@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "DocBuilderFront": {
+    "TechatomeMolecules": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/doc-builder-front",
+            "outputPath": "dist/techatome-molecules",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "DocBuilderFront:build:production"
+              "buildTarget": "TechatomeMolecules:build:production"
             },
             "development": {
-              "buildTarget": "DocBuilderFront:build:development"
+              "buildTarget": "TechatomeMolecules:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -115,7 +115,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "DocBuilderFront:build",
+            "browserTarget": "TechatomeMolecules:build",
             "compodoc": false,
             "port": 6006
           }
@@ -124,9 +124,9 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "DocBuilderFront:build",
+            "browserTarget": "TechatomeMolecules:build",
             "compodoc": false,
-            "outputDir": "dist/storybook/DocBuilderFront"
+            "outputDir": "dist/storybook/TechatomeMolecules"
           }
         }
       }

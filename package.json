@@ -10,8 +10,8 @@
     "checkfiles": "yarn install --check-files",
     "lint": "eslint . --ext .ts,.html",
     "prettier": "prettier --write \"src/**/*.{ts,html,css}\"",
-    "storybook": "ng run DocBuilderFront:storybook",
-    "build-storybook": "ng run DocBuilderFront:build-storybook"
+    "storybook": "ng run TechatomeMolecules:storybook",
+    "build-storybook": "ng run TechatomeMolecules:build-storybook"
   },
   "private": true,
   "dependencies": {

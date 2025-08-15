@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, LogoComponent, PictureInfoMessageComponent, TypedMessageComponent } from '@ta/ui';
+import { TaButtonComponent, TaTextComponent, TitleComponent, LogoComponent, PictureInfoMessageComponent, ToastComponent, EToast } from '@ta/ui';
 
 @Component({
   selector: 'app-ui-components',
@@ -20,11 +20,10 @@ import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, L
     MatDividerModule,
     TaButtonComponent,
     TaTextComponent,
-    TaTitleComponent,
-    ToastComponent,
+    TitleComponent,
     LogoComponent,
     PictureInfoMessageComponent,
-    TypedMessageComponent
+    ToastComponent
   ],
   template: `
     <div class="sandbox-page">
@@ -43,32 +42,61 @@ import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, L
           </mat-card-header>
           <mat-card-content>
             <div class="component-demo">
-              <h4>Bouton Simple</h4>
-              <lib-button label="Bouton Primary" type="primary"></lib-button>
-              <lib-button label="Bouton Secondary" type="secondary"></lib-button>
-              <lib-button label="Bouton Disabled" type="primary" [disabled]="true"></lib-button>
+              <h4>Boutons</h4>
+              <ta-button type="primary" (action)="onAction('Bouton Primary clicked')">
+                Bouton Primary
+              </ta-button>
+              <ta-button type="secondary" (action)="onAction('Bouton Secondary clicked')">
+                Bouton Secondary
+              </ta-button>
+              <ta-button type="danger" (action)="onAction('Bouton Danger clicked')">
+                Bouton Danger
+              </ta-button>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="component-demo">
-              <h4>Bouton Double</h4>
-              <lib-dual-button 
-                primaryLabel="Confirmer" 
-                secondaryLabel="Annuler"
-                (primaryClick)="onAction('Primary clicked')"
-                (secondaryClick)="onAction('Secondary clicked')">
-              </lib-dual-button>
+              <h4>Tailles de Boutons</h4>
+              <ta-button size="small" type="primary" (action)="onAction('Small button clicked')">
+                Small
+              </ta-button>
+              <ta-button size="medium" type="primary" (action)="onAction('Medium button clicked')">
+                Medium
+              </ta-button>
+              <ta-button size="large" type="primary" (action)="onAction('Large button clicked')">
+                Large
+              </ta-button>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="component-demo">
-              <h4>Bouton d'Action</h4>
-              <lib-action-button 
-                [data]="{icon: 'save', label: 'Sauvegarder', type: 'primary'}"
-                (actionClick)="onAction('Action button clicked')">
-              </lib-action-button>
+              <h4>États de Boutons</h4>
+              <ta-button state="classic" type="primary" (action)="onAction('Classic button clicked')">
+                Bouton Actif
+              </ta-button>
+              <ta-button state="disabled" type="primary">
+                Bouton Désactivé
+              </ta-button>
+              <ta-button state="inactive" type="primary">
+                Bouton Inactif
+              </ta-button>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="component-demo">
+              <h4>Options de Boutons</h4>
+              <ta-button type="primary" [options]="{circular: true}" (action)="onAction('Circular button clicked')">
+                Circular
+              </ta-button>
+              <ta-button type="secondary" [options]="{border: true}" (action)="onAction('Border button clicked')">
+                Avec Bordure
+              </ta-button>
+              <ta-button type="primary" [options]="{class: 'custom-class'}" (action)="onAction('Custom class button clicked')">
+                Classe Custom
+              </ta-button>
             </div>
           </mat-card-content>
         </mat-card>
@@ -81,33 +109,46 @@ import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, L
           <mat-card-content>
             <div class="component-demo">
               <h4>Titres</h4>
-              <lib-title text="Titre Principal" level="h1"></lib-title>
-              <lib-title text="Sous-titre" level="h2"></lib-title>
-              <lib-title text="Titre de section" level="h3"></lib-title>
+              <ta-title [level]="1">Titre Principal (H1)</ta-title>
+              <ta-title [level]="2">Sous-titre (H2)</ta-title>
+              <ta-title [level]="3">Titre de section (H3)</ta-title>
+              <ta-title [level]="4">Titre de sous-section (H4)</ta-title>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="component-demo">
-              <h4>Texte</h4>
-              <lib-text 
-                content="Ceci est un exemple de texte standard avec le composant Text."
-                type="paragraph">
-              </lib-text>
-              <lib-text 
-                content="Texte en emphase"
-                type="emphasis">
-              </lib-text>
+              <h4>Titres avec Options</h4>
+              <ta-title [level]="2" [isTheme]="true">Titre avec thème</ta-title>
+              <ta-title [level]="3" [isBold]="true">Titre en gras</ta-title>
+              <ta-title [level]="2" [isTheme]="true" [isBold]="true">Titre thème + gras</ta-title>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="component-demo">
+              <h4>Composant Texte</h4>
+              <ta-text size="sm">Texte petit (sm)</ta-text>
+              <ta-text size="md">Texte moyen (md)</ta-text>
+              <ta-text size="lg">Texte large (lg)</ta-text>
+              <ta-text size="xl">Texte extra large (xl)</ta-text>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="component-demo">
+              <h4>Texte avec Options</h4>
+              <ta-text [isBold]="true">Texte en gras</ta-text>
+              <ta-text color="primary">Texte couleur primaire</ta-text>
+              <ta-text color="secondary">Texte couleur secondaire</ta-text>
+              <ta-text size="lg" [isBold]="true" color="primary">Texte large, gras et primaire</ta-text>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="component-demo">
               <h4>Message Typé</h4>
-              <lib-typed-message 
-                messages="['Bienvenue dans le sandbox!', 'Explorez tous les composants', 'Testez les fonctionnalités']"
-                [typingSpeed]="100">
-              </lib-typed-message>
+              <p><em>Composant TypedMessage disponible mais nécessite une configuration spécifique.</em></p>
             </div>
           </mat-card-content>
         </mat-card>
@@ -119,40 +160,46 @@ import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, L
           </mat-card-header>
           <mat-card-content>
             <div class="component-demo">
-              <h4>Logo</h4>
-              <lib-logo 
-                src="/assets/logo.png" 
-                alt="Logo Techatome"
-                width="150">
-              </lib-logo>
+              <h4>Logos</h4>
+              <ta-logo></ta-logo>
+              <ta-logo type="name"></ta-logo>
+              <ta-logo type="full"></ta-logo>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="component-demo">
-              <h4>Message avec Image</h4>
-              <lib-picture-info-message
-                title="Information importante"
-                message="Ceci est un message informatif avec une image d'accompagnement."
-                imageSrc="/assets/info-icon.png"
-                imageAlt="Information">
-              </lib-picture-info-message>
+              <h4>Messages avec Icônes</h4>
+              <ta-picture-info-message 
+                icon="info" 
+                text="Ceci est un message d'information"
+                type="info">
+              </ta-picture-info-message>
+              <ta-picture-info-message 
+                icon="warning" 
+                text="Attention! Ceci est un avertissement"
+                type="warning">
+              </ta-picture-info-message>
+              <ta-picture-info-message 
+                icon="error" 
+                text="Une erreur est survenue"
+                type="danger">
+              </ta-picture-info-message>
+              <ta-picture-info-message 
+                icon="check_circle" 
+                text="Opération réussie avec succès"
+                type="success">
+              </ta-picture-info-message>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="component-demo">
-              <h4>Toast</h4>
-              <lib-toast 
-                message="Message de succès!" 
-                type="success"
-                [show]="true">
-              </lib-toast>
-              <lib-toast 
-                message="Message d'erreur!" 
-                type="error"
-                [show]="true">
-              </lib-toast>
+              <h4>Toasts / Notifications</h4>
+              <ta-toast [code]="EToast.information">Message d'information</ta-toast>
+              <ta-toast [code]="EToast.success">Message de succès</ta-toast>
+              <ta-toast [code]="EToast.warning">Message d'avertissement</ta-toast>
+              <ta-toast [code]="EToast.error">Message d'erreur</ta-toast>
             </div>
           </mat-card-content>
         </mat-card>
@@ -216,6 +263,21 @@ import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, L
       margin: 0.5rem;
     }
 
+    .component-demo ta-button {
+      margin: 0.5rem;
+      display: inline-block;
+    }
+
+    .component-demo ta-text {
+      display: block;
+      margin: 0.5rem 0;
+    }
+
+    .component-demo ta-title {
+      display: block;
+      margin: 1rem 0;
+    }
+
     .action-log {
       max-height: 200px;
       overflow-y: auto;
@@ -243,10 +305,28 @@ import { TaButtonComponent, TaTextComponent, TaTitleComponent, ToastComponent, L
     mat-divider {
       margin: 1rem 0;
     }
+
+    ta-logo {
+      margin: 1rem;
+      display: inline-block;
+    }
+
+    ta-picture-info-message {
+      margin: 0.5rem 0;
+      display: block;
+    }
+
+    ta-toast {
+      margin: 0.5rem 0;
+      display: block;
+    }
   `]
 })
 export class UiComponentsComponent {
   actionLog: Array<{timestamp: Date, message: string}> = [];
+  
+  // Expose EToast pour le template
+  EToast = EToast;
 
   onAction(message: string) {
     this.actionLog.unshift({

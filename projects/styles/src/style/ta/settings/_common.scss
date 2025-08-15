@@ -5,7 +5,9 @@
 
   :root {
     @each $key, $value in $flat-map {
-      --ta-#{$key}: #{$value};
+      @if $value != null and $value != () {
+        --ta-#{$key}: #{$value};
+      }
     }
   }
 

@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an Angular 19 monorepo with multiple library packages organized under the `@ta/` namespace. The project combines a main Angular application (DocBuilderFront) with reusable component libraries, following a modular architecture pattern.
+This is an Angular 19 monorepo with multiple library packages organized under the `@ta/` namespace. The project combines a main Angular application (TechatomeMolecules) with reusable component libraries, following a modular architecture pattern.
 
 ### Core Architecture
 
-- **Main Application**: `DocBuilderFront` - A document builder frontend using Angular Material, Editor.js, and Apollo GraphQL
+- **Main Application**: `TechatomeMolecules` - A document builder frontend using Angular Material, Editor.js, and Apollo GraphQL
 - **Library Projects**: Multiple shared libraries under `projects/` directory:
   - `@ta/ui` - UI components (buttons, cards, layouts)
   - `@ta/form-*` - Form handling components and models

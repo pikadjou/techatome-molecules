@@ -7,14 +7,14 @@ import { InputRadio } from '@ta/form-model';
 import { TaSizes } from '@ta/styles';
 import { TaBaseComponent, TranslatePipe } from '@ta/utils';
 import { FormLabelComponent } from '../../label/label.component';
-import { NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'ta-input-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
   standalone: true,
-  imports: [NgClass, NgIf, MatFormFieldModule, MatRadioModule, FormsModule, ReactiveFormsModule, TranslatePipe, FormLabelComponent],
+  imports: [AsyncPipe, NgClass, NgIf, MatFormFieldModule, MatRadioModule, FormsModule, ReactiveFormsModule, TranslatePipe, FormLabelComponent],
 })
 export class RadioComponent extends TaBaseComponent {
   @Input() input!: InputRadio<any>;
