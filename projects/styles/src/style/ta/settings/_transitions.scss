@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use 'ta/vars';
+@use 'ta/utils/mixins/common';
+
+/** Transitions Settings **/
+
+// Generate transition CSS custom properties
+@mixin generateTransitions() {
+  @include common.generateMap(transition, vars.$transition);
+  
+  // Generate utility classes for transitions
+  @each $name, $value in vars.$transition {
+    .transition-#{$name} {
+      transition: all #{$value};
+    }
+    
+    .transition-#{$name}-colors {
+      transition: color #{$value}, background-color #{$value}, border-color #{$value};
+    }
+    
+    .transition-#{$name}-transform {
+      transition: transform #{$value};
+    }
+    
+    .transition-#{$name}-opacity {
+      transition: opacity #{$value};
+    }
+  }
+  
+  // Additional transition utilities
+  .transition-none {
+    transition: none;
+  }
+  
+  .transition-all {
+    transition: all 0.3s ease;
+  }
+}

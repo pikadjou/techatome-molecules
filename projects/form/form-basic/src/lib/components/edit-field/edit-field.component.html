@@ -1,0 +1,28 @@
+<ta-loader [isLoading]="this.isLoading">
+  <ng-container *ngIf="!this.editMode">
+    <div
+      class="value-container"
+      [ngStyle]="{ height: height }"
+      [ngClass]="{ 'no-border': !this.withBorder }"
+      (click)="this.toggleEditMode()"
+    >
+      <ng-content></ng-content>
+      <!-- <ta-font-icon class="hidden-icon" name="modify" type="sm"></ta-font-icon> -->
+    </div>
+  </ng-container>
+  <ng-container *ngIf="this.editMode">
+    <div class="align-center g-space-sm" [ngClass]="'flex-' + this.layout">
+      <ta-form
+        class="flex-fill"
+        [inputs]="[this.input]"
+        [canDisplayButton]="false"
+      ></ta-form>
+
+      <!-- <ta-font-icon
+        name="check-line"
+        type="sm"
+        (click)="this.validation()"
+      ></ta-font-icon> -->
+    </div>
+  </ng-container>
+</ta-loader>

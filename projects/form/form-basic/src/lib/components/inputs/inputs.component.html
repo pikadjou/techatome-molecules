@@ -1,0 +1,53 @@
+<ng-container
+  [ngTemplateOutlet]="inputsTemplate"
+  [ngTemplateOutletContext]="{
+    input: this.input,
+    matcher: this.matcher
+  }"
+></ng-container>
+
+<ng-template #inputsTemplate let-input="input" let-matcher="matcher">
+  <ng-container [ngSwitch]="input.controlType">
+    <ng-container *ngSwitchCase="'textbox'">
+      <ta-input-textbox
+        [input]="input"
+        [matcher]="matcher"
+        [space]="this.space"
+      ></ta-input-textbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="'textarea'">
+      <ta-input-textarea
+        [input]="input"
+        [matcher]="matcher"
+      ></ta-input-textarea>
+    </ng-container>
+    <ng-container *ngSwitchCase="'dropdown'">
+      <ta-input-dropdown
+        [input]="input"
+        [matcher]="matcher"
+        [space]="this.space"
+      ></ta-input-dropdown>
+    </ng-container>
+    <ng-container *ngSwitchCase="'radio'">
+      <ta-input-radio [input]="input"></ta-input-radio>
+    </ng-container>
+    <ng-container *ngSwitchCase="'checkbox'">
+      <ta-input-checkbox [input]="input"></ta-input-checkbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="'toggle'">
+      <ta-input-toggle [input]="input"></ta-input-toggle>
+    </ng-container>
+    <ng-container *ngSwitchCase="'panel'">
+      <ta-form-panel
+        [panel]="input"
+        [inputsTemplate]="inputsTemplate"
+      ></ta-form-panel>
+    </ng-container>
+    <ng-container *ngSwitchCase="'label'">
+      <ta-input-label [input]="input"></ta-input-label>
+    </ng-container>
+    <ng-container *ngSwitchCase="'wysiswyg'">
+      <ta-input-wysiswyg [input]="input"></ta-input-wysiswyg>
+    </ng-container>
+  </ng-container>
+</ng-template>

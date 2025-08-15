@@ -1,0 +1,13 @@
+{
+  "name": "@ta/server",
+  "version": "0.0.1",
+  "dependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@apollo/client": "^3.12.4",
+    "apollo-angular": "^8.0.0",
+    "graphql": "^16.10.0",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

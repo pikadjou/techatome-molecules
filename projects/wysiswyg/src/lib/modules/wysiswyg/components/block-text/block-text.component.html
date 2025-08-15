@@ -1,0 +1,39 @@
+<ng-container *ngFor="let block of this.blocks">
+  <ng-container [ngSwitch]="block.type">
+    <ng-container *ngSwitchCase="'header'">
+      <ta-title [level]="block.data.level">
+        {{ block.data.text }}
+      </ta-title>
+    </ng-container>
+    <ng-container *ngSwitchCase="'paragraph'">
+      <ta-text>
+        <div [innerHTML]="block.data.text"></div>
+      </ta-text>
+    </ng-container>
+    <ng-container *ngSwitchCase="'list'">
+      <ng-container *ngIf="block.data.style === 'ordered'">
+        <ol>
+          <li *ngFor="let item of block.data.items">
+            {{ item }}
+          </li>
+        </ol>
+      </ng-container>
+      <ng-container *ngIf="block.data.style === 'unordered'">
+        <ul>
+          <li *ngFor="let item of block.data.items">
+            {{ item }}
+          </li>
+        </ul>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'delimiter'">
+      <hr />
+    </ng-container>
+    <ng-container *ngSwitchCase="'quote'">
+      <div class="flex-start g-space-xs">
+        <div *ngIf="block.data.caption">{{ block.data.caption }}:</div>
+        <q [innerHTML]="block.data.text"></q>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

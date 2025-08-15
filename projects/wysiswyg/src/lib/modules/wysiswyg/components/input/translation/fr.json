@@ -1,0 +1,77 @@
+{
+  "editorjs": {
+    "placeholder": "Répondre",
+    "i18n": {
+      "direction": "ltr",
+      "messages": {
+        "ui": {
+          "blockTunes": {
+            "toggler": {
+              "Click to tune": "Cliquer pour régler",
+              "or drag to move": "ou glisser pour déplacer"
+            }
+          },
+          "inlineToolbar": {
+            "converter": {
+              "Convert to": "Convertir en"
+            }
+          },
+          "popover": {
+            "Filter": "Filtrer",
+            "Nothing found": "Rien trouvé",
+            "Convert to": "Convertir en"
+          },
+          "toolbar": {
+            "toolbox": {
+              "Add": "Ajouter"
+            }
+          }
+        },
+        "toolNames": {
+          "Text": "Texte",
+          "Heading": "Titre",
+          "List": "Liste",
+          "Warning": "Avertissement",
+          "Checklist": "Liste de contrôle",
+          "Quote": "Citation",
+          "Code": "Code",
+          "Delimiter": "Délimiteur",
+          "Raw HTML": "HTML brut",
+          "Table": "Tableau",
+          "Link": "Lien",
+          "Marker": "Marqueur",
+          "Bold": "Gras",
+          "Italic": "Italique",
+          "InlineCode": "Code en ligne"
+        },
+        "tools": {
+          "quote": {
+            "Enter a quote": "Citation",
+            "Enter a caption": "Message"
+          },
+          "warning": {
+            "Title": "Titre",
+            "Message": "Message"
+          },
+          "link": {
+            "Add a link": "Ajouter un lien"
+          },
+          "stub": {
+            "The block can not be displayed correctly.": "Le bloc ne peut pas être affiché correctement."
+          }
+        },
+        "blockTunes": {
+          "delete": {
+            "Delete": "Supprimer"
+          },
+          "moveUp": {
+            "Move up": "Déplacer vers le haut"
+          },
+          "moveDown": {
+            "Move down": "Déplacer vers le bas"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <mat-icon>waving_hand</mat-icon>
+    Bienvenu dans DocBuilder
+  </app-layout-title>
+  <app-layout-content>
+    <div class="grid">
+      <div class="g-col-4">
+        <div class="box" (click)="this.goToCategories()">
+          <mat-icon class="icon-display">view_list</mat-icon>
+          <ta-title [level]="1"> Catégories </ta-title>
+        </div>
+      </div>
+      <div class="g-col-4">
+        <div class="box" (click)="this.goToDocuments()">
+          <mat-icon class="icon-display">description</mat-icon>
+          <ta-title [level]="1"> Documents </ta-title>
+        </div>
+      </div>
+      <div class="g-col-4">
+        <div class="box sandbox-box" (click)="this.goToSandbox()">
+          <mat-icon class="icon-display">science</mat-icon>
+          <ta-title [level]="1"> Sandbox </ta-title>
+        </div>
+      </div>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

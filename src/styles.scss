@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'bases';
+@use 'ta/utils/mixins/common';
+
+// Variables CSS globales pour les propriétés spécifiques à l'application
+// Toutes les variables sont maintenant centralisées dans le système @ta/styles
+
+html, body { 
+  height: 100%; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body { 
+  font-family: 'Inter', 'Roboto', "Helvetica Neue", sans-serif;
+  background-color: common.get-var(surface, tertiary);
+  color: common.get-var(text, primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+
+// Styles pour les états de focus améliorés
+:focus-visible {
+  outline: 2px solid common.get-var(brand, 700);
+  outline-offset: 2px;
+  border-radius: common.get-var(radius, minimal);
+}
+
+// Scroll personnalisé
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: common.get-var(surface, primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: common.get-var(text, tertiary);
+  border-radius: common.get-var(radius, minimal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: common.get-var(text, secondary);
+}

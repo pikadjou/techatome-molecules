@@ -1,0 +1,312 @@
+@use "ta/utils/mixins/common";
+
+// Container principal avec animations
+.flex-column {
+  min-height: 100vh;
+  animation: fadeIn common.get-var(transition, normal) ease-out;
+}
+
+// Header du document avec navigation
+.document-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: common.get-var(space, md) 0;
+  margin-bottom: common.get-var(space, lg);
+  z-index: 10;
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: common.get-var(space, md);
+    
+    .back-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: common.get-var(radius, rounded);
+      background: common.get-var(surface, secondary);
+      border: none;
+      cursor: pointer;
+      transition: all common.get-var(transition, fast);
+      
+      &:hover {
+        background: common.get-var(brand, 700);
+        color: white;
+        transform: scale(1.1);
+      }
+      
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+    
+    .document-title {
+      flex: 1;
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: common.get-var(text, primary);
+    }
+    
+    .document-actions {
+      display: flex;
+      gap: common.get-var(space, sm);
+    }
+  }
+}
+
+// Layout de la grille principal
+.document-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: common.get-var(space, xl);
+  align-items: start;
+}
+
+// Panneau de formulaire (gauche)
+.form-panel {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  
+  ta-form {
+    background: common.get-var(surface, primary);
+    border-radius: common.get-var(radius, label);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: common.get-var(space, lg);
+    box-shadow: common.get-var(shadow, black, sm);
+  }
+}
+
+// Panneau de pr�visualisation (droite)
+.preview-panel {
+  background: common.get-var(surface, primary);
+  border-radius: common.get-var(radius, label);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  box-shadow: common.get-var(shadow, black, md);
+  animation: slideInRight common.get-var(transition, normal) ease-out;
+  
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: common.get-var(space, lg);
+    background: linear-gradient(135deg, common.get-var(brand, 700), common.get-var(brand, 400));
+    color: white;
+    
+    .preview-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .convert-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: common.get-var(space, sm) common.get-var(space, md);
+      border-radius: common.get-var(radius, rounded);
+      cursor: pointer;
+      transition: all common.get-var(transition, fast);
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
+    }
+  }
+  
+  .document-meta {
+    padding: common.get-var(space, md) common.get-var(space, lg);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: common.get-var(surface, secondary);
+    
+    .document-title-preview {
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: common.get-var(text, primary);
+    }
+    
+    hr {
+      margin: common.get-var(space, sm) 0;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, common.get-var(brand, 700), transparent);
+    }
+  }
+  
+  .document-content {
+    padding: common.get-var(space, lg);
+    max-height: 600px;
+    overflow-y: auto;
+    
+    // Styles pour le contenu HTML
+    :deep(p) {
+      margin: 0 0 common.get-var(space, md);
+      line-height: 1.7;
+      color: common.get-var(text, primary);
+    }
+    
+    :deep(h1) {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin: 0 0 common.get-var(space, lg);
+      color: common.get-var(text, primary);
+      border-bottom: 2px solid common.get-var(brand, 700);
+      padding-bottom: common.get-var(space, sm);
+    }
+    
+    :deep(h2) {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: common.get-var(space, lg) 0 common.get-var(space, md);
+      color: common.get-var(text, primary);
+    }
+    
+    :deep(h3) {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: common.get-var(space, md) 0 common.get-var(space, sm);
+      color: common.get-var(text, primary);
+    }
+    
+    :deep(strong) {
+      color: common.get-var(brand, 700);
+      font-weight: 600;
+    }
+    
+    :deep(ul) {
+      margin: common.get-var(space, md) 0;
+      padding-left: common.get-var(space, lg);
+      
+      li {
+        margin-bottom: common.get-var(space, xs);
+        line-height: 1.6;
+      }
+    }
+    
+    // Style pour les variables en surbrillance
+    :deep([data-variable]) {
+      background: linear-gradient(135deg, common.get-var(second, 600), common.get-var(second, 400));
+      color: white;
+      padding: 2px 6px;
+      border-radius: common.get-var(radius, minimal);
+      font-weight: 500;
+      display: inline-block;
+      margin: 0 2px;
+    }
+  }
+}
+
+// �tats de chargement
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: common.get-var(text, secondary);
+  
+  &::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    border: 3px solid common.get-var(neutral, 300);
+    border-top-color: common.get-var(brand, 700);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: common.get-var(space, md);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// �tats d'erreur
+.error-state {
+  padding: common.get-var(space, lg);
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid common.get-var(semantic, red);
+  border-radius: common.get-var(radius, rounded);
+  color: common.get-var(semantic, red);
+  text-align: center;
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+  .document-grid {
+    grid-template-columns: 1fr;
+    gap: common.get-var(space, lg);
+  }
+  
+  .form-panel {
+    position: static;
+    max-height: none;
+    order: 2;
+  }
+  
+  .preview-panel {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .document-header {
+    .header-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: common.get-var(space, sm);
+      
+      .document-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  }
+  
+  .document-grid {
+    gap: common.get-var(space, md);
+  }
+  
+  .form-panel ta-form,
+  .preview-panel {
+    padding: common.get-var(space, md);
+  }
+  
+  .preview-panel .document-content {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .document-header {
+    .header-content {
+      .document-actions {
+        flex-direction: column;
+        width: 100%;
+        
+        .full-width-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  .preview-panel {
+    .preview-header {
+      flex-direction: column;
+      gap: common.get-var(space, sm);
+      text-align: center;
+    }
+  }
+}

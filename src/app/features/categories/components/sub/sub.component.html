@@ -1,0 +1,84 @@
+<div class="flex-column g-space-md">
+  @let category = this.category();
+  <ta-title [level]="2" [isBold]="true">
+    @if (category) {
+      <div class="flex-start g-space-sm align-center">
+        <mat-icon (click)="this.selected(category?.parent?.documentId ?? null)"> arrow_back_ios_new </mat-icon>
+        {{ category?.name }}
+
+        <div class="justify-end g-space-md">
+          <ta-button [type]="'secondary'" (action)="this.update(category)"> Modifier </ta-button>
+
+          <ta-button [type]="'danger'" (action)="this.delete()"> Supprimer </ta-button>
+        </div>
+      </div>
+    }
+  </ta-title>
+
+  <ta-loader [isLoading]="this.requestState.isLoading()">
+    <ta-error [message]="this.requestState.error.message" [code]="this.requestState.error.status">
+      <div class="grid">
+        <div class="sub-cat g-col-4">
+          <ta-title [level]="3" [isBold]="true">
+            <div class="space-between align-center">
+              Sous catégories
+              <ta-button (action)="this.add(category ?? null)"> Ajouter une sous catégorie </ta-button>
+            </div>
+          </ta-title>
+          @let categories = this.subCategories();
+          <ta-empty [isEmpty]="!categories || categories.length === 0">
+            @if (categories) {
+              <div class="grid mt-space-md">
+                @for (subCategory of categories; track subCategory.documentId) {
+                  <ta-card (click)="this.selected(subCategory.documentId ?? null)" class="g-col-6">
+                    <ta-card-header>
+                      <ta-card-title>
+                        <ta-title [level]="3" [isBold]="true">
+                          {{ subCategory.name }}
+                        </ta-title>
+                      </ta-card-title>
+                    </ta-card-header>
+                    <ta-card-content>
+                      <ta-text size="sm">
+                        {{ subCategory.description }}
+                      </ta-text>
+                    </ta-card-content>
+                  </ta-card>
+                }
+              </div>
+            }
+          </ta-empty>
+        </div>
+        <div class="doc g-col-8">
+          <ta-title [level]="3" [isBold]="true">
+            <div class="space-between align-center">
+              Documents
+              <ta-button (action)="this.addDoc(category ?? null)"> Ajouter un document </ta-button>
+            </div>
+          </ta-title>
+          @let documents = this.documents();
+          <ta-empty [isEmpty]="!categories || categories.length === 0">
+            <div class="grid mt-space-md">
+              @for (doc of documents; track doc.documentId) {
+                <ta-card (click)="this.goToDoc(doc.documentId ?? '')" class="g-col-4">
+                  <ta-card-header>
+                    <ta-card-title>
+                      <ta-title [level]="3" [isBold]="true">
+                        {{ doc.title }}
+                      </ta-title>
+                    </ta-card-title>
+                  </ta-card-header>
+                  <ta-card-content>
+                    <ta-text size="sm">
+                      {{ doc.publishedAt | date: 'dd/MM/yyyy' }}
+                    </ta-text>
+                  </ta-card-content>
+                </ta-card>
+              }
+            </div>
+          </ta-empty>
+        </div>
+      </div>
+    </ta-error>
+  </ta-loader>
+</div>

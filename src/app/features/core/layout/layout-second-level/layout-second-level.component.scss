@@ -1,0 +1,6 @@
+@import 'camelot-export';
+
+.layout-title-container {
+  @include flex-start();
+  @include align-center();
+}

@@ -1,0 +1,14 @@
+<div class="dual-button row">
+  <div class="col first" (click)="this.first.callback()">
+    <div class="flex-start">
+      <ta-font-icon class="icon" [name]="this.first.icon"></ta-font-icon>
+      <span class="label">{{ this.first.label | translate }}</span>
+    </div>
+  </div>
+  <div class="col second" (click)="this.second.callback()">
+    <div class="flex-start">
+      <span class="label">{{ this.second.label | translate }}</span>
+      <ta-font-icon class="icon" [name]="this.second.icon"></ta-font-icon>
+    </div>
+  </div>
+</div>

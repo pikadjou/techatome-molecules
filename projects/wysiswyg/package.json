@@ -1,0 +1,22 @@
+{
+  "name": "wysiswyg",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@editorjs/delimiter": "^1.4.2",
+    "@editorjs/editorjs": "^2.30.5",
+    "@editorjs/header": "^2.8.7",
+    "@editorjs/list": "^1.10.0",
+    "@editorjs/quote": "^2.7.0",
+    "@editorjs/table": "^2.3.0",
+    "@editorjs/warning": "^1.4.0",
+    "codex-notifier": "^1.1.2",
+    "codex-tooltip": "^1.0.5",
+    "editorjs-html": "^3.4.3"
+  },
+  "sideEffects": false
+}

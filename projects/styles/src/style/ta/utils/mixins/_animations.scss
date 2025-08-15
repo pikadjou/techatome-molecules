@@ -1,0 +1,88 @@
+@use 'sass:map';
+@use 'ta/settings/animations';
+
+/** Animation Mixins **/
+
+// Apply animation with custom parameters
+@mixin animate($name, $duration: normal, $easing: ease-out, $delay: 0s, $iteration: 1, $direction: normal, $fill-mode: both) {
+  $duration-value: map.get(animations.$animation-durations, $duration) or $duration;
+  $easing-value: map.get(animations.$animation-easings, $easing) or $easing;
+  
+  animation: #{$name} #{$duration-value} #{$easing-value} #{$delay} #{$iteration} #{$direction} #{$fill-mode};
+}
+
+// Quick fade in animation
+@mixin fadeIn($duration: normal, $easing: ease-out) {
+  @include animate(fadeIn, $duration, $easing);
+}
+
+// Quick slide animations
+@mixin slideInRight($duration: normal, $easing: ease-out) {
+  @include animate(slideInRight, $duration, $easing);
+}
+
+@mixin slideInLeft($duration: normal, $easing: ease-out) {
+  @include animate(slideInLeft, $duration, $easing);
+}
+
+@mixin slideInUp($duration: normal, $easing: ease-out) {
+  @include animate(slideInUp, $duration, $easing);
+}
+
+@mixin slideInDown($duration: normal, $easing: ease-out) {
+  @include animate(slideInDown, $duration, $easing);
+}
+
+// Scale animation
+@mixin scaleIn($duration: normal, $easing: ease-out) {
+  @include animate(scaleIn, $duration, $easing);
+}
+
+// Infinite animations
+@mixin spin($duration: slower, $easing: linear) {
+  @include animate(spin, $duration, $easing, 0s, infinite);
+}
+
+@mixin pulse($duration: slower, $easing: ease-in-out) {
+  @include animate(pulse, $duration, $easing, 0s, infinite);
+}
+
+@mixin bounce($duration: slower, $easing: ease-out) {
+  @include animate(bounce, $duration, $easing, 0s, infinite);
+}
+
+// Hover effects
+@mixin hoverScale($scale: 1.05, $duration: fast, $easing: ease-out) {
+  transition: transform map.get(animations.$animation-durations, $duration) map.get(animations.$animation-easings, $easing);
+  
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin hoverFade($opacity: 0.8, $duration: fast, $easing: ease-out) {
+  transition: opacity map.get(animations.$animation-durations, $duration) map.get(animations.$animation-easings, $easing);
+  
+  &:hover {
+    opacity: $opacity;
+  }
+}
+
+// Transition helpers
+@mixin transition($properties, $duration: normal, $easing: ease-out, $delay: 0s) {
+  $duration-value: map.get(animations.$animation-durations, $duration) or $duration;
+  $easing-value: map.get(animations.$animation-easings, $easing) or $easing;
+  
+  transition: #{$properties} #{$duration-value} #{$easing-value} #{$delay};
+}
+
+// Sequential animation delays for lists
+@mixin staggeredAnimation($name, $duration: normal, $easing: ease-out, $stagger-delay: 0.1s, $max-items: 10) {
+  @include animate($name, $duration, $easing);
+  
+  @for $i from 1 through $max-items {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * $stagger-delay};
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/flex';
+
+.card-title-container {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: common.get-var(text, primary);
+  line-height: 1.4;
+  margin: 0;
+  flex: 1;
+  
+  .category-title-content {
+    @include flex.align-center;
+    gap: common.get-var(space, sm);
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@ta/form-basic",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@ta/utils": "version-skip",
+    "@ta/ui": "version-skip",
+    "@ta/form-input": "version-skip",
+    "@ta/form-model": "version-skip",
+    "@ta/notification": "version-skip"
+  },
+  "sideEffects": false
+}

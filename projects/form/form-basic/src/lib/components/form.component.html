@@ -1,0 +1,28 @@
+<div class="form-container">
+  <form (ngSubmit)="onSubmit()" [formGroup]="this.form">
+    <div *ngFor="let input of this.inputs; trackBy: trackByKey">
+      <ng-container *ngIf="input.visible$ | async">
+        <ta-inputs [input]="input"></ta-inputs>
+      </ng-container>
+    </div>
+    <div>
+      <ta-loader [isLoading]="this.loader">
+        <ta-button
+          *ngIf="this.canDisplayButton && this.buttonTitle"
+          (action)="this.onSubmit()"
+          [state]="!this.isValid() ? 'disabled' : 'classic'"
+          icon="check-line"
+        >
+          {{ this.buttonTitle | translate }}
+        </ta-button>
+      </ta-loader>
+      <ta-notification-inline
+        [message]="this.error.message"
+        [code]="this.error.status"
+        class="my-space-sm"
+      >
+        <div class="justify-end"></div>
+      </ta-notification-inline>
+    </div>
+  </form>
+</div>

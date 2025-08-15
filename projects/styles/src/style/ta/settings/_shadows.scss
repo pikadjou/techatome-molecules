@@ -1,0 +1,12 @@
+@use "ta/vars";
+@use 'ta/settings/common';
+
+@mixin generateShadows() {
+  @include common.generateMap(
+    'shadow',
+    vars.$shadow,
+    (
+      bxs: box-shadow,
+    )
+  );
+}
