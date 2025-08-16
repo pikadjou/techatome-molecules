@@ -1,0 +1,25 @@
+<div class="row g-0 align-items-center mb-space-2">
+  <div class="col">
+    <cam-form-label [input]="this.input"></cam-form-label>
+  </div>
+  <div
+    [ngClass]="this.selection.length === 0 ? 'col-12 my-space-2' : 'col-auto'"
+  >
+    <cam-button
+      type="secondary"
+      #focusedElement
+      (action)="this.openDialog()"
+      [options]="{ circular: this.isCircularButton }"
+    >
+      <cam-local-icon [type]="this.icon.Gallery"></cam-local-icon>
+    </cam-button>
+  </div>
+</div>
+
+@if(this.selection.length > 0) {
+<cam-files-list
+  [files]="this.fileDataSelection"
+  [canDeleteFile]="!!this.input.fileDeleted"
+  (fileDeleted)="this.onFileDeleted($event)"
+></cam-files-list>
+}

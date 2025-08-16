@@ -1,0 +1,25 @@
+@import "camelot-export";
+
+:host,
+::ng-deep {
+  .mat-content {
+    overflow: visible !important;
+  }
+  .mat-expansion-panel {
+    box-shadow: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid get-var(neutral, 400);
+    padding: get-var(space, sm) 0;
+
+    background-color: get-var(surface, primary);
+
+    &.mat-expanded {
+      @include shadow-mixin(black, md);
+      border-radius: get-var(space, xs) !important;
+    }
+  }
+  .mat-expansion-panel-header,
+  .mat-expansion-panel-body {
+    padding: get-var(space, xs) !important;
+  }
+}

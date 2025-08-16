@@ -5,13 +5,16 @@
 
   <div *ngFor="let key of getKeys(); trackBy: trackByFn">
     <div *ngIf="this.canRemove(key)" class="remove-action">
-      <ta-button
+      <cam-button
         class="remove-action"
         [style]="'danger'"
         (action)="remove(key)"
       >
-        <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
-      </ta-button>
+        <cam-local-icon
+          [type]="this.icon.DeleteLight"
+          size="xs"
+        ></cam-local-icon>
+      </cam-button>
     </div>
 
     <ng-container
@@ -28,5 +31,5 @@
       </div>
     </ng-container>
   </div>
-  <ta-button (action)="add()">{{ "form.dynamic.add" | translate }}</ta-button>
+  <cam-button (action)="add()">{{ "form.dynamic.add" | translate }}</cam-button>
 </div>

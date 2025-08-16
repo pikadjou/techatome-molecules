@@ -1,0 +1,34 @@
+@import "camelot-export";
+
+.button {
+  background-color: get-var(surface, primary);
+  border: 1px solid get-var(border, secondary);
+
+  border-radius: get-var(radius, rounded);
+  padding: get-var(space, sm);
+
+  @include align-center();
+  @include justify-center;
+
+  &.disabled,
+  &.inactive {
+    cursor: not-allowed;
+  }
+  &.primary {
+    color: get-var(icon, primary);
+
+    &:hover,
+    &.selected {
+      color: get-var(text, brand, primary);
+    }
+    &.disabled,
+    &.inactive {
+      color: get-var(neutral, 200);
+      border-color: get-var(surface, hover, secondary);
+    }
+    &.unselected {
+      color: get-var(text, primary);
+      background-color: get-var(surface, tertiary);
+    }
+  }
+}

@@ -1,26 +1,29 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  signal,
+} from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { InputBase } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
-import { NgClass, NgIf, NgStyle } from '@angular/common';
-import { LoaderComponent } from '@ta/ui';
-import { TaFormComponent } from '../form.component';
+import { InputBase } from '@camelot/form-model';
+import { CamBaseComponent } from '@camelot/utils';
 
 export type Layout = 'row' | 'column';
 
 @Component({
-  selector: 'ta-edit-field',
+  selector: 'cam-edit-field',
   templateUrl: './edit-field.component.html',
   styleUrls: ['./edit-field.component.scss'],
-  standalone: true,
-  imports: [NgIf, NgClass, NgStyle, LoaderComponent, TaFormComponent],
 })
-export class EditFieldComponent extends TaBaseComponent implements OnInit, OnChanges {
-  @Input()
-  layout: Layout = 'row';
-
+export class EditFieldComponent extends CamBaseComponent implements OnInit, OnChanges {
   @Input()
   getInput!: () => InputBase<any>;
 
@@ -30,37 +33,72 @@ export class EditFieldComponent extends TaBaseComponent implements OnInit, OnCha
   @Input()
   isLoading: boolean = false;
 
-  @Output()
-  newValue: EventEmitter<unknown> = new EventEmitter();
-
-  @Input()
-  height: string = '22px';
-
   @Input()
   withBorder: boolean = true;
 
-  public input!: InputBase<any>;
-  public editMode = false;
+  @Input()
+  disabled: boolean = false;
 
+  @Output()
+  newValue: EventEmitter<unknown> = new EventEmitter();
+
+  readonly onFocus = new BehaviorSubject<void>(undefined);
+  readonly renderInput = signal<InputBase<null> | null>(null);
+  public editMode = signal(false);
+
+  @HostListener('document:click', ['$event.target'])
+  onDocumentClick(targetElement: HTMLElement): void {
+    if (!this.editMode()) {
+      return;
+    }
+    if (targetElement.tagName === 'INPUT' && (targetElement as HTMLInputElement).type === 'file') {
+      return;
+    }
+    const clickedInside = this.elementRef.nativeElement.contains(targetElement);
+    if (!clickedInside) {
+      this.validation();
+    }
+  }
+
+  constructor(private elementRef: ElementRef) {
+    super();
+  }
   ngOnInit() {
     if (this.changeEditMode$) {
-      this._registerSubscription(this.changeEditMode$.subscribe(value => (this.editMode = value)));
+      this._registerSubscription(this.changeEditMode$.subscribe(value => this.editMode.set(value)));
     }
-    this.input = this.getInput();
+    this._setInput();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes["isLoading"] && changes["isLoading"].currentValue !== changes["isLoading"].previousValue && changes["isLoading"].currentValue === false) {
-      this.input = this.getInput();
-      this.editMode = false;
+    if (
+      changes['isLoading'] &&
+      changes['isLoading'].currentValue !== changes['isLoading'].previousValue &&
+      changes['isLoading'].currentValue === false
+    ) {
+      this._setInput();
+      this.editMode.set(false);
     }
   }
+
   public toggleEditMode() {
-    this.editMode = !this.editMode;
+    this.editMode.set(!this.editMode());
+
+    if (this.editMode()) {
+      this.onFocus.next();
+    }
   }
 
   public validation() {
-    this.newValue.emit(this.input.value);
+    const input = this.renderInput();
+    if (!input) {
+      return;
+    }
+    this.newValue.emit(input.value);
 
     this.toggleEditMode();
+  }
+
+  private _setInput() {
+    this.renderInput.set(this.getInput());
   }
 }

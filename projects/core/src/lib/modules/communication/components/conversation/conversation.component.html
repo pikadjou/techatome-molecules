@@ -1,0 +1,60 @@
+@let participants = (this.participants$ | async) ?? [];
+<div class="conversation-container">
+  <div class="filters space-between align-center pl-space-sm">
+    <div class="pl-space-sm">
+      <cam-title [level]="3" [isBold]="true"> {{ 'tasks.conversation.title' | translate }}</cam-title>
+    </div>
+    <cam-conversation-filters
+      *ngIf="participants && participants.length > 0"
+      [conversationParticipants]="participants"
+      (filtersUpdated)="this.filters$.next($event)"
+    ></cam-conversation-filters>
+  </div>
+  <div class="communication-container pt-space-md" #scrollMe [scrollTop]="this.scrollTop()">
+    @let communications = this.communications$ | async;
+    <cam-loader [isLoading]="this.requestState.isLoading()">
+      <cam-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+        <cam-empty [isEmpty]="!communications || communications.length === 0">
+          <div class="list-container flex-column" *ngIf="communications">
+            <cam-message-list
+              class="mx-space-sm"
+              [readonly]="this.readonly"
+              [list]="communications"
+              [conversationParticipants]="participants"
+              [limit]="this.seeAll ? -1 : 3"
+              [taskId]="this.taskId"
+              (askReply)="this.setReplyTo($event)"
+            ></cam-message-list>
+          </div>
+        </cam-empty>
+      </cam-error>
+    </cam-loader>
+  </div>
+  <div
+    class="box-container"
+    [class.out-of-box]="this.outOfBox()"
+    *ngIf="!this.requestState.isLoading() && !this.readonly"
+  >
+    <cam-loader [isLoading]="this.messageBoxRequestState.isLoading()">
+      <div class="cadre">
+        <cam-font-icon
+          [name]="this.outOfBox() ? 'arrow-go-back-line' : 'enlarge'"
+          type="sm"
+          (click)="this.outOfBox.set(!this.outOfBox())"
+        ></cam-font-icon>
+        <cam-communication-message-box-container
+          [taskId]="this.taskId"
+          [conversationParticipants]="participants"
+          [statusTemplate]="this.statusTemplate"
+          [replyTo]="this.replyTo"
+          [clear$]="this.clearBox$"
+          [openPanel]="this.outOfBox()"
+          (message)="this.sendMessage($event)"
+        ></cam-communication-message-box-container>
+      </div>
+    </cam-loader>
+  </div>
+  @if (this.outOfBox()) {
+    <div class="overlay-bck" (click)="this.outOfBox.set(!this.outOfBox())"></div>
+  }
+</div>

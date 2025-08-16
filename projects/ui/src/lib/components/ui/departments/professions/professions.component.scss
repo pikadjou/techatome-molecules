@@ -1,0 +1,38 @@
+@import 'camelot-export';
+
+// .xs {
+//     @include fontSizeBody(xs);
+// }
+
+// .sm {
+//     @include fontSizeBody(sm);
+// }
+
+// .md {
+//     @include fontSizeBody(md);
+// }
+
+// .lg {
+//     @include fontSizeBody(lg);
+// }
+
+// .xl {
+//     @include fontSizeBody(xl);
+// }
+
+// .xxl {
+//     @include fontSizeBody(xxl);
+// }
+
+// .big {
+//     @include fontSizeBody(big);
+// }
+
+.professions-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .more-label {
+    color: get-var(brand, 500);
+  }
+}

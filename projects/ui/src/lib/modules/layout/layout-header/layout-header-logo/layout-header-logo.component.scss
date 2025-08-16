@@ -1,0 +1,38 @@
+@import "camelot-export";
+
+.icons {
+  user-select: none;
+
+  .image {
+    text-align: left;
+    img {
+      width: 28px;
+      height: auto;
+      border-radius: 100px;
+    }
+  }
+  .title {
+    text-align: center;
+
+    cam-logo {
+      display: block;
+      width: 60px;
+      height: auto;
+      border-radius: 5px;
+      margin: auto;
+    }
+  }
+  .notif {
+    text-align: right;
+
+    &.disabled {
+      color: get-var(icon, disabled);
+    }
+  }
+}
+
+cam-font-icon {
+  padding: get-var(space, xs);
+  cursor: pointer;
+  display: block;
+}

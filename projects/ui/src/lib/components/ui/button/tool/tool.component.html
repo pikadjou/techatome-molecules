@@ -1,0 +1,13 @@
+<button
+  [disabled]="this.readonly"
+  appStopPropagation
+  [stopPropagationActivation]="this.stopPropagationActivation"
+  type="button"
+  class="button pointer"
+  [ngClass]="this.getClass()"
+  (click)="this.handleClick()"
+>
+  <div class="flex-row g-space-sm align-c enter">
+    <cam-font-icon *ngIf="this.icon" [name]="this.icon" [type]="this.size"></cam-font-icon>
+  </div>
+</button>

@@ -1,0 +1,75 @@
+<cam-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.documents$ | async as documents">
+  <cam-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <cam-empty
+      [isEmpty]="!documents || documents.length === 0"
+      [text]="this.emptyMessage"
+      [showMessage]="!!this.emptyMessage"
+    >
+      <div class="list flex-column g-space-sm">
+        <div *ngFor="let doc of documents">
+          <ng-container
+            *ngTemplateOutlet="this.actions !== 'select' ? defaultTemplate : selectTemplate; context: { doc: doc }"
+          ></ng-container>
+        </div>
+      </div>
+    </cam-empty>
+  </cam-error>
+</cam-loader>
+
+<ng-template #defaultTemplate let-doc="doc">
+  <div class="flex-row g-space-xs justify-content-between">
+    <div class="align-center">
+      <cam-font-icon name="doc" size="xs"></cam-font-icon>
+      <div>
+        <cam-link [underline]="false" (action)="this.openDocument(doc)">{{ doc.name }}</cam-link>
+        <div class="extra flex-row g-space-md">
+          <cam-time-ago [date]="doc.uploadedDate"></cam-time-ago>
+          <cam-megaoctet [octet]="doc.size"></cam-megaoctet>
+        </div>
+      </div>
+    </div>
+    <div class="cta align-content-center">
+      @if (this.actions === 'select') {
+        <input [disabled]="this.readonly" type="checkbox" [checked]="this.isChecked(doc)" (click)="this.check(doc)" />
+      } @else if (this.actions === 'delete') {
+        <cam-button-tool
+          (action)="this.removeDocument(doc)"
+          icon="delete"
+          [size]="'sm'"
+          [readonly]="this.readonly"
+        ></cam-button-tool>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #selectTemplate let-doc="doc">
+  <div
+    class="card-document-upload flex-row g-space-xs justify-content-between"
+    [class.selected]="this.isChecked(doc)"
+    (click)="this.check(doc)"
+  >
+    <div class="display flex-column align-items-start">
+      <cam-link [bold]="true" [underline]="false" (click)="$event.stopPropagation()" (action)="this.openDocument(doc)">
+        {{ doc.name }}
+      </cam-link>
+      <div class="flex-row g-space-md">
+        <div class="flex-row align-items-center">
+          <cam-font-icon name="doc" size="xs"></cam-font-icon>
+          <cam-text>
+            {{ 'communication.documents.file-type.' + this.FileType[doc.fileType].toLocaleLowerCase() | translate }}
+          </cam-text>
+        </div>
+        <cam-megaoctet [icon]="true" [octet]="doc.size"></cam-megaoctet>
+      </div>
+    </div>
+    <div class="button align-content-center">
+      @if (this.actions === 'select') {
+        <input type="checkbox" [checked]="this.isChecked(doc)" />
+      }
+      @if (this.actions === 'delete') {
+        <cam-button-tool (action)="this.removeDocument(doc)" icon="delete" [size]="'sm'"></cam-button-tool>
+      }
+    </div>
+  </div>
+</ng-template>

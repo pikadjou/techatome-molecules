@@ -1,0 +1,5 @@
+@import "camelot-export";
+
+cam-font-icon{
+  color: get-var(icon, brand, primary);
+}

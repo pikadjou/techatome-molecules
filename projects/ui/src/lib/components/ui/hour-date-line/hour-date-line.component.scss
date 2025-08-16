@@ -1,0 +1,13 @@
+@import "camelot-export";
+
+.hour-date-line-container {
+  @include space-between();
+
+  align-items: flex-start;
+
+  .label {
+    @include fontSizeBody(md);
+
+    color: get-var(neutral, 900);
+  }
+}

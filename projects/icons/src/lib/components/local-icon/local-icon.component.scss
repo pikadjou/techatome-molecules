@@ -1,0 +1,24 @@
+.internal-icon {
+  margin: auto;
+  display: flex;
+}
+
+:host ::ng-deep {
+  svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+.is-rotation {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

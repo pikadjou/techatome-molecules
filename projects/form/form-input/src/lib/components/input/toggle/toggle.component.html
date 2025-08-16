@@ -1,3 +1,11 @@
-<mat-slide-toggle [checked]="this.input.value" [formControl]="$any(this.input.formControl)">
-  <span class="label">{{ this.input.label | translate }}</span>
-</mat-slide-toggle>
+<label class="toggle-switch">
+  <input
+    type="checkbox"
+    (click)="this.input.value = !this.input.value"
+    [checked]="this.input.value"
+    [disabled]="this.input.disabled"
+    [attr.aria-invalid]="this.input.formControl?.invalid"
+  />
+  <span class="slider"></span>
+  <cam-form-label [input]="input" [withMarginBottom]="false"></cam-form-label>
+</label>

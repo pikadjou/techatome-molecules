@@ -1,0 +1,19 @@
+<div class="text-container">
+  <div
+    class="text"
+    [class.with-shadow]="this.hasFixedHeight"
+    [style.height]="this.textHeight"
+  >
+    <div #myText>
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <button *ngIf="this.hasTooBigText" (click)="toggleText()">
+    {{
+      (this.showFullText
+        ? "ui.expandabletext.seeless"
+        : "ui.expandabletext.seemore"
+      ) | translate
+    }}
+  </button>
+</div>

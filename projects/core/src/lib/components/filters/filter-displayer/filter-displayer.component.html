@@ -1,0 +1,24 @@
+<ng-container *ngIf="this.container === 'button'">
+  <cam-button [options]="{ circular: true }" (action)="this.open()">
+    <cam-font-icon [name]="this.iconType"></cam-font-icon>
+  </cam-button>
+</ng-container>
+<ng-container *ngIf="this.container === 'link'">
+  <div (click)="this.open()">
+    <cam-font-icon [name]="this.iconType"></cam-font-icon>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!this.mobileDetection">
+  <cam-layout-full-panel *ngIf="this.isFilterOpen" (closeEvent)="this.close()">
+    <ng-template [ngTemplateOutlet]="filterTemplate"></ng-template>
+  </cam-layout-full-panel>
+</ng-container>
+
+<ng-template #filterTemplate>
+  <cam-filter-container
+    class="flex-full"
+    [form]="this.form"
+    (filtersSelected)="this.selected($event)"
+  ></cam-filter-container>
+</ng-template>

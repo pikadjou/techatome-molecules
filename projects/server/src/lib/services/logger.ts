@@ -26,7 +26,10 @@ export class Logger {
     this._fsLog('info', message, data);
   }
 
-  public static LogWarning(message: string, data?: string | Object | any): void {
+  public static LogWarning(
+    message: string,
+    data?: string | Object | any
+  ): void {
     if (data === undefined) {
       data = '';
     }
@@ -50,7 +53,10 @@ export class Logger {
 
   private static _fsLog(logLevel: string, message: string, data?: any) {
     if ((<any>window).FS) {
-      (<any>window).FS.log(logLevel, `${message} | data: ${JSON.stringify(data)}`);
+      (<any>window).FS.log(
+        logLevel,
+        `${message} | data: ${JSON.stringify(data)}`
+      );
     }
   }
 }

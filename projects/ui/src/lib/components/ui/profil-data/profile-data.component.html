@@ -1,0 +1,45 @@
+<div class="ta-r pt-space-xl" *ngIf="this.sideIcon">
+  <cam-button
+    [options]="{ circular: 'small' }"
+    [style]="'secondary'"
+    (action)="this.launchAction()"
+  >
+    <cam-font-icon [name]="this.sideIcon"></cam-font-icon>
+  </cam-button>
+</div>
+
+<div class="profile">
+  <div class="ta-c" *ngIf="this.userLogo">
+    <cam-user-logo
+      [userInfo]="this.userLogo.userInfo"
+      size="xl"
+    ></cam-user-logo>
+  </div>
+
+  <div class="title">
+    <div class="second text">{{ this.profile.title?.second }}</div>
+    <div class="main text">{{ this.profile.title?.main }}</div>
+  </div>
+
+  <div class="sub-title text">
+    {{ this.profile.title?.sub ?? "" | translate }}
+  </div>
+
+  <div class="ta-c cta-buttons g-space-sm">
+    <cam-button
+      *ngIf="this.profile.phoneNumber"
+      [ngClass]="{ 'mr-space-xs': this.profile.email }"
+      [options]="{ circular: 'big' }"
+      (action)="this.tel()"
+    >
+      <cam-font-icon name="phone" type="md"></cam-font-icon>
+    </cam-button>
+    <cam-button
+      *ngIf="this.profile.email"
+      [options]="{ circular: 'big' }"
+      (action)="this.mail()"
+    >
+      <cam-font-icon name="mail" type="md"></cam-font-icon>
+    </cam-button>
+  </div>
+</div>

@@ -1,7 +1,9 @@
-import { InjectionToken } from "@angular/core";
-
-export const GRAPHQL_SERVER_CONFIG = new InjectionToken<IGraphConfig>('config_graphQl_server');
+export const GRAPHQL_SERVER_CONFIG = 'config_graphQl_server';
 
 export interface IGraphConfig {
+  config: {
     url: string;
+    visitor?: string;
+    local_urls?: { [index: string]: string };
+  };
 }

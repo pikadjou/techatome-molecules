@@ -1,0 +1,7 @@
+<div class="edit-schema-container">
+  <cam-files-edit
+    [imagePath]="this.imagePath"
+    [saveImage$]="this.askImage$"
+    (savedImage)="this.savedImage($event)"
+  ></cam-files-edit>
+</div>

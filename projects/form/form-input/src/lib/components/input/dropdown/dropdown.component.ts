@@ -1,61 +1,73 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
-import { map, switchMap } from 'rxjs/operators';
+import { InputDropdown } from '@camelot/form-model';
+import { CamOverlayPanelComponent } from '@camelot/ui';
 
-import { Observable } from 'rxjs';
-
-import { InputDropdown } from '@ta/form-model';
-import { TaBaseComponent, toArray, TranslatePipe } from '@ta/utils';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { FormLabelComponent } from '../../label/label.component';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-dropdown',
+  selector: 'cam-input-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
-  standalone: true,
-  imports: [AsyncPipe, NgIf, NgFor, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, TranslatePipe, FormLabelComponent],
 })
-export class DropdownComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  input!: InputDropdown<any>;
+export class DropdownComponent extends CamAbstractInputComponent<InputDropdown<any>, any> {
+  @Input() space = true;
 
-  @Input()
-  matcher!: ErrorStateMatcher;
+  @ViewChild(CamOverlayPanelComponent) overlayPanelRef!: CamOverlayPanelComponent;
 
-  @Input()
-  space = true;
+  public optionsList: { id: string; name: string; disabled?: boolean }[] = [];
+  public filteredOptions: { id: string; name: string; disabled?: boolean }[] = [];
 
-  @Output()
-  valueChanged = new EventEmitter();
-
-  public validators = Validators;
-  public filteredOptions$: Observable<{ id: string; name: string; disabled?: boolean }[]> | null = null;
-
-  constructor() {
-    super();
-  }
-
-  ngOnInit() {
-    if (this.matcher === null) {
-      this.matcher = new ErrorStateMatcher();
-    }
-    if (this.input.formControl) {
-      this.filteredOptions$ = this.input.formControl.valueChanges.pipe(switchMap(x => this._filter(x)));
-    }
-  }
-
-  public onChange(value: any) {
-    this.valueChanged.emit(value);
-  }
-
-  private _filter(value: string | string[]): Observable<{ id: string; name: string; disabled?: boolean }[]> {
-    return this.input.options.pipe(
-      map(x => x.filter(option => option.name?.toLowerCase()?.includes(toArray(value).join(' ')?.toLowerCase())))
+  override ngOnInit() {
+    super.ngOnInit();
+    this._registerSubscription(
+      this.input.options.subscribe(options => {
+        this.optionsList = options;
+        this.filteredOptions = this.optionsList;
+      })
     );
+  }
+
+  public getOptionName(id: any): string {
+    const found = this.optionsList.find(opt => opt.id === id);
+    return found ? found.name : '';
+  }
+
+  public onMenuSelect(selectedId: any) {
+    if (this.input.multiple) {
+      let currentValue = this.input.value || [];
+      if (currentValue.includes(selectedId)) {
+        currentValue = currentValue.filter((v: any) => v !== selectedId);
+      } else {
+        currentValue = [...currentValue, selectedId];
+      }
+      this.input.value = currentValue;
+    } else {
+      this.input.value = selectedId;
+      this.overlayPanelRef.close();
+    }
+  }
+
+  public onOverlayClosed(): void {
+    this.filteredOptions = this.optionsList;
+  }
+
+  public isSelected(id: any): boolean {
+    const currentValue = this.input.value;
+    return this.input.multiple ? Array.isArray(currentValue) && currentValue.includes(id) : currentValue === id;
+  }
+
+  public selectOption(id: any, event: MouseEvent): void {
+    this.onMenuSelect(id);
+  }
+
+  public onSearchChange(event: Event): void {
+    if (!this.input.withSearch) return;
+    const target = event.target as HTMLInputElement;
+    const searchTerm = target.value.trim();
+    this.filteredOptions =
+      searchTerm.length >= 0
+        ? this.optionsList.filter(opt => opt.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        : this.optionsList;
   }
 }

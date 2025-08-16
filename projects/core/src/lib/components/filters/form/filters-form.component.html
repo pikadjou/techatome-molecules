@@ -1,0 +1,15 @@
+<div>
+  <div class="ta-r">
+    <cam-button (action)="this.clear()">{{
+      "core.filter.clear" | translate
+    }}</cam-button>
+  </div>
+  <cam-form
+    *ngIf="this.form"
+    [inputs]="this.form"
+    [canDisplayButton]="false"
+    [askValidation$]="this.askValidation$"
+    (valid)="this.apply($event)"
+  >
+  </cam-form>
+</div>

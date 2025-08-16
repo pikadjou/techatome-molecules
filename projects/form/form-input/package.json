@@ -1,14 +1,41 @@
 {
-  "name": "@ta/form-input",
-  "version": "0.0.1",
+  "name": "@camelot/form-input",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/form-input",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0"
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/forms": "^18.2.13",
+    "@angular/material": "^18.2.13"
   },
   "dependencies": {
-    "tslib": "^2.3.0",
-    "@ta/form-model": "^0.0.1",
-    "@ta/wysiswyg": "^0.0.1"
+    "@angular-material-extensions/google-maps-autocomplete": "^16.4.0",
+    "@angular/flex-layout": "^15.0.0-beta.42",
+    "@camelot/files-basic": "^3.16.0-beta.4",
+    "@camelot/form-model": "^3.16.0-beta.4",
+    "@camelot/icons": "^3.16.0-beta.4",
+    "@camelot/menu": "^3.16.0-beta.4",
+    "@camelot/notification": "^3.16.0-beta.4",
+    "@camelot/services": "^3.16.0-beta.4",
+    "@camelot/styles": "^3.16.0-beta.4",
+    "@camelot/translation": "^3.16.0-beta.4",
+    "@camelot/ui": "^3.16.0-beta.4",
+    "@camelot/utils": "^3.16.0-beta.4",
+    "@camelot/wysiswyg": "^3.16.0-beta.4",
+    "@justin-s/ngx-intl-tel-input": "^17.0.0",
+    "@types/googlemaps": "^3.43.3",
+    "@types/luxon": "^3.3.0",
+    "intl-tel-input": "^25.3.0",
+    "libphonenumber-js": "^1.11.14",
+    "luxon": "^3.3.0",
+    "ngx-material-timepicker": "^13.1.0",
+    "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

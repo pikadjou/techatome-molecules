@@ -1,14 +1,14 @@
 import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 
-import { Observable, Subject, Subscription, distinctUntilChanged, of } from 'rxjs';
+import { Observable, Subject, distinctUntilChanged, of } from 'rxjs';
 
-// import { ENotificationCode } from '@ta/notification';
-import { SubscriberHandler } from '@ta/utils';
+import { ENotificationCode } from '@camelot/notification';
+import { SubscriberHandler } from '@camelot/utils';
 
 import { InputLabel } from './label';
 
 export interface IInputsError {
-  status: any;
+  status: ENotificationCode;
   message: string;
 }
 
@@ -75,7 +75,7 @@ export class InputBase<T> implements IInputBase<T> {
     this.message = options.message || '';
     this.controlType = options.controlType || '';
     this.validators = options.validators || [];
-    this.class = options.class || 'col';
+    this.class = options.class || 'col-12';
     this.children = [];
     this.disabled = options.disabled === true;
 
@@ -128,7 +128,6 @@ export class InputBase<T> implements IInputBase<T> {
 
   public launchChangeValue() {
     this.changeValue$.next(this.value);
-    this.formControl?.updateValueAndValidity();
     this.children.forEach(child => child.launchChangeValue());
   }
 

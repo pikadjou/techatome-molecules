@@ -1,0 +1,33 @@
+<cam-loader [isLoading]="this.requestState.isLoading()">
+  <cam-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
+    <ng-container *ngLet="this.list$ | async as list">
+      <cam-empty [isEmpty]="!list || list.length === 0">
+        <ng-container *ngIf="!this.showTemplate">
+          <cam-choice-list
+            *ngIf="list"
+            [list]="list"
+            (selected)="this.hover($event)"
+          ></cam-choice-list>
+        </ng-container>
+        <ng-container *ngIf="this.showTemplate">
+          <div class="align-center">
+            <cam-font-icon
+              name="arrow-back"
+              (click)="this.showTemplate = null"
+            ></cam-font-icon>
+            <cam-title [level]="4">{{ this.showTemplate.code }}</cam-title>
+          </div>
+          <hr />
+          <cam-choice-detail
+            [template]="this.showTemplate"
+            (selected)="this.select($event)"
+            class="full-width"
+          ></cam-choice-detail>
+        </ng-container>
+      </cam-empty>
+    </ng-container>
+  </cam-error>
+</cam-loader>

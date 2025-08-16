@@ -1,0 +1,25 @@
+@import "camelot-export";
+
+.items {
+  @include flex-start();
+  position: relative;
+  width: 100%;
+
+  user-select: none;
+  cursor: pointer;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  flex-wrap: nowrap;
+}
+
+@include mobileDevice() {
+  .items::-webkit-scrollbar {
+    display: none;
+  }
+}
+@include desktopDevice() {
+  .items::-webkit-scrollbar {
+    height: get-var(space, xs);
+  }
+}

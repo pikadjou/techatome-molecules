@@ -1,0 +1,33 @@
+@import "camelot-export";
+
+.progress-container {
+  @include space-between();
+
+  .title {
+    @include flex-start();
+    gap: get-var(space, xs);
+    color: get-var(neutral, 900);
+  }
+
+  .right-side {
+    display: flex;
+    gap: get-var(space, xs);
+
+    .progress-value {
+      @include fontSizeBody(md, true);
+      line-height: calc(fontSize(sm) * 2);
+      letter-spacing: 0.05em;
+      text-align: left;
+      color: get-var(neutral, 900);
+      text-transform: uppercase;
+    }
+
+    .description {
+      @include fontSizeBody(md, true);
+      line-height: calc(fontSize(sm) * 2);
+      letter-spacing: 0.05em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+  }
+}

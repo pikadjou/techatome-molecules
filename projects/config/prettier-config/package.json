@@ -1,0 +1,23 @@
+{
+  "name": "@camelot/prettier-config",
+  "version": "3.16.0-beta.4",
+  "main": "index.js",
+  "description": "> TODO: description",
+  "author": "Geoffrey L <g.lambert@merlinsoftware.be>",
+  "homepage": "",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.0.0",
+    "prettier": "^3.2.5",
+    "prettier-eslint": "^16.3.0",
+    "prettier-plugin-sort-json": "4.1.1"
+  },
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
+}

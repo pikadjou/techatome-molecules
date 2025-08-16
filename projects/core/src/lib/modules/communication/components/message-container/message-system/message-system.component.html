@@ -1,0 +1,62 @@
+<ng-container [ngSwitch]="this.getBody().Type">
+  <ng-container *ngSwitchCase="'TaskMerged'">
+    <cam-switch-cases-task-merged
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-task-merged>
+  </ng-container>
+  <ng-container *ngSwitchCase="'TypeChanged'">
+    <cam-switch-cases-type-changed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-type-changed>
+  </ng-container>
+  <ng-container *ngSwitchCase="'SubTypeChanged'">
+    <cam-switch-cases-sub-type-changed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-sub-type-changed>
+  </ng-container>
+  <ng-container *ngSwitchCase="'TaskStatusChanged'">
+    <cam-switch-cases-task-status-changed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-task-status-changed>
+  </ng-container>
+  <ng-container *ngSwitchCase="'ToDoAdded'">
+    <cam-switch-cases-to-do-added
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-to-do-added>
+  </ng-container>
+  <ng-container *ngSwitchCase="'ToDoClosed'">
+    <cam-switch-cases-to-do-closed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-to-do-closed>
+  </ng-container>
+  <ng-container *ngSwitchCase="'AssigneeChanged'">
+    <cam-switch-cases-assignee-changed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-assignee-changed>
+  </ng-container>
+  <ng-container *ngSwitchCase="'SubTaskCreated'">
+    <cam-switch-cases-sub-task-created
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-sub-task-created>
+  </ng-container>
+  <ng-container *ngSwitchCase="'CriticityChanged'">
+    <cam-switch-cases-criticity-changed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-criticity-changed>
+  </ng-container>
+  <ng-container *ngSwitchCase="'TeamChanged'">
+    <cam-switch-cases-team-changed
+      [case]="$any(this.getBody())"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-switch-cases-team-changed>
+  </ng-container>
+</ng-container>

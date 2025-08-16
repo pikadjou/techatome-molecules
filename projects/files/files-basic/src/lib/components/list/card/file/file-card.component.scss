@@ -1,0 +1,5 @@
+@import "camelot-export";
+
+.title {
+  @include fontSizeBody(md);
+}

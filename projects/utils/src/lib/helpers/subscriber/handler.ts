@@ -6,7 +6,9 @@ export class SubscriberHandler {
   constructor() {}
 
   public destroy() {
-    this._subscriptionList.forEach(subscription => subscription.unsubscribe());
+    this._subscriptionList.forEach((subscription) =>
+      subscription.unsubscribe()
+    );
   }
 
   public registerSubscription(subscription: Subscription) {

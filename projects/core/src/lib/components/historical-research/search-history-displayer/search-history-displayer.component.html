@@ -1,0 +1,56 @@
+<cam-search-field
+  #searchField
+  [isOpen]="true"
+  [placeholder]="this.placeholder"
+  [input]="this.input"
+  (valueCompleted)="this.searchCompleted($event)"
+  [matMenuTriggerFor]="
+    this.searchHistory?.type && this.isDropDown === true ? menu : null
+  "
+></cam-search-field>
+
+<mat-menu #menu="matMenu">
+  <div class="" [style.width.px]="this.searchFieldWidth">
+    <ng-container *ngIf="this.menuTemplate">
+      <ng-container
+        *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"
+      ></ng-container>
+    </ng-container>
+  </div>
+</mat-menu>
+
+<ng-container
+  *ngIf="
+    this.menuTemplate && this.searchHistory?.type && this.isDropDown === false
+  "
+>
+  <ng-container
+    *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"
+  ></ng-container>
+</ng-container>
+
+<ng-template #menuTemplate>
+  <div class="p-space-md">
+    <cam-contact-information
+      icon="history"
+      value="core.historical-research.last-searches"
+    >
+      <cam-empty
+        [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown"
+      >
+        <cam-list-container class="list-container">
+          <ng-container *ngFor="let search of this.listRecentSearches">
+            <cam-list-element (click)="this.searchCompleted(search)">
+              <cam-list-title>
+                {{ search }}
+              </cam-list-title>
+              <cam-list-tag>
+                <cam-font-icon name="arrow-big-right" type="sm"></cam-font-icon>
+              </cam-list-tag>
+            </cam-list-element>
+          </ng-container>
+        </cam-list-container>
+      </cam-empty>
+    </cam-contact-information>
+  </div>
+</ng-template>

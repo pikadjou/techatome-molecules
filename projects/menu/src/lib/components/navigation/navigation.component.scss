@@ -1,0 +1,87 @@
+@import "camelot-export";
+
+.element-list {
+  gap: get-var(space, md);
+
+  @include flex-row;
+  &.vertical {
+    @include flex-column;
+  }
+}
+.tags {
+  .item-container {
+    .item {
+      @include flex-row();
+      @include align-center();
+      gap: get-var(space, xs);
+      padding: spaceBase(1.25);
+
+      border: 1px solid transparent;
+
+      color: get-var(text-tertiary);
+      background-color: get-var(surface, tertiary);
+      border-color: get-var(surface, tertiary);
+
+      border-radius: get-var(radius, rounded);
+
+      @include fontSizeBody(sm);
+    }
+
+    &.disabled {
+      .item {
+        background-color: get-var(surface, primary);
+        border-color: get-var(border, disabled);
+      }
+    }
+    &.active {
+      .item {
+        color: get-var(text, brand, primary);
+        background-color: get-var(surface, default);
+        border-color: get-var(surface, default);
+      }
+    }
+  }
+}
+.tab {
+  .list {
+    border-bottom: 1px solid get-var(border, secondary);
+  }
+  .item-container {
+    .item {
+      @include flex-row();
+      @include align-center();
+      gap: get-var(space, xs);
+      padding: spaceBase(1.25);
+
+      border-bottom: 2px solid transparent;
+
+      color: get-var(text-tertiary);
+
+      @include fontSizeBody(sm);
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+    &.active {
+      .item {
+        color: get-var(text, brand, primary);
+        border-bottom-color: get-var(border, brand);
+      }
+    }
+  }
+}
+
+:host ::ng-deep {
+  .swiper-container {
+    gap: get-var(space, sm) !important;
+  }
+  cam-font-icon {
+    margin-top: -6px;
+    display: block;
+    i {
+      height: 18px !important;
+      font-size: 18px !important;
+    }
+  }
+}

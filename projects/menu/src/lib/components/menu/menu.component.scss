@@ -1,0 +1,57 @@
+@import "camelot-export";
+
+@mixin menu-item-horizontal() {
+  li {
+    @include make-col();
+  }
+}
+
+@mixin menu-item-vertical() {
+  li {
+    @include make-col(12);
+  }
+}
+
+.menu {
+  @include make-row(0);
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    @include make-col-ready();
+  }
+  &.horizontal {
+    @include menu-item-horizontal();
+  }
+
+  &.vertical {
+    @include menu-item-vertical();
+  }
+
+  &.responsive {
+    @include media-breakpoint-down(mobile) {
+      @include menu-item-horizontal();
+      width: 100%;
+    }
+    @include media-breakpoint-up(mobile) {
+      @include menu-item-vertical();
+    }
+  }
+}
+
+ul.second {
+  list-style: none;
+  @include make-row(0);
+
+  padding: 0;
+  margin: 0;
+
+  background-color: get-var(neutral, 50);
+
+  li {
+    @include make-col-ready();
+    @include make-col();
+  }
+}

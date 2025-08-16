@@ -1,13 +1,19 @@
 {
-  "name": "@ta/server",
-  "version": "0.0.1",
+  "name": "@camelot/server",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/server",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
   "dependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0",
-    "@apollo/client": "^3.12.4",
-    "apollo-angular": "^8.0.0",
+    "@apollo/client": "3.11.0",
+    "@camelot/utils": "^3.16.0-beta.4",
+    "apollo-angular": "5.0.2",
     "graphql": "^16.10.0",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

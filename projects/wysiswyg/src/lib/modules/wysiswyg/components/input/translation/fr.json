@@ -72,6 +72,10 @@
           }
         }
       }
+    },
+    "colortool": {
+      "backgroundColorLabel": "surlignage",
+      "frontColorLabel": "couleur"
     }
   }
 }

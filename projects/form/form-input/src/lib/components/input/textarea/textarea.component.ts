@@ -1,29 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { Component } from '@angular/core';
 
-import { InputTextarea } from '@ta/form-model';
-import { FormLabelComponent } from '../../label/label.component';
+import { InputTextarea } from '@camelot/form-model';
+import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-textarea',
+  selector: 'cam-input-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss'],
-    standalone: true,
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, FormLabelComponent],
-
 })
-export class TextareaComponent {
-  @Input()
-  input!: InputTextarea;
-
-  @Input()
-  matcher!: ErrorStateMatcher;
-
-  public validators = Validators;
-
-  constructor() {}
-
+export class TextareaComponent extends CamAbstractInputComponent<InputTextarea> {
+  constructor() {
+    super();
+  }
 }

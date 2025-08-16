@@ -1,0 +1,49 @@
+<div class="flew-start g-space-xs align-center">
+  <ng-container
+    *ngIf="
+      !this.conversationParticipant ||
+      (!this.conversationParticipant.user &&
+        !this.conversationParticipant.contact)
+    "
+  >
+    <cam-text size="sm" color="brand-primary">
+      {{ this.participant.email }}
+    </cam-text>
+  </ng-container>
+  <ng-container
+    *ngIf="this.conversationParticipant && this.conversationParticipant.user"
+  >
+    <cam-user-logo
+      [userInfo]="{
+        profilePictureUrl: this.conversationParticipant.user.picture,
+        naming: {
+          firstName: this.conversationParticipant.user.firstName,
+          name: this.conversationParticipant.user.lastName,
+          trigram: this.conversationParticipant.user.trigram
+        }
+      }"
+      size="md"
+    ></cam-user-logo>
+
+    <cam-text size="sm" color="brand-primary">
+      {{
+        fullName({
+          firstName: this.conversationParticipant.user.firstName,
+          name: this.conversationParticipant.user.lastName
+        })
+      }}
+    </cam-text>
+  </ng-container>
+  <ng-container
+    *ngIf="this.conversationParticipant && this.conversationParticipant.contact"
+  >
+    <cam-text size="sm" color="brand-primary">
+      {{
+        fullName({
+          firstName: this.conversationParticipant.contact.firstName,
+          name: this.conversationParticipant.contact.lastName
+        })
+      }}
+    </cam-text>
+  </ng-container>
+</div>

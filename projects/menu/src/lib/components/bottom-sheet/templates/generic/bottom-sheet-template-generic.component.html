@@ -1,0 +1,13 @@
+<div class="handler">
+  <span></span>
+</div>
+
+<div
+  class="bottom-sheet-template-generic"
+  [ngStyle]="{ 'max-height': this.data.maxHeight ?? 'auto' }"
+>
+  <ng-template
+    [ngTemplateOutlet]="this.data.template"
+    [ngTemplateOutletContext]="this.data.context ?? {}"
+  ></ng-template>
+</div>

@@ -1,0 +1,11 @@
+@import 'camelot-export';
+
+.component-container {
+  position: relative;
+}
+.cta {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: get-var(space, sm);
+}

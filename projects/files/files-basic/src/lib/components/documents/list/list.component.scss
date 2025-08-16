@@ -1,0 +1,36 @@
+@import "camelot-export";
+
+cam-font-icon {
+  color: get-var(icon, brand, primary);
+}
+.extra {
+  @include fontSizeBody(sm);
+  color: get-var(text, tertiary);
+}
+
+input {
+  width: 20px;
+  height: 20px;
+}
+
+.button {
+  padding: get-var(space, sm);
+}
+
+.card-document-upload{
+
+  padding: get-var(space, md);
+  margin-right: get-var(space, sm);
+
+  &.selected{
+    border: 1px solid get-var(border, brand);
+    border-radius: get-var(radius, rounded);
+
+    background-color: get-var(surface, brand, tertiary);
+  }
+
+  .display{
+    gap: get-var(space, sm);
+  }
+
+}

@@ -1,16 +1,16 @@
 import { BehaviorSubject, Observable, filter, map, tap } from 'rxjs';
 
-import { isNonNullable } from '@ta/utils';
+import { isNonNullable } from '@camelot/utils';
 
 export class HandleComplexRequest<T> {
-  public data$ = new BehaviorSubject<{ [index: string | number]: T }>({});
+  public data$ = new BehaviorSubject<{ [index: string]: T }>({});
 
   constructor() {}
 
-  public fetch(id: string | number, subscriber: Observable<T>) {
+  public fetch(id: string, subscriber: Observable<T>) {
     return subscriber.pipe(
-      filter(data => !!data),
-      tap(entity => {
+      filter((data) => !!data),
+      tap((entity) => {
         const entities = this.data$.getValue();
         entities[id] = entity;
         this.data$.next(entities);
@@ -18,7 +18,17 @@ export class HandleComplexRequest<T> {
     );
   }
 
-  public update(id: string | number, item: T, merge: boolean = true) {
+  public add(id: string, item: T) {
+    const entities = this.data$.getValue();
+
+    if (entities[id]) {
+      this.update(id, item);
+      return;
+    }
+    entities[id] = item;
+    this.data$.next(entities);
+  }
+  public update(id: string, item: T, merge: boolean = true) {
     const entities = this.data$.getValue();
 
     if (!entities[id]) {
@@ -27,14 +37,14 @@ export class HandleComplexRequest<T> {
     entities[id] = merge ? { ...entities[id], ...item } : item;
     this.data$.next(entities);
   }
-  public get(key: string | number) {
+  public get(key: string) {
     return this.data$.getValue()[key] ?? null;
   }
 
-  public get$(key: string | number) {
+  public get$(key: string) {
     return this.data$.pipe(
-      map(data => data[key]),
-      filter(data => !!data)
+      map((data) => data[key]),
+      filter((data) => !!data)
     );
   }
 }
@@ -47,7 +57,7 @@ export class HandleSimpleRequest<T> {
   public fetch(subscriber: Observable<T | undefined | null>) {
     return subscriber.pipe(
       filter(isNonNullable),
-      tap(entity => {
+      tap((entity) => {
         this.data$.next(entity);
       })
     );
@@ -57,6 +67,6 @@ export class HandleSimpleRequest<T> {
   }
 
   public get$() {
-    return this.data$.pipe(filter(data => !!data));
+    return this.data$.pipe(filter((data) => !!data));
   }
 }

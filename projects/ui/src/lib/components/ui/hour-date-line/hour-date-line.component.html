@@ -1,0 +1,11 @@
+<div class="hour-date-line-container">
+  <span class="label date mr-space-xs" *ngIf="this.startDate">
+    {{ this.startDate | date : "shortDate" }}
+  </span>
+
+  <span class="label hour">
+    <span *ngIf="this.startDate">{{ this.startDate | date : "HH:mm" }}</span>
+    -
+    <span *ngIf="this.endDate">{{ this.endDate | date : "HH:mm" }}</span>
+  </span>
+</div>

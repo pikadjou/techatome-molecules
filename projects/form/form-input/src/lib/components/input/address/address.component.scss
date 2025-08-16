@@ -1,0 +1,18 @@
+@import "camelot-export";
+
+::ng-deep {
+  .mat-mdc-form-field-required-marker {
+    display: none;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: get-var(space, sm) !important;
+    padding-bottom: get-var(space, sm) !important;
+    align-content: center;
+    @include fontSizeBody(md);
+  }
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: get-var(radius, rounded) !important;
+  }
+}

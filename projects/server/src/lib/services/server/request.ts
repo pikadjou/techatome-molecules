@@ -1,4 +1,4 @@
-import { newId } from '@ta/utils';
+import { newId } from '@camelot/utils';
 
 import { CacheStrategy, ECacheStrategy } from '../../types/cache';
 

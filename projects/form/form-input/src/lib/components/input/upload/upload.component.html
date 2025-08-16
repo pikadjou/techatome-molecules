@@ -1,0 +1,65 @@
+<cam-loader [isLoading]="this.requestState.isLoading()">
+  <div class="upload-container flex-column" appDnd (fileDropped)="this.onFileDropped($event)">
+    <div class="flex-responsive-ctr g-space-md">
+      @if (this.inProgressFiles.length > 0) {
+        <div class="files-list flex-column g-space-sm">
+          <div class="flex-column" *ngFor="let item of this.inProgressFiles">
+            <div class="flex-row align-center">
+              <cam-font-icon name="doc" size="xs"></cam-font-icon>
+              @if (item.progress < 100) {
+                <cam-text class="name" size="sm">
+                  {{ item.name }}
+                </cam-text>
+              }
+              @if (item.progress === 100 && item.completed) {
+                <cam-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</cam-link>
+              }
+            </div>
+            <div class="extra flex-row g-space-md">
+              @if (item.progress < 100) {
+                <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
+                <cam-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
+                  <cam-font-icon name="close" type="sm"></cam-font-icon>
+                </cam-link>
+              }
+              @if (item.progress === 100 && item.completed) {
+                <cam-text size="sm" class="justify-end">
+                  <cam-megaoctet [octet]="item.completed.size"></cam-megaoctet>
+                </cam-text>
+                @if (item.completed.id) {
+                  <cam-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
+                    <cam-font-icon name="close" type="sm"></cam-font-icon>
+                  </cam-link>
+                }
+              }
+            </div>
+          </div>
+        </div>
+      }
+      <div class="content ta-c">
+        <input type="file" multiple (change)="this.fileBrowseHandler($event.target)" />
+        <h3>
+          {{ 'input.upload.dragndrop' | translate }}
+        </h3>
+        <div class="d-flex">
+          <cam-button type="secondary" icon="add" class="m-a" (action)="this.uploadFile()">
+            {{ 'input.upload.add' | translate }}
+          </cam-button>
+        </div>
+      </div>
+    </div>
+    @if (this.input.confirmButton) {
+      <div class="d-flex">
+        <cam-button
+          icon="check-line"
+          class="justify-end align-center"
+          (action)="this.validation()"
+          size="small"
+          [state]="this.isValidDocumentList() ? 'classic' : 'disabled'"
+        >
+          {{ 'input.upload.confirm' | translate }}
+        </cam-button>
+      </div>
+    }
+  </div>
+</cam-loader>

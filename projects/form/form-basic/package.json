@@ -1,17 +1,25 @@
 {
-  "name": "@ta/form-basic",
-  "version": "0.0.1",
+  "name": "@camelot/form-basic",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/form-basic",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0"
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "tslib": "^2.3.0",
-    "@ta/utils": "version-skip",
-    "@ta/ui": "version-skip",
-    "@ta/form-input": "version-skip",
-    "@ta/form-model": "version-skip",
-    "@ta/notification": "version-skip"
+    "@camelot/form-input": "^3.16.0-beta.4",
+    "@camelot/form-model": "^3.16.0-beta.4",
+    "@camelot/icons": "^3.16.0-beta.4",
+    "@camelot/styles": "^3.16.0-beta.4",
+    "@camelot/translation": "^3.16.0-beta.4",
+    "fast-deep-equal": "^3.1.3",
+    "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": true,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

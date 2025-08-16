@@ -1,21 +1,18 @@
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { OutputBlockData } from '@editorjs/editorjs';
-import { TaTextComponent, TitleComponent } from '@ta/ui';
 
-import { TaBaseComponent } from '@ta/utils';
+import { ENotificationCode } from '@camelot/notification';
+import { CamBaseComponent } from '@camelot/utils';
 
 @Component({
-  selector: 'ta-cms-editor-blocks',
+  selector: 'cam-cms-editor-blocks',
   templateUrl: './block-text.component.html',
   styleUrls: ['./block-text.component.scss'],
-  standalone: true,
-  imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, TitleComponent, TaTextComponent],
 })
-export class BlockTextComponent extends TaBaseComponent {
+export class BlockTextComponent extends CamBaseComponent {
   @Input()
   blocks!: OutputBlockData[];
 
- // readonly ENotificationCode = ENotificationCode;
+  readonly ENotificationCode = ENotificationCode;
 }

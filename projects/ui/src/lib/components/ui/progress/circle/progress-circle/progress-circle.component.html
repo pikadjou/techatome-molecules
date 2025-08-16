@@ -1,0 +1,33 @@
+<div class="circle-progress-bar">
+  <div class="title" *ngIf="this.upTitle">
+    {{ this.upTitle | translate }}
+  </div>
+
+  <svg viewBox="0 0 100 100">
+    <circle class="circle-progress-bar-bg" cx="50" cy="50" r="45"></circle>
+
+    <circle
+      class="circle-progress-bar-progress"
+      cx="50"
+      cy="50"
+      r="45"
+      [attr.stroke-dasharray]="this.circumference"
+      [attr.stroke-dashoffset]="this.circumference * (1 - this.progress / 100)"
+    ></circle>
+
+    <text
+      *ngIf="this.canDisplayText"
+      class="circle-progress-bar-text"
+      x="50"
+      y="50"
+      dominant-baseline="middle"
+      text-anchor="middle"
+    >
+      {{ this.progress | number : "1.0-0" }}%
+    </text>
+  </svg>
+
+  <div class="title" *ngIf="this.downTitle">
+    {{ this.downTitle | translate }}
+  </div>
+</div>

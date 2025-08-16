@@ -1,0 +1,32 @@
+@import "camelot-export";
+
+.profile {
+  margin-bottom: get-var(space, xl);
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .title {
+    @include fontSizeKey(xl);
+    text-align: center;
+    line-height: 50px;
+    margin-bottom: get-var(space, sm);
+
+    .main {
+      text-transform: uppercase;
+    }
+  }
+  .sub-title {
+    @include fontSizeKey(lg);
+    text-align: center;
+    color: get-var(neutral, 500);
+    margin-bottom: get-var(space, md);
+  }
+
+  .text {
+    @include text-line-limit(2);
+  }
+}

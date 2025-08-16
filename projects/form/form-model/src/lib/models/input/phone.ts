@@ -1,3 +1,4 @@
+import { phoneValidator } from '../../validators/phone.validator';
 import { InputBase } from './base';
 import { IInputTextBox } from './textbox';
 
@@ -9,5 +10,7 @@ export class InputPhone extends InputBase<string> {
     super(options);
     this.type = 'tel';
     this.preferredCountries = ['be', 'fr'];
+
+    this.validators.push(phoneValidator());
   }
 }

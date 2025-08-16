@@ -1,0 +1,6 @@
+@import "camelot-export";
+
+.paragraph {
+  @include fontSizeBody(md);
+  margin: get-var(space, md) 0;
+}

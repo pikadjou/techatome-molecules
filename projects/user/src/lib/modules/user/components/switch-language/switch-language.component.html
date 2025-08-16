@@ -1,0 +1,22 @@
+<cam-loader [isLoading]="this.changeLanguageAsked">
+  <div class="mx-space-sm language-panel">
+    <cam-list-container>
+      <ng-container *ngFor="let language of this.languages">
+        <cam-list-element
+          [withSeparator]="false"
+          (click)="this.changeLanguage(language.id)"
+        >
+          <cam-list-title class="d-flex p-space-xs">
+            {{ language.name | translate }}
+          </cam-list-title>
+          <cam-list-tag *ngIf="language.id === this.activeLanguage">
+            <cam-font-icon
+              name="check-line"
+              class="color-semantic-token-success"
+            ></cam-font-icon>
+          </cam-list-tag>
+        </cam-list-element>
+      </ng-container>
+    </cam-list-container>
+  </div>
+</cam-loader>

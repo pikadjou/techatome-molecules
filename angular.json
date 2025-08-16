@@ -3,11 +3,12 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TechatomeMolecules": {
+    "Camelot": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "skipTests": true
         }
       },
       "root": "",
@@ -15,47 +16,42 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/techatome-molecules",
+            "outputPath": "dist/camelot",
             "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "node_modules/@camelot/icons/dist/assets/fonts",
+                "output": "assets/fonts/"
               }
             ],
-            "styles": [
-              "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
+            "scripts": [],
+            "preserveSymlinks": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src",
-                "sass",
-                "projects/styles/src/style"
-              ]
+              "includePaths": ["src", "sass", "projects/styles/src/style", "."]
             },
-            "scripts": []
+            "main": "src/main.ts"
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "outputHashing": "all"
@@ -64,10 +60,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
+              "namedChunks": true
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.local.ts"
                 }
               ]
             }
@@ -78,36 +81,31 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "TechatomeMolecules:build:production"
+              "buildTarget": "Camelot:build:production"
             },
             "development": {
-              "buildTarget": "TechatomeMolecules:build:development"
+              "buildTarget": "Camelot:build:development"
+            },
+            "local": {
+              "buildTarget": "Camelot:build:local"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "Camelot:build"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": [
-              "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },
@@ -115,126 +113,57 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "TechatomeMolecules:build",
-            "compodoc": false,
-            "port": 6006
+            "browserTarget": "Camelot:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "."],
+            "port": 6006,
+            "assets": [
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@camelot/icons/dist/assets/fonts",
+                "output": "assets/fonts/"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/styles/src/style"]
+            },
+            "styles": [
+              "projects/styles/src/index.scss",
+              ".storybook/styles.scss"
+            ]
           }
         },
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "TechatomeMolecules:build",
-            "compodoc": false,
-            "outputDir": "dist/storybook/TechatomeMolecules"
-          }
-        }
-      }
-    },
-    "@ta/server": {
-      "projectType": "library",
-      "root": "projects/server",
-      "sourceRoot": "projects/server/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/server/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/server/tsconfig.lib.prod.json"
+            "browserTarget": "Camelot:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "."],
+            "outputDir": "storybook-static",
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/styles/src/style"]
             },
-            "development": {
-              "tsConfig": "projects/server/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/server/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+            "styles": [
+              "projects/styles/src/index.scss",
+              "node_modules/angular-calendar/css/angular-calendar.css"
             ]
           }
-        }
-      }
-    },
-    "@ta/utils": {
-      "projectType": "library",
-      "root": "projects/utils",
-      "sourceRoot": "projects/utils/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/utils/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/utils/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/utils/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": "projects/utils/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     },
-    "@ta/menu": {
-      "projectType": "library",
-      "root": "projects/menu",
-      "sourceRoot": "projects/menu/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/menu/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/menu/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/menu/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/menu/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
-    "@ta/ui": {
+    "@camelot/ui": {
       "projectType": "library",
       "root": "projects/ui",
       "sourceRoot": "projects/ui/src",
-      "prefix": "lib",
+      "prefix": "cam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -255,31 +184,28 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/ui/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
     },
-    "@ta/styles": {
+    "@camelot/server": {
       "projectType": "library",
-      "root": "projects/styles",
-      "sourceRoot": "projects/styles/src",
-      "prefix": "lib",
+      "root": "projects/server",
+      "sourceRoot": "projects/server/src",
+      "prefix": "cam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/styles/ng-package.json"
+            "project": "projects/server/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/styles/tsconfig.lib.prod.json"
+              "tsConfig": "projects/server/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/styles/tsconfig.lib.json"
+              "tsConfig": "projects/server/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -287,32 +213,29 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/styles/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "tsConfig": "projects/server/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
     },
-    "@ta/form-basic": {
+    "@camelot/services": {
       "projectType": "library",
-      "root": "projects/form/form-basic",
-      "sourceRoot": "projects/form/form-basic/src",
-      "prefix": "lib",
+      "root": "projects/services",
+      "sourceRoot": "projects/services/src",
+      "prefix": "cam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/form/form-basic/ng-package.json"
+            "project": "projects/services/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/form/form-basic/tsconfig.lib.prod.json"
+              "tsConfig": "projects/services/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/form/form-basic/tsconfig.lib.json"
+              "tsConfig": "projects/services/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -320,32 +243,29 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/form/form-basic/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "tsConfig": "projects/services/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
     },
-    "@ta/form-input": {
+    "@camelot/utils": {
       "projectType": "library",
-      "root": "projects/form/form-input",
-      "sourceRoot": "projects/form/form-input/src",
-      "prefix": "lib",
+      "root": "projects/utils",
+      "sourceRoot": "projects/utils/src",
+      "prefix": "cam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/form/form-input/ng-package.json"
+            "project": "projects/utils/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/form/form-input/tsconfig.lib.prod.json"
+              "tsConfig": "projects/utils/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/form/form-input/tsconfig.lib.json"
+              "tsConfig": "projects/utils/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -353,86 +273,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/form/form-input/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "tsConfig": "projects/utils/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
     },
-    "@ta/form-model": {
-      "projectType": "library",
-      "root": "projects/form/form-model",
-      "sourceRoot": "projects/form/form-model/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/form/form-model/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/form/form-model/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/form/form-model/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/form/form-model/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
-    "@ta/wysiswyg": {
-      "projectType": "library",
-      "root": "projects/wysiswyg",
-      "sourceRoot": "projects/wysiswyg/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/wysiswyg/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/wysiswyg/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/wysiswyg/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/wysiswyg/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
-    "@ta/notification": {
+    "@camelot/notification": {
       "projectType": "library",
       "root": "projects/notification",
       "sourceRoot": "projects/notification/src",
-      "prefix": "lib",
+      "prefix": "cam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -453,19 +304,346 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/notification/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
     },
-    "@ta/icons": {
+    "@camelot/menu": {
+      "projectType": "library",
+      "root": "projects/menu",
+      "sourceRoot": "projects/menu/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/menu/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/menu/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/menu/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/menu/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/calendar": {
+      "projectType": "library",
+      "root": "projects/calendar",
+      "sourceRoot": "projects/calendar/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/calendar/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/calendar/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/calendar/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/calendar/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/translation": {
+      "projectType": "library",
+      "root": "projects/translation",
+      "sourceRoot": "projects/translation/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/translation/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/translation/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/translation/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/translation/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/form-input": {
+      "projectType": "library",
+      "root": "projects/form/form-input",
+      "sourceRoot": "projects/form/form-input/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/form/form-input/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/form/form-input/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/form/form-input/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/form/form-input/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/form-model": {
+      "projectType": "library",
+      "root": "projects/form/form-model",
+      "sourceRoot": "projects/form/form-model/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/form/form-model/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/form/form-model/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/form/form-model/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/form/form-model/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/form-basic": {
+      "projectType": "library",
+      "root": "projects/form/form-basic",
+      "sourceRoot": "projects/form/form-basic/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/form/form-basic/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/form/form-basic/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/form/form-basic/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/form/form-basic/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/prettier-config": {
+      "projectType": "library",
+      "root": "projects/config/prettier-config",
+      "sourceRoot": "projects/config/prettier-config",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/config/prettier-config/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/config/prettier-config/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/config/prettier-config/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/config/prettier-config/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/eslint-config": {
+      "projectType": "library",
+      "root": "projects/config/eslint-config",
+      "sourceRoot": "projects/config/eslint-config",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/config/eslint-config/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/config/eslint-config/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/config/eslint-config/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/config/eslint-config/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/styles": {
+      "projectType": "library",
+      "root": "projects/styles",
+      "sourceRoot": "projects/styles/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/styles/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/styles/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/styles/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/styles/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/files-extended": {
+      "projectType": "library",
+      "root": "projects/files/files-extended",
+      "sourceRoot": "projects/files/files-extended/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/files/files-extended/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/files/files-extended/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/files/files-extended/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/files/files-extended/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/files-basic": {
+      "projectType": "library",
+      "root": "projects/files/files-basic",
+      "sourceRoot": "projects/files/files-basic/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/files/files-basic/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/files/files-basic/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/files/files-basic/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/files/files-basic/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/icons": {
       "projectType": "library",
       "root": "projects/icons",
       "sourceRoot": "projects/icons/src",
-      "prefix": "ta",
+      "prefix": "cam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -486,10 +664,217 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/icons/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/capacitor": {
+      "projectType": "library",
+      "root": "projects/capacitor",
+      "sourceRoot": "projects/capacitor/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/capacitor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/capacitor/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/capacitor/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/capacitor/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/core": {
+      "projectType": "library",
+      "root": "projects/core",
+      "sourceRoot": "projects/core/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/core/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/user": {
+      "projectType": "library",
+      "root": "projects/user",
+      "sourceRoot": "projects/user/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/user/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/user/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/user/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/user/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/cms": {
+      "projectType": "library",
+      "root": "projects/cms",
+      "sourceRoot": "projects/cms/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/cms/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/cms/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/cms/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/cms/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/wysiswyg": {
+      "projectType": "library",
+      "root": "projects/wysiswyg",
+      "sourceRoot": "projects/wysiswyg/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/wysiswyg/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wysiswyg/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wysiswyg/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/wysiswyg/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/charts": {
+      "projectType": "library",
+      "root": "projects/charts",
+      "sourceRoot": "projects/charts/src",
+      "prefix": "cam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/charts/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/charts/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/charts/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/charts/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@camelot/project": {
+      "projectType": "library",
+      "root": "projects/features/project",
+      "sourceRoot": "projects/features/project/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/features/project/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/features/project/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/features/project/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/features/project/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }

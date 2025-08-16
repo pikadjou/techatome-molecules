@@ -1,44 +1,62 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "allowSyntheticDefaultImports": true,
+    "compilationMode": "full"
+  },
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
+    "baseUrl": "./",
+    "outDir": "./out-tsc",
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
-    "paths": {
-      "@ta/server": ["./dist/server"],
-      "@ta/utils": ["./dist/utils"],
-      "@ta/menu": ["./dist/menu"],
-      "@ta/ui": ["./dist/ui"],
-      "@ta/styles": ["./dist/styles"],
-      "@ta/form-basic": ["./dist/form-basic"],
-      "@ta/form-input": ["./dist/form-input"],
-      "@ta/form-model": ["./dist/form-model"],
-      "@ta/wysiswyg": ["./dist/wysiswyg"],
-      "@ta/notification": [
-        "./dist/notification"
-      ],
-      "@ta/icons": [
-        "./dist/@ta/icons"
-      ]
-    },
+    "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "preserveSymlinks": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@angular/*": ["node_modules/@angular/*"],
+      "@camelot/testing": ["projects/testing"],
+      "@camelot/ui": ["projects/ui"],
+      "@camelot/server": ["projects/server"],
+      "@camelot/services": ["projects/services"],
+      "@camelot/utils": ["projects/utils"],
+      "@camelot/notification": ["projects/notification"],
+      "@camelot/menu": ["projects/menu"],
+      "@camelot/calendar": ["projects/calendar"],
+      "@camelot/translation": ["projects/translation"],
+      "@camelot/form-input": ["projects/form/form-input"],
+      "@camelot/form-model": ["projects/form/form-model"],
+      "@camelot/form-basic": ["projects/form/form-basic"],
+      "@camelot/eslint-config": ["projects/config/eslint-config"],
+      "@camelot/prettier-config": ["projects/config/prettier-config"],
+      "@camelot/styles": ["projects/styles"],
+      "@camelot/files-basic": ["projects/files/files-basic"],
+      "@camelot/files-extended": ["projects/files/files-extended"],
+      "@camelot/icons": ["projects/icons"],
+      "@camelot/capacitor": ["projects/capacitor"],
+      "@camelot/core": ["projects/core"],
+      "@camelot/user": ["projects/user"],
+      "@camelot/cms": ["projects/cms"],
+      "@camelot/wysiswyg": ["projects/wysiswyg"],
+      "@camelot/charts": ["projects/charts"],
+      "@camelot/project": ["projects/features/project"]
+    },
+    "lib": ["ES2022", "dom"]
   }
 }

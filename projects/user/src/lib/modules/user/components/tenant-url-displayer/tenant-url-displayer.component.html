@@ -1,0 +1,14 @@
+<cam-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.contactTenantRoute$ | async as contactTenantRoute">
+  <cam-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    @if (this.display === 'icon') {
+      <cam-font-icon
+        [name]="'arrow-big-right'"
+        (click)="this.navigateToTenantContact(contactTenantRoute)"
+      ></cam-font-icon>
+    } @else if (this.display === 'button') {
+      <cam-button [type]="'secondary'" (action)="this.navigateToTenantContact(contactTenantRoute)">
+        <ng-content></ng-content>
+      </cam-button>
+    }
+  </cam-error>
+</cam-loader>

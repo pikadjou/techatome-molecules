@@ -1,0 +1,21 @@
+<div *ngIf="this.value" class="header">
+  <div class="icon">
+    <ng-container *ngIf="this.localIcon">
+      <cam-local-icon
+        class="local-icon"
+        [type]="this.localIcon"
+      ></cam-local-icon>
+    </ng-container>
+
+    <ng-container *ngIf="this.icon">
+      <cam-font-icon [name]="this.icon" type="sm"></cam-font-icon>
+    </ng-container>
+  </div>
+
+  <div class="value">
+    <div class="text">{{ this.value | translate }}</div>
+  </div>
+</div>
+<div class="content">
+  <ng-content></ng-content>
+</div>

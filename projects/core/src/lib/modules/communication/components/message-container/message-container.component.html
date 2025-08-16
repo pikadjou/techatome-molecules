@@ -1,0 +1,91 @@
+<div
+  class="message-container"
+  [class.box]="this.communication.type !== this.CommunicationType.System"
+  [class.is-mine]="this.communication.isMine"
+  [class.intern]="this.communication.type === this.CommunicationType.Intern"
+  [class.system]="this.communication.type === this.CommunicationType.System"
+  [class.error]="this.communication.status === CommunicationStatus.Failed"
+>
+  <div class="participant-container space-between" *ngIf="this.communication.type !== this.CommunicationType.System">
+    <cam-communication-participant
+      [participant]="this.communication.from"
+      [conversationParticipants]="this.conversationParticipants"
+    ></cam-communication-participant>
+    <div class="flex-start g-space-sm">
+      <div *ngIf="this.communication.type === this.CommunicationType.Mail">
+        <cam-font-icon
+          type="sm"
+          name="arrow-go-back-line"
+          (click)="this.askReply.emit({ communication: this.communication, isForward: false })"
+        ></cam-font-icon>
+      </div>
+      <div *ngIf="this.communication.type === this.CommunicationType.Mail">
+        <cam-font-icon
+          type="sm"
+          name="arrow-go-forward-line"
+          (click)="this.askReply.emit({ communication: this.communication, isForward: true })"
+        ></cam-font-icon>
+      </div>
+    </div>
+  </div>
+  <div class="message-wrapper mb-space-xs">
+    <ng-container [ngSwitch]="this.communication.type">
+      <ng-container *ngSwitchCase="this.CommunicationType.Mail">
+        <cam-communication-message-mail
+          [communication]="this.communication"
+          [conversationParticipants]="this.conversationParticipants"
+          [taskId]="this.taskId"
+        ></cam-communication-message-mail>
+      </ng-container>
+      <ng-container *ngSwitchCase="this.CommunicationType.Chat">
+        <cam-communication-message-chat
+          [communication]="this.communication"
+          [conversationParticipants]="this.conversationParticipants"
+        ></cam-communication-message-chat>
+      </ng-container>
+      <ng-container *ngSwitchCase="this.CommunicationType.Intern">
+        <cam-communication-message-chat
+          [communication]="this.communication"
+          [conversationParticipants]="this.conversationParticipants"
+        ></cam-communication-message-chat>
+      </ng-container>
+      <ng-container *ngSwitchCase="this.CommunicationType.System">
+        <cam-communication-message-system
+          [communication]="this.communication"
+          [conversationParticipants]="this.conversationParticipants"
+        ></cam-communication-message-system>
+      </ng-container>
+    </ng-container>
+    <div
+      class="documents-container pt-space-md"
+      *ngIf="this.communication.documentsIds && this.communication.documentsIds.length > 0"
+    >
+      <cam-documents-list [documentsIds]="this.communication.documentsIds"></cam-documents-list>
+    </div>
+  </div>
+  <div class="time">
+    <cam-text size="sm" color="secondary">
+      <div class="align-center">
+        <cam-communication-status
+          *ngIf="this.communication.status !== CommunicationStatus.Sent"
+          [value]="this.communication.status"
+          (click)="this.open()"
+        ></cam-communication-status>
+        <cam-time-ago
+          *ngIf="this.communication.status === CommunicationStatus.Sent"
+          [date]="this.communication.createdTime"
+          [withHours]="true"
+        ></cam-time-ago>
+        @if (
+          this.communication.createdByFullName &&
+          (this.communication.type === this.CommunicationType.Intern ||
+            this.communication.type === this.CommunicationType.System)
+        ) {
+          <div class="ml-space-xs">
+            {{ 'communication.message.from' | translate }} {{ this.communication.createdByFullName }}
+          </div>
+        }
+      </div>
+    </cam-text>
+  </div>
+</div>

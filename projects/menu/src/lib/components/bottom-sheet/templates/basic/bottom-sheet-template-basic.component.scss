@@ -1,0 +1,35 @@
+@import "camelot-export";
+
+.bottom-sheet-template-basic {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.handler {
+  text-align: center;
+  padding-top: get-var(space, xs);
+  padding-bottom: get-var(space, sm);
+
+  span {
+    display: block;
+    height: 4px;
+    width: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin: auto;
+  }
+}
+
+.item {
+  text-align: center;
+  padding: get-var(space, sm) 0;
+  &.horizontal {
+    @include flex-start();
+    gap: get-var(space, xs);
+  }
+
+  .title-container {
+    margin: auto 0;
+    .label {
+      @include fontSizeBody(xs);
+    }
+  }
+}

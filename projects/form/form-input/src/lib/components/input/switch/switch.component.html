@@ -1,0 +1,22 @@
+<div>
+  <ng-container [ngSwitch]="input.matchtype()">
+    <ng-container *ngSwitchCase="'textbox'">
+      <cam-input-textbox [input]="$any(input)"></cam-input-textbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="'number'">
+      <cam-input-textbox [input]="$any(input)"></cam-input-textbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="'checkbox'">
+      <cam-input-checkbox [input]="$any(input)"></cam-input-checkbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="'datePicker'">
+      <cam-input-date-picker [input]="$any(input)"></cam-input-date-picker>
+    </ng-container>
+    <ng-container *ngSwitchCase="'dropdown'">
+      <cam-input-dropdown [input]="$any(input)"></cam-input-dropdown>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <span>Aucune valeur selectionnée</span>
+    </ng-container>
+  </ng-container>
+</div>

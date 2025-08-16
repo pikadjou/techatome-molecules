@@ -1,0 +1,33 @@
+<div class="overlay">
+  <div class="row user-info">
+    <div class="col-5 align-items-center">
+      {{ "user.language" | translate }}
+    </div>
+    <div class="col-7">
+      <cam-input-dropdown
+        [input]="this.language"
+        appStopPropagation
+      ></cam-input-dropdown>
+    </div>
+  </div>
+
+  <ng-container *ngIf="this.authService.isAuthenticated$ | async">
+    <div class="row user-info">
+      <div class="col-2">
+        <cam-trigram [value]="this.getFirstLetter"></cam-trigram>
+      </div>
+      <div class="col">
+        <div class="title">{{ (this.authService.user$ | async)?.name }}</div>
+        <div class="subtitle" *ngIf="this.roles.length > 0">
+          {{ this.roles | join }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row user-info">
+      <cam-button type="secondary" (action)="this.logout()">
+        {{ "user.logout" | translate }}
+      </cam-button>
+    </div>
+  </ng-container>
+</div>

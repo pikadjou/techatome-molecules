@@ -1,0 +1,14 @@
+@import "camelot-export";
+
+.modal-container {
+  padding: spaceBase(2);
+  background-color: get-var(surface, primary);
+
+  .header {
+    padding-bottom: get-var(space, sm);
+  }
+
+  cam-font-icon {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,43 @@
+<div class="list-container">
+  <div class="search">
+    <cam-search-field
+      [isOpen]="true"
+      placeholder="communication.filters.template"
+      [input]="this.inputSearch"
+    ></cam-search-field>
+  </div>
+
+  <cam-title [level]="3" [isBold]="true">
+    {{ "communication.template.choice.title" | translate }}
+  </cam-title>
+  <div class="list" *ngIf="this.filteredList$">
+    <ng-container *ngFor="let item of this.filteredList$ | async">
+      <div
+        (mouseover)="this.hover(item)"
+        (click)="this.select(item)"
+        class="item"
+        [class.highlighted]="this.highlighted?.id === item.id"
+      >
+        <div class="code">
+          {{ item.code }}
+          <cam-text size="xs">
+            <div class="flex-start g-space-xs">
+              {{ "communication.template.choice.language.default" | translate }}
+              <cam-culture
+                [cultures]="[item.availableCultures[0]]"
+              ></cam-culture>
+            </div>
+          </cam-text>
+          <cam-text size="xs">
+            <div class="flex-start g-space-xs">
+              {{
+                "communication.template.choice.language.available" | translate
+              }}
+              <cam-culture [cultures]="item.availableCultures"></cam-culture>
+            </div>
+          </cam-text>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

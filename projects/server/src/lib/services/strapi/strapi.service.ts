@@ -1,73 +1,59 @@
 import { HttpHeaders } from '@angular/common/http';
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
-import { filter, tap } from 'rxjs';
+import { filter, map } from 'rxjs';
 
-import { isNonNullable } from '@ta/utils';
+import { isNonNullable } from '@camelot/utils';
 
-import { TaBaseService } from '../server/baseService';
-import { GraphMutationPayload, GraphQueryPayload } from '../graphql/models/graphPayload';
-import { Request } from '../server/request';
-import { Permissions } from '../user/permissions';
+import { GraphQueryPayload } from '../graphql/models/graphPayload';
+import { CamBaseService } from '../server/baseService';
+import { IStrapiConfig, STRAPI_SERVER_CONFIG } from './config';
 
-export const STRAPI_SERVER_CONFIG = new InjectionToken<IStrapiConfig>('config_strapi_server');
-export interface IStrapiConfig {
-    url: string;
-    token: string;
+export interface GraphStrapiResponse<T> {
+  data: {
+    id: string;
+    attributes: T;
+  };
 }
 
-export type GraphStrapiResponse<T> = T
-
-export type GraphStrapiListResponse<T> = T[]
-
-export type GraphStrapiMutateResponse<T> = T;
+export interface GraphStrapiListResponse<T> {
+  data: {
+    id: string;
+    attributes: T;
+  }[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaStrapiService extends TaBaseService {
-
-  private readonly _config = inject(STRAPI_SERVER_CONFIG)
-
-  constructor() {
+export class CamStrapiService extends CamBaseService {
+  constructor(@Inject(STRAPI_SERVER_CONFIG) private _strapiConfig: IStrapiConfig) {
     super();
 
     const headers = new HttpHeaders({
-      authorization: `Bearer ${this._config.token}`,
+      authorization: `Bearer ${this._strapiConfig.config.token}`,
     });
+
     super.registerRoutes({
       graphEndpoint: {
         clientName: 'strapi',
-        endpoint: this._config.url,
-        headers: headers
+        endpoint: this._strapiConfig.config.url,
+        headers: headers,
       },
     });
   }
 
-  public authentification$(data: { identifier: string, password: string}) {
-    return this._serverService.request<{ jwt: string }>(new Request({ type: 'Login', cacheTime: -1, content: data, loginRequired: false })).pipe(
-      tap(data => {
-        Permissions.token = data.jwt;
-        Permissions.setAuthenticated(true)
-      })
-    );
-  }
-
   public fetchQuery$<T>(payload: GraphQueryPayload, node: string) {
     return this._graphService.fetchQuery<GraphStrapiResponse<T>>(payload, node, 'strapi').pipe(
-      filter(isNonNullable)
+      filter(isNonNullable),
+      map(data => data.data.attributes)
     );
   }
 
   public fetchQueryList$<T>(payload: GraphQueryPayload, node: string) {
     return this._graphService.fetchQuery<GraphStrapiListResponse<T>>(payload, node, 'strapi').pipe(
       filter(isNonNullable),
-    );
-  }
-
-  public mutate$<T>(payload: GraphMutationPayload, node: string) {
-    return this._graphService.mutate<GraphStrapiResponse<T>>(payload, node, 'strapi').pipe(
-      filter(isNonNullable),
+      map(data => data.data.map(data => data.attributes))
     );
   }
 }

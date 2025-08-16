@@ -5,8 +5,8 @@ export const copyTextToClipboard = async (
 ) => {
   try {
     await navigator.clipboard.writeText(text);
-    success('utils.clipboard.success');
+    success('ui.clipboard.success');
   } catch (err) {
-    error('utils.clipboard.error');
+    error('ui.clipboard.error');
   }
 };

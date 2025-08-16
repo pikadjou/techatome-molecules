@@ -1,0 +1,28 @@
+<ng-container *ngIf="this.mobileDetection">
+  <ng-container *ngIf="this.container === 'button'">
+    <cam-button [options]="{ circular: true }" (action)="this.openDialog()">
+      <cam-font-icon [name]="'search'"></cam-font-icon>
+    </cam-button>
+  </ng-container>
+  <ng-container *ngIf="this.container === 'link'">
+    <div (click)="this.openDialog()">
+      <cam-font-icon [name]="'search'"></cam-font-icon>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!this.mobileDetection">
+  <ng-template
+    [ngTemplateOutlet]="searchTemplate"
+    [ngTemplateOutletContext]="{ options: { isDropDown: true } }"
+  ></ng-template>
+</ng-container>
+
+<ng-template #searchTemplate let-options="options">
+  <cam-search-history-displayer
+    [placeholder]="this.placeholder"
+    [searchHistory]="this.searchHistory"
+    [isDropDown]="options.isDropDown"
+    (valueCompleted)="this.action($event)"
+  ></cam-search-history-displayer>
+</ng-template>

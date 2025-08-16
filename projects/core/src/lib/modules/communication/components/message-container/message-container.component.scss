@@ -1,0 +1,56 @@
+@import 'camelot-export';
+
+.message-container {
+  max-width: 80%;
+  overflow: hidden;
+  &.box {
+    .message-wrapper {
+      border-radius: get-var(radius, rounded);
+      border: 1px solid get-var(brand, 400);
+
+      background-color: get-var(surface, primary);
+
+      padding: get-var(space, md);
+    }
+  }
+
+  &.is-mine {
+    .participant-container {
+      flex-direction: row-reverse;
+    }
+    .message-wrapper {
+      border: 1px solid get-var(brand, 600);
+      background-color: get-var(brand, 100);
+    }
+    .time {
+      @include align-end();
+    }
+  }
+  &.intern {
+    .message-wrapper {
+      border: 1px solid get-var(semantic, yellow-dark);
+      background-color: get-var(semantic, yellow-light);
+    }
+  }
+
+  &.system {
+    .participant-container {
+      flex-direction: row-reverse;
+    }
+    .message-wrapper {
+      @include fontSizeBody(sm);
+    }
+    .time {
+      @include align-end();
+    }
+  }
+  &.error {
+    .message-wrapper {
+      border: 1px solid get-var(semantic, red-dark);
+    }
+  }
+}
+
+cam-communication-status{
+  cursor: pointer;
+}

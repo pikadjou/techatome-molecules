@@ -1,0 +1,14 @@
+<div class="side-panel-background" (click)="this.askClose()"></div>
+<div class="side-panel" [style.width]="this.width">
+  <cam-layout-header>
+    <div class="flex-row justify-content-between">
+      <cam-title [level]="3" [isBold]="true">{{ this.title | translate }}</cam-title>
+      <div (click)="this.askClose()">
+        <cam-font-icon name="close"></cam-font-icon>
+      </div>
+    </div>
+  </cam-layout-header>
+  <div class="layout-content">
+    <ng-content></ng-content>
+  </div>
+</div>

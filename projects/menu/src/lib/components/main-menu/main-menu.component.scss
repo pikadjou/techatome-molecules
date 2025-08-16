@@ -1,0 +1,138 @@
+@import "camelot-export";
+
+.main-nav-container {
+  @include media-breakpoint-up(sm) {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+
+    display: flex;
+  }
+
+  .expansion-nav {
+    display: none;
+  }
+
+  @include media-breakpoint-up(desktop) {
+    &:hover {
+      .expansion-nav {
+        display: block;
+      }
+    }
+  }
+}
+.main-nav {
+  display: flex;
+  flex-flow: column;
+  padding: get-var(space, sm) get-var(space, sm) 0 get-var(space, sm);
+  padding-bottom: calc(get-var(space, sm) + env(safe-area-inset-bottom));
+
+  border-radius: 3px 3px 0px 0px;
+
+  background-color: get-var(surface, primary);
+
+  @include shadow-mixin(black, md);
+
+  @include media-breakpoint-down(sm) {
+    @include make-row(0);
+    @include space-between();
+    overflow-x: auto;
+  }
+
+  @include media-breakpoint-up(sm) {
+    border-radius: 0px 3px 3px 0px;
+    padding: get-var(components, header, top) get-var(space, sm) 0
+      get-var(space, sm);
+    padding-bottom: calc(get-var(space, sm) + env(safe-area-inset-bottom));
+
+    align-content: space-between();
+
+    background-color: get-var(brand, 900);
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: get-var(components, header, top) get-var(space, md) 0
+      get-var(space, md);
+    padding-bottom: calc(get-var(space, md) + env(safe-area-inset-bottom));
+  }
+
+  .logo {
+    margin: auto;
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+
+    @include media-breakpoint-up(sm) {
+      margin-bottom: spaceBase(2);
+      width: 48px;
+      .small {
+        display: block;
+      }
+      .oneline {
+        display: none;
+      }
+    }
+    @include media-breakpoint-up(lg) {
+      margin-left: 0;
+      margin-bottom: spaceBase(7);
+      width: 190px;
+      .small {
+        display: none;
+      }
+      .oneline {
+        display: block;
+      }
+    }
+  }
+
+  @include menuMinimized() {
+    .logo {
+      margin-left: auto !important;
+      width: 48px !important;
+      .small {
+        display: block !important;
+      }
+      .oneline {
+        display: none !important;
+      }
+    }
+  }
+
+  .menu-nav {
+    flex: 1;
+    .menu {
+      flex: 1;
+    }
+  }
+  .user-nav {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+
+    .sep {
+      border-bottom: 1px solid get-var(surface, brand, primary);
+      margin: get-var(space, sm);
+    }
+  }
+}
+
+.expansion-nav {
+  position: absolute;
+  bottom: 15px;
+  right: -20px;
+
+  color: get-var(icon, invert, primary);
+  border-radius: get-var(radius, full);
+  background-color: get-var(surface, brand, primary);
+
+  padding: get-var(space, sm);
+
+  .open,
+  .close {
+    transition-duration: 0.8s;
+    transition-property: transform;
+  }
+  .close {
+    transform: rotate(180deg);
+  }
+}

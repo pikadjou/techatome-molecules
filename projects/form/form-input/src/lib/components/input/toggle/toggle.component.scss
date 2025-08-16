@@ -1,4 +1,50 @@
-.label {
-  display: block;
-  padding-left: 10px;
+@import 'camelot-export';
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-switch input {
+  display: none;
+
+  &:checked + .slider {
+    background-color: get-var(border, brand);
+  }
+
+  &:checked + .slider:before {
+    transform: translateX(14px);
+  }
+
+  &:disabled + .slider {
+    border-color: get-var(neutral, 300);
+    cursor: not-allowed;
+  }
+
+  &:disabled + .slider:before {
+    border-color: get-var(neutral, 200);
+  }
+}
+
+.slider {
+  position: relative;
+  width: 30px;
+  height: 16px;
+  background-color: get-var(neutral, 300);
+  border-radius: get-var(radius, rounded);
+  transition: background-color 0.2s ease;
+  margin-right: get-var(space, sm);
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 2px;
+    top: 2px;
+    background-color: get-var(neutral, white);
+    border-radius: get-var(radius, full);
+    transition: transform 0.2s ease;
+  }
 }

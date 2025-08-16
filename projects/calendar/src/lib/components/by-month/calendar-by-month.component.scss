@@ -1,0 +1,76 @@
+@import "camelot-export";
+
+:host ::ng-deep {
+  .cal-month-view {
+    .cal-days {
+      border: none;
+
+      .cal-cell-row {
+        border: none;
+        .cal-cell {
+          border: 1px solid transparent;
+          background-color: transparent;
+          min-height: 50px;
+          margin: 0 5px;
+          &.cal-weekend,
+          &.cal-out-month {
+            opacity: 0.5;
+          }
+          &.cal-today {
+            .cell {
+              border: 1px solid get-var(surface, invert);
+              &.current-date {
+                .cal-day-number {
+                  color: get-var(surface, invert);
+                }
+              }
+            }
+          }
+
+          .cell {
+            padding: 5px 2px;
+            min-height: 0;
+            text-align: center;
+
+            border-radius: 5px;
+
+            &.current-date {
+              background-color: get-var(brand, 50);
+              border: 1px solid get-var(surface, brand, primary);
+            }
+            .cal-day-number {
+              position: relative;
+              margin: 0;
+              float: none;
+              @include fontSizeBody(md);
+              color: get-var(text, primary);
+              opacity: 1;
+            }
+            .visits-type {
+              justify-content: center;
+              display: flex;
+              flex-wrap: wrap;
+              .visit-type {
+                display: inline-block;
+                height: 6px;
+                width: 6px;
+                border-radius: 50%;
+                margin-right: 1px;
+                margin-bottom: 1px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .cal-header {
+      background-color: get-var(brand, 50);
+      border-radius: 5px;
+    }
+    .calendar-month-view-small {
+      min-height: 50px;
+      position: relative;
+      border: none;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+@import 'camelot-export';
+
+.label {
+  @include fontSizeBody(sm, true);
+}

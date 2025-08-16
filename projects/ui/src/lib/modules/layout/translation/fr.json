@@ -1,0 +1,7 @@
+{
+  "notfound": {
+    "content": "Désolé, votre page est introuvable. Nous vous invitons à revenir sur votre Dashboard.",
+    "cta": "Dashboard",
+    "title": "Erreur 404"
+  }
+}

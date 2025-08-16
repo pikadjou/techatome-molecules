@@ -1,9 +1,13 @@
 import { IInputBase, InputBase } from './base';
 import { InputLabel } from './label';
 
-type classAvailable = 'with-separator' | 'no-title-space' | 'highlight-title' | string;
+type classAvailable =
+  | 'with-separator'
+  | 'no-title-space'
+  | 'highlight-title'
+  | string;
 
-export interface IFormPanel extends IInputBase<null> {
+export interface IInputPanel extends IInputBase<null> {
   children?: (InputBase<any> | InputLabel)[];
   containerClass?: classAvailable[];
   contentClass?: string;
@@ -12,7 +16,7 @@ export interface IFormPanel extends IInputBase<null> {
 export class InputPanel extends InputBase<any> {
   containerClass: classAvailable[];
   contentClass: string;
-  constructor(options: IFormPanel) {
+  constructor(options: IInputPanel) {
     super(options);
     this.controlType = 'panel';
 

@@ -1,0 +1,52 @@
+@import 'camelot-export';
+
+.badge-container {
+  display: flex;
+  width: fit-content;
+  padding: get-var(space, sm) get-var(space, xs);
+  @include fontSizeBody(xs, true);
+
+  border-radius: 6px;
+
+  .value {
+    white-space: nowrap;
+  }
+}
+.badge-info {
+  color: get-var(semantic, purple-dark);
+  background: get-var(semantic, purple-light);
+}
+
+.badge-danger {
+  color: get-var(semantic, red-dark);
+  background: get-var(semantic, red-light);
+}
+
+.badge-warning {
+  color: get-var(semantic, yellow-dark);
+  background: get-var(semantic, yellow-light);
+}
+
+.badge-success {
+  color: get-var(semantic, green-dark);
+  background: get-var(semantic, green-light);
+}
+
+.badge-primary {
+  color: get-var(brand, 800);
+  background: get-var(brand, 300);
+}
+
+.badge-secondary {
+  color: get-var(neutral, black);
+  background: get-var(brand, 300);
+}
+.badge-purple {
+  color: get-var(semantic, purple-dark);
+  background: get-var(semantic, purple-light);
+}
+
+.badge-orange {
+  color: get-var(semantic, orange-dark);
+  background: get-var(semantic, orange-light);
+}

@@ -1,6 +1,6 @@
-
+export * from './baseStrapi.service';
 export * from './strapi.service';
 
-export * from './dto/base';
-export * from './dto/types/rich-text';
+export * from './config';
 
+export * from './dto/base';

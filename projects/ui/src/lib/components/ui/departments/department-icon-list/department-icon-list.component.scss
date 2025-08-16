@@ -1,0 +1,23 @@
+@import "camelot-export";
+
+.departements-container {
+  @include align-center();
+}
+
+.department {
+  @include align-center();
+  margin-right: get-var(space, space); /* Espacement entre les départements */
+}
+
+.img-container {
+  margin-right: get-var(space, xs); /* Espacement entre l'icône et le texte */
+  width: 20px;
+  img {
+    width: 100%;
+  }
+}
+
+/* Pour cacher la virgule après le dernier élément */
+.department:last-child span {
+  display: none;
+}

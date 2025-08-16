@@ -1,0 +1,10 @@
+@import "camelot-export";
+
+:host ::ng-deep {
+  .cal-hour-segment {
+    background-color: get-var(neutral, 100);
+  }
+  .cal-time {
+    color: get-var(neutral, 600);
+  }
+}

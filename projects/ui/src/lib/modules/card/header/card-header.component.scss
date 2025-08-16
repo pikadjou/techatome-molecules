@@ -1,0 +1,24 @@
+@import "camelot-export";
+
+.header-tag {
+  margin-bottom: get-var(space, md);
+}
+
+.header-title {
+  border-bottom: 1px solid get-var(neutral, main);
+  @include in-context(".no-card-border") {
+    border-width: 0px;
+  }
+  padding-bottom: get-var(space, xs);
+  .title {
+    @include fontSizeBody(md, true);
+  }
+  .subtitle {
+    @include fontSizeBody(xs);
+  }
+}
+@include in-context(".no-card-border") {
+  .header-title {
+    border-width: 0px;
+  }
+}

@@ -1,0 +1,60 @@
+<cam-empty [isEmpty]="this.files.length === 0">
+  <div class="files-container" *ngIf="this.canDisplayFileType('Image')">
+    <ng-container
+      *ngFor="let file of this.files; index as i; trackBy: this.trackById"
+    >
+      <div class="info-container" (click)="this.onFileSelected(file, i)">
+        <div
+          class="delete"
+          (click)="this.deleteFile(file)"
+          *ngIf="this.canDeleteFile"
+          appStopPropagation
+        >
+          <div class="delete-icon">
+            <cam-font-icon type="sm" name="close"></cam-font-icon>
+          </div>
+        </div>
+
+        <img
+          *ngIf="file.type === 'Image'"
+          [src]="file.thumbnailUrl || file.url | safe : 'url'"
+        />
+
+        <cam-file-card
+          *ngIf="file.type === 'Document'"
+          [file]="file"
+        ></cam-file-card>
+
+        <div class="is-loading" *ngIf="file.isLoading">
+          <cam-local-icon
+            class="align-middle"
+            [rotation]="file.isLoading"
+            [type]="this.icon.Loader"
+            [size]="'xs'"
+          ></cam-local-icon>
+        </div>
+        <div class="is-selected" *ngIf="file.isSelected">
+          <cam-local-icon
+            class="align-middle"
+            [type]="this.icon.Checked"
+            [size]="'xs'"
+          ></cam-local-icon>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    class="row g-2 row-cols-1 row-cols-md-2 row-cols-xl-3 mb-space-lg"
+    *ngIf="canDisplayFileType('Document')"
+  >
+    <div *ngFor="let file of this.files; index as i; trackBy: this.trackById">
+      <cam-file-card
+        *ngIf="file.type === 'Document'"
+        (fileSelected)="this.onFileSelected(file, i)"
+        (moreInformationSelected)="this.onMoreInformationSelected(file)"
+        [file]="file"
+      ></cam-file-card>
+    </div>
+  </div>
+</cam-empty>

@@ -1,0 +1,13 @@
+@import "camelot-export";
+
+.is-bold {
+  font-weight: get-var(font, body, md, bold, weight);
+}
+
+.is-underline {
+  text-decoration: underline;
+}
+
+.is-italic {
+  font-style: italic;
+}

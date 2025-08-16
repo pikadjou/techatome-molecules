@@ -1,0 +1,15 @@
+@import "camelot-export";
+
+.progress-bar {
+  appearance: none;
+  width: 100%;
+  height: 2px;
+}
+
+progress::-webkit-progress-bar {
+  background-color: get-var(neutral, 300);
+}
+
+progress::-webkit-progress-value {
+  background-color: get-var(surface, brand, primary);
+}

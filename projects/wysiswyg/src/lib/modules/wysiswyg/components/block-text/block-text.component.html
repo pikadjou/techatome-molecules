@@ -1,14 +1,14 @@
-<ng-container *ngFor="let block of this.blocks">
+@for (block of this.blocks; track block.id) {
   <ng-container [ngSwitch]="block.type">
     <ng-container *ngSwitchCase="'header'">
-      <ta-title [level]="block.data.level">
+      <cam-title [level]="block.data.level">
         {{ block.data.text }}
-      </ta-title>
+      </cam-title>
     </ng-container>
     <ng-container *ngSwitchCase="'paragraph'">
-      <ta-text>
-        <div [innerHTML]="block.data.text"></div>
-      </ta-text>
+      <cam-text>
+        <div [innerHTML]="block.data.text | safe: 'html'"></div>
+      </cam-text>
     </ng-container>
     <ng-container *ngSwitchCase="'list'">
       <ng-container *ngIf="block.data.style === 'ordered'">
@@ -29,11 +29,23 @@
     <ng-container *ngSwitchCase="'delimiter'">
       <hr />
     </ng-container>
+    <ng-container *ngSwitchCase="'image'">
+      <img [src]="block.data.file.url" style="max-width: 100%" />
+    </ng-container>
     <ng-container *ngSwitchCase="'quote'">
       <div class="flex-start g-space-xs">
         <div *ngIf="block.data.caption">{{ block.data.caption }}:</div>
-        <q [innerHTML]="block.data.text"></q>
+        <q [innerHTML]="block.data.text | safe: 'html'"></q>
       </div>
     </ng-container>
+    <ng-container *ngSwitchCase="'warning'">
+      <cam-toast>
+        <cam-notification-inline
+          [message]="block.data.message"
+          [code]="this.ENotificationCode.warning"
+          [showClose]="false"
+        ></cam-notification-inline>
+      </cam-toast>
+    </ng-container>
   </ng-container>
-</ng-container>
+}

@@ -1,0 +1,30 @@
+<google-map #map [options]="this.options">
+  @for (marker of this.markers; track marker.position) {
+    <map-marker
+      #mapMarker="mapMarker"
+      [position]="marker.position"
+      [title]="marker.title"
+      [options]="marker.options"
+      (mapClick)="this.openInfoWindow(mapMarker)"
+    ></map-marker>
+  }
+
+  <map-info-window>
+    {{ this.selectedMarker()?.getTitle() }}
+  </map-info-window>
+</google-map>
+
+<div *ngIf="this.routeSummary">
+  <h3>Résumé du trajet</h3>
+  <p>
+    Distance : {{ this.routeSummary.distanceKm }} km<br />
+    Durée estimée : {{ this.routeSummary.duration }}
+  </p>
+</div>
+
+<div *ngIf="routeDetails().length > 0">
+  <h3>Détails du trajet</h3>
+  <ul>
+    <li *ngFor="let step of routeDetails()">{{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}</li>
+  </ul>
+</div>

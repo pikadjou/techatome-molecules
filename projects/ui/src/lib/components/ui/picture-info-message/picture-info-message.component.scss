@@ -1,0 +1,14 @@
+@import "camelot-export";
+
+.card {
+  padding: get-var(space, sm);
+  text-align: center;
+}
+
+p {
+  padding-top: get-var(space, sm);
+}
+
+cam-font-icon {
+  color: get-var(brand, 400);
+}

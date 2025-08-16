@@ -1,5 +1,12 @@
-export const getUniqueValues = <T>(inputArray: T[], propName: (x: T) => any): T[] => {
-  return [...new Map(inputArray.map(x => [propName(x), x])).values()];
+export const isArray = (variable: unknown): boolean => {
+  return Array.isArray(variable);
+};
+
+export const getUniqueValues = <T>(
+  inputArray: T[],
+  propName: (x: T) => any
+): T[] => {
+  return [...new Map(inputArray.map((x) => [propName(x), x])).values()];
 };
 
 export const getUniqueArray = <T>(array: T[]): T[] => {
@@ -10,21 +17,36 @@ export const isNonNullable = <T>(value: T): value is NonNullable<T> => {
   return value !== null && value !== undefined;
 };
 
+export const filterNonNullableItems = <T>(list: T[]): Array<NonNullable<T>> => {
+  return list.filter(
+    (value): value is NonNullable<T> => value !== null && value !== undefined
+  );
+};
+
 export const toArray = <T>(value: T | T[]) => {
   return Array.isArray(value) ? value : [value];
 };
 
-export const keepUniqueObjectByProperty = <T>(list: T[], property: (item: T) => any): T[] => {
+export const keepUniqueObjectByProperty = <T>(
+  list: T[],
+  property: (item: T) => any
+): T[] => {
   const unique = getUniqueArray(list.map(property));
-  return unique.map(u => list.find(item => property(item) === u)).filter(isNonNullable);
+  return unique
+    .map((u) => list.find((item) => property(item) === u))
+    .filter(isNonNullable);
 };
 
 /**
  * @deprecated
  */
-export const removeElementsWithSameProperty = <T>(arrayA: T[], arrayB: T[], property: (item: any) => any): T[] => {
+export const removeElementsWithSameProperty = <T>(
+  arrayA: T[],
+  arrayB: T[],
+  property: (item: any) => any
+): T[] => {
   const idsToDelete = arrayB.map(property);
-  return arrayA.filter(item => !idsToDelete.includes(property(item)));
+  return arrayA.filter((item) => !idsToDelete.includes(property(item)));
 };
 
 /**

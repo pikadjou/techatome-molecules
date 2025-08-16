@@ -1,0 +1,21 @@
+// .side-container {
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+// }
+
+@import "camelot-export";
+
+.side-container {
+  display: flex;
+  flex-flow: column;
+
+  flex: 1;
+
+  .side-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}

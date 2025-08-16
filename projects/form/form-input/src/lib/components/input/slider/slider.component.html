@@ -1,0 +1,12 @@
+<cam-input-layout [input]="this.input">
+  <div class="slider-container">
+    <input
+      type="range"
+      [min]="this.input.min"
+      [max]="this.input.max"
+      [formControl]="$any(this.input.formControl)"
+      class="slider-input"
+      [attr.aria-invalid]="this.input.formControl?.invalid"
+    />
+  </div>
+</cam-input-layout>

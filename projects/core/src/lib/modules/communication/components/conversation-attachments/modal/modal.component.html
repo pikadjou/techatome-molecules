@@ -1,0 +1,131 @@
+<cam-layout-modal>
+  <div class="conversation-attachments-container flex-column">
+    <div class="mt-space-md">
+      <ng-container [ngTemplateOutlet]="contentTemplate"></ng-container>
+    </div>
+
+    <div class="cta d-flex">
+      <cam-link
+        [state]="!this.allUploadsCompleted() ? 'disabled' : 'classic'"
+        (action)="this.close()"
+        icon="close-tool"
+        size="sm"
+      >
+        {{ 'communication.input.upload.cancel' | translate }}
+      </cam-link>
+      <cam-button
+        [state]="!this.allUploadsCompleted() ? 'disabled' : 'classic'"
+        icon="check-line"
+        size="small"
+        (action)="this.confirm()"
+        [state]="'classic'"
+      >
+        {{ 'communication.input.upload.confirm' | translate }}
+      </cam-button>
+    </div>
+  </div>
+</cam-layout-modal>
+
+<ng-template #contentTemplate>
+  <ng-container [ngSwitch]="this.documentType">
+    <ng-container *ngSwitchCase="EDocumentType.linkedDocuments">
+      <div class="mb-space-md space-between align-center">
+        <cam-title [level]="3" [isBold]="true">
+          {{ 'communication.documents.modal.title.add-linked-document' | translate }}
+        </cam-title>
+      </div>
+      <div class="mb-space-md">
+        <cam-menu-navigation container="tags" [menu]="this.menu"></cam-menu-navigation>
+      </div>
+      <cam-loader [isLoading]="this.requestState.isLoading()">
+        <div class="content">
+          <ng-container [ngTemplateOutlet]="documentDetailTemplate"></ng-container>
+        </div>
+      </cam-loader>
+      <ng-container [ngTemplateOutlet]="buttonTemplate"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="EDocumentType.newDocuments">
+      <div class="mb-space-md space-between align-center">
+        <cam-title [level]="3" [isBold]="true">
+          {{ 'communication.documents.modal.title.add-new-document' | translate }}
+        </cam-title>
+      </div>
+      <cam-input-upload
+        [standalone]="true"
+        [input]="this.uploadInput"
+        (uploadStatusChanged)="this.updateUploadStatus($event)"
+      >
+      </cam-input-upload>
+      <ng-container [ngTemplateOutlet]="buttonTemplate"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #documentDetailTemplate>
+  <ng-container [ngSwitch]="this.filterHelper.filter">
+    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.uploaded">
+      <cam-documents-list
+        [documentsIds]="this.extractInputUploadValueId(this.uploadInput.value)"
+        [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.communication'"
+        actions="delete"
+        (remove)="this.removedUploadDocument($event)"
+      ></cam-documents-list>
+    </ng-container>
+    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.communication">
+      <cam-documents-list
+        [documentsIds]="this.documentsIds.communication"
+        [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.communication'"
+        [defaultSelected]="this.extractInputUploadValueId(this.documentsSelected.communication)"
+        actions="select"
+        (checkedFilesChanged)="this.onDocumentSelectedChange('communication')($event)"
+      ></cam-documents-list>
+    </ng-container>
+    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.task">
+      <cam-documents-list
+        [documentsIds]="this.documentsIds.task"
+        [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.task'"
+        [defaultSelected]="this.extractInputUploadValueId(this.documentsSelected.task)"
+        actions="select"
+        (checkedFilesChanged)="this.onDocumentSelectedChange('task')($event)"
+      ></cam-documents-list>
+    </ng-container>
+    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.project">
+      <cam-documents-list
+        [documentsIds]="this.documentsIds.project"
+        [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.project'"
+        [defaultSelected]="this.extractInputUploadValueId(this.documentsSelected.project)"
+        actions="select"
+        (checkedFilesChanged)="this.onDocumentSelectedChange('project')($event)"
+      ></cam-documents-list>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #buttonTemplate>
+  <ng-container [ngSwitch]="this.documentType">
+    <ng-container *ngSwitchCase="this.EDocumentType.linkedDocuments">
+      <div class="display-button d-flex">
+        <cam-button
+          size="small"
+          type="secondary"
+          icon="add"
+          (action)="this.switchView(this.EDocumentType.newDocuments)"
+        >
+          {{ 'communication.documents.modal.cta.add-new-document' | translate }}
+        </cam-button>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="this.EDocumentType.newDocuments">
+      <div class="display-button d-flex">
+        <cam-button
+          size="small"
+          type="secondary"
+          icon="add"
+          (action)="this.switchView(this.EDocumentType.linkedDocuments)"
+        >
+          {{ 'communication.documents.modal.cta.add-linked-document' | translate }}
+        </cam-button>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>

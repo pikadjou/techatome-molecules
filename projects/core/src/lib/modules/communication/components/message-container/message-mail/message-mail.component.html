@@ -1,0 +1,61 @@
+<div>
+  <div class="header-container">
+    <div class="header simple-flex g-space-md align-center mb-space-md">
+      <div class="icon">
+        <cam-font-icon name="mail"></cam-font-icon>
+      </div>
+      <cam-text [isBold]="true">
+        {{ this.communication.title }}
+      </cam-text>
+      <div class="opener align-end ml-a" (click)="this.expand = !this.expand">
+        <cam-font-icon name="arrow-big-bottom" *ngIf="!this.expand"></cam-font-icon>
+        <cam-font-icon name="arrow-big-top" *ngIf="this.expand"></cam-font-icon>
+      </div>
+    </div>
+    <div class="extended mb-space-md flex-column g-space-sm" *ngIf="this.expand">
+      <div class="flex-start g-space-sm align-center">
+        {{ 'communication.message.expansion.from' | translate }}
+        <cam-communication-participant-light
+          [participants]="[this.communication.from]"
+          [conversationParticipants]="this.conversationParticipants"
+        ></cam-communication-participant-light>
+      </div>
+      <div class="flex-start g-space-sm align-center">
+        {{ 'communication.message.expansion.to' | translate }}
+        <cam-communication-participant-light
+          [participants]="this.communication.to"
+          [conversationParticipants]="this.conversationParticipants"
+        ></cam-communication-participant-light>
+      </div>
+      <div class="flex-start g-space-sm align-center" *ngIf="this.communication.cc && this.communication.cc.length > 0">
+        {{ 'communication.message.expansion.cc' | translate }}
+        <cam-communication-participant-light
+          [conversationParticipants]="this.conversationParticipants"
+          [participants]="this.communication.cc"
+        ></cam-communication-participant-light>
+      </div>
+    </div>
+  </div>
+  <div [innerHTML]="this.communication.bodyPreview | safe: 'html'" class="mt-space-md innerHTML"></div>
+
+  @if (this.showFullText && this.communication.replyHistoryPreview) {
+    <div
+      [innerHTML]="this.communication.replyHistoryPreview | safe: 'html'"
+      class="mt-space-md history-preview innerHTML"
+    ></div>
+  }
+  @if (this.communication.replyHistoryPreview) {
+    <cam-link (action)="this.showFullText = !this.showFullText">
+      {{ (this.showFullText ? 'communication.message.expand.less' : 'communication.message.expand.more') | translate }}
+    </cam-link>
+  }
+  @if (this.communication.responseToCommunicationId) {
+    <cam-link (action)="this.showResponsteToCommunication = !this.showResponsteToCommunication"> ... </cam-link>
+    @if (this.showResponsteToCommunication) {
+      <cam-response-to-communication
+        [responseToCommunicationId]="this.communication.responseToCommunicationId"
+        [taskId]="this.taskId"
+      ></cam-response-to-communication>
+    }
+  }
+</div>

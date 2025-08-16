@@ -1,0 +1,20 @@
+@import "camelot-export";
+
+.list {
+  @include flex-column;
+}
+
+.search {
+  margin-bottom: get-var(space, md);
+}
+.item {
+  padding: get-var(space, md);
+  border-bottom: 1px solid get-var(border, secondary);
+  &:hover,
+  &.highlighted {
+    background-color: get-var(surface, hover, secondary);
+  }
+}
+.code {
+  @include fontSizeBody(md);
+}

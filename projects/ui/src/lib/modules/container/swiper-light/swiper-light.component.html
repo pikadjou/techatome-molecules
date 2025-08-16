@@ -1,0 +1,7 @@
+<div class="swiper-container" [ngClass]="this.classes">
+  <ng-container *ngFor="let item of this.items; trackBy: this.track">
+    @if ((item.visible$ | async) !== false) {
+      <ng-container *ngTemplateOutlet="this.template; context: { element: item }"></ng-container>
+    }
+  </ng-container>
+</div>

@@ -18,8 +18,17 @@ class RequestMapCore {
   public getConfigById(id: string): IRequestMap | null {
     return this._getConfigById(id);
   }
-  public parseUrl(data: { serverUrl: string; url: string; request: Request; apiExt?: string }): string {
-    return this._formatUrl(data.serverUrl, data.url, data.request) + '' + (data.apiExt ?? '');
+  public parseUrl(data: {
+    serverUrl: string;
+    url: string;
+    request: Request;
+    apiExt?: string;
+  }): string {
+    return (
+      this._formatUrl(data.serverUrl, data.url, data.request) +
+      '' +
+      (data.apiExt ?? '')
+    );
   }
 
   private _getConfigById(id: string): IRequestMap | null {
@@ -35,7 +44,10 @@ class RequestMapCore {
       if (request.urlData !== null && request.urlData.hasOwnProperty(string)) {
         return request.urlData[string];
       }
-      if (request.BrutContent !== null && request.BrutContent.hasOwnProperty(string)) {
+      if (
+        request.BrutContent !== null &&
+        request.BrutContent.hasOwnProperty(string)
+      ) {
         return request.BrutContent[string];
       }
       if (string === 'ApiUrl') {

@@ -1,0 +1,47 @@
+@if (this.input) {
+  <cam-input-layout [input]="this.input">
+    @if (!this.input.rangeEnabled) {
+      <div class="align-center" [class.disabled]="this.input.disabled">
+        <input
+          matInput
+          #focusedElement
+          class="form-control"
+          [matDatepicker]="picker"
+          [value]="this.input.value"
+          (dateInput)="this.onDateSelect($event)"
+          (click)="this.picker.open()"
+          [min]="this.input.minDate"
+          [max]="this.input.maxDate"
+          readonly
+        />
+        <mat-datepicker touchUi #picker></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="this.picker"></mat-datepicker-toggle>
+      </div>
+    }
+    @if (this.input.rangeEnabled) {
+      <div class="align-center">
+        <mat-date-range-input [formGroup]="this.range" [rangePicker]="this.picker">
+          <input
+            matStartDate
+            #focusedElement
+            placeholder="Start date"
+            [min]="this.input.minDate"
+            [max]="this.input.maxDate"
+            formControlName="start"
+            readonly
+          />
+          <input
+            matEndDate
+            placeholder="End date"
+            [min]="this.input.minDate"
+            [max]="this.input.maxDate"
+            formControlName="end"
+            readonly
+          />
+        </mat-date-range-input>
+        <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="this.picker"></mat-datepicker-toggle>
+      </div>
+    }
+  </cam-input-layout>
+}

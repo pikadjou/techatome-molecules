@@ -1,0 +1,59 @@
+@import "camelot-export";
+
+.label-container {
+  padding: get-var(space, sm) get-var(space, md);
+  @include fontSizeBody(sm);
+
+  border-radius: get-var(radius, label);
+  border: 1px solid transparent;
+
+  &.xs {
+    padding: spaceBase(0.25) spaceBase(0.25);
+    @include fontSizeBody(xs);
+  }
+
+  &.sm {
+    padding: spaceBase(0.25) spaceBase(1.25);
+    @include fontSizeBody(sm);
+  }
+
+  &.lg {
+    padding: get-var(space, md) get-var(space, lg);
+    @include fontSizeBody(md);
+  }
+}
+.label-default {
+  color: get-var(text, brand, primary);
+  background: get-var(surface, default);
+  border-color: get-var(border, brand);
+}
+
+.label-secondary {
+  color: get-var(text, body);
+  background: get-var(surface, secondary);
+  border-color: get-var(neutral, 600);
+}
+
+.label-success {
+  color: get-var(text, success);
+  background: get-var(surface, success);
+  border-color: get-var(border, success);
+}
+
+.label-warning {
+  color: get-var(text, warning);
+  background: get-var(surface, warning);
+  border-color: get-var(border, warning);
+}
+
+.label-alert {
+  color: get-var(text, alert);
+  background: get-var(surface, alert);
+  border-color: get-var(border, alert);
+}
+
+.label-purple {
+  color: get-var(semantic, purple-dark);
+  background: get-var(semantic, purple-light);
+  border-color: get-var(semantic, purple-dark);
+}

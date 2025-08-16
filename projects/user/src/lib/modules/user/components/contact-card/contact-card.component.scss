@@ -1,0 +1,19 @@
+@import "camelot-export";
+
+.contact-name {
+  @include fontSizeBody(md);
+}
+
+.user-logo {
+  display: flex;
+  padding-bottom: get-var(space, xs);
+}
+
+.contacts {
+  padding-top: get-var(space, sm);
+  gap: get-var(space, xl);
+}
+
+cam-font-icon {
+  color: get-var(icon, brand, primary);
+}

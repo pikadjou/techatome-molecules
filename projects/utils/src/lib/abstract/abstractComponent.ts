@@ -4,14 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
+import { CamIconType } from '@camelot/icons';
+
 import { BreakpointDetection } from '../helpers/breakpoints/detection';
 import { RequestState } from '../helpers/request/state';
 import { SubscriberHandler } from '../helpers/subscriber/handler';
 
 @Component({ template: '' })
-export abstract class TaAbstractComponent implements OnDestroy {
+export abstract class CamAbstractComponent implements OnDestroy {
   public breakpoints = new BreakpointDetection();
   public requestState = new RequestState();
+
+  public icon: typeof CamIconType = CamIconType;
 
   get isMobile() {
     return this.breakpoints.isMobile;
@@ -31,10 +35,6 @@ export abstract class TaAbstractComponent implements OnDestroy {
 
   ngOnDestroy() {
     this._subscriberHandler.destroy();
-  }
-
-  protected _getSnapshotQueryParams(key: string): string | null {
-    return this._route.snapshot.queryParams[key] ?? null;
   }
 
   protected _registerSubscription(subscription: Subscription) {

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "allowedNonPeerDependencies": ["@camelot", "@angular", "date-fns", "ag-grid-", "@googlemaps"],
+  "dest": "dist",
+
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "styleIncludePaths": ["../styles/src/style"]
+  }
+}

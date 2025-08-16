@@ -1,0 +1,36 @@
+<div *ngLet="this.getVariant() as variant" [style.height]="'60vh'" class="d-flex">
+  <cam-layout-side class="d-flex flex-full full-width">
+    <cam-layout-side-content>
+      <cam-empty [isEmpty]="!this.template">
+        <ng-container *ngIf="this.template">
+          <cam-toggle-navigation
+            *ngIf="this.cultureMenu"
+            [menu]="this.cultureMenu"
+            container="tab"
+          ></cam-toggle-navigation>
+          <div *ngLet="this.getVariant() as variant" class="item">
+            <div class="flex-row g-space-sm align-center">
+              <cam-title [level]="3" [isBold]="true">
+                {{ variant.title }}
+              </cam-title>
+            </div>
+            <div class="flex-row g-space-sm align-center">
+              <div [innerHTML]="variant.body | safe: 'html'"></div>
+            </div>
+            <div class="flex-row g-space-sm align-center" *ngIf="variant.documentIds && variant.documentIds.length > 0">
+              <cam-button-tool icon="attach" [size]="'sm'"></cam-button-tool>
+              <cam-documents-list [documentsIds]="variant.documentIds"></cam-documents-list>
+            </div>
+          </div>
+        </ng-container>
+      </cam-empty>
+    </cam-layout-side-content>
+    <cam-layout-side-cta *ngIf="this.template">
+      <div class="align-center justify-end">
+        <cam-button (action)="this.select(variant)">
+          {{ 'communication.template.detail.cta' | translate }}
+        </cam-button>
+      </div>
+    </cam-layout-side-cta>
+  </cam-layout-side>
+</div>

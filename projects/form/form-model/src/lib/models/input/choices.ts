@@ -4,7 +4,12 @@ import { Observable } from 'rxjs';
 
 import { IInputDropdown, InputDropdown } from './dropdown';
 
-export type InputChoicesOption = { id: string; name: string; disabled?: boolean; data: any };
+export type InputChoicesOption = {
+  id: string;
+  name: string;
+  disabled?: boolean;
+  data: any;
+};
 
 export interface IInputChoices extends IInputDropdown<string[]> {
   onlyTemplate?: boolean;
@@ -14,10 +19,11 @@ export interface IInputChoices extends IInputDropdown<string[]> {
     one?: TemplateRef<any>;
     list?: TemplateRef<any>;
   };
+  showNullableFields?: boolean;
 }
 export class InputChoices extends InputDropdown<string[]> {
   override controlType = 'choices';
-  declare options: Observable<InputChoicesOption[]>;
+  override options!: Observable<InputChoicesOption[]>;
 
   public onlyTemplate?: boolean;
   public advancedSearch$: ((search?: string) => Observable<InputChoicesOption[]>) | null;
@@ -25,6 +31,7 @@ export class InputChoices extends InputDropdown<string[]> {
     one?: TemplateRef<any>;
     list?: TemplateRef<any>;
   };
+  public showNullableFields: boolean;
 
   constructor(options: IInputChoices = {}) {
     super(options);
@@ -32,5 +39,6 @@ export class InputChoices extends InputDropdown<string[]> {
     this.onlyTemplate = options.onlyTemplate;
     this.advancedSearch$ = options['advancedSearch$'] || null;
     this.choiceTemplate = options.choiceTemplate;
+    this.showNullableFields = options.showNullableFields ?? false;
   }
 }

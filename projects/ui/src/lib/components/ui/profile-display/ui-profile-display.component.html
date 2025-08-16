@@ -1,0 +1,30 @@
+<div class="ta-r" *ngIf="this.sideIcon">
+  <cam-button [options]="{ circular: 'small' }" [style]="'secondary'" (action)="sideIcon.callback()">
+    <cam-font-icon [name]="this.sideIcon.icon"></cam-font-icon>
+  </cam-button>
+</div>
+
+<div class="profile">
+  <div class="ta-c" *ngIf="this.userLogo">
+    <cam-user-logo class="justify-center" [userInfo]="this.userLogo.userInfo" size="lg"></cam-user-logo>
+  </div>
+
+  <div class="ta-c mx-a">
+    <cam-title [level]="2">{{ this.label }}</cam-title>
+  </div>
+
+  <ng-content></ng-content>
+
+  <div class="align-center justify-content-around pt-space-xxl" *ngIf="this.ctas">
+    <div *ngFor="let cta of this.ctas">
+      <cam-button (action)="cta?.callback()" size="large">
+        <div class="align-center">
+          <cam-font-icon *ngIf="cta.icon" [name]="cta.icon" class="mr-space-xs"></cam-font-icon>
+          <div *ngIf="cta.label">
+            {{ cta.label | translate }}
+          </div>
+        </div>
+      </cam-button>
+    </div>
+  </div>
+</div>

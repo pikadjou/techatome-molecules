@@ -1,0 +1,13 @@
+@import "camelot-export";
+
+.alert {
+  border-radius: 8px;
+  display: inline-flex;
+  gap: get-var(space, xs);
+  border: none;
+  padding: get-var(space, xs);
+}
+
+.text {
+  margin: auto;
+}

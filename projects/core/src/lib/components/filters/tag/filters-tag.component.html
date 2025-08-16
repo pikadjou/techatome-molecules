@@ -1,0 +1,13 @@
+<div>
+  <span
+    class="badge-container"
+    *ngFor="let filter of this.activeFilter; trackBy: trackById"
+  >
+    <cam-badge
+      [value]="filter.name"
+      type="info"
+      icon="close"
+      (clickAction)="this.remove(filter)"
+    ></cam-badge>
+  </span>
+</div>

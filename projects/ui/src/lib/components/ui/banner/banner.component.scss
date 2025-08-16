@@ -1,0 +1,13 @@
+@import 'camelot-export';
+
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: get-var(semantic, yellow-light);
+  color: get-var(semantic, yellow-dark);
+  padding: get-var(space, xs) get-var(space, md);
+  text-align: center;
+  box-shadow: get-var(shadow, black, sm);
+}

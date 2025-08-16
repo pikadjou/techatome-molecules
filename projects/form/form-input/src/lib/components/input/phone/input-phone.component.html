@@ -1,0 +1,8 @@
+<cam-input-layout [input]="this.input">
+  <input
+    class="form-control"
+    #phoneInput
+    type="tel"
+    [formControl]="$any(this.input.formControl)"
+  />
+</cam-input-layout>

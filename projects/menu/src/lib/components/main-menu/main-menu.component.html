@@ -1,0 +1,34 @@
+<div class="main-nav-container">
+  <div class="main-nav">
+    <div class="logo">
+      <cam-logo class="small"></cam-logo>
+      <cam-logo class="oneline" [type]="'oneline'"></cam-logo>
+    </div>
+    <div class="menu-nav">
+      <cam-menu
+        class="menu"
+        [menu]="this.menuMain"
+        [container]="'main'"
+      ></cam-menu>
+    </div>
+    <div *ngIf="this.menuUser" class="user-nav">
+      <div class="sep"></div>
+      <cam-menu
+        class="menu"
+        [menu]="this.menuUser"
+        [container]="'main'"
+      ></cam-menu>
+    </div>
+    <div
+      class="expansion-nav"
+      (click)="this.toggleView()"
+      *ngIf="(this.breakpoints.isMobile$ | async) === false"
+    >
+      <cam-font-icon
+        class="d-flex"
+        name="arrow-double"
+        [ngClass]="(this.sharedMenu.isMinimized$ | async) ? 'close' : 'open'"
+      ></cam-font-icon>
+    </div>
+  </div>
+</div>

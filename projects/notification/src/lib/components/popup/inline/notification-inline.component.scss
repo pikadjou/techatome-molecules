@@ -1,33 +1,31 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@import "camelot-export";
 
 .notification-container {
   position: relative;
-  @include fonts.fontSizeBody(md);
+  @include fontSizeBody(md);
 }
 
 .wrapper {
-  padding: common.get-var(space, sm);
+  padding: get-var(space, sm);
 }
 
 .icon {
-  @include flex.align-center;
+  @include align-center();
 }
 .text {
   .label {
-    @include flex.flex-start;
+    @include flex-start;
     &.success {
-      color: common.get-var(semantic-token, success);
+      color: get-var(semantic-token, success);
     }
     &.danger {
-      color: common.get-var(semantic-token, alert);
+      color: get-var(semantic-token, alert);
     }
     &.warning {
-      color: common.get-var(semantic-token, warning);
+      color: get-var(semantic-token, warning);
     }
     &.info {
-      color: common.get-var(semantic-token, link);
+      color: get-var(semantic-token, link);
     }
   }
 }

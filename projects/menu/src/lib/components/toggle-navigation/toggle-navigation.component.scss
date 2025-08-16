@@ -1,0 +1,74 @@
+@import "camelot-export";
+
+.toggle-container {
+  border-bottom: 1px solid get-var(neutral, 300);
+
+  &.switch-container {
+    overflow: hidden;
+  }
+
+  .badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: get-var(brand, 700);
+    color: get-var(brand, 50);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .toggle-element {
+    color: get-var(neutral, 800);
+
+    @include fontSizeBody(md, true);
+    cursor: pointer;
+
+    .icon {
+      margin: auto;
+      color: get-var(brand, 700);
+    }
+
+    &.active {
+      .icon {
+        color: get-var(icon, brand, primary);
+      }
+    }
+  }
+
+  &.switch {
+    border-radius: get-var(space, xs);
+    .toggle-element {
+      background: get-var(surface, secondary);
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      &.active {
+        background: get-var(brand, 700);
+        color: get-var(neutral, 50);
+      }
+    }
+  }
+
+  &.tab {
+    .toggle-element {
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      &.active {
+        color: get-var(text, brand, primary);
+        border-bottom: 2px solid get-var(border, brand);
+      }
+    }
+  }
+}
+
+.label {
+  @include fontSizeBody(md);
+}

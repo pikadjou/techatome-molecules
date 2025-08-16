@@ -1,12 +1,25 @@
 {
-  "name": "@ta/menu",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0"
+  "name": "@camelot/menu",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/menu",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
+  },
+  "devDependencies": {
+    "@camelot/icons": "^3.16.0-beta.4",
+    "@camelot/styles": "^3.16.0-beta.4",
+    "@camelot/translation": "^3.16.0-beta.4",
+    "@camelot/ui": "^3.16.0-beta.4",
+    "@camelot/utils": "^3.16.0-beta.4",
+    "swiper": "^9.1.0",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

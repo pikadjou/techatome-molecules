@@ -1,8 +1,8 @@
 <div class="radio-label">
-  <ta-form-label [input]="this.input"></ta-form-label>
+  <cam-form-label [input]="this.input"></cam-form-label>
 </div>
 
-<div class="radio-container" *ngIf="!this.input.useMaterialTheme">
+<div class="radio-container">
   <div
     class="radio-element"
     [ngClass]="{
@@ -18,41 +18,14 @@
         'only-icon': !this.hasLabel(option)
       }"
     >
-      <!-- <ta-local-icon
-        *ngIf="option.icon"
-        [type]="option.icon"
-        [size]="this.iconSize(option)"
-      >
-      </ta-local-icon> -->
-
-      <span *ngIf="option.name">
+      @if(option.icon) {
+      <cam-local-icon [type]="option.icon" [size]="this.iconSize(option)">
+      </cam-local-icon>
+      } @if(option.name) {
+      <span>
         {{ option.name | translate }}
       </span>
+      }
     </div>
   </div>
 </div>
-
-<mat-radio-group
-  *ngIf="this.input.useMaterialTheme"
-  [id]="this.input.key"
-  [formControl]="$any(this.input.formControl)"
->
-  <mat-radio-button
-    [ngClass]="{ validated: this.input.value === option.id }"
-    *ngFor="let option of this.input.options | async"
-    [value]="option.id"
-  >
-    <div class="button-with-icon">
-      <!-- <ta-local-icon
-        *ngIf="this.option.icon"
-        [type]="this.option.icon"
-        [size]="this.iconSize(option)"
-      >
-      </ta-local-icon> -->
-
-      <span *ngIf="option.name">
-        {{ option.name | translate }}
-      </span>
-    </div>
-  </mat-radio-button>
-</mat-radio-group>

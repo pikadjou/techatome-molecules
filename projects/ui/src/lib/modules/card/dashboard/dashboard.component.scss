@@ -1,0 +1,45 @@
+@import "camelot-export";
+
+.dashboard-content {
+  position: relative;
+  z-index: 1;
+
+  gap: get-var(space, md);
+  @include flex-column();
+
+  @include media-breakpoint-up(mobile) {
+    @include flex-row();
+  }
+
+  .icon-container {
+    margin-top: -7px;
+  }
+  .title,
+  .subtitle {
+    @include media-breakpoint-up(xl) {
+      width: calc(100% - 170px);
+    }
+  }
+  .subtitle {
+    display: none;
+    @include media-breakpoint-up(mobile) {
+      display: block;
+    }
+  }
+}
+
+.background {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+
+  height: 200px;
+  width: 170px;
+  color: get-var(brand, 100);
+  cam-font-icon {
+    position: absolute;
+    bottom: 0;
+  }
+}

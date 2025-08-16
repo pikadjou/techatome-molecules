@@ -1,0 +1,21 @@
+<cam-loader [isLoading]="this.requestState.isLoading()">
+  <cam-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
+    <cam-form
+      *ngIf="this.form"
+      [inputs]="this.form"
+      (valid)="this.createTemplate($event)"
+      [loader]="this.requestState.isLoading()"
+    ></cam-form>
+  </cam-error>
+
+  <div *ngLet="this.template$ | async as template" class="pt-space-md">
+    <cam-communication-template-variant-edit
+      *ngIf="this.id && template"
+      [id]="this.id"
+      [variants]="template.variants"
+    ></cam-communication-template-variant-edit>
+  </div>
+</cam-loader>

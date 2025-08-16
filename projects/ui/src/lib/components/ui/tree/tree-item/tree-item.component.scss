@@ -1,0 +1,19 @@
+@import 'camelot-export';
+
+.item {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: calc(get-var(space, xl) * -0.5);
+
+    border-bottom-left-radius: 5px;
+    height: 5px;
+
+    width: calc((get-var(space, xl) * 0.5) - 3px);
+    border: 2px solid get-var(surface, brand, primary);
+    border-top: none;
+    border-right: none;
+  }
+}

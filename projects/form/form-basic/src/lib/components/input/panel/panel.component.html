@@ -4,7 +4,9 @@
   </ng-container>
 
   <div [ngClass]="this.panel.contentClass">
-    <ng-container *ngFor="let input of this.panel.children; trackBy: this.trackByKey">
+    <ng-container
+      *ngFor="let input of this.panel.children; trackBy: this.trackByKey"
+    >
       <div
         [ngClass]="input.class"
         [style.display]="(input.visible$ | async) ? 'block' : 'none'"

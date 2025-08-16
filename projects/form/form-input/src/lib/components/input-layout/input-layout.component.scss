@@ -1,0 +1,45 @@
+@import 'camelot-export';
+
+.input-layout-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.error-message {
+  color: get-var(semantic, red-dark);
+  @include fontSizeBody(sm);
+  margin-top: get-var(space, xs);
+}
+
+:host ::ng-deep {
+  .form-control {
+    @include fontSizeBody(md);
+    border-radius: get-var(radius, rounded);
+    padding: get-var(space, sm) get-var(space, md);
+    outline: none;
+    border: 1px solid;
+    border-color: get-var(neutral, 300);
+    background-color: get-var(neutral, white);
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box;
+    min-height: 40px;
+
+    &:hover:not(:disabled) {
+      border-color: get-var(neutral, 500);
+    }
+
+    &:focus:not(:disabled) {
+      border-color: get-var(border, brand);
+    }
+
+    &:required:not(:disabled) {
+      border-color: get-var(semantic, red-dark);
+    }
+
+    &:disabled {
+      border-color: get-var(neutral, 300);
+    }
+  }
+}

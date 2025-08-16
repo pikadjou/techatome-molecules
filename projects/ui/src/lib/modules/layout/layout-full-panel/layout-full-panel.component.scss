@@ -1,0 +1,46 @@
+@import "camelot-export";
+
+cam-layout-header {
+  text-align: right;
+
+  cam-title {
+    padding: get-var(space, md) 0 0 get-var(space, md);
+  }
+
+  cam-font-icon {
+    cursor: pointer;
+  }
+}
+.side-panel-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 999;
+  opacity: 0.5;
+  background-color: get-var(surface, invert);
+}
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: get-var(surface, primary);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow-y: auto;
+
+  display: flex;
+  flex-flow: column;
+
+  .layout-content {
+    display: flex;
+    flex: 1;
+    & > div {
+      flex: 1;
+    }
+  }
+}

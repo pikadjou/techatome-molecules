@@ -1,0 +1,13 @@
+<div
+  class="layout-container"
+  [class.is-menu-minimized]="this.isMinimized$ | async"
+>
+  <div class="layout-content-container" #bottomLayoutContainer>
+    <div class="container">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div class="bottom-nav-container" #bottomNavContainer>
+    <ng-content select="cam-layout-nav"></ng-content>
+  </div>
+</div>

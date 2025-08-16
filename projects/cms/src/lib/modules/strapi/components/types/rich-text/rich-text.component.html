@@ -1,0 +1,45 @@
+<ng-container *ngFor="let rich of this.richText">
+  <ng-container [ngSwitch]="rich.type">
+    <ng-container *ngSwitchCase="'heading'">
+      <cam-title [level]="rich.level">
+        <ng-container
+          *ngTemplateOutlet="
+            textTemplate;
+            context: { childrenText: rich.children }
+          "
+        ></ng-container>
+      </cam-title>
+    </ng-container>
+    <ng-container *ngSwitchCase="'paragraph'">
+      <div class="paragraph">
+        <ng-container
+          *ngTemplateOutlet="
+            textTemplate;
+            context: { childrenText: rich.children }
+          "
+        ></ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template
+  #textTemplate
+  let-childrenText="childrenText"
+  [typedTemplate]="this.typeToken"
+>
+  <ng-container *ngFor="let entity of childrenText">
+    <ng-container [ngSwitch]="entity.type">
+      <ng-container *ngSwitchCase="'text'">
+        <cam-rich-paragraph-text
+          [text]="$any(entity)"
+        ></cam-rich-paragraph-text>
+      </ng-container>
+      <ng-container *ngSwitchCase="'link'">
+        <cam-rich-paragraph-link
+          [link]="$any(entity)"
+        ></cam-rich-paragraph-link>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>

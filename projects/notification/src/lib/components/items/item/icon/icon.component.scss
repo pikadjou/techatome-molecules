@@ -1,0 +1,9 @@
+@import "camelot-export";
+
+.icon-container {
+  padding: spaceBase(1.3);
+  border-radius: get-var(radius, full);
+
+  background-color: get-var(surface, hover, secondary);
+  color: get-var(icon, brand, primary);
+}

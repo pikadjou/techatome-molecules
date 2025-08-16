@@ -1,4 +1,4 @@
-import { IFormPanel, InputPanel } from './panel';
+import { IInputPanel, InputPanel } from './panel';
 import { InputTextBox } from './textbox';
 
 export enum EAddressValues {
@@ -20,18 +20,25 @@ export interface IAddressValue {
   longitude: number;
   latitude: number;
 }
-export interface IInputAddress extends IFormPanel {}
+export interface IInputAddress extends IInputPanel {}
 export class InputAddress extends InputPanel {
   override controlType = 'address';
 
   override set value(data: IAddressValue) {
-    this.children.find(x => x.key === EAddressValues.street)!.value = data.street;
-    this.children.find(x => x.key === EAddressValues.streetNumber)!.value = data.streetNumber;
-    this.children.find(x => x.key === EAddressValues.country)!.value = data.country;
-    this.children.find(x => x.key === EAddressValues.locality)!.value = data.locality;
-    this.children.find(x => x.key === EAddressValues.postalCode)!.value = data.postalCode;
-    this.children.find(x => x.key === EAddressValues.longitude)!.value = data.longitude;
-    this.children.find(x => x.key === EAddressValues.latitude)!.value = data.latitude;
+    this.children.find((x) => x.key === EAddressValues.street)!.value =
+      data.street;
+    this.children.find((x) => x.key === EAddressValues.streetNumber)!.value =
+      data.streetNumber;
+    this.children.find((x) => x.key === EAddressValues.country)!.value =
+      data.country;
+    this.children.find((x) => x.key === EAddressValues.locality)!.value =
+      data.locality;
+    this.children.find((x) => x.key === EAddressValues.postalCode)!.value =
+      data.postalCode;
+    this.children.find((x) => x.key === EAddressValues.longitude)!.value =
+      data.longitude;
+    this.children.find((x) => x.key === EAddressValues.latitude)!.value =
+      data.latitude;
   }
 
   constructor(options: IInputAddress = {}) {

@@ -4,3 +4,4 @@ export * from './files/temporary-files';
 
 export * from './civility/civility';
 export * from './type';
+export * from './culture';

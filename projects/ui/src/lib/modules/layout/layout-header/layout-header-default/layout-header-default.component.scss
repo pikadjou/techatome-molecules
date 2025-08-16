@@ -1,0 +1,29 @@
+@import "camelot-export";
+
+.more,
+.back {
+  width: 32px;
+}
+.icons {
+  user-select: none;
+
+  .back {
+    text-align: left;
+  }
+  .title {
+    margin: auto;
+
+    @include fontSizeBody(md, true);
+
+    text-align: center;
+  }
+  .more {
+    text-align: right;
+  }
+}
+
+cam-font-icon {
+  padding: get-var(space, xs);
+  cursor: pointer;
+  display: block;
+}

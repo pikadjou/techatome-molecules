@@ -24,7 +24,7 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
   firstRender: boolean = true;
   composedKeyForGroup: boolean = true;
 
-  declare formControl?: FormGroup;
+  override formControl?: FormGroup;
 
   constructor(options: IInputDynamic = {}) {
     super(options);
@@ -58,7 +58,7 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
   public override createFormControl(group: FormGroup): void {
     this.formControl = new FormGroup({});
     const inputGroupKeys = Object.keys(this.inputsGroup);
-    inputGroupKeys.forEach(key => {
+    inputGroupKeys.forEach((key) => {
       this._addControl(this.inputsGroup[key], key);
     });
     if (this.firstRender && this.template && inputGroupKeys.length === 0) {
@@ -69,10 +69,13 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
 
   private _addControl(inputs: InputBase<any>[], key: string): void {
     const childGroup = new FormGroup({});
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       input.createFormControl(childGroup);
     });
-    this.formControl?.addControl(this.composedKeyForGroup ? this.key + '-' + key : key, childGroup);
+    this.formControl?.addControl(
+      this.composedKeyForGroup ? this.key + '-' + key : key,
+      childGroup
+    );
     this.inputsGroup[key] = inputs;
   }
 

@@ -1,9 +1,21 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/form-input",
+  "dest": "dist",
+
   "lib": {
     "entryFile": "src/public-api.ts",
     "styleIncludePaths": ["../../styles/src/style"]
   },
-  "allowedNonPeerDependencies": ["@angular", "@ta"]
+  "allowedNonPeerDependencies": [
+    "@angular",
+    "@camelot",
+    "@types",
+    "luxon",
+    "ngx-material-timepicker",
+    "@editorjs",
+    "codex-notifier",
+    "codex-tooltip",
+    "libphonenumber-js",
+    "intl-tel-input"
+  ]
 }

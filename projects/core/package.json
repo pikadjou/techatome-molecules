@@ -1,0 +1,33 @@
+{
+  "name": "@camelot/core",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/core",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
+  "peerDependencies": {
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
+  },
+  "dependencies": {
+    "@camelot/files-extended": "^3.16.0-beta.4",
+    "@camelot/form-basic": "^3.16.0-beta.4",
+    "@camelot/form-model": "^3.16.0-beta.4",
+    "@camelot/icons": "^3.16.0-beta.4",
+    "@camelot/styles": "^3.16.0-beta.4",
+    "@camelot/translation": "^3.16.0-beta.4",
+    "@camelot/ui": "^3.16.0-beta.4",
+    "@camelot/user": "^3.16.0-beta.4",
+    "@camelot/utils": "^3.16.0-beta.4",
+    "ag-grid-angular": "^31.0.1",
+    "ag-grid-community": "^31.0.1",
+    "ag-grid-enterprise": "^31.0.1",
+    "@angular/google-maps": "20.0.2",
+    "@googlemaps/markerclusterer": "2.5.3",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
+}

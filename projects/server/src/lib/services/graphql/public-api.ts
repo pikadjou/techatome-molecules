@@ -7,5 +7,3 @@ export * from './helpers/queries';
 export * from './helpers/mutations';
 
 export * from './graph.service';
-
-export { gql as Apollo_gql } from 'apollo-angular';

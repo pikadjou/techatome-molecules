@@ -1,0 +1,53 @@
+<div class="translation-container">
+  <ng-container *ngIf="this.input.label">
+    <cam-title [level]="3" [isBold]="true">{{
+      this.input.label | translate
+    }}</cam-title>
+  </ng-container>
+  <div class="flex-row align-center g-space-md">
+    <cam-toggle-navigation
+      *ngIf="this.cultureMenu"
+      [menu]="this.cultureMenu"
+      container="tab"
+    ></cam-toggle-navigation>
+    <cam-button
+      size="small"
+      [matMenuTriggerFor]="menu"
+      [stopPropagationActivation]="false"
+      >+</cam-button
+    >
+  </div>
+
+  <div class="pt-space-md">
+    <ng-container *ngFor="let input of this.getInputs(this.currentCulture)">
+      <div [ngClass]="input.class" *ngIf="input">
+        <ng-container
+          [ngTemplateOutlet]="this.inputsTemplate"
+          [ngTemplateOutletContext]="{
+            input: input
+          }"
+        >
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<mat-menu #menu="matMenu">
+  <div *ngFor="let culture of this.cultureList">
+    <div class="flex-row g-space-sm p-space-sm">
+      <ng-container *ngIf="this.hasKey(culture.name)">
+        <cam-font-icon name="check-line" class="checked"></cam-font-icon>
+        <cam-link (action)="this.remove(culture.name)">{{
+          culture.name
+        }}</cam-link>
+      </ng-container>
+      <ng-container *ngIf="!this.hasKey(culture.name)">
+        <cam-font-icon name="check-line"> </cam-font-icon>
+        <cam-link (action)="this.add(culture.name)">{{
+          culture.name
+        }}</cam-link>
+      </ng-container>
+    </div>
+  </div>
+</mat-menu>

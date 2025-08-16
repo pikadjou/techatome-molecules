@@ -1,0 +1,81 @@
+import { Component, Input } from '@angular/core';
+
+import { CamSizes } from '@camelot/styles';
+
+export interface UserLogoNaming {
+  name: string;
+  firstName: string | null;
+  trigram: string;
+}
+
+export interface UserLogoData {
+  firstName: string;
+  lastName: string;
+  trigram?: string;
+  picture?: string;
+}
+@Component({
+  selector: 'cam-user-logo',
+  templateUrl: './user-logo.component.html',
+  styleUrls: ['./user-logo.component.scss'],
+})
+export class UserLogoComponent {
+  /**
+   * @deprecated
+   * User information containing his profile picture and his naming
+   */
+  @Input()
+  userInfo?: { profilePictureUrl?: string; naming: UserLogoNaming | null };
+
+  /**
+   * User information containing his profile picture and his naming
+   */
+  @Input()
+  user?: UserLogoData;
+
+  /**
+   * Size of user logo desired
+   */
+  @Input()
+  size?: CamSizes = 'lg';
+
+  @Input()
+  forcedSize?: number;
+
+  @Input()
+  defaultType: 'font' | 'trigram' = 'font';
+
+  get sizeValue() {
+    if (this.forcedSize) {
+      return this.forcedSize;
+    }
+    switch (this.size) {
+      case 'sm':
+        return 16;
+      case 'md':
+        return 24;
+      case 'lg':
+        return 48;
+      case 'xl':
+        return 70;
+      default:
+        return 48;
+    }
+  }
+
+  public getTrigram() {
+    const trigram = this.user?.trigram || this.userInfo?.naming?.trigram;
+    if (trigram) {
+      return trigram;
+    }
+
+    return this._trigram(this.user?.firstName || this.userInfo?.naming?.trigram);
+  }
+
+  private _trigram = (name: string | null | undefined) => {
+    if (!name) return '';
+    if (name.length < 4) return name;
+
+    return (name[0] + name[2] + name[3]).toUpperCase();
+  };
+}

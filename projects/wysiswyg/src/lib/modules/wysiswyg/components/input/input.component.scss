@@ -1,3 +1,5 @@
+@import 'camelot-export';
+
 .max-height {
   max-height: 300px;
   overflow: auto;
@@ -5,4 +7,32 @@
 
 .cdx-block {
   max-width: 100% !important;
+}
+
+:host ::ng-deep {
+  .ce-inline-tool--color__actions-container {
+    @include flex-column();
+    gap: get-var(space, sm);
+
+    .ce-inline-tool--color__action-list {
+      @include flex-start();
+      list-style-type: none;
+      margin: 0;
+      padding: get-var(space, sm);
+
+      gap: get-var(space, sm);
+
+      .ce-inline-tool--color__action-list-item {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #000;
+        text-align: center;
+        justify-content: center;
+
+        &:first-child {
+          content-visibility: hidden;
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,14 @@
+@import "camelot-export";
+
+.text {
+  @include fontSizeBody(md);
+}
+.sm {
+  @include fontSizeBody(sm);
+}
+.xs {
+  @include fontSizeBody(xs);
+}
+.bold {
+  @include fontSizeBody(md, true);
+}

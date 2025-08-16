@@ -1,0 +1,27 @@
+<swiper-container
+  #swiperContainer
+  [attr.slides-per-view]="this.slidesPerPage"
+  (transitionend)="this.slideChanged($event)"
+  [attr.free-mode]="this.isFreeMode"
+  [attr.slides-per-group]="this.slidesPerGroup"
+  [attr.zoom]="true"
+  [attr.pagination]="{
+    type: 'bullets',
+  }"
+  watch-slides-progress="true"
+  init="true"
+  class="w-full"
+  active-index="3"
+>
+  <ng-container *ngFor="let element of this.slides; trackBy: this.trackByKey">
+    <swiper-slide *ngIf="element.visible$ | async">
+      <ng-container
+        [ngTemplateOutlet]="this.swipeTemplate"
+        [ngTemplateOutletContext]="{
+          element: element
+        }"
+      >
+      </ng-container>
+    </swiper-slide>
+  </ng-container>
+</swiper-container>

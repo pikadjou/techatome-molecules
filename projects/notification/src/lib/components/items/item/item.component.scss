@@ -1,0 +1,34 @@
+@import "camelot-export";
+
+.item-container {
+  @include flex-row();
+  gap: get-var(space, md);
+  padding: spaceBase(1.25);
+
+  &:hover {
+    background-color: get-var(surface, brand, tertiary);
+  }
+  &.new {
+    background-color: get-var(surface, brand, tertiary);
+  }
+  .tenant-name {
+    @include fontSizeBody(sm);
+    color: get-var(text, brand, primary);
+  }
+  .title {
+    @include fontSizeBody(md, true);
+  }
+
+  .info {
+    @include flex-row();
+
+    .project-name {
+      @include fontSizeBody(sm);
+      color: get-var(text, secondary);
+    }
+  }
+  .extra-info {
+    @include fontSizeKey(xs);
+    color: get-var(text, tertiary);
+  }
+}

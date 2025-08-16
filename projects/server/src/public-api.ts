@@ -16,16 +16,14 @@ export * from './lib/services/server/interface';
 export * from './lib/services/server/request';
 export * from './lib/services/server/response';
 
+export * from './lib/services/error.service';
+
 export * from './lib/services/logger';
 
 export * from './lib/services/graphql/public-api';
+export * from './lib/services/strapi/public-api';
 
 export * from './lib/services/server/token';
 
-export * from './lib/services/strapi/public-api';
-
-export * from './lib/services/user/public-api';
-
 export * from './lib/provider';
-
-
+export * from './lib/server.module';

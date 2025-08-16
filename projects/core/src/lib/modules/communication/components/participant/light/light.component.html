@@ -1,0 +1,6 @@
+<div class="participant-light-container flex-start g-space-sm">
+  <cam-badge
+    *ngFor="let participant of this.participants; trackBy: trackById"
+    [value]="this.getFullName(participant)"
+  ></cam-badge>
+</div>

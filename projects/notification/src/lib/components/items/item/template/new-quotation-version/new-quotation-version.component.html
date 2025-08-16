@@ -1,0 +1,9 @@
+<cam-notification-item [notification]="this.notification" (click)="this.goTo()">
+  <cam-notification-item-title>
+    {{
+      "notification.items.new-quotation-version.title"
+        | translate : this.getTranslation()
+    }}
+  </cam-notification-item-title>
+  <cam-notification-item-icon icon="article-line"></cam-notification-item-icon>
+</cam-notification-item>

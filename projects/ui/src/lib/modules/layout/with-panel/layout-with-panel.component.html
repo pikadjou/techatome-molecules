@@ -1,0 +1,9 @@
+<mat-drawer-container hasBackdrop [ngClass]="{ isOpen: this.open }">
+  <mat-drawer #drawer [position]="'end'" class="drawer">
+    <ng-content select="cam-layout-panel"></ng-content>
+  </mat-drawer>
+
+  <div class="cam-layout-content-container">
+    <ng-content select="cam-layout-content"></ng-content>
+  </div>
+</mat-drawer-container>

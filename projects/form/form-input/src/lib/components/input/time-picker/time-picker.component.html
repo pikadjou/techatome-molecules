@@ -1,0 +1,16 @@
+<cam-input-layout [input]="this.input">
+  <input
+    matInput
+    #focusedElement
+    class="form-control"
+    [ngxTimepicker]="picker"
+    [formControl]="$any(this.input.formControl)"
+    [value]="this.input.value"
+    [format]="24"
+    readonly
+  />
+  <ngx-material-timepicker
+    #picker
+    [timepickerClass]="'time-picker-container-class'"
+  ></ngx-material-timepicker>
+</cam-input-layout>

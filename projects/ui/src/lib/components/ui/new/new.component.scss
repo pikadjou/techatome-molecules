@@ -1,0 +1,35 @@
+@import "camelot-export";
+
+.bullet {
+  &.is-relative {
+    position: relative;
+  }
+  &.is-absolute {
+    position: absolute;
+  }
+
+  &.xs {
+    &.is-absolute {
+      top: 0px;
+      right: 0px;
+    }
+  }
+  &.sm {
+    &.is-absolute {
+      top: -2px;
+      right: -2px;
+    }
+  }
+  &.md {
+    &.is-absolute {
+      top: -5px;
+      right: -5px;
+    }
+  }
+  &.lg {
+    &.is-absolute {
+      top: -8px;
+      right: -8px;
+    }
+  }
+}

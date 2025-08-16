@@ -1,0 +1,25 @@
+@import "camelot-export";
+
+.hello-user-container {
+  display: flex;
+  flex-direction: column;
+  gap: get-var(space, sm);
+
+  .title {
+    @include fontSizeBody(md, true);
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: center;
+    color: get-var(neutral, 900);
+  }
+
+  .trigram {
+    margin: auto;
+  }
+
+  .footer {
+    @include fontSizeHeader(h1);
+    text-align: center;
+    color: get-var(neutral, 900);
+  }
+}

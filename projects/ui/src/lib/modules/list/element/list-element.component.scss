@@ -1,0 +1,30 @@
+@import "camelot-export";
+
+.list-element {
+  @include space-between();
+  padding-top: get-var(space, xs);
+  padding-bottom: get-var(space, xs);
+
+  .titles-container {
+    margin: auto 0;
+  }
+
+  .tag-container {
+    margin-left: auto;
+    .list-tag-container {
+      text-align: right;
+      margin-left: auto;
+    }
+  }
+  &:hover {
+    background-color: get-var(surface, brand, tertiary);
+    cursor: pointer;
+  }
+}
+
+.responsive-container {
+  @include flex-column();
+  @include media-breakpoint-up(mobile) {
+    @include flex-row();
+  }
+}

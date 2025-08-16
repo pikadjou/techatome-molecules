@@ -1,0 +1,20 @@
+<div class="hello-user-container">
+  <div *ngIf="this.title" class="title">{{ this.title | translate }}</div>
+
+  <div class="trigram" *ngIf="this.userInfo">
+    <cam-user-logo
+      [userInfo]="this.userInfo"
+      [size]="this.bulletSize"
+    ></cam-user-logo>
+  </div>
+
+  <div class="footer">
+    <div *ngIf="this.userInfo?.naming?.firstName">
+      {{ this.userInfo?.naming?.firstName }}
+    </div>
+    <div *ngIf="this.userInfo?.naming?.name">
+      {{ this.userInfo?.naming?.name }}
+    </div>
+    <div *ngIf="this.footer">{{ this.footer | translate }}</div>
+  </div>
+</div>

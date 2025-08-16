@@ -1,0 +1,20 @@
+<cam-notification-item [notification]="this.notification" (click)="this.goTo()">
+  <cam-notification-item-title>
+    <div class="flex-row g-space-sm">
+      {{
+        "notification.items.project-status-changed.title"
+          | translate : this.getTranslation()
+      }}
+      <div class="d-flex">
+        <ng-container
+          *ngIf="this.template"
+          [ngTemplateOutlet]="this.template"
+          [ngTemplateOutletContext]="{
+            data: this.projectStatus
+          }"
+        ></ng-container>
+      </div>
+    </div>
+  </cam-notification-item-title>
+  <cam-notification-item-icon icon="projects"></cam-notification-item-icon>
+</cam-notification-item>

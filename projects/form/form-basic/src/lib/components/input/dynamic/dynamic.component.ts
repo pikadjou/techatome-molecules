@@ -1,14 +1,14 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
-import { InputBase, InputDynamic } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
+import { InputBase, InputDynamic } from '@camelot/form-model';
+import { CamBaseComponent } from '@camelot/utils';
 
 @Component({
-  selector: 'ta-input-dynamic',
+  selector: 'cam-input-dynamic',
   templateUrl: './dynamic.component.html',
   styleUrls: ['./dynamic.component.scss'],
 })
-export class DynamicComponent extends TaBaseComponent {
+export class DynamicComponent extends CamBaseComponent {
   @Input()
   public inputsTemplate!: TemplateRef<any>;
 

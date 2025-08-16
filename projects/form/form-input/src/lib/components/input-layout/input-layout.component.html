@@ -1,0 +1,10 @@
+<cam-form-label [input]="this.input"></cam-form-label>
+
+<div
+  class="input-layout-container"
+  [ngClass]="[this.input.formControl?.invalid && this.input.formControl?.touched ? 'error' : '']"
+  [ngStyle]="this.containerStyles"
+>
+  <ng-content></ng-content>
+</div>
+<cam-input-error [input]="this.input"></cam-input-error>

@@ -1,0 +1,14 @@
+<ng-template #template>
+  <ng-container *ngIf="this.breakpoints.isTablette">
+    <cam-communication-template-choice-mobile
+      [type]="this.type"
+      (selected)="this.select($event)"
+    ></cam-communication-template-choice-mobile>
+  </ng-container>
+  <ng-container *ngIf="!this.breakpoints.isTablette">
+    <cam-communication-template-choice-desktop
+      [type]="this.type"
+      (selected)="this.select($event)"
+    ></cam-communication-template-choice-desktop>
+  </ng-container>
+</ng-template>

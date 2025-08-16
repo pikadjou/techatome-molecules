@@ -1,0 +1,22 @@
+<div
+  class="list-element"
+  [class.list-border]="this.withSeparator"
+  [class.responsive-container]="this.flexColumn"
+>
+  <div class="titles-container" (click)="this.action.emit()">
+    <div class="list-title-container">
+      <ng-content select="cam-list-title"></ng-content>
+    </div>
+    <div class="list-sub-title-container">
+      <ng-content select="cam-list-sub-title"></ng-content>
+    </div>
+  </div>
+  <div class="tag-container align-center">
+    <div class="list-tag-container">
+      <ng-content select="cam-list-tag"></ng-content>
+    </div>
+  </div>
+  <div class="list-extra-information" (click)="this.action.emit()">
+    <ng-content select="cam-list-extra-information"></ng-content>
+  </div>
+</div>

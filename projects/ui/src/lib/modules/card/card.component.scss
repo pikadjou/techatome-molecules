@@ -1,0 +1,51 @@
+@import "camelot-export";
+
+$spacing: get-var(space, md);
+
+.card {
+  &.hover {
+    @include hover-bgc();
+  }
+  border-radius: get-var(space, md);
+
+  position: relative;
+
+  padding: $spacing;
+
+  background-color: get-var(surface, primary);
+  color: get-var(text, primary);
+
+  @include fontSizeBody(md);
+
+  &.full-height {
+    height: calc(100% - $spacing * 2);
+  }
+  &.highlight {
+    background-color: get-var(surface, hover, secondary);
+    border-color: 1px solid get-var(border, secondary);
+  }
+  &.card-shadow {
+    @include shadow-mixin(black, md);
+  }
+
+  .responsive-content {
+    @include flex-column();
+    @include media-breakpoint-up(tablette) {
+      @include flex-row();
+      .img-container {
+        order: 2;
+      }
+    }
+  }
+}
+
+@include in-context(".card-force-mobile") {
+  .card {
+    .responsive-content {
+      @include flex-column();
+      .img-container {
+        order: 0;
+      }
+    }
+  }
+}

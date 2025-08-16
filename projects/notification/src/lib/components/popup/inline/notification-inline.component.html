@@ -2,19 +2,19 @@
   <div class="notification-container">
     <div class="text">
       <div class="label" [ngClass]="this.getTypeClass()">
-        <mat-icon class="mr-space-xs">{{ this.getIcon() }}</mat-icon>
+        <cam-font-icon class="mr-space-xs" [name]="this.getIcon()" type="md"></cam-font-icon>
         <ng-container [ngSwitch]="true" *ngIf="!this.message">
           <ng-container *ngSwitchCase="this.isError">
-            {{ "notification.inline.label.error" | translate }}
+            {{ 'notification.inline.label.error' | translate }}
           </ng-container>
           <ng-container *ngSwitchCase="this.isWarning">
-            {{ "notification.inline.label.warning" | translate }}
+            {{ 'notification.inline.label.warning' | translate }}
           </ng-container>
           <ng-container *ngSwitchCase="this.isInformation">
-            {{ "notification.inline.label.info" | translate }}
+            {{ 'notification.inline.label.info' | translate }}
           </ng-container>
           <ng-container *ngSwitchCase="this.isSuccess">
-            {{ "notification.inline.label.success" | translate }}
+            {{ 'notification.inline.label.success' | translate }}
           </ng-container>
         </ng-container>
         <ng-container [ngSwitch]="true" *ngIf="this.message">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <span class="close" (click)="this.close()" *ngIf="this.showClose">
-      <mat-icon>close</mat-icon>
+      <cam-font-icon name="close"></cam-font-icon>
     </span>
   </div>
 </ng-container>
@@ -31,3 +31,7 @@
 <ng-container *ngIf="!this.showMessage">
   <ng-content></ng-content>
 </ng-container>
+
+@if (this.isError) {
+  <cam-link size="sm" class="color-semantic-orange-dark flex-end" (action)="this.openErrorBox()">Open</cam-link>
+}

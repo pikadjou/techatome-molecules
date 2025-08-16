@@ -1,0 +1,16 @@
+@import 'camelot-export';
+
+.children {
+  position: relative;
+  margin-left: get-var(space, xl);
+
+  &::before {
+    content: '';
+    background-color: get-var(surface, brand, primary);
+    width: 2px;
+    position: absolute;
+    top: 0;
+    left: calc(get-var(space, xl) * -0.5);
+    bottom: 18px;
+  }
+}

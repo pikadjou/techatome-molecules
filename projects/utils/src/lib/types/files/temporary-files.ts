@@ -15,8 +15,8 @@ export class TemporaryFile {
     this.files = this.files.concat(fileData);
   }
   public removeFiles(files: FileStructure[]): void {
-    const urls = files.map(file => file.localUrl);
-    this.files = this.files.filter(file => !urls.includes(file.url));
+    const urls = files.map((file) => file.localUrl);
+    this.files = this.files.filter((file) => !urls.includes(file.url));
   }
   public removeAll(): void {
     this.files = [];

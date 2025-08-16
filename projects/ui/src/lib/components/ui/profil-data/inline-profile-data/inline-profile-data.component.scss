@@ -1,0 +1,11 @@
+@import "camelot-export";
+
+.mail {
+  color: get-var(neutral, 500);
+  @include fontSizeBody(xs);
+  @include text-overflow();
+}
+.text {
+  @include fontSizeBody(sm);
+  @include text-overflow();
+}

@@ -5,10 +5,10 @@ import { Document } from '../../../../services/documents/dto/document';
 import { asBlob } from 'html-docx-js-typescript';
 import { saveAs } from 'file-saver';
 
-import { TaAbstractComponent } from '@ta/utils';
+import { HandleEntity, TaAbstractComponent } from '@ta/utils';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TaButtonComponent } from '@ta/ui';
+import { TaButtonComponent, TitleComponent } from '@ta/ui';
 import {
   extractSections,
   extractReplaces,
@@ -35,7 +35,7 @@ import { ENotificationCode, TaNotificationService } from '@ta/notification';
 
 @Component({
   selector: 'app-document-view',
-  imports: [AsyncPipe, FormsModule, TaButtonComponent, MatIcon, TaFormComponent],
+  imports: [AsyncPipe, FormsModule, TaButtonComponent, TitleComponent, MatIcon, TaFormComponent],
   templateUrl: './view.component.html',
   styleUrl: './view.component.scss',
 })

@@ -1,0 +1,10 @@
+<div class="label justify-end">
+  {{
+    'communication.message.system.cases.task-merged'
+      | translate
+        : {
+            reference: this.case.SourceReference ?? '',
+            title: this.case.SourceTitle ?? '',
+          }
+  }}
+</div>

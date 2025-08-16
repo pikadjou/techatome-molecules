@@ -1,0 +1,18 @@
+@import "camelot-export";
+
+.participant-logo {
+  margin-left: -7px;
+}
+
+cam-font-icon {
+  padding: get-var(space, sm);
+  border-radius: get-var(radius, rounded);
+  border: 1px solid get-var(border, secondary);
+  background-color: get-var(brand, 50);
+}
+
+:host ::ng-deep {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: get-var(brand, 50);
+  }
+}

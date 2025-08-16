@@ -1,7 +1,13 @@
-import { Directive, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Directive,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive({
-  selector: '[taOnRender]',
+  selector: '[camOnRender]',
 })
 export class OnRenderDirective {
   @Input() onRender!: boolean;
@@ -9,7 +15,9 @@ export class OnRenderDirective {
   @Output() rendered = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['onRender'].previousValue !== changes['onRender'].currentValue) {
+    if (
+      changes['onRender'].previousValue !== changes['onRender'].currentValue
+    ) {
       this.rendered.emit();
     }
   }

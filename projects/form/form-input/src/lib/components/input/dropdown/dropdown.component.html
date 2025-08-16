@@ -1,43 +1,48 @@
-<ng-container *ngIf="this.input">
-  <ta-form-label [input]="this.input"></ta-form-label>
+@if (this.input) {
+  <cam-overlay-panel [panelConfig]="{ matchTriggerWidth: true }" (closed)="this.onOverlayClosed()">
+    <ng-template #panelTrigger>
+      <cam-input-layout [input]="this.input">
+        <div #focusedElement class="custom-dropdown-button form-control" [class.disabled]="this.input.disabled">
+          <span class="selected-value align-center g-space-xs">
+            @if (!this.input.multiple) {
+              <span *ngIf="this.input.value; else placeholder">
+                {{ this.getOptionName(this.input.value) | translate }}
+              </span>
+              <ng-template #placeholder>
+                {{ 'form.input.dropdown.novalue' | translate }}
+              </ng-template>
+            }
+            @if (this.input.multiple) {
+              <cam-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
+                {{ this.getOptionName(value) | translate }}
+              </cam-label>
+            }
+          </span>
+          <cam-font-icon name="arrow-big-bottom" type="sm"></cam-font-icon>
+        </div>
+      </cam-input-layout>
+    </ng-template>
 
-  <mat-form-field [floatLabel]="'auto'">
-    <mat-select
-      #box
-      panelClass="dropdown-panel"
-      [disabled]="this.input.disabled"
-      [id]="this.input.key"
-      [formControl]="$any(this.input.formControl)"
-      [multiple]="this.input.multiple"
-      (selectionChange)="this.onChange($event)"
-    >
-      <mat-option
-        *ngIf="this.input.showNothingOption"
-        [value]="null"
-      ></mat-option>
-      <mat-option
-        *ngFor="let opt of this.input.options | async"
-        [value]="opt.id"
-        [disabled]="opt.disabled || false"
-      >
-        {{ opt.name | translate }}
-      </mat-option>
-    </mat-select>
+    <ng-template #panelContent>
+      <div class="custom-menu">
+        <ng-container *ngIf="this.input.withSearch">
+          <input class="input-search" type="search" placeholder="Rechercher..." (input)="this.onSearchChange($event)" />
+        </ng-container>
 
-    <mat-hint>
-      <div *ngIf="this.input.message" class="message">
-        <span> {{ this.input.message }} </span>
+        <button
+          *ngFor="let opt of this.filteredOptions"
+          [attr.cdkMenuItem]="!this.input.multiple ? '' : null"
+          (click)="this.selectOption(opt.id, $event)"
+          [class.selected]="this.isSelected(opt.id)"
+          [class.disabled]="opt.disabled"
+          class="dropdown-option space-between"
+        >
+          {{ opt.name | translate }}
+          @if (this.isSelected(opt.id)) {
+            <cam-font-icon class="checkmark" name="check-line"></cam-font-icon>
+          }
+        </button>
       </div>
-    </mat-hint>
-    <mat-error *ngIf="this.input.formControl?.hasError('message')">
-      <div class="alert alert-danger" role="alert">
-        {{ this.input.formControl?.getError("message") }}
-      </div>
-    </mat-error>
-    <mat-error *ngIf="this.input.formControl?.hasError('required')">
-      <div class="alert alert-danger" role="alert">
-        {{ this.input.label | translate }} est <strong>obligatoire</strong>
-      </div>
-    </mat-error>
-  </mat-form-field>
-</ng-container>
+    </ng-template>
+  </cam-overlay-panel>
+}

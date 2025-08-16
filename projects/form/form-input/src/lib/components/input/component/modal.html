@@ -1,0 +1,8 @@
+<cam-layout-modal style="classic" title="input.component.modal.title">
+  @if(this.data.input.template) {
+  <ng-template
+    [ngTemplateOutlet]="this.data.input.template"
+    [ngTemplateOutletContext]="{ selectedValue$: this.selectedValue$ }"
+  ></ng-template>
+  }
+</cam-layout-modal>

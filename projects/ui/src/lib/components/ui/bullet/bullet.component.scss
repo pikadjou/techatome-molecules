@@ -1,0 +1,82 @@
+@import "camelot-export";
+
+.bullet-container {
+  display: inline-block;
+  @include fontSizeBody(xs);
+
+  border-radius: get-var(radius, full);
+  border: 1px solid transparent;
+
+  color: get-var(text, invert, primary);
+  @include fontSizeKey(xxs, true);
+
+  &.xs {
+    width: 5px;
+    height: 5px;
+  }
+  &.sm {
+    width: 10px;
+    height: 10px;
+  }
+  &.md {
+    width: 14px;
+    height: 14px;
+  }
+  &.lg {
+    width: 20px;
+    height: 20px;
+  }
+}
+.bullet-default {
+  color: get-var(text, brand, primary);
+  background: get-var(surface, default);
+  border-color: get-var(border, brand);
+}
+
+.bullet-secondary {
+  color: get-var(text, body);
+  background: get-var(surface, secondary);
+  border-color: get-var(neutral, 600);
+}
+
+.bullet-success {
+  color: get-var(text, success);
+  background: get-var(surface, success);
+  border-color: get-var(border, success);
+}
+
+.bullet-warning {
+  color: get-var(text, warning);
+  background: get-var(surface, warning);
+  border-color: get-var(border, warning);
+}
+
+.bullet-alert {
+  color: get-var(text, alert);
+  background: get-var(surface, alert);
+  border-color: get-var(border, alert);
+}
+
+.bullet-purple {
+  color: get-var(semantic, purple-dark);
+  background: get-var(semantic, purple-light);
+  border-color: get-var(semantic, purple-dark);
+}
+
+.bullet-new {
+  background: get-var(surface, brand, primary);
+  border-color: get-var(surface, brand, primary);
+}
+
+.bullet-notif {
+  height: 16px;
+  width: 16px;
+
+  background: get-var(surface, brand, primary);
+  border-color: get-var(surface, brand, primary);
+
+  div {
+    @include align-center();
+    @include justify-center;
+  }
+}

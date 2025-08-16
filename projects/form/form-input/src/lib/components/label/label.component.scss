@@ -1,11 +1,7 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
+@import "camelot-export";
 
-mat-label {
+.form-label {
   display: block;
-
-  @include fonts.fontSizeBody(sm);
-  color: common.get-var(brand, 700);
-
-  margin-bottom: common.get-var(space, sm);
+  @include fontSizeBody(sm);
+  color: get-var(brand, 700);
 }

@@ -1,0 +1,15 @@
+<cam-list-container class="content">
+  <ng-container *ngFor="let item of this.menu.elements">
+    <cam-list-element>
+      <cam-list-title>
+        <div>
+          <cam-font-icon
+            *ngIf="item.icon"
+            [name]="$any(item.icon)"
+          ></cam-font-icon>
+          {{ item.label }}
+        </div>
+      </cam-list-title>
+    </cam-list-element>
+  </ng-container>
+</cam-list-container>

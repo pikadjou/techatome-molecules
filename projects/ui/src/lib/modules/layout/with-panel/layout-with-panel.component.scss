@@ -1,0 +1,15 @@
+@import "camelot-export";
+
+.drawer {
+  width: 100%;
+}
+
+mat-drawer-container {
+  background: transparent;
+}
+
+.isOpen {
+  .app-layout-content-container {
+    @include setHeight($isMinHeight: false, $withBottom: true);
+  }
+}

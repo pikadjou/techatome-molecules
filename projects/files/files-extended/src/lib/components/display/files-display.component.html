@@ -1,0 +1,36 @@
+<div class="toggle-navigation">
+  <cam-toggle-navigation
+    [menu]="this.menu"
+    [container]="'tab'"
+  ></cam-toggle-navigation>
+</div>
+
+<div *ngIf="this.canDisplayTempsFiles">
+  <cam-files-list [files]="this.tempFiles"></cam-files-list>
+  <hr />
+</div>
+
+<cam-loader [isLoading]="this.requestState.isLoading()" skeleton="fileList">
+  <cam-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
+    <div class="list">
+      <cam-files-list
+        [files]="(this.files$ | async) || []"
+        (fileSelected)="this.fileSelected.emit($event)"
+        (moreInformationSelected)="this.moreInformationSelected.emit($event)"
+      >
+      </cam-files-list>
+    </div>
+  </cam-error>
+</cam-loader>
+
+<div class="floating-add" *ngIf="this.canAddFile === true">
+  <cam-files-upload
+    [features]="this.getFeature()"
+    [canSelectMultipleFiles]="this.canSelectMultipleFiles"
+    (filesPicked)="this.fileUploading.emit($event)"
+  >
+  </cam-files-upload>
+</div>

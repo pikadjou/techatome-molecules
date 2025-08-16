@@ -1,0 +1,28 @@
+<cam-loader [isLoading]="this.requestState.isLoading()">
+  <cam-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
+    <div class="flex-row g-space-sm">
+      <cam-form
+        class="flex-fill"
+        *ngIf="this.form"
+        [inputs]="this.form"
+        (valid)="this.createVariants($event)"
+        [loader]="this.requestState.isLoading()"
+      ></cam-form>
+
+      <div class="flex-column g-space-sm">
+        <div
+          *ngFor="let key of this.templateKeys$ | async"
+          class="flex-start align-center g-space-sm"
+        >
+          <cam-text>
+            {{ key }}
+          </cam-text>
+          <cam-text-to-clipboard [value]="key"></cam-text-to-clipboard>
+        </div>
+      </div>
+    </div>
+  </cam-error>
+</cam-loader>

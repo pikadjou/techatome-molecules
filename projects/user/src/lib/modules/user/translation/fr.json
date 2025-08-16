@@ -1,0 +1,10 @@
+{
+  "clientnumber": "Numero client: ",
+  "infos": "Infos",
+  "language": "Langue",
+  "login": "Me connecter",
+  "logout": "Se déconnecter",
+  "modify": "Modifier mon profil",
+  "params": "Paramètres",
+  "tenantlisttitle": "Numéros client"
+}

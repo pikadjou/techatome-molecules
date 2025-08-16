@@ -1,48 +1,16 @@
-<ta-form-label [input]="this.input"></ta-form-label>
+<cam-input-layout [input]="this.input">
+  <input
+    type="hidden"
+    #focusedElement
+    [formControl]="$any(this.input.formControl)"
+    [value]="this.input.value"
+  />
 
-<div class="input-group">
-  <mat-form-field class="textbox-container" [floatLabel]="'auto'">
-    <input
-      matInput
-      class="form-control"
-      [formControl]="$any(this.input.formControl)"
-      [errorStateMatcher]="this.matcher"
-      [value]="this.input.value"
-      style="display: none"
-    />
-
-    <ta-cms-editor-input
-      [initValue]="this.input.value"
-      (saved)="this.set($event)"
-      [saveOnChange]="true"
-    ></ta-cms-editor-input>
-
-    <mat-hint>
-      <small class="form-text text-muted">
-        <div *ngIf="this.input.message" class="message">
-          <span>{{ this.input.message }}</span>
-        </div>
-      </small>
-    </mat-hint>
-    <mat-error *ngIf="this.input.formControl?.hasError('message')">
-      <small class="form-text text-danger">
-        {{ this.input.formControl?.getError("message") }}
-      </small>
-    </mat-error>
-    <mat-error *ngIf="this.input.formControl?.hasError('minlength')">
-      <small class="form-text text-danger">
-        {{ "form.text-box.minimum-length" | translate }}
-      </small>
-    </mat-error>
-    <mat-error *ngIf="this.input.formControl?.hasError('type')">
-      <small class="form-text text-danger">{{
-        "form.text-box.error-occured" | translate
-      }}</small>
-    </mat-error>
-    <mat-error *ngIf="this.input.formControl?.hasError('required')">
-      <small class="form-text text-danger">
-        {{ "form.text-box.is-mandatory" | translate }}
-      </small>
-    </mat-error>
-  </mat-form-field>
-</div>
+  <cam-cms-editor-input
+    class="form-control"
+    [initValue]="this.input.value"
+    (saved)="this.set($event)"
+    [saveOnChange]="true"
+  >
+  </cam-cms-editor-input>
+</cam-input-layout>

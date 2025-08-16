@@ -1,0 +1,50 @@
+@import "camelot-export";
+
+$menu-size-medium: 100px;
+$menu-size-large: 220px;
+
+.layout-container {
+  @include simple-flex();
+  margin: 0;
+
+  .layout-content-container {
+    @include full-width();
+    overflow: hidden;
+
+    @include media-breakpoint-up(sm) {
+      order: 2;
+    }
+
+    .container {
+      width: auto;
+      @include media-breakpoint-up(sm) {
+        padding: get-var(components, header, top) get-var(space, md) 0
+          get-var(space, md);
+        padding-bottom: get-var(space, sm) !important;
+      }
+    }
+  }
+  .bottom-nav-container {
+    width: 100%;
+    @include media-breakpoint-down(sm) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+    }
+    @include media-breakpoint-up(sm) {
+      position: sticky;
+      width: $menu-size-medium;
+      order: 1;
+    }
+    @include media-breakpoint-up(lg) {
+      width: $menu-size-large;
+    }
+  }
+  &.is-menu-minimized {
+    .bottom-nav-container {
+      width: $menu-size-medium !important;
+    }
+  }
+}

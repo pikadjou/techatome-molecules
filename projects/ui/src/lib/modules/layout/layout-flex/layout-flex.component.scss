@@ -1,0 +1,40 @@
+@import "camelot-export";
+
+.flex-container {
+  @include flex-row;
+}
+.main {
+  @include flex-column;
+  @include full-width;
+
+  .left,
+  .center {
+    width: 100%;
+  }
+  .center {
+    border-top: 1px solid get-var(border, primary);
+    padding-top: get-var(space, md);
+  }
+
+  @include media-breakpoint-up(xxl) {
+    @include flex-row;
+
+    .left,
+    .center {
+      width: 50%;
+    }
+    .center {
+      border-top: none;
+      padding-top: none;
+      border-left: 1px solid get-var(border, primary);
+    }
+  }
+}
+
+.second {
+  display: flex;
+  border-left: 1px solid get-var(border, primary);
+  .right {
+    max-width: 300px;
+  }
+}

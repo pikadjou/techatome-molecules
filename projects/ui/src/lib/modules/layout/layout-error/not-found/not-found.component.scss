@@ -1,0 +1,17 @@
+@import "camelot-export";
+
+.not-found-container {
+  text-align: center;
+
+  cam-font-icon {
+    color: get-var(brand, 400);
+  }
+  .title {
+    @include fontSizeKey(key);
+    margin: get-var(space, md) 0;
+  }
+  .content {
+    @include fontSizeKey(key);
+    margin-bottom: get-var(space, md);
+  }
+}

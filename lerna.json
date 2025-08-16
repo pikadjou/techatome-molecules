@@ -1,0 +1,16 @@
+{
+  "command": {
+    "publish": {
+      "conventionalCommits": true
+    }
+  },
+  "npmClient": "yarn",
+  "packages": [
+    "projects/*",
+    "projects/files/*",
+    "projects/form/*",
+    "projects/config/*",
+    "projects/features/*"
+  ],
+  "version": "3.16.0-beta.4"
+}

@@ -1,0 +1,19 @@
+@import "camelot-export";
+
+:host ::ng-deep {
+  .list-container {
+    cam-list-element {
+      .list-border {
+        border-bottom: 1px solid get-var(border, primary);
+      }
+      display: block;
+
+      &:last-child {
+        border: none;
+      }
+      &:first-child {
+        padding-top: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "camelot-export";
+
+.profile {
+  margin-bottom: get-var(space, xl);
+
+  .title {
+    @include fontSizeKey(key);
+    text-align: center;
+    line-height: 32px;
+    margin-bottom: get-var(space, sm);
+    @include text-line-limit(2);
+
+    .main {
+      text-transform: uppercase;
+    }
+  }
+}

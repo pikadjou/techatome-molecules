@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-import { IGraphConfig } from '../graphql/models/graphConfig';
+import { TenantConfig } from './interface';
 
-export const GRAPHQL_CONFIG_TOKEN = new InjectionToken<IGraphConfig>('IGraphConfig');
+export const TENANT_CONFIG_TOKEN = new InjectionToken<TenantConfig>('TenantConfig');

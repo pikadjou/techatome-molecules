@@ -4,11 +4,8 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
-  TemplateRef,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -16,31 +13,37 @@ import {
 import Delimiter from '@editorjs/delimiter';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
+// @ts-ignore
+import ImageTool from '@editorjs/image';
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
-// @ts-ignore
 import Warning from '@editorjs/warning';
-import { Observable } from 'rxjs';
+import { ColorTool } from 'editorjs-color';
+import { Observable, firstValueFrom } from 'rxjs';
 
-import { TaBaseComponent } from '@ta/utils';
+import { CamDocumentsService } from '@camelot/services';
+import { CamTranslationService } from '@camelot/translation';
+import { CamBaseComponent, isNonNullable, isNotEmptyObject } from '@camelot/utils';
 
-import { WysiswgBlockData } from '../../public-api';
+import { WysiswgBlockData, convertBlocksToHtml } from '../../public-api';
+import { TagTool } from '../plugins/tag-editor/tag-editor';
 import * as en from './translation/en.json';
 import * as es from './translation/es.json';
 import * as fr from './translation/fr.json';
 import * as nl from './translation/nl.json';
 
+export type EditorInputSavedData = { blocks: WysiswgBlockData[]; tags: string[] };
 @Component({
-  selector: 'ta-cms-editor-input',
+  selector: 'cam-cms-editor-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })
-export class EditorInputComponent extends TaBaseComponent implements OnInit, AfterViewInit {
+export class EditorInputComponent extends CamBaseComponent implements OnInit, AfterViewInit {
   @Input()
   initValue?: WysiswgBlockData[] | null;
 
   @Input()
-  setNewValue$?: Observable<WysiswgBlockData[] | null>;
+  setNewValue$?: Observable<{ blocks: WysiswgBlockData[] | string | null; saveAfter?: boolean }>;
 
   @Input()
   requestSave$?: Observable<void>;
@@ -49,21 +52,32 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
   clear$?: Observable<void>;
 
   @Input()
+  users: { id: string; name: string }[] = [];
+
+  @Input()
   saveOnChange = false;
 
   @Input()
   maxHeight = false;
 
   @Output()
-  saved = new EventEmitter<WysiswgBlockData[]>();
+  changed = new EventEmitter<{ blocks: WysiswgBlockData[] }>();
 
-  // public translationService = inject(TaTranslationService);
-  public readonly languages: { [index: string]: { editorjs: { i18n: Object } & any } } = {
+  @Output()
+  saved = new EventEmitter<EditorInputSavedData>();
+
+  public translationService = inject(CamTranslationService);
+  public readonly languages: {
+    [index: string]: { editorjs: { i18n: Object } & any };
+  } = {
     en: en,
     es: es,
     fr: fr,
     nl: nl,
   };
+
+  private readonly _documentsService = inject(CamDocumentsService);
+  private _saveAfter = false;
 
   @ViewChild('editorjs', { static: true })
   editorjs!: ElementRef;
@@ -91,9 +105,14 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     if (this.setNewValue$) {
       this._registerSubscription(
         this.setNewValue$?.subscribe({
-          next: newValue => {
-            if (this.editorInstance && newValue) {
-              this.editorInstance.render({ blocks: newValue });
+          next: ({ blocks, saveAfter }) => {
+            this._saveAfter = saveAfter ?? false;
+            if (this.editorInstance && blocks) {
+              if (typeof blocks === 'string') {
+                this.editorInstance.blocks.renderFromHTML(blocks);
+              } else {
+                this.editorInstance.render({ blocks: blocks });
+              }
             }
           },
         })
@@ -105,46 +124,143 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     this.editorInstance = this.init();
   }
 
-  public save() {
-    if (this.editorInstance) {
-      this.editorInstance.save().then(data => {
-        this.saved.emit(data.blocks);
-      });
+  override ngOnDestroy(): void {
+    this.editorInstance?.destroy();
+  }
+  public async save() {
+    if (isNotEmptyObject(this.editorInstance)) {
+      const data = await this._extractWithColorTokenStyles();
+      if (!data) {
+        return;
+      }
+      this.saved.emit({ blocks: data.blocks, tags: this._extractTags(data.blocks) });
     }
   }
   public init(): EditorJS {
     const translations = this._getTranslation();
 
     return new EditorJS({
-      /**
-       * Id of Element that should contain Editor instance
-       */
       holder: this.editorjs.nativeElement,
       minHeight: 100,
-      data: { blocks: this.initValue ?? [] },
-    //  placeholder: translations['placeholder'],
+      data: { blocks: this.initValue },
+      placeholder: translations['placeholder'],
       tools: {
         header: Header,
         list: List,
         quote: Quote,
         delimiter: Delimiter,
         warning: Warning,
+        TextColor: {
+          class: ColorTool,
+          config: {
+            backgroundColorLabel: translations['colortool.backgroundColorLabel'],
+            frontColorLabel: translations['colortool.frontColorLabel'],
+          },
+        },
+        image: {
+          class: ImageTool,
+          config: {
+            uploader: {
+              uploadByFile: async (file: File) => {
+                return this.uploadByFile(file);
+              },
+            },
+          },
+        },
+        mention: {
+          class: TagTool,
+          config: {
+            users: this.users,
+          },
+        },
       },
       onChange: this._onChange,
       ...translations,
     });
   }
 
-  private _onChange = () => {
+  public uploadByFile = async (file: File) => {
+    const doc = await firstValueFrom(this._documentsService.addDocument$({ file }));
+
+    return {
+      success: 1,
+      file: {
+        url: doc.url,
+      },
+    };
+  };
+
+  private _onChange = async () => {
+    if (isNotEmptyObject(this.editorInstance)) {
+      const data = await this._extractWithColorTokenStyles();
+      if (!data) {
+        return;
+      }
+      this.changed.emit({ blocks: data.blocks });
+    }
     if (this.saveOnChange) {
       this.save();
     }
+    if (this._saveAfter) {
+      this.save();
+      this._saveAfter = false;
+    }
   };
   private _getTranslation() {
-    return {};
-    // if (!isNonNullable(this.translationService.getLanguage())) {
-    //   return {};
-    // }
-    // return this.languages[this.translationService.getLanguage()].editorjs ?? {};
+    if (!isNonNullable(this.translationService.getLanguage())) {
+      return {};
+    }
+    return this.languages[this.translationService.getLanguage()].editorjs ?? {};
+  }
+
+  private async _extractWithColorTokenStyles() {
+    const output = await this.editorInstance?.save();
+    if (!output) {
+      return null;
+    }
+
+    const styledSpans = Array.from(
+      this.editorjs.nativeElement.innerHTML.matchAll(/<span class="ce-inline-tool--color__token"(.*?)>/gs)
+    ).map((match: any) => ({
+      style: match[1].trim(), // `style`
+    }));
+
+    if (styledSpans.length === 0) {
+      return output;
+    }
+
+    let spanIndex = 0;
+    const updatedBlocks = output.blocks.map(block => {
+      if (block.type !== 'paragraph' || !block.data?.text) {
+        return block;
+      }
+
+      const newText = block.data.text.replace(/<span class="ce-inline-tool--color__token">/gs, (match: unknown) => {
+        const styled = styledSpans[spanIndex++];
+        if (!styled) {
+          return match;
+        }
+        return `<span class="ce-inline-tool--color__token" ${styled.style}>`;
+      });
+
+      return {
+        ...block,
+        data: {
+          ...block.data,
+          text: newText,
+        },
+      };
+    });
+
+    return {
+      ...output,
+      blocks: updatedBlocks,
+    };
+  }
+  private _extractTags(blocks: WysiswgBlockData<string, any>[]) {
+    const html = convertBlocksToHtml(blocks);
+    const regex = /data-user-id="([^"]+)"/g;
+    // Extraction des IDs sous forme de tableau
+    return [...html.matchAll(regex)].map(match => match[1]);
   }
 }

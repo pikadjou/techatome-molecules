@@ -1,29 +1,20 @@
-import { Component, Input } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatRadioModule} from '@angular/material/radio';
+import { Component } from '@angular/core';
 
-import { InputRadio } from '@ta/form-model';
-import { TaSizes } from '@ta/styles';
-import { TaBaseComponent, TranslatePipe } from '@ta/utils';
-import { FormLabelComponent } from '../../label/label.component';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { InputRadio } from '@camelot/form-model';
+import { CamSizes } from '@camelot/styles';
+import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-radio',
+  selector: 'cam-input-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
-  standalone: true,
-  imports: [AsyncPipe, NgClass, NgIf, MatFormFieldModule, MatRadioModule, FormsModule, ReactiveFormsModule, TranslatePipe, FormLabelComponent],
 })
-export class RadioComponent extends TaBaseComponent {
-  @Input() input!: InputRadio<any>;
-
+export class RadioComponent extends CamAbstractInputComponent<InputRadio<any>> {
   constructor() {
     super();
   }
 
-  public iconSize(option: { name?: string }): TaSizes {
+  public iconSize(option: { name?: string }): CamSizes {
     return this.hasLabel(option) ? 'xs' : 'sm';
   }
 

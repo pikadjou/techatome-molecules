@@ -1,9 +1,11 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
 
-export enum TaMainRoute {
+export enum CamMainRoute {
   HOME = 'HOME',
   USERLOGIN = 'USERLOGIN',
   USERLOGOUT = 'USERLOGOUT',
+  NOTIFICATIONS = 'NOTIFICATIONS',
+  REDIRECT = 'REDIRECT',
 }
 export interface IRoute {
   key: string;
@@ -12,19 +14,27 @@ export interface IRoute {
   children?: IRoute[];
 }
 
-export class TaRoutesCore {
+export class CamRoutesCore {
   public routes: IRoute[] = [
     {
-      key: TaMainRoute.HOME,
+      key: CamMainRoute.HOME,
       url: '',
     },
     {
-      key: TaMainRoute.USERLOGIN,
+      key: CamMainRoute.USERLOGIN,
       url: 'login',
     },
     {
-      key: TaMainRoute.USERLOGOUT,
+      key: CamMainRoute.USERLOGOUT,
       url: 'logout',
+    },
+    {
+      key: CamMainRoute.NOTIFICATIONS,
+      url: 'notifications',
+    },
+    {
+      key: CamMainRoute.REDIRECT,
+      url: 'redirect',
     },
   ];
 
@@ -34,26 +44,33 @@ export class TaRoutesCore {
     this.routes.push(route);
   }
   public addRoutes(routes: IRoute[]) {
-    routes.forEach(route => this.addRoute(route));
+    routes.forEach((route) => this.addRoute(route));
   }
   public getHome() {
-    return this.getAbsoluteUrl([TaMainRoute.HOME]);
+    return this.getAbsoluteUrl([CamMainRoute.HOME]);
   }
   public getLogin() {
-    return this.getAbsoluteUrl([TaMainRoute.USERLOGIN]);
+    return this.getAbsoluteUrl([CamMainRoute.USERLOGIN]);
   }
   public getLogout() {
-    return this.getAbsoluteUrl([TaMainRoute.USERLOGOUT]);
+    return this.getAbsoluteUrl([CamMainRoute.USERLOGOUT]);
   }
   public getUrl(eNums: string[], params: {} = {}, strict = false): string {
     const url = this._replaceParams(this._getUrl(eNums), params);
     return strict ? this._removeParams(url) : url;
   }
-  public getAbsoluteUrl<T>(eNums: string[], params: T = {} as T, queryParams: {[index: string]: string} | null = null, strict = false): string {
+  public getAbsoluteUrl(
+    eNums: string[],
+    params: {} = {},
+    strict = false
+  ): string {
     const url = this._replaceParams(this._getUrl(eNums, true), params);
-    return (strict ? this._removeParams(url) : url) + (queryParams ? this._formatQueryParams(queryParams) : '');
+    return strict ? this._removeParams(url) : url;
   }
-  public addQueryParamsToUrl(route: ActivatedRouteSnapshot, params: { [index: string]: any } = {}): string {
+  public addQueryParamsToUrl(
+    route: ActivatedRouteSnapshot,
+    params: { [index: string]: any } = {}
+  ): string {
     const keys = Object.keys(params);
 
     for (let key of keys) {
@@ -86,7 +103,10 @@ export class TaRoutesCore {
   private _getRouteByENum(eNums: any[]): IRoute | null {
     let route: IRoute | null = null;
     for (const eNum of eNums) {
-      route = this._getByENum(route === null ? this.routes : route.children, eNum);
+      route = this._getByENum(
+        route === null ? this.routes : route.children,
+        eNum
+      );
       if (route === null) {
         return null;
       }
@@ -98,7 +118,10 @@ export class TaRoutesCore {
     let route: IRoute | null = null;
     let url = '';
     for (const eNum of eNums) {
-      route = this._getByENum(route === null ? this.routes : route.children, eNum);
+      route = this._getByENum(
+        route === null ? this.routes : route.children,
+        eNum
+      );
       if (route === null) {
         break;
       }
@@ -107,7 +130,10 @@ export class TaRoutesCore {
     return route === null ? '' : absolute === false ? route.url : '/' + url;
   }
 
-  private _getByENum(routes: IRoute[] | null | undefined, eNum: string): IRoute | null {
+  private _getByENum(
+    routes: IRoute[] | null | undefined,
+    eNum: string
+  ): IRoute | null {
     if (!routes) {
       return null;
     }
@@ -118,12 +144,5 @@ export class TaRoutesCore {
     }
     return null;
   }
-
-  private _formatQueryParams(params: {[index: string]: string}): string {
-    const queryString = Object.entries(params)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-      .join('&');
-    return queryString ? `?${queryString}` : '';
-  }
 }
-export const TaRoutes = new TaRoutesCore();
+export const CamRoutes = new CamRoutesCore();

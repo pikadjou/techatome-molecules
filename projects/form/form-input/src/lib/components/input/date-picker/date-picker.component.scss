@@ -1,0 +1,10 @@
+@import 'camelot-export';
+
+:host ::ng-deep .form-control {
+  width: 100%;
+}
+
+.disabled {
+  border-color: get-var(neutral, 300);
+  pointer-events: none;
+}

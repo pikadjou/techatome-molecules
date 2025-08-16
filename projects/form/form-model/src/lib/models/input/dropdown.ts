@@ -22,7 +22,9 @@ export class InputDropdown<T = string | string[]> extends InputBase<T> {
     super(options);
     this.options = options['options'] || of([]);
     this.multiple = options['multiple'] || false;
-    this.showNothingOption = !this.multiple ? !!options.showNothingOption : false;
+    this.showNothingOption = !this.multiple
+      ? !!options.showNothingOption
+      : false;
     this.width = options.width || '100%';
     this.withSearch = options.withSearch || false;
   }

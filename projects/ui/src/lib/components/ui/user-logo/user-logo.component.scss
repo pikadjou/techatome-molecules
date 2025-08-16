@@ -1,0 +1,24 @@
+@import "camelot-export";
+
+.user-image {
+  border-radius: 100%;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: get-var(brand, 200);
+  overflow: hidden;
+
+  cam-font-icon {
+    color: get-var(brand, 700);
+  }
+}

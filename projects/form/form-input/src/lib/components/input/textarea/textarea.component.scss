@@ -1,3 +1,9 @@
+@import 'camelot-export';
 .textarea-container {
   width: 100%;
+}
+
+.form-control {
+  height: auto;
+  @include fontSizeBody(md);
 }

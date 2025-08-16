@@ -1,0 +1,39 @@
+@import 'camelot-export';
+
+.message-container {
+  border-radius: get-var(radius, rounded);
+  padding: get-var(space, xs);
+
+  border: 1px solid get-var(border, secondary);
+  background-color: get-var(surface, brand, tertiary);
+
+  &.intern {
+    border: 1px solid get-var(semantic, yellow-dark);
+    background-color: get-var(semantic, yellow-light);
+  }
+}
+
+.toggle-container {
+  @include fontSizeBody(xs);
+}
+
+.extra-container {
+  @include flex-row();
+}
+
+.collapsed-icon {
+  width: 100%;
+  text-align: center;
+}
+
+.out-of-box {
+  position: fixed;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+
+  .collapsed-icon {
+    display: none;
+  }
+}

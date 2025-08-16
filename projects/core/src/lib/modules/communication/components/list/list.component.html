@@ -1,0 +1,21 @@
+<div class="list-container mx-space-sm">
+  <ng-container *ngFor="let group of this.groupedMessages">
+    <div class="date-header align-center g-space-sm mx-space-md">
+      <span class="line my-space-sm"></span>
+      <span class="date">{{ group.date | date: 'EEEE dd/MM/yy' }}</span>
+      <span class="line"></span>
+    </div>
+
+    <ng-container *ngFor="let communication of group.messages">
+      <cam-communication-message-container
+        class="communication mb-space-md"
+        [communication]="communication"
+        [conversationParticipants]="this.conversationParticipants"
+        [taskId]="this.taskId"
+        [class.is-mine]="communication.isMine"
+        [class.system]="communication.type === this.CommunicationType.System"
+        (askReply)="this.readonly ? null : this.askReply.emit($event)"
+      ></cam-communication-message-container>
+    </ng-container>
+  </ng-container>
+</div>

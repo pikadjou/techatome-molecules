@@ -1,0 +1,18 @@
+import { Component, Input } from '@angular/core';
+import { CommunicationStatus } from '../../services/dto/communication';
+
+@Component({
+  selector: 'cam-communication-status',
+  templateUrl: './communication-status.component.html',
+  styleUrls: ['./communication-status.component.scss'],
+})
+export class CommunicationStatusComponent {
+  @Input()
+  value!: CommunicationStatus;
+
+  public getTranslate() {
+    return `communication.status.${CommunicationStatus[
+      this.value ?? CommunicationStatus.Unknown
+    ].toLocaleLowerCase()}`;
+  }
+}

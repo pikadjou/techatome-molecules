@@ -1,0 +1,16 @@
+<div class="not-found-container">
+  <div class="icon">
+    <cam-font-icon name="close-tool" size="lg"></cam-font-icon>
+  </div>
+  <div class="title">
+    {{ "layout.notfound.title" | translate }}
+  </div>
+  <div class="content">
+    {{ "layout.notfound.content" | translate }}
+  </div>
+  <div class="button">
+    <cam-button (action)="this.goToHome()">{{
+      "layout.notfound.cta" | translate
+    }}</cam-button>
+  </div>
+</div>

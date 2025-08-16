@@ -1,0 +1,27 @@
+@import 'camelot-export';
+
+.communication {
+  &.is-mine {
+    @include align-end();
+    margin-left: auto;
+  }
+  &.system {
+    @include align-end();
+    margin-left: auto;
+  }
+}
+
+.date-header {
+  display: flex;
+  color: get-var(brand, 600);
+
+  .line {
+    flex: 1;
+    height: 1px;
+    background-color: get-var(brand, 600);
+  }
+
+  .date {
+    white-space: nowrap;
+  }
+}

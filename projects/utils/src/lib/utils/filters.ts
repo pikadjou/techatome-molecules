@@ -1,4 +1,4 @@
-// import slugify from 'slugify';
+import slugify from 'slugify';
 
 const searchOptions = {
   replacement: ' ',
@@ -6,14 +6,14 @@ const searchOptions = {
   trim: true,
 };
 
-// export const search = (array: string[], term: string): boolean => {
-//   const searchTerm = slugify(term, searchOptions);
+export const search = (array: string[], term: string): boolean => {
+  const searchTerm = slugify(term, searchOptions);
 
-//   for (let item of array) {
-//     const slugItem = slugify(item, searchOptions);
-//     if (slugItem.includes(searchTerm)) {
-//       return true;
-//     }
-//   }
-//   return false;
-// };
+  for (let item of array) {
+    const slugItem = slugify(item, searchOptions);
+    if (slugItem.includes(searchTerm)) {
+      return true;
+    }
+  }
+  return false;
+};

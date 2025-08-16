@@ -1,0 +1,11 @@
+<ng-container *ngIf="this.showInActionButton">
+  <cam-action-button [actions]="this.addActions"> </cam-action-button>
+</ng-container>
+<ng-container *ngIf="!this.showInActionButton">
+  <cam-button
+    *ngFor="let action of this.addActions"
+    (action)="action.callback()"
+  >
+    {{ action.label }}
+  </cam-button>
+</ng-container>

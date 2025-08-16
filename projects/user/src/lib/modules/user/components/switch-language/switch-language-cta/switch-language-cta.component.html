@@ -1,0 +1,8 @@
+<div [matMenuTriggerFor]="menu" class="flex-start g-space-sm c-pointer">
+  {{ this.activeLanguage.toLocaleUpperCase() }}
+  <cam-font-icon name="arrow-big-bottom"></cam-font-icon>
+</div>
+
+<mat-menu #menu="matMenu">
+  <cam-switch-language></cam-switch-language>
+</mat-menu>

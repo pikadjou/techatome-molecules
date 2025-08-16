@@ -1,3 +1,11 @@
-<mat-checkbox [formControl]="$any(this.input.formControl)">
-  {{ input.label | translate }}
-</mat-checkbox>
+<div class="custom-checkbox align-center g-space-xs">
+  <input
+    type="checkbox"
+    #focusedElement
+    (click)="this.input.value = !this.input.value"
+    [checked]="this.input.value"
+    [attr.aria-invalid]="this.input.formControl?.invalid"
+    [disabled]="this.input.disabled"
+  />
+  <cam-form-label [input]="this.input" [withMarginBottom]="false"></cam-form-label>
+</div>

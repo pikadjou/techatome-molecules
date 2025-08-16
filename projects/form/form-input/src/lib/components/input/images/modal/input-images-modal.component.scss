@@ -1,0 +1,13 @@
+@import "camelot-export";
+
+.input-image-container {
+  padding-bottom: 70px;
+}
+
+.cta-container {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom);
+  right: 0;
+  left: 0;
+  margin: space(xs);
+}

@@ -1,0 +1,83 @@
+<div class="navigation-container" [class]="this.container">
+  <div class="list">
+    <ng-container *ngIf="this.swiper">
+      <cam-swiper-light
+        [items]="this.menu.elements"
+        [template]="template"
+        [forced]="true"
+        [swiperClasses]="this.getSpaceClass()"
+      ></cam-swiper-light>
+    </ng-container>
+    <ng-container *ngIf="!this.swiper">
+      <div
+        class="element-list"
+        [ngClass]="this.menu.direction + ' ' + this.getSpaceClass()"
+      >
+        <div class="element" *ngFor="let element of this.menu.elements">
+          <ng-template
+            [ngTemplateOutlet]="template"
+            [ngTemplateOutletContext]="{
+              element: element
+            }"
+          >
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #template let-element="element">
+  <cam-notification-badge-container class="c-pointer">
+    <div
+      *ngIf="element.callback || element.disabled"
+      (click)="this.callback(element)"
+      class="item-container"
+      [ngClass]="{ active: this.isActive(element), disabled: element.disabled }"
+    >
+      <ng-template
+        [ngTemplateOutlet]="Item"
+        [ngTemplateOutletContext]="{
+          item: element
+        }"
+      >
+      </ng-template>
+    </div>
+    <div
+      *ngIf="!element.callback && !element.disabled"
+      class="item-container"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: element.exact }"
+      [routerLink]="[this.getLink(element)]"
+      [queryParamsHandling]="element.queryParamsHandling"
+    >
+      <ng-template
+        [ngTemplateOutlet]="Item"
+        [ngTemplateOutletContext]="{
+          item: element
+        }"
+      >
+      </ng-template>
+    </div>
+    <cam-notification-badge
+      *ngIf="element.options?.notificationBadge?.label"
+      [number]="element.options?.notificationBadge?.label || 0"
+      [style]="element.options?.notificationBadge?.style"
+      fontSize="xs"
+    ></cam-notification-badge>
+  </cam-notification-badge-container>
+</ng-template>
+
+<ng-template #Item let-item="item" [typedTemplate]="this.typeItem">
+  <div class="item" [class.disabled]="item.disabled">
+    <div class="icon" *ngIf="this.hasFontIcon(item)">
+      <cam-font-icon [name]="this.getFontIcon(item)"></cam-font-icon>
+    </div>
+    <div class="label" *ngIf="item.label">
+      {{ item.label | translate }}
+    </div>
+    <div class="bullet" *ngIf="item.translationData?.length">
+      ({{ item.translationData?.length }})
+    </div>
+  </div>
+</ng-template>

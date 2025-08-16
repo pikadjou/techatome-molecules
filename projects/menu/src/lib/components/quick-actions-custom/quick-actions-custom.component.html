@@ -1,0 +1,12 @@
+<div class="tabs my-space-2" *ngIf="this.elements && this.elements.length > 0">
+  <div class="menu-tab">
+    <cam-swiper
+      [slidesPerPage]="this.elementPerPage"
+      [slidesPerGroup]="this.slidesPerGroup"
+      [swipeTemplate]="swipeTemplate"
+      [slides]="this.elements"
+      [isFreeMode]="this.isFreeMode"
+      (onSlideChanged)="this.onSlideChanged.emit($event)"
+    ></cam-swiper>
+  </div>
+</div>

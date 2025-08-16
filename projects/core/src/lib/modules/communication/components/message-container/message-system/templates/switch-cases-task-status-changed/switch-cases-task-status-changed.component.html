@@ -1,0 +1,12 @@
+<div class="label justify-end flex-row g-space-xs align-center" *ngIf="this.sharedService.taskStatusTemplate">
+  {{ 'communication.message.system.cases.status-changed' | translate }}
+  <ng-template
+    [ngTemplateOutlet]="this.sharedService.taskStatusTemplate"
+    [ngTemplateOutletContext]="{ status: Number(this.case.OldStatus) }"
+  ></ng-template>
+  {{ 'communication.message.system.cases.move-to' | translate }}
+  <ng-template
+    [ngTemplateOutlet]="this.sharedService.taskStatusTemplate"
+    [ngTemplateOutletContext]="{ status: Number(this.case.NewStatus) }"
+  ></ng-template>
+</div>

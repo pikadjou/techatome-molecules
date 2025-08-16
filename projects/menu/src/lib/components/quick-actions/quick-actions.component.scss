@@ -1,0 +1,29 @@
+@import "camelot-export";
+
+.tabs {
+  background: get-var(neutral, 50);
+  border-radius: 10px 10px 0 0;
+
+  .menu-tab {
+    .menu-item {
+      cursor: pointer;
+
+      color: get-var(neutral, 400);
+      padding: get-var(space, xs) get-var(space, sm);
+
+      border-bottom: solid;
+
+      @include fontSizeBody(md, true);
+      text-align: center;
+
+      &.active {
+        color: get-var(neutral, 900);
+        border-bottom-color: get-var(surface, brand, primary);
+      }
+    }
+
+    .menu-item.disabled {
+      filter: grayscale(100%);
+    }
+  }
+}

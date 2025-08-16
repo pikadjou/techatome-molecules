@@ -1,0 +1,7 @@
+<div
+  *ngIf="this.type"
+  [innerHTML]="this.getSvgIcon()"
+  [style.width]="this.getSize()"
+  [ngClass]="{ 'is-rotation': this.rotation }"
+  class="internal-icon"
+></div>

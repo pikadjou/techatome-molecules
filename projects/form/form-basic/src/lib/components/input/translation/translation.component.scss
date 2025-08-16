@@ -1,0 +1,11 @@
+@import "camelot-export";
+
+.checked {
+  color: get-var(semantic-token, success);
+}
+
+.translation-container {
+  padding: get-var(space, md);
+  border-radius: get-var(radius, rounded);
+  border: 1px solid get-var(border, secondary);
+}

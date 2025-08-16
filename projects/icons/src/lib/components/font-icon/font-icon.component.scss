@@ -1,0 +1,29 @@
+@import '../../styles/icon.scss';
+@import 'camelot-export';
+i {
+  display: block;
+}
+.xs {
+  @include fontSizeBody(xs);
+}
+.sm {
+  @include fontSizeBody(sm);
+}
+.md {
+  height: 24px;
+  font-size: 24px;
+  line-height: 24px;
+}
+.lg {
+  height: 48px;
+  font-size: 34px;
+  line-height: 48px;
+}
+
+.xl {
+  font-size: 60px;
+}
+
+.big {
+  font-size: 300px;
+}

@@ -1,0 +1,37 @@
+<ul class="context-menu row">
+  <ng-container
+    *ngFor="let item of this.menu.elements; trackBy: this.trackByKey"
+  >
+    <li
+      *ngIf="(item.visible$ | async) === true"
+      class="col-6 col-md-4 col-lg-2"
+    >
+      <div
+        class="element"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.exact }"
+        [routerLink]="this.getRoute(item)"
+        [queryParamsHandling]="item.queryParamsHandling"
+        [class.disabled]="item.disabled"
+      >
+        <div class="icon align-self-center">
+          <span *ngIf="this.hasFontIcon(item)" class="icon-material">
+            <cam-font-icon
+              [name]="this.getFontIcon(item)"
+              size="xs"
+            ></cam-font-icon>
+          </span>
+          <span *ngIf="this.hasIconImage(item)" class="icon-image">
+            <cam-local-icon
+              [type]="this.getIcon(item)"
+              size="xs"
+            ></cam-local-icon>
+          </span>
+        </div>
+        <div class="label align-self-center">
+          {{ item.label | translate }}
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>

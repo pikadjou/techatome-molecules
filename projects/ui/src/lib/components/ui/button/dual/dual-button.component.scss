@@ -1,0 +1,60 @@
+@import "camelot-export";
+
+.dual-button {
+  @include make-row(0);
+
+  border: 1px solid get-var(brand, 50);
+
+  border-radius: 60px;
+
+  .first,
+  .second {
+    @include make-col-ready();
+
+    @include fontSizeBody(md);
+    padding: get-var(space, sm) 0;
+
+    &.primary {
+      color: get-var(text, invert, primary);
+    }
+    &.secondary {
+      color: get-var(text, primary);
+      border: 1px solid get-var(border, secondary);
+    }
+
+    > div {
+      justify-content: center;
+      margin: auto;
+    }
+    .icon {
+      color: get-var(surface, brand, primary);
+      margin: auto get-var(space, sm);
+    }
+  }
+
+  .first {
+    border-right: 1px solid get-var(brand, 700);
+  }
+  .second {
+    border-left: 1px solid get-var(brand, 700);
+  }
+
+  &.full {
+    background-color: get-var(brand, 700);
+    border: 1px solid $light;
+    color: $light;
+    .first,
+    .second {
+      .icon {
+        color: $light;
+      }
+    }
+
+    .first {
+      border-right: 1px solid $light;
+    }
+    .second {
+      border-left: 1px solid $light;
+    }
+  }
+}

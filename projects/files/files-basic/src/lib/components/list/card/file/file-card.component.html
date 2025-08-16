@@ -1,0 +1,21 @@
+<cam-card>
+  <cam-card-header>
+    <cam-card-tag class="space-between">
+      <cam-trigram [value]="this.userTrigram"> </cam-trigram>
+      <div (click)="this.onHeaderClicked()">
+        <cam-font-icon name="more" size="xs"></cam-font-icon>
+      </div>
+    </cam-card-tag>
+    <cam-card-title>
+      <cam-title [level]="4">{{ this.fileName }}</cam-title>
+    </cam-card-title>
+  </cam-card-header>
+  <cam-card-content>
+    <div (click)="this.onBodyClicked()">
+      <cam-local-icon [type]="this.localIcon" size="md"></cam-local-icon>
+    </div>
+  </cam-card-content>
+  <cam-card-cta>
+    <cam-badge [value]="this.fileType ?? ''"> </cam-badge>
+  </cam-card-cta>
+</cam-card>

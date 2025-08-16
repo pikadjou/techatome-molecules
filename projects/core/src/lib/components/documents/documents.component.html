@@ -1,0 +1,10 @@
+<cam-files-display
+  [files$]="this.getDocs$()"
+  [menu]="this.menu"
+  [canAddFile]="this.canAddFile"
+  fileType="Document"
+  (fileSelected)="this.downloadDocument($event)"
+  (moreInformationSelected)="this.openBottomSheet($event)"
+  (fileUploading)="this.uploadDocuments($event)"
+>
+</cam-files-display>

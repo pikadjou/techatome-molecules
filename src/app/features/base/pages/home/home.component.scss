@@ -103,25 +103,6 @@ ta-title {
   }
 }
 
-// Style spécial pour le sandbox
-.sandbox-box {
-  background: linear-gradient(135deg, 
-    #6366f1 0%,
-    #8b5cf6 100%);
-  
-  &:hover {
-    border-color: #4f46e5;
-    
-    .icon-display {
-      color: #4f46e5;
-    }
-
-    ta-title {
-      color: #4f46e5;
-    }
-  }
-}
-
 // Responsive design
 @media (max-width: 768px) {
   .grid {

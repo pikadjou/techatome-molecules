@@ -1,0 +1,28 @@
+@import 'camelot-export';
+
+.menu-panel {
+  width: 100%;
+  box-sizing: border-box;
+  background: get-var(neutral, white);
+  border-radius: get-var(radius, rounded);
+  box-shadow: get-var(shadow, black, md);
+  overflow-y: auto;
+}
+.custom-panel-header {
+  flex: 0 0 auto;
+  padding: get-var(space, md);
+  border-bottom: 1px solid get-var(neutral, 200);
+}
+
+.custom-panel-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: get-var(space, md);
+}
+
+.custom-panel-cta {
+  flex: 0 0 auto;
+  padding: get-var(space, md);
+  border-top: 1px solid get-var(neutral, 200);
+  background: get-var(neutral, white);
+}

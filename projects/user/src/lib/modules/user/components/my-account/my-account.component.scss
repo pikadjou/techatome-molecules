@@ -1,0 +1,16 @@
+@import "camelot-export";
+
+.modify-icon {
+  color: get-var(brand, 700);
+}
+.language-panel {
+  min-width: 240px;
+}
+
+.text {
+  @include fontSizeBody(md);
+}
+
+.button-content {
+  justify-content: center;
+}

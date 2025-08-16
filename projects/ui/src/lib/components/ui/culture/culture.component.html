@@ -1,0 +1,5 @@
+<div class="flex-start g-space-xs">
+  <div *ngFor="let culture of this.cultures; let isLast = last">
+    {{ 'ui.culture.short.' + culture | translate }}{{ !isLast ? ',' : '' }}
+  </div>
+</div>

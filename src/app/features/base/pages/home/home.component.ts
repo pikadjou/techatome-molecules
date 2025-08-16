@@ -32,8 +32,4 @@ export class HomePage extends TaBasePage {
       }),
     );
   }
-
-  public goToSandbox() {
-    this._router.navigateByUrl('/sandbox');
-  }
 }

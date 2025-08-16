@@ -1,0 +1,14 @@
+<cam-input-layout [input]="this.input">
+  <cam-button
+    #focusedElement
+    (action)="this.openDialog()"
+    [options]="{ circular: this.isCircularButton }"
+    [style]="'secondary'"
+  >
+    <cam-local-icon [type]="this.icon.Pencil"></cam-local-icon>
+  </cam-button>
+
+  @if(this.pics) {
+  <cam-files-list [files]="this.pics"></cam-files-list>
+  }
+</cam-input-layout>

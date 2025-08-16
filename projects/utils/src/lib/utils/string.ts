@@ -1,7 +1,8 @@
 import { EFileExtension } from '../types/files/file-extension';
 
 export const getFileExtension = (filePath: string): EFileExtension => {
-  const extension: string | null = getFullFileNameFromUrl(filePath)?.split('.').pop()?.toLowerCase() || null;
+  const extension: string | null =
+    getFullFileNameFromUrl(filePath)?.split('.').pop()?.toLowerCase() || null;
 
   switch (extension) {
     case 'pdf':
@@ -40,7 +41,8 @@ export const capitalizeFirstLetter = (value: string): string => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
-export const convertToNumber = (values?: string[]): number[] => values?.map(value => Number(value)) || [];
+export const convertToNumber = (values?: string[]): number[] =>
+  values?.map((value) => Number(value)) || [];
 
 export const isURL = (str: string) => {
   // Expression régulière pour vérifier une URL

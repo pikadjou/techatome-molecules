@@ -1,0 +1,154 @@
+@import "camelot-export";
+
+@mixin menu-item-horizontal() {
+  justify-content: center;
+
+  .icon,
+  .title {
+    @include make-col(12);
+    @include fontSizeBody(sm);
+  }
+
+  .item {
+    position: relative;
+
+    .badge-container {
+      position: absolute;
+      top: -10px;
+      right: 0;
+    }
+  }
+}
+
+@mixin menu-item-vertical() {
+  padding: get-var(space, md) spaceBase(1.25);
+
+  .item {
+    @include align-center();
+  }
+
+  .icon,
+  .title {
+    @include fontSizeBody(md);
+    text-align: left;
+    @include make-col-auto();
+  }
+  .icon {
+    margin-right: get-var(space, md);
+  }
+}
+
+.link {
+  @include make-row(0);
+  text-decoration: none;
+
+  padding: get-var(space, xs) 0;
+
+  &.dark {
+    .icon,
+    .title {
+      color: get-var(icon, primary);
+    }
+    .title {
+      color: get-var(text, primary);
+    }
+  }
+
+  &.active {
+    .icon {
+      color: get-var(icon, brand, primary);
+    }
+    .title {
+      color: get-var(text, brand, primary);
+    }
+
+    @include media-breakpoint-up(mobile) {
+      .icon {
+        color: get-var(icon, invert, primary);
+      }
+      .title {
+        color: get-var(icon, invert, primary);
+      }
+      background-color: get-var(brand, 700);
+      border-radius: 16px;
+    }
+  }
+
+  &.horizontal {
+    @include menu-item-horizontal();
+  }
+
+  &.vertical {
+    @include menu-item-vertical();
+  }
+
+  &.responsive {
+    @include media-breakpoint-down(sm) {
+      @include menu-item-horizontal();
+
+      .ending-icon-container {
+        display: none;
+      }
+    }
+    @include media-breakpoint-up(sm) {
+      @include menu-item-horizontal();
+
+      .ending-icon-container {
+        display: none;
+      }
+    }
+    @include media-breakpoint-up(lg) {
+      @include menu-item-vertical();
+    }
+    @include menuMinimized() {
+      .icon {
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .title {
+        display: none;
+      }
+    }
+  }
+
+  .icon,
+  .title {
+    @include make-col-ready();
+    color: get-var(neutral, 300);
+    @include media-breakpoint-up(mobile) {
+      color: get-var(brand, 400);
+    }
+  }
+
+  .disable {
+    opacity: 0.5;
+  }
+
+  .item {
+    @include full-width();
+    text-align: center;
+  }
+
+  .icon-image {
+    margin-bottom: 3px;
+  }
+
+  .badge-container {
+    position: relative;
+    margin-left: auto;
+  }
+
+  .ending-icon-container {
+    @include align-center();
+    justify-content: flex-end;
+  }
+}
+
+.trigger-container {
+  position: relative;
+  .trigger {
+    position: absolute;
+    top: 0;
+    right: calc(get-var(space, xl) * -1);
+  }
+}

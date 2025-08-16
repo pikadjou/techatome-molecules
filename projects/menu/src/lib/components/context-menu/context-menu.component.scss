@@ -1,0 +1,32 @@
+@import "camelot-export";
+
+.context-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  .disabled {
+    opacity: 0.5;
+  }
+
+  .element {
+    text-align: center;
+
+    border: 1px solid get-var(neutral, 400);
+
+    padding: get-var(space, md) 0;
+    margin-bottom: get-var(space, sm);
+
+    border-radius: get-var(space, md);
+
+    .icon {
+      color: get-var(surface, brand, primary);
+    }
+    .label {
+      @include fontSizeBody(md, true);
+      @include text-overflow();
+
+      margin-top: get-var(space, xs);
+    }
+  }
+}

@@ -1,14 +1,30 @@
 {
-  "name": "@ta/ui",
-  "version": "0.0.1",
+  "name": "@camelot/ui",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/ui",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0"
+    "@angular/animations": "^18.2.13",
+    "@angular/cdk": "^18.2.13",
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/material": "^18.2.13"
   },
   "dependencies": {
-    "tslib": "^2.3.0",
-    "@ta/utils": "version-skip",
-    "@ta/styles": "version-skip"
+    "@camelot/capacitor": "^3.16.0-beta.4",
+    "@camelot/icons": "^3.16.0-beta.4",
+    "@camelot/server": "^3.16.0-beta.4",
+    "@camelot/services": "^3.16.0-beta.4",
+    "@camelot/styles": "^3.16.0-beta.4",
+    "@camelot/utils": "^3.16.0-beta.4",
+    "storage-manager-js": "4.2.0",
+    "swiper": "^9.1.0",
+    "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

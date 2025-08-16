@@ -1,0 +1,23 @@
+@import "camelot-export";
+
+.input-container {
+  border: 1px solid get-var(neutral, 300);
+  border-radius: 10px;
+  padding: 15px;
+
+  &:hover:not(:disabled) {
+    border-color: get-var(neutral, 500);
+  }
+
+  &:focus:not(:disabled) {
+    border-color: get-var(border, brand);
+  }
+
+  &:required:not(:disabled) {
+    border-color: get-var(semantic, red-dark);
+  }
+
+  &:disabled {
+    border-color: get-var(neutral, 300);
+  }
+}

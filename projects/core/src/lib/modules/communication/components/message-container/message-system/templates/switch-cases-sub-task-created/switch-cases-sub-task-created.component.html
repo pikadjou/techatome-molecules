@@ -1,0 +1,16 @@
+<div class="label flex-row g-space-sm justify-end">
+  <div>
+    {{
+      'communication.message.system.cases.sub-task-created.title' | translate: { title: this.case.TaskReference ?? '' }
+    }}
+  </div>
+  <div *ngIf="this.case.AssigneeId">
+    {{
+      'communication.message.system.cases.sub-task-created.assignee'
+        | translate
+          : {
+              name: this.getConversationParticipant(this.case.AssigneeId),
+            }
+    }}
+  </div>
+</div>

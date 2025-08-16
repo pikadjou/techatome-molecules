@@ -1,0 +1,10 @@
+<div class="label justify-end">
+  {{
+    'communication.message.system.cases.assignee-changed'
+      | translate
+        : {
+            oldname: this.getConversationParticipant(this.case.OldUserId),
+            newname: this.getConversationParticipant(this.case.NewUserId),
+          }
+  }}
+</div>

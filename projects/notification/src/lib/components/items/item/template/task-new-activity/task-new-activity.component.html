@@ -1,0 +1,9 @@
+<cam-notification-item [notification]="this.notification" (click)="this.goTo()">
+  <cam-notification-item-title>
+    {{
+      "notification.items.task-new-activity.title"
+        | translate : this.getTranslation()
+    }}
+  </cam-notification-item-title>
+  <cam-notification-item-icon icon="tasks"></cam-notification-item-icon>
+</cam-notification-item>

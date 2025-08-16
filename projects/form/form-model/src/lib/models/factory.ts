@@ -3,10 +3,12 @@ import { InputCheckBox } from './input/checkbox';
 import { InputColorPicker } from './input/colorPicker';
 import { InputDropdown } from './input/dropdown';
 import { IInputChildrenDynamic } from './input/dynamic';
+import { InputImages } from './input/images';
 import { InputLabel } from './input/label';
 import { InputNumber } from './input/number';
 import { InputPanel } from './input/panel';
 import { InputRadio } from './input/radio';
+import { InputSchema } from './input/schema';
 import { InputTextarea } from './input/textarea';
 import { InputTextBox } from './input/textbox';
 import { InputUpload } from './input/upload';
@@ -27,7 +29,10 @@ export type FactoryInputType =
   | 'InputWysiswyg'
   | 'InputUpload';
 export class InputFactory {
-  public static getInput(key: FactoryInputType, options: IInputChildrenDynamic): InputBase<any> {
+  public static getInput(
+    key: FactoryInputType,
+    options: IInputChildrenDynamic
+  ): InputBase<any> {
     if (options.templateChildren) {
       options.children = options.templateChildren();
     }
@@ -41,16 +46,16 @@ export class InputFactory {
         return new InputColorPicker(options);
       case 'InputDropdown':
         return new InputDropdown(options);
-     // case 'InputImages':
-       // return new InputImages(options);
+      case 'InputImages':
+        return new InputImages(options);
       case 'InputLabel':
         return new InputLabel(options);
       case 'InputNumber':
         return new InputNumber(options);
       case 'InputPanel':
         return new InputPanel(options);
-      // case 'InputSchema':
-      //   return new InputSchema(options);
+      case 'InputSchema':
+        return new InputSchema(options);
       case 'InputTextarea':
         return new InputTextarea(options);
       case 'InputTextBox':

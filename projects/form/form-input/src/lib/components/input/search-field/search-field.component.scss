@@ -1,0 +1,36 @@
+@import "camelot-export";
+
+$search-field-size: 44px;
+$search-field-deploy-size: 100%;
+
+.input-group {
+  @include simple-flex();
+  @include align-center();
+  padding: get-var(space, sm);
+  gap: get-var(space, sm);
+  box-sizing: border-box;
+
+  .inner-div {
+    flex-grow: 1;
+  }
+
+  &.focus {
+    cam-font-icon {
+      color: get-var(icon, brand, primary);
+    }
+  }
+  &.disabled {
+    color: get-var(text, tertiary);
+    cam-font-icon {
+      color: get-var(icon, tertiary);
+    }
+  }
+}
+
+.search-input-container {
+  width: 100%;
+}
+
+.form-control {
+  width: 90%;
+}

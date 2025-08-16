@@ -1,6 +1,4 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
+@import "camelot-export";
 
 .radio-label {
   display: block;
@@ -23,20 +21,20 @@
 .radio-container {
   display: flex !important;
   flex-direction: row;
-  @include flex.space-between();
+  justify-content: space-between;
 
   .radio-element {
     display: flex;
     height: 50px;
     width: 45%;
-    border: 2px solid common.get-var(neutral, 400);
+    border: 2px solid get-var(neutral, 400);
     border-radius: 20px;
     box-sizing: border-box;
     align-items: center;
     gap: 8px;
     justify-content: center;
-    color: common.get-var(neutral, 600);
-    @include fonts.fontSizeBody(md);
+    color: get-var(neutral, 600);
+    @include fontSizeBody(md);
     line-height: 28px;
     font-weight: 500;
 
@@ -45,14 +43,14 @@
     }
 
     &.validated {
-      border: 2px solid common.get-var(surface, brand, primary);
+      border: 2px solid get-var(surface, brand, primary);
 
       app-local-icon {
         opacity: 1;
       }
 
       span {
-        color: common.get-var(neutral, 900);
+        color: get-var(neutral, 900);
       }
     }
 

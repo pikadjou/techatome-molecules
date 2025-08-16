@@ -1,25 +1,32 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import { distinctUntilChanged, Observable } from 'rxjs';
 
-import { IInputsError, InputBase } from '@ta/form-model';
-import { TaBaseComponent, TranslatePipe } from '@ta/utils';
-import { InputsComponent } from "./inputs/inputs.component";
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { LoaderComponent, TaButtonComponent } from '@ta/ui';
+import { IInputsError, InputBase } from '@camelot/form-model';
+import { ENotificationCode } from '@camelot/notification';
+import { CamBaseComponent } from '@camelot/utils';
 
 import deepEqual from 'fast-deep-equal';
-import { NotificationInlineComponent } from "@ta/notification";
 
 @Component({
-  selector: 'ta-form',
+  selector: 'cam-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  standalone: true,
-  imports: [InputsComponent, NgFor, NgIf, AsyncPipe, FormsModule, ReactiveFormsModule, LoaderComponent, TaButtonComponent, TranslatePipe, NotificationInlineComponent]
 })
-export class TaFormComponent extends TaBaseComponent implements OnInit, OnChanges, OnDestroy {
+export class FormComponent
+  extends CamBaseComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input()
   inputs!: InputBase<any>[];
 
@@ -32,7 +39,7 @@ export class TaFormComponent extends TaBaseComponent implements OnInit, OnChange
   @Input()
   loader = false;
   @Input()
-  error: IInputsError = { status: 0, message: '' };
+  error: IInputsError = { status: ENotificationCode.none, message: '' };
 
   @Input()
   border = true;
@@ -41,7 +48,6 @@ export class TaFormComponent extends TaBaseComponent implements OnInit, OnChange
   canDisplayButton = true;
   @Input()
   buttonTitle = 'form.save';
-
   @Input()
   onLive = false;
 
@@ -60,14 +66,24 @@ export class TaFormComponent extends TaBaseComponent implements OnInit, OnChange
   ngOnInit() {
     this.form = this.toFormGroup(this.inputs);
 
-    this._registerSubscription(this.form.statusChanges.subscribe(() => this.isFormValid.emit(this.isValid())));
+    this._registerSubscription(
+      this.form.statusChanges.subscribe(() =>
+        this.isFormValid.emit(this.isValid())
+      )
+    );
 
-    if(this.onLive) {
-      this._registerSubscription(this.form.valueChanges.pipe(distinctUntilChanged((prev, curr) => deepEqual(prev, curr))).subscribe(() => this.onSubmit()));
+    if (this.onLive) {
+      this._registerSubscription(
+        this.form.valueChanges
+          .pipe(distinctUntilChanged((prev, curr) => deepEqual(prev, curr)))
+          .subscribe(() => this.onSubmit())
+      );
     }
 
     if (this.askValidation$) {
-      this._registerSubscription(this.askValidation$.subscribe(_ => this.onSubmit()));
+      this._registerSubscription(
+        this.askValidation$.subscribe((_) => this.onSubmit())
+      );
     }
   }
 
@@ -79,7 +95,7 @@ export class TaFormComponent extends TaBaseComponent implements OnInit, OnChange
 
   override ngOnDestroy() {
     super.ngOnDestroy();
-    this.inputs.forEach(input => {
+    this.inputs.forEach((input) => {
       input.destroy();
     });
     if (this.askOnDestroy) {
@@ -103,7 +119,7 @@ export class TaFormComponent extends TaBaseComponent implements OnInit, OnChange
     if (inputs === null || inputs.length === 0) {
       return group;
     }
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       input.createFormControl(group);
     });
     return group;

@@ -1,0 +1,9 @@
+<div class="flex-start g-space-sm">
+  {{
+    this.key()
+      | translate : { date: this.date | date : "shortDate", days: this.absDays }
+  }}
+  @if(this.withHours) {
+  {{ this.date | date : "shortTime" }}
+  }
+</div>

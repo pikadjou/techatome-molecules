@@ -1,0 +1,28 @@
+@import "camelot-export";
+
+.header {
+  gap: spaceBase(1.25);
+  @include flex-row;
+  @include align-center();
+}
+.icon {
+  color: get-var(surface, brand, primary);
+  margin-right: get-var(space, xs);
+}
+
+.local-icon {
+  max-width: 20px;
+}
+
+.text {
+  @include fontSizeBody(md, true);
+}
+.value {
+  @include fontSizeBody(md, true);
+  @include text-overflow();
+}
+
+.content {
+  margin-top: spaceBase(1.25);
+  color: get-var(neutral, 500);
+}

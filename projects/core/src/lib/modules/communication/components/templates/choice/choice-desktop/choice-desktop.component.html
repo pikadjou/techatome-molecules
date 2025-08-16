@@ -1,0 +1,26 @@
+<cam-loader [isLoading]="this.requestState.isLoading()">
+  <cam-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
+    <ng-container *ngLet="this.list$ | async as list">
+      <cam-empty [isEmpty]="!list || list.length === 0">
+        <div class="flex-row">
+          <cam-choice-list
+            *ngIf="list"
+            [list]="list"
+            class="col-4"
+            (hovered)="this.hover($event)"
+            (selected)="this.chose($event)"
+          ></cam-choice-list>
+
+          <cam-choice-detail
+            [template]="this.showTemplate"
+            (selected)="this.select($event)"
+            class="full-width"
+          ></cam-choice-detail>
+        </div>
+      </cam-empty>
+    </ng-container>
+  </cam-error>
+</cam-loader>

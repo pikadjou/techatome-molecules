@@ -1,0 +1,10 @@
+@import "camelot-export";
+
+.badge-container {
+  padding-right: get-var(space, sm);
+  @include fontSizeBody(md);
+
+  cam-badge {
+    display: inline-block;
+  }
+}

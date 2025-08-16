@@ -10,6 +10,10 @@ export const sort = (array: any[], options: Option): any[] => {
     return array;
   }
   return array.sort((a, b) => {
-    return compare(a[options.active], b[options.active], options.direction === 'asc');
+    return compare(
+      a[options.active],
+      b[options.active],
+      options.direction === 'asc'
+    );
   });
 };

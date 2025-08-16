@@ -9,5 +9,5 @@ import { NotificationBoxComponent } from '@ta/notification';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'TechatomeMolecules';
+  title = 'DocBuilderFront';
 }

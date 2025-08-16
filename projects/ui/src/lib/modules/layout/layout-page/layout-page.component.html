@@ -1,0 +1,14 @@
+<cam-layout-with-bottom-nav>
+  <div class="layout-page-header">
+    <ng-content select="cam-layout-header"></ng-content>
+  </div>
+  <div class="layout-page-title">
+    <ng-content select="cam-layout-title"></ng-content>
+  </div>
+  <div class="layout-page-content">
+    <ng-content></ng-content>
+  </div>
+  <cam-layout-nav>
+    <ng-content select="cam-layout-nav"></ng-content>
+  </cam-layout-nav>
+</cam-layout-with-bottom-nav>

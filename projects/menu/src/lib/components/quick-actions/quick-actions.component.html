@@ -1,0 +1,26 @@
+<div class="tabs my-space-2" *ngIf="this.menu">
+  <div class="menu-tab">
+    <cam-swiper
+      [slidesPerPage]="this.elementPerPage"
+      [swipeTemplate]="swipeTemplate"
+      [slides]="this.menu.elements"
+    ></cam-swiper>
+  </div>
+</div>
+
+<ng-template #swipeTemplate let-element="element" [typedTemplate]="typeToken">
+  <div
+    class="menu-item"
+    [class.active]="this.tabSelection === element.key"
+    [class.disabled]="element.disabled === true"
+    (click)="this.onQuickActionSelected(element)"
+  >
+    <cam-local-icon
+      *ngIf="element.icon"
+      [type]="element.icon"
+      [size]="'xs'"
+    ></cam-local-icon>
+    <p class="text-truncate">{{ element.label | translate }}</p>
+    <div class="bottom"></div>
+  </div>
+</ng-template>

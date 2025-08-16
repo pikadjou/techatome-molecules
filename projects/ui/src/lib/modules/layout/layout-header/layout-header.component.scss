@@ -1,0 +1,8 @@
+@import "camelot-export";
+
+.header {
+  @include media-breakpoint-down(mobile) {
+    color: get-var(text, primary);
+    padding: get-var(space, sm);
+  }
+}

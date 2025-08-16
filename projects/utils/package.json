@@ -1,12 +1,26 @@
 {
-  "name": "@ta/utils",
-  "version": "0.0.1",
+  "name": "@camelot/utils",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "scripts": {
+    "build": "ng build @camelot/utils",
+    "postbuild": "rm -f dist/.npmignore",
+    "postpublish": "rm -rf dist/"
+  },
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0"
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
   },
   "dependencies": {
+    "@camelot/icons": "^3.16.0-beta.4",
+    "@camelot/styles": "^3.16.0-beta.4",
+    "@capacitor/camera": "^5.0.4",
+    "@capacitor/core": "^5.0.5",
+    "compressorjs": "^1.2.1",
+    "date-fns": "^2.29.3",
+    "slugify": "^1.6.5",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

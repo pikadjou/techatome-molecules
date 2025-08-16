@@ -1,0 +1,19 @@
+<ng-container *ngIf="this.user?.picture || this.userInfo?.profilePictureUrl">
+  <div class="img-container">
+    <img
+      [src]="this.user?.picture || this.userInfo?.profilePictureUrl"
+      [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }"
+      class="user-image"
+    />
+  </div>
+</ng-container>
+<ng-container *ngIf="!(this.user?.picture || this.userInfo?.profilePictureUrl)">
+  <cam-trigram *ngIf="this.defaultType === 'trigram'" [value]="this.getTrigram()" [size]="this.sizeValue"></cam-trigram>
+  <div
+    *ngIf="this.defaultType === 'font'"
+    class="profile-icon"
+    [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }"
+  >
+    <cam-font-icon name="profil-picture" [type]="this.size ?? 'lg'"></cam-font-icon>
+  </div>
+</ng-container>

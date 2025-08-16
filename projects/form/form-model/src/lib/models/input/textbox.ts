@@ -1,14 +1,16 @@
+import { CamIconType } from '@camelot/icons';
+
 import { IInputBase, InputBase } from './base';
 
 export interface IInputTextBox<T> extends IInputBase<T> {
   type?: string;
-  icon?: string;
+  icon?: CamIconType;
   iconClicked?: () => void;
 }
 
-export class InputTextBox extends InputBase<string> {
+export class InputTextBox<T = string> extends InputBase<T> {
   override controlType = 'textbox';
-  icon?: string | null;
+  icon?: CamIconType | null;
   iconClicked?: () => void;
 
   constructor(options: IInputTextBox<string> = {}) {

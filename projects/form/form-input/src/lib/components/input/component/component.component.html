@@ -1,0 +1,16 @@
+<cam-input-layout [input]="this.input">
+  <div class="component-container">
+    <input
+      #box
+      #focusedElement
+      class="form-control"
+      [value]="this.input.value"
+      [formControl]="$any(this.input.formControl)"
+      [readonly]="this.input.disabled"
+      type="text"
+    />
+    <div class="cta" (click)="this.open()">
+      <cam-font-icon name="ressources"></cam-font-icon>
+    </div>
+  </div>
+</cam-input-layout>

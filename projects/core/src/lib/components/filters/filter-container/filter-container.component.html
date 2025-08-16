@@ -1,0 +1,32 @@
+<cam-layout-side class="d-flex full-width">
+  <cam-layout-side-content>
+    <div class="m-space-sm">
+      <cam-form
+        [inputs]="this.form"
+        [canDisplayButton]="false"
+        [askValidation$]="this.askValidation$"
+        (valid)="this.apply($event)"
+      ></cam-form>
+    </div>
+  </cam-layout-side-content>
+  <cam-layout-side-cta>
+    <div class="align-center space-between">
+      <div class="pr-space-md">
+        <div class="align-center g-space-xs link">
+          <cam-font-icon name="close-tool" type="sm"></cam-font-icon>
+          <cam-link class="c-pointer" (action)="this.clear()">
+            {{ "core.filter.clear" | translate }}
+          </cam-link>
+        </div>
+      </div>
+      <div>
+        <cam-button (action)="this.validate()">
+          <div class="align-center m-space-xs">
+            <cam-font-icon name="check-line"></cam-font-icon>
+            {{ "core.filter.validate" | translate }}
+          </div>
+        </cam-button>
+      </div>
+    </div>
+  </cam-layout-side-cta>
+</cam-layout-side>

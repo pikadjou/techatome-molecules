@@ -1,0 +1,30 @@
+@import "camelot-export";
+
+.header-container {
+  border-bottom: 1px solid get-var(border, disabled);
+}
+.extended {
+  @include fontSizeBody(sm);
+}
+.icon {
+  padding: get-var(space, sm);
+
+  border-radius: get-var(radius, full);
+
+  background-color: get-var(surface, hover, secondary);
+  color: get-var(icon, brand, primary);
+}
+
+.history-preview {
+  border-top: 1px solid get-var(border, disabled);
+}
+
+button {
+  margin-top: get-var(space, xs);
+  background-color: transparent;
+  border: none;
+  color: get-var(neutral, 500);
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}

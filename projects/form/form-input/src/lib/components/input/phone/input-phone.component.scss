@@ -1,0 +1,11 @@
+@import "camelot-export";
+
+.textbox-container {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .mdc-text-field {
+    overflow: visible;
+  }
+}

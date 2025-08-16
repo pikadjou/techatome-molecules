@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
-import { TaBaseComponent, TranslatePipe } from '@ta/utils';
+import { CamBaseComponent } from '@camelot/utils';
 
 import { ENotificationCode } from '../../../enum';
-import { NgClass, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
+import { openErrorModal } from '../../error-box/error-box.component';
 
 @Component({
-  selector: 'ta-notification-inline',
+  selector: 'cam-notification-inline',
   templateUrl: './notification-inline.component.html',
   styleUrls: ['./notification-inline.component.scss'],
-  standalone: true,
-  imports: [TranslatePipe, NgSwitch, NgSwitchCase, NgClass, NgIf, MatIcon],
 })
-export class NotificationInlineComponent extends TaBaseComponent {
+export class NotificationInlineComponent extends CamBaseComponent {
   @Input() set message(value: string) {
     this._message = value;
     this.showMessage = !!value;
@@ -27,6 +25,8 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   @Output()
   askClose: EventEmitter<null> = new EventEmitter();
+
+  private _matDialog = inject(MatDialog);
 
   public showMessage = false;
 
@@ -80,5 +80,9 @@ export class NotificationInlineComponent extends TaBaseComponent {
     } else {
       return '';
     }
+  }
+
+  public openErrorBox() {
+    openErrorModal(this._matDialog);
   }
 }

@@ -1,0 +1,17 @@
+@import "camelot-export";
+
+.trigram {
+  @include fontSizeBody(md);
+
+  background-color: get-var(surface, brand, primary);
+  color: get-var(neutral, 100);
+
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  vertical-align: middle;
+
+  margin: auto;
+}

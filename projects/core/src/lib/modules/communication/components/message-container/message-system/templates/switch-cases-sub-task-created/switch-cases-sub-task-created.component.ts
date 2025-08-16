@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+
+import { SwitchCasesSubTaskCreated } from '../../../../../services/dto/switch-cases';
+import { SwitchCaseBaseComponent } from '../switch-case-base/switch-case-base.component';
+
+@Component({
+  selector: 'cam-switch-cases-sub-task-created',
+  templateUrl: './switch-cases-sub-task-created.component.html',
+  styleUrls: ['./switch-cases-sub-task-created.component.scss'],
+})
+export class SwitchCasesSubTaskCreatedComponent extends SwitchCaseBaseComponent<SwitchCasesSubTaskCreated> {}

@@ -1,0 +1,25 @@
+@import "camelot-export";
+
+.badge-container {
+  color: get-var(neutral, 50) !important;
+  background-color: get-var(brand, 400);
+  height: 15px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  @include shadow-mixin(black, md);
+
+  padding-bottom: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+
+  &.relative {
+    position: relative;
+    top: 0px;
+    right: 0px;
+  }
+}
