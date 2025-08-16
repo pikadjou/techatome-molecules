@@ -1,10 +1,10 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .menu-panel {
   width: 350px;
-  background-color: get-var(neutral, white);
-  border-radius: get-var(radius, rounded);
+  background-color: common.get-var(neutral, white);
+  border-radius: common.get-var(radius, rounded);
   border: 1px solid;
-  border-color: get-var(neutral, 300);
+  border-color: common.get-var(neutral, 300);
   overflow: hidden;
 }

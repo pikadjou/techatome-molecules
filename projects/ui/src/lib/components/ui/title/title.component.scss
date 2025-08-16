@@ -1,44 +1,46 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
 
 h1 {
-  @include fontSizeHeader(h1);
+  @include fonts.@include fonts.fontSizeHeader(h1);
   margin: 0;
 }
 
 h2 {
-  @include fontSizeHeader(h2);
+  @include fonts.@include fonts.fontSizeHeader(h2);
   margin: 0;
   .bold & {
-    @include fontSizeHeader(h2, true);
+    @include fonts.@include fonts.fontSizeHeader(h2, true);
   }
 }
 
 h3 {
-  @include fontSizeHeader(h3);
+  @include fonts.@include fonts.fontSizeHeader(h3);
   margin: 0;
   .bold & {
-    @include fontSizeHeader(h3, true);
+    @include fonts.@include fonts.fontSizeHeader(h3, true);
   }
 }
 
 h4 {
-  @include fontSizeHeader(h4);
+  @include fonts.@include fonts.fontSizeHeader(h4);
   margin: 0;
   .bold & {
-    @include fontSizeHeader(h4, true);
+    @include fonts.@include fonts.fontSizeHeader(h4, true);
   }
 }
 
 .theme-title {
-  color: get-var(surface, brand, primary);
+  color: common.common.get-var(surface, brand, primary);
 }
 
 .bold {
   h3 {
-    @include fontSizeHeader(h3, true);
+    @include fonts.@include fonts.fontSizeHeader(h3, true);
   }
 
   h4 {
-    @include fontSizeHeader(h4, true);
+    @include fonts.@include fonts.fontSizeHeader(h4, true);
   }
 }

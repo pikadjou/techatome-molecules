@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .component-container {
   position: relative;
@@ -7,5 +7,5 @@
   position: absolute;
   top: 0;
   right: 0;
-  padding: get-var(space, sm);
+  padding: common.get-var(space, sm);
 }

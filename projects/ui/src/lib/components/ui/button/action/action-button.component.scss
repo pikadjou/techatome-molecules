@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 $size: 50px;
 $thickness: 0.25em;
@@ -9,7 +9,7 @@ $thickness: 0.25em;
   .bullet {
     cursor: pointer;
     position: absolute;
-    background-color: get-var(surface, invert);
+    background-color: common.get-var(surface, invert);
     height: $size;
     width: $size;
     border-radius: 50%;
@@ -20,7 +20,7 @@ $thickness: 0.25em;
     &:after {
       position: absolute;
       content: '';
-      background-color: get-var(neutral, 100);
+      background-color: common.get-var(neutral, 100);
       top: 0;
       bottom: 0;
       left: 0;
@@ -64,7 +64,7 @@ $thickness: 0.25em;
     opacity: 0;
     z-index: 1;
 
-    color: get-var(neutral, 100);
+    color: common.get-var(neutral, 100);
     text-align: center;
 
     transform: rotateZ(90deg);

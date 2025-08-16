@@ -1,13 +1,14 @@
+@use "ta/utils/mixins/fonts";
+
 @import '../../styles/icon.scss';
-@import 'ta-export';
 i {
   display: block;
 }
 .xs {
-  @include fontSizeBody(xs);
+  @include fonts.fontSizeBody(xs);
 }
 .sm {
-  @include fontSizeBody(sm);
+  @include fonts.fontSizeBody(sm);
 }
 .md {
   height: 24px;

@@ -1,10 +1,10 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 :host ::ng-deep {
   .cal-hour-segment {
-    background-color: get-var(neutral, 100);
+    background-color: common.get-var(neutral, 100);
   }
   .cal-time {
-    color: get-var(neutral, 600);
+    color: common.get-var(neutral, 600);
   }
 }

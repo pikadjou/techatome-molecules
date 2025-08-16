@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .item {
-  padding-top: get-var(space, md);
+  padding-top: common.get-var(space, md);
 }

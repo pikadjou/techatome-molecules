@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .icons {
   user-select: none;
@@ -26,13 +26,13 @@
     text-align: right;
 
     &.disabled {
-      color: get-var(icon, disabled);
+      color: common.get-var(icon, disabled);
     }
   }
 }
 
 ta-font-icon {
-  padding: get-var(space, xs);
+  padding: common.get-var(space, xs);
   cursor: pointer;
   display: block;
 }

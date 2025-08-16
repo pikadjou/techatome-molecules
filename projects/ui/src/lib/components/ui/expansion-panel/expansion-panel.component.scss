@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 :host,
 ::ng-deep {
@@ -8,18 +8,18 @@
   .mat-expansion-panel {
     box-shadow: none;
     border-radius: 0px !important;
-    border-bottom: 1px solid get-var(neutral, 400);
-    padding: get-var(space, sm) 0;
+    border-bottom: 1px solid common.get-var(neutral, 400);
+    padding: common.get-var(space, sm) 0;
 
-    background-color: get-var(surface, primary);
+    background-color: common.get-var(surface, primary);
 
     &.mat-expanded {
       @include shadow-mixin(black, md);
-      border-radius: get-var(space, xs) !important;
+      border-radius: common.get-var(space, xs) !important;
     }
   }
   .mat-expansion-panel-header,
   .mat-expansion-panel-body {
-    padding: get-var(space, xs) !important;
+    padding: common.get-var(space, xs) !important;
   }
 }

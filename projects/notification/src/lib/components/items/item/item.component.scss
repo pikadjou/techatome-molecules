@@ -1,34 +1,36 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .item-container {
-  @include flex-row();
-  gap: get-var(space, md);
-  padding: spaceBase(1.25);
+  @include flex.flex-row();
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, lg);
 
   &:hover {
-    background-color: get-var(surface, brand, tertiary);
+    background-color: common.get-var(surface, brand, tertiary);
   }
   &.new {
-    background-color: get-var(surface, brand, tertiary);
+    background-color: common.get-var(surface, brand, tertiary);
   }
   .tenant-name {
-    @include fontSizeBody(sm);
-    color: get-var(text, brand, primary);
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, brand, primary);
   }
   .title {
-    @include fontSizeBody(md, true);
+    @include fonts.fontSizeBody(md, true);
   }
 
   .info {
-    @include flex-row();
+    @include flex.flex-row();
 
     .project-name {
-      @include fontSizeBody(sm);
-      color: get-var(text, secondary);
+      @include fonts.fontSizeBody(sm);
+      color: common.get-var(text, secondary);
     }
   }
   .extra-info {
-    @include fontSizeKey(xs);
-    color: get-var(text, tertiary);
+    @include fonts.fontSizeKey(xs);
+    color: common.get-var(text, tertiary);
   }
 }

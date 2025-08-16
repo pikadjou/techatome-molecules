@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .item-container {
-  border-bottom: 1px solid get-var(border, primary);
+  border-bottom: 1px solid common.get-var(border, primary);
 }

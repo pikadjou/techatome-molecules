@@ -1,6 +1,7 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .paragraph {
-  @include fontSizeBody(md);
-  margin: get-var(space, md) 0;
+  @include fonts.fontSizeBody(md);
+  margin: common.get-var(space, md) 0;
 }

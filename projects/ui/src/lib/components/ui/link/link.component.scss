@@ -1,17 +1,18 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .link {
   justify-content: center;
 
-  color: get-var(text, primary);
+  color: common.get-var(text, primary);
 
   &:hover {
-    color: get-var(text, brand, primary);
+    color: common.get-var(text, brand, primary);
   }
   &.disabled,
   &.inactive {
     cursor: not-allowed;
-    color: get-var(neutral, 400);
+    color: common.get-var(neutral, 400);
   }
 
   .content {
@@ -22,14 +23,14 @@
 }
 
 .xs {
-  @include fontSizeBody(xs);
+  @include fonts.fontSizeBody(xs);
 }
 .sm {
-  @include fontSizeBody(sm);
+  @include fonts.fontSizeBody(sm);
 }
 .md {
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }
 .bold {
-  @include fontSizeBody(md, true);
+  @include fonts.fontSizeBody(md, true);
 }

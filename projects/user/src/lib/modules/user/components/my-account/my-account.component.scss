@@ -1,14 +1,15 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .modify-icon {
-  color: get-var(brand, 700);
+  color: common.get-var(brand, 700);
 }
 .language-panel {
   min-width: 240px;
 }
 
 .text {
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }
 
 .button-content {

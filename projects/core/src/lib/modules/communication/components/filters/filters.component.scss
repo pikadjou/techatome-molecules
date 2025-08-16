@@ -1,18 +1,18 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .participant-logo {
   margin-left: -7px;
 }
 
 ta-font-icon {
-  padding: get-var(space, sm);
-  border-radius: get-var(radius, rounded);
-  border: 1px solid get-var(border, secondary);
-  background-color: get-var(brand, 50);
+  padding: common.get-var(space, sm);
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, secondary);
+  background-color: common.get-var(brand, 50);
 }
 
 :host ::ng-deep {
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: get-var(brand, 50);
+    background-color: common.get-var(brand, 50);
   }
 }

@@ -1,4 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .input-layout-container {
   width: 100%;
@@ -7,39 +8,39 @@
 }
 
 .error-message {
-  color: get-var(semantic, red-dark);
-  @include fontSizeBody(sm);
-  margin-top: get-var(space, xs);
+  color: common.get-var(semantic, red-dark);
+  @include fonts.fontSizeBody(sm);
+  margin-top: common.get-var(space, xs);
 }
 
 :host ::ng-deep {
   .form-control {
-    @include fontSizeBody(md);
-    border-radius: get-var(radius, rounded);
-    padding: get-var(space, sm) get-var(space, md);
+    @include fonts.fontSizeBody(md);
+    border-radius: common.get-var(radius, rounded);
+    padding: common.get-var(space, sm) common.get-var(space, md);
     outline: none;
     border: 1px solid;
-    border-color: get-var(neutral, 300);
-    background-color: get-var(neutral, white);
+    border-color: common.get-var(neutral, 300);
+    background-color: common.get-var(neutral, white);
     width: 100%;
     cursor: pointer;
     box-sizing: border-box;
     min-height: 40px;
 
     &:hover:not(:disabled) {
-      border-color: get-var(neutral, 500);
+      border-color: common.get-var(neutral, 500);
     }
 
     &:focus:not(:disabled) {
-      border-color: get-var(border, brand);
+      border-color: common.get-var(border, brand);
     }
 
     &:required:not(:disabled) {
-      border-color: get-var(semantic, red-dark);
+      border-color: common.get-var(semantic, red-dark);
     }
 
     &:disabled {
-      border-color: get-var(neutral, 300);
+      border-color: common.get-var(neutral, 300);
     }
   }
 }

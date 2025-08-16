@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 img {
   border-radius: 5px;
@@ -26,7 +26,7 @@ img {
       border-radius: 32px;
       top: 4px;
       right: 4px;
-      background: get-var(neutral, 50);
+      background: common.get-var(neutral, 50);
 
       .delete-icon {
         width: fit-content;
@@ -47,7 +47,7 @@ img {
       bottom: 0;
       right: 0;
       left: 0;
-      background-color: get-var(neutral, 100);
+      background-color: common.get-var(neutral, 100);
 
       app-local-icon {
         position: relative;

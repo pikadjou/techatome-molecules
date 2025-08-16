@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .user-image {
   border-radius: 100%;
@@ -15,10 +15,10 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: get-var(brand, 200);
+  background-color: common.get-var(brand, 200);
   overflow: hidden;
 
   ta-font-icon {
-    color: get-var(brand, 700);
+    color: common.get-var(brand, 700);
   }
 }

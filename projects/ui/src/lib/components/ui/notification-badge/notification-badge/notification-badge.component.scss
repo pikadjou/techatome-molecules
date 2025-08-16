@@ -1,8 +1,8 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .badge-container {
-  color: get-var(neutral, 50) !important;
-  background-color: get-var(brand, 400);
+  color: common.get-var(neutral, 50) !important;
+  background-color: common.get-var(brand, 400);
   height: 15px;
   position: absolute;
   top: -8px;

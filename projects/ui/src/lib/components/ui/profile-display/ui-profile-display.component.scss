@@ -1,13 +1,14 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .profile {
-  margin-bottom: get-var(space, xl);
+  margin-bottom: common.get-var(space, xl);
 
   .title {
-    @include fontSizeKey(key);
+    @include fonts.fontSizeKey(key);
     text-align: center;
     line-height: 32px;
-    margin-bottom: get-var(space, sm);
+    margin-bottom: common.get-var(space, sm);
     @include text-line-limit(2);
 
     .main {

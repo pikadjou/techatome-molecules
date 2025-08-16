@@ -1,24 +1,26 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .message-container {
-  border-radius: get-var(radius, rounded);
-  padding: get-var(space, xs);
+  border-radius: common.get-var(radius, rounded);
+  padding: common.get-var(space, xs);
 
-  border: 1px solid get-var(border, secondary);
-  background-color: get-var(surface, brand, tertiary);
+  border: 1px solid common.get-var(border, secondary);
+  background-color: common.get-var(surface, brand, tertiary);
 
   &.intern {
-    border: 1px solid get-var(semantic, yellow-dark);
-    background-color: get-var(semantic, yellow-light);
+    border: 1px solid common.get-var(semantic, yellow-dark);
+    background-color: common.get-var(semantic, yellow-light);
   }
 }
 
 .toggle-container {
-  @include fontSizeBody(xs);
+  @include fonts.fontSizeBody(xs);
 }
 
 .extra-container {
-  @include flex-row();
+  @include flex.flex-row();
 }
 
 .collapsed-icon {

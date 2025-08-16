@@ -1,13 +1,16 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
 
 .hour-date-line-container {
-  @include space-between();
+  @include flex.@include flex.space-between();
 
   align-items: flex-start;
 
   .label {
-    @include fontSizeBody(md);
+    @include fonts.@include fonts.fontSizeBody(md);
 
-    color: get-var(neutral, 900);
+    color: common.common.get-var(neutral, 900);
   }
 }

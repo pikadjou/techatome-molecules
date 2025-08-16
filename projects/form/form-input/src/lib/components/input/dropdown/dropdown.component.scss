@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .custom-dropdown-button {
   text-align: left;
@@ -7,7 +7,7 @@
   align-items: center;
 
   &.disabled {
-    border-color: get-var(neutral, 300);
+    border-color: common.get-var(neutral, 300);
     pointer-events: none;
   }
 }
@@ -40,7 +40,7 @@ button .selected-value {
 .dropdown-option {
   display: flex;
   align-items: center;
-  padding: get-var(space, sm) get-var(space, md);
+  padding: common.get-var(space, sm) common.get-var(space, md);
   text-align: left;
   border: none;
   background: transparent;
@@ -48,16 +48,16 @@ button .selected-value {
   width: 100%;
 
   .checkmark {
-    margin-left: get-var(space, sm);
-    color: get-var(border, brand);
+    margin-left: common.get-var(space, sm);
+    color: common.get-var(border, brand);
   }
 
   &:hover {
-    background-color: get-var(neutral, 100);
+    background-color: common.get-var(neutral, 100);
   }
 
   &.disabled {
-    color: get-var(neutral, 500);
+    color: common.get-var(neutral, 500);
     cursor: not-allowed;
   }
 }

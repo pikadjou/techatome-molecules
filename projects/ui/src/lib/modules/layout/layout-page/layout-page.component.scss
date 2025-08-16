@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .layout-page-content {
-  padding: 0; // get-var(space,sm);
+  padding: 0; // common.get-var(space,sm);
 }

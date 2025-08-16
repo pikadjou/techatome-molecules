@@ -1,9 +1,9 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .icon-container {
-  padding: spaceBase(1.3);
-  border-radius: get-var(radius, full);
+  padding: common.get-var(space, md);
+  border-radius: common.get-var(radius, full);
 
-  background-color: get-var(surface, hover, secondary);
-  color: get-var(icon, brand, primary);
+  background-color: common.get-var(surface, hover, secondary);
+  color: common.get-var(icon, brand, primary);
 }

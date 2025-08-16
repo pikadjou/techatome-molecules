@@ -1,10 +1,10 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .conversation-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: get-var(brand, 100);
+  background-color: common.get-var(brand, 100);
 
   .communication-container {
     overflow-y: auto;
@@ -12,7 +12,7 @@
 
   .box-container {
     margin-top: auto;
-    padding: get-var(space, xs);
+    padding: common.get-var(space, xs);
     background-color: transparent;
 
     ta-font-icon {
@@ -22,11 +22,11 @@
 }
 
 .cadre {
-  border: 1px solid get-var(neutral, 300);
-  border-radius: get-var(radius, minimal);
-  background-color: get-var(brand, 50);
+  border: 1px solid common.get-var(neutral, 300);
+  border-radius: common.get-var(radius, minimal);
+  background-color: common.get-var(brand, 50);
   display: flex;
-  padding: get-var(space, sm);
+  padding: common.get-var(space, sm);
 }
 
 ta-communication-message-box-container {

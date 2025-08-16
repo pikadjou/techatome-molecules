@@ -1,26 +1,27 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .card {
   @include shadow-mixin(brand, md);
-  border-radius: get-var(space, md);
+  border-radius: common.get-var(space, md);
   overflow: hidden;
 
-  padding: get-var(space, lg);
-  background-color: get-var(surface, primary);
-  color: get-var(text, primary);
+  padding: common.get-var(space, lg);
+  background-color: common.get-var(surface, primary);
+  color: common.get-var(text, primary);
 
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 
   &.success {
-    border: 1px solid get-var(semantic-token, success);
+    border: 1px solid common.get-var(semantic-token, success);
   }
   &.danger {
-    border: 1px solid get-var(semantic-token, alert);
+    border: 1px solid common.get-var(semantic-token, alert);
   }
   &.warning {
-    border: 1px solid get-var(semantic-token, warning);
+    border: 1px solid common.get-var(semantic-token, warning);
   }
   &.info {
-    border: 1px solid get-var(semantic-token, link);
+    border: 1px solid common.get-var(semantic-token, link);
   }
 }

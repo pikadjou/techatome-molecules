@@ -1,9 +1,9 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
 .textarea-container {
   width: 100%;
 }
 
 .form-control {
   height: auto;
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }

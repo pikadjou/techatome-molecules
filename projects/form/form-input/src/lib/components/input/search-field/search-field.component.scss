@@ -1,13 +1,14 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
 
 $search-field-size: 44px;
 $search-field-deploy-size: 100%;
 
 .input-group {
   @include simple-flex();
-  @include align-center();
-  padding: get-var(space, sm);
-  gap: get-var(space, sm);
+  @include flex.align-center();
+  padding: common.get-var(space, sm);
+  gap: common.get-var(space, sm);
   box-sizing: border-box;
 
   .inner-div {
@@ -16,13 +17,13 @@ $search-field-deploy-size: 100%;
 
   &.focus {
     ta-font-icon {
-      color: get-var(icon, brand, primary);
+      color: common.get-var(icon, brand, primary);
     }
   }
   &.disabled {
-    color: get-var(text, tertiary);
+    color: common.get-var(text, tertiary);
     ta-font-icon {
-      color: get-var(icon, tertiary);
+      color: common.get-var(icon, tertiary);
     }
   }
 }

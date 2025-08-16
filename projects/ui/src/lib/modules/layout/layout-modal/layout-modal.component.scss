@@ -1,11 +1,11 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .modal-container {
-  padding: spaceBase(2);
-  background-color: get-var(surface, primary);
+  padding: common.get-var(space, md);
+  background-color: common.get-var(surface, primary);
 
   .header {
-    padding-bottom: get-var(space, sm);
+    padding-bottom: common.get-var(space, sm);
   }
 
   ta-font-icon {

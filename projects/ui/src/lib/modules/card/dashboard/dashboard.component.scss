@@ -1,14 +1,15 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
 
 .dashboard-content {
   position: relative;
   z-index: 1;
 
-  gap: get-var(space, md);
-  @include flex-column();
+  gap: common.get-var(space, md);
+  @include flex.flex-column();
 
   @include media-breakpoint-up(mobile) {
-    @include flex-row();
+    @include flex.flex-row();
   }
 
   .icon-container {
@@ -37,7 +38,7 @@
 
   height: 200px;
   width: 170px;
-  color: get-var(brand, 100);
+  color: common.get-var(brand, 100);
   ta-font-icon {
     position: absolute;
     bottom: 0;

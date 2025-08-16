@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .card-content {
-  padding: get-var(space, xs) 0;
+  padding: common.get-var(space, xs) 0;
 }

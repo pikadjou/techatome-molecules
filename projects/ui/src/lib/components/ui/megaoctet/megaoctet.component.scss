@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 ta-font-icon {
-  color: get-var(icon, brand, primary);
+  color: common.get-var(icon, brand, primary);
 }

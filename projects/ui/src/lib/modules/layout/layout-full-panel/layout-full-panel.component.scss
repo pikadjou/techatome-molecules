@@ -1,10 +1,10 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 ta-layout-header {
   text-align: right;
 
   ta-title {
-    padding: get-var(space, md) 0 0 get-var(space, md);
+    padding: common.get-var(space, md) 0 0 common.get-var(space, md);
   }
 
   ta-font-icon {
@@ -20,7 +20,7 @@ ta-layout-header {
 
   z-index: 999;
   opacity: 0.5;
-  background-color: get-var(surface, invert);
+  background-color: common.get-var(surface, invert);
 }
 .side-panel {
   position: fixed;
@@ -28,7 +28,7 @@ ta-layout-header {
   right: 0;
   width: 400px;
   height: 100vh;
-  background-color: get-var(surface, primary);
+  background-color: common.get-var(surface, primary);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   overflow-y: auto;

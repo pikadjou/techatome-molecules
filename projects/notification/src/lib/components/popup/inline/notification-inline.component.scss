@@ -1,31 +1,33 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .notification-container {
   position: relative;
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }
 
 .wrapper {
-  padding: get-var(space, sm);
+  padding: common.get-var(space, sm);
 }
 
 .icon {
-  @include align-center();
+  @include flex.align-center();
 }
 .text {
   .label {
     @include flex-start;
     &.success {
-      color: get-var(semantic-token, success);
+      color: common.get-var(semantic-token, success);
     }
     &.danger {
-      color: get-var(semantic-token, alert);
+      color: common.get-var(semantic-token, alert);
     }
     &.warning {
-      color: get-var(semantic-token, warning);
+      color: common.get-var(semantic-token, warning);
     }
     &.info {
-      color: get-var(semantic-token, link);
+      color: common.get-var(semantic-token, link);
     }
   }
 }

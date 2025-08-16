@@ -1,16 +1,17 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .hello-user-container {
   display: flex;
   flex-direction: column;
-  gap: get-var(space, sm);
+  gap: common.get-var(space, sm);
 
   .title {
-    @include fontSizeBody(md, true);
+    @include fonts.fontSizeBody(md, true);
     line-height: 24px;
     letter-spacing: 0;
     text-align: center;
-    color: get-var(neutral, 900);
+    color: common.get-var(neutral, 900);
   }
 
   .trigram {
@@ -18,8 +19,8 @@
   }
 
   .footer {
-    @include fontSizeHeader(h1);
+    @include fonts.fontSizeHeader(h1);
     text-align: center;
-    color: get-var(neutral, 900);
+    color: common.get-var(neutral, 900);
   }
 }

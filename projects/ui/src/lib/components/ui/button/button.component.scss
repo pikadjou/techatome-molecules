@@ -1,26 +1,28 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .button {
   width: 100%;
 
   border: none;
 
-  border-radius: get-var(radius, full);
-  padding: get-var(space, sm) get-var(space, md);
+  border-radius: common.get-var(radius, full);
+  padding: common.get-var(space, sm) common.get-var(space, md);
 
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 
-  @include align-center();
-  @include justify-center;
+  @include flex.align-center();
+  @include flex.justify-center();
 
-  gap: get-var(space, md);
+  gap: common.get-var(space, md);
 
   &.small {
-    @include fontSizeBody(sm);
-    padding: get-var(space, xs) get-var(space, sm);
+    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, sm);
   }
   &.large {
-    padding: get-var(space, md) get-var(space, lg);
+    padding: common.get-var(space, md) common.get-var(space, lg);
   }
   &.no-border {
     border: none;
@@ -30,43 +32,43 @@
     cursor: not-allowed;
   }
   &.primary {
-    color: get-var(text, invert, primary);
-    background-color: get-var(surface, brand, primary);
+    color: common.get-var(text, invert, primary);
+    background-color: common.get-var(surface, brand, primary);
 
     &:hover {
-      background-color: get-var(surface, hover, primary);
+      background-color: common.get-var(surface, hover, primary);
     }
 
     &.disabled {
-      color: get-var(text, brand, secondary);
-      background-color: get-var(surface, hover, secondary);
+      color: common.get-var(text, brand, secondary);
+      background-color: common.get-var(surface, hover, secondary);
     }
     &.inactive {
-      color: get-var(text, primary);
-      background-color: get-var(surface, tertiary);
+      color: common.get-var(text, primary);
+      background-color: common.get-var(surface, tertiary);
     }
 
     ta-font-icon {
-      color: get-var(icon, invert, primary);
+      color: common.get-var(icon, invert, primary);
     }
   }
   &.secondary {
-    color: get-var(text, primary);
-    background-color: get-var(surface, primary);
-    border: 1px solid get-var(border, secondary);
+    color: common.get-var(text, primary);
+    background-color: common.get-var(surface, primary);
+    border: 1px solid common.get-var(border, secondary);
     &:hover {
-      border-color: get-var(border, invert);
+      border-color: common.get-var(border, invert);
     }
     &.disabled {
-      color: get-var(text, tertiary);
-      border-color: get-var(border, disabled);
+      color: common.get-var(text, tertiary);
+      border-color: common.get-var(border, disabled);
     }
     &.inactive {
-      border-color: get-var(border, primary);
+      border-color: common.get-var(border, primary);
     }
 
     ta-font-icon {
-      color: get-var(icon, brand, primary);
+      color: common.get-var(icon, brand, primary);
     }
   }
 }

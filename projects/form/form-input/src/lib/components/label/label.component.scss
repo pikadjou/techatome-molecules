@@ -1,7 +1,8 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .form-label {
   display: block;
-  @include fontSizeBody(sm);
-  color: get-var(brand, 700);
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(brand, 700);
 }

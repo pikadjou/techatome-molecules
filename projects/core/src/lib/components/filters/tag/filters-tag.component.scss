@@ -1,8 +1,9 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .badge-container {
-  padding-right: get-var(space, sm);
-  @include fontSizeBody(md);
+  padding-right: common.get-var(space, sm);
+  @include fonts.fontSizeBody(md);
 
   ta-badge {
     display: inline-block;

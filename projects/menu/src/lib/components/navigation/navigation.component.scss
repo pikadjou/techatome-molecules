@@ -1,7 +1,9 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .element-list {
-  gap: get-var(space, md);
+  gap: common.get-var(space, md);
 
   @include flex-row;
   &.vertical {
@@ -11,53 +13,53 @@
 .tags {
   .item-container {
     .item {
-      @include flex-row();
-      @include align-center();
-      gap: get-var(space, xs);
-      padding: spaceBase(1.25);
+      @include flex.flex-row();
+      @include flex.align-center();
+      gap: common.get-var(space, xs);
+      padding: common.get-var(space, md);
 
       border: 1px solid transparent;
 
-      color: get-var(text-tertiary);
-      background-color: get-var(surface, tertiary);
-      border-color: get-var(surface, tertiary);
+      color: common.get-var(text-tertiary);
+      background-color: common.get-var(surface, tertiary);
+      border-color: common.get-var(surface, tertiary);
 
-      border-radius: get-var(radius, rounded);
+      border-radius: common.get-var(radius, rounded);
 
-      @include fontSizeBody(sm);
+      @include fonts.fontSizeBody(sm);
     }
 
     &.disabled {
       .item {
-        background-color: get-var(surface, primary);
-        border-color: get-var(border, disabled);
+        background-color: common.get-var(surface, primary);
+        border-color: common.get-var(border, disabled);
       }
     }
     &.active {
       .item {
-        color: get-var(text, brand, primary);
-        background-color: get-var(surface, default);
-        border-color: get-var(surface, default);
+        color: common.get-var(text, brand, primary);
+        background-color: common.get-var(surface, default);
+        border-color: common.get-var(surface, default);
       }
     }
   }
 }
 .tab {
   .list {
-    border-bottom: 1px solid get-var(border, secondary);
+    border-bottom: 1px solid common.get-var(border, secondary);
   }
   .item-container {
     .item {
-      @include flex-row();
-      @include align-center();
-      gap: get-var(space, xs);
-      padding: spaceBase(1.25);
+      @include flex.flex-row();
+      @include flex.align-center();
+      gap: common.get-var(space, xs);
+      padding: common.get-var(space, md);
 
       border-bottom: 2px solid transparent;
 
-      color: get-var(text-tertiary);
+      color: common.get-var(text-tertiary);
 
-      @include fontSizeBody(sm);
+      @include fonts.fontSizeBody(sm);
     }
 
     &.disabled {
@@ -65,8 +67,8 @@
     }
     &.active {
       .item {
-        color: get-var(text, brand, primary);
-        border-bottom-color: get-var(border, brand);
+        color: common.get-var(text, brand, primary);
+        border-bottom-color: common.get-var(border, brand);
       }
     }
   }
@@ -74,7 +76,7 @@
 
 :host ::ng-deep {
   .swiper-container {
-    gap: get-var(space, sm) !important;
+    gap: common.get-var(space, sm) !important;
   }
   ta-font-icon {
     margin-top: -6px;

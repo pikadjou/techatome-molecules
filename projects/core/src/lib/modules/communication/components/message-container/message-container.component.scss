@@ -1,16 +1,17 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .message-container {
   max-width: 80%;
   overflow: hidden;
   &.box {
     .message-wrapper {
-      border-radius: get-var(radius, rounded);
-      border: 1px solid get-var(brand, 400);
+      border-radius: common.get-var(radius, rounded);
+      border: 1px solid common.get-var(brand, 400);
 
-      background-color: get-var(surface, primary);
+      background-color: common.get-var(surface, primary);
 
-      padding: get-var(space, md);
+      padding: common.get-var(space, md);
     }
   }
 
@@ -19,8 +20,8 @@
       flex-direction: row-reverse;
     }
     .message-wrapper {
-      border: 1px solid get-var(brand, 600);
-      background-color: get-var(brand, 100);
+      border: 1px solid common.get-var(brand, 600);
+      background-color: common.get-var(brand, 100);
     }
     .time {
       @include align-end();
@@ -28,8 +29,8 @@
   }
   &.intern {
     .message-wrapper {
-      border: 1px solid get-var(semantic, yellow-dark);
-      background-color: get-var(semantic, yellow-light);
+      border: 1px solid common.get-var(semantic, yellow-dark);
+      background-color: common.get-var(semantic, yellow-light);
     }
   }
 
@@ -38,7 +39,7 @@
       flex-direction: row-reverse;
     }
     .message-wrapper {
-      @include fontSizeBody(sm);
+      @include fonts.fontSizeBody(sm);
     }
     .time {
       @include align-end();
@@ -46,7 +47,7 @@
   }
   &.error {
     .message-wrapper {
-      border: 1px solid get-var(semantic, red-dark);
+      border: 1px solid common.get-var(semantic, red-dark);
     }
   }
 }

@@ -1,14 +1,16 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .bullet-container {
   display: inline-block;
-  @include fontSizeBody(xs);
+  @include fonts.fontSizeBody(xs);
 
-  border-radius: get-var(radius, full);
+  border-radius: common.get-var(radius, full);
   border: 1px solid transparent;
 
-  color: get-var(text, invert, primary);
-  @include fontSizeKey(xxs, true);
+  color: common.get-var(text, invert, primary);
+  @include fonts.fontSizeKey(xxs, true);
 
   &.xs {
     width: 5px;
@@ -28,55 +30,55 @@
   }
 }
 .bullet-default {
-  color: get-var(text, brand, primary);
-  background: get-var(surface, default);
-  border-color: get-var(border, brand);
+  color: common.get-var(text, brand, primary);
+  background: common.get-var(surface, default);
+  border-color: common.get-var(border, brand);
 }
 
 .bullet-secondary {
-  color: get-var(text, body);
-  background: get-var(surface, secondary);
-  border-color: get-var(neutral, 600);
+  color: common.get-var(text, body);
+  background: common.get-var(surface, secondary);
+  border-color: common.get-var(neutral, 600);
 }
 
 .bullet-success {
-  color: get-var(text, success);
-  background: get-var(surface, success);
-  border-color: get-var(border, success);
+  color: common.get-var(text, success);
+  background: common.get-var(surface, success);
+  border-color: common.get-var(border, success);
 }
 
 .bullet-warning {
-  color: get-var(text, warning);
-  background: get-var(surface, warning);
-  border-color: get-var(border, warning);
+  color: common.get-var(text, warning);
+  background: common.get-var(surface, warning);
+  border-color: common.get-var(border, warning);
 }
 
 .bullet-alert {
-  color: get-var(text, alert);
-  background: get-var(surface, alert);
-  border-color: get-var(border, alert);
+  color: common.get-var(text, alert);
+  background: common.get-var(surface, alert);
+  border-color: common.get-var(border, alert);
 }
 
 .bullet-purple {
-  color: get-var(semantic, purple-dark);
-  background: get-var(semantic, purple-light);
-  border-color: get-var(semantic, purple-dark);
+  color: common.get-var(semantic, purple-dark);
+  background: common.get-var(semantic, purple-light);
+  border-color: common.get-var(semantic, purple-dark);
 }
 
 .bullet-new {
-  background: get-var(surface, brand, primary);
-  border-color: get-var(surface, brand, primary);
+  background: common.get-var(surface, brand, primary);
+  border-color: common.get-var(surface, brand, primary);
 }
 
 .bullet-notif {
   height: 16px;
   width: 16px;
 
-  background: get-var(surface, brand, primary);
-  border-color: get-var(surface, brand, primary);
+  background: common.get-var(surface, brand, primary);
+  border-color: common.get-var(surface, brand, primary);
 
   div {
-    @include align-center();
+    @include flex.align-center();
     @include justify-center;
   }
 }

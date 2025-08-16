@@ -1,59 +1,60 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .label-container {
-  padding: get-var(space, sm) get-var(space, md);
-  @include fontSizeBody(sm);
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  @include fonts.fontSizeBody(sm);
 
-  border-radius: get-var(radius, label);
+  border-radius: common.get-var(radius, label);
   border: 1px solid transparent;
 
   &.xs {
-    padding: spaceBase(0.25) spaceBase(0.25);
-    @include fontSizeBody(xs);
+    padding: common.get-var(space, xs) common.get-var(space, xs);
+    @include fonts.fontSizeBody(xs);
   }
 
   &.sm {
-    padding: spaceBase(0.25) spaceBase(1.25);
-    @include fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, lg);
+    @include fonts.fontSizeBody(sm);
   }
 
   &.lg {
-    padding: get-var(space, md) get-var(space, lg);
-    @include fontSizeBody(md);
+    padding: common.get-var(space, md) common.get-var(space, lg);
+    @include fonts.fontSizeBody(md);
   }
 }
 .label-default {
-  color: get-var(text, brand, primary);
-  background: get-var(surface, default);
-  border-color: get-var(border, brand);
+  color: common.get-var(text, brand, primary);
+  background: common.get-var(surface, default);
+  border-color: common.get-var(border, brand);
 }
 
 .label-secondary {
-  color: get-var(text, body);
-  background: get-var(surface, secondary);
-  border-color: get-var(neutral, 600);
+  color: common.get-var(text, body);
+  background: common.get-var(surface, secondary);
+  border-color: common.get-var(neutral, 600);
 }
 
 .label-success {
-  color: get-var(text, success);
-  background: get-var(surface, success);
-  border-color: get-var(border, success);
+  color: common.get-var(text, success);
+  background: common.get-var(surface, success);
+  border-color: common.get-var(border, success);
 }
 
 .label-warning {
-  color: get-var(text, warning);
-  background: get-var(surface, warning);
-  border-color: get-var(border, warning);
+  color: common.get-var(text, warning);
+  background: common.get-var(surface, warning);
+  border-color: common.get-var(border, warning);
 }
 
 .label-alert {
-  color: get-var(text, alert);
-  background: get-var(surface, alert);
-  border-color: get-var(border, alert);
+  color: common.get-var(text, alert);
+  background: common.get-var(surface, alert);
+  border-color: common.get-var(border, alert);
 }
 
 .label-purple {
-  color: get-var(semantic, purple-dark);
-  background: get-var(semantic, purple-light);
-  border-color: get-var(semantic, purple-dark);
+  color: common.get-var(semantic, purple-dark);
+  background: common.get-var(semantic, purple-light);
+  border-color: common.get-var(semantic, purple-dark);
 }

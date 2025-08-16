@@ -1,13 +1,14 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .connect {
-  @include fontSizeBody(xs);
+  @include fonts.fontSizeBody(xs);
 }
 
 .user {
-  background-color: get-var(neutral, 100);
-  color: get-var(text, primary);
-  padding: get-var(space, space);
+  background-color: common.get-var(neutral, 100);
+  color: common.get-var(text, primary);
+  padding: common.get-var(space, space);
   border-radius: 60px;
 
   .expand {
@@ -17,14 +18,14 @@
 }
 
 .overlay {
-  padding: get-var(space, space);
+  padding: common.get-var(space, space);
   width: 350px;
 
   .user-info {
     border-bottom: 1px solid $primary;
-    padding-bottom: get-var(space, xs);
+    padding-bottom: common.get-var(space, xs);
     margin: 0;
-    margin-bottom: get-var(space, xs);
+    margin-bottom: common.get-var(space, xs);
   }
 
   .user-info:last-of-type {
@@ -34,11 +35,11 @@
   }
 
   .title {
-    @include fontSizeBody(md);
+    @include fonts.fontSizeBody(md);
   }
 
   .subtitle {
-    @include fontSizeBody(xs);
+    @include fonts.fontSizeBody(xs);
   }
 }
 

@@ -1,8 +1,8 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .header {
   @include media-breakpoint-down(mobile) {
-    color: get-var(text, primary);
-    padding: get-var(space, sm);
+    color: common.get-var(text, primary);
+    padding: common.get-var(space, sm);
   }
 }

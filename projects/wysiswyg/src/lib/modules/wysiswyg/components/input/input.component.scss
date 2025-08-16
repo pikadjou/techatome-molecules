@@ -1,4 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
 
 .max-height {
   max-height: 300px;
@@ -11,16 +12,16 @@
 
 :host ::ng-deep {
   .ce-inline-tool--color__actions-container {
-    @include flex-column();
-    gap: get-var(space, sm);
+    @include flex.flex-column();
+    gap: common.get-var(space, sm);
 
     .ce-inline-tool--color__action-list {
       @include flex-start();
       list-style-type: none;
       margin: 0;
-      padding: get-var(space, sm);
+      padding: common.get-var(space, sm);
 
-      gap: get-var(space, sm);
+      gap: common.get-var(space, sm);
 
       .ce-inline-tool--color__action-list-item {
         width: 20px;

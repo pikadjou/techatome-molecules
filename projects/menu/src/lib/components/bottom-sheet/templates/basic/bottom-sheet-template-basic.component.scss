@@ -1,12 +1,13 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .bottom-sheet-template-basic {
   padding-bottom: env(safe-area-inset-bottom);
 }
 .handler {
   text-align: center;
-  padding-top: get-var(space, xs);
-  padding-bottom: get-var(space, sm);
+  padding-top: common.get-var(space, xs);
+  padding-bottom: common.get-var(space, sm);
 
   span {
     display: block;
@@ -20,16 +21,16 @@
 
 .item {
   text-align: center;
-  padding: get-var(space, sm) 0;
+  padding: common.get-var(space, sm) 0;
   &.horizontal {
     @include flex-start();
-    gap: get-var(space, xs);
+    gap: common.get-var(space, xs);
   }
 
   .title-container {
     margin: auto 0;
     .label {
-      @include fontSizeBody(xs);
+      @include fonts.fontSizeBody(xs);
     }
   }
 }

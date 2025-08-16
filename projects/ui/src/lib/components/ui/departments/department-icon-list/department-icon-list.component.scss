@@ -1,16 +1,17 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
 
 .departements-container {
-  @include align-center();
+  @include flex.align-center();
 }
 
 .department {
-  @include align-center();
-  margin-right: get-var(space, space); /* Espacement entre les départements */
+  @include flex.align-center();
+  margin-right: common.get-var(space, space); /* Espacement entre les départements */
 }
 
 .img-container {
-  margin-right: get-var(space, xs); /* Espacement entre l'icône et le texte */
+  margin-right: common.get-var(space, xs); /* Espacement entre l'icône et le texte */
   width: 20px;
   img {
     width: 100%;

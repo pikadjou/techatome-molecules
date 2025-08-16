@@ -1,23 +1,23 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .input-container {
-  border: 1px solid get-var(neutral, 300);
+  border: 1px solid common.get-var(neutral, 300);
   border-radius: 10px;
   padding: 15px;
 
   &:hover:not(:disabled) {
-    border-color: get-var(neutral, 500);
+    border-color: common.get-var(neutral, 500);
   }
 
   &:focus:not(:disabled) {
-    border-color: get-var(border, brand);
+    border-color: common.get-var(border, brand);
   }
 
   &:required:not(:disabled) {
-    border-color: get-var(semantic, red-dark);
+    border-color: common.get-var(semantic, red-dark);
   }
 
   &:disabled {
-    border-color: get-var(neutral, 300);
+    border-color: common.get-var(neutral, 300);
   }
 }

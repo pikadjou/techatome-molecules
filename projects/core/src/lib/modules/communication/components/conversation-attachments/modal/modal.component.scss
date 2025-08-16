@@ -1,35 +1,35 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .conversation-attachments-container {
   display: flex;
-  border: 1px dotted get-var(border, primary);
-  padding: get-var(space, md);
+  border: 1px dotted common.get-var(border, primary);
+  padding: common.get-var(space, md);
 
-  gap: get-var(space, md);
+  gap: common.get-var(space, md);
 
   ta-documents-list {
     display: block;
     height: 300px;
     overflow: auto;
 
-    padding-bottom: get-var(space, md);
+    padding-bottom: common.get-var(space, md);
   }
 
   .display-button {
-    padding: get-var(space, lg) 0 0 get-var(space, lg);
+    padding: common.get-var(space, lg) 0 0 common.get-var(space, lg);
   }
 
   .cta {
     justify-content: flex-end;
     align-items: center;
-    gap: get-var(space, sm);
+    gap: common.get-var(space, sm);
 
-    background-color: get-var(surface, tertiary);
+    background-color: common.get-var(surface, tertiary);
   }
 
   .content {
-    padding: get-var(space, md);
-    border: 1px dotted get-var(border, secondary);
-    border-radius: get-var(radius, rounded);
+    padding: common.get-var(space, md);
+    border: 1px dotted common.get-var(border, secondary);
+    border-radius: common.get-var(radius, rounded);
   }
 }

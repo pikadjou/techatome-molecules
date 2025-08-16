@@ -1,7 +1,7 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
 
 .text {
-  @include fontSizeKey(key);
+  @include fonts.fontSizeKey(key);
   display: flex;
   justify-content: center;
   line-height: 32px;

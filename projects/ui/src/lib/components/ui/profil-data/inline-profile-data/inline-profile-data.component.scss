@@ -1,11 +1,12 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .mail {
-  color: get-var(neutral, 500);
-  @include fontSizeBody(xs);
+  color: common.get-var(neutral, 500);
+  @include fonts.fontSizeBody(xs);
   @include text-overflow();
 }
 .text {
-  @include fontSizeBody(sm);
+  @include fonts.fontSizeBody(sm);
   @include text-overflow();
 }

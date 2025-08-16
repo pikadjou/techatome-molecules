@@ -1,14 +1,14 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .card {
-  padding: get-var(space, sm);
+  padding: common.get-var(space, sm);
   text-align: center;
 }
 
 p {
-  padding-top: get-var(space, sm);
+  padding-top: common.get-var(space, sm);
 }
 
 ta-font-icon {
-  color: get-var(brand, 400);
+  color: common.get-var(brand, 400);
 }

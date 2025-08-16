@@ -1,20 +1,21 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .header-tag {
-  margin-bottom: get-var(space, md);
+  margin-bottom: common.get-var(space, md);
 }
 
 .header-title {
-  border-bottom: 1px solid get-var(neutral, main);
+  border-bottom: 1px solid common.get-var(neutral, main);
   @include in-context('.no-card-border') {
     border-width: 0px;
   }
-  padding-bottom: get-var(space, xs);
+  padding-bottom: common.get-var(space, xs);
   .title {
-    @include fontSizeBody(md, true);
+    @include fonts.fontSizeBody(md, true);
   }
   .subtitle {
-    @include fontSizeBody(xs);
+    @include fonts.fontSizeBody(xs);
   }
 }
 @include in-context('.no-card-border') {

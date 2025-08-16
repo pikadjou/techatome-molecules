@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .flex-container {
   @include flex-row;
@@ -12,8 +12,8 @@
     width: 100%;
   }
   .center {
-    border-top: 1px solid get-var(border, primary);
-    padding-top: get-var(space, md);
+    border-top: 1px solid common.get-var(border, primary);
+    padding-top: common.get-var(space, md);
   }
 
   @include media-breakpoint-up(xxl) {
@@ -26,14 +26,14 @@
     .center {
       border-top: none;
       padding-top: none;
-      border-left: 1px solid get-var(border, primary);
+      border-left: 1px solid common.get-var(border, primary);
     }
   }
 }
 
 .second {
   display: flex;
-  border-left: 1px solid get-var(border, primary);
+  border-left: 1px solid common.get-var(border, primary);
   .right {
     max-width: 300px;
   }

@@ -1,24 +1,25 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .tabs {
-  background: get-var(neutral, 50);
+  background: common.get-var(neutral, 50);
   border-radius: 10px 10px 0 0;
 
   .menu-tab {
     .menu-item {
       cursor: pointer;
 
-      color: get-var(neutral, 400);
-      padding: get-var(space, xs) get-var(space, sm);
+      color: common.get-var(neutral, 400);
+      padding: common.get-var(space, xs) common.get-var(space, sm);
 
       border-bottom: solid;
 
-      @include fontSizeBody(md, true);
+      @include fonts.fontSizeBody(md, true);
       text-align: center;
 
       &.active {
-        color: get-var(neutral, 900);
-        border-bottom-color: get-var(surface, brand, primary);
+        color: common.get-var(neutral, 900);
+        border-bottom-color: common.get-var(surface, brand, primary);
       }
     }
 

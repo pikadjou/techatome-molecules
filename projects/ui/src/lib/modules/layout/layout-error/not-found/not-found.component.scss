@@ -1,17 +1,18 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .not-found-container {
   text-align: center;
 
   ta-font-icon {
-    color: get-var(brand, 400);
+    color: common.get-var(brand, 400);
   }
   .title {
-    @include fontSizeKey(key);
-    margin: get-var(space, md) 0;
+    @include fonts.fontSizeKey(key);
+    margin: common.get-var(space, md) 0;
   }
   .content {
-    @include fontSizeKey(key);
-    margin-bottom: get-var(space, md);
+    @include fonts.fontSizeKey(key);
+    margin-bottom: common.get-var(space, md);
   }
 }

@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .items {
   @include flex-start();
@@ -20,6 +20,6 @@
 }
 @include desktopDevice() {
   .items::-webkit-scrollbar {
-    height: get-var(space, xs);
+    height: common.get-var(space, xs);
   }
 }

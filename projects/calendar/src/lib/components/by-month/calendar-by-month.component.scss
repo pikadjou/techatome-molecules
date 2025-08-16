@@ -1,4 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 :host ::ng-deep {
   .cal-month-view {
@@ -18,10 +19,10 @@
           }
           &.cal-today {
             .cell {
-              border: 1px solid get-var(surface, invert);
+              border: 1px solid common.get-var(surface, invert);
               &.current-date {
                 .cal-day-number {
-                  color: get-var(surface, invert);
+                  color: common.get-var(surface, invert);
                 }
               }
             }
@@ -35,15 +36,15 @@
             border-radius: 5px;
 
             &.current-date {
-              background-color: get-var(brand, 50);
-              border: 1px solid get-var(surface, brand, primary);
+              background-color: common.get-var(brand, 50);
+              border: 1px solid common.get-var(surface, brand, primary);
             }
             .cal-day-number {
               position: relative;
               margin: 0;
               float: none;
-              @include fontSizeBody(md);
-              color: get-var(text, primary);
+              @include fonts.fontSizeBody(md);
+              color: common.get-var(text, primary);
               opacity: 1;
             }
             .visits-type {
@@ -64,7 +65,7 @@
       }
     }
     .cal-header {
-      background-color: get-var(brand, 50);
+      background-color: common.get-var(brand, 50);
       border-radius: 5px;
     }
     .calendar-month-view-small {

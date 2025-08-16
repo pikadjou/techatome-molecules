@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
 
 .label {
-  @include fontSizeBody(sm, true);
+  @include fonts.fontSizeBody(sm, true);
 }

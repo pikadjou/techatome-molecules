@@ -1,14 +1,14 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
 
 .text {
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }
 .sm {
-  @include fontSizeBody(sm);
+  @include fonts.fontSizeBody(sm);
 }
 .xs {
-  @include fontSizeBody(xs);
+  @include fonts.fontSizeBody(xs);
 }
 .bold {
-  @include fontSizeBody(md, true);
+  @include fonts.fontSizeBody(md, true);
 }

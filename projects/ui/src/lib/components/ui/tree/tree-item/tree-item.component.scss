@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .item {
   position: relative;
@@ -6,13 +6,13 @@
     content: '';
     position: absolute;
     top: 20px;
-    left: calc(get-var(space, xl) * -0.5);
+    left: calc(common.get-var(space, xl) * -0.5);
 
     border-bottom-left-radius: 5px;
     height: 5px;
 
-    width: calc((get-var(space, xl) * 0.5) - 3px);
-    border: 2px solid get-var(surface, brand, primary);
+    width: calc((common.get-var(space, xl) * 0.5) - 3px);
+    border: 2px solid common.get-var(surface, brand, primary);
     border-top: none;
     border-right: none;
   }

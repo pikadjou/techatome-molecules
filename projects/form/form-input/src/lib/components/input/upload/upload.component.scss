@@ -1,18 +1,18 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .upload-container {
   display: flex;
-  border: 1px dotted get-var(border, primary);
-  padding: get-var(space, md);
+  border: 1px dotted common.get-var(border, primary);
+  padding: common.get-var(space, md);
 
-  gap: get-var(space, md);
+  gap: common.get-var(space, md);
 
   .files-list {
     width: 50%;
     max-height: 500px;
 
     ta-font-icon {
-      color: get-var(surface, brand, secondary);
+      color: common.get-var(surface, brand, secondary);
     }
     .name {
       @include text-overflow();
@@ -20,8 +20,8 @@
   }
   .content {
     position: relative;
-    background-color: get-var(surface, default);
-    padding: get-var(space, xl);
+    background-color: common.get-var(surface, default);
+    padding: common.get-var(space, xl);
 
     flex: 1;
 

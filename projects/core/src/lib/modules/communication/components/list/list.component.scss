@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .communication {
   &.is-mine {
@@ -13,12 +13,12 @@
 
 .date-header {
   display: flex;
-  color: get-var(brand, 600);
+  color: common.get-var(brand, 600);
 
   .line {
     flex: 1;
     height: 1px;
-    background-color: get-var(brand, 600);
+    background-color: common.get-var(brand, 600);
   }
 
   .date {

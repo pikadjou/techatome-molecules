@@ -1,13 +1,15 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .header {
-  gap: spaceBase(1.25);
+  gap: common.get-var(space, md);
   @include flex-row;
-  @include align-center();
+  @include flex.align-center();
 }
 .icon {
-  color: get-var(surface, brand, primary);
-  margin-right: get-var(space, xs);
+  color: common.get-var(surface, brand, primary);
+  margin-right: common.get-var(space, xs);
 }
 
 .local-icon {
@@ -15,14 +17,14 @@
 }
 
 .text {
-  @include fontSizeBody(md, true);
+  @include fonts.fontSizeBody(md, true);
 }
 .value {
-  @include fontSizeBody(md, true);
+  @include fonts.fontSizeBody(md, true);
   @include text-overflow();
 }
 
 .content {
-  margin-top: spaceBase(1.25);
-  color: get-var(neutral, 500);
+  margin-top: common.get-var(space, md);
+  color: common.get-var(neutral, 500);
 }

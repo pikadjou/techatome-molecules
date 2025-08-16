@@ -1,14 +1,15 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .circle-progress-bar .circle-progress-bar-bg {
   fill: none;
-  stroke: get-var(neutral, 300);
+  stroke: common.get-var(neutral, 300);
   stroke-width: 10;
 }
 
 .circle-progress-bar .circle-progress-bar-progress {
   fill: none;
-  stroke: get-var(surface, brand, primary);
+  stroke: common.get-var(surface, brand, primary);
   stroke-width: 10;
   stroke-linecap: round;
   transform: rotate(-90deg);
@@ -21,7 +22,7 @@
 }
 
 .title {
-  @include fontSizeBody(md, true);
+  @include fonts.fontSizeBody(md, true);
   text-align: center;
   padding: 5px;
 }

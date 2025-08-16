@@ -1,11 +1,11 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .alert {
   border-radius: 8px;
   display: inline-flex;
-  gap: get-var(space, xs);
+  gap: common.get-var(space, xs);
   border: none;
-  padding: get-var(space, xs);
+  padding: common.get-var(space, xs);
 }
 
 .text {

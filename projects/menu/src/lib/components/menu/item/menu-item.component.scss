@@ -1,4 +1,6 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 @mixin menu-item-horizontal() {
   justify-content: center;
@@ -6,7 +8,7 @@
   .icon,
   .title {
     @include make-col(12);
-    @include fontSizeBody(sm);
+    @include fonts.fontSizeBody(sm);
   }
 
   .item {
@@ -21,20 +23,20 @@
 }
 
 @mixin menu-item-vertical() {
-  padding: get-var(space, md) spaceBase(1.25);
+  padding: common.get-var(space, md) common.get-var(space, md);
 
   .item {
-    @include align-center();
+    @include flex.align-center();
   }
 
   .icon,
   .title {
-    @include fontSizeBody(md);
+    @include fonts.fontSizeBody(md);
     text-align: left;
     @include make-col-auto();
   }
   .icon {
-    margin-right: get-var(space, md);
+    margin-right: common.get-var(space, md);
   }
 }
 
@@ -42,34 +44,34 @@
   @include make-row(0);
   text-decoration: none;
 
-  padding: get-var(space, xs) 0;
+  padding: common.get-var(space, xs) 0;
 
   &.dark {
     .icon,
     .title {
-      color: get-var(icon, primary);
+      color: common.get-var(icon, primary);
     }
     .title {
-      color: get-var(text, primary);
+      color: common.get-var(text, primary);
     }
   }
 
   &.active {
     .icon {
-      color: get-var(icon, brand, primary);
+      color: common.get-var(icon, brand, primary);
     }
     .title {
-      color: get-var(text, brand, primary);
+      color: common.get-var(text, brand, primary);
     }
 
     @include media-breakpoint-up(mobile) {
       .icon {
-        color: get-var(icon, invert, primary);
+        color: common.get-var(icon, invert, primary);
       }
       .title {
-        color: get-var(icon, invert, primary);
+        color: common.get-var(icon, invert, primary);
       }
-      background-color: get-var(brand, 700);
+      background-color: common.get-var(brand, 700);
       border-radius: 16px;
     }
   }
@@ -114,9 +116,9 @@
   .icon,
   .title {
     @include make-col-ready();
-    color: get-var(neutral, 300);
+    color: common.get-var(neutral, 300);
     @include media-breakpoint-up(mobile) {
-      color: get-var(brand, 400);
+      color: common.get-var(brand, 400);
     }
   }
 
@@ -139,7 +141,7 @@
   }
 
   .ending-icon-container {
-    @include align-center();
+    @include flex.align-center();
     justify-content: flex-end;
   }
 }
@@ -149,6 +151,6 @@
   .trigger {
     position: absolute;
     top: 0;
-    right: calc(get-var(space, xl) * -1);
+    right: calc(common.get-var(space, xl) * -1);
   }
 }

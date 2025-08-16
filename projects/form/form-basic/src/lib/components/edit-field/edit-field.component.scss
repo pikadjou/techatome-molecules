@@ -1,17 +1,18 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
 
 .value-container {
-  @include space-between();
-  @include align-center();
+  @include flex.space-between();
+  @include flex.align-center();
 
   border: 1px solid;
   border-radius: 4px;
-  border-color: get-var(neutral, 300);
+  border-color: common.get-var(neutral, 300);
   display: flex;
-  padding: get-var(space, sm);
+  padding: common.get-var(space, sm);
 
   &:hover {
-    border-color: get-var(neutral, 500);
+    border-color: common.get-var(neutral, 500);
   }
 
   &.no-border {
@@ -20,7 +21,7 @@
 
   &.is-disabled {
     &:hover {
-      border-color: get-var(neutral, 300);
+      border-color: common.get-var(neutral, 300);
     }
   }
 }

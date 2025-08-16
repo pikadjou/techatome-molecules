@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .link {
-  color: get-var(text, secondary);
+  color: common.get-var(text, secondary);
 }

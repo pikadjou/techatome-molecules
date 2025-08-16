@@ -1,7 +1,8 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .profile {
-  margin-bottom: get-var(space, xl);
+  margin-bottom: common.get-var(space, xl);
 
   .cta-buttons {
     display: flex;
@@ -10,20 +11,20 @@
   }
 
   .title {
-    @include fontSizeKey(xl);
+    @include fonts.fontSizeKey(xl);
     text-align: center;
     line-height: 50px;
-    margin-bottom: get-var(space, sm);
+    margin-bottom: common.get-var(space, sm);
 
     .main {
       text-transform: uppercase;
     }
   }
   .sub-title {
-    @include fontSizeKey(lg);
+    @include fonts.fontSizeKey(lg);
     text-align: center;
-    color: get-var(neutral, 500);
-    margin-bottom: get-var(space, md);
+    color: common.get-var(neutral, 500);
+    margin-bottom: common.get-var(space, md);
   }
 
   .text {

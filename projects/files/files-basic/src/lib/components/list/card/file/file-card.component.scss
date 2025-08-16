@@ -1,5 +1,5 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
 
 .title {
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }

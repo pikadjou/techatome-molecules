@@ -1,20 +1,21 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .list {
   @include flex-column;
 }
 
 .search {
-  margin-bottom: get-var(space, md);
+  margin-bottom: common.get-var(space, md);
 }
 .item {
-  padding: get-var(space, md);
-  border-bottom: 1px solid get-var(border, secondary);
+  padding: common.get-var(space, md);
+  border-bottom: 1px solid common.get-var(border, secondary);
   &:hover,
   &.highlighted {
-    background-color: get-var(surface, hover, secondary);
+    background-color: common.get-var(surface, hover, secondary);
   }
 }
 .code {
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 }

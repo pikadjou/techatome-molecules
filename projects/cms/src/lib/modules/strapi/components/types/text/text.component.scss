@@ -1,7 +1,7 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .is-bold {
-  font-weight: get-var(font, body, md, bold, weight);
+  font-weight: common.get-var(font, body, md, bold, weight);
 }
 
 .is-underline {

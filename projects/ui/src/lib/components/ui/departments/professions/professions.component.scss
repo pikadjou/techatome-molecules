@@ -1,31 +1,32 @@
-@import 'ta-export';
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 // .xs {
-//     @include fontSizeBody(xs);
+//     @include fonts.fontSizeBody(xs);
 // }
 
 // .sm {
-//     @include fontSizeBody(sm);
+//     @include fonts.fontSizeBody(sm);
 // }
 
 // .md {
-//     @include fontSizeBody(md);
+//     @include fonts.fontSizeBody(md);
 // }
 
 // .lg {
-//     @include fontSizeBody(lg);
+//     @include fonts.fontSizeBody(lg);
 // }
 
 // .xl {
-//     @include fontSizeBody(xl);
+//     @include fonts.fontSizeBody(xl);
 // }
 
 // .xxl {
-//     @include fontSizeBody(xxl);
+//     @include fonts.fontSizeBody(xxl);
 // }
 
 // .big {
-//     @include fontSizeBody(big);
+//     @include fonts.fontSizeBody(big);
 // }
 
 .professions-container {
@@ -33,6 +34,6 @@
   flex-wrap: wrap;
 
   .more-label {
-    color: get-var(brand, 500);
+    color: common.get-var(brand, 500);
   }
 }

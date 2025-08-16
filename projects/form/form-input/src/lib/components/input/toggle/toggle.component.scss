@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 .toggle-switch {
   display: inline-flex;
   align-items: center;
@@ -10,7 +10,7 @@
   display: none;
 
   &:checked + .slider {
-    background-color: get-var(border, brand);
+    background-color: common.get-var(border, brand);
   }
 
   &:checked + .slider:before {
@@ -18,12 +18,12 @@
   }
 
   &:disabled + .slider {
-    border-color: get-var(neutral, 300);
+    border-color: common.get-var(neutral, 300);
     cursor: not-allowed;
   }
 
   &:disabled + .slider:before {
-    border-color: get-var(neutral, 200);
+    border-color: common.get-var(neutral, 200);
   }
 }
 
@@ -31,10 +31,10 @@
   position: relative;
   width: 30px;
   height: 16px;
-  background-color: get-var(neutral, 300);
-  border-radius: get-var(radius, rounded);
+  background-color: common.get-var(neutral, 300);
+  border-radius: common.get-var(radius, rounded);
   transition: background-color 0.2s ease;
-  margin-right: get-var(space, sm);
+  margin-right: common.get-var(space, sm);
 
   &:before {
     content: '';
@@ -43,8 +43,8 @@
     height: 12px;
     left: 2px;
     top: 2px;
-    background-color: get-var(neutral, white);
-    border-radius: get-var(radius, full);
+    background-color: common.get-var(neutral, white);
+    border-radius: common.get-var(radius, full);
     transition: transform 0.2s ease;
   }
 }

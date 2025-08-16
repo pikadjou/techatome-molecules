@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 .toggle-navigation {
-  margin-bottom: get-var(space, sm);
+  margin-bottom: common.get-var(space, sm);
 }

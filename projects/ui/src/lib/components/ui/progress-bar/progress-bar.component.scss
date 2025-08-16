@@ -1,4 +1,4 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .progress-bar {
   appearance: none;
@@ -7,9 +7,9 @@
 }
 
 progress::-webkit-progress-bar {
-  background-color: get-var(neutral, 300);
+  background-color: common.get-var(neutral, 300);
 }
 
 progress::-webkit-progress-value {
-  background-color: get-var(surface, brand, primary);
+  background-color: common.get-var(surface, brand, primary);
 }

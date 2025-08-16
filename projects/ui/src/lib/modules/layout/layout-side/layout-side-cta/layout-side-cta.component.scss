@@ -1,10 +1,10 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .side-cta-container {
-  padding: get-var(space, md);
-  padding-bottom: calc(get-var(space, md) + env(safe-area-inset-bottom));
+  padding: common.get-var(space, md);
+  padding-bottom: calc(common.get-var(space, md) + env(safe-area-inset-bottom));
 
   &.background {
-    background-color: get-var(surface, brand, tertiary);
+    background-color: common.get-var(surface, brand, tertiary);
   }
 }

@@ -1,37 +1,39 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
-$spacing: get-var(space, md);
+$spacing: common.get-var(space, md);
 
 .card {
   &.hover {
     @include hover-bgc();
   }
-  border-radius: get-var(space, md);
+  border-radius: common.get-var(space, md);
 
   position: relative;
 
   padding: $spacing;
 
-  background-color: get-var(surface, primary);
-  color: get-var(text, primary);
+  background-color: common.get-var(surface, primary);
+  color: common.get-var(text, primary);
 
-  @include fontSizeBody(md);
+  @include fonts.fontSizeBody(md);
 
   &.full-height {
     height: calc(100% - $spacing * 2);
   }
   &.highlight {
-    background-color: get-var(surface, hover, secondary);
-    border-color: 1px solid get-var(border, secondary);
+    background-color: common.get-var(surface, hover, secondary);
+    border-color: 1px solid common.get-var(border, secondary);
   }
   &.card-shadow {
     @include shadow-mixin(black, md);
   }
 
   .responsive-content {
-    @include flex-column();
+    @include flex.flex-column();
     @include media-breakpoint-up(tablette) {
-      @include flex-row();
+      @include flex.flex-row();
       .img-container {
         order: 2;
       }
@@ -42,7 +44,7 @@ $spacing: get-var(space, md);
 @include in-context('.card-force-mobile') {
   .card {
     .responsive-content {
-      @include flex-column();
+      @include flex.flex-column();
       .img-container {
         order: 0;
       }

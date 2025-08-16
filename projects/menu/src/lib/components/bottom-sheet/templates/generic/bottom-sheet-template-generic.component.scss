@@ -1,14 +1,14 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .bottom-sheet-template-generic {
-  padding: get-var(space, sm);
-  padding-bottom: calc(get-var(space, sm) + env(safe-area-inset-bottom));
+  padding: common.get-var(space, sm);
+  padding-bottom: calc(common.get-var(space, sm) + env(safe-area-inset-bottom));
 }
 
 .handler {
   text-align: center;
-  padding-top: get-var(space, xs);
-  padding-bottom: get-var(space, sm);
+  padding-top: common.get-var(space, xs);
+  padding-bottom: common.get-var(space, sm);
 
   span {
     display: block;

@@ -1,10 +1,11 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 .badge-container {
   display: flex;
   width: fit-content;
-  padding: get-var(space, sm) get-var(space, xs);
-  @include fontSizeBody(xs, true);
+  padding: common.get-var(space, sm) common.get-var(space, xs);
+  @include fonts.fontSizeBody(xs, true);
 
   border-radius: 6px;
 
@@ -13,40 +14,40 @@
   }
 }
 .badge-info {
-  color: get-var(semantic, purple-dark);
-  background: get-var(semantic, purple-light);
+  color: common.get-var(semantic, purple-dark);
+  background: common.get-var(semantic, purple-light);
 }
 
 .badge-danger {
-  color: get-var(semantic, red-dark);
-  background: get-var(semantic, red-light);
+  color: common.get-var(semantic, red-dark);
+  background: common.get-var(semantic, red-light);
 }
 
 .badge-warning {
-  color: get-var(semantic, yellow-dark);
-  background: get-var(semantic, yellow-light);
+  color: common.get-var(semantic, yellow-dark);
+  background: common.get-var(semantic, yellow-light);
 }
 
 .badge-success {
-  color: get-var(semantic, green-dark);
-  background: get-var(semantic, green-light);
+  color: common.get-var(semantic, green-dark);
+  background: common.get-var(semantic, green-light);
 }
 
 .badge-primary {
-  color: get-var(brand, 800);
-  background: get-var(brand, 300);
+  color: common.get-var(brand, 800);
+  background: common.get-var(brand, 300);
 }
 
 .badge-secondary {
-  color: get-var(neutral, black);
-  background: get-var(brand, 300);
+  color: common.get-var(neutral, black);
+  background: common.get-var(brand, 300);
 }
 .badge-purple {
-  color: get-var(semantic, purple-dark);
-  background: get-var(semantic, purple-light);
+  color: common.get-var(semantic, purple-dark);
+  background: common.get-var(semantic, purple-light);
 }
 
 .badge-orange {
-  color: get-var(semantic, orange-dark);
-  background: get-var(semantic, orange-light);
+  color: common.get-var(semantic, orange-dark);
+  background: common.get-var(semantic, orange-light);
 }

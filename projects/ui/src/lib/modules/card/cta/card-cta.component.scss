@@ -1,9 +1,9 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .cta {
-  border-top: 1px solid get-var(neutral, main);
+  border-top: 1px solid common.get-var(neutral, main);
 
-  padding-top: get-var(space, md);
+  padding-top: common.get-var(space, md);
 }
 
 @include in-context('.no-card-border') {

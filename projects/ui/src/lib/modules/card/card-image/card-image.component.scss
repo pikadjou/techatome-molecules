@@ -1,9 +1,9 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 .img-container {
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: get-var(radius, rounded);
+  border-radius: common.get-var(radius, rounded);
 
   .img {
     width: 100%;

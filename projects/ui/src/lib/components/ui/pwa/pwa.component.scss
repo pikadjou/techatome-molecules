@@ -1,4 +1,6 @@
-@import 'ta-export';
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/common";
 
 .pwa-layout {
   position: fixed;
@@ -15,17 +17,17 @@
 }
 
 .pwa-container {
-  @include flex-column();
-  gap: get-var(space, lg);
+  @include flex.flex-column();
+  gap: common.get-var(space, lg);
 
   @include media-breakpoint-up(mobile) {
-    @include flex-row();
-    @include space-between();
+    @include flex.flex-row();
+    @include flex.space-between();
   }
 
   .title {
-    color: get-var(brand, 700);
-    @include fontSizeBody(md, bold);
+    color: common.get-var(brand, 700);
+    @include fonts.fontSizeBody(md, bold);
   }
 }
 
@@ -35,15 +37,15 @@
     margin: auto;
   }
   .cta-button {
-    @include flex-row();
+    @include flex.flex-row();
 
     justify-content: space-evenly;
 
     @include media-breakpoint-up(mobile) {
-      @include flex-column();
+      @include flex.flex-column();
     }
     .button-content {
-      @include align-center();
+      @include flex.align-center();
       margin: auto;
     }
   }
@@ -51,6 +53,6 @@
 
 .link-container {
   ta-font-icon {
-    color: get-var(surface, brand, primary);
+    color: common.get-var(surface, brand, primary);
   }
 }

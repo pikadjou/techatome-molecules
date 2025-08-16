@@ -1,10 +1,10 @@
-@import 'ta-export';
+@use "ta/utils/mixins/common";
 
 :host ::ng-deep {
   .list-container {
     ta-list-element {
       .list-border {
-        border-bottom: 1px solid get-var(border, primary);
+        border-bottom: 1px solid common.get-var(border, primary);
       }
       display: block;
 
