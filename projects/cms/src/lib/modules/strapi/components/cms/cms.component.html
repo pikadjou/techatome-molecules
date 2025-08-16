@@ -1,19 +1,13 @@
-<cam-loader
-  [isLoading]="this.requestState.isLoading()"
-  *ngLet="this.content$ | async as content"
->
-  <cam-error
-    [message]="this.requestState.getErrorMessage()"
-    [code]="this.requestState.getErrorStatus()"
-  >
-    <cam-empty [isEmpty]="!content">
+<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.content$ | async as content">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <ta-empty [isEmpty]="!content">
       <ng-container *ngIf="content">
-        <cam-title>
+        <ta-title>
           {{ content.Title }}
-        </cam-title>
+        </ta-title>
 
-        <cam-rich-text [richText]="content.Description"></cam-rich-text>
+        <ta-rich-text [richText]="content.Description"></ta-rich-text>
       </ng-container>
-    </cam-empty>
-  </cam-error>
-</cam-loader>
+    </ta-empty>
+  </ta-error>
+</ta-loader>

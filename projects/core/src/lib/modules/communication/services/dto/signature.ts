@@ -1,5 +1,5 @@
-import { GraphSchema } from '@camelot/server';
-import { WysiswgBlockData } from '@camelot/wysiswyg';
+import { GraphSchema } from '@ta/server';
+import { WysiswgBlockData } from '@ta/wysiswyg';
 
 export interface Signature {
   id: string;

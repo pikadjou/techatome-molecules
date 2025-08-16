@@ -1,5 +1,5 @@
 @if (this.input) {
-  <cam-input-layout [input]="this.input">
+  <ta-input-layout [input]="this.input">
     @if (!this.input.rangeEnabled) {
       <div class="align-center" [class.disabled]="this.input.disabled">
         <input
@@ -43,5 +43,5 @@
         <mat-datepicker-toggle matSuffix [for]="this.picker"></mat-datepicker-toggle>
       </div>
     }
-  </cam-input-layout>
+  </ta-input-layout>
 }

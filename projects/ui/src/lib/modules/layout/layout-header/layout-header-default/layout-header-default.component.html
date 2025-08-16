@@ -1,13 +1,7 @@
 <div class="icons space-between">
   <div class="back">
-    <cam-font-icon
-      *ngIf="this.showBack"
-      class="close"
-      (click)="this.showBackAction()"
-      name="arrow-big-left"
-      type="md"
-    >
-    </cam-font-icon>
+    <ta-font-icon *ngIf="this.showBack" class="close" (click)="this.showBackAction()" name="arrow-big-left" type="md">
+    </ta-font-icon>
   </div>
 
   <div class="title">
@@ -17,19 +11,12 @@
   </div>
 
   <div class="more" [matMenuTriggerFor]="menu">
-    <cam-font-icon
-      *ngIf="this.menuTemplate"
-      class="more"
-      name="more"
-      type="md"
-    ></cam-font-icon>
+    <ta-font-icon *ngIf="this.menuTemplate" class="more" name="more" type="md"></ta-font-icon>
   </div>
 </div>
 
 <mat-menu #menu="matMenu">
   <ng-container *ngIf="this.menuTemplate">
-    <ng-template
-      *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"
-    ></ng-template>
+    <ng-template *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"></ng-template>
   </ng-container>
 </mat-menu>

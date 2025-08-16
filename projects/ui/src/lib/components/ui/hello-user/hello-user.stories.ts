@@ -1,8 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { TranslatePipe } from '@camelot/translation';
-import { UserLogoComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { TranslatePipe } from '@ta/translation';
+import { UserLogoComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { __userInfo } from '../../../__mocks__/userInfo';
 import { HelloUserComponent } from './hello-user.component';

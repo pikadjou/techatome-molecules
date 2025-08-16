@@ -1,31 +1,27 @@
-<cam-card [fullHeight]="true">
-  <cam-card-content class="flex-full">
+<ta-card [fullHeight]="true">
+  <ta-card-content class="flex-full">
     <div class="background">
-      <cam-font-icon [name]="this.icon" type="big"></cam-font-icon>
+      <ta-font-icon [name]="this.icon" type="big"></ta-font-icon>
     </div>
     <div class="dashboard-content flex-full">
       <div class="icon-container">
-        <cam-font-icon
-          class="icon-color-icon-brand-primary"
-          [name]="this.icon"
-          type="lg"
-        ></cam-font-icon>
+        <ta-font-icon class="icon-color-icon-brand-primary" [name]="this.icon" type="lg"></ta-font-icon>
       </div>
       <div class="flex-column g-space-md flex-full">
         <div class="title">
-          <cam-title [level]="2" [isBold]="true">
-            <ng-content select="cam-card-title"></ng-content>
-          </cam-title>
+          <ta-title [level]="2" [isBold]="true">
+            <ng-content select="ta-card-title"></ng-content>
+          </ta-title>
         </div>
         <div class="subtitle">
-          <cam-text size="sm">
-            <ng-content select="cam-card-subtitle"></ng-content>
-          </cam-text>
+          <ta-text size="sm">
+            <ng-content select="ta-card-subtitle"></ng-content>
+          </ta-text>
         </div>
         <div class="flex-full flex-column">
           <ng-content></ng-content>
         </div>
       </div>
     </div>
-  </cam-card-content>
-</cam-card>
+  </ta-card-content>
+</ta-card>

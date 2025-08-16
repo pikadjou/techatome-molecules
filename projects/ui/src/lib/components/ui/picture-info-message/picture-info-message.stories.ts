@@ -1,9 +1,8 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconType, LocalIconComponent, MaterialIconComponent } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { TypedMessageComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconType, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { TypedMessageComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { PictureInfoMessageComponent } from './picture-info-message.component';
 

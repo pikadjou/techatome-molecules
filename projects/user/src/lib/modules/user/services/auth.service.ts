@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { InjectionToken } from '@angular/core';
 
+import { CamBaseService, MappingApiType } from '@ta/server';
+import { APPLICATION_CONFIG, IApplicationConfig } from '@ta/utils';
 import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
-
-import { CamBaseService, MappingApiType } from '@camelot/server';
-import { APPLICATION_CONFIG, IApplicationConfig } from '@camelot/utils';
 
 import { UserProfile } from './dto/user-profile';
 import { CamPermissionsService } from './permissions.service';

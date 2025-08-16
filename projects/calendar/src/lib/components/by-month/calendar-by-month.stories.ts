@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { User } from '@camelot/services';
+import { User } from '@ta/services';
 
 import { CamCalendarModule } from '../../calendar.module';
 import { ByMonthComponent } from './calendar-by-month.component';
@@ -14,7 +13,7 @@ export default {
       imports: [CamCalendarModule],
     }),
   ],
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   args: {
     viewDate: new Date(),
     events: [

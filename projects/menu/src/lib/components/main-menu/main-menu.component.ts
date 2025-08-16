@@ -1,12 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
 
-import { CamSharedMenuService } from '@camelot/services';
-import { CamBaseComponent } from '@camelot/utils';
+import { CamSharedMenuService } from '@ta/services';
+import { CamBaseComponent } from '@ta/utils';
 
 import { Menu } from '../../models/menu/menu';
 
 @Component({
-  selector: 'cam-main-menu',
+  selector: 'ta-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss'],
 })

@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .card {
   padding: get-var(space, sm);
@@ -9,6 +9,6 @@ p {
   padding-top: get-var(space, sm);
 }
 
-cam-font-icon {
+ta-font-icon {
   color: get-var(brand, 400);
 }

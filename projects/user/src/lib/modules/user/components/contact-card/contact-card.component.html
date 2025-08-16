@@ -1,28 +1,18 @@
-<cam-loader
-  [isLoading]="this.requestState.isLoading()"
-  *ngLet="this.user$ | async as user"
->
-  <cam-error
-    [message]="this.requestState.getErrorMessage()"
-    [code]="this.requestState.getErrorStatus()"
-  >
-    <cam-empty [isEmpty]="!user">
-      <cam-user-logo
-        *ngIf="user"
-        class="user-logo"
-        [user]="this.getUserLogoData(user)"
-      ></cam-user-logo>
+<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.user$ | async as user">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <ta-empty [isEmpty]="!user">
+      <ta-user-logo *ngIf="user" class="user-logo" [user]="this.getUserLogoData(user)"></ta-user-logo>
       <div class="contact-name">{{ user?.firstName }} {{ user?.lastName }}</div>
       <div class="contacts align-center">
         <div class="phone align-center">
-          <cam-font-icon class="mr-space-xs" name="phone"></cam-font-icon>
+          <ta-font-icon class="mr-space-xs" name="phone"></ta-font-icon>
           {{ user?.phoneNumber }}
         </div>
         <div class="mail align-center">
-          <cam-font-icon class="mr-space-xs" name="mail"></cam-font-icon>
+          <ta-font-icon class="mr-space-xs" name="mail"></ta-font-icon>
           {{ user?.userName }}
         </div>
       </div>
-    </cam-empty>
-  </cam-error>
-</cam-loader>
+    </ta-empty>
+  </ta-error>
+</ta-loader>

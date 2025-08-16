@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ENotificationLevel } from '../../../../services/dto/level';
 
 @Component({
-  selector: 'cam-notification-item-icon',
+  selector: 'ta-notification-item-icon',
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
 })

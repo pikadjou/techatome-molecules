@@ -1,4 +1,4 @@
-import { BaseStrapi, GraphSchema, baseStrapiProps } from '@camelot/server';
+import { BaseStrapi, GraphSchema, baseStrapiProps } from '@ta/server';
 
 import { RichText } from './types/rich-text';
 

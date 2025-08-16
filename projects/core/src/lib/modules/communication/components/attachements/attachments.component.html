@@ -1,13 +1,9 @@
 <div class="flex-start g-space-sm align-center">
-  <cam-button-tool
-    (action)="this.open()"
-    icon="attach"
-    [size]="'sm'"
-  ></cam-button-tool>
+  <ta-button-tool (action)="this.open()" icon="attach" [size]="'sm'"></ta-button-tool>
 
   <div *ngFor="let att of this.attachmentsValue">
-    <cam-text size="sm" color="brand-secondary">
+    <ta-text size="sm" color="brand-secondary">
       {{ att.name }}
-    </cam-text>
+    </ta-text>
   </div>
 </div>

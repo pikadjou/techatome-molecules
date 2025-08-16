@@ -1,13 +1,7 @@
 <ul class="menu" [ngClass]="this.containerCss">
-  <ng-container
-    *ngFor="let item of this.menu.elements; trackBy: this.trackByKey"
-  >
+  <ng-container *ngFor="let item of this.menu.elements; trackBy: this.trackByKey">
     <li *ngIf="(item.visible$ | async) === true">
-      <cam-menu-item
-        [item]="item"
-        [class]="item.key"
-        [styleType]="this.menu.direction"
-      ></cam-menu-item>
+      <ta-menu-item [item]="item" [class]="item.key" [styleType]="this.menu.direction"></ta-menu-item>
     </li>
   </ng-container>
 </ul>

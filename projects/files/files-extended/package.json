@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/files-extended",
+  "name": "@ta/files-extended",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/files-extended",
+    "build": "ng build @ta/files-extended",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
@@ -12,9 +12,9 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@camelot/form-basic": "^3.16.0-beta.4",
-    "@camelot/icons": "^3.16.0-beta.4",
-    "@camelot/menu": "^3.16.0-beta.4",
+    "@ta/form-basic": "^3.16.0-beta.4",
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/menu": "^3.16.0-beta.4",
     "@capacitor/camera": "^5.0.4",
     "@capawesome/capacitor-file-picker": "^0.6.2",
     "tslib": "^2.3.0",

@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
+import { CamContactService, CamUsersService } from '@ta/user';
+import { getUniqueArray, isNonNullable } from '@ta/utils';
 import { Subject, combineLatest, filter, map, mergeMap, of, tap } from 'rxjs';
-
-import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@camelot/server';
-import { CamContactService, CamUsersService } from '@camelot/user';
-import { getUniqueArray, isNonNullable } from '@camelot/utils';
 
 import {
   CommunicationError,

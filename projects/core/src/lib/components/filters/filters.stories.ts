@@ -1,9 +1,8 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { CamLayoutModule, CamUiModule } from '@camelot/ui';
+import { CamIconsModule } from '@ta/icons';
+import { CamLayoutModule, CamUiModule } from '@ta/ui';
 
 import { FiltersComponent } from './filters.component';
 
@@ -13,26 +12,21 @@ export default {
   title: 'UI/Filters',
   component: FiltersComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-filters>
+        <ta-filters>
           Mon contenu
-        </cam-filters>
+        </ta-filters>
       `,
     };
   },
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        CamLayoutModule,
-        CamUiModule,
-        CamIconsModule,
-      ],
+      imports: [BrowserAnimationsModule, CamLayoutModule, CamUiModule, CamIconsModule],
     }),
   ],
   args: {},

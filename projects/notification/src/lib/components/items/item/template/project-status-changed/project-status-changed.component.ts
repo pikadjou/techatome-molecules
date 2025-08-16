@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AbstractNotificationTemplateComponent } from '../abstract';
 
 @Component({
-  selector: 'cam-notification-project-status-changed',
+  selector: 'ta-notification-project-status-changed',
   templateUrl: './project-status-changed.component.html',
   styleUrls: ['./project-status-changed.component.scss'],
 })

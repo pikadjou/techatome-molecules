@@ -1,4 +1,4 @@
-import { CamIconType } from '@camelot/icons';
+import { CamIconType } from '@ta/icons';
 
 export interface ActionButtonData {
   callback: (data?: any) => void;

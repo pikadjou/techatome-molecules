@@ -1,5 +1,5 @@
-<cam-layout-modal>
-  <cam-form
+<ta-layout-modal>
+  <ta-form
     *ngIf="this.form.length > 0"
     class="form"
     [inputs]="this.form"
@@ -7,5 +7,5 @@
     [loader]="this.loader"
     (valid)="this.onSaveClick($any($event))"
   >
-  </cam-form>
-</cam-layout-modal>
+  </ta-form>
+</ta-layout-modal>

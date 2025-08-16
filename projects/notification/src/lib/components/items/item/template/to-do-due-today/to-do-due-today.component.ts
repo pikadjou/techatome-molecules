@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AbstractNotificationTemplateComponent } from '../abstract';
 
 @Component({
-  selector: 'cam-to-do-due-today',
+  selector: 'ta-to-do-due-today',
   templateUrl: './to-do-due-today.component.html',
   styleUrls: ['./to-do-due-today.component.scss'],
 })

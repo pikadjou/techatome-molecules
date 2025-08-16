@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { AuthService, User } from '@auth0/auth0-angular';
+import { Logger, MappingApiType } from '@ta/server';
+import { CamConfigurationService } from '@ta/services';
+import { isNonNullable, trigram } from '@ta/utils';
 import { distinct, filter, tap } from 'rxjs';
-
-import { Logger, MappingApiType } from '@camelot/server';
-import { CamConfigurationService } from '@camelot/services';
-import { isNonNullable, trigram } from '@camelot/utils';
 
 import { CamAuthService } from '../../user/services/auth.service';
 import { CamUserService } from '../../user/services/user.service';

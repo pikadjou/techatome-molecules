@@ -1,4 +1,4 @@
-import { GraphSchema } from '@camelot/server';
+import { GraphSchema } from '@ta/server';
 
 export interface TenantInformation {
   id: string;
@@ -7,8 +7,4 @@ export interface TenantInformation {
   customerId: number;
 }
 
-export const tenantInformationsProps = new GraphSchema<TenantInformation>([
-  'customerId',
-  'tenantId',
-  'tenantName',
-]);
+export const tenantInformationsProps = new GraphSchema<TenantInformation>(['customerId', 'tenantId', 'tenantName']);

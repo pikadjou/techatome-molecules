@@ -1,15 +1,15 @@
 @if (this.input.onlyTemplate !== true) {
-  <cam-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
+  <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
     <ng-template #panelTrigger>
-      <cam-input-layout [input]="this.input">
+      <ta-input-layout [input]="this.input">
         <div class="form-control" #focusedElement>
           <div class="input-group d-flex full-width">
             <input type="hidden" [formControl]="$any(this.input.formControl)" [value]="this.input.value" />
 
             <div class="flex-start g-space-xs">
-              <cam-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
+              <ta-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
                 {{ (getName$(value) | async) ?? '' | translate }}
-              </cam-label>
+              </ta-label>
             </div>
             @if (this.input.message) {
               <div class="message">
@@ -20,12 +20,12 @@
             }
           </div>
         </div>
-      </cam-input-layout>
+      </ta-input-layout>
     </ng-template>
     <ng-template #panelContent>
       <ng-template [ngTemplateOutlet]="choicesTemplate"></ng-template>
     </ng-template>
-  </cam-overlay-panel>
+  </ta-overlay-panel>
 } @else {
   <div class="only-template">
     <ng-template [ngTemplateOutlet]="choicesTemplate"></ng-template>
@@ -36,26 +36,26 @@
   <div appStopPropagation class="flex-column g-space-sm">
     @if (!this.input.choiceTemplate) {
       @if (this.input.withSearch) {
-        <cam-search-field
+        <ta-search-field
           [isOpen]="true"
           [input]="this.inputSearch"
           [onFocus]="this.searchFocus"
           [standalone]="true"
           class="m-space-sm"
-        ></cam-search-field>
+        ></ta-search-field>
       }
 
-      <cam-layout-side class="d-flex full-width choices-wrapper" style="min-height: 300px; max-height: 400px">
-        <cam-layout-side-content>
-          <cam-loader [isLoading]="this.requestState.isLoading()">
-            <cam-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
+      <ta-layout-side class="d-flex full-width choices-wrapper" style="min-height: 300px; max-height: 400px">
+        <ta-layout-side-content>
+          <ta-loader [isLoading]="this.requestState.isLoading()">
+            <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
               @if (this.input.showNullableFields) {
                 <div class="p-space-sm">
-                  <cam-input-checkbox
+                  <ta-input-checkbox
                     [input]="this.inputNullable"
                     [standalone]="true"
                     (valueChanged)="this.selectNullable($event)"
-                  ></cam-input-checkbox>
+                  ></ta-input-checkbox>
                 </div>
               }
               <div
@@ -64,50 +64,50 @@
                 [class.is-selected]="this.isSelected(option)"
                 (click)="this.select(option)"
               >
-                <cam-text>{{ option.name }}</cam-text>
+                <ta-text>{{ option.name }}</ta-text>
               </div>
-            </cam-empty>
-          </cam-loader>
-        </cam-layout-side-content>
-        <cam-layout-side-cta>
+            </ta-empty>
+          </ta-loader>
+        </ta-layout-side-content>
+        <ta-layout-side-cta>
           <div class="align-center space-between">
             <div class="pr-space-md">
               <div class="align-center g-space-xs link">
-                <cam-font-icon name="close-tool" type="sm"></cam-font-icon>
-                <cam-link class="c-pointer" (action)="this.clear()">
+                <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
+                <ta-link class="c-pointer" (action)="this.clear()">
                   {{ 'core.filter.clear' | translate }}
-                </cam-link>
+                </ta-link>
               </div>
             </div>
             <div>
               @if (this.input.onlyTemplate !== true) {
-                <cam-button (action)="this.close()">
+                <ta-button (action)="this.close()">
                   <div class="align-center m-space-xs">
-                    <cam-font-icon name="check-line"></cam-font-icon>
+                    <ta-font-icon name="check-line"></ta-font-icon>
                     {{ 'form.validate' | translate }}
                   </div>
-                </cam-button>
+                </ta-button>
               }
             </div>
           </div>
-        </cam-layout-side-cta>
-      </cam-layout-side>
+        </ta-layout-side-cta>
+      </ta-layout-side>
     }
     @if (this.input.choiceTemplate && this.filteredOptions$) {
       @if (this.input.withSearch) {
-        <cam-search-field
+        <ta-search-field
           [isOpen]="true"
           [input]="this.inputSearch"
           [onFocus]="this.searchFocus"
           class="m-space-sm"
           [standalone]="true"
-        ></cam-search-field>
+        ></ta-search-field>
       }
-      <cam-layout-side class="d-flex full-width" style="min-height: 300px; max-height: 400px">
-        <cam-layout-side-content>
-          <cam-loader [isLoading]="this.requestState.isLoading()">
+      <ta-layout-side class="d-flex full-width" style="min-height: 300px; max-height: 400px">
+        <ta-layout-side-content>
+          <ta-loader [isLoading]="this.requestState.isLoading()">
             @if (this.input.choiceTemplate.one) {
-              <cam-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
+              <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
                 <div
                   *ngFor="let option of this.filteredOptions$ | async"
                   class="flex-row pointer m-space-sm p-space-sm"
@@ -119,7 +119,7 @@
                     [ngTemplateOutletContext]="{ item: option.data }"
                   ></ng-template>
                 </div>
-              </cam-empty>
+              </ta-empty>
             }
             @if (this.input.choiceTemplate.list) {
               <ng-template
@@ -135,31 +135,31 @@
                 }"
               ></ng-template>
             }
-          </cam-loader>
-        </cam-layout-side-content>
-        <cam-layout-side-cta>
+          </ta-loader>
+        </ta-layout-side-content>
+        <ta-layout-side-cta>
           <div class="align-center space-between">
             <div class="pr-space-md">
               <div class="align-center g-space-xs link">
-                <cam-font-icon name="close-tool" type="sm"></cam-font-icon>
-                <cam-link class="c-pointer" (action)="this.clear()">
+                <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
+                <ta-link class="c-pointer" (action)="this.clear()">
                   {{ 'core.filter.clear' | translate }}
-                </cam-link>
+                </ta-link>
               </div>
             </div>
             <div>
               @if (this.input.onlyTemplate !== true) {
-                <cam-button (action)="this.close()">
+                <ta-button (action)="this.close()">
                   <div class="align-center m-space-xs">
-                    <cam-font-icon name="check-line"></cam-font-icon>
+                    <ta-font-icon name="check-line"></ta-font-icon>
                     {{ 'form.validate' | translate }}
                   </div>
-                </cam-button>
+                </ta-button>
               }
             </div>
           </div>
-        </cam-layout-side-cta>
-      </cam-layout-side>
+        </ta-layout-side-cta>
+      </ta-layout-side>
     }
   </div>
 </ng-template>

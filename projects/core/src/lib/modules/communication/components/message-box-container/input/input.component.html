@@ -2,15 +2,15 @@
   <div class="flex-row" [hidden]="this.collapsed">
     <div class="flex-column flex-full">
       <div class="flex-row align-center g-space-sm">
-        <cam-text size="sm">{{ 'communication.message.input.to' | translate }}</cam-text>
-        <cam-input-choices class="full-width" [input]="this.tos"></cam-input-choices>
+        <ta-text size="sm">{{ 'communication.message.input.to' | translate }}</ta-text>
+        <ta-input-choices class="full-width" [input]="this.tos"></ta-input-choices>
       </div>
       <div class="flex-row align-center g-space-sm">
-        <cam-text size="sm">{{ 'communication.message.input.cc' | translate }}</cam-text>
-        <cam-input-choices class="full-width" [input]="this.ccs"></cam-input-choices>
+        <ta-text size="sm">{{ 'communication.message.input.cc' | translate }}</ta-text>
+        <ta-input-choices class="full-width" [input]="this.ccs"></ta-input-choices>
       </div>
     </div>
-    <cam-font-icon class="justify-end" name="arrow-big-top" (click)="this.collapsed = true"></cam-font-icon>
+    <ta-font-icon class="justify-end" name="arrow-big-top" (click)="this.collapsed = true"></ta-font-icon>
   </div>
 
   <ng-container *ngIf="this.collapsed">
@@ -18,7 +18,7 @@
       <div class="flex-row align-center g-space-sm" *ngIf="this.outputCorrespondentInput.length > 0">
         <div *ngFor="let correspondent of this.outputCorrespondentInput" class="flex-row g-space-xs">
           <ng-container *ngLet="this.getCorrespondent(correspondent) as correspondent">
-            <cam-user-logo
+            <ta-user-logo
               [user]="{
                 picture: correspondent.picture,
                 firstName: correspondent.firstName,
@@ -27,7 +27,7 @@
               }"
               size="md"
               defaultType="trigram"
-            ></cam-user-logo>
+            ></ta-user-logo>
             {{ correspondent.firstName }} {{ correspondent.lastName }};
           </ng-container>
         </div>
@@ -35,7 +35,7 @@
       <div *ngIf="this.outputCorrespondentInput.length === 0">
         {{ 'communication.message.input.no-recipient' | translate }}
       </div>
-      <cam-font-icon name="arrow-big-bottom" class="justify-end"></cam-font-icon>
+      <ta-font-icon name="arrow-big-bottom" class="justify-end"></ta-font-icon>
     </div>
   </ng-container>
 </div>
@@ -43,19 +43,19 @@
 <ng-template #choicesTemplate let-data="data">
   <div class="p-space-sm">
     <div *ngIf="this.isEmail(data.search)">
-      <cam-link (action)="this.addCustomEmail(data.search, data.select, data.refresh)">
+      <ta-link (action)="this.addCustomEmail(data.search, data.select, data.refresh)">
         {{ 'communication.message.input.add' | translate }}
-      </cam-link>
+      </ta-link>
     </div>
   </div>
   <div class="p-space-sm">
-    <cam-menu-navigation
+    <ta-menu-navigation
       [menu]="this.menu"
       container="tags"
       [options]="{
         spaceElement: 'xs',
       }"
-    ></cam-menu-navigation>
+    ></ta-menu-navigation>
   </div>
   <ng-container *ngIf="(data.search?.length ?? 0) < 3 && this.selected !== 'participant'">
     <div class="p-space-sm">
@@ -63,7 +63,7 @@
     </div>
   </ng-container>
   <ng-container *ngIf="(data.search?.length ?? 0) >= 3 || this.selected === 'participant'">
-    <cam-empty [isEmpty]="this.filteredItems(data.items).length === 0">
+    <ta-empty [isEmpty]="this.filteredItems(data.items).length === 0">
       <div
         *ngFor="let option of this.filteredItems(data.items)"
         class="flex-row pointer m-space-sm p-space-sm"
@@ -71,7 +71,7 @@
         (click)="data.select(option)"
       >
         <div class="flex-row align-center g-space-sm" *ngLet="option.data as item">
-          <cam-user-logo
+          <ta-user-logo
             [userInfo]="{
               profilePictureUrl: item.picture,
               naming: {
@@ -82,10 +82,10 @@
             }"
             size="md"
             defaultType="font"
-          ></cam-user-logo>
+          ></ta-user-logo>
           {{ item.firstName }} {{ item.lastName }}
         </div>
       </div>
-    </cam-empty>
+    </ta-empty>
   </ng-container>
 </ng-template>

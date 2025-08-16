@@ -3,12 +3,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule, Menu } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { CamCardModule, CamUiModule } from '@ta/ui';
 import { __classicMenu } from 'projects/menu/src/lib/components/menu/__mock__/menu';
-
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule, Menu } from '@camelot/menu';
-import { TranslatePipe } from '@camelot/translation';
-import { CamCardModule, CamUiModule } from '@camelot/ui';
 
 import {
   LayoutHeaderComponent,
@@ -51,20 +50,20 @@ export default {
     return {
       props,
       template: `
-        <cam-layout-page>
-            <cam-layout-header *ngIf="withHeader">
-                <cam-layout-header-default></cam-layout-header-default>
-            </cam-layout-header>
-            <cam-layout-title>
-              <cam-profile-data [profile]="profile"></cam-profile-data>
-            </cam-layout-title>
-            <cam-card class='ta-c'>
-              <cam-card-content>Dynamic content</cam-card-content>
-            </cam-card>
-            <cam-layout-nav>
-                <cam-menu [menu]="menu" [container]="'main'"></cam-menu>
-            </cam-layout-nav>
-        </cam-layout-page>
+        <ta-layout-page>
+            <ta-layout-header *ngIf="withHeader">
+                <ta-layout-header-default></ta-layout-header-default>
+            </ta-layout-header>
+            <ta-layout-title>
+              <ta-profile-data [profile]="profile"></ta-profile-data>
+            </ta-layout-title>
+            <ta-card class='ta-c'>
+              <ta-card-content>Dynamic content</ta-card-content>
+            </ta-card>
+            <ta-layout-nav>
+                <ta-menu [menu]="menu" [container]="'main'"></ta-menu>
+            </ta-layout-nav>
+        </ta-layout-page>
       `,
     };
   },

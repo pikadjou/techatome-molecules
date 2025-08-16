@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 import { UserLogoNaming } from '../user-logo/user-logo.component';
 
 @Component({
-  selector: 'cam-hello-user',
+  selector: 'ta-hello-user',
   templateUrl: './hello-user.component.html',
   styleUrls: ['./hello-user.component.scss'],
 })

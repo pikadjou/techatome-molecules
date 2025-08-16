@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/charts",
+  "name": "@ta/charts",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/charts",
+    "build": "ng build @ta/charts",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },

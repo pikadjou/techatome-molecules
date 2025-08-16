@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 import { openModal } from '../common-modal';
 
 @Component({
-  selector: 'cam-container-validation',
+  selector: 'ta-container-validation',
   templateUrl: './container-validation.component.html',
 })
 export class ContainerValidationComponent extends CamBaseComponent {

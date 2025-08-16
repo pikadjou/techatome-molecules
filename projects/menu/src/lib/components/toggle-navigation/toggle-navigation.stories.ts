@@ -1,11 +1,10 @@
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { Menu } from '../../models/menu/menu';
 import {
@@ -29,8 +28,8 @@ export default {
     return {
       props,
       template: `
-        <cam-toggle-navigation [menu]="menu" [container]="container">
-        </cam-toggle-navigation>
+        <ta-toggle-navigation [menu]="menu" [container]="container">
+        </ta-toggle-navigation>
       `,
     };
   },

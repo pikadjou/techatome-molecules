@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { Civility } from '@camelot/utils';
+import { Civility } from '@ta/utils';
 
 import { CamUiModule } from '../ui.module';
 import { CivilityComponent } from './civility.component';
@@ -14,10 +13,10 @@ export default {
       imports: [CamUiModule],
     }),
   ],
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   argTypes: {
     civility: {
-      options: Object.values(Civility).filter((x) => typeof x === 'string'),
+      options: Object.values(Civility).filter(x => typeof x === 'string'),
       mapping: Civility,
       control: { type: 'select' },
     },

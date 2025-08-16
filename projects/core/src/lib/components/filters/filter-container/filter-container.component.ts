@@ -1,19 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+import { InputBase } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 import { Subject } from 'rxjs';
 
-import { InputBase } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
-
 @Component({
-  selector: 'cam-filter-container',
+  selector: 'ta-filter-container',
   templateUrl: './filter-container.component.html',
   styleUrls: ['./filter-container.component.scss'],
 })
-export class FilterContainerComponent
-  extends CamBaseComponent
-  implements OnInit
-{
+export class FilterContainerComponent extends CamBaseComponent implements OnInit {
   @Input()
   form: InputBase<any>[] = [];
 
@@ -31,7 +27,7 @@ export class FilterContainerComponent
 
   ngOnInit(): void {
     if (this.askClear$) {
-      this._registerSubscription(this.askClear$.subscribe((_) => this.clear()));
+      this._registerSubscription(this.askClear$.subscribe(_ => this.clear()));
     }
   }
 

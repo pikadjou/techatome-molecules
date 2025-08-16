@@ -4,7 +4,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'cam-calendar-by-day',
+  selector: 'ta-calendar-by-day',
   templateUrl: './calendar-by-day.component.html',
   styleUrls: ['./calendar-by-day.component.scss'],
 })

@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { CamIconType } from '@camelot/icons';
-import { CamSizes } from '@camelot/styles';
-import { MessageLevel } from '@camelot/utils';
+import { CamIconType } from '@ta/icons';
+import { CamSizes } from '@ta/styles';
+import { MessageLevel } from '@ta/utils';
 
 @Component({
-  selector: 'cam-empty',
+  selector: 'ta-empty',
   templateUrl: './empty.component.html',
   styleUrls: ['./empty.component.scss'],
 })

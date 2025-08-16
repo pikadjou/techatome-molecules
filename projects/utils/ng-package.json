@@ -6,7 +6,7 @@
     "entryFile": "src/public-api.ts"
   },
   "allowedNonPeerDependencies": [
-    "@camelot",
+    "@ta",
     "@capacitor",
     "compressorjs",
     "date-fns",

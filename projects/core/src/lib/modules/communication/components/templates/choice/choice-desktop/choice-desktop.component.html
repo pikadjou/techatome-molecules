@@ -1,26 +1,23 @@
-<cam-loader [isLoading]="this.requestState.isLoading()">
-  <cam-error
-    [message]="this.requestState.getErrorMessage()"
-    [code]="this.requestState.getErrorStatus()"
-  >
+<ta-loader [isLoading]="this.requestState.isLoading()">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
     <ng-container *ngLet="this.list$ | async as list">
-      <cam-empty [isEmpty]="!list || list.length === 0">
+      <ta-empty [isEmpty]="!list || list.length === 0">
         <div class="flex-row">
-          <cam-choice-list
+          <ta-choice-list
             *ngIf="list"
             [list]="list"
             class="col-4"
             (hovered)="this.hover($event)"
             (selected)="this.chose($event)"
-          ></cam-choice-list>
+          ></ta-choice-list>
 
-          <cam-choice-detail
+          <ta-choice-detail
             [template]="this.showTemplate"
             (selected)="this.select($event)"
             class="full-width"
-          ></cam-choice-detail>
+          ></ta-choice-detail>
         </div>
-      </cam-empty>
+      </ta-empty>
     </ng-container>
-  </cam-error>
-</cam-loader>
+  </ta-error>
+</ta-loader>

@@ -1,7 +1,6 @@
+import { Picture } from '@ta/services';
+import { FileData, FileStructure } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { Picture } from '@camelot/services';
-import { FileData, FileStructure } from '@camelot/utils';
 
 import { IInputBase, InputBase } from './base';
 

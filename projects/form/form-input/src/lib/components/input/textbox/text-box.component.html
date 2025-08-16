@@ -1,8 +1,8 @@
 @if (this.input.type === 'textarea') {
-  <cam-input-textarea [input]="this.input" [matcher]="this.matcher"></cam-input-textarea>
+  <ta-input-textarea [input]="this.input" [matcher]="this.matcher"></ta-input-textarea>
 }
 @if (this.input.type !== 'textarea') {
-  <cam-input-layout [input]="this.input">
+  <ta-input-layout [input]="this.input">
     <div>
       <input
         #box
@@ -16,9 +16,9 @@
       />
       @if (this.isPassword) {
         <span class="toggle-icon" (click)="this.hide = !this.hide">
-          <cam-font-icon name="eye"></cam-font-icon>
+          <ta-font-icon name="eye"></ta-font-icon>
         </span>
       }
     </div>
-  </cam-input-layout>
+  </ta-input-layout>
 }

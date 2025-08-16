@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 @Component({
-  selector: 'cam-font-icon',
+  selector: 'ta-font-icon',
   templateUrl: './font-icon.component.html',
   styleUrls: ['./font-icon.component.scss'],
 })

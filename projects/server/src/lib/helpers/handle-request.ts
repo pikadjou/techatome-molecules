@@ -1,6 +1,5 @@
+import { isNonNullable } from '@ta/utils';
 import { BehaviorSubject, Observable, filter, map, tap } from 'rxjs';
-
-import { isNonNullable } from '@camelot/utils';
 
 export class HandleComplexRequest<T> {
   public data$ = new BehaviorSubject<{ [index: string]: T }>({});
@@ -9,8 +8,8 @@ export class HandleComplexRequest<T> {
 
   public fetch(id: string, subscriber: Observable<T>) {
     return subscriber.pipe(
-      filter((data) => !!data),
-      tap((entity) => {
+      filter(data => !!data),
+      tap(entity => {
         const entities = this.data$.getValue();
         entities[id] = entity;
         this.data$.next(entities);
@@ -43,8 +42,8 @@ export class HandleComplexRequest<T> {
 
   public get$(key: string) {
     return this.data$.pipe(
-      map((data) => data[key]),
-      filter((data) => !!data)
+      map(data => data[key]),
+      filter(data => !!data)
     );
   }
 }
@@ -57,7 +56,7 @@ export class HandleSimpleRequest<T> {
   public fetch(subscriber: Observable<T | undefined | null>) {
     return subscriber.pipe(
       filter(isNonNullable),
-      tap((entity) => {
+      tap(entity => {
         this.data$.next(entity);
       })
     );
@@ -67,6 +66,6 @@ export class HandleSimpleRequest<T> {
   }
 
   public get$() {
-    return this.data$.pipe(filter((data) => !!data));
+    return this.data$.pipe(filter(data => !!data));
   }
 }

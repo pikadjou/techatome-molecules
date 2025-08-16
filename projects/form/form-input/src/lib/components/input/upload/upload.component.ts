@@ -1,10 +1,9 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 
 import { FilePicker, PickedFile } from '@capawesome/capacitor-file-picker';
-
-import { InputUpload, InputUploadValue } from '@camelot/form-model';
-import { CamDocumentsService, DocumentDto } from '@camelot/services';
-import { downloadFile, isNonNullable } from '@camelot/utils';
+import { InputUpload, InputUploadValue } from '@ta/form-model';
+import { CamDocumentsService, DocumentDto } from '@ta/services';
+import { downloadFile, isNonNullable } from '@ta/utils';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
@@ -15,7 +14,7 @@ type InProgressFile = {
 };
 
 @Component({
-  selector: 'cam-input-upload',
+  selector: 'ta-input-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss'],
 })

@@ -7,7 +7,7 @@
     "styleIncludePaths": ["../styles/src/style"]
   },
   "allowedNonPeerDependencies": [
-    "@camelot",
+    "@ta",
     "storage-manager-js",
     "swiper",
     "@angular"

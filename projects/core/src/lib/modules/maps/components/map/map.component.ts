@@ -8,7 +8,7 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { markers } from '../../mock';
 
 @Component({
-  selector: 'cam-google-maps',
+  selector: 'ta-google-maps',
   standalone: true,
   imports: [GoogleMapsModule, NgIf, NgFor],
   templateUrl: './map.component.html',

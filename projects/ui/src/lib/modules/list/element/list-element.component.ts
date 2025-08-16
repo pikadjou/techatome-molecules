@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'cam-list-element',
+  selector: 'ta-list-element',
   templateUrl: './list-element.component.html',
   styleUrls: ['./list-element.component.scss'],
 })

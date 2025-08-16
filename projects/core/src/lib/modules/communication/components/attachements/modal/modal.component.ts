@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { InputUpload, InputUploadValue } from '@camelot/form-model';
-import { CamBaseModal } from '@camelot/utils';
+import { InputUpload, InputUploadValue } from '@ta/form-model';
+import { CamBaseModal } from '@ta/utils';
 
 export interface AttachmentsResult {
   result: InputUploadValue[];

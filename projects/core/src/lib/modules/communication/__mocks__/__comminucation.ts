@@ -1,4 +1,4 @@
-import { User } from '@camelot/user';
+import { User } from '@ta/user';
 
 import {
   Communication,
@@ -75,9 +75,7 @@ const contentChat = [
       text: 'There are dozens of ready-to-use Blocks and a simple API <sup data-tune="footnotes">2</sup> for creating any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA buttons, and even games.',
     },
     tunes: {
-      footnotes: [
-        "Just take a look at our Creating Block Tool guide. You'll be surprised.",
-      ],
+      footnotes: ["Just take a look at our Creating Block Tool guide. You'll be surprised."],
     },
   },
   {
@@ -349,11 +347,7 @@ export const __mockCommunications: (Communication | any)[] = [
   {
     id: 'comm9',
     from: __mockParticipantsExtended[4],
-    to: [
-      __mockParticipantsExtended[0],
-      __mockParticipantsExtended[1],
-      __mockParticipantsExtended[2],
-    ],
+    to: [__mockParticipantsExtended[0], __mockParticipantsExtended[1], __mockParticipantsExtended[2]],
     cc: [],
     title: 'Team Meeting Minutes',
     body: 'Team Meeting Minutes',
@@ -390,11 +384,7 @@ export const __mockConversations: Conversation[] = [
     title: 'Project ABC',
     reference: 'REF123',
     communications: [__mockCommunications[0], __mockCommunications[1]],
-    participants: [
-      __mockParticipantsExtended[0],
-      __mockParticipantsExtended[1],
-      __mockParticipantsExtended[2],
-    ],
+    participants: [__mockParticipantsExtended[0], __mockParticipantsExtended[1], __mockParticipantsExtended[2]],
     projectId: 'proj1',
     taskId: 'task1',
     teamId: 'team1',
@@ -404,10 +394,7 @@ export const __mockConversations: Conversation[] = [
     title: 'Meeting Preparation',
     reference: 'REF124',
     communications: [__mockCommunications[2], __mockCommunications[3]],
-    participants: [
-      __mockParticipantsExtended[2],
-      __mockParticipantsExtended[3],
-    ],
+    participants: [__mockParticipantsExtended[2], __mockParticipantsExtended[3]],
     projectId: 'proj2',
     taskId: 'task2',
     teamId: 'team2',
@@ -417,11 +404,7 @@ export const __mockConversations: Conversation[] = [
     title: 'Quotation Review',
     reference: 'REF125',
     communications: [__mockCommunications[4], __mockCommunications[5]],
-    participants: [
-      __mockParticipantsExtended[4],
-      __mockParticipantsExtended[0],
-      __mockParticipantsExtended[3],
-    ],
+    participants: [__mockParticipantsExtended[4], __mockParticipantsExtended[0], __mockParticipantsExtended[3]],
     projectId: 'proj3',
     taskId: 'task3',
     teamId: 'team3',
@@ -431,11 +414,7 @@ export const __mockConversations: Conversation[] = [
     title: 'Submission Reminder',
     reference: 'REF126',
     communications: [__mockCommunications[6], __mockCommunications[7]],
-    participants: [
-      __mockParticipantsExtended[2],
-      __mockParticipantsExtended[1],
-      __mockParticipantsExtended[4],
-    ],
+    participants: [__mockParticipantsExtended[2], __mockParticipantsExtended[1], __mockParticipantsExtended[4]],
     projectId: 'proj4',
     taskId: 'task4',
     teamId: 'team4',
@@ -445,11 +424,7 @@ export const __mockConversations: Conversation[] = [
     title: 'Meeting Minutes',
     reference: 'REF127',
     communications: [__mockCommunications[8], __mockCommunications[9]],
-    participants: [
-      __mockParticipantsExtended[1],
-      __mockParticipantsExtended[0],
-      __mockParticipantsExtended[3],
-    ],
+    participants: [__mockParticipantsExtended[1], __mockParticipantsExtended[0], __mockParticipantsExtended[3]],
     projectId: 'proj5',
     taskId: 'task5',
     teamId: 'team5',

@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .user-image {
   border-radius: 100%;
@@ -18,7 +18,7 @@
   background-color: get-var(brand, 200);
   overflow: hidden;
 
-  cam-font-icon {
+  ta-font-icon {
     color: get-var(brand, 700);
   }
 }

@@ -1,4 +1,4 @@
-import { Culture } from '@camelot/utils';
+import { Culture } from '@ta/utils';
 
 export interface CreateTemplateVariantPayloadInput {
   templateId?: string;
@@ -9,7 +9,6 @@ export interface CreateTemplateVariantPayloadInput {
   documentIds: number[];
 }
 
-export interface UpdateTemplateVariantPayloadInput
-  extends CreateTemplateVariantPayloadInput {
+export interface UpdateTemplateVariantPayloadInput extends CreateTemplateVariantPayloadInput {
   id: string;
 }

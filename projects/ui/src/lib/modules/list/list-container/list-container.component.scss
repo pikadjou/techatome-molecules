@@ -1,8 +1,8 @@
-@import "camelot-export";
+@import 'ta-export';
 
 :host ::ng-deep {
   .list-container {
-    cam-list-element {
+    ta-list-element {
       .list-border {
         border-bottom: 1px solid get-var(border, primary);
       }

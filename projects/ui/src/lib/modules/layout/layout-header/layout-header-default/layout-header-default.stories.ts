@@ -3,10 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { LayoutHeaderDefaultComponent } from './layout-header-default.component';
 
@@ -33,19 +32,19 @@ export default {
     return {
       props,
       template: `
-        <cam-layout-header-default [showBack]="showBack" [title]="title" (backEvent)="backEvent()" [menuTemplate]="menuTemplate"></cam-layout-header-default>
+        <ta-layout-header-default [showBack]="showBack" [title]="title" (backEvent)="backEvent()" [menuTemplate]="menuTemplate"></ta-layout-header-default>
 
         <ng-template #menuTemplate>
           <button mat-menu-item>
-            <cam-material-icon>dialpad</cam-material-icon>
+            <ta-material-icon>dialpad</ta-material-icon>
             <span>Redial</span>
           </button>
           <button mat-menu-item disabled>
-            <cam-material-icon>voicemail</cam-material-icon>
+            <ta-material-icon>voicemail</ta-material-icon>
             <span>Check voice mail</span>
           </button>
           <button mat-menu-item>
-            <cam-material-icon>notifications_off</cam-material-icon>
+            <ta-material-icon>notifications_off</ta-material-icon>
             <span>Disable alerts</span>
           </button>
         </ng-template>

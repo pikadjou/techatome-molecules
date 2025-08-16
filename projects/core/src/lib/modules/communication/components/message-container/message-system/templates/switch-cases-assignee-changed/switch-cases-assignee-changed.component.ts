@@ -4,7 +4,7 @@ import { SwitchCasesAssigneeChanged } from '../../../../../services/dto/switch-c
 import { SwitchCaseBaseComponent } from '../switch-case-base/switch-case-base.component';
 
 @Component({
-  selector: 'cam-switch-cases-assignee-changed',
+  selector: 'ta-switch-cases-assignee-changed',
   templateUrl: './switch-cases-assignee-changed.component.html',
   styleUrls: ['./switch-cases-assignee-changed.component.scss'],
 })

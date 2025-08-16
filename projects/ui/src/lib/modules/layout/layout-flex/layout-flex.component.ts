@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { CamState } from '@camelot/styles';
-import { CamBaseComponent } from '@camelot/utils';
+import { CamState } from '@ta/styles';
+import { CamBaseComponent } from '@ta/utils';
 
 type Panel = 'left' | 'right' | 'center';
 
 @Component({
-  selector: 'cam-layout-flex',
+  selector: 'ta-layout-flex',
   templateUrl: './layout-flex.component.html',
   styleUrls: ['./layout-flex.component.scss'],
 })
@@ -17,7 +17,7 @@ export class LayoutFlexComponent extends CamBaseComponent {
   constructor() {
     super();
     this._registerSubscription(
-      this.breakpoints.isLessThanLG$.subscribe((value) => {
+      this.breakpoints.isLessThanLG$.subscribe(value => {
         if (value) {
           this.view = ['left'];
         } else {
@@ -38,11 +38,11 @@ export class LayoutFlexComponent extends CamBaseComponent {
     return this.view.length === 1;
   }
   public has(panel: Panel) {
-    return this.view.findIndex((v) => v === panel) > -1;
+    return this.view.findIndex(v => v === panel) > -1;
   }
 
   public toggle(panel: Panel) {
-    const index = this.view.findIndex((v) => v === panel);
+    const index = this.view.findIndex(v => v === panel);
     if (index === -1) {
       this.view.push(panel);
     } else {

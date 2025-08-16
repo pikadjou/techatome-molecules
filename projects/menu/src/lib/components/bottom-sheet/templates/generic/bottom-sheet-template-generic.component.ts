@@ -8,12 +8,10 @@ export type BottomSheetTemplateGenericParams<T = any> = {
 };
 
 @Component({
-  selector: 'cam-bottom-sheet-template-generic',
+  selector: 'ta-bottom-sheet-template-generic',
   templateUrl: './bottom-sheet-template-generic.component.html',
   styleUrls: ['./bottom-sheet-template-generic.component.scss'],
 })
 export class BottomSheetTemplateGenericComponent {
-  constructor(
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetTemplateGenericParams
-  ) {}
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetTemplateGenericParams) {}
 }

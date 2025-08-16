@@ -1,8 +1,7 @@
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
 
+import { CamBaseStrapiService, HandleComplexRequest } from '@ta/server';
 import { map } from 'rxjs';
-
-import { CamBaseStrapiService, HandleComplexRequest } from '@camelot/server';
 
 import { Cms } from './dto/cms';
 import { GET_CMS_CONTENT } from './strapiQueries';

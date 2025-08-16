@@ -8,14 +8,14 @@ export default {
   title: 'UI/Link',
   component: LinkComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { text, ...props } = args;
     return {
       props,
       template: `
-        <cam-link (action)="action()">
+        <ta-link (action)="action()">
           ${text}
-        </cam-link>
+        </ta-link>
       `,
     };
   },

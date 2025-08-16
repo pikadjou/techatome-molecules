@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 export interface UserLogoNaming {
   name: string;
@@ -15,7 +15,7 @@ export interface UserLogoData {
   picture?: string;
 }
 @Component({
-  selector: 'cam-user-logo',
+  selector: 'ta-user-logo',
   templateUrl: './user-logo.component.html',
   styleUrls: ['./user-logo.component.scss'],
 })

@@ -1,7 +1,4 @@
-<ng-container
-  *ngIf="!this.hasChild()"
-  [style.cursor]="this.item.callback ? 'pointer' : 'default'"
->
+<ng-container *ngIf="!this.hasChild()" [style.cursor]="this.item.callback ? 'pointer' : 'default'">
   <ng-container *ngIf="this.getLink()">
     <a
       class="link"
@@ -15,11 +12,7 @@
     </a>
   </ng-container>
   <ng-container *ngIf="!this.getLink()">
-    <a
-      (click)="this.executeCallback()"
-      class="link"
-      [ngClass]="this.getStyleType()"
-    >
+    <a (click)="this.executeCallback()" class="link" [ngClass]="this.getStyleType()">
       <ng-template [ngTemplateOutlet]="Item"></ng-template>
     </a>
   </ng-container>
@@ -29,43 +22,29 @@
   <div class="item pointer" [class.disable]="item.disabled">
     <div class="icon">
       <span *ngIf="this.hasFontIcon()" class="icon-material">
-        <cam-font-icon
-          [name]="this.getFontIcon()"
-          size="xs"
-          [ngClass]="item.iconsColor"
-        ></cam-font-icon>
+        <ta-font-icon [name]="this.getFontIcon()" size="xs" [ngClass]="item.iconsColor"></ta-font-icon>
       </span>
       <span *ngIf="this.hasIconImage()" class="icon-image">
-        <cam-local-icon
-          [type]="this.getIcon()"
-          size="xs"
-          [ngClass]="item.iconsColor"
-        ></cam-local-icon>
+        <ta-local-icon [type]="this.getIcon()" size="xs" [ngClass]="item.iconsColor"></ta-local-icon>
       </span>
     </div>
 
     <div class="title">{{ item.label | translate }}</div>
 
     <div class="badge-container d-flex">
-      <cam-notification-badge
+      <ta-notification-badge
         *ngIf="item.options?.notificationBadge?.label"
         [number]="item.options?.notificationBadge?.label || 0"
         [style]="'brand-700'"
         fontSize="xs"
         [relative]="true"
-      ></cam-notification-badge>
+      ></ta-notification-badge>
       <ng-container *ngLet="item.options?.extraTemplate as extraTemplate">
-        <ng-template
-          *ngIf="extraTemplate"
-          [ngTemplateOutlet]="extraTemplate"
-        ></ng-template>
+        <ng-template *ngIf="extraTemplate" [ngTemplateOutlet]="extraTemplate"></ng-template>
       </ng-container>
     </div>
     <div class="ending-icon-container" *ngIf="item.endingIcon">
-      <cam-font-icon
-        [name]="item.endingIcon"
-        [ngClass]="item.iconsColor"
-      ></cam-font-icon>
+      <ta-font-icon [name]="item.endingIcon" [ngClass]="item.iconsColor"></ta-font-icon>
     </div>
     <ng-container *ngLet="this.getTemplate() as template">
       <ng-container *ngIf="template">

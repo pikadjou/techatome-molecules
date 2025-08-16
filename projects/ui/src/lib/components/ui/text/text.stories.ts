@@ -8,14 +8,14 @@ export default {
   title: 'UI/Text',
   component: TextComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { text, ...props } = args;
     return {
       props,
       template: `
-        <cam-text [size]="size" [isBold]="isBold">
+        <ta-text [size]="size" [isBold]="isBold">
           ${text}
-        </cam-text>
+        </ta-text>
       `,
     };
   },

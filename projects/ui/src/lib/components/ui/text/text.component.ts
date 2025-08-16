@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 @Component({
-  selector: 'cam-text',
+  selector: 'ta-text',
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.scss'],
 })

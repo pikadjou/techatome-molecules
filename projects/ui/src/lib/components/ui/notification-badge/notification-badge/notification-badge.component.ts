@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 @Component({
-  selector: 'cam-notification-badge',
+  selector: 'ta-notification-badge',
   templateUrl: './notification-badge.component.html',
   styleUrls: ['./notification-badge.component.scss'],
 })

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamIconsModule } from '@camelot/icons';
+import { CamIconsModule } from '@ta/icons';
 
 import { CamUiModule } from '../../components/ui/ui.module';
 import { CardImageComponent } from './card-image/card-image.component';

@@ -1,4 +1,4 @@
-import { WysiswgBlockData } from '@camelot/wysiswyg';
+import { WysiswgBlockData } from '@ta/wysiswyg';
 
 import { IInputBase, InputBase } from './base';
 

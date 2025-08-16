@@ -1,5 +1,5 @@
 <div class="radio-label">
-  <cam-form-label [input]="this.input"></cam-form-label>
+  <ta-form-label [input]="this.input"></ta-form-label>
 </div>
 
 <div class="radio-container">
@@ -7,7 +7,7 @@
     class="radio-element"
     [ngClass]="{
       validated: this.input.value === option.id,
-      disabled: this.input.disabled
+      disabled: this.input.disabled,
     }"
     *ngFor="let option of this.input.options | async"
     (click)="this.onOptionClicked(option.id)"
@@ -15,16 +15,16 @@
     <div
       [ngClass]="{
         'button-with-icon': this.hasLabel(option),
-        'only-icon': !this.hasLabel(option)
+        'only-icon': !this.hasLabel(option),
       }"
     >
-      @if(option.icon) {
-      <cam-local-icon [type]="option.icon" [size]="this.iconSize(option)">
-      </cam-local-icon>
-      } @if(option.name) {
-      <span>
-        {{ option.name | translate }}
-      </span>
+      @if (option.icon) {
+        <ta-local-icon [type]="option.icon" [size]="this.iconSize(option)"> </ta-local-icon>
+      }
+      @if (option.name) {
+        <span>
+          {{ option.name | translate }}
+        </span>
       }
     </div>
   </div>

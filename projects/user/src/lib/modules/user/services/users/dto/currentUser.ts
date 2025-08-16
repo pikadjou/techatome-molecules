@@ -1,4 +1,4 @@
-import { Culture } from '@camelot/utils';
+import { Culture } from '@ta/utils';
 
 import { Function } from './function';
 import { TenantInformation } from './tenantInformation';

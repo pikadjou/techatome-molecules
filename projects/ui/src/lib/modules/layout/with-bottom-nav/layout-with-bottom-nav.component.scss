@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 $menu-size-medium: 100px;
 $menu-size-large: 220px;
@@ -18,8 +18,7 @@ $menu-size-large: 220px;
     .container {
       width: auto;
       @include media-breakpoint-up(sm) {
-        padding: get-var(components, header, top) get-var(space, md) 0
-          get-var(space, md);
+        padding: get-var(components, header, top) get-var(space, md) 0 get-var(space, md);
         padding-bottom: get-var(space, sm) !important;
       }
     }

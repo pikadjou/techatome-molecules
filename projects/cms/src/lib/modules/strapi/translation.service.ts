@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { CamLazyTranslationService } from '@camelot/translation';
+import { CamLazyTranslationService } from '@ta/translation';
 
 @Injectable({
   providedIn: 'root',

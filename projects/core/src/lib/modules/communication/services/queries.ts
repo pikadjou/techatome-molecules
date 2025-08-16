@@ -1,4 +1,4 @@
-import { Apollo_gql, GraphQueryPayload, KeyValue, graphQlTake } from '@camelot/server';
+import { Apollo_gql, GraphQueryPayload, KeyValue, graphQlTake } from '@ta/server';
 
 import { Tones } from './dto/tones';
 
@@ -17,7 +17,7 @@ export function GET_CONVERSATION(where: string, props: string): GraphQueryPayloa
   };
 }
 
-export function GET_COMMUNICATION_ERRORS(where: string, props: string){
+export function GET_COMMUNICATION_ERRORS(where: string, props: string) {
   return {
     query: Apollo_gql`
         query CommunicationErrors {

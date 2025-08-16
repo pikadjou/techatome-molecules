@@ -1,15 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
-import { SwiperData } from '@camelot/ui';
+import { SwiperData } from '@ta/ui';
 
 @Component({
-  selector: 'cam-quick-actions-custom',
+  selector: 'ta-quick-actions-custom',
   templateUrl: './quick-actions-custom.component.html',
   styleUrls: ['./quick-actions-custom.component.scss'],
 })

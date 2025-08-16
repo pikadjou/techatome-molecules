@@ -89,7 +89,7 @@ function writePackageJson(packageJson) {
   }
 }
 
-// Met à jour les dépendances @camelot/ dans le package.json
+// Met à jour les dépendances @ta/ dans le package.json
 function updateCamelotPackages(version) {
   const packageJsonPath = './package.json';
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
@@ -98,7 +98,7 @@ function updateCamelotPackages(version) {
   ['dependencies', 'devDependencies'].forEach(depType => {
     if (packageJson[depType]) {
       Object.keys(packageJson[depType]).forEach(key => {
-        if (key.startsWith('@camelot/')) {
+        if (key.startsWith('@ta/')) {
           packageJson[depType][key] = version;
           updated = true;
           console.log(`Mise à jour : ${key} -> ${version}`);
@@ -110,7 +110,7 @@ function updateCamelotPackages(version) {
   if (updated) {
     writePackageJson(packageJson);
   } else {
-    console.log('Aucune dépendance @camelot/ trouvée. Aucun changement effectué.');
+    console.log('Aucune dépendance @ta/ trouvée. Aucun changement effectué.');
   }
 }
 
@@ -142,7 +142,7 @@ async function waitForPackageAvailability(packageName, version) {
   console.log(`✔ ${packageName}@${version} est maintenant disponible.`);
 }
 
-// Fonction pour supprimer les chemins @camelot/ du tsconfig.json
+// Fonction pour supprimer les chemins @ta/ du tsconfig.json
 function removeCamelotPathsFromTsconfig() {
   try {
     const tsconfig = JSON.parse(fs.readFileSync('tsconfig.json', 'utf8'));
@@ -150,9 +150,9 @@ function removeCamelotPathsFromTsconfig() {
     if (tsconfig.compilerOptions && tsconfig.compilerOptions.paths) {
       const paths = tsconfig.compilerOptions.paths;
 
-      // Filtrer les chemins contenant @camelot/
+      // Filtrer les chemins contenant @ta/
       Object.keys(paths).forEach(key => {
-        if (key.includes('@camelot/')) {
+        if (key.includes('@ta/')) {
           delete paths[key];
           console.log(`✔ Chemin supprimé : ${key}`);
         }
@@ -278,25 +278,25 @@ async function main() {
   await fetchAllBranches();
   await handleExistingBranch(releaseBranch);
 
-  // Mise à jour des packages @camelot/
-  const { camelotVersion } = await inquirer.prompt([
+  // Mise à jour des packages @ta/
+  const { taVersion } = await inquirer.prompt([
     {
       type: 'input',
-      name: 'camelotVersion',
-      message: 'Entrez la version des packages @camelot/ à appliquer (ex: 1.0.0):',
+      name: 'taVersion',
+      message: 'Entrez la version des packages @ta/ à appliquer (ex: 1.0.0):',
     },
   ]);
 
-  // Vérification de la disponibilité du package @camelot/utils
-  await waitForPackageAvailability('@camelot/utils', camelotVersion);
+  // Vérification de la disponibilité du package @ta/utils
+  await waitForPackageAvailability('@ta/utils', taVersion);
 
   // Mise à jour de la version
   packageJson.version = releaseVersion;
   writePackageJson(packageJson);
 
-  updateCamelotPackages(camelotVersion);
+  updateCamelotPackages(taVersion);
 
-  // Suppression des chemins @camelot/ dans tsconfig.json
+  // Suppression des chemins @ta/ dans tsconfig.json
   removeCamelotPathsFromTsconfig();
 
   // Installation des dépendances et construction du projet

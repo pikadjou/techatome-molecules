@@ -1,23 +1,13 @@
-import {
-  Apollo_gql,
-  GraphQueryPayload,
-  graphQlPaginationFields,
-  graphQlTake,
-} from '@camelot/server';
+import { Apollo_gql, GraphQueryPayload, graphQlPaginationFields, graphQlTake } from '@ta/server';
 
 import { addressProps } from './dto/address';
 import { projectProps } from './dto/project';
 import { ProjectStatus } from './dto/status';
 import { tenantProps } from './dto/tenant';
 
-export function GET_MY_PROJECTS(filters?: {
-  statusList?: ProjectStatus[];
-  take?: number;
-}): GraphQueryPayload {
+export function GET_MY_PROJECTS(filters?: { statusList?: ProjectStatus[]; take?: number }): GraphQueryPayload {
   const where =
-    filters?.statusList && filters.statusList.length > 0
-      ? `where: { status: { in: [${filters.statusList}] } }`
-      : '';
+    filters?.statusList && filters.statusList.length > 0 ? `where: { status: { in: [${filters.statusList}] } }` : '';
   return {
     query: Apollo_gql`
         query Projects {

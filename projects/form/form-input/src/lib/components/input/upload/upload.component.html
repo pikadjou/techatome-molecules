@@ -1,35 +1,35 @@
-<cam-loader [isLoading]="this.requestState.isLoading()">
+<ta-loader [isLoading]="this.requestState.isLoading()">
   <div class="upload-container flex-column" appDnd (fileDropped)="this.onFileDropped($event)">
     <div class="flex-responsive-ctr g-space-md">
       @if (this.inProgressFiles.length > 0) {
         <div class="files-list flex-column g-space-sm">
           <div class="flex-column" *ngFor="let item of this.inProgressFiles">
             <div class="flex-row align-center">
-              <cam-font-icon name="doc" size="xs"></cam-font-icon>
+              <ta-font-icon name="doc" size="xs"></ta-font-icon>
               @if (item.progress < 100) {
-                <cam-text class="name" size="sm">
+                <ta-text class="name" size="sm">
                   {{ item.name }}
-                </cam-text>
+                </ta-text>
               }
               @if (item.progress === 100 && item.completed) {
-                <cam-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</cam-link>
+                <ta-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</ta-link>
               }
             </div>
             <div class="extra flex-row g-space-md">
               @if (item.progress < 100) {
                 <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
-                <cam-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
-                  <cam-font-icon name="close" type="sm"></cam-font-icon>
-                </cam-link>
+                <ta-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
+                  <ta-font-icon name="close" type="sm"></ta-font-icon>
+                </ta-link>
               }
               @if (item.progress === 100 && item.completed) {
-                <cam-text size="sm" class="justify-end">
-                  <cam-megaoctet [octet]="item.completed.size"></cam-megaoctet>
-                </cam-text>
+                <ta-text size="sm" class="justify-end">
+                  <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
+                </ta-text>
                 @if (item.completed.id) {
-                  <cam-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
-                    <cam-font-icon name="close" type="sm"></cam-font-icon>
-                  </cam-link>
+                  <ta-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
+                    <ta-font-icon name="close" type="sm"></ta-font-icon>
+                  </ta-link>
                 }
               }
             </div>
@@ -42,15 +42,15 @@
           {{ 'input.upload.dragndrop' | translate }}
         </h3>
         <div class="d-flex">
-          <cam-button type="secondary" icon="add" class="m-a" (action)="this.uploadFile()">
+          <ta-button type="secondary" icon="add" class="m-a" (action)="this.uploadFile()">
             {{ 'input.upload.add' | translate }}
-          </cam-button>
+          </ta-button>
         </div>
       </div>
     </div>
     @if (this.input.confirmButton) {
       <div class="d-flex">
-        <cam-button
+        <ta-button
           icon="check-line"
           class="justify-end align-center"
           (action)="this.validation()"
@@ -58,8 +58,8 @@
           [state]="this.isValidDocumentList() ? 'classic' : 'disabled'"
         >
           {{ 'input.upload.confirm' | translate }}
-        </cam-button>
+        </ta-button>
       </div>
     }
   </div>
-</cam-loader>
+</ta-loader>

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { differenceInCalendarDays } from 'date-fns';
 
 @Component({
-  selector: 'cam-time-ago',
+  selector: 'ta-time-ago',
   templateUrl: './time-ago.component.html',
   styleUrls: ['./time-ago.component.scss'],
 })

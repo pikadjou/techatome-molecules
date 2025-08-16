@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Menu, MenuIcon } from '@camelot/menu';
+import { Menu, MenuIcon } from '@ta/menu';
 
 @Injectable({
   providedIn: 'root',

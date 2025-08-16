@@ -1,4 +1,4 @@
-import { GraphSchema } from '@camelot/server';
+import { GraphSchema } from '@ta/server';
 
 export interface Contact {
   id: string;
@@ -9,13 +9,6 @@ export interface Contact {
   tenantPersonId: number;
 }
 
-const props: (keyof Contact)[] = [
-  'id',
-  'firstName',
-  'lastName',
-  'mail',
-  'phoneNumber',
-  'tenantPersonId',
-];
+const props: (keyof Contact)[] = ['id', 'firstName', 'lastName', 'mail', 'phoneNumber', 'tenantPersonId'];
 
 export const contactProps = new GraphSchema<Contact>(props);

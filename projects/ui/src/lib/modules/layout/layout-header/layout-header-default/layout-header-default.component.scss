@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .more,
 .back {
@@ -22,7 +22,7 @@
   }
 }
 
-cam-font-icon {
+ta-font-icon {
   padding: get-var(space, xs);
   cursor: pointer;
   display: block;

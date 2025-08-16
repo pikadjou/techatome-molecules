@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
-  selector: 'cam-contact-card',
+  selector: 'ta-contact-card',
   templateUrl: './contact-card.component.html',
   styleUrls: ['./contact-card.component.scss'],
 })

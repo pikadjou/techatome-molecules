@@ -1,18 +1,5 @@
-<span
-  class="badge-container"
-  [ngClass]="this.getClass()"
-  (click)="this.click()"
->
+<span class="badge-container" [ngClass]="this.getClass()" (click)="this.click()">
   <span class="value">{{ this.value | translate }}</span>
-  <cam-font-icon
-    class="ml-space-xs"
-    *ngIf="this.icon"
-    [name]="icon"
-    type="xs"
-  ></cam-font-icon>
-  <cam-font-icon
-    *ngIf="this.showClickOption"
-    name="arrow-small"
-    type="xs"
-  ></cam-font-icon>
+  <ta-font-icon class="ml-space-xs" *ngIf="this.icon" [name]="icon" type="xs"></ta-font-icon>
+  <ta-font-icon *ngIf="this.showClickOption" name="arrow-small" type="xs"></ta-font-icon>
 </span>

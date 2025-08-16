@@ -1,21 +1,11 @@
 import { Injectable } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleComplexRequest } from '@ta/server';
+import { getUniqueArray } from '@ta/utils';
 import { map, of, switchMap } from 'rxjs';
 
-import {
-  CamBaseService,
-  GraphEndpoint,
-  HandleComplexRequest,
-} from '@camelot/server';
-import { getUniqueArray } from '@camelot/utils';
-
 import { NotificationDto } from './dto/notification';
-import {
-  GET_NOTIFICATIONS,
-  GET_NOTIFICATIONS_COUNT,
-  NotificationFilter,
-  READ_NOTIFICATION,
-} from './queries';
+import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_COUNT, NotificationFilter, READ_NOTIFICATION } from './queries';
 import { CamNotificationSharedService } from './shared.service';
 
 const graphEndpoint: GraphEndpoint = {
@@ -41,33 +31,23 @@ export class CamNotificationDataService extends CamBaseService {
     return this.list.fetch(
       this.computeKey(filters),
       this._graphService
-        .fetchPagedQueryList<NotificationDto>(
-          GET_NOTIFICATIONS(filters),
-          'notifications',
-          graphEndpoint.clientName
-        )
+        .fetchPagedQueryList<NotificationDto>(GET_NOTIFICATIONS(filters), 'notifications', graphEndpoint.clientName)
         .pipe(
-          map((data) => data.items ?? []),
-          switchMap((entities) => {
+          map(data => data.items ?? []),
+          switchMap(entities => {
             if (!this._sharedService.getProjects$) {
               return of(entities);
             }
-            return this._sharedService
-              .getProjects$(
-                getUniqueArray(entities.map((entity) => entity.projectId))
+            return this._sharedService.getProjects$(getUniqueArray(entities.map(entity => entity.projectId))).pipe(
+              map(projects =>
+                entities.map(entity => ({
+                  ...entity,
+                  ...{
+                    project: projects.find(project => project.id === entity.projectId),
+                  },
+                }))
               )
-              .pipe(
-                map((projects) =>
-                  entities.map((entity) => ({
-                    ...entity,
-                    ...{
-                      project: projects.find(
-                        (project) => project.id === entity.projectId
-                      ),
-                    },
-                  }))
-                )
-              );
+            );
           })
         )
     );
@@ -77,21 +57,13 @@ export class CamNotificationDataService extends CamBaseService {
     return this.count.fetch(
       this.computeKey(filters),
       this._graphService
-        .fetchPagedQueryList(
-          GET_NOTIFICATIONS_COUNT(filters),
-          'notifications',
-          graphEndpoint.clientName
-        )
-        .pipe(map((data) => data.totalCount))
+        .fetchPagedQueryList(GET_NOTIFICATIONS_COUNT(filters), 'notifications', graphEndpoint.clientName)
+        .pipe(map(data => data.totalCount))
     );
   }
 
   public isRead$(id: string) {
-    return this._graphService.mutate<boolean>(
-      READ_NOTIFICATION(id),
-      'notificationRead',
-      graphEndpoint.clientName
-    );
+    return this._graphService.mutate<boolean>(READ_NOTIFICATION(id), 'notificationRead', graphEndpoint.clientName);
   }
 
   public computeKey(filters?: NotificationFilter) {

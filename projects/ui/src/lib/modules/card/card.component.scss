@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 $spacing: get-var(space, md);
 
@@ -39,7 +39,7 @@ $spacing: get-var(space, md);
   }
 }
 
-@include in-context(".card-force-mobile") {
+@include in-context('.card-force-mobile') {
   .card {
     .responsive-content {
       @include flex-column();

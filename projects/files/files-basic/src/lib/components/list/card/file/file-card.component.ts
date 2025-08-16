@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamIconType } from '@camelot/icons';
-import { EFileExtension, FileData } from '@camelot/utils';
+import { CamIconType } from '@ta/icons';
+import { EFileExtension, FileData } from '@ta/utils';
 
 @Component({
-  selector: 'cam-file-card',
+  selector: 'ta-file-card',
   templateUrl: './file-card.component.html',
   styleUrls: ['./file-card.component.scss'],
 })
@@ -15,8 +15,7 @@ export class FileCardComponent {
   fileSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
 
   @Output()
-  moreInformationSelected: EventEmitter<FileData> =
-    new EventEmitter<FileData>();
+  moreInformationSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
 
   get localIcon() {
     switch (this.file.fileExtension) {

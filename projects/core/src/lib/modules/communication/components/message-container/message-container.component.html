@@ -7,75 +7,75 @@
   [class.error]="this.communication.status === CommunicationStatus.Failed"
 >
   <div class="participant-container space-between" *ngIf="this.communication.type !== this.CommunicationType.System">
-    <cam-communication-participant
+    <ta-communication-participant
       [participant]="this.communication.from"
       [conversationParticipants]="this.conversationParticipants"
-    ></cam-communication-participant>
+    ></ta-communication-participant>
     <div class="flex-start g-space-sm">
       <div *ngIf="this.communication.type === this.CommunicationType.Mail">
-        <cam-font-icon
+        <ta-font-icon
           type="sm"
           name="arrow-go-back-line"
           (click)="this.askReply.emit({ communication: this.communication, isForward: false })"
-        ></cam-font-icon>
+        ></ta-font-icon>
       </div>
       <div *ngIf="this.communication.type === this.CommunicationType.Mail">
-        <cam-font-icon
+        <ta-font-icon
           type="sm"
           name="arrow-go-forward-line"
           (click)="this.askReply.emit({ communication: this.communication, isForward: true })"
-        ></cam-font-icon>
+        ></ta-font-icon>
       </div>
     </div>
   </div>
   <div class="message-wrapper mb-space-xs">
     <ng-container [ngSwitch]="this.communication.type">
       <ng-container *ngSwitchCase="this.CommunicationType.Mail">
-        <cam-communication-message-mail
+        <ta-communication-message-mail
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
           [taskId]="this.taskId"
-        ></cam-communication-message-mail>
+        ></ta-communication-message-mail>
       </ng-container>
       <ng-container *ngSwitchCase="this.CommunicationType.Chat">
-        <cam-communication-message-chat
+        <ta-communication-message-chat
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
-        ></cam-communication-message-chat>
+        ></ta-communication-message-chat>
       </ng-container>
       <ng-container *ngSwitchCase="this.CommunicationType.Intern">
-        <cam-communication-message-chat
+        <ta-communication-message-chat
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
-        ></cam-communication-message-chat>
+        ></ta-communication-message-chat>
       </ng-container>
       <ng-container *ngSwitchCase="this.CommunicationType.System">
-        <cam-communication-message-system
+        <ta-communication-message-system
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
-        ></cam-communication-message-system>
+        ></ta-communication-message-system>
       </ng-container>
     </ng-container>
     <div
       class="documents-container pt-space-md"
       *ngIf="this.communication.documentsIds && this.communication.documentsIds.length > 0"
     >
-      <cam-documents-list [documentsIds]="this.communication.documentsIds"></cam-documents-list>
+      <ta-documents-list [documentsIds]="this.communication.documentsIds"></ta-documents-list>
     </div>
   </div>
   <div class="time">
-    <cam-text size="sm" color="secondary">
+    <ta-text size="sm" color="secondary">
       <div class="align-center">
-        <cam-communication-status
+        <ta-communication-status
           *ngIf="this.communication.status !== CommunicationStatus.Sent"
           [value]="this.communication.status"
           (click)="this.open()"
-        ></cam-communication-status>
-        <cam-time-ago
+        ></ta-communication-status>
+        <ta-time-ago
           *ngIf="this.communication.status === CommunicationStatus.Sent"
           [date]="this.communication.createdTime"
           [withHours]="true"
-        ></cam-time-ago>
+        ></ta-time-ago>
         @if (
           this.communication.createdByFullName &&
           (this.communication.type === this.CommunicationType.Intern ||
@@ -86,6 +86,6 @@
           </div>
         }
       </div>
-    </cam-text>
+    </ta-text>
   </div>
 </div>

@@ -1,15 +1,5 @@
-import {
-  Meta,
-  StoryObj,
-  componentWrapperDecorator,
-  moduleMetadata,
-} from '@storybook/angular';
-
-import {
-  CamIconType,
-  LocalIconComponent,
-  MaterialIconComponent,
-} from '@camelot/icons';
+import { Meta, StoryObj, componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
+import { CamIconType, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
 
 import { ActionButtonComponent } from './action-button.component';
 
@@ -21,20 +11,18 @@ export default {
     moduleMetadata({
       declarations: [MaterialIconComponent, LocalIconComponent],
     }),
-    componentWrapperDecorator(
-      (story) => `<div style="height: 50px; padding-top: 50px">${story}</div>`
-    ),
+    componentWrapperDecorator(story => `<div style="height: 50px; padding-top: 50px">${story}</div>`),
   ],
 
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   args: {
     actions: [
       {
-        callback: (_) => console.log('test'),
+        callback: _ => console.log('test'),
         icon: CamIconType.Play,
       },
       {
-        callback: (_) => console.log('test'),
+        callback: _ => console.log('test'),
         icon: CamIconType.Stop,
       },
     ],
@@ -47,11 +35,11 @@ export const MaterialIcons: StoryObj<ActionButtonComponent> = {
   args: {
     actions: [
       {
-        callback: (_) => console.log('test'),
+        callback: _ => console.log('test'),
         icon: 'play_circle_filled',
       },
       {
-        callback: (_) => console.log('test'),
+        callback: _ => console.log('test'),
         icon: 'pause_circle_filled',
       },
     ],

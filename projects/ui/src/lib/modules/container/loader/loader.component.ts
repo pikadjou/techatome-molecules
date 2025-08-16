@@ -1,13 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import {
-  Placeholder,
-  PlaceholderConfig,
-  getPlaceholderConfig,
-} from '../placeholder/config';
+import { Placeholder, PlaceholderConfig, getPlaceholderConfig } from '../placeholder/config';
 
 @Component({
-  selector: 'cam-loader',
+  selector: 'ta-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
 })

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-progress-bar-data',
+  selector: 'ta-progress-bar-data',
   templateUrl: './progress-bar-data.component.html',
   styleUrls: ['./progress-bar-data.component.scss'],
 })
@@ -28,8 +28,7 @@ export class ProgressBarDataComponent {
   rightText?: { text: string; colorClass?: string };
 
   get progressValue() {
-    if ((this.current || this.current === 0) && (this.max || this.max === 0))
-      return `${this.current}/${this.max}`;
+    if ((this.current || this.current === 0) && (this.max || this.max === 0)) return `${this.current}/${this.max}`;
 
     return (this.current ?? this.max)?.toString() ?? '';
   }

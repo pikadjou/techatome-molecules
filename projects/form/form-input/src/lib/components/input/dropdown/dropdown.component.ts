@@ -1,12 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
 
-import { InputDropdown } from '@camelot/form-model';
-import { CamOverlayPanelComponent } from '@camelot/ui';
+import { InputDropdown } from '@ta/form-model';
+import { CamOverlayPanelComponent } from '@ta/ui';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-dropdown',
+  selector: 'ta-input-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
 })

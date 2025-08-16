@@ -1,4 +1,4 @@
-import { GraphSchema } from '@camelot/server';
+import { GraphSchema } from '@ta/server';
 
 export interface Role {
   id: string;

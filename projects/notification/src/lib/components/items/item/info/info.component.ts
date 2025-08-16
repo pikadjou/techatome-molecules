@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'cam-notification-item-info',
+  selector: 'ta-notification-item-info',
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss'],
 })

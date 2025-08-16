@@ -1,19 +1,13 @@
-<cam-loader
-  [isLoading]="this.requestState.isLoading()"
-  *ngLet="this.content$ | async as content"
->
-  <cam-error
-    [message]="this.requestState.getErrorMessage()"
-    [code]="this.requestState.getErrorStatus()"
-  >
-    <cam-empty [isEmpty]="!content">
+<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.content$ | async as content">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <ta-empty [isEmpty]="!content">
       <ng-container *ngIf="content">
-        <cam-rich-text [richText]="content.Content"></cam-rich-text>
+        <ta-rich-text [richText]="content.Content"></ta-rich-text>
 
         <div class="checkbox ta-r">
-          <cam-input-toggle [input]="this.checkbox"></cam-input-toggle>
+          <ta-input-toggle [input]="this.checkbox"></ta-input-toggle>
         </div>
       </ng-container>
-    </cam-empty>
-  </cam-error>
-</cam-loader>
+    </ta-empty>
+  </ta-error>
+</ta-loader>

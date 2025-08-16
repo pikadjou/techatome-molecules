@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { DepartmentIconListComponent } from '../../components/ui/departments/department-icon-list/department-icon-list.component';
 import { Department } from '../../components/ui/departments/interface';
@@ -40,27 +39,27 @@ export default {
       imports: [CamDirectivePipeModule],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
         <div [style.width.px]="320"> 
-          <cam-card [highlight]="highlight" [shadow]="shadow" [noContent]="noContent">
-            <cam-card-header>
-              <cam-card-tag>
-                <cam-hour-date-line [startDate]="startDate" [endDate]="endDate"></cam-hour-date-line>
-              </cam-card-tag>
-              <cam-card-title>Sprl Cabinet Dentaire Eric MASSART</cam-card-title>
-            </cam-card-header>
-            <cam-card-content>
+          <ta-card [highlight]="highlight" [shadow]="shadow" [noContent]="noContent">
+            <ta-card-header>
+              <ta-card-tag>
+                <ta-hour-date-line [startDate]="startDate" [endDate]="endDate"></ta-hour-date-line>
+              </ta-card-tag>
+              <ta-card-title>Sprl Cabinet Dentaire Eric MASSART</ta-card-title>
+            </ta-card-header>
+            <ta-card-content>
               Rue Sainte-Walburge 12
               4000 Liège
-            </cam-card-content>
-            <cam-card-cta>
-              <cam-department-icon-list [departments]="departments"></cam-department-icon-list>
-            </cam-card-cta>
-          </cam-card>
+            </ta-card-content>
+            <ta-card-cta>
+              <ta-department-icon-list [departments]="departments"></ta-department-icon-list>
+            </ta-card-cta>
+          </ta-card>
         </div>
       `,
     };
@@ -74,14 +73,12 @@ export default {
       {
         id: 0,
         name: 'BUREAU',
-        iconPath:
-          'https://rgroupstorage.blob.core.windows.net/prod/Renoenergy_icones_bic.png',
+        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/Renoenergy_icones_bic.png',
       },
       {
         id: 0,
         name: 'HVAC',
-        iconPath:
-          'https://rgroupstorage.blob.core.windows.net/prod/Chauffage%20et%20cliu%CC%80.png',
+        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/Chauffage%20et%20cliu%CC%80.png',
       },
       {
         id: 0,
@@ -106,27 +103,27 @@ export const NoContent: StoryObj<StoryType> = {
   },
 };
 export const fullHeight: StoryObj<StoryType> = {
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
         <div [style.height.px]="500" [style.width.px]="320" class="bd">
-          <cam-card [highlight]="highlight" [shadow]="shadow" [fullHeight]="true">
-            <cam-card-header>
-              <cam-card-tag>
-                <cam-hour-date-line [startDate]="startDate" [endDate]="endDate"></cam-hour-date-line>
-              </cam-card-tag>
-              <cam-card-title>Sprl Cabinet Dentaire Eric MASSART</cam-card-title>
-            </cam-card-header>
-            <cam-card-content>
+          <ta-card [highlight]="highlight" [shadow]="shadow" [fullHeight]="true">
+            <ta-card-header>
+              <ta-card-tag>
+                <ta-hour-date-line [startDate]="startDate" [endDate]="endDate"></ta-hour-date-line>
+              </ta-card-tag>
+              <ta-card-title>Sprl Cabinet Dentaire Eric MASSART</ta-card-title>
+            </ta-card-header>
+            <ta-card-content>
               Rue Sainte-Walburge 12
               4000 Liège
-            </cam-card-content>
-            <cam-card-cta>
-              <cam-department-icon-list [departments]="departments"></cam-department-icon-list>
-            </cam-card-cta>
-          </cam-card>
+            </ta-card-content>
+            <ta-card-cta>
+              <ta-department-icon-list [departments]="departments"></ta-department-icon-list>
+            </ta-card-cta>
+          </ta-card>
         </div>
       `,
     };

@@ -1,26 +1,15 @@
-import {
-  AfterViewChecked,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 
+import { CamSharedMenuService } from '@ta/services';
+import { CamBaseComponent } from '@ta/utils';
 import { combineLatest, map, startWith } from 'rxjs';
 
-import { CamSharedMenuService } from '@camelot/services';
-import { CamBaseComponent } from '@camelot/utils';
-
 @Component({
-  selector: 'cam-layout-with-bottom-nav',
+  selector: 'ta-layout-with-bottom-nav',
   templateUrl: './layout-with-bottom-nav.component.html',
   styleUrls: ['./layout-with-bottom-nav.component.scss'],
 })
-export class LayoutWithBottomNavComponent
-  extends CamBaseComponent
-  implements AfterViewChecked
-{
+export class LayoutWithBottomNavComponent extends CamBaseComponent implements AfterViewChecked {
   @Input()
   type!: string;
 
@@ -36,7 +25,7 @@ export class LayoutWithBottomNavComponent
     this.sharedMenu.isMinimized$.pipe(startWith(false)),
     this.breakpoints.isDesktop$,
   ]).pipe(
-    map((data) => ({
+    map(data => ({
       isMinimized: data[0],
       isDesktop: data[1],
     })),
@@ -50,13 +39,7 @@ export class LayoutWithBottomNavComponent
     const clientHeight = this._bottomNav.nativeElement.clientHeight;
     const clientWidth = this._bottomNav.nativeElement.clientWidth;
 
-    this._layoutContent.nativeElement.setAttribute(
-      'style',
-      `padding-bottom: ${clientHeight + 10}px`
-    );
-    this._layoutContent.nativeElement.setAttribute(
-      'style',
-      `width: ${window.screen.width - clientWidth}px`
-    );
+    this._layoutContent.nativeElement.setAttribute('style', `padding-bottom: ${clientHeight + 10}px`);
+    this._layoutContent.nativeElement.setAttribute('style', `width: ${window.screen.width - clientWidth}px`);
   }
 }

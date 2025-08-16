@@ -1,5 +1,5 @@
-import { Picture } from '@camelot/services';
-import { FileStructure } from '@camelot/utils';
+import { Picture } from '@ta/services';
+import { FileStructure } from '@ta/utils';
 
 import { IInputBase, InputBase } from './base';
 

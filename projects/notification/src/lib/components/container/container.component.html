@@ -1,66 +1,47 @@
-<cam-loader
-  [isLoading]="this.requestState.isLoading()"
-  *ngLet="this.notifications$ | async as notifications"
->
-  <cam-error
-    [message]="this.requestState.getErrorMessage()"
-    [code]="this.requestState.getErrorStatus()"
-  >
-    <cam-empty
+<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.notifications$ | async as notifications">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <ta-empty
       [isEmpty]="!notifications || notifications.length === 0"
       icon="ghost"
       [isLight]="false"
       text="notification.empty"
     >
       <div class="notification-container">
-        <div
-          *ngFor="let notif of this.notifications"
-          class="item-container c-pointer"
-        >
+        <div *ngFor="let notif of this.notifications" class="item-container c-pointer">
           <ng-container [ngSwitch]="notif.type">
             <ng-container *ngSwitchCase="'ProjectStatusChanged'">
-              <cam-notification-project-status-changed
-                [notification]="notif"
-              ></cam-notification-project-status-changed>
+              <ta-notification-project-status-changed [notification]="notif"></ta-notification-project-status-changed>
             </ng-container>
             <ng-container *ngSwitchCase="'NewQuotationVersion'">
-              <cam-new-quotation-version
-                [notification]="notif"
-              ></cam-new-quotation-version>
+              <ta-new-quotation-version [notification]="notif"></ta-new-quotation-version>
             </ng-container>
             <ng-container *ngSwitchCase="'NewInvoice'">
-              <cam-new-invoice [notification]="notif"></cam-new-invoice>
+              <ta-new-invoice [notification]="notif"></ta-new-invoice>
             </ng-container>
             <ng-container *ngSwitchCase="'InvoicePaymentStatusChanged'">
-              <cam-invoice-payment-status-changed
-                [notification]="notif"
-              ></cam-invoice-payment-status-changed>
+              <ta-invoice-payment-status-changed [notification]="notif"></ta-invoice-payment-status-changed>
             </ng-container>
             <ng-container *ngSwitchCase="'TaskAssigned'">
-              <cam-task-assigned [notification]="notif"></cam-task-assigned>
+              <ta-task-assigned [notification]="notif"></ta-task-assigned>
             </ng-container>
             <ng-container *ngSwitchCase="'ToDoAssigned'">
-              <cam-to-do-assigned [notification]="notif"></cam-to-do-assigned>
+              <ta-to-do-assigned [notification]="notif"></ta-to-do-assigned>
             </ng-container>
             <ng-container *ngSwitchCase="'TaskDueToday'">
-              <cam-task-due-today [notification]="notif"></cam-task-due-today>
+              <ta-task-due-today [notification]="notif"></ta-task-due-today>
             </ng-container>
             <ng-container *ngSwitchCase="'ToDoDueToday'">
-              <cam-to-do-due-today [notification]="notif"></cam-to-do-due-today>
+              <ta-to-do-due-today [notification]="notif"></ta-to-do-due-today>
             </ng-container>
             <ng-container *ngSwitchCase="'TaskNewActivity'">
-              <cam-task-new-activity
-                [notification]="notif"
-              ></cam-task-new-activity>
+              <ta-task-new-activity [notification]="notif"></ta-task-new-activity>
             </ng-container>
             <ng-container *ngSwitchCase="'UserTaggedInConversation'">
-              <cam-user-tagged-in-conversation
-                [notification]="notif"
-              ></cam-user-tagged-in-conversation>
+              <ta-user-tagged-in-conversation [notification]="notif"></ta-user-tagged-in-conversation>
             </ng-container>
           </ng-container>
         </div>
       </div>
-    </cam-empty>
-  </cam-error>
-</cam-loader>
+    </ta-empty>
+  </ta-error>
+</ta-loader>

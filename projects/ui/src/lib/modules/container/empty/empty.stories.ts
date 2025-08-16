@@ -2,11 +2,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconType, CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconType, CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { EmptyComponent } from './empty.component';
 
@@ -34,13 +33,13 @@ export default {
       props,
       template: `
       <div [style.width.px]="350">
-        <cam-empty
+        <ta-empty
          [isEmpty]="isEmpty" [isLight]="isLight"
          [text]="text" [type]="type"
          [icon]="icon" [iconSize]="iconSize"
         >
             Je ne suis pas vide !!!
-        </cam-empty>
+        </ta-empty>
         </div>
       `,
     };

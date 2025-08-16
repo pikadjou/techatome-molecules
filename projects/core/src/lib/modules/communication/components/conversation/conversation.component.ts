@@ -14,11 +14,10 @@ import {
   signal,
 } from '@angular/core';
 
+import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@ta/notification';
+import { CamBaseComponent, RequestState, isNonNullable } from '@ta/utils';
+import { convertBlocksToHtml } from '@ta/wysiswyg';
 import { Observable, Subject, combineLatest, map, of, startWith } from 'rxjs';
-
-import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@camelot/notification';
-import { CamBaseComponent, RequestState, isNonNullable } from '@camelot/utils';
-import { convertBlocksToHtml } from '@camelot/wysiswyg';
 
 import { CamCommunicationsService } from '../../services/communications.service';
 import { Communication, CommunicationParticipantExtended, CommunicationType } from '../../services/dto/communication';
@@ -29,7 +28,7 @@ import { CorrespondentInput } from '../message-box-container/input/input.compone
 import { MessageBoxOutputMessage } from '../message-box-container/message-box-container.component';
 
 @Component({
-  selector: 'cam-conversation',
+  selector: 'ta-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.scss'],
 })

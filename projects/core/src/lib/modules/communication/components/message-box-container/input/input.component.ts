@@ -14,12 +14,11 @@ import {
 
 import { map } from 'rxjs/operators';
 
+import { InputChoices, InputChoicesOption } from '@ta/form-model';
+import { Menu, MenuIcon } from '@ta/menu';
+import { CamContactService, CamUsersService, Contact, User } from '@ta/user';
+import { CamBaseComponent, fullName, isValidEmail } from '@ta/utils';
 import { Observable, combineLatest, of } from 'rxjs';
-
-import { InputChoices, InputChoicesOption } from '@camelot/form-model';
-import { Menu, MenuIcon } from '@camelot/menu';
-import { CamContactService, CamUsersService, Contact, User } from '@camelot/user';
-import { CamBaseComponent, fullName, isValidEmail } from '@camelot/utils';
 
 import {
   Communication,
@@ -39,7 +38,7 @@ export type OutputCorrespondentInput = {
 };
 
 @Component({
-  selector: 'cam-message-box-input',
+  selector: 'ta-message-box-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })

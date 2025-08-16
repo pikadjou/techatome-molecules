@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { graphQlUpdateFields } from '@camelot/server';
+import { graphQlUpdateFields } from '@ta/server';
 
 export enum ESignatureFormFields {
   mailSignature = 'mailSignature',

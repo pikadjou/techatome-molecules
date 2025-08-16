@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 import { filter, map, of, tap } from 'rxjs';
-
-import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@camelot/server';
-import { isNonNullable } from '@camelot/utils';
 
 import { Contact, contactProps } from './contacts/dto/contact';
 import { GET_CONTACTS, GET_CONTACTS_LIGHT, GET_SEARCH_CONTACTS } from './contacts/queries';

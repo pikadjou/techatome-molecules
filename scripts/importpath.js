@@ -54,7 +54,7 @@ rl.question('Entrez le numéro du partenaire que vous souhaitez choisir : ', cho
     }
 
     const currentPaths = currentTsconfig.compilerOptions.paths;
-    const camelotPaths = Object.keys(currentPaths).filter(key => key.startsWith('@camelot'));
+    const taPaths = Object.keys(currentPaths).filter(key => key.startsWith('@ta'));
 
     // Vérifier si le fichier tsconfig.json du répertoire distant contient la propriété paths
     const tsconfig = JSON.parse(fs.readFileSync(tsconfigPath, 'utf-8'));
@@ -65,15 +65,15 @@ rl.question('Entrez le numéro du partenaire que vous souhaitez choisir : ', cho
       tsconfig.compilerOptions.paths = {};
     }
 
-    // Demander si l'utilisateur veut ajouter ou retirer les chemins @camelot (Y/N)
+    // Demander si l'utilisateur veut ajouter ou retirer les chemins @ta (Y/N)
     rl.question(
-      'Voulez-vous ajouter les chemins @camelot du répertoire courant dans celui du partenaire (Y/N) ? (par défaut, Y) : ',
+      'Voulez-vous ajouter les chemins @ta du répertoire courant dans celui du partenaire (Y/N) ? (par défaut, Y) : ',
       action => {
         const isAdd = action === '' || action.toLowerCase() === 'y';
 
         if (isAdd) {
-          // Ajouter les chemins @camelot du répertoire courant dans le tsconfig du répertoire distant
-          camelotPaths.forEach(key => {
+          // Ajouter les chemins @ta du répertoire courant dans le tsconfig du répertoire distant
+          taPaths.forEach(key => {
             if (tsconfig.compilerOptions.paths[key]) {
               // Fusionner les chemins existants dans le répertoire distant
               tsconfig.compilerOptions.paths[key] = [
@@ -85,14 +85,14 @@ rl.question('Entrez le numéro du partenaire que vous souhaitez choisir : ', cho
             }
             console.log(`Chemin ajouté pour ${key}: ${tsconfig.compilerOptions.paths[key]}`);
           });
-          console.log('Les chemins @camelot ont été ajoutés au tsconfig du partenaire.');
+          console.log('Les chemins @ta ont été ajoutés au tsconfig du partenaire.');
         } else {
-          // Retirer les chemins @camelot du tsconfig du répertoire distant
-          camelotPaths.forEach(key => {
+          // Retirer les chemins @ta du tsconfig du répertoire distant
+          taPaths.forEach(key => {
             delete tsconfig.compilerOptions.paths[key];
             console.log(`Chemin retiré pour ${key}`);
           });
-          console.log('Les chemins @camelot ont été retirés du tsconfig du partenaire.');
+          console.log('Les chemins @ta ont été retirés du tsconfig du partenaire.');
         }
 
         // Sauvegarder le tsconfig.json du répertoire distant modifié

@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 
-import { InputUploadValue } from '@camelot/form-model';
-import { CamDocumentsService, DocumentDto, FileType } from '@camelot/services';
-import { CamBaseComponent, downloadFile } from '@camelot/utils';
+import { InputUploadValue } from '@ta/form-model';
+import { CamDocumentsService, DocumentDto, FileType } from '@ta/services';
+import { CamBaseComponent, downloadFile } from '@ta/utils';
 
 @Component({
-  selector: 'cam-documents-list',
+  selector: 'ta-documents-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })

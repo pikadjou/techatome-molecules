@@ -1,13 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, SimpleChanges, TemplateRef, inject, signal } from '@angular/core';
 
+import { InputUploadValue } from '@ta/form-model';
+import { Menu, MenuIcon } from '@ta/menu';
+import { CamUsersService } from '@ta/user';
+import { CamBaseComponent, fullName } from '@ta/utils';
+import { EditorInputSavedData, WysiswgBlockData } from '@ta/wysiswyg';
 import { Observable, Subject } from 'rxjs';
-
-import { InputUploadValue } from '@camelot/form-model';
-import { Menu, MenuIcon } from '@camelot/menu';
-import { CamUsersService } from '@camelot/user';
-import { CamBaseComponent, fullName } from '@camelot/utils';
-import { EditorInputSavedData, WysiswgBlockData } from '@camelot/wysiswyg';
 
 import { CamCommunicationsService } from '../../services/communications.service';
 import { Communication, CommunicationParticipantExtended, CommunicationType } from '../../services/dto/communication';
@@ -29,7 +28,7 @@ export type MessageBoxOutputMessage = {
 };
 
 @Component({
-  selector: 'cam-communication-message-box-container',
+  selector: 'ta-communication-message-box-container',
   templateUrl: './message-box-container.component.html',
   styleUrls: ['./message-box-container.component.scss'],
 })

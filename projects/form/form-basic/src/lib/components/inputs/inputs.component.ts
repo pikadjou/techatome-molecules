@@ -2,26 +2,19 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
-import { InputBase } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
+import { InputBase } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
 
 @Component({
-  selector: 'cam-inputs',
+  selector: 'ta-inputs',
   templateUrl: './inputs.component.html',
   styleUrls: ['./inputs.component.scss'],
 })

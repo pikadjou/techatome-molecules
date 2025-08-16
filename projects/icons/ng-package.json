@@ -9,5 +9,5 @@
   "assets": [
     { "input": "src/lib/styles", "glob": "assets/fonts/**/*", "output": "." }
   ],
-  "allowedNonPeerDependencies": ["@camelot"]
+  "allowedNonPeerDependencies": ["@ta"]
 }

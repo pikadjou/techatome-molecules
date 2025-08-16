@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes, ColorType } from '@camelot/styles';
+import { CamSizes, ColorType } from '@ta/styles';
 
 @Component({
-  selector: 'cam-bullet',
+  selector: 'ta-bullet',
   templateUrl: './bullet.component.html',
   styleUrls: ['./bullet.component.scss'],
 })

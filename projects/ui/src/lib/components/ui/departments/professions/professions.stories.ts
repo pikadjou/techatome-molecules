@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { DepartmentProfessionsComponent } from './professions.component';
 
@@ -13,7 +12,7 @@ export default {
       imports: [CamDirectivePipeModule],
     }),
   ],
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   args: {
     professions: ['Eleveur de moules', 'Conducteur de pouce-pouce'],
   },

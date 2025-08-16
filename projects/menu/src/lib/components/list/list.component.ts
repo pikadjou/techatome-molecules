@@ -4,7 +4,7 @@ import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
 
 @Component({
-  selector: 'cam-list',
+  selector: 'ta-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })

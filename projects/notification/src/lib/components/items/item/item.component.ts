@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { NotificationDto } from '../../../services/dto/notification';
 
 @Component({
-  selector: 'cam-notification-item',
+  selector: 'ta-notification-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
 })

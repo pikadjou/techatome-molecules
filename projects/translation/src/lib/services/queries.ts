@@ -1,4 +1,4 @@
-import { Apollo_gql, GraphQueryPayload } from '@camelot/server';
+import { Apollo_gql, GraphQueryPayload } from '@ta/server';
 
 import { featureProps } from './dto/feature';
 import { translationProps } from './dto/translation';

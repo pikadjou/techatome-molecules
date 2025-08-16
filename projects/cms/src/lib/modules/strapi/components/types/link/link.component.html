@@ -1,11 +1,9 @@
 <ng-container *ngFor="let entity of this.link.children">
-  <cam-link (action)="this.goTo()">
+  <ta-link (action)="this.goTo()">
     <ng-container [ngSwitch]="entity.type">
       <ng-container *ngSwitchCase="'text'">
-        <cam-rich-paragraph-text
-          [text]="$any(entity)"
-        ></cam-rich-paragraph-text>
+        <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
       </ng-container>
     </ng-container>
-  </cam-link>
+  </ta-link>
 </ng-container>

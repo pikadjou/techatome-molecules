@@ -1,8 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ButtonComponent, UserLogoComponent } from '../public-api';
 import { UiProfileDisplayComponent } from './ui-profile-display.component';
@@ -24,7 +23,7 @@ export default {
     return {
       props,
       template: `
-        <cam-ui-profile-display [label]="label" [userLogo]="userLogo" [ctas]="ctas" [sideIcon]="sideIcon">
+        <ta-ui-profile-display [label]="label" [userLogo]="userLogo" [ctas]="ctas" [sideIcon]="sideIcon">
 
         <div class="px-big">
             <div style="display: flex; justify-content: center">a.sophielemmens@reno.enegy</div>
@@ -33,7 +32,7 @@ export default {
             <div style="display: flex; justify-content: center">1000 Bruxelles</div>
         </div>
 
-        </cam-ui-profile-display>
+        </ta-ui-profile-display>
       `,
     };
   },

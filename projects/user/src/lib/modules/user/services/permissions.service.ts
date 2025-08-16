@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { Logger } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
-
-import { Logger } from '@camelot/server';
-import { isNonNullable } from '@camelot/utils';
 
 import { Permissions } from './permissions';
 

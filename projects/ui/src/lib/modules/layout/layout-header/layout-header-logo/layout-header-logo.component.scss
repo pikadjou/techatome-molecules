@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .icons {
   user-select: none;
@@ -14,7 +14,7 @@
   .title {
     text-align: center;
 
-    cam-logo {
+    ta-logo {
       display: block;
       width: 60px;
       height: auto;
@@ -31,7 +31,7 @@
   }
 }
 
-cam-font-icon {
+ta-font-icon {
   padding: get-var(space, xs);
   cursor: pointer;
   display: block;

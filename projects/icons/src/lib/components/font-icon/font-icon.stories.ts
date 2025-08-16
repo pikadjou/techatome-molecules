@@ -8,12 +8,12 @@ export default {
   title: 'ICONS/font icon',
   component: FontIconComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-font-icon [name]="name" [type]="type"></cam-font-icon>
+        <ta-font-icon [name]="name" [type]="type"></ta-font-icon>
       `,
     };
   },

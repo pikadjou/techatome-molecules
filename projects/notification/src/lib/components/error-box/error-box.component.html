@@ -1,24 +1,24 @@
-<cam-layout-modal>
+<ta-layout-modal>
   <div class="flex-column">
     @for (entity of this.errorList(); track entity; let i = $index) {
-      <cam-title [level]="3">{{ entity.error.name }}</cam-title>
+      <ta-title [level]="3">{{ entity.error.name }}</ta-title>
       <div class="row">
         <div class="col-6">
           @for (message of entity.errorsMessage; track message) {
-            <cam-text>{{ message.message }}</cam-text>
+            <ta-text>{{ message.message }}</ta-text>
           }
         </div>
         <div class="col-6">
-          <cam-text size="sm">{{ entity.query }}</cam-text>
-          <cam-text size="sm">{{ entity.variables | json }}</cam-text>
+          <ta-text size="sm">{{ entity.query }}</ta-text>
+          <ta-text size="sm">{{ entity.variables | json }}</ta-text>
         </div>
       </div>
       <div class="extra">
-        <cam-text size="sm" [isBold]="true"> {{ entity.error.message }}</cam-text>
-        <cam-expandable-text size="sm" [height]="20">{{ entity.error.stack }}</cam-expandable-text>
+        <ta-text size="sm" [isBold]="true"> {{ entity.error.message }}</ta-text>
+        <ta-expandable-text size="sm" [height]="20">{{ entity.error.stack }}</ta-expandable-text>
       </div>
-      <cam-button class="ml-a" (action)="this.copyContent(entity)">copy</cam-button>
+      <ta-button class="ml-a" (action)="this.copyContent(entity)">copy</ta-button>
       <div class="sep"></div>
     }
   </div>
-</cam-layout-modal>
+</ta-layout-modal>

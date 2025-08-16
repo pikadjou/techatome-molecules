@@ -12,12 +12,12 @@ export default {
       imports: [CamCalendarModule],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-calendar-by-day [eventTemplate]="step1Template" [viewDate]="viewDate" [events]="events"></cam-calendar-by-day>
+        <ta-calendar-by-day [eventTemplate]="step1Template" [viewDate]="viewDate" [events]="events"></ta-calendar-by-day>
 
         <ng-template #step1Template let-weekEvent="weekEvent">
           <div>{{ weekEvent.event.title }}</div>

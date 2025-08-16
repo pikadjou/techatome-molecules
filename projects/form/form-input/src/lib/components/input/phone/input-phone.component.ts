@@ -1,12 +1,12 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 
-import { InputPhone } from '@camelot/form-model';
-import { CamAbstractInputComponent } from '../../abstract.component';
-
+import { InputPhone } from '@ta/form-model';
 import intlTelInput from 'intl-tel-input';
 
+import { CamAbstractInputComponent } from '../../abstract.component';
+
 @Component({
-  selector: 'cam-input-phone',
+  selector: 'ta-input-phone',
   templateUrl: './input-phone.component.html',
   styleUrls: ['./input-phone.component.scss'],
 })
@@ -20,8 +20,7 @@ export class InputPhoneComponent extends CamAbstractInputComponent<InputPhone> {
     super.ngOnInit();
     const link = this.renderer.createElement('link');
     link.rel = 'stylesheet';
-    link.href =
-      'https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.min.css';
+    link.href = 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.min.css';
     this.renderer.appendChild(document.head, link);
   }
   override ngAfterViewInit() {

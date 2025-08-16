@@ -1,11 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import {
-  getFontIcon,
-  getIcon,
-  hasFontIcon,
-  hasIconImage,
-} from '../../helpers/icon-manager';
+import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { MenuIcon } from '../../models/menu/item/icon';
@@ -15,7 +10,7 @@ import { Menu } from '../../models/menu/menu';
  ** @deprecated
  */
 @Component({
-  selector: 'cam-toggle-navigation',
+  selector: 'ta-toggle-navigation',
   templateUrl: './toggle-navigation.component.html',
   styleUrls: ['./toggle-navigation.component.scss'],
 })
@@ -37,15 +32,11 @@ export class ToggleNavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (
-      this.menu.elements.find(
-        (element) => element.options?.notificationBadge?.label
-      )
-    ) {
+    if (this.menu.elements.find(element => element.options?.notificationBadge?.label)) {
       this.notifEnabled = true;
     }
 
-    const activeItem = this.menu.elements.find((item) => item.defaultOpen);
+    const activeItem = this.menu.elements.find(item => item.defaultOpen);
     if (activeItem) {
       this.callback(activeItem);
     }

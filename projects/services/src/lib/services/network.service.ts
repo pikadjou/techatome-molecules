@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { CamDeviceNetworkService } from '@camelot/capacitor';
-import {
-  CamNotificationService,
-  ENotificationCode,
-} from '@camelot/notification';
+import { CamDeviceNetworkService } from '@ta/capacitor';
+import { CamNotificationService, ENotificationCode } from '@ta/notification';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +11,7 @@ export class NetworkService {
     private _notificationService: CamNotificationService,
     private _deviceNetworkService: CamDeviceNetworkService
   ) {
-    this._deviceNetworkService.isConnected$.subscribe((isConnected) =>
-      this._displayNotification(isConnected)
-    );
+    this._deviceNetworkService.isConnected$.subscribe(isConnected => this._displayNotification(isConnected));
   }
 
   private _displayNotification(isConnected: boolean): void {

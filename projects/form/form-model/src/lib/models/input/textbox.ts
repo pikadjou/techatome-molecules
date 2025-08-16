@@ -1,4 +1,4 @@
-import { CamIconType } from '@camelot/icons';
+import { CamIconType } from '@ta/icons';
 
 import { IInputBase, InputBase } from './base';
 

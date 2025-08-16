@@ -1,33 +1,33 @@
 @let signature = (this.mySignature$() | async) ?? null;
 <div class="message-box-container">
   <div class="toggle-container d-flex">
-    <cam-font-icon
+    <ta-font-icon
       [name]="this.collapsed ? 'arrow-big-top' : 'arrow-big-bottom'"
       class="collapsed-icon"
       (click)="this.toogleCollapsed()"
-    ></cam-font-icon>
+    ></ta-font-icon>
   </div>
 
   <div class="flex-start g-space-sm" [hidden]="this.collapsed">
     <div class="control-container">
-      <cam-menu-navigation
+      <ta-menu-navigation
         [menu]="this.menu"
         [manuallyChanged$]="this.activateMenuItem$"
         container="tags"
         [options]="{
           spaceElement: 'xs',
         }"
-      ></cam-menu-navigation>
+      ></ta-menu-navigation>
     </div>
     <div class="message-container full-width" [class.intern]="this.activeTab === this.CommunicationType.Intern">
-      <cam-message-box-input
+      <ta-message-box-input
         [activeTab]="this.activeTab"
         [conversationParticipants]="this.conversationParticipants"
         [replyTo]="this.replyTo"
         (correspondents)="this.updateCorrespondents($event)"
-      ></cam-message-box-input>
+      ></ta-message-box-input>
 
-      <cam-cms-editor-input
+      <ta-cms-editor-input
         *ngIf="this.users().length > 0"
         [setNewValue$]="this.selectedTemplateVariantBodyChanged$"
         [requestSave$]="this.requestMessage$.asObservable()"
@@ -36,89 +36,89 @@
         [users]="this.users()"
         (changed)="this.messageContent.next($event)"
         (saved)="this.send($event, signature)"
-      ></cam-cms-editor-input>
+      ></ta-cms-editor-input>
 
       @if (this.replyTo) {
         <div class="space-between">
           @if (this.replyTo.isForward) {
-            <cam-title [level]="5">
+            <ta-title [level]="5">
               {{ 'communication.message.forward-to' | translate }}
-            </cam-title>
+            </ta-title>
           } @else {
-            <cam-title [level]="5">
+            <ta-title [level]="5">
               {{ 'communication.message.replying-to' | translate }}
-            </cam-title>
+            </ta-title>
           }
-          <cam-font-icon name="close" type="sm" (click)="this.replyTo = null"></cam-font-icon>
+          <ta-font-icon name="close" type="sm" (click)="this.replyTo = null"></ta-font-icon>
         </div>
 
-        <cam-expandable-text>
-          <cam-response-to-communication
+        <ta-expandable-text>
+          <ta-response-to-communication
             [responseToCommunicationId]="this.replyTo.communication.id"
             [taskId]="this.taskId"
-          ></cam-response-to-communication>
-        </cam-expandable-text>
+          ></ta-response-to-communication>
+        </ta-expandable-text>
       }
 
       @if (this.withSignature && signature && signature.blocks) {
-        <cam-loader [isLoading]="this.requestState.isLoading()">
-          <cam-error [code]="this.requestState.getErrorStatus()">
+        <ta-loader [isLoading]="this.requestState.isLoading()">
+          <ta-error [code]="this.requestState.getErrorStatus()">
             <div class="space-between">
-              <cam-title [level]="5">
+              <ta-title [level]="5">
                 {{ 'communication.message.my-signature' | translate }}
-              </cam-title>
-              <cam-font-icon name="close" type="sm" (click)="this.withSignature = !this.withSignature"></cam-font-icon>
+              </ta-title>
+              <ta-font-icon name="close" type="sm" (click)="this.withSignature = !this.withSignature"></ta-font-icon>
             </div>
 
-            <cam-expandable-text [height]="80">
-              <cam-cms-editor-blocks [blocks]="signature.blocks"></cam-cms-editor-blocks>
-            </cam-expandable-text>
-          </cam-error>
-        </cam-loader>
+            <ta-expandable-text [height]="80">
+              <ta-cms-editor-blocks [blocks]="signature.blocks"></ta-cms-editor-blocks>
+            </ta-expandable-text>
+          </ta-error>
+        </ta-loader>
       }
 
       <div class="pj c-pointer">
-        <cam-communication-conversation-attachments
+        <ta-communication-conversation-attachments
           (attachments)="this.updateAttachments($event)"
           [preSetAttachments]="this.selectedTemplateVariant?.documentIds ?? []"
           [documentsIds]="this.documentsIds()"
-        ></cam-communication-conversation-attachments>
+        ></ta-communication-conversation-attachments>
       </div>
       <div class="space-between">
         <div class="extra-container flex-start g-space-md">
-          <cam-button-tool
+          <ta-button-tool
             (action)="this.toggleExtra('choiceTemplate')"
             icon="user-guide"
             [size]="'sm'"
-          ></cam-button-tool>
+          ></ta-button-tool>
           @if (signature && signature.blocks) {
-            <cam-button-tool
+            <ta-button-tool
               (action)="this.withSignature = !this.withSignature"
               icon="home"
               [size]="'sm'"
-            ></cam-button-tool>
+            ></ta-button-tool>
           }
-          <cam-conversations-ai-tools
+          <ta-conversations-ai-tools
             [taskId]="this.taskId"
             [message]="this.messageContent | async"
             [responseToCommunicationId]="this.replyTo?.communication?.id"
             (generatedMessage)="this.selectedTemplateVariantBodyChanged$.next($event)"
             (changedType)="this.activateMenuItem$.next($event)"
-          ></cam-conversations-ai-tools>
+          ></ta-conversations-ai-tools>
         </div>
         <div class="align-end">
           <div class="flex-start g-space-sm align-center">
             <div *ngIf="this.activeTab === this.CommunicationType.Intern">
-              <cam-text size="sm">
+              <ta-text size="sm">
                 {{ 'communication.message.internal' | translate }}
-              </cam-text>
+              </ta-text>
             </div>
             <div *ngIf="this.activeTab !== this.CommunicationType.Intern && this.statusTemplate">
               <ng-template [ngTemplateOutlet]="this.statusTemplate"></ng-template>
             </div>
-            <cam-button (action)="this.requestMessage$.next()" size="small">
+            <ta-button (action)="this.requestMessage$.next()" size="small">
               {{ 'communication.message.cta' | translate }}
-            </cam-button>
+            </ta-button>
           </div>
         </div>
       </div>
@@ -127,9 +127,9 @@
 </div>
 
 <ng-container *ngIf="this.extraOpen['choiceTemplate']">
-  <cam-communication-template-choice
+  <ta-communication-template-choice
     [type]="this.activeTab"
     (selected)="this.selectTemplateVariant($event)"
     (closed)="this.toggleExtra('choiceTemplate')"
-  ></cam-communication-template-choice>
+  ></ta-communication-template-choice>
 </ng-container>

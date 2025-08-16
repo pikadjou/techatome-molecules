@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
-import { CamFilesBasicModule } from '@camelot/files-basic';
-import { CamFilesExtendedModule } from '@camelot/files-extended';
-import { CamFormModule } from '@camelot/form-basic';
-import { CamFormInputsModule } from '@camelot/form-input';
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule } from '@camelot/menu';
-import { TranslatePipe } from '@camelot/translation';
-import { CamCardModule, CamContainerModule, CamLayoutModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule, SafePipe } from '@camelot/utils';
-import { CamWysiswygModule } from '@camelot/wysiswyg';
+import { CamFilesBasicModule } from '@ta/files-basic';
+import { CamFilesExtendedModule } from '@ta/files-extended';
+import { CamFormModule } from '@ta/form-basic';
+import { CamFormInputsModule } from '@ta/form-input';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { CamCardModule, CamContainerModule, CamLayoutModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule, SafePipe } from '@ta/utils';
+import { CamWysiswygModule } from '@ta/wysiswyg';
 
 import { CamCoreModule } from '../../core.module';
 import { CamGridModule } from '../grid/grid.module';

@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 export interface ExpansionPanelInput {
   title: TemplateRef<any>;
@@ -8,7 +8,7 @@ export interface ExpansionPanelInput {
   context?: object;
 }
 @Component({
-  selector: 'cam-expansion-panel',
+  selector: 'ta-expansion-panel',
   templateUrl: './expansion-panel.component.html',
   styleUrls: ['./expansion-panel.component.scss'],
 })

@@ -5,8 +5,8 @@ import {
   graphQlPaginationFields,
   graphQlTake,
   keyValueProps,
-} from '@camelot/server';
-import { isNonNullable } from '@camelot/utils';
+} from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 
 import { notificationProps } from './dto/notification';
 
@@ -16,16 +16,12 @@ export type NotificationFilter = {
   take?: number | null;
 } | null;
 
-export function GET_NOTIFICATIONS(
-  filters: NotificationFilter
-): GraphQueryPayload {
+export function GET_NOTIFICATIONS(filters: NotificationFilter): GraphQueryPayload {
   const where = computeFilters(filters);
   return {
     query: Apollo_gql`
     query Notifications {
-        notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(
-      filters?.take
-    )}) {
+        notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(filters?.take)}) {
             items {
               ${notificationProps.get('id')}
               ${notificationProps.get('date')}
@@ -51,16 +47,12 @@ export function GET_NOTIFICATIONS(
   };
 }
 
-export function GET_NOTIFICATIONS_COUNT(
-  filters: NotificationFilter
-): GraphQueryPayload {
+export function GET_NOTIFICATIONS_COUNT(filters: NotificationFilter): GraphQueryPayload {
   const where = computeFilters(filters);
   return {
     query: Apollo_gql`
       query Notifications {
-          notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(
-      filters?.take
-    )}) {
+          notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(filters?.take)}) {
               ${graphQlPaginationFields()}
           }
       }

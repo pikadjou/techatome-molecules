@@ -1,20 +1,15 @@
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
-import {
-  getFontIcon,
-  getIcon,
-  hasFontIcon,
-  hasIconImage,
-} from '../../helpers/icon-manager';
+import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
 
 @Component({
-  selector: 'cam-context-menu',
+  selector: 'ta-context-menu',
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss'],
 })

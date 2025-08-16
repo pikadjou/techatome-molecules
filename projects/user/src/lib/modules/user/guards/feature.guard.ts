@@ -3,9 +3,8 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
 import { map } from 'rxjs/operators';
 
+import { CamRoutes } from '@ta/menu';
 import { Observable } from 'rxjs';
-
-import { CamRoutes } from '@camelot/menu';
 
 import { CamPermissionsService, Domain, Level, PermissionFeature } from '../services/permissions.service';
 

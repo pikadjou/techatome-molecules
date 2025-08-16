@@ -1,6 +1,6 @@
 <div class="align-center professions-container g-space-xs">
   <span *ngFor="let profession of this.visibleProfessions">
-    <cam-badge [value]="profession"></cam-badge>
+    <ta-badge [value]="profession"></ta-badge>
   </span>
   @if (this.maxVisible && this.professions.length > this.maxVisible) {
     <span class="more-label"> +{{ this.professions.length - maxVisible }} </span>

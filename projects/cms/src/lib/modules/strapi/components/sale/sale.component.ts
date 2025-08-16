@@ -1,23 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-  Optional,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Optional, Output } from '@angular/core';
 
+import { InputCheckBox } from '@ta/form-model';
+import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
+import { CamBaseComponent } from '@ta/utils';
 import { of } from 'rxjs';
-
-import { InputCheckBox } from '@camelot/form-model';
-import { TENANT_CONFIG_TOKEN, TenantConfig } from '@camelot/server';
-import { CamBaseComponent } from '@camelot/utils';
 
 import { CamSaleService } from '../../services/sale.service';
 
 @Component({
-  selector: 'cam-sale',
+  selector: 'ta-sale',
   templateUrl: './sale.component.html',
   styleUrls: ['./sale.component.scss'],
 })
@@ -33,9 +25,7 @@ export class SaleComponent extends CamBaseComponent implements OnInit {
     if (!this.tenantConfig.tenantId) {
       return of();
     }
-    return this.saleService.saleContents.get$(
-      this.tenantConfig.tenantId?.toString()
-    );
+    return this.saleService.saleContents.get$(this.tenantConfig.tenantId?.toString());
   }
   constructor(
     public saleService: CamSaleService,
@@ -46,7 +36,7 @@ export class SaleComponent extends CamBaseComponent implements OnInit {
     this.checkbox.createFormControl();
     this._registerSubscription(
       this.checkbox.changeValue$.subscribe({
-        next: (value) => this.acceptation.emit(value),
+        next: value => this.acceptation.emit(value),
       })
     );
   }

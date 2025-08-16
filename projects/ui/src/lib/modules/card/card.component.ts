@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'cam-card',
+  selector: 'ta-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })

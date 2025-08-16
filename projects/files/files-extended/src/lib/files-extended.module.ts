@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamFilesBasicModule } from '@camelot/files-basic';
-import { CamFormModule } from '@camelot/form-basic';
-import { CamFormInputsModule } from '@camelot/form-input';
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule } from '@camelot/menu';
-import { CamEnumerationService } from '@camelot/services';
-import { CamCardModule, CamContainerModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamFilesBasicModule } from '@ta/files-basic';
+import { CamFormModule } from '@ta/form-basic';
+import { CamFormInputsModule } from '@ta/form-input';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule } from '@ta/menu';
+import { CamEnumerationService } from '@ta/services';
+import { CamCardModule, CamContainerModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { FilesDisplayComponent } from './components/display/files-display.component';
 import { UploadComponent } from './components/upload/files-upload.component';

@@ -1,21 +1,10 @@
 <div class="translation-container">
   <ng-container *ngIf="this.input.label">
-    <cam-title [level]="3" [isBold]="true">{{
-      this.input.label | translate
-    }}</cam-title>
+    <ta-title [level]="3" [isBold]="true">{{ this.input.label | translate }}</ta-title>
   </ng-container>
   <div class="flex-row align-center g-space-md">
-    <cam-toggle-navigation
-      *ngIf="this.cultureMenu"
-      [menu]="this.cultureMenu"
-      container="tab"
-    ></cam-toggle-navigation>
-    <cam-button
-      size="small"
-      [matMenuTriggerFor]="menu"
-      [stopPropagationActivation]="false"
-      >+</cam-button
-    >
+    <ta-toggle-navigation *ngIf="this.cultureMenu" [menu]="this.cultureMenu" container="tab"></ta-toggle-navigation>
+    <ta-button size="small" [matMenuTriggerFor]="menu" [stopPropagationActivation]="false">+</ta-button>
   </div>
 
   <div class="pt-space-md">
@@ -24,7 +13,7 @@
         <ng-container
           [ngTemplateOutlet]="this.inputsTemplate"
           [ngTemplateOutletContext]="{
-            input: input
+            input: input,
           }"
         >
         </ng-container>
@@ -37,16 +26,12 @@
   <div *ngFor="let culture of this.cultureList">
     <div class="flex-row g-space-sm p-space-sm">
       <ng-container *ngIf="this.hasKey(culture.name)">
-        <cam-font-icon name="check-line" class="checked"></cam-font-icon>
-        <cam-link (action)="this.remove(culture.name)">{{
-          culture.name
-        }}</cam-link>
+        <ta-font-icon name="check-line" class="checked"></ta-font-icon>
+        <ta-link (action)="this.remove(culture.name)">{{ culture.name }}</ta-link>
       </ng-container>
       <ng-container *ngIf="!this.hasKey(culture.name)">
-        <cam-font-icon name="check-line"> </cam-font-icon>
-        <cam-link (action)="this.add(culture.name)">{{
-          culture.name
-        }}</cam-link>
+        <ta-font-icon name="check-line"> </ta-font-icon>
+        <ta-link (action)="this.add(culture.name)">{{ culture.name }}</ta-link>
       </ng-container>
     </div>
   </div>

@@ -1,6 +1,5 @@
 import { Meta, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
+import { CamIconsModule } from '@ta/icons';
 
 import { TextToClipboardComponent } from './text-to-clipboard.component';
 
@@ -15,12 +14,12 @@ export default {
     }),
   ],
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-text-to-clipboard [value]="value"></cam-text-to-clipboard>
+        <ta-text-to-clipboard [value]="value"></ta-text-to-clipboard>
       `,
     };
   },

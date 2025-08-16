@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/form-basic",
+  "name": "@ta/form-basic",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/form-basic",
+    "build": "ng build @ta/form-basic",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
@@ -12,11 +12,11 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@camelot/form-input": "^3.16.0-beta.4",
-    "@camelot/form-model": "^3.16.0-beta.4",
-    "@camelot/icons": "^3.16.0-beta.4",
-    "@camelot/styles": "^3.16.0-beta.4",
-    "@camelot/translation": "^3.16.0-beta.4",
+    "@ta/form-input": "^3.16.0-beta.4",
+    "@ta/form-model": "^3.16.0-beta.4",
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/translation": "^3.16.0-beta.4",
     "fast-deep-equal": "^3.1.3",
     "tslib": "^2.3.0"
   },

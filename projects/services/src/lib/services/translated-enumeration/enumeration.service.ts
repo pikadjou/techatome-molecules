@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { filter, map, tap } from 'rxjs/operators';
 
+import { CamBaseService, MappingApiType, Request } from '@ta/server';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { CamBaseService, MappingApiType, Request } from '@camelot/server';
 
 import { TranslatedEnumeration } from '../common/dto/translated-enumeration';
 import { sortByTranslatedValue } from './translated-enumeration-helpers';
@@ -39,9 +38,7 @@ export class CamEnumerationService extends CamBaseService {
   public getAbandonReasons$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
   public wontDoReasons$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
   public incidentTypes$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
-  public workerJustifications$ = new BehaviorSubject<TranslatedEnumeration[]>(
-    []
-  );
+  public workerJustifications$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
 
   private _getFileTypes$ = new BehaviorSubject<{
     [index: string]: TranslatedEnumeration[];
@@ -53,12 +50,10 @@ export class CamEnumerationService extends CamBaseService {
 
   public fetchWontDoReasons$(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(
-        new Request({ type: 'GetWontDoReasons', content: {}, cacheTime: 60 })
-      )
+      .request<TranslatedEnumeration[]>(new Request({ type: 'GetWontDoReasons', content: {}, cacheTime: 60 }))
       .pipe(
-        filter((data) => !!data),
-        tap((data) => {
+        filter(data => !!data),
+        tap(data => {
           this.wontDoReasons$.next(data);
         })
       );
@@ -74,8 +69,8 @@ export class CamEnumerationService extends CamBaseService {
         })
       )
       .pipe(
-        filter((data) => !!data),
-        tap((data) => {
+        filter(data => !!data),
+        tap(data => {
           this.workerJustifications$.next(data);
         })
       );
@@ -83,49 +78,41 @@ export class CamEnumerationService extends CamBaseService {
 
   public fetchIncidentTypes$(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(
-        new Request({ type: 'GetIncidentTypes', content: {}, cacheTime: 60 })
-      )
+      .request<TranslatedEnumeration[]>(new Request({ type: 'GetIncidentTypes', content: {}, cacheTime: 60 }))
       .pipe(
-        filter((data) => !!data),
-        tap((data) => {
+        filter(data => !!data),
+        tap(data => {
           this.incidentTypes$.next(data);
         })
       );
   }
   public fetchAbandonReasons(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(
-        new Request({ type: 'GetAbandonReasons', cacheTime: -1 })
-      )
+      .request<TranslatedEnumeration[]>(new Request({ type: 'GetAbandonReasons', cacheTime: -1 }))
       .pipe(
-        filter((myData) => !!myData),
-        map((reasons) => sortByTranslatedValue(reasons)),
-        tap((reasons) => this.getAbandonReasons$.next(reasons))
+        filter(myData => !!myData),
+        map(reasons => sortByTranslatedValue(reasons)),
+        tap(reasons => this.getAbandonReasons$.next(reasons))
       );
   }
 
   public getFileTypes = (id: number) => (fileTypeId: number) => {
-    return this._getFileTypes$
-      .getValue()
-      [id].find((document) => document.id === fileTypeId);
+    return this._getFileTypes$.getValue()[id].find(document => document.id === fileTypeId);
   };
 
   public getFileTypes$ = (id: number): Observable<TranslatedEnumeration[]> =>
     this._getFileTypes$.pipe(
-      map((data) => data[id]),
-      filter((myData) => !!myData),
-      map((fileTypes) => sortByTranslatedValue(fileTypes))
+      map(data => data[id]),
+      filter(myData => !!myData),
+      map(fileTypes => sortByTranslatedValue(fileTypes))
     );
 
   public fetchFileTypes(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(
-        new Request({ type: 'GetFileTypes', cacheTime: -1 })
-      )
+      .request<TranslatedEnumeration[]>(new Request({ type: 'GetFileTypes', cacheTime: -1 }))
       .pipe(
-        filter((myData) => !!myData),
-        map((fileTypes) => sortByTranslatedValue(fileTypes))
+        filter(myData => !!myData),
+        map(fileTypes => sortByTranslatedValue(fileTypes))
       );
   }
 }

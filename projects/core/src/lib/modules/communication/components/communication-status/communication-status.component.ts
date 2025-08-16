@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+
 import { CommunicationStatus } from '../../services/dto/communication';
 
 @Component({
-  selector: 'cam-communication-status',
+  selector: 'ta-communication-status',
   templateUrl: './communication-status.component.html',
   styleUrls: ['./communication-status.component.scss'],
 })
@@ -11,8 +12,6 @@ export class CommunicationStatusComponent {
   value!: CommunicationStatus;
 
   public getTranslate() {
-    return `communication.status.${CommunicationStatus[
-      this.value ?? CommunicationStatus.Unknown
-    ].toLocaleLowerCase()}`;
+    return `communication.status.${CommunicationStatus[this.value ?? CommunicationStatus.Unknown].toLocaleLowerCase()}`;
   }
 }

@@ -1,4 +1,4 @@
 {
   "entry": "./index.scss",
-  "dest": "./dist/camelot-index.scss"
+  "dest": "./dist/ta-index.scss"
 }

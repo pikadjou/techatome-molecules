@@ -11,14 +11,14 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { InputUploadValue } from '@camelot/form-model';
-import { CamDocumentsService } from '@camelot/services';
-import { CamAbstractComponent } from '@camelot/utils';
+import { InputUploadValue } from '@ta/form-model';
+import { CamDocumentsService } from '@ta/services';
+import { CamAbstractComponent } from '@ta/utils';
 
 import { AttachmentsModal, AttachmentsResult } from './modal/modal.component';
 
 @Component({
-  selector: 'cam-communication-attachments',
+  selector: 'ta-communication-attachments',
   templateUrl: './attachments.component.html',
   styleUrls: ['./attachments.component.scss'],
 })

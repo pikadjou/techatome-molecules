@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Validators } from '@angular/forms';
 
+import { InputChoices, InputPanel, InputTextBox } from '@ta/form-model';
+import { isNonNullable } from '@ta/utils';
 import { filter, map } from 'rxjs';
-
-import { InputChoices, InputPanel, InputTextBox } from '@camelot/form-model';
-import { isNonNullable } from '@camelot/utils';
 
 import { CamFunctionsService } from '../../functions.service';
 import { Function, FunctionCreationPayload, FunctionModifierPayload } from '../dto/function';

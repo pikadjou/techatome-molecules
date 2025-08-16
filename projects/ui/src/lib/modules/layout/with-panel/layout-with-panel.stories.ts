@@ -5,11 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 
-import {
-  LayoutContentComponent,
-  LayoutPanelComponent,
-  LayoutWithPanelComponent,
-} from '../public-api';
+import { LayoutContentComponent, LayoutPanelComponent, LayoutWithPanelComponent } from '../public-api';
 
 type StoryType = LayoutWithPanelComponent & { isOpen: boolean };
 
@@ -20,27 +16,22 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [LayoutPanelComponent, LayoutContentComponent],
-      imports: [
-        CommonModule,
-        BrowserAnimationsModule,
-        RouterTestingModule,
-        MatSidenavModule,
-      ],
+      imports: [CommonModule, BrowserAnimationsModule, RouterTestingModule, MatSidenavModule],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-      <cam-layout-with-panel [open]="isOpen">
-        <cam-layout-panel>
-          cam-layout-panel content
-        </cam-layout-panel>
-        <cam-layout-content>
+      <ta-layout-with-panel [open]="isOpen">
+        <ta-layout-panel>
+          ta-layout-panel content
+        </ta-layout-panel>
+        <ta-layout-content>
           general content
-        </cam-layout-content>
-      </cam-layout-with-panel>
+        </ta-layout-content>
+      </ta-layout-with-panel>
         
       `,
     };

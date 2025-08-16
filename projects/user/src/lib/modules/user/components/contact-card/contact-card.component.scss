@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .contact-name {
   @include fontSizeBody(md);
@@ -14,6 +14,6 @@
   gap: get-var(space, xl);
 }
 
-cam-font-icon {
+ta-font-icon {
   color: get-var(icon, brand, primary);
 }

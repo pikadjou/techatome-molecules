@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/files-basic",
+  "name": "@ta/files-basic",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/files-basic",
+    "build": "ng build @ta/files-basic",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
@@ -12,13 +12,13 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@camelot/form-model": "^3.16.0-beta.4",
-    "@camelot/icons": "^3.16.0-beta.4",
-    "@camelot/notification": "^3.16.0-beta.4",
-    "@camelot/server": "^3.16.0-beta.4",
-    "@camelot/styles": "^3.16.0-beta.4",
-    "@camelot/ui": "^3.16.0-beta.4",
-    "@camelot/utils": "^3.16.0-beta.4",
+    "@ta/form-model": "^3.16.0-beta.4",
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/notification": "^3.16.0-beta.4",
+    "@ta/server": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/ui": "^3.16.0-beta.4",
+    "@ta/utils": "^3.16.0-beta.4",
     "tslib": "^2.3.0",
     "tui-image-editor": "^3.7.2"
   },

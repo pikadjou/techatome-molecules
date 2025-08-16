@@ -6,7 +6,7 @@ import { isSameDay, isSameMonth, isSameYear } from 'date-fns';
 import { VisitEvent } from '../../types/visit-event';
 
 @Component({
-  selector: 'cam-calendar-by-month',
+  selector: 'ta-calendar-by-month',
   templateUrl: './calendar-by-month.component.html',
   styleUrls: ['./calendar-by-month.component.scss'],
 })

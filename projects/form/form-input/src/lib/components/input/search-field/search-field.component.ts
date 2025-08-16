@@ -1,20 +1,12 @@
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
-import { InputNumber, InputTextBox } from '@camelot/form-model';
-import { CamSizes } from '@camelot/styles';
+import { InputNumber, InputTextBox } from '@ta/form-model';
+import { CamSizes } from '@ta/styles';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-search-field',
+  selector: 'ta-search-field',
   templateUrl: './search-field.component.html',
   styleUrls: ['./search-field.component.scss'],
 })

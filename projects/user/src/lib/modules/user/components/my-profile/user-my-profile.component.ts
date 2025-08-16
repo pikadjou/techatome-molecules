@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamBaseComponent, fullName, sendMail } from '@camelot/utils';
+import { CamBaseComponent, fullName, sendMail } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
-  selector: 'cam-user-my-profile',
+  selector: 'ta-user-my-profile',
   templateUrl: './user-my-profile.component.html',
   styleUrls: ['./user-my-profile.component.scss'],
 })

@@ -1,16 +1,11 @@
-<cam-input-layout [input]="this.input">
-  <input
-    type="hidden"
-    #focusedElement
-    [formControl]="$any(this.input.formControl)"
-    [value]="this.input.value"
-  />
+<ta-input-layout [input]="this.input">
+  <input type="hidden" #focusedElement [formControl]="$any(this.input.formControl)" [value]="this.input.value" />
 
-  <cam-cms-editor-input
+  <ta-cms-editor-input
     class="form-control"
     [initValue]="this.input.value"
     (saved)="this.set($event)"
     [saveOnChange]="true"
   >
-  </cam-cms-editor-input>
-</cam-input-layout>
+  </ta-cms-editor-input>
+</ta-input-layout>

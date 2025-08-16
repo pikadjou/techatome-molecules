@@ -1,14 +1,13 @@
 import { Component, Input, inject, signal } from '@angular/core';
 
+import { CamBaseComponent } from '@ta/utils';
 import { Observable, map } from 'rxjs';
-
-import { CamBaseComponent } from '@camelot/utils';
 
 import { CamCommunicationsService } from '../../../../services/communications.service';
 import { Communication } from '../../../../services/dto/communication';
 
 @Component({
-  selector: 'cam-response-to-communication',
+  selector: 'ta-response-to-communication',
   templateUrl: './response-to-communication.component.html',
   styleUrls: ['./response-to-communication.component.scss'],
 })

@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { CamCardModule, CamContainerModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { CamCardModule, CamContainerModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { __file } from '../../../../../__mock__/files';
 import { FileCardComponent } from './card/file/file-card.component';
@@ -31,13 +30,13 @@ export default {
     }),
   ],
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-files-list [files]="files">
-        </cam-files-list>
+        <ta-files-list [files]="files">
+        </ta-files-list>
       `,
     };
   },

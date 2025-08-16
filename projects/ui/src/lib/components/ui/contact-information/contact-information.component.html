@@ -1,14 +1,11 @@
 <div *ngIf="this.value" class="header">
   <div class="icon">
     <ng-container *ngIf="this.localIcon">
-      <cam-local-icon
-        class="local-icon"
-        [type]="this.localIcon"
-      ></cam-local-icon>
+      <ta-local-icon class="local-icon" [type]="this.localIcon"></ta-local-icon>
     </ng-container>
 
     <ng-container *ngIf="this.icon">
-      <cam-font-icon [name]="this.icon" type="sm"></cam-font-icon>
+      <ta-font-icon [name]="this.icon" type="sm"></ta-font-icon>
     </ng-container>
   </div>
 

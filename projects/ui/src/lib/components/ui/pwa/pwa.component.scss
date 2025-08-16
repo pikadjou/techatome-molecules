@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .pwa-layout {
   position: fixed;
@@ -50,7 +50,7 @@
 }
 
 .link-container {
-  cam-font-icon {
+  ta-font-icon {
     color: get-var(surface, brand, primary);
   }
 }

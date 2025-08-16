@@ -1,60 +1,60 @@
-<cam-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.currentUser$ | async as currentUser">
-  <cam-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
-    <cam-empty [isEmpty]="!currentUser">
+<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.currentUser$ | async as currentUser">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <ta-empty [isEmpty]="!currentUser">
       <ng-container *ngIf="currentUser">
-        <cam-ui-profile-display
+        <ta-ui-profile-display
           [label]="this.getFullName(currentUser.firstName, currentUser.lastName)"
           [ctas]="this.canModify ? this.ctas : null"
           [userLogo]="this.getUserLogo(currentUser)"
         >
           <div class="pt-space-xxl">
             <div class="pt-space-xs align-center">
-              <cam-title class="m-a" [level]="3">
-                <cam-link (action)="this.mailTo(currentUser.userName)">{{ currentUser.userName }}</cam-link>
-              </cam-title>
+              <ta-title class="m-a" [level]="3">
+                <ta-link (action)="this.mailTo(currentUser.userName)">{{ currentUser.userName }}</ta-link>
+              </ta-title>
             </div>
             <div class="pt-space-xs align-center">
-              <cam-title class="m-a" [level]="3">
+              <ta-title class="m-a" [level]="3">
                 {{ currentUser.phoneNumber }}
-              </cam-title>
+              </ta-title>
             </div>
             <div *ngIf="currentUser.tenantInformations.length === 1" class="align-center">
-              <cam-title class="m-a" [level]="3">
+              <ta-title class="m-a" [level]="3">
                 {{ 'user.clientnumber' | translate }}
                 {{ currentUser.tenantInformations[0].customerId }}
-              </cam-title>
+              </ta-title>
             </div>
             <div *ngIf="currentUser.tenantInformations.length > 1">
               <div class="pt-space-xxl align-center">
-                <cam-title class="m-a" [level]="3">
+                <ta-title class="m-a" [level]="3">
                   {{ 'user.tenantlisttitle' | translate }}
-                </cam-title>
+                </ta-title>
               </div>
               <div class="list">
                 <div class="tenant-list">
-                  <cam-list-container>
+                  <ta-list-container>
                     <ng-container *ngFor="let tenantInformation of currentUser.tenantInformations">
-                      <cam-list-element [withSeparator]="false">
-                        <cam-list-title>
+                      <ta-list-element [withSeparator]="false">
+                        <ta-list-title>
                           <div>{{ tenantInformation.tenantName }}</div>
-                        </cam-list-title>
-                        <cam-list-extra-information>
+                        </ta-list-title>
+                        <ta-list-extra-information>
                           <div *ngIf="tenantInformation.customerId" class="align-center">
                             <div class="mr-space-sm">
                               {{ tenantInformation.customerId }}
                             </div>
-                            <!-- <cam-text-to-clipboard [value]="tenantInformation.customerId.toString()" ></cam-text-to-clipboard> -->
+                            <!-- <ta-text-to-clipboard [value]="tenantInformation.customerId.toString()" ></ta-text-to-clipboard> -->
                           </div>
-                        </cam-list-extra-information>
-                      </cam-list-element>
+                        </ta-list-extra-information>
+                      </ta-list-element>
                     </ng-container>
-                  </cam-list-container>
+                  </ta-list-container>
                 </div>
               </div>
             </div>
           </div>
-        </cam-ui-profile-display>
+        </ta-ui-profile-display>
       </ng-container>
-    </cam-empty>
-  </cam-error>
-</cam-loader>
+    </ta-empty>
+  </ta-error>
+</ta-loader>

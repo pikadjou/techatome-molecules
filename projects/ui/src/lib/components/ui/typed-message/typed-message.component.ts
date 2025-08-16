@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { MessageLevel } from '@camelot/utils';
+import { MessageLevel } from '@ta/utils';
 
 @Component({
-  selector: 'cam-typed-message',
+  selector: 'ta-typed-message',
   templateUrl: './typed-message.component.html',
   styleUrls: ['./typed-message.component.scss'],
 })

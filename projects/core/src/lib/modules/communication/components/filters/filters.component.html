@@ -1,22 +1,22 @@
 <div class="m-space-md">
   <div class="justify-end g-space-sm align-center">
     <div class="d-flex">
-      <cam-communication-participants-list
+      <ta-communication-participants-list
         [conversationParticipants]="this.conversationParticipants"
-      ></cam-communication-participants-list>
+      ></ta-communication-participants-list>
     </div>
-    <cam-font-icon name="filter" type="sm" (click)="this.open = !this.open"></cam-font-icon>
+    <ta-font-icon name="filter" type="sm" (click)="this.open = !this.open"></ta-font-icon>
   </div>
 
   <div class="flex-row g-space-md" *ngIf="this.open">
-    <cam-input-choices *ngIf="this.participantsInput" [input]="this.participantsInput"></cam-input-choices>
-    <cam-input-dropdown *ngIf="this.typeInput" [input]="this.typeInput"></cam-input-dropdown>
+    <ta-input-choices *ngIf="this.participantsInput" [input]="this.participantsInput"></ta-input-choices>
+    <ta-input-dropdown *ngIf="this.typeInput" [input]="this.typeInput"></ta-input-dropdown>
   </div>
 </div>
 
 <ng-template #participantTemplate let-item="item" [typedTemplate]="this.participantToken">
   <div class="flex-row align-center g-space-sm">
-    <cam-user-logo
+    <ta-user-logo
       [userInfo]="{
         profilePictureUrl: item.picture,
         naming: {
@@ -27,14 +27,14 @@
       }"
       size="md"
       defaultType="trigram"
-    ></cam-user-logo>
+    ></ta-user-logo>
     {{ item.firstName }} {{ item.lastName }}
   </div>
 </ng-template>
 
 <ng-template #typeTemplate let-item="item" [typedTemplate]="this.participantToken">
   <div class="flex-row align-center g-space-sm">
-    <cam-user-logo
+    <ta-user-logo
       [userInfo]="{
         profilePictureUrl: item.picture,
         naming: {
@@ -45,7 +45,7 @@
       }"
       size="md"
       defaultType="trigram"
-    ></cam-user-logo>
+    ></ta-user-logo>
     {{ item.firstName }} {{ item.lastName }}
   </div>
 </ng-template>

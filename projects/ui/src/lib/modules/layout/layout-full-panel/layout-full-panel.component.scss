@@ -1,13 +1,13 @@
-@import "camelot-export";
+@import 'ta-export';
 
-cam-layout-header {
+ta-layout-header {
   text-align: right;
 
-  cam-title {
+  ta-title {
     padding: get-var(space, md) 0 0 get-var(space, md);
   }
 
-  cam-font-icon {
+  ta-font-icon {
     cursor: pointer;
   }
 }

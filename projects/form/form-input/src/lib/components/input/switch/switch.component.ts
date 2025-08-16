@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 
-import { InputSwitch } from '@camelot/form-model';
+import { InputSwitch } from '@ta/form-model';
+
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-switch',
+  selector: 'ta-input-switch',
   templateUrl: './switch.component.html',
   styleUrls: ['./switch.component.scss'],
 })

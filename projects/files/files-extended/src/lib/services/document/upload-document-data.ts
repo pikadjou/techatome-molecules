@@ -1,6 +1,5 @@
+import { TranslatedEnumeration } from '@ta/services';
 import { Observable } from 'rxjs';
-
-import { TranslatedEnumeration } from '@camelot/services';
 
 export interface UploadDocumentData {
   description?: string;

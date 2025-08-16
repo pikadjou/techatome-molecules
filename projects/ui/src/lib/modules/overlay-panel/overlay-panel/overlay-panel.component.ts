@@ -12,13 +12,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 import { CamDefaultPanelComponent } from '../default-panel/default-panel.component';
 import { OverlayMenuConfig, OverlayService } from '../overlay.service';
 
 @Component({
-  selector: 'cam-overlay-panel',
+  selector: 'ta-overlay-panel',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './overlay-panel.component.html',

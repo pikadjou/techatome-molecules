@@ -1,10 +1,9 @@
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { CamIconsModule } from '@ta/icons';
+import { CamContainerModule } from '@ta/ui';
 import { Subject } from 'rxjs';
-
-import { CamIconsModule } from '@camelot/icons';
-import { CamContainerModule } from '@camelot/ui';
 
 import { FileEditComponent } from './files-edit.component';
 
@@ -19,13 +18,13 @@ export default {
       imports: [CamIconsModule, RouterTestingModule, CamContainerModule],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
       <div [style.width.px]="500" [style.height.px]="500">
-        <cam-files-edit [imagePath]="imagePath"></cam-files-edit>
+        <ta-files-edit [imagePath]="imagePath"></ta-files-edit>
       </div>
       `,
     };

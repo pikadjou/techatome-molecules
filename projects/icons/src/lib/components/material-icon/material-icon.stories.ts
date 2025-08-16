@@ -8,14 +8,14 @@ export default {
   title: 'ICONS/Material Icon',
   component: MaterialIconComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { icon, ...props } = args;
     return {
       props,
       template: `
-        <cam-material-icon>
+        <ta-material-icon>
           ${icon}
-        </cam-material-icon>
+        </ta-material-icon>
       `,
     };
   },

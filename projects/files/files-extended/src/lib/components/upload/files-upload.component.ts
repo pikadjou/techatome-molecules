@@ -2,14 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { FilePicker, PickedFile } from '@capawesome/capacitor-file-picker';
-
-import { ActionButtonData } from '@camelot/ui';
-import { FileStructure, pathToFile, pickImages } from '@camelot/utils';
+import { ActionButtonData } from '@ta/ui';
+import { FileStructure, pathToFile, pickImages } from '@ta/utils';
 
 export type Feature = 'take-pic' | 'upload-pic' | 'upload-file';
 
 @Component({
-  selector: 'cam-files-upload',
+  selector: 'ta-files-upload',
   templateUrl: './files-upload.component.html',
   styleUrls: ['./files-upload.component.scss'],
 })
@@ -33,7 +32,7 @@ export class UploadComponent {
       actionsAvailable.push({
         label: 'Take',
         icon: 'add_a_photo',
-        callback: (_) => this._takePic(),
+        callback: _ => this._takePic(),
       });
     }
 
@@ -41,7 +40,7 @@ export class UploadComponent {
       actionsAvailable.push({
         label: 'Upload',
         icon: 'insert_photo',
-        callback: (_) => this._uploadPic(),
+        callback: _ => this._uploadPic(),
       });
     }
 
@@ -49,7 +48,7 @@ export class UploadComponent {
       actionsAvailable.push({
         label: 'upload file',
         icon: 'upload_file',
-        callback: (_) => this._uploadFile(),
+        callback: _ => this._uploadFile(),
       });
     }
 

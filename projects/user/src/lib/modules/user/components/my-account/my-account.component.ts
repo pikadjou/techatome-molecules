@@ -1,26 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 
+import { Menu, MenuIcon, MenuPanel } from '@ta/menu';
+import { CamSizes } from '@ta/styles';
+import { UserLogoNaming } from '@ta/ui';
+import { CamBaseComponent } from '@ta/utils';
 import { Observable, map } from 'rxjs';
-
-import { Menu, MenuIcon, MenuPanel } from '@camelot/menu';
-import { CamSizes } from '@camelot/styles';
-import { UserLogoNaming } from '@camelot/ui';
-import { CamBaseComponent } from '@camelot/utils';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 import { CamUsersService } from '../../services/users.service';
 
 @Component({
-  selector: 'cam-my-account',
+  selector: 'ta-my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
 })
@@ -62,7 +53,7 @@ export class MyAccountComponent extends CamBaseComponent {
 
   get profile$() {
     return this.currentUser$.pipe(
-      map((data) => {
+      map(data => {
         return {
           title: {
             second: data?.firstName || data?.lastName,
@@ -81,7 +72,7 @@ export class MyAccountComponent extends CamBaseComponent {
     size?: CamSizes;
   } | null> {
     return this.currentUser$.pipe(
-      map((x) => {
+      map(x => {
         if (!x) {
           return null;
         }
@@ -102,10 +93,7 @@ export class MyAccountComponent extends CamBaseComponent {
   }
 
   ngAfterViewChecked() {
-    this.profileMenu = this.getProfileMenu(
-      this.languageTemplate,
-      this.infosTemplate
-    );
+    this.profileMenu = this.getProfileMenu(this.languageTemplate, this.infosTemplate);
     this.disconnectionMenu = this.getDisconnectionMenu();
   }
 
@@ -117,10 +105,7 @@ export class MyAccountComponent extends CamBaseComponent {
     this._authService.logout().then(() => location.reload());
   }
 
-  public getProfileMenu(
-    languageTemplate: TemplateRef<any>,
-    infosTemplate: TemplateRef<any>
-  ) {
+  public getProfileMenu(languageTemplate: TemplateRef<any>, infosTemplate: TemplateRef<any>) {
     const menu = [
       new MenuPanel({
         key: 'language',

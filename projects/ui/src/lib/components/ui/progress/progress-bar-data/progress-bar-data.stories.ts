@@ -1,9 +1,8 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { MaterialIconComponent } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { TitleComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { MaterialIconComponent } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { TitleComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
 import { ProgressBarDataComponent } from './progress-bar-data.component';

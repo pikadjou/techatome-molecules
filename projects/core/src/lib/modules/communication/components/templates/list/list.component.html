@@ -1,59 +1,53 @@
-<cam-loader
-  [isLoading]="this.requestState.isLoading()"
-  *ngLet="this.list$ | async as templates"
->
-  <cam-error
-    [message]="this.requestState.getErrorMessage()"
-    [code]="this.requestState.getErrorStatus()"
-  >
-    <cam-empty [isEmpty]="!templates || templates.length === 0">
+<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.list$ | async as templates">
+  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+    <ta-empty [isEmpty]="!templates || templates.length === 0">
       <ng-container *ngIf="templates && templates.length">
-        <cam-ag-grid
+        <ta-ag-grid
           [gridId]="this.id"
           [defaultDisplay]="'grid'"
           [data]="templates"
           [fieldsOverrides]="this.fieldsOverrides"
           [gridOptions]="{
-            domLayout: 'autoHeight'
+            domLayout: 'autoHeight',
           }"
-        ></cam-ag-grid>
+        ></ta-ag-grid>
       </ng-container>
 
       <!-- <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div *ngFor="let template of templates; track: this.trackById">
-          <cam-card (click)="this.goToTemplate(template.id)">
-            <cam-card-header>
-              <cam-card-tag class="space-between">
+          <ta-card (click)="this.goToTemplate(template.id)">
+            <ta-card-header>
+              <ta-card-tag class="space-between">
                 <div>
                   {{ template.code }}
                 </div>
                 <div>
-                  <cam-badge
+                  <ta-badge
                     [type]="template.isActive ? 'success' : 'danger'"
                     [value]="template.isActive ? 'actif' : 'inactif'"
-                  ></cam-badge>
+                  ></ta-badge>
                 </div>
-              </cam-card-tag>
-            </cam-card-header>
-            <cam-card-content>
+              </ta-card-tag>
+            </ta-card-header>
+            <ta-card-content>
               <div class="flex-column" *ngIf="template.variants[0]">
-                <cam-title [level]="3" [isBold]="true">
+                <ta-title [level]="3" [isBold]="true">
                   {{ template.variants[0].title }}
-                </cam-title>
-                <cam-text [innerHTML]="template.variants[0].body"></cam-text>
+                </ta-title>
+                <ta-text [innerHTML]="template.variants[0].body"></ta-text>
               </div>
-            </cam-card-content>
-            <cam-card-cta>
-              <cam-text size="xs">
+            </ta-card-content>
+            <ta-card-cta>
+              <ta-text size="xs">
                 <div class="flex-start g-space-xs">
                   {{ 'communication.template.choice.language.available' | translate }}
-                  <cam-culture [cultures]="template.availableCultures"></cam-culture>
+                  <ta-culture [cultures]="template.availableCultures"></ta-culture>
                 </div>
-              </cam-text>
-            </cam-card-cta>
-          </cam-card>
+              </ta-text>
+            </ta-card-cta>
+          </ta-card>
         </div>
       </div> -->
-    </cam-empty>
-  </cam-error>
-</cam-loader>
+    </ta-empty>
+  </ta-error>
+</ta-loader>

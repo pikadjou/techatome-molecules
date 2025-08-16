@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleSimpleRequest } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 import { Observable, catchError, filter, map, of, switchMap } from 'rxjs';
-
-import { CamBaseService, GraphEndpoint, HandleSimpleRequest } from '@camelot/server';
-import { isNonNullable } from '@camelot/utils';
 
 import { CamUsersService } from './users.service';
 import { Function, FunctionCreationPayload, FunctionModifierPayload, functionProps } from './users/dto/function';

@@ -8,12 +8,12 @@ export default {
   title: 'UI/Bullet',
   component: BulletComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-bullet [type]="type"></cam-bullet>
+        <ta-bullet [type]="type"></ta-bullet>
       `,
     };
   },
@@ -25,12 +25,12 @@ export default {
 export const Basic: StoryObj<StoryType> = {};
 
 export const Notification: StoryObj<StoryType> = {
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-bullet [type]="type">12</cam-bullet>
+        <ta-bullet [type]="type">12</ta-bullet>
       `,
     };
   },

@@ -1,6 +1,5 @@
+import { GraphMutationPayload } from '@ta/server';
 import { gql } from 'apollo-angular';
-
-import { GraphMutationPayload } from '@camelot/server';
 
 import { FunctionCreationPayload, FunctionModifierPayload, functionProps } from './dto/function';
 import { ModifyUserPayloadInput } from './dto/modifyUserPayloadInput';

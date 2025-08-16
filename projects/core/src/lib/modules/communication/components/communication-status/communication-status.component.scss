@@ -1,9 +1,7 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .communication-status {
-
-  cam-font-icon {
-    margin-left: get-var(space, xs) ;
+  ta-font-icon {
+    margin-left: get-var(space, xs);
   }
-
 }

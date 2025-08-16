@@ -2,29 +2,29 @@
   class="card flex-column"
   [ngClass]="{
     'card-shadow': this.shadow,
-    highlight: this.highlight,
+    'highlight': this.highlight,
     'full-height': this.fullHeight,
-    'no-card-border': this.noContent
+    'no-card-border': this.noContent,
   }"
   [class.hover]="this.hasHandler"
   (click)="this.clickTrigger()"
 >
-  <cam-new [visible]="this.isNew"></cam-new>
+  <ta-new [visible]="this.isNew"></ta-new>
   <div class="responsive-content">
     <div class="img-container">
       <div class="card-img-container">
-        <ng-content select="cam-card-image"></ng-content>
+        <ng-content select="ta-card-image"></ng-content>
       </div>
     </div>
     <div class="content-container flex-column flex-full">
       <div class="card-header-container">
-        <ng-content select="cam-card-header"></ng-content>
+        <ng-content select="ta-card-header"></ng-content>
       </div>
       <div class="card-content-container flex-full">
-        <ng-content select="cam-card-content" class="flex-full"></ng-content>
+        <ng-content select="ta-card-content" class="flex-full"></ng-content>
       </div>
       <div class="card-cta-container">
-        <ng-content select="cam-card-cta"></ng-content>
+        <ng-content select="ta-card-cta"></ng-content>
       </div>
     </div>
   </div>

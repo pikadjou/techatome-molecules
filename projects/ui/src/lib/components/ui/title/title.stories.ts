@@ -9,14 +9,14 @@ export default {
   title: 'UI/Title',
   component: TitleComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { titleText, ...props } = args;
     return {
       props,
       template: `
-        <cam-title [level]="level" [isTheme]="isTheme">
+        <ta-title [level]="level" [isTheme]="isTheme">
           ${titleText}
-        </cam-title>
+        </ta-title>
       `,
     };
   },

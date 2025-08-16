@@ -1,6 +1,6 @@
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
 
-import { CamBaseService, GraphEndpoint } from '@camelot/server';
+import { CamBaseService, GraphEndpoint } from '@ta/server';
 
 import { Tones } from './dto/tones';
 import { aiConversationSummary, aiMessageInConversationResponse, aiMessageReformulation } from './queries';

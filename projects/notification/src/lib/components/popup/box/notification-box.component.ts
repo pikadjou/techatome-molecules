@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 
 import { tap } from 'rxjs/operators';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 import { ENotificationCode } from '../../../enum';
 import { CamNotificationService } from '../../../services/notification.service';
 
 @Component({
-  selector: 'cam-notification-box',
+  selector: 'ta-notification-box',
   templateUrl: './notification-box.component.html',
   styleUrls: ['./notification-box.component.scss'],
 })
@@ -21,12 +21,12 @@ export class NotificationBoxComponent extends CamBaseComponent {
     this._registerSubscription(
       this._notificationService.newNotification$
         .pipe(
-          tap((notification) => {
+          tap(notification => {
             this.list.push(notification);
           }),
-          tap((notification) => {
+          tap(notification => {
             setTimeout(() => {
-              this.list = this.list.filter((item) => item !== notification);
+              this.list = this.list.filter(item => item !== notification);
             }, 3000);
           })
         )

@@ -1,4 +1,4 @@
-import { FileData } from '@camelot/utils';
+import { FileData } from '@ta/utils';
 
 import { Document } from '../files-extended/src/public-api';
 

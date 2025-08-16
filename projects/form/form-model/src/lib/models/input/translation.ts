@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 
-import { Culture } from '@camelot/utils';
+import { Culture } from '@ta/utils';
 
 import { IInputDynamic, InputDynamic } from './dynamic';
 

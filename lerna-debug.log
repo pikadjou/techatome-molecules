@@ -15,8 +15,8 @@
 4 error > 15 | <<<<<<< HEAD
 4 error      | ^^^^^^^
 4 error   16 |     "editorjs-color-picker": "^1.0.7",
-4 error   17 |     "@camelot/notification": "^3.14.0-beta.8",
-4 error   18 |     "@camelot/utils": "^3.14.0-beta.8",
+4 error   17 |     "@ta/notification": "^3.14.0-beta.8",
+4 error   18 |     "@ta/utils": "^3.14.0-beta.8",
 4 error
 4 error     at parseJson (C:\Merlin-software\Camelot\node_modules\nx\src\utils\json.js:25:15)
 4 error     at readJsonFile (C:\Merlin-software\Camelot\node_modules\nx\src\utils\fileutils.js:22:37)

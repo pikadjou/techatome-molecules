@@ -4,7 +4,7 @@ import { SwitchCasesSubTaskCreated } from '../../../../../services/dto/switch-ca
 import { SwitchCaseBaseComponent } from '../switch-case-base/switch-case-base.component';
 
 @Component({
-  selector: 'cam-switch-cases-sub-task-created',
+  selector: 'ta-switch-cases-sub-task-created',
   templateUrl: './switch-cases-sub-task-created.component.html',
   styleUrls: ['./switch-cases-sub-task-created.component.scss'],
 })

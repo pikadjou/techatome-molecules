@@ -1,13 +1,13 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { InputBase } from '@camelot/form-model';
+import { InputBase } from '@ta/form-model';
 
 import { FormLabelComponent } from '../label/label.component';
 import { InputErrorComponent } from './input-error/input-error.component';
 
 @Component({
-  selector: 'cam-input-layout',
+  selector: 'ta-input-layout',
   templateUrl: './input-layout.component.html',
   styleUrls: ['./input-layout.component.scss'],
   standalone: true,

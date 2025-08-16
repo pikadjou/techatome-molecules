@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 
 @Component({
-  selector: 'cam-login-card',
+  selector: 'ta-login-card',
   templateUrl: './login-card.component.html',
   styleUrls: ['./login-card.component.scss'],
 })

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'cam-tree-container',
+  selector: 'ta-tree-container',
   standalone: true,
   imports: [],
   templateUrl: './tree-container.component.html',

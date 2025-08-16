@@ -4,12 +4,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule, Menu } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { CamUiModule } from '@ta/ui';
 import { __classicMenu } from 'projects/menu/src/lib/components/menu/__mock__/menu';
-
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule, Menu } from '@camelot/menu';
-import { TranslatePipe } from '@camelot/translation';
-import { CamUiModule } from '@camelot/ui';
 
 import {
   LayoutHeaderComponent,
@@ -48,12 +47,12 @@ export default {
     return {
       props,
       template: `
-        <cam-layout-with-bottom-nav>
+        <ta-layout-with-bottom-nav>
           Dynamic content
-          <cam-layout-nav>
-              <cam-menu *ngIf="withMenu" [menu]="menu" [container]="'main'"></cam-menu>
-          </cam-layout-nav>
-        </cam-layout-with-bottom-nav>
+          <ta-layout-nav>
+              <ta-menu *ngIf="withMenu" [menu]="menu" [container]="'main'"></ta-menu>
+          </ta-layout-nav>
+        </ta-layout-with-bottom-nav>
       `,
     };
   },

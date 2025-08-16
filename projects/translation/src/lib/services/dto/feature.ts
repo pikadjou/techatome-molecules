@@ -1,4 +1,4 @@
-import { BaseStrapi, GraphSchema, baseStrapiProps } from '@camelot/server';
+import { BaseStrapi, GraphSchema, baseStrapiProps } from '@ta/server';
 
 export interface Feature extends BaseStrapi {
   name: string;

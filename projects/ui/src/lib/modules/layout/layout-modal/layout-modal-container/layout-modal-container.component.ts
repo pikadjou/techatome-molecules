@@ -1,9 +1,8 @@
 import { Component, Inject, TemplateRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+import { CamBaseModal } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { CamBaseModal } from '@camelot/utils';
 
 import { ModalStyle } from '../layout-modal.component';
 
@@ -15,7 +14,7 @@ export interface TemplateModalContainerData {
 @Component({
   selector: '',
   template:
-    '<cam-layout-modal [style]="this.style"><ng-template [ngTemplateOutlet]="this.data.template"></ng-template></cam-layout-modal>',
+    '<ta-layout-modal [style]="this.style"><ng-template [ngTemplateOutlet]="this.data.template"></ng-template></ta-layout-modal>',
 })
 export class TemplateModalContainer extends CamBaseModal {
   get style(): ModalStyle {
@@ -27,9 +26,7 @@ export class TemplateModalContainer extends CamBaseModal {
   ) {
     super();
     if (this.data.askClosing$) {
-      this._registerSubscription(
-        this.data.askClosing$.subscribe((_) => this.dialogRef.close())
-      );
+      this._registerSubscription(this.data.askClosing$.subscribe(_ => this.dialogRef.close()));
     }
   }
 }

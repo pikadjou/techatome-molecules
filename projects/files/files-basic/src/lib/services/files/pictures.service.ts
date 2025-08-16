@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleComplexRequest } from '@ta/server';
 import { of } from 'rxjs';
-
-import {
-  CamBaseService,
-  GraphEndpoint,
-  HandleComplexRequest,
-} from '@camelot/server';
 
 import { Picture } from './dto/picture';
 
@@ -30,7 +25,7 @@ export class AppPicturesService extends CamBaseService {
     return this.dashboardByProject.fetch(
       id,
       of(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => ({
           url: 'https://placehold.co/400',
         }))
       )

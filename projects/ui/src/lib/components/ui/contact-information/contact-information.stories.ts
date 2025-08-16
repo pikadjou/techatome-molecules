@@ -1,8 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconType, CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconType, CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { TitleComponent } from '../public-api';
 import { ContactInformationComponent } from './contact-information.component';
@@ -24,9 +23,9 @@ export default {
     return {
       props,
       template: `
-        <cam-contact-information [value]="value" [icon]="icon">
+        <ta-contact-information [value]="value" [icon]="icon">
           My content
-        </cam-contact-information>
+        </ta-contact-information>
       `,
     };
   },

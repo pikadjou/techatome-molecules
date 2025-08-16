@@ -1,16 +1,15 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 
+import { InputDropdown } from '@ta/form-model';
+import { CamTranslationService } from '@ta/translation';
+import { CamBaseComponent } from '@ta/utils';
 import { of } from 'rxjs';
-
-import { InputDropdown } from '@camelot/form-model';
-import { CamTranslationService } from '@camelot/translation';
-import { CamBaseComponent } from '@camelot/utils';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 import { CamPermissionsService } from '../../services/permissions.service';
 
 @Component({
-  selector: 'cam-user-menu',
+  selector: 'ta-user-menu',
   templateUrl: './menu-user.component.html',
   styleUrls: ['./menu-user.component.scss'],
 })

@@ -6,5 +6,5 @@
     "entryFile": "src/public-api.ts",
     "styleIncludePaths": ["../styles/src/style"]
   },
-  "allowedNonPeerDependencies": ["@angular", "@camelot", "chart.js"]
+  "allowedNonPeerDependencies": ["@angular", "@ta", "chart.js"]
 }

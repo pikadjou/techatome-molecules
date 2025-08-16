@@ -1,7 +1,7 @@
 <div class="edit" #containerRef>
   <div #tuiRef [style.height]="this.getHeight()" [style.width]="this.getWidth()" class="m-a image-container"></div>
 
-  <cam-loader [isLoading]="this.requestState.isLoading()">
+  <ta-loader [isLoading]="this.requestState.isLoading()">
     <div class="control">
       <div class="panel" *ngIf="this.showPanel()">
         <ng-container *ngIf="this.selection === 'line'">
@@ -12,22 +12,22 @@
           <div class="row g-0 shape-selection">
             <div class="col" (click)="this.changeShapeSelection('rect')">
               <div class="item" [ngClass]="{ selected: this.shapeSelection === 'rect' }">
-                <cam-material-icon type="sm">check_box_outline_blank</cam-material-icon>
+                <ta-material-icon type="sm">check_box_outline_blank</ta-material-icon>
               </div>
             </div>
             <div class="col" (click)="this.changeShapeSelection('triangle')">
               <div class="item" [ngClass]="{ selected: this.shapeSelection === 'triangle' }">
-                <cam-material-icon type="sm">change_history</cam-material-icon>
+                <ta-material-icon type="sm">change_history</ta-material-icon>
               </div>
             </div>
             <div class="col" (click)="this.changeShapeSelection('circle')">
               <div class="item" [ngClass]="{ selected: this.shapeSelection === 'circle' }">
-                <cam-material-icon type="sm">circle</cam-material-icon>
+                <ta-material-icon type="sm">circle</ta-material-icon>
               </div>
             </div>
             <div class="col" (click)="this.changeShapeSelection('line')">
               <div class="item" [ngClass]="{ selected: this.shapeSelection === 'line' }">
-                <cam-material-icon type="sm">straighten</cam-material-icon>
+                <ta-material-icon type="sm">straighten</ta-material-icon>
               </div>
             </div>
           </div>
@@ -43,49 +43,49 @@
       <div class="selection row g-0">
         <div class="col" (click)="this.changeSelection('')">
           <div class="item" [ngClass]="{ selected: this.selection === '' }">
-            <cam-material-icon type="sm">pan_tool</cam-material-icon>
+            <ta-material-icon type="sm">pan_tool</ta-material-icon>
           </div>
         </div>
         <div class="col" (click)="this.changeSelection('line')">
           <div class="item" [ngClass]="{ selected: this.selection === 'line' }">
-            <cam-material-icon type="sm">draw</cam-material-icon>
+            <ta-material-icon type="sm">draw</ta-material-icon>
           </div>
         </div>
         <div class="col" (click)="this.changeSelection('shape')">
           <div class="item" [ngClass]="{ selected: this.selection === 'shape' }">
-            <cam-material-icon type="sm">interests</cam-material-icon>
+            <ta-material-icon type="sm">interests</ta-material-icon>
           </div>
         </div>
         <div class="col" (click)="this.changeSelection('text')">
           <div class="item" [ngClass]="{ selected: this.selection === 'text' }">
-            <cam-material-icon type="sm">text_fields</cam-material-icon>
+            <ta-material-icon type="sm">text_fields</ta-material-icon>
           </div>
         </div>
         <div class="col" (click)="this.clear()">
           <div class="item" [ngClass]="{ disabled: !this.objectActivated }">
-            <cam-material-icon type="sm">delete</cam-material-icon>
+            <ta-material-icon type="sm">delete</ta-material-icon>
           </div>
         </div>
         <span class="separator"></span>
         <div class="col" (click)="this.undo()">
           <div class="item">
-            <cam-material-icon type="sm">undo</cam-material-icon>
+            <ta-material-icon type="sm">undo</ta-material-icon>
           </div>
         </div>
         <div class="col" (click)="this.redo()">
           <div class="item">
-            <cam-material-icon type="sm">redo</cam-material-icon>
+            <ta-material-icon type="sm">redo</ta-material-icon>
           </div>
         </div>
         <span class="separator"></span>
         <div class="col" (click)="this.validation()">
           <div class="item color-success">
-            <cam-font-icon name="check-line"></cam-font-icon>
+            <ta-font-icon name="check-line"></ta-font-icon>
           </div>
         </div>
       </div>
     </div>
-  </cam-loader>
+  </ta-loader>
 </div>
 
 <ng-template #Colors>
@@ -93,7 +93,7 @@
     <div class="row g-0">
       <div class="col" *ngFor="let color of this.colorList" (click)="this.changeColor(color)">
         <div class="color" [style.background-color]="color" [ngClass]="{ 'is-light': this.isLight(color) }">
-          <cam-material-icon [type]="'sm'" *ngIf="this.colorHexa === color">done</cam-material-icon>
+          <ta-material-icon [type]="'sm'" *ngIf="this.colorHexa === color">done</ta-material-icon>
         </div>
       </div>
     </div>
@@ -101,6 +101,6 @@
 </ng-template>
 <ng-template #Range>
   <div class="range">
-    <!-- <cam-input-slider [input]="this.slider"></cam-input-slider> -->
+    <!-- <ta-input-slider [input]="this.slider"></ta-input-slider> -->
   </div>
 </ng-template>

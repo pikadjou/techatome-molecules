@@ -1,13 +1,13 @@
 import { Component, Input, inject } from '@angular/core';
 
-import { CamIconType } from '@camelot/icons';
-import { CamMainRoute, CamRoutes } from '@camelot/menu';
-import { CamAbstractComponent } from '@camelot/utils';
+import { CamIconType } from '@ta/icons';
+import { CamMainRoute, CamRoutes } from '@ta/menu';
+import { CamAbstractComponent } from '@ta/utils';
 
 import { CamPermissionsService, Domain, Level, PermissionFeature } from '../../services/permissions.service';
 
 @Component({
-  selector: 'cam-guard',
+  selector: 'ta-guard',
   templateUrl: './guard.component.html',
   styleUrls: ['./guard.component.scss'],
 })

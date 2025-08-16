@@ -20,7 +20,7 @@ export interface SwiperData {
 }
 
 @Component({
-  selector: 'cam-swiper',
+  selector: 'ta-swiper',
   standalone: true,
   templateUrl: './swiper.component.html',
   styleUrls: ['./swiper.component.scss'],

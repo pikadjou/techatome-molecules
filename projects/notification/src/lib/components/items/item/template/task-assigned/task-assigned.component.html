@@ -1,9 +1,6 @@
-<cam-notification-item [notification]="this.notification" (click)="this.goTo()">
-  <cam-notification-item-title>
-    {{
-      "notification.items.task-assigned.title"
-        | translate : this.getTranslation()
-    }}
-  </cam-notification-item-title>
-  <cam-notification-item-icon icon="tasks"></cam-notification-item-icon>
-</cam-notification-item>
+<ta-notification-item [notification]="this.notification" (click)="this.goTo()">
+  <ta-notification-item-title>
+    {{ 'notification.items.task-assigned.title' | translate: this.getTranslation() }}
+  </ta-notification-item-title>
+  <ta-notification-item-icon icon="tasks"></ta-notification-item-icon>
+</ta-notification-item>

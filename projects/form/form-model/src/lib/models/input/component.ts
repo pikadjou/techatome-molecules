@@ -1,9 +1,8 @@
 import { TemplateRef } from '@angular/core';
 
+import { CamIconType } from '@ta/icons';
+import { Logger } from '@ta/server';
 import { Subject } from 'rxjs';
-
-import { CamIconType } from '@camelot/icons';
-import { Logger } from '@camelot/server';
 
 import { IInputBase, InputBase } from './base';
 

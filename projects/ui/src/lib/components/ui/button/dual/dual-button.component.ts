@@ -7,7 +7,7 @@ export interface DualButtonInput {
 }
 
 @Component({
-  selector: 'cam-dual-button',
+  selector: 'ta-dual-button',
   templateUrl: './dual-button.component.html',
   styleUrls: ['./dual-button.component.scss'],
 })

@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 
-import { InputBase } from '@camelot/form-model';
-import { TranslatePipe } from '@camelot/translation';
+import { InputBase } from '@ta/form-model';
+import { TranslatePipe } from '@ta/translation';
 
 @Component({
-  selector: 'cam-input-error',
+  selector: 'ta-input-error',
   templateUrl: './input-error.component.html',
   styleUrls: ['./input-error.component.scss'],
   standalone: true,

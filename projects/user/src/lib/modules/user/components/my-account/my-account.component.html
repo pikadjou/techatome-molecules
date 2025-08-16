@@ -1,48 +1,36 @@
 <div class="mx-space-sm" appStopPropagation>
-  <cam-loader
-    [isLoading]="this.requestState.isLoading()"
-    *ngLet="this.profile$ | async as profile"
-  >
-    <cam-error
-      [message]="this.requestState.getErrorMessage()"
-      [code]="this.requestState.getErrorStatus()"
-    >
-      <cam-empty [isEmpty]="!profile">
+  <ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.profile$ | async as profile">
+    <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+      <ta-empty [isEmpty]="!profile">
         <div class="bdp-b color-border-primary">
           <div class="pt-space-xs m-xs">
-            <cam-inline-profile-data
+            <ta-inline-profile-data
               [profile]="profile ?? {}"
               [userLogo]="this.userLogo$ | async"
               (click)="this.navigateToProfile()"
-            ></cam-inline-profile-data>
+            ></ta-inline-profile-data>
             <div class="my-space-md" *ngIf="this.isEditable">
-              <cam-button
-                (action)="this.navigateToEditProfile()"
-                [style]="'secondary'"
-              >
+              <ta-button (action)="this.navigateToEditProfile()" [style]="'secondary'">
                 <div class="align-center button-content">
-                  <cam-font-icon
-                    name="modify"
-                    class="mr-space-xs modify-icon"
-                  ></cam-font-icon>
+                  <ta-font-icon name="modify" class="mr-space-xs modify-icon"></ta-font-icon>
                   <div class="text">
-                    {{ "user.modify" | translate }}
+                    {{ 'user.modify' | translate }}
                   </div>
                 </div>
-              </cam-button>
+              </ta-button>
             </div>
           </div>
         </div>
-      </cam-empty>
-    </cam-error>
-  </cam-loader>
+      </ta-empty>
+    </ta-error>
+  </ta-loader>
 
   <div *ngIf="this.profileMenu" class="bdp-b color-border-primary pt-space-xs">
-    <cam-menu [menu]="this.profileMenu" [style]="'dark'"></cam-menu>
+    <ta-menu [menu]="this.profileMenu" [style]="'dark'"></ta-menu>
   </div>
 
   <div *ngIf="this.disconnectionMenu" class="bdp-b pt-space-xs">
-    <cam-menu [menu]="this.disconnectionMenu" [style]="'dark'"></cam-menu>
+    <ta-menu [menu]="this.disconnectionMenu" [style]="'dark'"></ta-menu>
   </div>
   <div class="ta-c">
     <small>{{ this.appVersion }}</small>
@@ -50,11 +38,11 @@
 </div>
 
 <ng-template #languageTemplate>
-  <cam-switch-language></cam-switch-language>
+  <ta-switch-language></ta-switch-language>
 </ng-template>
 
 <ng-template #infosTemplate>
   <div class="mx-space-sm info-panel" *ngIf="this.infosMenu">
-    <cam-menu [menu]="this.infosMenu" [style]="'dark'"></cam-menu>
+    <ta-menu [menu]="this.infosMenu" [style]="'dark'"></ta-menu>
   </div>
 </ng-template>

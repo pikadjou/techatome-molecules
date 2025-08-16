@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { InputSchema } from '@camelot/form-model';
-import { FileData, FileStructure, getBase64FromFile } from '@camelot/utils';
+import { InputSchema } from '@ta/form-model';
+import { FileData, FileStructure, getBase64FromFile } from '@ta/utils';
 
-import { InputSchemaModal } from './modal/input-schema-modal.component';
 import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputSchemaModal } from './modal/input-schema-modal.component';
 
 @Component({
-  selector: 'cam-input-schema',
+  selector: 'ta-input-schema',
   templateUrl: './input-schema.component.html',
   styleUrls: ['./input-schema.component.scss'],
 })
@@ -42,26 +42,21 @@ export class InputSchemaComponent extends CamAbstractInputComponent<InputSchema>
   }
 
   public openDialog(): void {
-    const dialogRef = this.dialog.open<
-      InputSchemaModal,
-      { file: FileStructure }
-    >(InputSchemaModal);
+    const dialogRef = this.dialog.open<InputSchemaModal, { file: FileStructure }>(InputSchemaModal);
 
     this._registerSubscription(
-      dialogRef
-        .afterClosed()
-        .subscribe(async (data: { file: FileStructure }) => {
-          if (!data || !data.file) {
-            return;
-          }
-          if (this.input.update) {
-            const pics = await this.input.update([data.file]);
+      dialogRef.afterClosed().subscribe(async (data: { file: FileStructure }) => {
+        if (!data || !data.file) {
+          return;
+        }
+        if (this.input.update) {
+          const pics = await this.input.update([data.file]);
 
-            if (pics && pics.length > 0 && data.file.file) {
-              this.selection = await getBase64FromFile(data.file.file);
-            }
+          if (pics && pics.length > 0 && data.file.file) {
+            this.selection = await getBase64FromFile(data.file.file);
           }
-        })
+        }
+      })
     );
   }
 }

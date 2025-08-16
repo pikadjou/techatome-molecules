@@ -1,8 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { Validators } from '@angular/forms';
 
-import { of } from 'rxjs';
-
 import {
   InputAddress,
   InputBase,
@@ -22,7 +20,8 @@ import {
   InputTranslation,
   InputUpload,
   InputWysiswyg,
-} from '@camelot/form-model';
+} from '@ta/form-model';
+import { of } from 'rxjs';
 
 export const __basicForm: InputBase<any>[] = [
   new InputPanel({

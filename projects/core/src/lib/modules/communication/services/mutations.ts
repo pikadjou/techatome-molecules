@@ -1,4 +1,4 @@
-import { Apollo_gql, GraphMutationPayload } from '@camelot/server';
+import { Apollo_gql, GraphMutationPayload } from '@ta/server';
 
 import { conversationProps } from './dto/communication';
 import { CommunicationPayloadInput } from './dto/post/communication';

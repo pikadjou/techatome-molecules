@@ -1,19 +1,12 @@
 <div class="ta-r pt-space-xl" *ngIf="this.sideIcon">
-  <cam-button
-    [options]="{ circular: 'small' }"
-    [style]="'secondary'"
-    (action)="this.launchAction()"
-  >
-    <cam-font-icon [name]="this.sideIcon"></cam-font-icon>
-  </cam-button>
+  <ta-button [options]="{ circular: 'small' }" [style]="'secondary'" (action)="this.launchAction()">
+    <ta-font-icon [name]="this.sideIcon"></ta-font-icon>
+  </ta-button>
 </div>
 
 <div class="profile">
   <div class="ta-c" *ngIf="this.userLogo">
-    <cam-user-logo
-      [userInfo]="this.userLogo.userInfo"
-      size="xl"
-    ></cam-user-logo>
+    <ta-user-logo [userInfo]="this.userLogo.userInfo" size="xl"></ta-user-logo>
   </div>
 
   <div class="title">
@@ -22,24 +15,20 @@
   </div>
 
   <div class="sub-title text">
-    {{ this.profile.title?.sub ?? "" | translate }}
+    {{ this.profile.title?.sub ?? '' | translate }}
   </div>
 
   <div class="ta-c cta-buttons g-space-sm">
-    <cam-button
+    <ta-button
       *ngIf="this.profile.phoneNumber"
       [ngClass]="{ 'mr-space-xs': this.profile.email }"
       [options]="{ circular: 'big' }"
       (action)="this.tel()"
     >
-      <cam-font-icon name="phone" type="md"></cam-font-icon>
-    </cam-button>
-    <cam-button
-      *ngIf="this.profile.email"
-      [options]="{ circular: 'big' }"
-      (action)="this.mail()"
-    >
-      <cam-font-icon name="mail" type="md"></cam-font-icon>
-    </cam-button>
+      <ta-font-icon name="phone" type="md"></ta-font-icon>
+    </ta-button>
+    <ta-button *ngIf="this.profile.email" [options]="{ circular: 'big' }" (action)="this.mail()">
+      <ta-font-icon name="mail" type="md"></ta-font-icon>
+    </ta-button>
   </div>
 </div>

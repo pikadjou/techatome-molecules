@@ -1,4 +1,4 @@
-@import 'camelot-export';
+@import 'ta-export';
 
 .conversation-container {
   display: flex;
@@ -15,7 +15,7 @@
     padding: get-var(space, xs);
     background-color: transparent;
 
-    cam-font-icon {
+    ta-font-icon {
       position: absolute;
     }
   }
@@ -29,7 +29,7 @@
   padding: get-var(space, sm);
 }
 
-cam-communication-message-box-container {
+ta-communication-message-box-container {
   width: 100%;
 }
 

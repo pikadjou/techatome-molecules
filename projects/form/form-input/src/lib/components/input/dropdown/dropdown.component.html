@@ -1,7 +1,7 @@
 @if (this.input) {
-  <cam-overlay-panel [panelConfig]="{ matchTriggerWidth: true }" (closed)="this.onOverlayClosed()">
+  <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: true }" (closed)="this.onOverlayClosed()">
     <ng-template #panelTrigger>
-      <cam-input-layout [input]="this.input">
+      <ta-input-layout [input]="this.input">
         <div #focusedElement class="custom-dropdown-button form-control" [class.disabled]="this.input.disabled">
           <span class="selected-value align-center g-space-xs">
             @if (!this.input.multiple) {
@@ -13,14 +13,14 @@
               </ng-template>
             }
             @if (this.input.multiple) {
-              <cam-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
+              <ta-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
                 {{ this.getOptionName(value) | translate }}
-              </cam-label>
+              </ta-label>
             }
           </span>
-          <cam-font-icon name="arrow-big-bottom" type="sm"></cam-font-icon>
+          <ta-font-icon name="arrow-big-bottom" type="sm"></ta-font-icon>
         </div>
-      </cam-input-layout>
+      </ta-input-layout>
     </ng-template>
 
     <ng-template #panelContent>
@@ -39,10 +39,10 @@
         >
           {{ opt.name | translate }}
           @if (this.isSelected(opt.id)) {
-            <cam-font-icon class="checkmark" name="check-line"></cam-font-icon>
+            <ta-font-icon class="checkmark" name="check-line"></ta-font-icon>
           }
         </button>
       </div>
     </ng-template>
-  </cam-overlay-panel>
+  </ta-overlay-panel>
 }

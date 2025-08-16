@@ -1,19 +1,19 @@
-<cam-layout-modal [style]="'classic'" [title]="this.title">
+<ta-layout-modal [style]="'classic'" [title]="this.title">
   <div class="subtitle">
     {{ this.subtitle | translate }}
   </div>
 
   <div class="align-end flex-start g-space-md ml-a">
     <div>
-      <cam-button [type]="'danger'" (action)="this.onNoClick()">
+      <ta-button [type]="'danger'" (action)="this.onNoClick()">
         {{ 'container.validation.modal.cta.cancel' | translate }}
-      </cam-button>
+      </ta-button>
     </div>
 
     <div>
-      <cam-button (action)="this.onYesClick()">
+      <ta-button (action)="this.onYesClick()">
         {{ 'container.validation.modal.cta.ok' | translate }}
-      </cam-button>
+      </ta-button>
     </div>
   </div>
-</cam-layout-modal>
+</ta-layout-modal>

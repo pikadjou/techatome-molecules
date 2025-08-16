@@ -1,8 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ButtonComponent, UserLogoComponent } from '../public-api';
 import { ProfileDataComponent } from './profile-data.component';
@@ -24,7 +23,7 @@ export default {
     return {
       props,
       template: `
-        <cam-profile-data [profile]="profile" [userLogo]="userLogo" [sideIcon]="sideIcon"></cam-profile-data>
+        <ta-profile-data [profile]="profile" [userLogo]="userLogo" [sideIcon]="sideIcon"></ta-profile-data>
       `,
     };
   },

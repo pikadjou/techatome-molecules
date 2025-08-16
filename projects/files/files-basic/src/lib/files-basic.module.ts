@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamCardModule, CamContainerModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule, SafePipe } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamCardModule, CamContainerModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule, SafePipe } from '@ta/utils';
 
 import { DocumentsListComponent } from './components/documents/list/list.component';
 import { FileEditComponent } from './components/edit/files-edit.component';

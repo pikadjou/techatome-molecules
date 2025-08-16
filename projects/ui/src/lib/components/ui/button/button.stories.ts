@@ -1,7 +1,6 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ButtonComponent } from './button.component';
 
@@ -16,14 +15,14 @@ export default {
     }),
   ],
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { label, ...props } = args;
     return {
       props,
       template: `
-        <cam-button [state]="state" [style]="style" [size]="size" [options]="options" (action)="action()">
+        <ta-button [state]="state" [style]="style" [size]="size" [options]="options" (action)="action()">
           ${label}
-        </cam-button>
+        </ta-button>
       `,
     };
   },
@@ -65,14 +64,14 @@ export const Style: StoryObj<StoryType> = {
 };
 
 export const CircularWithIcon: StoryObj<StoryType> = {
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-button [state]="state" [style]="style" [size]='size" [options]="options" (action)="action()">
-          <cam-font-icon [name]="'calendar'"></cam-font-icon>
-        </cam-button>
+        <ta-button [state]="state" [style]="style" [size]='size" [options]="options" (action)="action()">
+          <ta-font-icon [name]="'calendar'"></ta-font-icon>
+        </ta-button>
       `,
     };
   },

@@ -1,14 +1,10 @@
-<div
-  class="toggle-container"
-  [ngClass]="this.containerCss"
-  [class.switch-container]="this.container === 'switch'"
->
-  <cam-swiper-light
+<div class="toggle-container" [ngClass]="this.containerCss" [class.switch-container]="this.container === 'switch'">
+  <ta-swiper-light
     [items]="this.menu.elements"
     [template]="template"
     [forced]="true"
     swiperClasses="g-space-lg pt-space-md"
-  ></cam-swiper-light>
+  ></ta-swiper-light>
 </div>
 
 <ng-template #template let-element="element">
@@ -22,7 +18,7 @@
     <ng-template
       [ngTemplateOutlet]="Item"
       [ngTemplateOutletContext]="{
-        item: element
+        item: element,
       }"
     >
     </ng-template>
@@ -40,7 +36,7 @@
     <ng-template
       [ngTemplateOutlet]="Item"
       [ngTemplateOutletContext]="{
-        item: element
+        item: element,
       }"
     >
     </ng-template>
@@ -51,23 +47,18 @@
   <div class="label flex-row align-center mb-space-xs">
     <div class="icon" *ngIf="this.hasFontIcon(item) || this.hasIconImage(item)">
       <span *ngIf="this.hasFontIcon(item)" class="icon-material">
-        <cam-font-icon [name]="this.getFontIcon(item)"></cam-font-icon>
+        <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
       </span>
       <span *ngIf="this.hasIconImage(item)" class="icon-image">
-        <cam-local-icon [type]="this.getIcon(item)" size="xs"></cam-local-icon>
+        <ta-local-icon [type]="this.getIcon(item)" size="xs"></ta-local-icon>
       </span>
     </div>
     <div class="text-truncate" *ngIf="item.label">
       {{ item.label | translate }}
     </div>
-    <div
-      class="badge ml-space-xs"
-      *ngIf="item.options?.notificationBadge !== null"
-    >
+    <div class="badge ml-space-xs" *ngIf="item.options?.notificationBadge !== null">
       {{ item.options?.notificationBadge?.label }}
     </div>
-    <div *ngIf="item.translationData?.length">
-      ({{ item.translationData?.length }})
-    </div>
+    <div *ngIf="item.translationData?.length">({{ item.translationData?.length }})</div>
   </div>
 </ng-template>

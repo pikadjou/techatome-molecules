@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'cam-filters',
+  selector: 'ta-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
 })

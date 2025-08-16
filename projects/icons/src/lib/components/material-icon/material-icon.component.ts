@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 /**
  * @deprecated
  */
 @Component({
-  selector: 'cam-material-icon',
+  selector: 'ta-material-icon',
   templateUrl: './material-icon.component.html',
   styleUrls: ['./material-icon.component.scss'],
 })

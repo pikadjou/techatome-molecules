@@ -2,28 +2,24 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="this.form">
     <div *ngFor="let input of this.inputs; trackBy: trackByKey">
       <ng-container *ngIf="input.visible$ | async">
-        <cam-inputs [input]="input"></cam-inputs>
+        <ta-inputs [input]="input"></ta-inputs>
       </ng-container>
     </div>
     <div>
-      <cam-notification-inline
-        [message]="this.error.message"
-        [code]="this.error.status"
-        class="my-space-sm"
-      >
+      <ta-notification-inline [message]="this.error.message" [code]="this.error.status" class="my-space-sm">
         <div class="justify-end">
-          <cam-loader [isLoading]="this.loader">
-            <cam-button
+          <ta-loader [isLoading]="this.loader">
+            <ta-button
               *ngIf="this.canDisplayButton && this.buttonTitle"
               (action)="this.onSubmit()"
               [state]="!this.isValid() ? 'disabled' : 'classic'"
               icon="check-line"
             >
               {{ this.buttonTitle | translate }}
-            </cam-button>
-          </cam-loader>
+            </ta-button>
+          </ta-loader>
         </div>
-      </cam-notification-inline>
+      </ta-notification-inline>
     </div>
   </form>
 </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'cam-card-content',
+  selector: 'ta-card-content',
   templateUrl: './card-content.component.html',
   styleUrls: ['./card-content.component.scss'],
 })

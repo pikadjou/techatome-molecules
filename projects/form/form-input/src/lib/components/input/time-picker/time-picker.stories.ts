@@ -7,11 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { InputTimePicker } from '@ta/form-model';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-
-import { InputTimePicker } from '@camelot/form-model';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
 
 import { TimePickerComponent } from './time-picker.component';
 
@@ -44,7 +43,7 @@ export default {
     return {
       props,
       template: `
-        <cam-input-time-picker [input]="input"></cam-input-time-picker>
+        <ta-input-time-picker [input]="input"></ta-input-time-picker>
       `,
     };
   },

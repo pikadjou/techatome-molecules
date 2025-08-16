@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .dashboard-content {
   position: relative;
@@ -38,7 +38,7 @@
   height: 200px;
   width: 170px;
   color: get-var(brand, 100);
-  cam-font-icon {
+  ta-font-icon {
     position: absolute;
     bottom: 0;
   }

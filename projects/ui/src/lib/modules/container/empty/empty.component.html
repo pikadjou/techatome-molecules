@@ -2,17 +2,11 @@
   <div class="empty-container">
     <ng-container *ngIf="this.showMessage">
       <ng-container *ngIf="this.isLight">
-        <cam-picture-info-message [type]="this.type" [text]="this.text">
-        </cam-picture-info-message>
+        <ta-picture-info-message [type]="this.type" [text]="this.text"> </ta-picture-info-message>
       </ng-container>
       <ng-container *ngIf="!this.isLight">
-        <cam-picture-info-message
-          [icon]="this.icon"
-          [iconSize]="this.iconSize"
-          [type]="this.type"
-          [text]="this.text"
-        >
-        </cam-picture-info-message>
+        <ta-picture-info-message [icon]="this.icon" [iconSize]="this.iconSize" [type]="this.type" [text]="this.text">
+        </ta-picture-info-message>
       </ng-container>
     </ng-container>
   </div>

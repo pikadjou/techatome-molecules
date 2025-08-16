@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ProgressCircleComponent } from './progress-circle.component';
 
@@ -13,7 +12,7 @@ export default {
       imports: [CamDirectivePipeModule],
     }),
   ],
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   args: {
     progress: 50,
     upTitle: 'Up title',

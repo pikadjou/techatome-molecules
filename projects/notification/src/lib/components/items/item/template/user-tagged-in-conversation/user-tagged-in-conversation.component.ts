@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AbstractNotificationTemplateComponent } from '../abstract';
 
 @Component({
-  selector: 'cam-user-tagged-in-conversation',
+  selector: 'ta-user-tagged-in-conversation',
   templateUrl: './user-tagged-in-conversation.component.html',
   styleUrls: ['./user-tagged-in-conversation.component.scss'],
 })

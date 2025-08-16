@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { createRange } from '@camelot/utils';
+import { createRange } from '@ta/utils';
 
 import { Placeholder } from './config';
 
 @Component({
-  selector: 'cam-placeholder',
+  selector: 'ta-placeholder',
   templateUrl: './placeholder.component.html',
   styleUrls: ['./placeholder.component.scss'],
 })

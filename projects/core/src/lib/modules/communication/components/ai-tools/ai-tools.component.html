@@ -1,12 +1,12 @@
 <div>
-  <cam-loader [isLoading]="this.requestState.isLoading()">
-    <cam-button-tool (action)="this.openMenu()" icon="ia" size="sm" [cdkMenuTriggerFor]="menu"></cam-button-tool>
-  </cam-loader>
+  <ta-loader [isLoading]="this.requestState.isLoading()">
+    <ta-button-tool (action)="this.openMenu()" icon="ia" size="sm" [cdkMenuTriggerFor]="menu"></ta-button-tool>
+  </ta-loader>
 
   <ng-template #menu>
     <div cdkMenu *ngLet="this.actionMenu() as actionMenu" class="menu-panel">
       @if (actionMenu) {
-        <cam-menu [menu]="actionMenu" style="dark"></cam-menu>
+        <ta-menu [menu]="actionMenu" style="dark"></ta-menu>
       }
     </div>
   </ng-template>

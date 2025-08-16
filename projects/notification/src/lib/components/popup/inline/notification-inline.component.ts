@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 import { ENotificationCode } from '../../../enum';
 import { openErrorModal } from '../../error-box/error-box.component';
 
 @Component({
-  selector: 'cam-notification-inline',
+  selector: 'ta-notification-inline',
   templateUrl: './notification-inline.component.html',
   styleUrls: ['./notification-inline.component.scss'],
 })

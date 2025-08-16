@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamState } from '@camelot/styles';
+import { CamState } from '@ta/styles';
 
 @Component({
-  selector: 'cam-button',
+  selector: 'ta-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })

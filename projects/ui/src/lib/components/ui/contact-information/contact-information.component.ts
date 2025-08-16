@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamIconType } from '@camelot/icons';
+import { CamIconType } from '@ta/icons';
 
 @Component({
-  selector: 'cam-contact-information',
+  selector: 'ta-contact-information',
   templateUrl: './contact-information.component.html',
   styleUrls: ['./contact-information.component.scss'],
 })

@@ -1,4 +1,4 @@
-import { User } from '@camelot/services';
+import { User } from '@ta/services';
 
 export interface VisitEvent {
   id: number;

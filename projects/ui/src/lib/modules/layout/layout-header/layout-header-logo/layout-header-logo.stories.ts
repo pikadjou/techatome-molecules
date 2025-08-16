@@ -3,10 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { LayoutHeaderLogoComponent } from './layout-header-logo.component';
 
@@ -33,7 +32,7 @@ export default {
     return {
       props,
       template: `
-      <cam-layout-header-logo [profile]="{ template: template, pic: 'https://placehold.co/600x400'}" [notificationTemplate]="template"></cam-layout-header-logo>
+      <ta-layout-header-logo [profile]="{ template: template, pic: 'https://placehold.co/600x400'}" [notificationTemplate]="template"></ta-layout-header-logo>
 
       <ng-template #template>
         <button>

@@ -1,11 +1,10 @@
 import { Inject, Injectable, Optional, inject } from '@angular/core';
 
 import { ApolloClient, ApolloError, ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { APPLICATION_CONFIG, IApplicationConfig, ILocalConfig, LOCAL, isURL } from '@ta/utils';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { BehaviorSubject, catchError, filter, map, switchMap, take, tap, throwError } from 'rxjs';
-
-import { APPLICATION_CONFIG, IApplicationConfig, ILocalConfig, LOCAL, isURL } from '@camelot/utils';
 
 import { CamServerErrorService } from '../error.service';
 import { Logger } from '../logger';

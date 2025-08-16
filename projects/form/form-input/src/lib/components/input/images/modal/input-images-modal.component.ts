@@ -1,14 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+import { CamBaseModal, FileData, TemporaryFile, pickImages } from '@ta/utils';
 import { map } from 'rxjs';
-
-import {
-  CamBaseModal,
-  FileData,
-  TemporaryFile,
-  pickImages,
-} from '@camelot/utils';
 
 import { DialogData } from '../input-images.component';
 
@@ -35,16 +29,14 @@ export class InputImageModal extends CamBaseModal implements OnInit {
 
   ngOnInit() {
     if (this.data.input.files$) {
-      this._registerSubscription(
-        this.data.input.files$.subscribe(() => this.tempFiles.removeAll())
-      );
+      this._registerSubscription(this.data.input.files$.subscribe(() => this.tempFiles.removeAll()));
     }
   }
 
   public getPics$() {
     return this.data.input.files$?.pipe(
-      map((files) =>
-        files.map((file) => ({
+      map(files =>
+        files.map(file => ({
           ...file,
           isSelected: this.selection.includes(file.url),
         }))
@@ -53,7 +45,7 @@ export class InputImageModal extends CamBaseModal implements OnInit {
   }
   public onFileSelected(file: FileData) {
     if (this.selection.includes(file.url)) {
-      this.selection = this.selection.filter((url) => file.url !== url);
+      this.selection = this.selection.filter(url => file.url !== url);
       return;
     }
     this.selection = [...this.selection, file.url];

@@ -2,25 +2,17 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 
-import {
-  TemplateModalContainer,
-  TemplateModalContainerData,
-} from '@camelot/ui';
-import { CamBaseComponent } from '@camelot/utils';
+import { TemplateModalContainer, TemplateModalContainerData } from '@ta/ui';
+import { CamBaseComponent } from '@ta/utils';
 
-import {
-  getFontIcon,
-  getIcon,
-  hasFontIcon,
-  hasIconImage,
-} from '../../../helpers/icon-manager';
+import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../../helpers/icon-manager';
 import { MenuAction } from '../../../models/menu/item/action';
 import { MenuBase } from '../../../models/menu/item/base';
 import { MenuIcon } from '../../../models/menu/item/icon';
 import { MenuPanel } from '../../../models/menu/item/panel';
 
 @Component({
-  selector: 'cam-menu-item',
+  selector: 'ta-menu-item',
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.scss'],
 })
@@ -86,14 +78,11 @@ export class MenuItemComponent extends CamBaseComponent implements OnInit {
     const myTemplate = this.getTemplate();
     if (myTemplate) {
       if (this.breakpoints.isLessThanXS) {
-        this.modal.open<TemplateModalContainer, TemplateModalContainerData>(
-          TemplateModalContainer,
-          {
-            data: {
-              template: myTemplate,
-            },
-          }
-        );
+        this.modal.open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
+          data: {
+            template: myTemplate,
+          },
+        });
       } else {
         this.triggerMenu.openMenu();
       }

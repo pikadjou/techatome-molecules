@@ -1,11 +1,7 @@
 <div class="notification-box_container flex-column g-space-sm">
   <div *ngFor="let item of this.list">
-    <cam-toast [code]="item.code">
-      <cam-notification-inline
-        [message]="item.message"
-        [code]="item.code"
-        [showClose]="false"
-      ></cam-notification-inline>
-    </cam-toast>
+    <ta-toast [code]="item.code">
+      <ta-notification-inline [message]="item.message" [code]="item.code" [showClose]="false"></ta-notification-inline>
+    </ta-toast>
   </div>
 </div>

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { map } from 'rxjs';
-
 import {
   CamBaseService,
   GraphEndpoint,
@@ -9,29 +7,15 @@ import {
   HandleSimpleRequest,
   KeyValue,
   graphQlUpdateFields,
-} from '@camelot/server';
+} from '@ta/server';
+import { map } from 'rxjs';
 
 import { CommunicationType } from './dto/communication';
-import {
-  CreateTemplatePayloadInput,
-  UpdateTemplatePayloadInput,
-} from './dto/post/template';
-import {
-  CreateTemplateVariantPayloadInput,
-  UpdateTemplateVariantPayloadInput,
-} from './dto/post/template-variation';
+import { CreateTemplatePayloadInput, UpdateTemplatePayloadInput } from './dto/post/template';
+import { CreateTemplateVariantPayloadInput, UpdateTemplateVariantPayloadInput } from './dto/post/template-variation';
 import { Template, templateProps, templateVariantProps } from './dto/template';
-import {
-  CREATE_TEMPLATE,
-  CREATE_VARIANT,
-  UPDATE_TEMPLATE,
-  UPDATE_VARIANT,
-} from './mutations';
-import {
-  GET_TEMPLATES,
-  GET_availableTemplateKeys,
-  GET_previewTemplate,
-} from './queries';
+import { CREATE_TEMPLATE, CREATE_VARIANT, UPDATE_TEMPLATE, UPDATE_VARIANT } from './mutations';
+import { GET_TEMPLATES, GET_availableTemplateKeys, GET_previewTemplate } from './queries';
 
 const graphEndpoint: GraphEndpoint = {
   clientName: 'communicationService',
@@ -44,9 +28,7 @@ const graphEndpoint: GraphEndpoint = {
 export class CamCommunicationsTemplatesService extends CamBaseService {
   public communicationTemplates = new HandleSimpleRequest<Template[]>();
   public communicationTemplate = new HandleComplexRequest<Template>();
-  public communicationTemplatesByComminucationType = new HandleComplexRequest<
-    Template[]
-  >();
+  public communicationTemplatesByComminucationType = new HandleComplexRequest<Template[]>();
   public templateKeys = new HandleSimpleRequest<string[]>();
 
   constructor() {
@@ -54,9 +36,7 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
     super.registerRoutes({ graphEndpoint: graphEndpoint });
   }
 
-  public fetchConversationTemplatesByComminucationType$(
-    communicationType: CommunicationType
-  ) {
+  public fetchConversationTemplatesByComminucationType$(communicationType: CommunicationType) {
     return this.communicationTemplatesByComminucationType.fetch(
       communicationType.toString(),
       this._graphService
@@ -82,7 +62,7 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
           'templates',
           graphEndpoint.clientName
         )
-        .pipe(map((data) => this._convertJsonBody(data.items ?? [])))
+        .pipe(map(data => this._convertJsonBody(data.items ?? [])))
     );
   }
   public fetchConversationTemplates$() {
@@ -109,7 +89,7 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
           'templates',
           graphEndpoint.clientName
         )
-        .pipe(map((data) => this._convertJsonBody(data.items ?? [])))
+        .pipe(map(data => this._convertJsonBody(data.items ?? [])))
     );
   }
 
@@ -139,7 +119,7 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
           'templates',
           graphEndpoint.clientName
         )
-        .pipe(map((data) => this._convertJsonBody(data.items ?? [])[0]))
+        .pipe(map(data => this._convertJsonBody(data.items ?? [])[0]))
     );
   }
 
@@ -153,10 +133,7 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
     );
   }
 
-  public previewConversationTemplate$(
-    template: string,
-    contextIds: KeyValue[]
-  ) {
+  public previewConversationTemplate$(template: string, contextIds: KeyValue[]) {
     return this._graphService.fetchQuery<string>(
       GET_previewTemplate(template, contextIds),
       'previewTemplate',
@@ -165,12 +142,9 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
   }
 
   public createTemplate$(template: CreateTemplatePayloadInput) {
-    return this._graphService.mutate<Template>(
-      CREATE_TEMPLATE(template),
-      'createTemplate',
-      graphEndpoint.clientName,
-      ['templates']
-    );
+    return this._graphService.mutate<Template>(CREATE_TEMPLATE(template), 'createTemplate', graphEndpoint.clientName, [
+      'templates',
+    ]);
   }
 
   public updateTemplate$(template: UpdateTemplatePayloadInput) {
@@ -201,10 +175,10 @@ export class CamCommunicationsTemplatesService extends CamBaseService {
   }
 
   private _convertJsonBody(templates: Template[]) {
-    return templates.map((template) => ({
+    return templates.map(template => ({
       ...template,
       ...{
-        variants: template.variants.map((variant) => ({
+        variants: template.variants.map(variant => ({
           ...variant,
           ...{ jsonBodyParsed: JSON.parse(variant.jsonBody) ?? null },
         })),

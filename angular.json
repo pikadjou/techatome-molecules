@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/camelot",
+            "outputPath": "dist/ta",
             "index": "src/index.html",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
@@ -28,7 +28,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@camelot/icons/dist/assets/fonts",
+                "input": "node_modules/@ta/icons/dist/assets/fonts",
                 "output": "assets/fonts/"
               }
             ],
@@ -121,7 +121,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@camelot/icons/dist/assets/fonts",
+                "input": "node_modules/@ta/icons/dist/assets/fonts",
                 "output": "assets/fonts/"
               }
             ],
@@ -159,11 +159,11 @@
         }
       }
     },
-    "@camelot/ui": {
+    "@ta/ui": {
       "projectType": "library",
       "root": "projects/ui",
       "sourceRoot": "projects/ui/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -189,11 +189,11 @@
         }
       }
     },
-    "@camelot/server": {
+    "@ta/server": {
       "projectType": "library",
       "root": "projects/server",
       "sourceRoot": "projects/server/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -219,11 +219,11 @@
         }
       }
     },
-    "@camelot/services": {
+    "@ta/services": {
       "projectType": "library",
       "root": "projects/services",
       "sourceRoot": "projects/services/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -249,11 +249,11 @@
         }
       }
     },
-    "@camelot/utils": {
+    "@ta/utils": {
       "projectType": "library",
       "root": "projects/utils",
       "sourceRoot": "projects/utils/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -279,11 +279,11 @@
         }
       }
     },
-    "@camelot/notification": {
+    "@ta/notification": {
       "projectType": "library",
       "root": "projects/notification",
       "sourceRoot": "projects/notification/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -309,11 +309,11 @@
         }
       }
     },
-    "@camelot/menu": {
+    "@ta/menu": {
       "projectType": "library",
       "root": "projects/menu",
       "sourceRoot": "projects/menu/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -339,11 +339,11 @@
         }
       }
     },
-    "@camelot/calendar": {
+    "@ta/calendar": {
       "projectType": "library",
       "root": "projects/calendar",
       "sourceRoot": "projects/calendar/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -369,11 +369,11 @@
         }
       }
     },
-    "@camelot/translation": {
+    "@ta/translation": {
       "projectType": "library",
       "root": "projects/translation",
       "sourceRoot": "projects/translation/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -399,11 +399,11 @@
         }
       }
     },
-    "@camelot/form-input": {
+    "@ta/form-input": {
       "projectType": "library",
       "root": "projects/form/form-input",
       "sourceRoot": "projects/form/form-input/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -429,11 +429,11 @@
         }
       }
     },
-    "@camelot/form-model": {
+    "@ta/form-model": {
       "projectType": "library",
       "root": "projects/form/form-model",
       "sourceRoot": "projects/form/form-model/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -459,11 +459,11 @@
         }
       }
     },
-    "@camelot/form-basic": {
+    "@ta/form-basic": {
       "projectType": "library",
       "root": "projects/form/form-basic",
       "sourceRoot": "projects/form/form-basic/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -489,11 +489,11 @@
         }
       }
     },
-    "@camelot/prettier-config": {
+    "@ta/prettier-config": {
       "projectType": "library",
       "root": "projects/config/prettier-config",
       "sourceRoot": "projects/config/prettier-config",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -519,11 +519,11 @@
         }
       }
     },
-    "@camelot/eslint-config": {
+    "@ta/eslint-config": {
       "projectType": "library",
       "root": "projects/config/eslint-config",
       "sourceRoot": "projects/config/eslint-config",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -549,11 +549,11 @@
         }
       }
     },
-    "@camelot/styles": {
+    "@ta/styles": {
       "projectType": "library",
       "root": "projects/styles",
       "sourceRoot": "projects/styles/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -579,11 +579,11 @@
         }
       }
     },
-    "@camelot/files-extended": {
+    "@ta/files-extended": {
       "projectType": "library",
       "root": "projects/files/files-extended",
       "sourceRoot": "projects/files/files-extended/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -609,11 +609,11 @@
         }
       }
     },
-    "@camelot/files-basic": {
+    "@ta/files-basic": {
       "projectType": "library",
       "root": "projects/files/files-basic",
       "sourceRoot": "projects/files/files-basic/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -639,11 +639,11 @@
         }
       }
     },
-    "@camelot/icons": {
+    "@ta/icons": {
       "projectType": "library",
       "root": "projects/icons",
       "sourceRoot": "projects/icons/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -669,11 +669,11 @@
         }
       }
     },
-    "@camelot/capacitor": {
+    "@ta/capacitor": {
       "projectType": "library",
       "root": "projects/capacitor",
       "sourceRoot": "projects/capacitor/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -699,11 +699,11 @@
         }
       }
     },
-    "@camelot/core": {
+    "@ta/core": {
       "projectType": "library",
       "root": "projects/core",
       "sourceRoot": "projects/core/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -729,11 +729,11 @@
         }
       }
     },
-    "@camelot/user": {
+    "@ta/user": {
       "projectType": "library",
       "root": "projects/user",
       "sourceRoot": "projects/user/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -759,11 +759,11 @@
         }
       }
     },
-    "@camelot/cms": {
+    "@ta/cms": {
       "projectType": "library",
       "root": "projects/cms",
       "sourceRoot": "projects/cms/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -789,11 +789,11 @@
         }
       }
     },
-    "@camelot/wysiswyg": {
+    "@ta/wysiswyg": {
       "projectType": "library",
       "root": "projects/wysiswyg",
       "sourceRoot": "projects/wysiswyg/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -819,11 +819,11 @@
         }
       }
     },
-    "@camelot/charts": {
+    "@ta/charts": {
       "projectType": "library",
       "root": "projects/charts",
       "sourceRoot": "projects/charts/src",
-      "prefix": "cam",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -849,7 +849,7 @@
         }
       }
     },
-    "@camelot/project": {
+    "@ta/project": {
       "projectType": "library",
       "root": "projects/features/project",
       "sourceRoot": "projects/features/project/src",

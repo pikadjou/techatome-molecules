@@ -1,27 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { InputImages } from '@camelot/form-model';
-import { FileData, pickImages, removeElement } from '@camelot/utils';
+import { InputImages } from '@ta/form-model';
+import { FileData, pickImages, removeElement } from '@ta/utils';
 
-import { InputImageModal } from './modal/input-images-modal.component';
 import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputImageModal } from './modal/input-images-modal.component';
 
 @Component({
-  selector: 'cam-input-images',
+  selector: 'ta-input-images',
   templateUrl: './input-images.component.html',
   styleUrls: ['./input-images.component.scss'],
 })
-export class InputImagesComponent
-  extends CamAbstractInputComponent<InputImages>
-  implements OnInit
-{
+export class InputImagesComponent extends CamAbstractInputComponent<InputImages> implements OnInit {
   get selection(): string[] {
     return this.input.value;
   }
 
   get fileDataSelection(): FileData[] {
-    return this.selection.map((selection) => ({
+    return this.selection.map(selection => ({
       id: 0,
       type: 'Image',
       url: selection,
@@ -46,18 +43,14 @@ export class InputImagesComponent
     super.ngOnInit();
     if (this.input.removeFile$) {
       this._registerSubscription(
-        this.input.removeFile$.subscribe((fileData) =>
-          removeElement(this.selection, fileData.url)
-        )
+        this.input.removeFile$.subscribe(fileData => removeElement(this.selection, fileData.url))
       );
     }
   }
 
   public async openDialog() {
     if (!this.input.files$) {
-      this.selection.push(
-        ...(await pickImages()).map((image) => image.localUrl!)
-      );
+      this.selection.push(...(await pickImages()).map(image => image.localUrl!));
 
       return;
     }
@@ -67,7 +60,7 @@ export class InputImagesComponent
     });
 
     this._registerSubscription(
-      dialogRef.afterClosed().subscribe((selection) => {
+      dialogRef.afterClosed().subscribe(selection => {
         if (!selection) {
           return;
         }
@@ -77,7 +70,7 @@ export class InputImagesComponent
   }
 
   public onFileDeleted(fileData: FileData) {
-    this.selection = this.selection.filter((url) => url !== fileData.url);
+    this.selection = this.selection.filter(url => url !== fileData.url);
   }
 }
 

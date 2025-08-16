@@ -4,7 +4,7 @@ import { SwitchCasesSubTypeChanged } from '../../../../../services/dto/switch-ca
 import { SwitchCaseBaseComponent } from '../switch-case-base/switch-case-base.component';
 
 @Component({
-  selector: 'cam-switch-cases-sub-type-changed',
+  selector: 'ta-switch-cases-sub-type-changed',
   templateUrl: './switch-cases-sub-type-changed.component.html',
   styleUrls: ['./switch-cases-sub-type-changed.component.scss'],
 })

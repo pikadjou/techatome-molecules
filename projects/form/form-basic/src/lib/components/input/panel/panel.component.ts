@@ -1,10 +1,10 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
-import { InputPanel } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
+import { InputPanel } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-form-panel',
+  selector: 'ta-form-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss'],
 })

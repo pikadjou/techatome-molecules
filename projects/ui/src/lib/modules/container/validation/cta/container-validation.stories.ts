@@ -2,10 +2,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { TranslatePipe } from '@camelot/translation';
-import { CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { TranslatePipe } from '@ta/translation';
+import { CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ValidationModal } from '../modal/modal-validation.component';
 import { ContainerValidationComponent } from './container-validation.component';
@@ -27,9 +26,9 @@ export default {
     return {
       props,
       template: `
-      <cam-container-validation (validated)="validated()">
+      <ta-container-validation (validated)="validated()">
         Validation modal
-      </cam-container-validation>
+      </ta-container-validation>
       `,
     };
   },

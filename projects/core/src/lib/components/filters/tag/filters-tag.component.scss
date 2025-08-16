@@ -1,10 +1,10 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .badge-container {
   padding-right: get-var(space, sm);
   @include fontSizeBody(md);
 
-  cam-badge {
+  ta-badge {
     display: inline-block;
   }
 }

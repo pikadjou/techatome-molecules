@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { InputBase } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 import { Subject } from 'rxjs';
-
-import { InputBase } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
 
 import { ActiveFilterTag } from '../types';
 
 @Component({
-  selector: 'cam-filters-container',
+  selector: 'ta-filters-container',
   templateUrl: './filters-container.component.html',
   styleUrls: ['./filters-container.component.scss'],
 })

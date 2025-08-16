@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { CamIconType } from '@camelot/icons';
-import { CamSizes } from '@camelot/styles';
-import { extractExtension } from '@camelot/utils';
+import { CamIconType } from '@ta/icons';
+import { CamSizes } from '@ta/styles';
+import { extractExtension } from '@ta/utils';
 
 @Component({
-  selector: 'cam-file-image',
+  selector: 'ta-file-image',
   templateUrl: './file-image.component.html',
   styleUrls: ['./file-image.component.scss'],
 })

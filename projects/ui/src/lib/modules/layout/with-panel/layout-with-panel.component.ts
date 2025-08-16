@@ -1,15 +1,8 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'cam-layout-with-panel',
+  selector: 'ta-layout-with-panel',
   templateUrl: './layout-with-panel.component.html',
   styleUrls: ['./layout-with-panel.component.scss'],
 })

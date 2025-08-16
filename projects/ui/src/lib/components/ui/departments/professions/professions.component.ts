@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 @Component({
-  selector: 'cam-department-professions',
+  selector: 'ta-department-professions',
   templateUrl: './professions.component.html',
   styleUrls: ['./professions.component.scss'],
 })

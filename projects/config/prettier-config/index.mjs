@@ -36,7 +36,7 @@ export default {
     '^@angular/(.*)$',
     '^rxjs/(.*)$',
     '<THIRD_PARTY_MODULES>',
-    '^@camelot/(.*)$',
+    '^@ta/(.*)$',
     '^src/(.*)$',
     '^[../]',
     '^[./]',

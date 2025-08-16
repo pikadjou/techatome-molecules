@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export type BadgeType = 'danger' | 'warning' | 'success' | 'primary' | 'secondary' | 'info' | 'purple' | 'orange';
 @Component({
-  selector: 'cam-badge',
+  selector: 'ta-badge',
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.scss'],
 })

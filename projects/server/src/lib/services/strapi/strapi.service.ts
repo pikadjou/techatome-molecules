@@ -1,9 +1,8 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
+import { isNonNullable } from '@ta/utils';
 import { filter, map } from 'rxjs';
-
-import { isNonNullable } from '@camelot/utils';
 
 import { GraphQueryPayload } from '../graphql/models/graphPayload';
 import { CamBaseService } from '../server/baseService';

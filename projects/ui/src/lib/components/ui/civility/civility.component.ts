@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { Civility } from '@camelot/utils';
+import { Civility } from '@ta/utils';
 
 @Component({
-  selector: 'cam-civility',
+  selector: 'ta-civility',
   templateUrl: './civility.component.html',
   styleUrls: ['./civility.component.scss'],
 })

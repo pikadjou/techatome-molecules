@@ -1,14 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { fullName } from '@camelot/utils';
+import { fullName } from '@ta/utils';
 
-import {
-  CommunicationParticipant,
-  CommunicationParticipantExtended,
-} from '../../services/dto/communication';
+import { CommunicationParticipant, CommunicationParticipantExtended } from '../../services/dto/communication';
 
 @Component({
-  selector: 'cam-communication-participant',
+  selector: 'ta-communication-participant',
   templateUrl: './participant.component.html',
   styleUrls: ['./participant.component.scss'],
 })
@@ -20,14 +17,11 @@ export class ParticipantComponent {
   participant!: CommunicationParticipant;
 
   get conversationParticipant() {
-    return this.conversationParticipants.find((p) => {
+    return this.conversationParticipants.find(p => {
       if (this.participant.userId && p.userId === this.participant.userId) {
         return true;
       }
-      if (
-        this.participant.contactId &&
-        p.contactId === this.participant.contactId
-      ) {
+      if (this.participant.contactId && p.contactId === this.participant.contactId) {
         return true;
       }
       return false;

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AbstractNotificationTemplateComponent } from '../abstract';
 
 @Component({
-  selector: 'cam-new-invoice',
+  selector: 'ta-new-invoice',
   templateUrl: './new-invoice.component.html',
   styleUrls: ['./new-invoice.component.scss'],
 })

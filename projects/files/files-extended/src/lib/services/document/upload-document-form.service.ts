@@ -2,15 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { map } from 'rxjs/operators';
 
+import { InputBase, InputDropdown, InputPanel, InputTextarea } from '@ta/form-model';
+import { TranslatedEnumeration } from '@ta/services';
 import { of } from 'rxjs';
-
-import {
-  InputBase,
-  InputDropdown,
-  InputPanel,
-  InputTextarea,
-} from '@camelot/form-model';
-import { TranslatedEnumeration } from '@camelot/services';
 
 import { UploadDocumentData } from './upload-document-data';
 
@@ -32,7 +26,7 @@ export class UploadDocumentFormService {
             label: 'documents.upload.dialog.document-type',
             options: data.documentTypes$.pipe(
               map((fileTypes: TranslatedEnumeration[]) => {
-                return fileTypes.map((fileType) => {
+                return fileTypes.map(fileType => {
                   return {
                     id: fileType.id.toString(),
                     name: fileType.translatedValue,

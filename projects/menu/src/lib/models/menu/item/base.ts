@@ -1,9 +1,8 @@
 import { TemplateRef } from '@angular/core';
 import { QueryParamsHandling } from '@angular/router';
 
+import { isNonNullable } from '@ta/utils';
 import { Observable, of } from 'rxjs';
-
-import { isNonNullable } from '@camelot/utils';
 
 export class MenuBase {
   key: string;
@@ -35,12 +34,9 @@ export class MenuBase {
     this.style = options.style || 'bloc';
     this.children = options.children || [];
     this.visible$ = options.visible$ || of(true);
-    this.defaultOpen =
-      options.defaultOpen === undefined ? false : options.defaultOpen;
+    this.defaultOpen = options.defaultOpen === undefined ? false : options.defaultOpen;
     this.exact = options.exact === undefined ? false : options.exact;
-    this.replaceUrl = isNonNullable(options.replaceUrl)
-      ? options.replaceUrl
-      : false;
+    this.replaceUrl = isNonNullable(options.replaceUrl) ? options.replaceUrl : false;
     this.queryParamsHandling = options.queryParamsHandling ?? '';
     this.disabled = options.disabled === undefined ? false : options.disabled;
     this.translationData = options.translationData;

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'cam-list-tag',
+  selector: 'ta-list-tag',
   templateUrl: './list-tag.component.html',
   styleUrls: ['./list-tag.component.scss'],
 })

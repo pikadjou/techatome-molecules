@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'cam-layout-panel',
+  selector: 'ta-layout-panel',
   templateUrl: './layout-panel.component.html',
   styleUrls: ['./layout-panel.component.scss'],
 })

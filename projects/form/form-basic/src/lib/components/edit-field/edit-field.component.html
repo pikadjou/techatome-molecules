@@ -1,4 +1,4 @@
-<cam-loader [isLoading]="this.isLoading">
+<ta-loader [isLoading]="this.isLoading">
   @let input = this.renderInput();
   @if (!this.editMode()) {
     <div
@@ -12,13 +12,13 @@
     </div>
   } @else if (input) {
     <div class="align-center g-space-sm">
-      <cam-inputs
+      <ta-inputs
         class="flex-fill"
         appStopPropagation
         [input]="input"
         [standalone]="true"
         [onFocus]="this.onFocus"
-      ></cam-inputs>
+      ></ta-inputs>
     </div>
   }
-</cam-loader>
+</ta-loader>

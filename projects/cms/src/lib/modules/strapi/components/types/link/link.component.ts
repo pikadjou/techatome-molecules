@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { RichParagraphLink } from '../../../services/dto/types/rich-text';
 
 @Component({
-  selector: 'cam-rich-paragraph-link',
+  selector: 'ta-rich-paragraph-link',
   templateUrl: './link.component.html',
   styleUrls: ['./link.component.scss'],
 })

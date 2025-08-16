@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .main-nav-container {
   @include media-breakpoint-up(sm) {
@@ -41,8 +41,7 @@
 
   @include media-breakpoint-up(sm) {
     border-radius: 0px 3px 3px 0px;
-    padding: get-var(components, header, top) get-var(space, sm) 0
-      get-var(space, sm);
+    padding: get-var(components, header, top) get-var(space, sm) 0 get-var(space, sm);
     padding-bottom: calc(get-var(space, sm) + env(safe-area-inset-bottom));
 
     align-content: space-between();
@@ -51,8 +50,7 @@
   }
 
   @include media-breakpoint-up(lg) {
-    padding: get-var(components, header, top) get-var(space, md) 0
-      get-var(space, md);
+    padding: get-var(components, header, top) get-var(space, md) 0 get-var(space, md);
     padding-bottom: calc(get-var(space, md) + env(safe-area-inset-bottom));
   }
 

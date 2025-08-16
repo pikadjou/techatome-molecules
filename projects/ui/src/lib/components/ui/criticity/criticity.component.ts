@@ -11,7 +11,7 @@ export enum CriticityStatus {
 export const criticityLabel = (criticity: CriticityStatus) => `ui.criticity.${criticity}`;
 
 @Component({
-  selector: 'cam-criticity',
+  selector: 'ta-criticity',
   templateUrl: './criticity.component.html',
   styleUrls: ['./criticity.component.scss'],
 })

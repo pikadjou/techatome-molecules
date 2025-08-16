@@ -3,16 +3,13 @@ import { Component } from '@angular/core';
 import { AbstractNotificationTemplateComponent } from '../abstract';
 
 @Component({
-  selector: 'cam-new-quotation-version',
+  selector: 'ta-new-quotation-version',
   templateUrl: './new-quotation-version.component.html',
   styleUrls: ['./new-quotation-version.component.scss'],
 })
 export class NewQuotationVersionComponent extends AbstractNotificationTemplateComponent {
   override goTo() {
-    if (
-      !this.sharedService.routing ||
-      !this.sharedService.routing.quotationVersion
-    ) {
+    if (!this.sharedService.routing || !this.sharedService.routing.quotationVersion) {
       return;
     }
     super.goTo();

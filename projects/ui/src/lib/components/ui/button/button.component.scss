@@ -1,4 +1,4 @@
-@import 'camelot-export';
+@import 'ta-export';
 
 .button {
   width: 100%;
@@ -46,7 +46,7 @@
       background-color: get-var(surface, tertiary);
     }
 
-    cam-font-icon {
+    ta-font-icon {
       color: get-var(icon, invert, primary);
     }
   }
@@ -65,7 +65,7 @@
       border-color: get-var(border, primary);
     }
 
-    cam-font-icon {
+    ta-font-icon {
       color: get-var(icon, brand, primary);
     }
   }

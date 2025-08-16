@@ -4,23 +4,22 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { map } from 'rxjs/operators';
 
-import { Observable, combineLatest, of } from 'rxjs';
-
-import { Document, FileMetadata } from '@camelot/files-extended';
+import { Document, FileMetadata } from '@ta/files-extended';
 import {
   BottomSheetData,
   BottomSheetTemplateBasicComponent,
   BottomSheetTemplateBasicParams,
   FilterHelper,
   Menu,
-} from '@camelot/menu';
-import { openModal } from '@camelot/ui';
-import { CamBaseComponent, FileData, downloadFile, getFileExtension } from '@camelot/utils';
+} from '@ta/menu';
+import { openModal } from '@ta/ui';
+import { CamBaseComponent, FileData, downloadFile, getFileExtension } from '@ta/utils';
+import { Observable, combineLatest, of } from 'rxjs';
 
 import { UploadDocumentModal, UploadDocumentResult } from './upload/upload-visit-document/upload-document.component';
 
 @Component({
-  selector: 'cam-documents',
+  selector: 'ta-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
 })

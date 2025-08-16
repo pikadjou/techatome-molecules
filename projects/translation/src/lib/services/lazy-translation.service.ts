@@ -1,8 +1,7 @@
 import { inject } from '@angular/core';
 
+import { CamBaseStrapiService } from '@ta/server';
 import { Observable, map } from 'rxjs';
-
-import { CamBaseStrapiService } from '@camelot/server';
 
 import { Translation } from './dto/translation';
 import { GET_TRANSLATIONS } from './queries';

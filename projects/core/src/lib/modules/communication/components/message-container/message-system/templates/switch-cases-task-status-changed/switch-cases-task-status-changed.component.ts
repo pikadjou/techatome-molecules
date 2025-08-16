@@ -4,7 +4,7 @@ import { SwitchCasesTaskStatusChanged } from '../../../../../services/dto/switch
 import { SwitchCaseBaseComponent } from '../switch-case-base/switch-case-base.component';
 
 @Component({
-  selector: 'cam-switch-cases-task-status-changed',
+  selector: 'ta-switch-cases-task-status-changed',
   templateUrl: './switch-cases-task-status-changed.component.html',
   styleUrls: ['./switch-cases-task-status-changed.component.scss'],
 })

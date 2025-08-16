@@ -3,18 +3,17 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
+import { InputComponent } from '@ta/form-model';
+import { CamIconsModule } from '@ta/icons';
+import { CamLayoutModule, CamUiModule } from '@ta/ui';
+import { CamBaseModal } from '@ta/utils';
 import { Subject } from 'rxjs';
-
-import { InputComponent } from '@camelot/form-model';
-import { CamIconsModule } from '@camelot/icons';
-import { CamLayoutModule, CamUiModule } from '@camelot/ui';
-import { CamBaseModal } from '@camelot/utils';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
-  selector: 'cam-input-component',
+  selector: 'ta-input-component',
   standalone: true,
   imports: [InputLayoutComponent, ReactiveFormsModule, CamIconsModule],
   templateUrl: './component.component.html',

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 
-import { CamDeviceInfoService } from '@camelot/capacitor';
-import { CamBaseComponent } from '@camelot/utils';
+import { CamDeviceInfoService } from '@ta/capacitor';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-swiper-light',
+  selector: 'ta-swiper-light',
   templateUrl: './swiper-light.component.html',
   styleUrls: ['./swiper-light.component.scss'],
 })
@@ -35,10 +35,10 @@ export class SwiperLightComponent extends CamBaseComponent implements OnInit {
       this.classes = `items ${this.swiperClasses ?? ''}`;
     } else {
       this._registerSubscription(
-        this._deviceInfoService.os$.subscribe((os) => {
+        this._deviceInfoService.os$.subscribe(os => {
           this.classes = this._deviceInfoService.isMobileOs(os)
             ? `items ${this.swiperClasses ?? ''}`
-            : this.containerClasses ?? '';
+            : (this.containerClasses ?? '');
         })
       );
     }

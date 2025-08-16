@@ -1,9 +1,8 @@
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamDeviceInfoService } from '@camelot/capacitor';
-import { CamUiModule } from '@camelot/ui';
+import { CamDeviceInfoService } from '@ta/capacitor';
+import { CamUiModule } from '@ta/ui';
 
 import { SwiperLightComponent } from './swiper-light.component';
 
@@ -17,7 +16,7 @@ export default {
       providers: [CamDeviceInfoService],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
@@ -38,13 +37,13 @@ export default {
         }
         </style>
         <div class="{{mobileClass}} border">
-          <cam-swiper-light [items]="items" [template]="template" [swiperClasses]="swiperClasses" [containerClasses]="containerClasses"></cam-swiper-light>
+          <ta-swiper-light [items]="items" [template]="template" [swiperClasses]="swiperClasses" [containerClasses]="containerClasses"></ta-swiper-light>
 
           <ng-template #template let-element="element">
             <div class="col-12 col-sm-6 col-xl-3 m-sm">
-              <cam-card>
-                <cam-card-content>{{ element.label }}</cam-card-content>
-              </cam-card>
+              <ta-card>
+                <ta-card-content>{{ element.label }}</ta-card-content>
+              </ta-card>
             </div>
           </ng-template>
         </div>

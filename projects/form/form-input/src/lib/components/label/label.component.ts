@@ -2,10 +2,10 @@ import { NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ValidatorFn, Validators } from '@angular/forms';
 
-import { TranslatePipe } from '@camelot/translation';
+import { TranslatePipe } from '@ta/translation';
 
 @Component({
-  selector: 'cam-form-label',
+  selector: 'ta-form-label',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   standalone: true,

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-trigram',
+  selector: 'ta-trigram',
   templateUrl: './trigram.component.html',
   styleUrls: ['./trigram.component.scss'],
 })

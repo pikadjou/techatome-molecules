@@ -8,14 +8,14 @@ export default {
   title: 'UI/Label',
   component: LabelComponent,
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-label [type]="type">
+        <ta-label [type]="type">
           Je suis un badge
-        </cam-label>
+        </ta-label>
       `,
     };
   },

@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 import { Menu } from '../../models/menu/menu';
 
 @Component({
-  selector: 'cam-menu',
+  selector: 'ta-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })

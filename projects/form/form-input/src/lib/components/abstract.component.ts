@@ -9,17 +9,15 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { CamBaseComponent } from '@camelot/utils';
-import { InputBase } from '@camelot/form-model';
 import { Validators } from '@angular/forms';
-import { delay, Observable } from 'rxjs';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+import { InputBase } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
+import { Observable, delay } from 'rxjs';
 
 @Component({ template: '' })
-export abstract class CamAbstractInputComponent<
-    C extends InputBase<any>,
-    V = unknown
-  >
+export abstract class CamAbstractInputComponent<C extends InputBase<any>, V = unknown>
   extends CamBaseComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
@@ -56,7 +54,7 @@ export abstract class CamAbstractInputComponent<
     }
     this._registerSubscription(
       this.input.changeValue$.subscribe({
-        next: (value) => this.onChange(value),
+        next: value => this.onChange(value),
       })
     );
   }

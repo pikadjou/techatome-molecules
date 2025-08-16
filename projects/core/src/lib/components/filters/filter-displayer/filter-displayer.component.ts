@@ -1,22 +1,12 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import { InputBase } from '@camelot/form-model';
-import {
-  BottomSheetTemplateGenericComponent,
-  BottomSheetTemplateGenericParams,
-} from '@camelot/menu';
-import { CamBaseComponent } from '@camelot/utils';
+import { InputBase } from '@ta/form-model';
+import { BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams } from '@ta/menu';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-filter-displayer',
+  selector: 'ta-filter-displayer',
   templateUrl: './filter-displayer.component.html',
   styleUrls: ['./filter-displayer.component.scss'],
 })
@@ -45,16 +35,16 @@ export class FilterDisplayerComponent extends CamBaseComponent {
 
     if (this.mobileDetection) {
       if (value) {
-        this._bottomSheet.open<
+        this._bottomSheet.open<BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams<null>>(
           BottomSheetTemplateGenericComponent,
-          BottomSheetTemplateGenericParams<null>
-        >(BottomSheetTemplateGenericComponent, {
-          panelClass: 'no-padding',
-          data: {
-            template: this.filterTemplate,
-            context: null,
-          },
-        });
+          {
+            panelClass: 'no-padding',
+            data: {
+              template: this.filterTemplate,
+              context: null,
+            },
+          }
+        );
       } else {
         this._bottomSheet.dismiss();
       }

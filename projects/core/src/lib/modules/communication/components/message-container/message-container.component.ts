@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import {
   Communication,
@@ -6,11 +7,10 @@ import {
   CommunicationStatus,
   CommunicationType,
 } from '../../services/dto/communication';
-import {CommunicationErrorModal} from "../communication-status/modal/modal.component";
-import {MatDialog} from "@angular/material/dialog";
+import { CommunicationErrorModal } from '../communication-status/modal/modal.component';
 
 @Component({
-  selector: 'cam-communication-message-container',
+  selector: 'ta-communication-message-container',
   templateUrl: './message-container.component.html',
   styleUrls: ['./message-container.component.scss'],
 })
@@ -30,12 +30,11 @@ export class MessageContainerComponent {
   readonly CommunicationType = CommunicationType;
   readonly CommunicationStatus = CommunicationStatus;
 
-  constructor(private _dialog: MatDialog) {
-  }
+  constructor(private _dialog: MatDialog) {}
 
   public open() {
-    if(this.communication.id){
-      this._dialog.open(CommunicationErrorModal, { data: { communicationId: this.communication.id } })
+    if (this.communication.id) {
+      this._dialog.open(CommunicationErrorModal, { data: { communicationId: this.communication.id } });
     }
   }
 }

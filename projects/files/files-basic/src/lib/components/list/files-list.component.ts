@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamBaseComponent, FileData, FileType } from '@camelot/utils';
+import { CamBaseComponent, FileData, FileType } from '@ta/utils';
 
 @Component({
-  selector: 'cam-files-list',
+  selector: 'ta-files-list',
   templateUrl: './files-list.component.html',
   styleUrls: ['./files-list.component.scss'],
 })
@@ -18,8 +18,7 @@ export class FileListComponent extends CamBaseComponent {
   fileSelected = new EventEmitter<FileData & { index: number }>();
 
   @Output()
-  moreInformationSelected: EventEmitter<FileData> =
-    new EventEmitter<FileData>();
+  moreInformationSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
 
   @Output()
   fileDeleted = new EventEmitter<FileData>();

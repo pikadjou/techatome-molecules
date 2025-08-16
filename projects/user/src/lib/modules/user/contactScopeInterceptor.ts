@@ -1,10 +1,9 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, Optional, inject } from '@angular/core';
 
+import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from '@ta/server';
+import { APPLICATION_CONFIG, IApplicationConfig } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from '@camelot/server';
-import { APPLICATION_CONFIG, IApplicationConfig } from '@camelot/utils';
 
 import { CamUsersService } from './services/users.service';
 

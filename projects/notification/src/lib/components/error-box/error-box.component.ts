@@ -2,11 +2,10 @@ import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { CamServerErrorService, ServerError } from '@ta/server';
+import { CamLayoutModule, CamUiModule } from '@ta/ui';
+import { CamBaseModal, copyTextToClipboard } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { CamServerErrorService, ServerError } from '@camelot/server';
-import { CamLayoutModule, CamUiModule } from '@camelot/ui';
-import { CamBaseModal, copyTextToClipboard } from '@camelot/utils';
 
 import { ENotificationCode } from '../../enum';
 import { LAZY_SERVICE_TOKEN } from '../../services/notification.service';

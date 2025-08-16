@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleSimpleRequest, MappingApiType, Request } from '@ta/server';
+import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 import { filter, map } from 'rxjs';
-
-import {
-  CamBaseService,
-  GraphEndpoint,
-  HandleSimpleRequest,
-  MappingApiType,
-  Request,
-} from '@camelot/server';
-import { isNonNullable, keepUniqueObjectByProperty } from '@camelot/utils';
 
 import { DocumentDto } from './dto/document';
 import { UploadFilePayloadInput } from './dto/post/UploadFilePayloadInput';
@@ -42,27 +35,21 @@ export class CamDocumentsService extends CamBaseService {
   }
 
   public getDocuments(ids: string[]) {
-    return this.documents.get()?.filter((doc) => ids.includes(doc.id));
+    return this.documents.get()?.filter(doc => ids.includes(doc.id));
   }
 
   public getDocuments$(ids: string[]) {
-    return this.documents
-      .get$()
-      .pipe(map((list) => list?.filter((doc) => ids.includes(doc.id))));
+    return this.documents.get$().pipe(map(list => list?.filter(doc => ids.includes(doc.id))));
   }
   public fetchDocuments$(ids: string[]) {
     return this.documents.fetch(
       this._graphService
-        .fetchPagedQueryList<DocumentDto>(
-          GET_DOCUMENTS({ ids }),
-          'documents',
-          graphEndpoint.clientName
-        )
+        .fetchPagedQueryList<DocumentDto>(GET_DOCUMENTS({ ids }), 'documents', graphEndpoint.clientName)
         .pipe(
-          map((data) => data.items ?? []),
+          map(data => data.items ?? []),
           filter(isNonNullable),
-          map((list) => [...(list ?? []), ...(this.documents.get() ?? [])]),
-          map((list) => keepUniqueObjectByProperty(list, (item) => item.id))
+          map(list => [...(list ?? []), ...(this.documents.get() ?? [])]),
+          map(list => keepUniqueObjectByProperty(list, item => item.id))
         )
     );
   }

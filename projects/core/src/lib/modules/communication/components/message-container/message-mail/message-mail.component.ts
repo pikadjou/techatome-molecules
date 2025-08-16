@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Communication, CommunicationParticipantExtended } from '../../../services/dto/communication';
 
 @Component({
-  selector: 'cam-communication-message-mail',
+  selector: 'ta-communication-message-mail',
   templateUrl: './message-mail.component.html',
   styleUrls: ['./message-mail.component.scss'],
 })

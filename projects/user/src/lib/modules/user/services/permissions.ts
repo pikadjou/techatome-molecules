@@ -1,9 +1,8 @@
 import { map } from 'rxjs/operators';
 
+import { Logger } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 import { BehaviorSubject, Observable, filter } from 'rxjs';
-
-import { Logger } from '@camelot/server';
-import { isNonNullable } from '@camelot/utils';
 
 /** @deprecated */
 export class PermissionsCore {

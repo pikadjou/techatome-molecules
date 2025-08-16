@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-error',
+  selector: 'ta-error',
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss'],
 })

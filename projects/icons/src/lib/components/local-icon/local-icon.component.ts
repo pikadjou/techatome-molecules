@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { CamSizes } from '@camelot/styles';
+import { CamSizes } from '@ta/styles';
 
 import { CamIconType, CamIconsService } from '../../services/icons.service';
 
@@ -9,7 +9,7 @@ import { CamIconType, CamIconsService } from '../../services/icons.service';
  * @deprecated
  */
 @Component({
-  selector: 'cam-local-icon',
+  selector: 'ta-local-icon',
   templateUrl: './local-icon.component.html',
   styleUrls: ['./local-icon.component.scss'],
 })
@@ -38,9 +38,7 @@ export class LocalIconComponent {
   ) {}
 
   public getSvgIcon() {
-    return this._sanitizer.bypassSecurityTrustHtml(
-      this._iconService.getIcon(this.type as CamIconType)
-    );
+    return this._sanitizer.bypassSecurityTrustHtml(this._iconService.getIcon(this.type as CamIconType));
   }
   public getSize(): string {
     if (this.size === 'xs') {

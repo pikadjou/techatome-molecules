@@ -1,43 +1,34 @@
 <ng-container *ngIf="this.isShowed">
   <div class="pwa-layout">
-    <cam-toast>
+    <ta-toast>
       <div class="pwa-container">
         <div class="title-container">
           <div class="mb-space-lg">
-            <cam-logo
-              [widthPercentage]="this.pictureWidth"
-              [type]="'oneline'"
-              color="black"
-            ></cam-logo>
+            <ta-logo [widthPercentage]="this.pictureWidth" [type]="'oneline'" color="black"></ta-logo>
           </div>
-          <cam-title [level]="3" class="mb-space-xs title">{{
-            "ui.pwa.title" | translate
-          }}</cam-title>
-          {{ "ui.pwa.description" | translate }}
+          <ta-title [level]="3" class="mb-space-xs title">{{ 'ui.pwa.title' | translate }}</ta-title>
+          {{ 'ui.pwa.description' | translate }}
         </div>
         <div class="cta col-auto flex-column g-space-md">
           <div class="cta-button flex-column g-space-md">
-            <cam-button (action)="this.onYesClick()">
+            <ta-button (action)="this.onYesClick()">
               <div class="button-content">
-                <cam-font-icon
-                  name="download"
-                  class="mr-space-xs"
-                ></cam-font-icon>
-                {{ "ui.pwa.install" | translate }}
+                <ta-font-icon name="download" class="mr-space-xs"></ta-font-icon>
+                {{ 'ui.pwa.install' | translate }}
               </div>
-            </cam-button>
-            <cam-button [style]="'secondary'" (action)="this.onNoClick()">
-              {{ "ui.pwa.cancel" | translate }}
-            </cam-button>
+            </ta-button>
+            <ta-button [style]="'secondary'" (action)="this.onNoClick()">
+              {{ 'ui.pwa.cancel' | translate }}
+            </ta-button>
           </div>
           <div class="link-container flex-row g-space-sm">
-            <cam-font-icon name="close-tool" type="sm"></cam-font-icon>
-            <cam-link (action)="this.dontAsk()">
-              {{ "ui.pwa.no-more" | translate }}
-            </cam-link>
+            <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
+            <ta-link (action)="this.dontAsk()">
+              {{ 'ui.pwa.no-more' | translate }}
+            </ta-link>
           </div>
         </div>
       </div>
-    </cam-toast>
+    </ta-toast>
   </div>
 </ng-container>

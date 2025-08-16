@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Department } from './interface';
 
 @Component({
-  selector: 'cam-departments',
+  selector: 'ta-departments',
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.scss'],
 })

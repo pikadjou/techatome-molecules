@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .cta {
   border-top: 1px solid get-var(neutral, main);
@@ -6,7 +6,7 @@
   padding-top: get-var(space, md);
 }
 
-@include in-context(".no-card-border") {
+@include in-context('.no-card-border') {
   .cta {
     border-width: 0px;
   }

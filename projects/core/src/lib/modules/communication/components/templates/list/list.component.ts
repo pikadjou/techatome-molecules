@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 
-import { CamBaseComponent, Culture } from '@camelot/utils';
+import { CamBaseComponent, Culture } from '@ta/utils';
 
 import {
   AbstractCellComponent,
@@ -15,7 +15,7 @@ import { Template, TemplateVariant } from '../../../services/dto/template';
 import { CamCommunicationsTemplatesService } from '../../../services/templates.service';
 
 @Component({
-  selector: 'cam-communication-template-list',
+  selector: 'ta-communication-template-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -25,11 +25,8 @@ export class CommunicationTemplateListComponent extends CamBaseComponent {
 
   readonly id = 'communicationTemplateList';
 
-  readonly communicationsTemplateService = inject(
-    CamCommunicationsTemplatesService
-  );
-  readonly list$ =
-    this.communicationsTemplateService.communicationTemplates.get$();
+  readonly communicationsTemplateService = inject(CamCommunicationsTemplatesService);
+  readonly list$ = this.communicationsTemplateService.communicationTemplates.get$();
 
   readonly fieldsOverrides: {
     [index in keyof Partial<Template>]: AgGrid_ColDef;
@@ -53,7 +50,7 @@ export class CommunicationTemplateListComponent extends CamBaseComponent {
     this._grid = this._dataService.get(this.id, true);
     this._grid.switchView('grid');
     this._registerSubscription(
-      this._grid.selectedData$.subscribe((data) => {
+      this._grid.selectedData$.subscribe(data => {
         if (data.length == 1) {
           this.goToTemplate(data[0].id);
         }
@@ -69,8 +66,7 @@ export class CommunicationTemplateListComponent extends CamBaseComponent {
       complete: () => {
         this.requestState.completed();
       },
-      error: (error: HttpErrorResponse) =>
-        this.requestState.onError(error.status, error.statusText),
+      error: (error: HttpErrorResponse) => this.requestState.onError(error.status, error.statusText),
     });
   }
 }
@@ -82,13 +78,10 @@ export class CommunicationTemplateListComponent extends CamBaseComponent {
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '',
   template: `<div class="align-center" style="height: 100%">
-    <cam-culture [cultures]="this.availableCultures"></cam-culture>
+    <ta-culture [cultures]="this.availableCultures"></ta-culture>
   </div>`,
 })
-export class CultureCellComponent extends AbstractCellComponent<
-  any,
-  Culture[]
-> {
+export class CultureCellComponent extends AbstractCellComponent<any, Culture[]> {
   get availableCultures() {
     return this.value ?? [];
   }
@@ -98,15 +91,12 @@ export class CultureCellComponent extends AbstractCellComponent<
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '',
   template: `<div class="align-center" style="height: 100%">
-    <cam-text>{{ this.title }}</cam-text>
+    <ta-text>{{ this.title }}</ta-text>
 
-    <!-- <cam-text [innerHTML]="this.body"></cam-text> -->
+    <!-- <ta-text [innerHTML]="this.body"></ta-text> -->
   </div>`,
 })
-export class VariantsCellComponent extends AbstractCellComponent<
-  any,
-  TemplateVariant[]
-> {
+export class VariantsCellComponent extends AbstractCellComponent<any, TemplateVariant[]> {
   get body() {
     if (!this.value || this.value.length === 0) {
       return '';
@@ -125,13 +115,10 @@ export class VariantsCellComponent extends AbstractCellComponent<
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '',
   template: `<div class="align-center" style="height: 100%">
-    <cam-communication-type [value]="this.type"></cam-communication-type>
+    <ta-communication-type [value]="this.type"></ta-communication-type>
   </div>`,
 })
-export class CommunicationTypeCellComponent extends AbstractCellComponent<
-  any,
-  CommunicationType
-> {
+export class CommunicationTypeCellComponent extends AbstractCellComponent<any, CommunicationType> {
   get type() {
     return this.value ?? CommunicationType.Unknown;
   }

@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 
-import { fullName } from '@camelot/utils';
+import { fullName } from '@ta/utils';
 
 import { CommunicationParticipantExtended } from '../../../../../services/dto/communication';
 import { CamSharedCommunicationsService } from '../../../../../services/shared.service';
@@ -21,7 +21,7 @@ export class SwitchCaseBaseComponent<T> {
   readonly sharedService = inject(CamSharedCommunicationsService);
 
   public getConversationParticipant(id: string) {
-    const find = this.conversationParticipants.find((p) => {
+    const find = this.conversationParticipants.find(p => {
       if (p.userId === id) {
         return true;
       }

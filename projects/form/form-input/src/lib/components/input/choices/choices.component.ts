@@ -1,5 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 
+import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
+import { CamOverlayPanelComponent } from '@ta/ui';
+import { getUniqueArray, toArray } from '@ta/utils';
 import {
   BehaviorSubject,
   Observable,
@@ -13,14 +16,10 @@ import {
   tap,
 } from 'rxjs';
 
-import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@camelot/form-model';
-import { CamOverlayPanelComponent } from '@camelot/ui';
-import { getUniqueArray, toArray } from '@camelot/utils';
-
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-choices',
+  selector: 'ta-input-choices',
   templateUrl: './choices.component.html',
   styleUrls: ['./choices.component.scss'],
 })

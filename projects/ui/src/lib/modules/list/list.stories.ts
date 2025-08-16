@@ -1,7 +1,6 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { DepartmentIconListComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { DepartmentIconListComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ListElementComponent } from './element/list-element.component';
 import { ListContainerComponent } from './list-container/list-container.component';
@@ -27,29 +26,29 @@ export default {
       imports: [CamDirectivePipeModule],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-      <cam-list-container>   
+      <ta-list-container>   
           <ng-container *ngFor="let object of list">
-            <cam-list-element [withSeparator]="withSeparator" [flexColumn]="flexColumn">
-              <cam-list-title>
+            <ta-list-element [withSeparator]="withSeparator" [flexColumn]="flexColumn">
+              <ta-list-title>
                 {{object.title}}
-              </cam-list-title>
-              <cam-list-sub-title>
+              </ta-list-title>
+              <ta-list-sub-title>
                 {{object.subtitle}}
-              </cam-list-sub-title>
-              <cam-list-tag>
+              </ta-list-sub-title>
+              <ta-list-tag>
                 {{object.tag}}
-              </cam-list-tag>
-              <cam-list-extra-information>
+              </ta-list-tag>
+              <ta-list-extra-information>
                 {{object.extra}}
-              </cam-list-extra-information>
-            </cam-list-element>
+              </ta-list-extra-information>
+            </ta-list-element>
           </ng-container>
-      </cam-list-container>
+      </ta-list-container>
       `,
     };
   },

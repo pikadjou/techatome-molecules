@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AbstractNotificationTemplateComponent } from '../abstract';
 
 @Component({
-  selector: 'cam-task-new-activity',
+  selector: 'ta-task-new-activity',
   templateUrl: './task-new-activity.component.html',
   styleUrls: ['./task-new-activity.component.scss'],
 })

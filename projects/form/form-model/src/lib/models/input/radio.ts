@@ -1,6 +1,5 @@
+import { CamIconType } from '@ta/icons';
 import { Observable, of } from 'rxjs';
-
-import { CamIconType } from '@camelot/icons';
 
 import { IInputBase, InputBase } from './base';
 

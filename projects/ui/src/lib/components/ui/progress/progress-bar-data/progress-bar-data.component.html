@@ -1,26 +1,16 @@
 <div class="progress-container">
   <div class="title">
-    <cam-title [level]="3">{{ this.title | translate }}</cam-title>
-    <cam-material-icon [type]="'sm'" *ngIf="this.titleIcon">{{
-      this.titleIcon
-    }}</cam-material-icon>
+    <ta-title [level]="3">{{ this.title | translate }}</ta-title>
+    <ta-material-icon [type]="'sm'" *ngIf="this.titleIcon">{{ this.titleIcon }}</ta-material-icon>
   </div>
 
   <div class="right-side">
     <span class="progress-value">{{ this.progressValue }}</span>
-    <span *ngIf="this.description" class="description color-grey-600">{{
-      this.description | translate
+    <span *ngIf="this.description" class="description color-grey-600">{{ this.description | translate }}</span>
+    <span *ngIf="this.rightText?.text" class="description" [ngClass]="this.rightText?.colorClass ?? ''">{{
+      this.rightText?.text ?? '' | translate
     }}</span>
-    <span
-      *ngIf="this.rightText?.text"
-      class="description"
-      [ngClass]="this.rightText?.colorClass ?? ''"
-      >{{ this.rightText?.text ?? "" | translate }}</span
-    >
   </div>
 </div>
 
-<cam-progress-bar
-  [current]="this.current ?? 0"
-  [max]="this.max ?? 0"
-></cam-progress-bar>
+<ta-progress-bar [current]="this.current ?? 0" [max]="this.max ?? 0"></ta-progress-bar>

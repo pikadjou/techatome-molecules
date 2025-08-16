@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 
-import { InputLabel } from '@camelot/form-model';
+import { InputLabel } from '@ta/form-model';
+
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-label',
+  selector: 'ta-input-label',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
 })

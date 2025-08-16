@@ -10,7 +10,7 @@
     ]
   },
   "allowedNonPeerDependencies": [
-    "@camelot",
+    "@ta",
     "@angular/animations",
     "angular-calendar"
   ]

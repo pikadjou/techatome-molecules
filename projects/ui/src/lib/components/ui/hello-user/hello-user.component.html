@@ -2,10 +2,7 @@
   <div *ngIf="this.title" class="title">{{ this.title | translate }}</div>
 
   <div class="trigram" *ngIf="this.userInfo">
-    <cam-user-logo
-      [userInfo]="this.userInfo"
-      [size]="this.bulletSize"
-    ></cam-user-logo>
+    <ta-user-logo [userInfo]="this.userInfo" [size]="this.bulletSize"></ta-user-logo>
   </div>
 
   <div class="footer">

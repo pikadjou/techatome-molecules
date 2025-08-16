@@ -1,56 +1,41 @@
-<cam-search-field
+<ta-search-field
   #searchField
   [isOpen]="true"
   [placeholder]="this.placeholder"
   [input]="this.input"
   (valueCompleted)="this.searchCompleted($event)"
-  [matMenuTriggerFor]="
-    this.searchHistory?.type && this.isDropDown === true ? menu : null
-  "
-></cam-search-field>
+  [matMenuTriggerFor]="this.searchHistory?.type && this.isDropDown === true ? menu : null"
+></ta-search-field>
 
 <mat-menu #menu="matMenu">
   <div class="" [style.width.px]="this.searchFieldWidth">
     <ng-container *ngIf="this.menuTemplate">
-      <ng-container
-        *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"
-      ></ng-container>
+      <ng-container *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"></ng-container>
     </ng-container>
   </div>
 </mat-menu>
 
-<ng-container
-  *ngIf="
-    this.menuTemplate && this.searchHistory?.type && this.isDropDown === false
-  "
->
-  <ng-container
-    *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"
-  ></ng-container>
+<ng-container *ngIf="this.menuTemplate && this.searchHistory?.type && this.isDropDown === false">
+  <ng-container *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"></ng-container>
 </ng-container>
 
 <ng-template #menuTemplate>
   <div class="p-space-md">
-    <cam-contact-information
-      icon="history"
-      value="core.historical-research.last-searches"
-    >
-      <cam-empty
-        [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown"
-      >
-        <cam-list-container class="list-container">
+    <ta-contact-information icon="history" value="core.historical-research.last-searches">
+      <ta-empty [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown">
+        <ta-list-container class="list-container">
           <ng-container *ngFor="let search of this.listRecentSearches">
-            <cam-list-element (click)="this.searchCompleted(search)">
-              <cam-list-title>
+            <ta-list-element (click)="this.searchCompleted(search)">
+              <ta-list-title>
                 {{ search }}
-              </cam-list-title>
-              <cam-list-tag>
-                <cam-font-icon name="arrow-big-right" type="sm"></cam-font-icon>
-              </cam-list-tag>
-            </cam-list-element>
+              </ta-list-title>
+              <ta-list-tag>
+                <ta-font-icon name="arrow-big-right" type="sm"></ta-font-icon>
+              </ta-list-tag>
+            </ta-list-element>
           </ng-container>
-        </cam-list-container>
-      </cam-empty>
-    </cam-contact-information>
+        </ta-list-container>
+      </ta-empty>
+    </ta-contact-information>
   </div>
 </ng-template>

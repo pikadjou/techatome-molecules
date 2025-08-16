@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
+import { InputChoices, InputDropdown } from '@ta/form-model';
+import { CamBaseComponent, extractEnum, fullName, isNonNullable } from '@ta/utils';
 import { filter, map, of } from 'rxjs';
-
-import { InputChoices, InputDropdown } from '@camelot/form-model';
-import { CamBaseComponent, extractEnum, fullName, isNonNullable } from '@camelot/utils';
 
 import { CommunicationParticipantExtended, CommunicationType } from '../../services/dto/communication';
 
@@ -13,7 +12,7 @@ export type Filter = {
 };
 
 @Component({
-  selector: 'cam-conversation-filters',
+  selector: 'ta-conversation-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
 })

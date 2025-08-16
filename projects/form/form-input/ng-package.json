@@ -8,7 +8,7 @@
   },
   "allowedNonPeerDependencies": [
     "@angular",
-    "@camelot",
+    "@ta",
     "@types",
     "luxon",
     "ngx-material-timepicker",

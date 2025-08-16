@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 
-import { CamTranslationService } from '@camelot/translation';
+import { CamTranslationService } from '@ta/translation';
 
 @Component({
-  selector: 'cam-switch-language-cta',
+  selector: 'ta-switch-language-cta',
   templateUrl: './switch-language-cta.component.html',
   styleUrls: ['./switch-language-cta.component.scss'],
 })

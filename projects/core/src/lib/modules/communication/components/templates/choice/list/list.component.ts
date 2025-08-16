@@ -1,20 +1,12 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
+import { InputTextBox } from '@ta/form-model';
 import { Observable, map, startWith } from 'rxjs';
-
-import { InputTextBox } from '@camelot/form-model';
 
 import { Template } from '../../../../services/dto/template';
 
 @Component({
-  selector: 'cam-choice-list',
+  selector: 'ta-choice-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -40,11 +32,7 @@ export class ChoiceListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.filteredList$ = this.inputSearch.changeValue$.pipe(
       startWith(''),
-      map((search) =>
-        search
-          ? this.list.filter((item) => item.code.includes(search))
-          : this.list
-      )
+      map(search => (search ? this.list.filter(item => item.code.includes(search)) : this.list))
     );
   }
   ngOnDestroy() {

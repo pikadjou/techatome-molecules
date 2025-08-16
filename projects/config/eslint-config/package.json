@@ -1,5 +1,5 @@
 {
-  "name": "@camelot/eslint-config",
+  "name": "@ta/eslint-config",
   "version": "3.16.0-beta.4",
   "main": "index.js",
   "description": "> TODO: description",

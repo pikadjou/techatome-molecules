@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { MenuComponent, MenuItemComponent } from '../public-api';
 import { __classicMenu, __fontIconMenu, __smallMenu } from './__mock__/menu';
@@ -29,7 +28,7 @@ export default {
       props,
       template: `
       <div [style.width.px]="230">
-        <cam-menu [menu]="menu" [container]="'main'"></cam-menu>
+        <ta-menu [menu]="menu" [container]="'main'"></ta-menu>
       </div>
       `,
     };

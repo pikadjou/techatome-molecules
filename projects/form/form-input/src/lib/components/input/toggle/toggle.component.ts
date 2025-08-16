@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { InputCheckBox } from '@camelot/form-model';
+import { InputCheckBox } from '@ta/form-model';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-toggle',
+  selector: 'ta-input-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss'],
 })

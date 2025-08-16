@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { getFontIcon, isFontIcon, isLocalIcon } from '@camelot/icons';
+import { getFontIcon, isFontIcon, isLocalIcon } from '@ta/icons';
 
 import { ActionButtonData } from './action-button-data';
 
 @Component({
-  selector: 'cam-action-button',
+  selector: 'ta-action-button',
   templateUrl: './action-button.component.html',
   styleUrls: ['./action-button.component.scss'],
 })

@@ -1,9 +1,8 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { CamBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { CamBaseComponent } from '@camelot/utils';
 
 import { UserLogoNaming } from '../../../../components/ui/user-logo/user-logo.component';
 import {
@@ -12,7 +11,7 @@ import {
 } from '../../layout-modal/layout-modal-container/layout-modal-container.component';
 
 @Component({
-  selector: 'cam-layout-header-logo',
+  selector: 'ta-layout-header-logo',
   templateUrl: './layout-header-logo.component.html',
   styleUrls: ['./layout-header-logo.component.scss'],
 })
@@ -56,29 +55,23 @@ export class LayoutHeaderLogoComponent extends CamBaseComponent {
     if (!this.profile?.template) {
       return;
     }
-    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
-      TemplateModalContainer,
-      {
-        data: {
-          template: this.profile?.template,
-          askClosing$: this.askClosing$,
-        },
-      }
-    );
+    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
+      data: {
+        template: this.profile?.template,
+        askClosing$: this.askClosing$,
+      },
+    });
   }
 
   public openNotification() {
     if (!this.notificationTemplate) {
       return;
     }
-    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
-      TemplateModalContainer,
-      {
-        data: {
-          template: this.notificationTemplate,
-          askClosing$: this.askClosing$,
-        },
-      }
-    );
+    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
+      data: {
+        template: this.notificationTemplate,
+        askClosing$: this.askClosing$,
+      },
+    });
   }
 }

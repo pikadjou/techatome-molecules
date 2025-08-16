@@ -5,11 +5,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
+import { CamIconsModule, CamIconsService } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 import { register } from 'swiper/element/bundle';
-
-import { CamIconsModule, CamIconsService } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
 
 import { BadgeComponent } from './badge/badge.component';
 import { BulletComponent } from './bullet/bullet.component';

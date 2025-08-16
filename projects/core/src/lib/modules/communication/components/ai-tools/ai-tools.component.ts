@@ -1,10 +1,10 @@
 import { CdkMenuModule, CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject, signal } from '@angular/core';
 
-import { CamMenuModule, Menu, MenuIcon } from '@camelot/menu';
-import { CamContainerModule, CamUiModule } from '@camelot/ui';
-import { CamBaseComponent, CamDirectivePipeModule, extractEnum } from '@camelot/utils';
-import { WysiswgBlockData, convertBlocksToHtml } from '@camelot/wysiswyg';
+import { CamMenuModule, Menu, MenuIcon } from '@ta/menu';
+import { CamContainerModule, CamUiModule } from '@ta/ui';
+import { CamBaseComponent, CamDirectivePipeModule, extractEnum } from '@ta/utils';
+import { WysiswgBlockData, convertBlocksToHtml } from '@ta/wysiswyg';
 
 import { CamCommunicationsAiService } from '../../services/ai.service';
 import { CamCommunicationsService } from '../../services/communications.service';
@@ -12,7 +12,7 @@ import { CommunicationType } from '../../services/dto/communication';
 import { Tones } from '../../services/dto/tones';
 
 @Component({
-  selector: 'cam-conversations-ai-tools',
+  selector: 'ta-conversations-ai-tools',
   standalone: true,
   imports: [CamUiModule, CamMenuModule, CdkMenuModule, CamDirectivePipeModule, CamContainerModule],
   templateUrl: './ai-tools.component.html',

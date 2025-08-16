@@ -1,4 +1,4 @@
-import { GraphSchema } from '@camelot/server';
+import { GraphSchema } from '@ta/server';
 
 import { FileType } from './file-type';
 

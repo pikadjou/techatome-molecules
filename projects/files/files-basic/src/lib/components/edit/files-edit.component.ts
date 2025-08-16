@@ -10,29 +10,20 @@ import {
   ViewChild,
 } from '@angular/core';
 
+import { InputSlider } from '@ta/form-model';
+import { CamBaseComponent, determineNewSize, getBlobImage, isLight } from '@ta/utils';
 import { Observable } from 'rxjs';
-
 import ImageEditor from 'tui-image-editor';
-import { InputSlider } from '@camelot/form-model';
-import {
-  CamBaseComponent,
-  determineNewSize,
-  getBlobImage,
-  isLight,
-} from '@camelot/utils';
 
 type Selection = 'line' | 'shape' | 'text' | '';
 type ShapeSelection = 'rect' | 'triangle' | 'circle' | 'line' | '';
 
 @Component({
-  selector: 'cam-files-edit',
+  selector: 'ta-files-edit',
   templateUrl: './files-edit.component.html',
   styleUrls: ['./files-edit.component.scss'],
 })
-export class FileEditComponent
-  extends CamBaseComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class FileEditComponent extends CamBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   imagePath!: string;
 
@@ -90,9 +81,7 @@ export class FileEditComponent
 
     this.slider.value = this.brushSize;
     this.slider.createFormControl();
-    this.slider.changeValue$.subscribe((value) =>
-      this.changeBrushSize(value ?? 0)
-    );
+    this.slider.changeValue$.subscribe(value => this.changeBrushSize(value ?? 0));
 
     window.addEventListener('keyup', this.keyPress);
   }
@@ -233,10 +222,7 @@ export class FileEditComponent
     this.tuiImageEditor = new ImageEditor(this._tuiRef.nativeElement, {
       usageStatistics: false,
     });
-    const crop = await this.tuiImageEditor.loadImageFromURL(
-      this.imagePath,
-      'default'
-    );
+    const crop = await this.tuiImageEditor.loadImageFromURL(this.imagePath, 'default');
     this._canvasSize = determineNewSize(
       crop.newHeight,
       crop.newWidth,

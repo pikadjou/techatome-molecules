@@ -3,12 +3,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { CamFormInputsModule } from '@camelot/form-input';
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule } from '@camelot/menu';
-import { TranslatePipe } from '@camelot/translation';
-import { CamCardModule, CamContainerModule, CamListModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule, Culture, DEFAULT_USER_LANGUAGE } from '@camelot/utils';
+import { CamFormInputsModule } from '@ta/form-input';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { CamCardModule, CamContainerModule, CamListModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule, Culture, DEFAULT_USER_LANGUAGE } from '@ta/utils';
 
 import { ContactCardComponent } from './components/contact-card/contact-card.component';
 import { GuardComponent } from './components/guard/guard.component';

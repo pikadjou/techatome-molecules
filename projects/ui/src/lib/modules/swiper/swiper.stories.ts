@@ -1,8 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
-import { SwiperComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamIconsModule } from '@ta/icons';
+import { SwiperComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 type StoryType = SwiperComponent;
 
@@ -15,12 +14,12 @@ export default {
     }),
   ],
   tags: ['autodocs'],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-swiper></cam-swiper>
+        <ta-swiper></ta-swiper>
       `,
     };
   },

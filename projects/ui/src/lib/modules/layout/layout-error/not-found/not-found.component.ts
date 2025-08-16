@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-layout-not-found',
+  selector: 'ta-layout-not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
 })

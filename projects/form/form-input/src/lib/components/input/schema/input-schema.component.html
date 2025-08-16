@@ -1,14 +1,14 @@
-<cam-input-layout [input]="this.input">
-  <cam-button
+<ta-input-layout [input]="this.input">
+  <ta-button
     #focusedElement
     (action)="this.openDialog()"
     [options]="{ circular: this.isCircularButton }"
     [style]="'secondary'"
   >
-    <cam-local-icon [type]="this.icon.Pencil"></cam-local-icon>
-  </cam-button>
+    <ta-local-icon [type]="this.icon.Pencil"></ta-local-icon>
+  </ta-button>
 
-  @if(this.pics) {
-  <cam-files-list [files]="this.pics"></cam-files-list>
+  @if (this.pics) {
+    <ta-files-list [files]="this.pics"></ta-files-list>
   }
-</cam-input-layout>
+</ta-input-layout>

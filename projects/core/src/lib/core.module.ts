@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { CamFilesExtendedModule } from '@camelot/files-extended';
-import { CamFormModule } from '@camelot/form-basic';
-import { CamFormInputsModule } from '@camelot/form-input';
-import { CamIconsModule } from '@camelot/icons';
-import { TranslatePipe } from '@camelot/translation';
-import { CamCardModule, CamContainerModule, CamLayoutModule, CamListModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamFilesExtendedModule } from '@ta/files-extended';
+import { CamFormModule } from '@ta/form-basic';
+import { CamFormInputsModule } from '@ta/form-input';
+import { CamIconsModule } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { CamCardModule, CamContainerModule, CamLayoutModule, CamListModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { CallTemplateComponent } from './components/communication-handler/call-template/call-template.component';
 import { MailTemplateComponent } from './components/communication-handler/mail-template/mail-template.component';

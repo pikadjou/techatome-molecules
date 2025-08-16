@@ -1,6 +1,6 @@
-import { GraphSchema } from '@camelot/server';
-import { Culture } from '@camelot/utils';
-import { WysiswgBlockData } from '@camelot/wysiswyg';
+import { GraphSchema } from '@ta/server';
+import { Culture } from '@ta/utils';
+import { WysiswgBlockData } from '@ta/wysiswyg';
 
 import { CommunicationType } from './communication';
 

@@ -1,32 +1,17 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import {
-  TemplateModalContainer,
-  TemplateModalContainerData,
-} from '@camelot/ui';
-import { CamBaseComponent } from '@camelot/utils';
+import { TemplateModalContainer, TemplateModalContainerData } from '@ta/ui';
+import { CamBaseComponent } from '@ta/utils';
 
 import { CommunicationType } from '../../../services/dto/communication';
 import { TemplateVariant } from '../../../services/dto/template';
 
 @Component({
-  selector: 'cam-communication-template-choice',
+  selector: 'ta-communication-template-choice',
   templateUrl: './choice.component.html',
 })
-export class CommunicationTemplateChoiceComponent
-  extends CamBaseComponent
-  implements AfterViewInit
-{
+export class CommunicationTemplateChoiceComponent extends CamBaseComponent implements AfterViewInit {
   @Input()
   type!: CommunicationType;
 
@@ -56,15 +41,12 @@ export class CommunicationTemplateChoiceComponent
   public openDialog(): void {
     this._registerSubscription(
       this.modal
-        .open<TemplateModalContainer, TemplateModalContainerData>(
-          TemplateModalContainer,
-          {
-            data: {
-              template: this.template,
-              style: 'classic',
-            },
-          }
-        )
+        .open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
+          data: {
+            template: this.template,
+            style: 'classic',
+          },
+        })
         .afterClosed()
         .subscribe({
           next: () => this.closed.emit(),

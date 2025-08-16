@@ -5,31 +5,22 @@
 
   <div *ngFor="let key of getKeys(); trackBy: trackByFn">
     <div *ngIf="this.canRemove(key)" class="remove-action">
-      <cam-button
-        class="remove-action"
-        [style]="'danger'"
-        (action)="remove(key)"
-      >
-        <cam-local-icon
-          [type]="this.icon.DeleteLight"
-          size="xs"
-        ></cam-local-icon>
-      </cam-button>
+      <ta-button class="remove-action" [style]="'danger'" (action)="remove(key)">
+        <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
+      </ta-button>
     </div>
 
-    <ng-container
-      *ngFor="let input of this.getInputs(key); trackBy: trackInputByFn"
-    >
+    <ng-container *ngFor="let input of this.getInputs(key); trackBy: trackInputByFn">
       <div [ngClass]="input.class" *ngIf="input">
         <ng-container
           [ngTemplateOutlet]="this.inputsTemplate"
           [ngTemplateOutletContext]="{
-            input: input
+            input: input,
           }"
         >
         </ng-container>
       </div>
     </ng-container>
   </div>
-  <cam-button (action)="add()">{{ "form.dynamic.add" | translate }}</cam-button>
+  <ta-button (action)="add()">{{ 'form.dynamic.add' | translate }}</ta-button>
 </div>

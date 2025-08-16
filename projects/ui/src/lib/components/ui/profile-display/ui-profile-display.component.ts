@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { UserLogoNaming } from '../public-api';
 
 @Component({
-  selector: 'cam-ui-profile-display',
+  selector: 'ta-ui-profile-display',
   templateUrl: './ui-profile-display.component.html',
   styleUrls: ['./ui-profile-display.component.scss'],
 })

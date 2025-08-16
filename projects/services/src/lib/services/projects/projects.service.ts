@@ -1,21 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
 import { map } from 'rxjs';
 
-import {
-  CamBaseService,
-  GraphEndpoint,
-  HandleComplexRequest,
-  HandleSimpleRequest,
-} from '@camelot/server';
-
 import { Project, projectProps } from './dto/project';
-import {
-  GET_LIGHT_PROJECTS,
-  GET_MY_PROJECTS,
-  GET_PROJECTS,
-  GET_PROJECT_BY_ID,
-} from './queries';
+import { GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID } from './queries';
 
 const graphEndpoint: GraphEndpoint = {
   clientName: 'projectService',
@@ -39,12 +28,8 @@ export class CamProjectsService extends CamBaseService {
 
   public getProjectsLightInfo$(ids: string[]) {
     return this._graphService
-      .fetchPagedQueryList<Project>(
-        GET_LIGHT_PROJECTS(ids),
-        'projects',
-        graphEndpoint.clientName
-      )
-      .pipe(map((data) => data.items ?? []));
+      .fetchPagedQueryList<Project>(GET_LIGHT_PROJECTS(ids), 'projects', graphEndpoint.clientName)
+      .pipe(map(data => data.items ?? []));
   }
 
   public fetchProjectsByContact$(contactId: string) {
@@ -62,30 +47,22 @@ export class CamProjectsService extends CamBaseService {
           'projects',
           graphEndpoint.clientName
         )
-        .pipe(map((data) => data.items ?? []))
+        .pipe(map(data => data.items ?? []))
     );
   }
 
   public fetchProjects$() {
     return this.projects.fetch(
       this._graphService
-        .fetchPagedQueryList<Project>(
-          GET_MY_PROJECTS(),
-          'projects',
-          graphEndpoint.clientName
-        )
-        .pipe(map((data) => data.items))
+        .fetchPagedQueryList<Project>(GET_MY_PROJECTS(), 'projects', graphEndpoint.clientName)
+        .pipe(map(data => data.items))
     );
   }
 
   public fetchProject$(id: string) {
     return this.project.fetch(
       id,
-      this._graphService.fetchQuery<Project>(
-        GET_PROJECT_BY_ID(id),
-        'projectById',
-        graphEndpoint.clientName
-      )
+      this._graphService.fetchQuery<Project>(GET_PROJECT_BY_ID(id), 'projectById', graphEndpoint.clientName)
     );
   }
 }

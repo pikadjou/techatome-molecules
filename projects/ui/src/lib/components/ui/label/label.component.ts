@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { CamSizes, ColorType } from '@camelot/styles';
+import { CamSizes, ColorType } from '@ta/styles';
 
 @Component({
-  selector: 'cam-label',
+  selector: 'ta-label',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
 })

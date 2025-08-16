@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-hour-date-line',
+  selector: 'ta-hour-date-line',
   templateUrl: './hour-date-line.component.html',
   styleUrls: ['./hour-date-line.component.scss'],
 })

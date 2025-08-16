@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamFormInputsModule } from '@camelot/form-input';
-import { CamContainerModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamFormInputsModule } from '@ta/form-input';
+import { CamContainerModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { CmsComponent } from './components/cms/cms.component';
 import { SaleComponent } from './components/sale/sale.component';

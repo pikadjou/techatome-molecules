@@ -1,19 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { Menu } from '@ta/menu';
+import { CamBaseComponent, FileData, FileStructure, FileType } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { Menu } from '@camelot/menu';
-import {
-  CamBaseComponent,
-  FileData,
-  FileStructure,
-  FileType,
-} from '@camelot/utils';
 
 import { Feature } from '../upload/files-upload.component';
 
 @Component({
-  selector: 'cam-files-display',
+  selector: 'ta-files-display',
   templateUrl: './files-display.component.html',
   styleUrls: ['./files-display.component.scss'],
 })
@@ -24,10 +18,8 @@ export class FilesDisplayComponent extends CamBaseComponent {
   @Input() tempFiles!: FileData[];
   @Input() fileType!: FileType;
 
-  @Output() fileSelected: EventEmitter<FileData & { index: number }> =
-    new EventEmitter();
-  @Output() moreInformationSelected: EventEmitter<FileData> =
-    new EventEmitter();
+  @Output() fileSelected: EventEmitter<FileData & { index: number }> = new EventEmitter();
+  @Output() moreInformationSelected: EventEmitter<FileData> = new EventEmitter();
   @Output() fileUploading: EventEmitter<FileStructure[]> = new EventEmitter();
 
   get canSelectMultipleFiles(): boolean {

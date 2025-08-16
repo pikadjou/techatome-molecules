@@ -1,23 +1,19 @@
 <div class="icons row align-items-center">
   <div class="image col-2">
-    <cam-user-logo
-      [userInfo]="this.userInfo()"
-      size="lg"
-      (click)="this.openProfile()"
-    ></cam-user-logo>
+    <ta-user-logo [userInfo]="this.userInfo()" size="lg" (click)="this.openProfile()"></ta-user-logo>
   </div>
 
   <div class="title col-8">
-    <cam-logo (click)="this.goToHome()" color="black"></cam-logo>
+    <ta-logo (click)="this.goToHome()" color="black"></ta-logo>
   </div>
 
   <div class="notif col-2">
-    <cam-font-icon
+    <ta-font-icon
       name="notifications"
       type="lg"
       [class.disabled]="!this.notificationTemplate"
       (click)="this.openNotification()"
-    ></cam-font-icon>
+    ></ta-font-icon>
   </div>
 </div>
 

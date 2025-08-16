@@ -1,32 +1,18 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { distinctUntilChanged, Observable } from 'rxjs';
-
-import { IInputsError, InputBase } from '@camelot/form-model';
-import { ENotificationCode } from '@camelot/notification';
-import { CamBaseComponent } from '@camelot/utils';
-
+import { IInputsError, InputBase } from '@ta/form-model';
+import { ENotificationCode } from '@ta/notification';
+import { CamBaseComponent } from '@ta/utils';
 import deepEqual from 'fast-deep-equal';
+import { Observable, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'cam-form',
+  selector: 'ta-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
-export class FormComponent
-  extends CamBaseComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+export class FormComponent extends CamBaseComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   inputs!: InputBase<any>[];
 
@@ -66,11 +52,7 @@ export class FormComponent
   ngOnInit() {
     this.form = this.toFormGroup(this.inputs);
 
-    this._registerSubscription(
-      this.form.statusChanges.subscribe(() =>
-        this.isFormValid.emit(this.isValid())
-      )
-    );
+    this._registerSubscription(this.form.statusChanges.subscribe(() => this.isFormValid.emit(this.isValid())));
 
     if (this.onLive) {
       this._registerSubscription(
@@ -81,9 +63,7 @@ export class FormComponent
     }
 
     if (this.askValidation$) {
-      this._registerSubscription(
-        this.askValidation$.subscribe((_) => this.onSubmit())
-      );
+      this._registerSubscription(this.askValidation$.subscribe(_ => this.onSubmit()));
     }
   }
 
@@ -95,7 +75,7 @@ export class FormComponent
 
   override ngOnDestroy() {
     super.ngOnDestroy();
-    this.inputs.forEach((input) => {
+    this.inputs.forEach(input => {
       input.destroy();
     });
     if (this.askOnDestroy) {
@@ -119,7 +99,7 @@ export class FormComponent
     if (inputs === null || inputs.length === 0) {
       return group;
     }
-    inputs.forEach((input) => {
+    inputs.forEach(input => {
       input.createFormControl(group);
     });
     return group;

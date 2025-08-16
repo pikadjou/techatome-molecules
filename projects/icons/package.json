@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/icons",
+  "name": "@ta/icons",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/icons",
+    "build": "ng build @ta/icons",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
@@ -13,7 +13,7 @@
     "@angular/material": "^18.2.13"
   },
   "dependencies": {
-    "@camelot/styles": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

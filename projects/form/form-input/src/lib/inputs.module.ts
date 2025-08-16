@@ -17,16 +17,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { CamFilesBasicModule } from '@ta/files-basic';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { CamCardModule, CamContainerModule, CamLayoutModule, CamListModule, CamUiModule } from '@ta/ui';
+import { CamOverlayPanelComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
+import { CamWysiswygModule } from '@ta/wysiswyg';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-
-import { CamFilesBasicModule } from '@camelot/files-basic';
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule } from '@camelot/menu';
-import { TranslatePipe } from '@camelot/translation';
-import { CamCardModule, CamContainerModule, CamLayoutModule, CamListModule, CamUiModule } from '@camelot/ui';
-import { CamOverlayPanelComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
-import { CamWysiswygModule } from '@camelot/wysiswyg';
 
 import { InputContainerComponent } from './components/input-layout/input-container/input-container.component';
 import { InputErrorComponent } from './components/input-layout/input-error/input-error.component';

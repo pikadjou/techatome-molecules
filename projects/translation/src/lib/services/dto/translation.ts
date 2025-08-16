@@ -1,4 +1,4 @@
-import { BaseStrapi, GraphSchema, GraphStrapiResponse, baseStrapiProps } from '@camelot/server';
+import { BaseStrapi, GraphSchema, GraphStrapiResponse, baseStrapiProps } from '@ta/server';
 
 import { Feature } from './feature';
 

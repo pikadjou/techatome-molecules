@@ -1,15 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-layout-header-default',
+  selector: 'ta-layout-header-default',
   templateUrl: './layout-header-default.component.html',
   styleUrls: ['./layout-header-default.component.scss'],
 })

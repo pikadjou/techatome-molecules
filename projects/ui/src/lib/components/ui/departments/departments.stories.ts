@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { DepartmentIconListComponent } from './department-icon-list/department-icon-list.component';
 import { DepartmentsComponent } from './departments.component';
@@ -13,26 +12,21 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [CamDirectivePipeModule],
-      declarations: [
-        DepartmentProfessionsComponent,
-        DepartmentIconListComponent,
-      ],
+      declarations: [DepartmentProfessionsComponent, DepartmentIconListComponent],
     }),
   ],
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   args: {
     departments: [
       {
         id: 0,
         name: 'BUREAU',
-        iconPath:
-          'https://rgroupstorage.blob.core.windows.net/prod/Renoenergy_icones_bic.png',
+        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/Renoenergy_icones_bic.png',
       },
       {
         id: 0,
         name: 'HVAC',
-        iconPath:
-          'https://rgroupstorage.blob.core.windows.net/prod/Chauffage%20et%20cliu%CC%80.png',
+        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/Chauffage%20et%20cliu%CC%80.png',
       },
       {
         id: 0,

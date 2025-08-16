@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Duration, intervalToDuration } from 'date-fns';
 
 @Component({
-  selector: 'cam-duration',
+  selector: 'ta-duration',
   templateUrl: './duration.component.html',
   styleUrls: ['./duration.component.scss'],
 })

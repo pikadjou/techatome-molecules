@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { BaseChartComponent } from './base-chart/base-chart.component';
 
 @Component({
-  selector: 'cam-doughnut-chart',
+  selector: 'ta-doughnut-chart',
   templateUrl: './base-chart/base-chart.component.html',
   styleUrls: ['./base-chart/base-chart.component.scss'],
   standalone: true,

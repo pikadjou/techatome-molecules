@@ -1,8 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { TranslatePipe } from '@camelot/translation';
-import { ButtonComponent } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { NotificationBadgeContainerComponent } from './notification-badge-container.component';
 import { NotificationBadgeComponent } from './notification-badge/notification-badge.component';
@@ -24,10 +23,10 @@ export default {
     return {
       props,
       template: `
-        <cam-notification-badge-container>
-            <cam-button>Test du badge de notification</cam-button>
-            <cam-notification-badge [number]="number" [fontSize]="fontSize" [style]="style"></cam-notification-badge>
-        </cam-notification-badge-container>
+        <ta-notification-badge-container>
+            <ta-button>Test du badge de notification</ta-button>
+            <ta-notification-badge [number]="number" [fontSize]="fontSize" [style]="style"></ta-notification-badge>
+        </ta-notification-badge-container>
       `,
     };
   },

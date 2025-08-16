@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-title',
+  selector: 'ta-title',
   templateUrl: './title.component.html',
   styleUrls: ['./title.component.scss'],
 })

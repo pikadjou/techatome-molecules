@@ -1,4 +1,4 @@
-import { CamIconType } from '@camelot/icons';
+import { CamIconType } from '@ta/icons';
 
 import { MenuIcon } from '../../../models/menu/item/icon';
 import { Menu } from '../../../models/menu/menu';

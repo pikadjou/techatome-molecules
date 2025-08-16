@@ -1,18 +1,15 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 
-import { InputBase, InputTranslation } from '@camelot/form-model';
-import { Menu, MenuBase } from '@camelot/menu';
-import { CamBaseComponent, Culture, extractEnum } from '@camelot/utils';
+import { InputBase, InputTranslation } from '@ta/form-model';
+import { Menu, MenuBase } from '@ta/menu';
+import { CamBaseComponent, Culture, extractEnum } from '@ta/utils';
 
 @Component({
-  selector: 'cam-input-translation',
+  selector: 'ta-input-translation',
   templateUrl: './translation.component.html',
   styleUrls: ['./translation.component.scss'],
 })
-export class InputTranslationComponent
-  extends CamBaseComponent
-  implements OnInit
-{
+export class InputTranslationComponent extends CamBaseComponent implements OnInit {
   @Input()
   input!: InputTranslation;
   @Input()
@@ -71,7 +68,7 @@ export class InputTranslationComponent
   private _renderMenu() {
     this.cultureMenu = new Menu({
       elements: this.getKeys().map(
-        (cul) =>
+        cul =>
           new MenuBase({
             key: cul,
             label: cul,

@@ -1,22 +1,11 @@
-<div
-  class="mobile-control full-width"
-  *ngIf="this.breakpoints.isTablette$ | async"
->
+<div class="mobile-control full-width" *ngIf="this.breakpoints.isTablette$ | async">
   <div class="space-between">
-    <cam-button
-      (action)="this.toggle('center')"
-      type="secondary"
-      [options]="{ circular: 'small' }"
-    >
-      <cam-font-icon name="mail" size="sm"></cam-font-icon>
-    </cam-button>
-    <cam-button
-      (action)="this.toggle('right')"
-      type="secondary"
-      [options]="{ circular: 'small' }"
-    >
-      <cam-font-icon name="task-todo" size="sm"></cam-font-icon>
-    </cam-button>
+    <ta-button (action)="this.toggle('center')" type="secondary" [options]="{ circular: 'small' }">
+      <ta-font-icon name="mail" size="sm"></ta-font-icon>
+    </ta-button>
+    <ta-button (action)="this.toggle('right')" type="secondary" [options]="{ circular: 'small' }">
+      <ta-font-icon name="task-todo" size="sm"></ta-font-icon>
+    </ta-button>
   </div>
 </div>
 <div class="flex-container">
@@ -26,19 +15,19 @@
         <ng-container *ngIf="this.has('left')">
           <ng-content select="[header-left]"></ng-content>
         </ng-container>
-        <cam-button
+        <ta-button
           (action)="this.toggle('left')"
           [style]="'secondary'"
           [options]="{ circular: 'small' }"
           [state]="this.state('left')"
         >
           <ng-container *ngIf="this.has('left')">
-            <cam-font-icon name="expand-horizontal" size="sm"></cam-font-icon>
+            <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
           </ng-container>
           <ng-container *ngIf="!this.has('left')">
-            <cam-font-icon name="collapse-horizontal" size="sm"></cam-font-icon>
+            <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
           </ng-container>
-        </cam-button>
+        </ta-button>
       </div>
 
       <ng-container *ngIf="this.has('left')">
@@ -53,23 +42,21 @@
         <ng-container *ngIf="this.has('center')">
           <ng-content select="[header-center]"></ng-content>
         </ng-container>
-        <cam-button
+        <ta-button
           (action)="this.toggle('center')"
           [style]="'secondary'"
           [options]="{ circular: 'small' }"
           [state]="this.state('center')"
         >
           <ng-container *ngIf="this.has('center')">
-            <cam-font-icon name="expand-horizontal" size="sm"></cam-font-icon>
+            <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
           </ng-container>
           <ng-container *ngIf="!this.has('center')">
-            <cam-font-icon name="collapse-horizontal" size="sm"></cam-font-icon>
+            <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
           </ng-container>
-        </cam-button>
+        </ta-button>
       </div>
-      <ng-container
-        *ngIf="this.has('center') && !(this.breakpoints.isTablette$ | async)"
-      >
+      <ng-container *ngIf="this.has('center') && !(this.breakpoints.isTablette$ | async)">
         <div class="content">
           <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
         </div>
@@ -83,19 +70,19 @@
         <ng-container *ngIf="this.has('right')">
           <ng-content select="[header-right]"></ng-content>
         </ng-container>
-        <cam-button
+        <ta-button
           (action)="this.toggle('right')"
           [style]="'secondary'"
           [options]="{ circular: 'small' }"
           [state]="this.state('right')"
         >
           <ng-container *ngIf="this.has('right')">
-            <cam-font-icon name="expand-horizontal" size="sm"></cam-font-icon>
+            <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
           </ng-container>
           <ng-container *ngIf="!this.has('right')">
-            <cam-font-icon name="collapse-horizontal" size="sm"></cam-font-icon>
+            <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
           </ng-container>
-        </cam-button>
+        </ta-button>
       </div>
       <ng-container *ngIf="this.has('right')">
         <div class="content">
@@ -107,22 +94,15 @@
 </div>
 
 <ng-container *ngIf="this.breakpoints.isTablette$ | async">
-  <cam-layout-full-panel
-    (closeEvent)="this.toggle('center')"
-    *ngIf="this.has('center')"
-    width="100%"
-  >
+  <ta-layout-full-panel (closeEvent)="this.toggle('center')" *ngIf="this.has('center')" width="100%">
     <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
-  </cam-layout-full-panel>
+  </ta-layout-full-panel>
 
-  <cam-layout-full-panel
-    (closeEvent)="this.toggle('right')"
-    *ngIf="this.has('right')"
-  >
+  <ta-layout-full-panel (closeEvent)="this.toggle('right')" *ngIf="this.has('right')">
     <div class="full-width">
       <ng-template [ngTemplateOutlet]="rightTemplate"></ng-template>
     </div>
-  </cam-layout-full-panel>
+  </ta-layout-full-panel>
 </ng-container>
 
 <ng-template #leftTemplate>

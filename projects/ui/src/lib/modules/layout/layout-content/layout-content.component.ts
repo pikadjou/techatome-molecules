@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-layout-content',
+  selector: 'ta-layout-content',
   templateUrl: './layout-content.component.html',
   styleUrls: ['./layout-content.component.scss'],
 })

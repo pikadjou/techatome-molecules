@@ -1,16 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 
+import { CamBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { CamBaseComponent } from '@camelot/utils';
 
 import { CommunicationType } from '../../../../services/dto/communication';
 import { Template, TemplateVariant } from '../../../../services/dto/template';
@@ -20,19 +12,14 @@ import { CamCommunicationsTemplatesService } from '../../../../services/template
   selector: '',
   template: '',
 })
-export class CommunicationTemplateAbstractChoiceComponent
-  extends CamBaseComponent
-  implements OnInit
-{
+export class CommunicationTemplateAbstractChoiceComponent extends CamBaseComponent implements OnInit {
   @Input()
   type!: CommunicationType;
 
   @Output()
   selected = new EventEmitter<TemplateVariant>();
 
-  readonly communicationsTemplateService = inject(
-    CamCommunicationsTemplatesService
-  );
+  readonly communicationsTemplateService = inject(CamCommunicationsTemplatesService);
 
   public list$: Observable<Template[]> | null = null;
   public showTemplate: Template | null = null;
@@ -41,10 +28,9 @@ export class CommunicationTemplateAbstractChoiceComponent
     super();
   }
   ngOnInit() {
-    this.list$ =
-      this.communicationsTemplateService.communicationTemplatesByComminucationType.get$(
-        this.type.toString()
-      );
+    this.list$ = this.communicationsTemplateService.communicationTemplatesByComminucationType.get$(
+      this.type.toString()
+    );
 
     this._fetch();
   }
@@ -58,14 +44,11 @@ export class CommunicationTemplateAbstractChoiceComponent
   }
   private _fetch() {
     this.requestState.asked();
-    this.communicationsTemplateService
-      .fetchConversationTemplatesByComminucationType$(this.type)
-      .subscribe({
-        complete: () => {
-          this.requestState.completed();
-        },
-        error: (error: HttpErrorResponse) =>
-          this.requestState.onError(error.status, error.statusText),
-      });
+    this.communicationsTemplateService.fetchConversationTemplatesByComminucationType$(this.type).subscribe({
+      complete: () => {
+        this.requestState.completed();
+      },
+      error: (error: HttpErrorResponse) => this.requestState.onError(error.status, error.statusText),
+    });
   }
 }

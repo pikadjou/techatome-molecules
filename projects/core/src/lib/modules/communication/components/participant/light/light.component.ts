@@ -1,14 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent, fullName } from '@camelot/utils';
+import { CamBaseComponent, fullName } from '@ta/utils';
 
-import {
-  CommunicationParticipant,
-  CommunicationParticipantExtended,
-} from '../../../services/dto/communication';
+import { CommunicationParticipant, CommunicationParticipantExtended } from '../../../services/dto/communication';
 
 @Component({
-  selector: 'cam-communication-participant-light',
+  selector: 'ta-communication-participant-light',
   templateUrl: './light.component.html',
   styleUrls: ['./light.component.scss'],
 })
@@ -22,7 +19,7 @@ export class LightComponent extends CamBaseComponent {
   readonly fullName = fullName;
 
   public getFullName(participant: CommunicationParticipant) {
-    const conversationParticipant = this.conversationParticipants.find((p) => {
+    const conversationParticipant = this.conversationParticipants.find(p => {
       if (participant.userId && p.userId === participant.userId) {
         return true;
       }

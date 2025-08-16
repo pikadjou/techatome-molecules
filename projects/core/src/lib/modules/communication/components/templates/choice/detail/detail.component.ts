@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
-import { Menu, MenuBase } from '@camelot/menu';
-import { Culture } from '@camelot/utils';
+import { Menu, MenuBase } from '@ta/menu';
+import { Culture } from '@ta/utils';
 
 import { Template, TemplateVariant } from '../../../../services/dto/template';
 
 @Component({
-  selector: 'cam-choice-detail',
+  selector: 'ta-choice-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss'],
 })

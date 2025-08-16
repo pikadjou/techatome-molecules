@@ -1,20 +1,12 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 
+import { InputTextBox } from '@ta/form-model';
 import { LocalStorage } from 'storage-manager-js';
 
-import { InputTextBox } from '@camelot/form-model';
-
 @Component({
-  selector: 'cam-search-history-displayer',
+  selector: 'ta-search-history-displayer',
   templateUrl: './search-history-displayer.component.html',
   styleUrls: ['./search-history-displayer.component.scss'],
 })
@@ -43,10 +35,8 @@ export class SearchHistoryDisplayerComponent {
   }
   get listRecentSearches() {
     if (this.searchHistory?.type) {
-      const storedSearches: { research: string }[] = this._getFromLocalStorage(
-        this.searchHistory?.type
-      );
-      const searches: string[] = storedSearches.map((obj) => obj.research);
+      const storedSearches: { research: string }[] = this._getFromLocalStorage(this.searchHistory?.type);
+      const searches: string[] = storedSearches.map(obj => obj.research);
       return searches;
     }
     return null;
@@ -72,9 +62,10 @@ export class SearchHistoryDisplayerComponent {
 
   private _saveInLocalStorage(searchValue: string) {
     if (this.searchHistory?.type) {
-      let storedSearches: { research: string; storageTime: Date }[] =
-        this._getFromLocalStorage(this.searchHistory?.type);
-      const search = storedSearches.find((s) => s.research === searchValue);
+      let storedSearches: { research: string; storageTime: Date }[] = this._getFromLocalStorage(
+        this.searchHistory?.type
+      );
+      const search = storedSearches.find(s => s.research === searchValue);
       if (search) {
         search.storageTime = new Date();
       } else {
@@ -84,10 +75,7 @@ export class SearchHistoryDisplayerComponent {
         });
       }
       this.orderAndSelect(storedSearches);
-      LocalStorage.set(
-        'search-' + this.searchHistory?.type || '',
-        JSON.stringify(storedSearches.slice(0, 5))
-      );
+      LocalStorage.set('search-' + this.searchHistory?.type || '', JSON.stringify(storedSearches.slice(0, 5)));
     }
   }
 

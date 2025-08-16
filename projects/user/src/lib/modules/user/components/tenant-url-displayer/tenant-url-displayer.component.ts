@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, inject } from '@angular/core';
 
-import { CamBaseComponent, openExternalUrl } from '@camelot/utils';
+import { CamBaseComponent, openExternalUrl } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 
 @Component({
-  selector: 'cam-tenant-url-displayer',
+  selector: 'ta-tenant-url-displayer',
   templateUrl: './tenant-url-displayer.component.html',
   styleUrls: ['./tenant-url-displayer.component.scss'],
 })

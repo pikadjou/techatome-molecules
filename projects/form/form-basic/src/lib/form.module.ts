@@ -4,13 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { CamFormInputsModule } from '@camelot/form-input';
-import { CamIconsModule } from '@camelot/icons';
-import { CamMenuModule } from '@camelot/menu';
-import { CamNotificationModule } from '@camelot/notification';
-import { TranslatePipe } from '@camelot/translation';
-import { CamContainerModule, CamUiModule } from '@camelot/ui';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { CamFormInputsModule } from '@ta/form-input';
+import { CamIconsModule } from '@ta/icons';
+import { CamMenuModule } from '@ta/menu';
+import { CamNotificationModule } from '@ta/notification';
+import { TranslatePipe } from '@ta/translation';
+import { CamContainerModule, CamUiModule } from '@ta/ui';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { EditFieldComponent } from './components/edit-field/edit-field.component';
 import { FormComponent } from './components/form.component';

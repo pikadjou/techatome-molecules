@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/ui",
+  "name": "@ta/ui",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/ui",
+    "build": "ng build @ta/ui",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
@@ -15,12 +15,12 @@
     "@angular/material": "^18.2.13"
   },
   "dependencies": {
-    "@camelot/capacitor": "^3.16.0-beta.4",
-    "@camelot/icons": "^3.16.0-beta.4",
-    "@camelot/server": "^3.16.0-beta.4",
-    "@camelot/services": "^3.16.0-beta.4",
-    "@camelot/styles": "^3.16.0-beta.4",
-    "@camelot/utils": "^3.16.0-beta.4",
+    "@ta/capacitor": "^3.16.0-beta.4",
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/server": "^3.16.0-beta.4",
+    "@ta/services": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/utils": "^3.16.0-beta.4",
     "storage-manager-js": "4.2.0",
     "swiper": "^9.1.0",
     "tslib": "^2.3.0"

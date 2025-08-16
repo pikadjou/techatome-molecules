@@ -1,13 +1,13 @@
 <div class="modal-container">
-  <cam-layout-header>
+  <ta-layout-header>
     <div class="header flex-row justify-content-between">
-      <cam-title [level]="3" [isBold]="true">{{ this.title | translate }}</cam-title>
+      <ta-title [level]="3" [isBold]="true">{{ this.title | translate }}</ta-title>
       <div (click)="this.close()">
-        <cam-font-icon name="close" type="md"></cam-font-icon>
+        <ta-font-icon name="close" type="md"></ta-font-icon>
       </div>
     </div>
-  </cam-layout-header>
-  <cam-layout-content [autoHeight]="true">
+  </ta-layout-header>
+  <ta-layout-content [autoHeight]="true">
     <ng-content></ng-content>
-  </cam-layout-content>
+  </ta-layout-content>
 </div>

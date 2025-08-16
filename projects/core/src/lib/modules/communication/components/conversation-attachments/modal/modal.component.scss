@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .conversation-attachments-container {
   display: flex;
@@ -7,7 +7,7 @@
 
   gap: get-var(space, md);
 
-  cam-documents-list{
+  ta-documents-list {
     display: block;
     height: 300px;
     overflow: auto;
@@ -15,11 +15,11 @@
     padding-bottom: get-var(space, md);
   }
 
-  .display-button{
+  .display-button {
     padding: get-var(space, lg) 0 0 get-var(space, lg);
   }
 
-  .cta{
+  .cta {
     justify-content: flex-end;
     align-items: center;
     gap: get-var(space, sm);
@@ -33,4 +33,3 @@
     border-radius: get-var(radius, rounded);
   }
 }
-

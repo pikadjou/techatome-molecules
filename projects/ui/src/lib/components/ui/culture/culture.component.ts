@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { Culture } from '@camelot/utils';
+import { Culture } from '@ta/utils';
 
 @Component({
-  selector: 'cam-culture',
+  selector: 'ta-culture',
   templateUrl: './culture.component.html',
   styleUrls: ['./culture.component.scss'],
 })

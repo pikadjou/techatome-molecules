@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { InputAddress } from '@camelot/form-model';
+import { InputAddress } from '@ta/form-model';
+
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-address',
+  selector: 'ta-input-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss'],
 })
@@ -30,9 +31,7 @@ export class InputAddressComponent extends CamAbstractInputComponent<InputAddres
     const geometry = place.geometry;
 
     const getComponent = (type: string) => {
-      const component = addressComponents.find((comp: any) =>
-        comp.types.includes(type)
-      );
+      const component = addressComponents.find((comp: any) => comp.types.includes(type));
       return component ? component.long_name : null;
     };
 

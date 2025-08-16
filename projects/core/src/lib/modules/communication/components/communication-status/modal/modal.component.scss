@@ -1,7 +1,6 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .communication-error-container {
-
   .content {
     padding: get-var(space, md);
     border: 1px dotted get-var(border, secondary);

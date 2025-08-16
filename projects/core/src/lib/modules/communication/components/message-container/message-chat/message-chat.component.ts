@@ -1,14 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { WysiswgBlockData } from '@camelot/wysiswyg';
+import { WysiswgBlockData } from '@ta/wysiswyg';
 
-import {
-  Communication,
-  CommunicationParticipantExtended,
-} from '../../../services/dto/communication';
+import { Communication, CommunicationParticipantExtended } from '../../../services/dto/communication';
 
 @Component({
-  selector: 'cam-communication-message-chat',
+  selector: 'ta-communication-message-chat',
   templateUrl: './message-chat.component.html',
   styleUrls: ['./message-chat.component.scss'],
 })

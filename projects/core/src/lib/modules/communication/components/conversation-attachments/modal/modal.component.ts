@@ -2,13 +2,13 @@ import { NgSwitch, NgSwitchCase, NgTemplateOutlet } from '@angular/common';
 import { Component, Inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { CamFilesBasicModule } from '@camelot/files-basic';
-import { CamFormInputsModule } from '@camelot/form-input';
-import { InputUpload, InputUploadValue } from '@camelot/form-model';
-import { CamMenuModule, FilterHelper, Menu } from '@camelot/menu';
-import { TranslatePipe } from '@camelot/translation';
-import { CamContainerModule, CamLayoutModule, CamUiModule } from '@camelot/ui';
-import { CamBaseModal, CamDirectivePipeModule } from '@camelot/utils';
+import { CamFilesBasicModule } from '@ta/files-basic';
+import { CamFormInputsModule } from '@ta/form-input';
+import { InputUpload, InputUploadValue } from '@ta/form-model';
+import { CamMenuModule, FilterHelper, Menu } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { CamContainerModule, CamLayoutModule, CamUiModule } from '@ta/ui';
+import { CamBaseModal, CamDirectivePipeModule } from '@ta/utils';
 
 import { AttachmentsResult } from '../../attachements/modal/modal.component';
 
@@ -25,7 +25,7 @@ export enum EDocumentType {
 }
 
 @Component({
-  selector: 'cam-conversation-attachments-modal',
+  selector: 'ta-conversation-attachments-modal',
   standalone: true,
   imports: [
     CamFormInputsModule,

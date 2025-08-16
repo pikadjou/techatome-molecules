@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'cam-logo',
+  selector: 'ta-logo',
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss'],
 })
@@ -31,8 +31,6 @@ export class LogoComponent {
   constructor() {}
 
   public getImagePath(): string {
-    return `assets/partners/logo/logo${this.type ? `-${this.type}` : ''}${
-      this.color ? `-${this.color}` : ''
-    }.png`;
+    return `assets/partners/logo/logo${this.type ? `-${this.type}` : ''}${this.color ? `-${this.color}` : ''}.png`;
   }
 }

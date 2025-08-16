@@ -1,6 +1,5 @@
+import { Culture, extractEnum } from '@ta/utils';
 import { of } from 'rxjs';
-
-import { Culture, extractEnum } from '@camelot/utils';
 
 import { IInputDropdown, InputDropdown } from './dropdown';
 

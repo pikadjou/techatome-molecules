@@ -1,21 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import {
-  BottomSheetTemplateGenericComponent,
-  BottomSheetTemplateGenericParams,
-} from '@camelot/menu';
-import { CamBaseComponent } from '@camelot/utils';
+import { BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams } from '@ta/menu';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-search-displayer',
+  selector: 'ta-search-displayer',
   templateUrl: './search-displayer.component.html',
   styleUrls: ['./search-displayer.component.scss'],
 })
@@ -49,17 +39,17 @@ export class SearchDisplayerComponent extends CamBaseComponent {
     if (!this.searchHistory?.type) {
       return;
     }
-    this._bottomSheet.open<
+    this._bottomSheet.open<BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams>(
       BottomSheetTemplateGenericComponent,
-      BottomSheetTemplateGenericParams
-    >(BottomSheetTemplateGenericComponent, {
-      data: {
-        template: this.searchTemplate,
-        context: {
-          options: { isDropDown: false },
+      {
+        data: {
+          template: this.searchTemplate,
+          context: {
+            options: { isDropDown: false },
+          },
         },
-      },
-    });
+      }
+    );
   }
 
   public action(result: any) {

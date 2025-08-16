@@ -1,4 +1,4 @@
-import { GraphSchema } from '@camelot/server';
+import { GraphSchema } from '@ta/server';
 
 import { ENotificationLevel } from './level';
 import { SwitchCases } from './switch-cases';

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamNotificationModule } from '@camelot/notification';
-import { CamUiModule } from '@camelot/ui';
-import { SafePipe } from '@camelot/utils';
+import { CamNotificationModule } from '@ta/notification';
+import { CamUiModule } from '@ta/ui';
+import { SafePipe } from '@ta/utils';
 
 import { BlockTextComponent } from './components/block-text/block-text.component';
 import { EditorInputComponent } from './components/input/input.component';

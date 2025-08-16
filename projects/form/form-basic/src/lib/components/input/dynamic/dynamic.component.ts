@@ -1,10 +1,10 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
-import { InputBase, InputDynamic } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
+import { InputBase, InputDynamic } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-input-dynamic',
+  selector: 'ta-input-dynamic',
   templateUrl: './dynamic.component.html',
   styleUrls: ['./dynamic.component.scss'],
 })

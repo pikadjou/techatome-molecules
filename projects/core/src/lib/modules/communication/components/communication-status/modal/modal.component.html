@@ -1,27 +1,27 @@
-<cam-layout-modal [title]="'communication.message.system.error.title'" class="communication-error-container">
+<ta-layout-modal [title]="'communication.message.system.error.title'" class="communication-error-container">
   @let error = this.communicationError$ | async;
-  <cam-loader [isLoading]="this.requestState.isLoading()">
-    <cam-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
-      <cam-empty [isEmpty]="!error">
+  <ta-loader [isLoading]="this.requestState.isLoading()">
+    <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+      <ta-empty [isEmpty]="!error">
         <div class="content flex-column" *ngIf="error">
           <div>
-            <cam-title [level]="4" [isBold]="true">
+            <ta-title [level]="4" [isBold]="true">
               {{ 'communication.message.system.error.subject' | translate }}
-            </cam-title>
-            <cam-text size="md">
-            {{ error.communicationSubject }}
-            </cam-text>
+            </ta-title>
+            <ta-text size="md">
+              {{ error.communicationSubject }}
+            </ta-text>
           </div>
           <div>
-            <cam-title [level]="4" [isBold]="true">
+            <ta-title [level]="4" [isBold]="true">
               {{ 'communication.message.system.error.error' | translate }}
-            </cam-title>
-            <cam-text size="md">
+            </ta-title>
+            <ta-text size="md">
               {{ error.error }}
-            </cam-text>
+            </ta-text>
           </div>
         </div>
-      </cam-empty>
-    </cam-error>
-  </cam-loader>
-</cam-layout-modal>
+      </ta-empty>
+    </ta-error>
+  </ta-loader>
+</ta-layout-modal>

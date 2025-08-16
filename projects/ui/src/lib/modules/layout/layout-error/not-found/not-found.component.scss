@@ -1,9 +1,9 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .not-found-container {
   text-align: center;
 
-  cam-font-icon {
+  ta-font-icon {
     color: get-var(brand, 400);
   }
   .title {

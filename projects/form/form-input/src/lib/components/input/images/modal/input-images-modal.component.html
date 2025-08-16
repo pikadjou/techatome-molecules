@@ -1,28 +1,25 @@
 <div class="input-image-container">
-  @if(this.tempFiles.files.length > 0) {
-  <cam-files-list [files]="this.tempFiles.files"></cam-files-list>
-  <hr />
+  @if (this.tempFiles.files.length > 0) {
+    <ta-files-list [files]="this.tempFiles.files"></ta-files-list>
+    <hr />
   }
 
-  <cam-files-list
-    [files]="(this.getPics$() | async) || []"
-    (fileSelected)="this.onFileSelected($event)"
-  >
-  </cam-files-list>
+  <ta-files-list [files]="(this.getPics$() | async) || []" (fileSelected)="this.onFileSelected($event)">
+  </ta-files-list>
 
   <div class="cta-container">
-    <cam-dual-button
+    <ta-dual-button
       [isFull]="true"
       [first]="{
         icon: 'add',
         label: 'input.images.add',
-        callback: this.uploadPics
+        callback: this.uploadPics,
       }"
       [second]="{
         icon: 'check-line',
         label: 'input.images.pick',
-        callback: this.selected
+        callback: this.selected,
       }"
-    ></cam-dual-button>
+    ></ta-dual-button>
   </div>
 </div>

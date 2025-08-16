@@ -1,31 +1,29 @@
 <div class="space-between p-space-sm">
   <div *ngIf="this.activeFilter">
-    <cam-filters-tag
+    <ta-filters-tag
       [activeFilter]="this.activeFilter"
       (removedFilter)="this.removedFilter.emit($event)"
-    ></cam-filters-tag>
+    ></ta-filters-tag>
   </div>
   <div>
-    <cam-link (action)="this.toggleFilter()">
-      <cam-font-icon
-        [name]="this.isFilterOpen ? 'check-line' : 'filter-tool'"
-      ></cam-font-icon>
-    </cam-link>
+    <ta-link (action)="this.toggleFilter()">
+      <ta-font-icon [name]="this.isFilterOpen ? 'check-line' : 'filter-tool'"></ta-font-icon>
+    </ta-link>
   </div>
 </div>
 <div>
-  <cam-layout-with-panel [open]="this.isFilterOpen">
-    <cam-layout-panel>
+  <ta-layout-with-panel [open]="this.isFilterOpen">
+    <ta-layout-panel>
       <div class="p-space-sm">
-        <cam-filters-form
+        <ta-filters-form
           [form]="this.form"
           [askValidation$]="this.askValidation$"
           (filtersSelected)="this.apply($event)"
-        ></cam-filters-form>
+        ></ta-filters-form>
       </div>
-    </cam-layout-panel>
-    <cam-layout-content>
+    </ta-layout-panel>
+    <ta-layout-content>
       <ng-content></ng-content>
-    </cam-layout-content>
-  </cam-layout-with-panel>
+    </ta-layout-content>
+  </ta-layout-with-panel>
 </div>

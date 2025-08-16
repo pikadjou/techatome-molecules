@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { InputBase } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
-import { InputBase } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
-
 @Component({
-  selector: 'cam-filters-form',
+  selector: 'ta-filters-form',
   templateUrl: './filters-form.component.html',
   styleUrls: ['./filters-form.component.scss'],
 })

@@ -18,12 +18,11 @@ import ImageTool from '@editorjs/image';
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Warning from '@editorjs/warning';
+import { CamDocumentsService } from '@ta/services';
+import { CamTranslationService } from '@ta/translation';
+import { CamBaseComponent, isNonNullable, isNotEmptyObject } from '@ta/utils';
 import { ColorTool } from 'editorjs-color';
 import { Observable, firstValueFrom } from 'rxjs';
-
-import { CamDocumentsService } from '@camelot/services';
-import { CamTranslationService } from '@camelot/translation';
-import { CamBaseComponent, isNonNullable, isNotEmptyObject } from '@camelot/utils';
 
 import { WysiswgBlockData, convertBlocksToHtml } from '../../public-api';
 import { TagTool } from '../plugins/tag-editor/tag-editor';
@@ -34,7 +33,7 @@ import * as nl from './translation/nl.json';
 
 export type EditorInputSavedData = { blocks: WysiswgBlockData[]; tags: string[] };
 @Component({
-  selector: 'cam-cms-editor-input',
+  selector: 'ta-cms-editor-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })

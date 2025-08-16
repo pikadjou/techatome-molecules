@@ -1,7 +1,6 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { TranslatePipe } from '@camelot/translation';
-import { CamDirectivePipeModule } from '@camelot/utils';
+import { TranslatePipe } from '@ta/translation';
+import { CamDirectivePipeModule } from '@ta/utils';
 
 import { ExpandableTextComponent } from './expandable-text.component';
 
@@ -22,9 +21,9 @@ export default {
     return {
       props,
       template: `
-        <cam-expandable-text>
+        <ta-expandable-text>
          {{ text}}
-        </cam-expandable-text>
+        </ta-expandable-text>
       `,
     };
   },

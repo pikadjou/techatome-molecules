@@ -13,33 +13,29 @@
         <ng-template
           [ngTemplateOutlet]="Item"
           [ngTemplateOutletContext]="{
-            item: item
+            item: item,
           }"
         >
         </ng-template>
       </div>
     </ng-container>
     <ng-container *ngIf="item.secure">
-      <cam-container-validation (validated)="item.action()">
+      <ta-container-validation (validated)="item.action()">
         <ng-template
           [ngTemplateOutlet]="Item"
           [ngTemplateOutletContext]="{
-            item: item
+            item: item,
           }"
         >
         </ng-template>
-      </cam-container-validation>
+      </ta-container-validation>
     </ng-container>
   </div>
 </div>
 
 <ng-template #Item let-item="item" [typedTemplate]="this.typeItem">
   <div class="item" [ngClass]="this.data.orientation">
-    <cam-font-icon
-      *ngIf="item.icon"
-      [name]="item.icon"
-      class="icon"
-    ></cam-font-icon>
+    <ta-font-icon *ngIf="item.icon" [name]="item.icon" class="icon"></ta-font-icon>
 
     <div class="title-container">
       <div class="label">{{ item.label | translate }}</div>

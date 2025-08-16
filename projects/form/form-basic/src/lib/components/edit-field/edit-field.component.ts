@@ -11,15 +11,14 @@ import {
   signal,
 } from '@angular/core';
 
+import { InputBase } from '@ta/form-model';
+import { CamBaseComponent } from '@ta/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { InputBase } from '@camelot/form-model';
-import { CamBaseComponent } from '@camelot/utils';
 
 export type Layout = 'row' | 'column';
 
 @Component({
-  selector: 'cam-edit-field',
+  selector: 'ta-edit-field',
   templateUrl: './edit-field.component.html',
   styleUrls: ['./edit-field.component.scss'],
 })

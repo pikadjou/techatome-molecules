@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { CamSizes } from '@ta/styles';
+import { CamAbstractComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { CamSizes } from '@camelot/styles';
-import { CamAbstractComponent } from '@camelot/utils';
 
 import { getFontIcon, hasFontIcon } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
@@ -11,7 +10,7 @@ import { MenuBase } from '../../models/menu/item/base';
 import { Menu, MenuIcon } from '../../models/public-api';
 
 @Component({
-  selector: 'cam-menu-navigation',
+  selector: 'ta-menu-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })

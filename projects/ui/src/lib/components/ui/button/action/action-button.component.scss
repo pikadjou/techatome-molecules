@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 $size: 50px;
 $thickness: 0.25em;
@@ -19,7 +19,7 @@ $thickness: 0.25em;
     &:before,
     &:after {
       position: absolute;
-      content: "";
+      content: '';
       background-color: get-var(neutral, 100);
       top: 0;
       bottom: 0;

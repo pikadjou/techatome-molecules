@@ -2,9 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { CamIconType } from '@ta/icons';
 import { Subscription } from 'rxjs';
-
-import { CamIconType } from '@camelot/icons';
 
 import { BreakpointDetection } from '../helpers/breakpoints/detection';
 import { RequestState } from '../helpers/request/state';

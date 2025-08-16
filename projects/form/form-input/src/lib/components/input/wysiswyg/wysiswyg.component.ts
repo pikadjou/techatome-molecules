@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { InputWysiswyg } from '@camelot/form-model';
-import { EditorInputSavedData } from '@camelot/wysiswyg';
+import { InputWysiswyg } from '@ta/form-model';
+import { EditorInputSavedData } from '@ta/wysiswyg';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-wysiswyg',
+  selector: 'ta-input-wysiswyg',
   templateUrl: './wysiswyg.component.html',
   styleUrls: ['./wysiswyg.component.scss'],
 })

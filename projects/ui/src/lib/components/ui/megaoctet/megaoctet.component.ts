@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { octetsToMo, roundToDecimal } from '@camelot/utils';
+import { octetsToMo, roundToDecimal } from '@ta/utils';
 
 @Component({
-  selector: 'cam-megaoctet',
+  selector: 'ta-megaoctet',
   templateUrl: './megaoctet.component.html',
   styleUrls: ['./megaoctet.component.scss'],
 })

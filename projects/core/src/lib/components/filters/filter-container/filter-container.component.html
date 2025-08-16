@@ -1,32 +1,32 @@
-<cam-layout-side class="d-flex full-width">
-  <cam-layout-side-content>
+<ta-layout-side class="d-flex full-width">
+  <ta-layout-side-content>
     <div class="m-space-sm">
-      <cam-form
+      <ta-form
         [inputs]="this.form"
         [canDisplayButton]="false"
         [askValidation$]="this.askValidation$"
         (valid)="this.apply($event)"
-      ></cam-form>
+      ></ta-form>
     </div>
-  </cam-layout-side-content>
-  <cam-layout-side-cta>
+  </ta-layout-side-content>
+  <ta-layout-side-cta>
     <div class="align-center space-between">
       <div class="pr-space-md">
         <div class="align-center g-space-xs link">
-          <cam-font-icon name="close-tool" type="sm"></cam-font-icon>
-          <cam-link class="c-pointer" (action)="this.clear()">
-            {{ "core.filter.clear" | translate }}
-          </cam-link>
+          <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
+          <ta-link class="c-pointer" (action)="this.clear()">
+            {{ 'core.filter.clear' | translate }}
+          </ta-link>
         </div>
       </div>
       <div>
-        <cam-button (action)="this.validate()">
+        <ta-button (action)="this.validate()">
           <div class="align-center m-space-xs">
-            <cam-font-icon name="check-line"></cam-font-icon>
-            {{ "core.filter.validate" | translate }}
+            <ta-font-icon name="check-line"></ta-font-icon>
+            {{ 'core.filter.validate' | translate }}
           </div>
-        </cam-button>
+        </ta-button>
       </div>
     </div>
-  </cam-layout-side-cta>
-</cam-layout-side>
+  </ta-layout-side-cta>
+</ta-layout-side>

@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamBaseComponent } from '@camelot/utils';
+import { CamBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'cam-layout-full-panel',
+  selector: 'ta-layout-full-panel',
   templateUrl: './layout-full-panel.component.html',
   styleUrls: ['./layout-full-panel.component.scss'],
 })

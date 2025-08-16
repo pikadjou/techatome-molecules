@@ -8,12 +8,12 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!(this.user?.picture || this.userInfo?.profilePictureUrl)">
-  <cam-trigram *ngIf="this.defaultType === 'trigram'" [value]="this.getTrigram()" [size]="this.sizeValue"></cam-trigram>
+  <ta-trigram *ngIf="this.defaultType === 'trigram'" [value]="this.getTrigram()" [size]="this.sizeValue"></ta-trigram>
   <div
     *ngIf="this.defaultType === 'font'"
     class="profile-icon"
     [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }"
   >
-    <cam-font-icon name="profil-picture" [type]="this.size ?? 'lg'"></cam-font-icon>
+    <ta-font-icon name="profil-picture" [type]="this.size ?? 'lg'"></ta-font-icon>
   </div>
 </ng-container>

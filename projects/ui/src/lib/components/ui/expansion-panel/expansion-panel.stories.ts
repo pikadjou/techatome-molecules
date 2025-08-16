@@ -3,8 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
-import { CamIconsModule } from '@camelot/icons';
+import { CamIconsModule } from '@ta/icons';
 
 import { CamExpansionPanelComponent } from './expansion-panel.component';
 
@@ -16,20 +15,15 @@ export default {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [
-        CamIconsModule,
-        MatExpansionModule,
-        BrowserAnimationsModule,
-        RouterTestingModule,
-      ],
+      imports: [CamIconsModule, MatExpansionModule, BrowserAnimationsModule, RouterTestingModule],
     }),
   ],
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-expansion-panel [templates]="[{title: title1, content: content1}, {title: title2, content: content2}]"></cam-expansion-panel>
+        <ta-expansion-panel [templates]="[{title: title1, content: content1}, {title: title2, content: content2}]"></ta-expansion-panel>
 
         <ng-template #title1>
           <div>1. Lorem Ipsum is simply dummy text</div>
@@ -53,12 +47,12 @@ export default {
 export const Basic: StoryObj<StoryType> = {};
 
 export const WithContext: StoryObj<StoryType> = {
-  render: (args) => {
+  render: args => {
     const { ...props } = args;
     return {
       props,
       template: `
-        <cam-expansion-panel [templates]="[{title: title1, content: content1, context: {info: 'this is my context'}}, {title: title2, content: content2}]"></cam-expansion-panel>
+        <ta-expansion-panel [templates]="[{title: title1, content: content1, context: {info: 'this is my context'}}, {title: title2, content: content2}]"></ta-expansion-panel>
 
         <ng-template #title1 let-info="info">
           <div>1. Lorem Ipsum is simply dummy text - {{ info }}</div>

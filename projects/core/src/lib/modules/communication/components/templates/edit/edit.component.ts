@@ -1,36 +1,28 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, inject } from '@angular/core';
 
+import { InputBase } from '@ta/form-model';
+import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@ta/notification';
+import { CamBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
-
-import { InputBase } from '@camelot/form-model';
-import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@camelot/notification';
-import { CamBaseComponent } from '@camelot/utils';
 
 import { Template } from '../../../services/dto/template';
 import { CamCommunicationsTemplateFormService } from '../../../services/form/template.service';
 import { CamCommunicationsTemplatesService } from '../../../services/templates.service';
 
 @Component({
-  selector: 'cam-communication-template-edit',
+  selector: 'ta-communication-template-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class CommunicationTemplateEditComponent
-  extends CamBaseComponent
-  implements OnChanges
-{
+export class CommunicationTemplateEditComponent extends CamBaseComponent implements OnChanges {
   @Input()
   id: string | null = null;
 
   protected _notificationService = inject(LAZY_SERVICE_TOKEN);
 
-  readonly communicationsTemplateFormService = inject(
-    CamCommunicationsTemplateFormService
-  );
-  readonly communicationsTemplateService = inject(
-    CamCommunicationsTemplatesService
-  );
+  readonly communicationsTemplateFormService = inject(CamCommunicationsTemplateFormService);
+  readonly communicationsTemplateService = inject(CamCommunicationsTemplatesService);
 
   public template$: Observable<Template> | null = null;
   public form: InputBase<any>[] | null = null;
@@ -44,15 +36,13 @@ export class CommunicationTemplateEditComponent
   }
 
   public setForm(template?: Template) {
-    this.form =
-      this.communicationsTemplateFormService.getTemplateForm(template);
+    this.form = this.communicationsTemplateFormService.getTemplateForm(template);
   }
 
   public createTemplate(data: any) {
     this.requestState.asked();
     if (!this.id) {
-      const template =
-        this.communicationsTemplateFormService.formatTemplateForm(data);
+      const template = this.communicationsTemplateFormService.formatTemplateForm(data);
 
       this.communicationsTemplateService.createTemplate$(template).subscribe({
         next: ({ id }) => {
@@ -60,18 +50,12 @@ export class CommunicationTemplateEditComponent
           this._fetch();
         },
         complete: () => {
-          this._notificationService.addNotification(
-            'notification.common.success',
-            ENotificationCode.success
-          );
+          this._notificationService.addNotification('notification.common.success', ENotificationCode.success);
           this.requestState.completed();
         },
         error: () => {
           this.requestState.completed();
-          this._notificationService.addNotification(
-            'notification.common.error',
-            ENotificationCode.error
-          );
+          this._notificationService.addNotification('notification.common.error', ENotificationCode.error);
         },
       });
     } else {
@@ -82,18 +66,12 @@ export class CommunicationTemplateEditComponent
 
       this.communicationsTemplateService.updateTemplate$(template).subscribe({
         complete: () => {
-          this._notificationService.addNotification(
-            'notification.common.success',
-            ENotificationCode.success
-          );
+          this._notificationService.addNotification('notification.common.success', ENotificationCode.success);
           this.requestState.completed();
         },
         error: () => {
           this.requestState.completed();
-          this._notificationService.addNotification(
-            'notification.common.error',
-            ENotificationCode.error
-          );
+          this._notificationService.addNotification('notification.common.error', ENotificationCode.error);
         },
       });
     }
@@ -103,21 +81,18 @@ export class CommunicationTemplateEditComponent
     if (!this.id) {
       return;
     }
-    this.template$ =
-      this.communicationsTemplateService.communicationTemplate.get$(this.id);
+    this.template$ = this.communicationsTemplateService.communicationTemplate.get$(this.id);
 
     this.requestState.asked();
 
-    this.communicationsTemplateService
-      .fetchConversationTemplate$(this.id)
-      .subscribe({
-        next: (template) => {
-          this.setForm(template);
-        },
-        complete: () => this.requestState.completed(),
-        error: (error: HttpErrorResponse) => {
-          this.requestState.onError(error.status, error.statusText);
-        },
-      });
+    this.communicationsTemplateService.fetchConversationTemplate$(this.id).subscribe({
+      next: template => {
+        this.setForm(template);
+      },
+      complete: () => this.requestState.completed(),
+      error: (error: HttpErrorResponse) => {
+        this.requestState.onError(error.status, error.statusText);
+      },
+    });
   }
 }

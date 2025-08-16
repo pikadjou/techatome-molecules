@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
+import { UploadDocumentFormService } from '@ta/files-extended';
+import { IInputsError, InputBase } from '@ta/form-model';
+import { CamEnumerationService, TranslatedEnumeration } from '@ta/services';
 import { Observable } from 'rxjs';
-
-import { UploadDocumentFormService } from '@camelot/files-extended';
-import { IInputsError, InputBase } from '@camelot/form-model';
-import {
-  CamEnumerationService,
-  TranslatedEnumeration,
-} from '@camelot/services';
 
 export interface UploadDocumentResult {
   description?: string;
@@ -16,7 +12,7 @@ export interface UploadDocumentResult {
 }
 
 @Component({
-  selector: 'cam-upload-document',
+  selector: 'ta-upload-document',
   templateUrl: './upload-document.component.html',
   styleUrls: ['./upload-document.component.scss'],
 })
@@ -32,10 +28,7 @@ export class UploadDocumentModal implements OnInit {
 
   constructor(
     private _enumTypeService: CamEnumerationService,
-    public dialogRef: MatDialogRef<
-      UploadDocumentModal,
-      UploadDocumentResult | null
-    >,
+    public dialogRef: MatDialogRef<UploadDocumentModal, UploadDocumentResult | null>,
     private _form: UploadDocumentFormService
   ) {}
 
@@ -46,10 +39,7 @@ export class UploadDocumentModal implements OnInit {
     });
   }
 
-  public onSaveClick = (values: {
-    description: string;
-    documentType: string;
-  }): void => {
+  public onSaveClick = (values: { description: string; documentType: string }): void => {
     this.dialogRef.close({
       description: values.description,
       documentTypeId: Number(values.documentType),

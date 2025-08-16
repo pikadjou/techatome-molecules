@@ -1,14 +1,13 @@
 import { Component, Input } from '@angular/core';
 
+import { UserLogoData } from '@ta/ui';
+import { CamBaseComponent } from '@ta/utils';
 import { Observable, of } from 'rxjs';
-
-import { UserLogoData } from '@camelot/ui';
-import { CamBaseComponent } from '@camelot/utils';
 
 import { CommunicationParticipantExtended } from '../../services/dto/communication';
 
 @Component({
-  selector: 'cam-communication-participants-list',
+  selector: 'ta-communication-participants-list',
   templateUrl: './participants-list.component.html',
   styleUrls: ['./participants-list.component.scss'],
 })

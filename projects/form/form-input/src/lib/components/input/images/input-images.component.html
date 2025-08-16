@@ -1,25 +1,23 @@
 <div class="row g-0 align-items-center mb-space-2">
   <div class="col">
-    <cam-form-label [input]="this.input"></cam-form-label>
+    <ta-form-label [input]="this.input"></ta-form-label>
   </div>
-  <div
-    [ngClass]="this.selection.length === 0 ? 'col-12 my-space-2' : 'col-auto'"
-  >
-    <cam-button
+  <div [ngClass]="this.selection.length === 0 ? 'col-12 my-space-2' : 'col-auto'">
+    <ta-button
       type="secondary"
       #focusedElement
       (action)="this.openDialog()"
       [options]="{ circular: this.isCircularButton }"
     >
-      <cam-local-icon [type]="this.icon.Gallery"></cam-local-icon>
-    </cam-button>
+      <ta-local-icon [type]="this.icon.Gallery"></ta-local-icon>
+    </ta-button>
   </div>
 </div>
 
-@if(this.selection.length > 0) {
-<cam-files-list
-  [files]="this.fileDataSelection"
-  [canDeleteFile]="!!this.input.fileDeleted"
-  (fileDeleted)="this.onFileDeleted($event)"
-></cam-files-list>
+@if (this.selection.length > 0) {
+  <ta-files-list
+    [files]="this.fileDataSelection"
+    [canDeleteFile]="!!this.input.fileDeleted"
+    (fileDeleted)="this.onFileDeleted($event)"
+  ></ta-files-list>
 }

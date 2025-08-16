@@ -1,5 +1,5 @@
-import { GraphSchema } from '@camelot/server';
-import { Contact, User } from '@camelot/user';
+import { GraphSchema } from '@ta/server';
+import { Contact, User } from '@ta/user';
 
 export enum CommunicationStatus {
   Unknown = 0,
@@ -114,4 +114,4 @@ export const communicationErrorProps = new GraphSchema<CommunicationError>([
   'communicationSubject',
   'communicationId',
   'communicationSubject',
-])
+]);

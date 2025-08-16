@@ -4,7 +4,7 @@ import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
 
 @Component({
-  selector: 'cam-quick-actions',
+  selector: 'ta-quick-actions',
   templateUrl: './quick-actions.component.html',
   styleUrls: ['./quick-actions.component.scss'],
 })

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
-import { InputRadio } from '@camelot/form-model';
-import { CamSizes } from '@camelot/styles';
+import { InputRadio } from '@ta/form-model';
+import { CamSizes } from '@ta/styles';
+
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-radio',
+  selector: 'ta-input-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
 })

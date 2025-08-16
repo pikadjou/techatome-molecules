@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 
-import { KeyValue } from '@camelot/server';
+import { KeyValue } from '@ta/server';
 
 import { CamNotificationDataService } from '../../../../services/data.service';
 import { NotificationDto } from '../../../../services/dto/notification';
@@ -28,17 +28,10 @@ export abstract class AbstractNotificationTemplateComponent {
   }
 
   public extractContext(key: string) {
-    return (
-      (<KeyValue[]>this.notification.context).find((item) => item.key === key)
-        ?.value ?? ''
-    );
+    return (<KeyValue[]>this.notification.context).find(item => item.key === key)?.value ?? '';
   }
 
   public extractredirectContext(key: string) {
-    return (
-      (<KeyValue[]>this.notification.redirectContext).find(
-        (item) => item.key === key
-      )?.value ?? ''
-    );
+    return (<KeyValue[]>this.notification.redirectContext).find(item => item.key === key)?.value ?? '';
   }
 }

@@ -7,7 +7,7 @@
     </div>
 
     <ng-container *ngFor="let communication of group.messages">
-      <cam-communication-message-container
+      <ta-communication-message-container
         class="communication mb-space-md"
         [communication]="communication"
         [conversationParticipants]="this.conversationParticipants"
@@ -15,7 +15,7 @@
         [class.is-mine]="communication.isMine"
         [class.system]="communication.type === this.CommunicationType.System"
         (askReply)="this.readonly ? null : this.askReply.emit($event)"
-      ></cam-communication-message-container>
+      ></ta-communication-message-container>
     </ng-container>
   </ng-container>
 </div>

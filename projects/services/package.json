@@ -1,9 +1,9 @@
 {
-  "name": "@camelot/services",
+  "name": "@ta/services",
   "version": "3.16.0-beta.4",
   "main": "./dist",
   "scripts": {
-    "build": "ng build @camelot/services",
+    "build": "ng build @ta/services",
     "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
@@ -12,8 +12,8 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@camelot/server": "^3.16.0-beta.4",
-    "@camelot/utils": "^3.16.0-beta.4",
+    "@ta/server": "^3.16.0-beta.4",
+    "@ta/utils": "^3.16.0-beta.4",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

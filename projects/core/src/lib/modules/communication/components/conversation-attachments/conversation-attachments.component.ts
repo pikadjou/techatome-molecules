@@ -12,16 +12,16 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { InputUploadValue } from '@camelot/form-model';
-import { CamDocumentsService } from '@camelot/services';
-import { CamUiModule } from '@camelot/ui';
-import { CamAbstractComponent } from '@camelot/utils';
+import { InputUploadValue } from '@ta/form-model';
+import { CamDocumentsService } from '@ta/services';
+import { CamUiModule } from '@ta/ui';
+import { CamAbstractComponent } from '@ta/utils';
 
 import { AttachmentsResult } from '../attachements/modal/modal.component';
 import { ConversationAttachmentsModal } from './modal/modal.component';
 
 @Component({
-  selector: 'cam-communication-conversation-attachments',
+  selector: 'ta-communication-conversation-attachments',
   standalone: true,
   templateUrl: './conversation-attachments.component.html',
   imports: [CommonModule, CamUiModule],

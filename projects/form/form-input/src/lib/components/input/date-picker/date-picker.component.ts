@@ -2,14 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 
+import { InputDatePicker } from '@ta/form-model';
 import { isEqual } from 'date-fns';
-
-import { InputDatePicker } from '@camelot/form-model';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-date-picker',
+  selector: 'ta-input-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
 })

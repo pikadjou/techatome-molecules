@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { getFontIcon, isFontIcon, isLocalIcon } from '@camelot/icons';
-import { CamIconType } from '@camelot/icons';
-import { CamSizes } from '@camelot/styles';
-import { MessageLevel } from '@camelot/utils';
+import { getFontIcon, isFontIcon, isLocalIcon } from '@ta/icons';
+import { CamIconType } from '@ta/icons';
+import { CamSizes } from '@ta/styles';
+import { MessageLevel } from '@ta/utils';
 
 @Component({
-  selector: 'cam-picture-info-message',
+  selector: 'ta-picture-info-message',
   templateUrl: './picture-info-message.component.html',
   styleUrls: ['./picture-info-message.component.scss'],
 })

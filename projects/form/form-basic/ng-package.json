@@ -6,5 +6,5 @@
     "entryFile": "src/public-api.ts",
     "styleIncludePaths": ["../../styles/src/style"]
   },
-  "allowedNonPeerDependencies": ["@camelot", "fast-deep-equal"]
+  "allowedNonPeerDependencies": ["@ta", "fast-deep-equal"]
 }

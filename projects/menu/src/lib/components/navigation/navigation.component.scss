@@ -1,4 +1,4 @@
-@import "camelot-export";
+@import 'ta-export';
 
 .element-list {
   gap: get-var(space, md);
@@ -76,7 +76,7 @@
   .swiper-container {
     gap: get-var(space, sm) !important;
   }
-  cam-font-icon {
+  ta-font-icon {
     margin-top: -6px;
     display: block;
     i {

@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { InputBase } from '@camelot/form-model';
+
+import { InputBase } from '@ta/form-model';
 
 @Component({
-  selector: 'cam-input-container',
+  selector: 'ta-input-container',
   templateUrl: './input-container.component.html',
   styleUrls: ['./input-container.component.scss'],
 })

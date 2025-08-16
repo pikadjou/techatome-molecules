@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 
-import { InputTextarea } from '@camelot/form-model';
+import { InputTextarea } from '@ta/form-model';
+
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'cam-input-textarea',
+  selector: 'ta-input-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss'],
 })

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { call, sendMail } from '@camelot/utils';
+import { call, sendMail } from '@ta/utils';
 
 import { UserLogoNaming } from '../user-logo/user-logo.component';
 import { IProfileData } from './IProfileData';
 
 @Component({
-  selector: 'cam-profile-data',
+  selector: 'ta-profile-data',
   templateUrl: './profile-data.component.html',
   styleUrls: ['./profile-data.component.scss'],
 })

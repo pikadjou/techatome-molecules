@@ -1,7 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 
-import { of } from 'rxjs';
-
 import {
   InputCheckBox,
   InputDropdown,
@@ -10,9 +8,10 @@ import {
   InputTranslation,
   InputUploadValue,
   slugValidator,
-} from '@camelot/form-model';
-import { Culture, DEFAULT_USER_LANGUAGE, extractEnum } from '@camelot/utils';
-import { convertBlocksToHtml } from '@camelot/wysiswyg';
+} from '@ta/form-model';
+import { Culture, DEFAULT_USER_LANGUAGE, extractEnum } from '@ta/utils';
+import { convertBlocksToHtml } from '@ta/wysiswyg';
+import { of } from 'rxjs';
 
 import { CommunicationType } from '../dto/communication';
 import { CreateTemplatePayloadInput } from '../dto/post/template';

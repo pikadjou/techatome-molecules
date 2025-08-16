@@ -1,9 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 
+import { CamTranslationService } from '@ta/translation';
 import { CalendarDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
-
-import { CamTranslationService } from '@camelot/translation';
 
 @Injectable()
 export class CustomDateFormatter extends CalendarDateFormatter {

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Communication, CommunicationParticipantExtended, CommunicationType } from '../../services/dto/communication';
 
 @Component({
-  selector: 'cam-message-list',
+  selector: 'ta-message-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })

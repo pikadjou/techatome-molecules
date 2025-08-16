@@ -1,4 +1,4 @@
-import { Apollo_gql, GraphQueryPayload, graphQlTake } from '@camelot/server';
+import { Apollo_gql, GraphQueryPayload, graphQlTake } from '@ta/server';
 
 export function GET_CONTACTS(where: string, props: string): GraphQueryPayload {
   return {

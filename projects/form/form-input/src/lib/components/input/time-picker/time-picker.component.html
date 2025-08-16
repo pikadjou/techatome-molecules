@@ -1,4 +1,4 @@
-<cam-input-layout [input]="this.input">
+<ta-input-layout [input]="this.input">
   <input
     matInput
     #focusedElement
@@ -9,8 +9,5 @@
     [format]="24"
     readonly
   />
-  <ngx-material-timepicker
-    #picker
-    [timepickerClass]="'time-picker-container-class'"
-  ></ngx-material-timepicker>
-</cam-input-layout>
+  <ngx-material-timepicker #picker [timepickerClass]="'time-picker-container-class'"></ngx-material-timepicker>
+</ta-input-layout>
