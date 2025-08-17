@@ -1,10 +1,10 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes } from '../../../../types/sizes';
+import { TaSizes } from '@ta/styles';
 
 @Component({
-selector: 'ta-notification-badge',
+  selector: 'ta-notification-badge',
   templateUrl: './notification-badge.component.html',
   styleUrls: ['./notification-badge.component.scss'],
   standalone: true,

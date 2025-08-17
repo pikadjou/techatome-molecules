@@ -1,11 +1,11 @@
-import { NgIf, NgClass } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { TaSizes, TaState } from '../../../types/sizes';
+import { FontIconComponent } from '@ta/icons';
+import { TaSizes, TaState } from '@ta/styles';
 
 @Component({
-selector: 'ta-link',
+  selector: 'ta-link',
   templateUrl: './link.component.html',
   styleUrls: ['./link.component.scss'],
   standalone: true,
@@ -13,7 +13,7 @@ selector: 'ta-link',
 })
 export class LinkComponent {
   @Input()
-  state: TaState = 'completed';
+  state: TaState = 'classic';
 
   @Input()
   underline?: boolean = true;
@@ -33,7 +33,7 @@ export class LinkComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state === 'completed') {
+    if (this.state === 'classic') {
       this.action.emit();
     }
   }

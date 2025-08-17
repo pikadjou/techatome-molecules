@@ -1,11 +1,12 @@
-import { NgIf, NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes } from '../../../../types/sizes';
+import { TaSizes } from '@ta/styles';
+
 import { BadgeComponent } from '../../badge/badge.component';
 
 @Component({
-selector: 'ta-department-professions',
+  selector: 'ta-department-professions',
   templateUrl: './professions.component.html',
   styleUrls: ['./professions.component.scss'],
   standalone: true,

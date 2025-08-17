@@ -1,8 +1,9 @@
 import { NgIf, NgStyle } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes } from '../../../types/sizes';
+import { FontIconComponent } from '@ta/icons';
+import { TaSizes } from '@ta/styles';
+
 import { TrigramComponent } from '../trigram/trigram.component';
 
 export interface UserLogoNaming {
@@ -18,7 +19,7 @@ export interface UserLogoData {
   picture?: string;
 }
 @Component({
-selector: 'ta-user-logo',
+  selector: 'ta-user-logo',
   templateUrl: './user-logo.component.html',
   styleUrls: ['./user-logo.component.scss'],
   standalone: true,

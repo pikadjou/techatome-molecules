@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { TaSizes } from '../../types/sizes';
+import { TaSizes } from '@ta/styles';
 
 import { CamIconType, CamIconsService } from '../../services/icons.service';
 

@@ -2,12 +2,13 @@ import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { CamIconType } from '@ta/icons';
-import { TaSizes } from '../../../types/sizes';
+import { TaSizes } from '@ta/styles';
 import { MessageLevel } from '@ta/utils';
+
 import { PictureInfoMessageComponent } from '../../../components/ui/picture-info-message/picture-info-message.component';
 
 @Component({
-selector: 'ta-empty',
+  selector: 'ta-empty',
   templateUrl: './empty.component.html',
   styleUrls: ['./empty.component.scss'],
   standalone: true,

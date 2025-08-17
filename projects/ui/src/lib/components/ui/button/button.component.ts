@@ -1,15 +1,16 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FontIconComponent } from '@ta/icons';
 
-import { TaState } from '../../../types/sizes';
+import { FontIconComponent } from '@ta/icons';
+import { TaState } from '@ta/styles';
+import { StopPropagationDirective } from '@ta/utils';
 
 @Component({
   selector: 'ta-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   standalone: true,
-  imports: [NgClass, NgIf, FontIconComponent],
+  imports: [NgClass, NgIf, FontIconComponent, StopPropagationDirective],
 })
 export class ButtonComponent {
   /**

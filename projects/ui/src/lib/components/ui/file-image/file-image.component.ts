@@ -1,12 +1,12 @@
-import { LocalIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
 
+import { LocalIconComponent } from '@ta/icons';
 import { CamIconType } from '@ta/icons';
-import { TaSizes } from '../../../types/sizes';
+import { TaSizes } from '@ta/styles';
 import { extractExtension } from '@ta/utils';
 
 @Component({
-selector: 'ta-file-image',
+  selector: 'ta-file-image',
   templateUrl: './file-image.component.html',
   styleUrls: ['./file-image.component.scss'],
   standalone: true,

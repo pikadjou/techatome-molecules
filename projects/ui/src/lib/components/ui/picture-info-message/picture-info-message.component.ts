@@ -1,16 +1,17 @@
 import { NgIf } from '@angular/common';
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
+import { TranslateModule } from '@ngx-translate/core';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { getFontIcon, isFontIcon, isLocalIcon } from '@ta/icons';
 import { CamIconType } from '@ta/icons';
-import { TaSizes } from '../../../types/sizes';
+import { TaSizes } from '@ta/styles';
 import { MessageLevel } from '@ta/utils';
+
 import { TypedMessageComponent } from '../typed-message/typed-message.component';
 
 @Component({
-selector: 'ta-picture-info-message',
+  selector: 'ta-picture-info-message',
   templateUrl: './picture-info-message.component.html',
   styleUrls: ['./picture-info-message.component.scss'],
   standalone: true,

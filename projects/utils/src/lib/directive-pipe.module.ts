@@ -26,12 +26,10 @@ import { SafePipe } from './pipe/safe.pipe';
     FileSizePipe,
     JoinPipe,
     LetDirective,
-    PluralTranslatePipe,
-    StopPropagationDirective,
     TypedTemplateDirective,
     OnRenderDirective,
   ],
-  imports: [CommonModule, SafePipe],
+  imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective],
   exports: [
     FileSizePipe,
     JoinPipe,

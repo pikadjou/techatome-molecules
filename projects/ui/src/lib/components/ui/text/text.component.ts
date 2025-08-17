@@ -1,10 +1,10 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes } from '../../../types/sizes';
+import { TaSizes } from '@ta/styles';
 
 @Component({
-selector: 'ta-text',
+  selector: 'ta-text',
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.scss'],
   standalone: true,

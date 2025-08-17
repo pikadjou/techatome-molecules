@@ -1,14 +1,14 @@
 import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes } from '../../../../types/sizes';
+import { TaSizes } from '@ta/styles';
 
 import { UserLogoNaming } from '../../user-logo/user-logo.component';
-import { IProfileData } from '../IProfileData';
 import { UserLogoComponent } from '../../user-logo/user-logo.component';
+import { IProfileData } from '../IProfileData';
 
 @Component({
-selector: 'ta-inline-profile-data',
+  selector: 'ta-inline-profile-data',
   templateUrl: './inline-profile-data.component.html',
   styleUrls: ['./inline-profile-data.component.scss'],
   standalone: true,

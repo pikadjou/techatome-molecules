@@ -1,10 +1,10 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes, ColorType } from '../../../types/sizes';
+import { ColorType, TaSizes } from '@ta/styles';
 
 @Component({
-selector: 'ta-bullet',
+  selector: 'ta-bullet',
   templateUrl: './bullet.component.html',
   styleUrls: ['./bullet.component.scss'],
   standalone: true,
@@ -15,7 +15,7 @@ export class BulletComponent {
   size: TaSizes = 'sm';
 
   @Input()
-  type: ColorType | 'notif' = 'primary';
+  type: ColorType | 'notif' = 'default';
 
   public getClass(): string {
     return `bullet-${this.type} ${this.size}`;

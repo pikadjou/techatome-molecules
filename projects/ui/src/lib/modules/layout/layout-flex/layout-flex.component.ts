@@ -2,10 +2,10 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
+import { TaState } from '@ta/styles';
 import { TaBaseComponent } from '@ta/utils';
 
 import { ButtonComponent } from '../../../components/ui/button/button.component';
-import { TaState } from '../../../types/sizes';
 import { LayoutFullPanelComponent } from '../layout-full-panel/layout-full-panel.component';
 
 type Panel = 'left' | 'right' | 'center';

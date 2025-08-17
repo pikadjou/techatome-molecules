@@ -1,11 +1,12 @@
 import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { TaSizes } from '../../../types/sizes';
+import { TaSizes } from '@ta/styles';
+
 import { BulletComponent } from '../bullet/bullet.component';
 
 @Component({
-selector: 'ta-new',
+  selector: 'ta-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss'],
   standalone: true,

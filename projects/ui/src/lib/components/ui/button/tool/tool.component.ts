@@ -1,19 +1,20 @@
-import { NgIf, NgClass } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { TaSizes, TaState } from '../../../../types/sizes';
+import { FontIconComponent } from '@ta/icons';
+import { TaSizes, TaState } from '@ta/styles';
+import { StopPropagationDirective } from '@ta/utils';
 
 @Component({
-selector: 'ta-button-tool',
+  selector: 'ta-button-tool',
   templateUrl: './tool.component.html',
   styleUrls: ['./tool.component.scss'],
   standalone: true,
-  imports: [NgIf, NgClass, FontIconComponent],
+  imports: [NgIf, NgClass, FontIconComponent, StopPropagationDirective],
 })
 export class ButtonToolComponent {
   @Input()
-  state: TaState = 'completed';
+  state: TaState = 'classic';
 
   @Input()
   type: 'primary' = 'primary';
@@ -39,7 +40,7 @@ export class ButtonToolComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state === 'completed') {
+    if (this.state === 'classic') {
       this.action.emit();
     }
   }
