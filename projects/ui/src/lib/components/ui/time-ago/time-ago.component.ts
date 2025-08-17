@@ -1,11 +1,15 @@
+import { NgIf, DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { differenceInCalendarDays } from 'date-fns';
 
 @Component({
-  selector: 'ta-time-ago',
+selector: 'ta-time-ago',
   templateUrl: './time-ago.component.html',
   styleUrls: ['./time-ago.component.scss'],
+  standalone: true,
+  imports: [NgIf, TranslateModule, DatePipe],
 })
 export class TimeAgoComponent {
   @Input()

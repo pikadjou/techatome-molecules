@@ -1,3 +1,5 @@
+import { NgIf, NgClass } from '@angular/common';
+import { LocalIconComponent } from '@ta/icons';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,9 +10,11 @@ import { CamAbstractInputComponent } from '../../abstract.component';
 import { InputImageModal } from './modal/input-images-modal.component';
 
 @Component({
-  selector: 'ta-input-images',
+selector: 'ta-input-images',
   templateUrl: './input-images.component.html',
-  styleUrls: ['./input-images.component.scss'],
+  styleUrls: ['./input-images.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgClass, LocalIconComponent],
 })
 export class InputImagesComponent extends CamAbstractInputComponent<InputImages> implements OnInit {
   get selection(): string[] {

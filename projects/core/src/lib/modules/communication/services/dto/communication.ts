@@ -1,5 +1,5 @@
 import { GraphSchema } from '@ta/server';
-import { Contact, User } from '@ta/user';
+import { Contact, User } from '../types/user.types';
 
 export enum CommunicationStatus {
   Unknown = 0,

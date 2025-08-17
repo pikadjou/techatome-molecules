@@ -20,7 +20,7 @@ import Quote from '@editorjs/quote';
 import Warning from '@editorjs/warning';
 import { CamDocumentsService } from '@ta/services';
 import { CamTranslationService } from '@ta/translation';
-import { CamBaseComponent, isNonNullable, isNotEmptyObject } from '@ta/utils';
+import { TaBaseComponent, isNonNullable, isNotEmptyObject } from '@ta/utils';
 import { ColorTool } from 'editorjs-color';
 import { Observable, firstValueFrom } from 'rxjs';
 
@@ -33,11 +33,12 @@ import * as nl from './translation/nl.json';
 
 export type EditorInputSavedData = { blocks: WysiswgBlockData[]; tags: string[] };
 @Component({
-  selector: 'ta-cms-editor-input',
+selector: 'ta-cms-editor-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  styleUrls: ['./input.component.scss'],,
+  standalone: true,
 })
-export class EditorInputComponent extends CamBaseComponent implements OnInit, AfterViewInit {
+export class EditorInputComponent extends TaBaseComponent implements OnInit, AfterViewInit {
   @Input()
   initValue?: WysiswgBlockData[] | null;
 

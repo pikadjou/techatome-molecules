@@ -6,9 +6,20 @@ import { LocalIconComponent } from './components/local-icon/local-icon.component
 import { MaterialIconComponent } from './components/material-icon/material-icon.component';
 import { CamIconsService } from './services/icons.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamIconsModule } from '@ta/icons';
+ * 
+ * // Import the standalone components directly:
+ * import { FontIconComponent, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
+ */
 @NgModule({
-  declarations: [LocalIconComponent, MaterialIconComponent, FontIconComponent],
-  imports: [CommonModule],
+  declarations: [],
+  imports: [CommonModule, LocalIconComponent, MaterialIconComponent, FontIconComponent],
   exports: [LocalIconComponent, MaterialIconComponent, FontIconComponent],
   providers: [CamIconsService],
 })

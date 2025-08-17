@@ -1,17 +1,20 @@
+import { NgIf, AsyncPipe } from '@angular/common';
 import { Component, Input, inject, signal } from '@angular/core';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable, map } from 'rxjs';
 
 import { CamCommunicationsService } from '../../../../services/communications.service';
 import { Communication } from '../../../../services/dto/communication';
 
 @Component({
-  selector: 'ta-response-to-communication',
+selector: 'ta-response-to-communication',
   templateUrl: './response-to-communication.component.html',
-  styleUrls: ['./response-to-communication.component.scss'],
+  styleUrls: ['./response-to-communication.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe],
 })
-export class ResponseToCommunicationComponent extends CamBaseComponent {
+export class ResponseToCommunicationComponent extends TaBaseComponent {
   @Input()
   responseToCommunicationId!: string;
 

@@ -1,6 +1,8 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '../../types/sizes';
 
 /**
  * @deprecated
@@ -9,6 +11,8 @@ import { CamSizes } from '@ta/styles';
   selector: 'ta-material-icon',
   templateUrl: './material-icon.component.html',
   styleUrls: ['./material-icon.component.scss'],
+  standalone: true,
+  imports: [NgClass, MatIconModule],
 })
 export class MaterialIconComponent {
   /**
@@ -39,7 +43,7 @@ export class MaterialIconComponent {
    * If set to true, define a size for the icon
    */
   @Input()
-  public type: CamSizes | '' = '';
+  public type: TaSizes | '' = '';
 
   public getDisplayStyle(): string {
     if (this.outline) return 'material-icons-outlined';

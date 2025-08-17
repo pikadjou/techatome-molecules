@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
-
-import { tap } from 'rxjs/operators';
-
-import { CamBaseComponent } from '@ta/utils';
-
 import { ENotificationCode } from '../../../enum';
 import { CamNotificationService } from '../../../services/notification.service';
+import { NotificationInlineComponent } from '../inline/notification-inline.component';
+import { NgFor } from '@angular/common';
+import { Component } from '@angular/core';
+import { ToastComponent } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
+import { tap } from 'rxjs/operators';
 
-@Component({
-  selector: 'ta-notification-box',
-  templateUrl: './notification-box.component.html',
-  styleUrls: ['./notification-box.component.scss'],
+    NgFor,
+    NotificationInlineComponent,
+    ToastComponent
+  ],
 })
-export class NotificationBoxComponent extends CamBaseComponent {
+export class NotificationBoxComponent extends TaBaseComponent {
   public list: { message: string; code: ENotificationCode }[] = [];
 
   constructor(private _notificationService: CamNotificationService) {

@@ -13,12 +13,12 @@ import { Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 import { InputBase } from '@ta/form-model';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable, delay } from 'rxjs';
 
 @Component({ template: '' })
 export abstract class CamAbstractInputComponent<C extends InputBase<any>, V = unknown>
-  extends CamBaseComponent
+  extends TaBaseComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   @Input()

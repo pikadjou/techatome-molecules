@@ -9,7 +9,7 @@
   right: 5%;
   z-index: 5000;
 
-  @include media-breakpoint-up(mobile) {
+  @media screen and (min-width: 768px) {
     bottom: calc(50px + env(safe-area-inset-bottom));
     right: 50px;
     width: 800px;
@@ -20,7 +20,7 @@
   @include flex.flex-column();
   gap: common.get-var(space, lg);
 
-  @include media-breakpoint-up(mobile) {
+  @media screen and (min-width: 768px) {
     @include flex.flex-row();
     @include flex.space-between();
   }
@@ -33,7 +33,7 @@
 
 .cta {
   margin: 0px;
-  @include media-breakpoint-up(mobile) {
+  @media screen and (min-width: 768px) {
     margin: auto;
   }
   .cta-button {
@@ -41,7 +41,7 @@
 
     justify-content: space-evenly;
 
-    @include media-breakpoint-up(mobile) {
+    @media screen and (min-width: 768px) {
       @include flex.flex-column();
     }
     .button-content {

@@ -1,13 +1,17 @@
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { CamIconType } from '@ta/icons';
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '../../../types/sizes';
 import { MessageLevel } from '@ta/utils';
+import { PictureInfoMessageComponent } from '../../../components/ui/picture-info-message/picture-info-message.component';
 
 @Component({
-  selector: 'ta-empty',
+selector: 'ta-empty',
   templateUrl: './empty.component.html',
   styleUrls: ['./empty.component.scss'],
+  standalone: true,
+  imports: [NgIf, PictureInfoMessageComponent],
 })
 export class EmptyComponent {
   @Input() isEmpty: boolean = true;
@@ -18,5 +22,5 @@ export class EmptyComponent {
   @Input() type?: MessageLevel = 'info';
 
   @Input() icon?: CamIconType | string = 'ghost';
-  @Input() iconSize?: CamSizes | 'xl' = 'lg';
+  @Input() iconSize?: TaSizes | 'xl' = 'lg';
 }

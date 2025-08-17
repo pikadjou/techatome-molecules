@@ -4,8 +4,9 @@ import { SwitchCasesTeamChanged } from '../../../../../services/dto/switch-cases
 import { SwitchCaseBaseComponent } from '../switch-case-base/switch-case-base.component';
 
 @Component({
-  selector: 'ta-switch-cases-team-changed',
+selector: 'ta-switch-cases-team-changed',
   templateUrl: './switch-cases-team-changed.component.html',
-  styleUrls: ['./switch-cases-team-changed.component.scss'],
+  styleUrls: ['./switch-cases-team-changed.component.scss'],,
+  standalone: true,
 })
 export class SwitchCasesTeamChangedComponent extends SwitchCaseBaseComponent<SwitchCasesTeamChanged> {}

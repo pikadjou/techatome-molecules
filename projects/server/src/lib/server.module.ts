@@ -11,6 +11,17 @@ import { TenantInterceptor } from './services/server/tenantInterceptor';
 
 export { gql as Apollo_gql } from 'apollo-angular';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamServerModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { ApolloModule } from '@ta/library-name';
+ */
 @NgModule({
   declarations: [],
   imports: [CommonModule, HttpClientModule, ApolloModule],

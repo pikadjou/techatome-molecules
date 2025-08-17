@@ -1,19 +1,44 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-
-import { CamBaseComponent } from '@ta/utils';
-import { Observable, tap } from 'rxjs';
-
 import { CamNotificationDataService } from '../../services/data.service';
 import { NotificationFilter } from '../../services/queries';
 import { CamNotificationSharedService, RoutingType } from '../../services/shared.service';
+import { InvoicePaymentStatusChangedComponent } from '../items/item/template/invoice-payment-status-changed/invoice-payment-status-changed.component';
+import { NewInvoiceComponent } from '../items/item/template/new-invoice/new-invoice.component';
+import { NewQuotationVersionComponent } from '../items/item/template/new-quotation-version/new-quotation-version.component';
+import { ProjectStatusChangedComponent } from '../items/item/template/project-status-changed/project-status-changed.component';
+import { TaskAssignedComponent } from '../items/item/template/task-assigned/task-assigned.component';
+import { TaskDueTodayComponent } from '../items/item/template/task-due-today/task-due-today.component';
+import { TaskNewActivityComponent } from '../items/item/template/task-new-activity/task-new-activity.component';
+import { ToDoAssignedComponent } from '../items/item/template/to-do-assigned/to-do-assigned.component';
+import { ToDoDueTodayComponent } from '../items/item/template/to-do-due-today/to-do-due-today.component';
+import { UserTaggedInConversationComponent } from '../items/item/template/user-tagged-in-conversation/user-tagged-in-conversation.component';
+import { AsyncPipe, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
+import { TaBaseComponent, NgLetDirective } from '@ta/utils';
+import { Observable, tap } from 'rxjs';
 
-@Component({
-  selector: 'ta-notification-container',
-  templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss'],
+    AsyncPipe,
+    EmptyComponent,
+    ErrorComponent,
+    InvoicePaymentStatusChangedComponent,
+    LoaderComponent,
+    NewInvoiceComponent,
+    NewQuotationVersionComponent,
+    NgFor,
+    NgLetDirective,
+    NgSwitch,
+    NgSwitchCase,
+    ProjectStatusChangedComponent,
+    TaskAssignedComponent,
+    TaskDueTodayComponent,
+    TaskNewActivityComponent,
+    ToDoAssignedComponent,
+    ToDoDueTodayComponent,
+    UserTaggedInConversationComponent
+  ],
 })
-export class ContainerComponent extends CamBaseComponent implements OnInit {
+export class ContainerComponent extends TaBaseComponent implements OnInit {
   @Input()
   filters: NotificationFilter = null;
 

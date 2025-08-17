@@ -1,6 +1,10 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TranslateModule } from '@ngx-translate/core';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+import { TaBaseComponent } from '@ta/utils';
 
 import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
@@ -12,8 +16,10 @@ import { Menu } from '../../models/menu/menu';
   selector: 'ta-context-menu',
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe, RouterModule, TranslateModule, FontIconComponent, LocalIconComponent],
 })
-export class ContextMenuComponent extends CamBaseComponent {
+export class ContextMenuComponent extends TaBaseComponent {
   @Input()
   menu!: Menu;
 

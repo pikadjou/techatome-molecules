@@ -9,6 +9,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
+import { NgFor } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 import { InputUploadValue } from '@ta/form-model';
@@ -18,9 +19,11 @@ import { CamAbstractComponent } from '@ta/utils';
 import { AttachmentsModal, AttachmentsResult } from './modal/modal.component';
 
 @Component({
-  selector: 'ta-communication-attachments',
+selector: 'ta-communication-attachments',
   templateUrl: './attachments.component.html',
-  styleUrls: ['./attachments.component.scss'],
+  styleUrls: ['./attachments.component.scss'],,
+  standalone: true,
+  imports: [NgFor],
 })
 export class AttachmentsComponent extends CamAbstractComponent implements OnChanges {
   @Input()

@@ -4,9 +4,13 @@
 .mail {
   color: common.get-var(neutral, 500);
   @include fonts.fontSizeBody(xs);
-  @include text-overflow();
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .text {
   @include fonts.fontSizeBody(sm);
-  @include text-overflow();
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

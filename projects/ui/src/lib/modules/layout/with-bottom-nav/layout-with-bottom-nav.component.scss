@@ -1,23 +1,24 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
 $menu-size-medium: 100px;
 $menu-size-large: 220px;
 
 .layout-container {
-  @include simple-flex();
+  @include flex.flex-column();
   margin: 0;
 
   .layout-content-container {
-    @include full-width();
+    width: 100%;
     overflow: hidden;
 
-    @include media-breakpoint-up(sm) {
+    @media screen and (min-width: 576px) {
       order: 2;
     }
 
     .container {
       width: auto;
-      @include media-breakpoint-up(sm) {
+      @media screen and (min-width: 576px) {
         padding: common.get-var(components, header, top) common.get-var(space, md) 0 common.get-var(space, md);
         padding-bottom: common.get-var(space, sm) !important;
       }
@@ -25,19 +26,19 @@ $menu-size-large: 220px;
   }
   .bottom-nav-container {
     width: 100%;
-    @include media-breakpoint-down(sm) {
+    @media screen and (max-width: 575px) {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 2;
     }
-    @include media-breakpoint-up(sm) {
+    @media screen and (min-width: 576px) {
       position: sticky;
       width: $menu-size-medium;
       order: 1;
     }
-    @include media-breakpoint-up(lg) {
+    @media screen and (min-width: 992px) {
       width: $menu-size-large;
     }
   }

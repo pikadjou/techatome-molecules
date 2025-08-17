@@ -1,15 +1,18 @@
+import { NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent, fullName } from '@ta/utils';
+import { TaBaseComponent, fullName } from '@ta/utils';
 
 import { CommunicationParticipant, CommunicationParticipantExtended } from '../../../services/dto/communication';
 
 @Component({
-  selector: 'ta-communication-participant-light',
+selector: 'ta-communication-participant-light',
   templateUrl: './light.component.html',
-  styleUrls: ['./light.component.scss'],
+  styleUrls: ['./light.component.scss'],,
+  standalone: true,
+  imports: [NgFor],
 })
-export class LightComponent extends CamBaseComponent {
+export class LightComponent extends TaBaseComponent {
   @Input()
   conversationParticipants!: CommunicationParticipantExtended[];
 

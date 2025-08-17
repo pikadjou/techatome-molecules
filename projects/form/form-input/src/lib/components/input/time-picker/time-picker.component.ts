@@ -5,9 +5,10 @@ import { InputTimePicker } from '@ta/form-model';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-time-picker',
+selector: 'ta-input-time-picker',
   templateUrl: './time-picker.component.html',
-  styleUrls: ['./time-picker.component.scss'],
+  styleUrls: ['./time-picker.component.scss'],,
+  standalone: true,
 })
 export class TimePickerComponent extends CamAbstractInputComponent<InputTimePicker> {
   constructor() {

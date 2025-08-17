@@ -1,10 +1,12 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, SimpleChanges, TemplateRef, inject, signal } from '@angular/core';
 
 import { InputUploadValue } from '@ta/form-model';
 import { Menu, MenuIcon } from '@ta/menu';
 import { CamUsersService } from '@ta/user';
-import { CamBaseComponent, fullName } from '@ta/utils';
+import { TaBaseComponent, fullName } from '@ta/utils';
 import { EditorInputSavedData, WysiswgBlockData } from '@ta/wysiswyg';
 import { Observable, Subject } from 'rxjs';
 
@@ -28,11 +30,13 @@ export type MessageBoxOutputMessage = {
 };
 
 @Component({
-  selector: 'ta-communication-message-box-container',
+selector: 'ta-communication-message-box-container',
   templateUrl: './message-box-container.component.html',
-  styleUrls: ['./message-box-container.component.scss'],
+  styleUrls: ['./message-box-container.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, FontIconComponent],
 })
-export class MessageBoxContainerComponent extends CamBaseComponent {
+export class MessageBoxContainerComponent extends TaBaseComponent {
   @Input()
   conversationParticipants!: CommunicationParticipantExtended[];
   @Input()

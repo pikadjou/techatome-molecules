@@ -9,7 +9,7 @@
   padding: common.get-var(space, sm);
 
   @include flex.align-center();
-  @include justify-center;
+  @include flex.justify-center();
 
   &.disabled,
   &.inactive {

@@ -4,7 +4,7 @@ import { TranslatePipe } from '@ta/translation';
 import { TitleComponent } from '@ta/ui';
 import { CamDirectivePipeModule } from '@ta/utils';
 
-import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { ProgressBarDataComponent } from './progress-bar-data.component';
 
 export default {

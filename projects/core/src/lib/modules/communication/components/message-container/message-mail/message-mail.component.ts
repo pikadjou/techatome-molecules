@@ -1,11 +1,15 @@
+import { NgIf } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
 
 import { Communication, CommunicationParticipantExtended } from '../../../services/dto/communication';
 
 @Component({
-  selector: 'ta-communication-message-mail',
+selector: 'ta-communication-message-mail',
   templateUrl: './message-mail.component.html',
-  styleUrls: ['./message-mail.component.scss'],
+  styleUrls: ['./message-mail.component.scss'],,
+  standalone: true,
+  imports: [NgIf, FontIconComponent],
 })
 export class MessageMailComponent {
   @Input()

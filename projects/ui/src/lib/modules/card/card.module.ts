@@ -28,9 +28,13 @@ const exports = [
 
 const declarations: any[] = [];
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ */
 @NgModule({
-  declarations: declarations.concat(exports),
-  imports: [CommonModule, CamUiModule, CamIconsModule],
+  declarations: declarations,
+  imports: [CommonModule, CamUiModule, CamIconsModule, ...exports],
   exports: exports,
 })
 export class CamCardModule {}

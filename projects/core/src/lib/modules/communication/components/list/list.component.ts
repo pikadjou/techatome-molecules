@@ -1,11 +1,14 @@
+import { NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Communication, CommunicationParticipantExtended, CommunicationType } from '../../services/dto/communication';
 
 @Component({
-  selector: 'ta-message-list',
+selector: 'ta-message-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  styleUrls: ['./list.component.scss'],,
+  standalone: true,
+  imports: [NgFor],
 })
 export class ListComponent {
   @Input()

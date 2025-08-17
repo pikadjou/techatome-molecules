@@ -13,17 +13,18 @@ import {
   Menu,
 } from '@ta/menu';
 import { openModal } from '@ta/ui';
-import { CamBaseComponent, FileData, downloadFile, getFileExtension } from '@ta/utils';
+import { TaBaseComponent, FileData, downloadFile, getFileExtension } from '@ta/utils';
 import { Observable, combineLatest, of } from 'rxjs';
 
 import { UploadDocumentModal, UploadDocumentResult } from './upload/upload-visit-document/upload-document.component';
 
 @Component({
-  selector: 'ta-documents',
+selector: 'ta-documents',
   templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.scss'],
+  styleUrls: ['./documents.component.scss'],,
+  standalone: true,
 })
-export class DocumentsComponent extends CamBaseComponent implements OnInit {
+export class DocumentsComponent extends TaBaseComponent implements OnInit {
   @Input()
   document$!: Observable<Document[]>;
 

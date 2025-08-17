@@ -16,7 +16,9 @@
 }
 .text {
   .label {
-    @include flex-start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     &.success {
       color: common.get-var(semantic-token, success);
     }

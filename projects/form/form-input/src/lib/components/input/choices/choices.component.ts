@@ -1,3 +1,6 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
+import { CamStopPropagationDirective } from '@ta/utils';
 import { Component, ViewChild } from '@angular/core';
 
 import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
@@ -19,9 +22,11 @@ import {
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-choices',
+selector: 'ta-input-choices',
   templateUrl: './choices.component.html',
-  styleUrls: ['./choices.component.scss'],
+  styleUrls: ['./choices.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe, FontIconComponent, CamStopPropagationDirective],
 })
 export class InputChoicesComponent extends CamAbstractInputComponent<InputChoices> {
   @ViewChild(CamOverlayPanelComponent) overlayPanelRef!: CamOverlayPanelComponent;

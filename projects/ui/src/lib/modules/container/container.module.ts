@@ -18,28 +18,23 @@ import { CamTranslationContainer } from './translation.service';
 import { ContainerValidationComponent } from './validation/cta/container-validation.component';
 import { ValidationModal } from './validation/modal/modal-validation.component';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamContainerModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { ContainerValidationComponent, EmptyComponent, ErrorComponent } from '@ta/library-name';
+ */
 @NgModule({
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    CamDirectivePipeModule,
-    CamUiModule,
-    CamIconsModule,
-    TranslatePipe,
-    CamDirectivePipeModule,
-    CamLayoutModule,
-  ],
-  declarations: [
-    ContainerValidationComponent,
-    ValidationModal,
-    EmptyComponent,
-    ErrorComponent,
-    LoaderComponent,
-    PlaceholderComponent,
-    SwiperLightComponent,
-  ],
+
+  imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, CamDirectivePipeModule, CamUiModule, CamIconsModule, TranslatePipe, CamLayoutModule, ContainerValidationComponent, ValidationModal, EmptyComponent, ErrorComponent, LoaderComponent, PlaceholderComponent, SwiperLightComponent],
+  declarations: [],
   exports: [ContainerValidationComponent, EmptyComponent, ErrorComponent, LoaderComponent, SwiperLightComponent],
+
 })
 export class CamContainerModule {
   constructor() {

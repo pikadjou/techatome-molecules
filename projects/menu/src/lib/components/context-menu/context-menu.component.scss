@@ -25,7 +25,9 @@
     }
     .label {
       @include fonts.fontSizeBody(md, true);
-      @include text-overflow();
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       margin-top: common.get-var(space, xs);
     }

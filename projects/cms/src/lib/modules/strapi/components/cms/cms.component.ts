@@ -1,17 +1,20 @@
+import { NgIf, AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 
 import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { CamCmsService } from '../../services/cms.service';
 
 @Component({
-  selector: 'ta-cms',
+selector: 'ta-cms',
   templateUrl: './cms.component.html',
-  styleUrls: ['./cms.component.scss'],
+  styleUrls: ['./cms.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe],
 })
-export class CmsComponent extends CamBaseComponent implements OnInit {
+export class CmsComponent extends TaBaseComponent implements OnInit {
   @Input()
   contentType!: string;
 

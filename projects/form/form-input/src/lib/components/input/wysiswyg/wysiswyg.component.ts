@@ -6,9 +6,10 @@ import { EditorInputSavedData } from '@ta/wysiswyg';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-wysiswyg',
+selector: 'ta-input-wysiswyg',
   templateUrl: './wysiswyg.component.html',
-  styleUrls: ['./wysiswyg.component.scss'],
+  styleUrls: ['./wysiswyg.component.scss'],,
+  standalone: true,
 })
 export class WysiswygComponent extends CamAbstractInputComponent<InputWysiswyg> {
   public set(value: EditorInputSavedData) {

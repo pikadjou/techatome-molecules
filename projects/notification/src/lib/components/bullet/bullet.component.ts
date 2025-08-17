@@ -1,17 +1,16 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-
-import { CamBaseComponent } from '@ta/utils';
-
 import { CamNotificationDataService } from '../../services/data.service';
 import { NotificationFilter } from '../../services/queries';
+import { AsyncPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
+import { BulletComponent } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
 
-@Component({
-  selector: 'ta-notification-bullet',
-  templateUrl: './bullet.component.html',
-  styleUrls: ['./bullet.component.scss'],
+    AsyncPipe,
+    BulletComponent
+  ],
 })
-export class BulletComponent extends CamBaseComponent {
+export class BulletComponent extends TaBaseComponent {
   @Input()
   filters: NotificationFilter = null;
 

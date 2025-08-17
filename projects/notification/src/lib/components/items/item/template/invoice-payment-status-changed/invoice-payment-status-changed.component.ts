@@ -1,13 +1,18 @@
+import { AbstractNotificationTemplateComponent } from '../abstract';
+import { IconComponent } from '../icon/icon.component';
+import { ItemComponent } from '../item/item.component';
+import { TitleComponent } from '../title/title.component';
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { KeyValue } from '@ta/server';
 
-import { AbstractNotificationTemplateComponent } from '../abstract';
-
-@Component({
-  selector: 'ta-invoice-payment-status-changed',
-  templateUrl: './invoice-payment-status-changed.component.html',
-  styleUrls: ['./invoice-payment-status-changed.component.scss'],
+    IconComponent,
+    ItemComponent,
+    NgIf,
+    TitleComponent,
+    TranslateModule
+  ],
 })
 export class InvoicePaymentStatusChangedComponent extends AbstractNotificationTemplateComponent {
   public template = this.sharedService.paymentStatusTemplate;

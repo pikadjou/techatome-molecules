@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -8,9 +9,11 @@ import { isEqual } from 'date-fns';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-date-picker',
+selector: 'ta-input-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss'],
+  styleUrls: ['./date-picker.component.scss'],,
+  standalone: true,
+  imports: [NgIf],
 })
 export class DatePickerComponent extends CamAbstractInputComponent<InputDatePicker> {
   @ViewChild('picker') picker!: MatDatepicker<any>;

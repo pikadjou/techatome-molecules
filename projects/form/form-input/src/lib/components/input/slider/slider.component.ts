@@ -5,9 +5,10 @@ import { InputSlider } from '@ta/form-model';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-slider',
+selector: 'ta-input-slider',
   templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss'],
+  styleUrls: ['./slider.component.scss'],,
+  standalone: true,
 })
 export class SliderComponent extends CamAbstractInputComponent<InputSlider> {
   constructor() {

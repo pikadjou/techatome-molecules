@@ -1,15 +1,19 @@
+import { NgIf, NgFor, NgClass } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 
 import { InputBase, InputTranslation } from '@ta/form-model';
 import { Menu, MenuBase } from '@ta/menu';
-import { CamBaseComponent, Culture, extractEnum } from '@ta/utils';
+import { TaBaseComponent, Culture, extractEnum } from '@ta/utils';
 
 @Component({
-  selector: 'ta-input-translation',
+selector: 'ta-input-translation',
   templateUrl: './translation.component.html',
-  styleUrls: ['./translation.component.scss'],
+  styleUrls: ['./translation.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, FontIconComponent],
 })
-export class InputTranslationComponent extends CamBaseComponent implements OnInit {
+export class InputTranslationComponent extends TaBaseComponent implements OnInit {
   @Input()
   input!: InputTranslation;
   @Input()

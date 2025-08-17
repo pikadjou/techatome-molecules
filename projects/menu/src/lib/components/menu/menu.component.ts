@@ -1,15 +1,19 @@
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { Menu } from '../../models/menu/menu';
+import { MenuItemComponent } from './item/menu-item.component';
 
 @Component({
   selector: 'ta-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, AsyncPipe, MenuItemComponent],
 })
-export class MenuComponent extends CamBaseComponent {
+export class MenuComponent extends TaBaseComponent {
   @Input()
   menu!: Menu;
 

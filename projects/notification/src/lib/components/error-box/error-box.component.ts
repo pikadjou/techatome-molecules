@@ -1,25 +1,25 @@
+import { ENotificationCode } from '../../enum';
+import { LAZY_SERVICE_TOKEN } from '../../services/notification.service';
 import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
 import { CamServerErrorService, ServerError } from '@ta/server';
-import { CamLayoutModule, CamUiModule } from '@ta/ui';
+import { ButtonComponent, CamLayoutModule, CamUiModule, ExpandableTextComponent, LayoutModalComponent, TextComponent, TitleComponent } from '@ta/ui';
 import { CamBaseModal, copyTextToClipboard } from '@ta/utils';
 import { Observable } from 'rxjs';
 
-import { ENotificationCode } from '../../enum';
-import { LAZY_SERVICE_TOKEN } from '../../services/notification.service';
-
-export const openErrorModal = <T>(dialog: MatDialog): Observable<T> => {
-  return dialog.open(ErrorBoxModal).afterClosed();
-};
-
 @Component({
-  selector: '',
-  standalone: true,
-  imports: [CamLayoutModule, CamUiModule, JsonPipe],
+  selector: 'ta-error-box',
   templateUrl: './error-box.component.html',
-  styleUrl: './error-box.component.scss',
+  styleUrls: ['./error-box.component.scss'],
+  standalone: true,
+  imports: [
+    ButtonComponent,
+    ExpandableTextComponent,
+    LayoutModalComponent,
+    TextComponent,
+    TitleComponent
+  ],
 })
 export class ErrorBoxModal extends CamBaseModal {
   protected _notificationService = inject(LAZY_SERVICE_TOKEN);

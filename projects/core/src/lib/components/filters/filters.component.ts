@@ -1,11 +1,14 @@
+import { FontIconComponent } from '@ta/icons';
 import { Component } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'ta-filters',
+selector: 'ta-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss'],
+  styleUrls: ['./filters.component.scss'],,
+  standalone: true,
+  imports: [FontIconComponent],
 })
 export class FiltersComponent {
   public isFilterOpen = false;

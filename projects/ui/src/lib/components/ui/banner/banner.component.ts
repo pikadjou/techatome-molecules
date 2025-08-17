@@ -1,16 +1,17 @@
 import { Component, Input } from '@angular/core';
 
+import { TranslateModule } from '@ngx-translate/core';
 import { TranslatePipe } from '@ta/translation';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 @Component({
   selector: 'ta-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss'],
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, TranslateModule],
 })
-export class BannerComponent extends CamBaseComponent {
+export class BannerComponent extends TaBaseComponent {
   @Input()
   message!: string;
 }

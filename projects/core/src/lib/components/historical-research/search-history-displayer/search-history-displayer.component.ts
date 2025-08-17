@@ -1,3 +1,5 @@
+import { NgIf, NgFor } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -6,9 +8,11 @@ import { InputTextBox } from '@ta/form-model';
 import { LocalStorage } from 'storage-manager-js';
 
 @Component({
-  selector: 'ta-search-history-displayer',
+selector: 'ta-search-history-displayer',
   templateUrl: './search-history-displayer.component.html',
-  styleUrls: ['./search-history-displayer.component.scss'],
+  styleUrls: ['./search-history-displayer.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, FontIconComponent],
 })
 export class SearchHistoryDisplayerComponent {
   @Input()

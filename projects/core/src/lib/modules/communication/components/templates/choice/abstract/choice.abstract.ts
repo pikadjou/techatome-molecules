@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
 import { CommunicationType } from '../../../../services/dto/communication';
@@ -12,7 +12,7 @@ import { CamCommunicationsTemplatesService } from '../../../../services/template
   selector: '',
   template: '',
 })
-export class CommunicationTemplateAbstractChoiceComponent extends CamBaseComponent implements OnInit {
+export class CommunicationTemplateAbstractChoiceComponent extends TaBaseComponent implements OnInit {
   @Input()
   type!: CommunicationType;
 

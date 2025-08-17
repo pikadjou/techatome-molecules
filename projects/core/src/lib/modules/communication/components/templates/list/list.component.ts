@@ -1,7 +1,8 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 
-import { CamBaseComponent, Culture } from '@ta/utils';
+import { TaBaseComponent, Culture } from '@ta/utils';
 
 import {
   AbstractCellComponent,
@@ -15,11 +16,13 @@ import { Template, TemplateVariant } from '../../../services/dto/template';
 import { CamCommunicationsTemplatesService } from '../../../services/templates.service';
 
 @Component({
-  selector: 'ta-communication-template-list',
+selector: 'ta-communication-template-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  styleUrls: ['./list.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe],
 })
-export class CommunicationTemplateListComponent extends CamBaseComponent {
+export class CommunicationTemplateListComponent extends TaBaseComponent {
   @Output()
   askNavigation = new EventEmitter<string>();
 

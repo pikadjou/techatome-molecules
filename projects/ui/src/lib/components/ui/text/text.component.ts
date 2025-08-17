@@ -1,11 +1,14 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '../../../types/sizes';
 
 @Component({
-  selector: 'ta-text',
+selector: 'ta-text',
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.scss'],
+  standalone: true,
+  imports: [NgClass],
 })
 export class TextComponent {
   /**
@@ -13,7 +16,7 @@ export class TextComponent {
    * Add small class to text
    */
   @Input()
-  size: CamSizes = 'md';
+  size: TaSizes = 'md';
 
   /**
    *

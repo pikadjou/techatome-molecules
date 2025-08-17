@@ -1,7 +1,11 @@
+import { NgClass, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TranslateModule } from '@ngx-translate/core';
+import { FontIconComponent } from '@ta/icons';
+import { LinkComponent } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
 
 import { ENotificationCode } from '../../../enum';
 import { openErrorModal } from '../../error-box/error-box.component';
@@ -10,8 +14,10 @@ import { openErrorModal } from '../../error-box/error-box.component';
   selector: 'ta-notification-inline',
   templateUrl: './notification-inline.component.html',
   styleUrls: ['./notification-inline.component.scss'],
+  standalone: true,
+  imports: [FontIconComponent, LinkComponent, NgIf, NgSwitch, NgSwitchCase, TranslateModule],
 })
-export class NotificationInlineComponent extends CamBaseComponent {
+export class NotificationInlineComponent extends TaBaseComponent {
   @Input() set message(value: string) {
     this._message = value;
     this.showMessage = !!value;

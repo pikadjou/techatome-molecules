@@ -1,15 +1,35 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
+import { TranslateModule } from '@ngx-translate/core';
 import { CamPwaService } from '@ta/capacitor';
-import { CamBaseComponent } from '@ta/utils';
+import { FontIconComponent } from '@ta/icons';
+import { TaBaseComponent } from '@ta/utils';
 import { LocalStorage } from 'storage-manager-js';
+
+import { ButtonComponent } from '../button/button.component';
+import { LinkComponent } from '../link/link.component';
+import { LogoComponent } from '../logo/logo.component';
+import { TitleComponent } from '../title/title.component';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'ta-pwa',
   templateUrl: './pwa.component.html',
   styleUrls: ['./pwa.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    FontIconComponent,
+    TranslateModule,
+    LinkComponent,
+    TitleComponent,
+    ButtonComponent,
+    LogoComponent,
+    ToastComponent,
+  ],
 })
-export class PwaComponent extends CamBaseComponent implements OnInit {
+export class PwaComponent extends TaBaseComponent implements OnInit {
   @Output()
   askClose: EventEmitter<null> = new EventEmitter();
 

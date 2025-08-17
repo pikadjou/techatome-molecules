@@ -1,3 +1,5 @@
+import { NgIf, NgFor } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 
 import { FilePicker, PickedFile } from '@capawesome/capacitor-file-picker';
@@ -14,9 +16,11 @@ type InProgressFile = {
 };
 
 @Component({
-  selector: 'ta-input-upload',
+selector: 'ta-input-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss'],
+  styleUrls: ['./upload.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, FontIconComponent],
 })
 export class UploadComponent extends CamAbstractInputComponent<InputUpload> implements OnInit {
   @Output() uploadStatusChanged = new EventEmitter<boolean>();

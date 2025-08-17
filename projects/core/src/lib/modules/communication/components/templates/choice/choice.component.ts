@@ -1,17 +1,20 @@
+import { NgIf } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TemplateModalContainer, TemplateModalContainerData } from '@ta/ui';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { CommunicationType } from '../../../services/dto/communication';
 import { TemplateVariant } from '../../../services/dto/template';
 
 @Component({
-  selector: 'ta-communication-template-choice',
-  templateUrl: './choice.component.html',
+selector: 'ta-communication-template-choice',
+  templateUrl: './choice.component.html',,
+  standalone: true,
+  imports: [NgIf],
 })
-export class CommunicationTemplateChoiceComponent extends CamBaseComponent implements AfterViewInit {
+export class CommunicationTemplateChoiceComponent extends TaBaseComponent implements AfterViewInit {
   @Input()
   type!: CommunicationType;
 

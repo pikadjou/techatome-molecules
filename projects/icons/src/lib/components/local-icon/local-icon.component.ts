@@ -1,7 +1,8 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '../../types/sizes';
 
 import { CamIconType, CamIconsService } from '../../services/icons.service';
 
@@ -12,6 +13,8 @@ import { CamIconType, CamIconsService } from '../../services/icons.service';
   selector: 'ta-local-icon',
   templateUrl: './local-icon.component.html',
   styleUrls: ['./local-icon.component.scss'],
+  standalone: true,
+  imports: [NgClass],
 })
 export class LocalIconComponent {
   /**
@@ -24,7 +27,7 @@ export class LocalIconComponent {
    * Size of the icon
    */
   @Input()
-  public size: CamSizes | 'xl' = 'xs';
+  public size: TaSizes | 'xl' = 'xs';
 
   /**
    * If set to true, icon will have a rotation animation

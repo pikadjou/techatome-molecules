@@ -1,15 +1,18 @@
+import { NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { ActiveFilterTag } from '../types';
 
 @Component({
-  selector: 'ta-filters-tag',
+selector: 'ta-filters-tag',
   templateUrl: './filters-tag.component.html',
-  styleUrls: ['./filters-tag.component.scss'],
+  styleUrls: ['./filters-tag.component.scss'],,
+  standalone: true,
+  imports: [NgFor],
 })
-export class FiltersTagComponent extends CamBaseComponent {
+export class FiltersTagComponent extends TaBaseComponent {
   @Input()
   activeFilter: ActiveFilterTag[] = [];
 

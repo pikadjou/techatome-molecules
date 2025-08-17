@@ -1,14 +1,21 @@
+import { NgIf, NgClass } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { call, sendMail } from '@ta/utils';
 
 import { UserLogoNaming } from '../user-logo/user-logo.component';
 import { IProfileData } from './IProfileData';
+import { UserLogoComponent } from '../user-logo/user-logo.component';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'ta-profile-data',
+selector: 'ta-profile-data',
   templateUrl: './profile-data.component.html',
   styleUrls: ['./profile-data.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgClass, FontIconComponent, TranslateModule, UserLogoComponent, ButtonComponent],
 })
 
 /**

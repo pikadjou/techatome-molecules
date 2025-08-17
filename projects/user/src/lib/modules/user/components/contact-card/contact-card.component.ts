@@ -1,17 +1,21 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
-  selector: 'ta-contact-card',
+selector: 'ta-contact-card',
   templateUrl: './contact-card.component.html',
-  styleUrls: ['./contact-card.component.scss'],
+  styleUrls: ['./contact-card.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, FontIconComponent],
 })
-export class ContactCardComponent extends CamBaseComponent {
+export class ContactCardComponent extends TaBaseComponent {
   @Input()
   userId: string = '';
 

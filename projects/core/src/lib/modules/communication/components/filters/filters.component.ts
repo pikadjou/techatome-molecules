@@ -1,7 +1,9 @@
+import { NgIf } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
 import { InputChoices, InputDropdown } from '@ta/form-model';
-import { CamBaseComponent, extractEnum, fullName, isNonNullable } from '@ta/utils';
+import { TaBaseComponent, extractEnum, fullName, isNonNullable } from '@ta/utils';
 import { filter, map, of } from 'rxjs';
 
 import { CommunicationParticipantExtended, CommunicationType } from '../../services/dto/communication';
@@ -12,11 +14,13 @@ export type Filter = {
 };
 
 @Component({
-  selector: 'ta-conversation-filters',
+selector: 'ta-conversation-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss'],
+  styleUrls: ['./filters.component.scss'],,
+  standalone: true,
+  imports: [NgIf, FontIconComponent],
 })
-export class FiltersComponent extends CamBaseComponent implements AfterViewInit {
+export class FiltersComponent extends TaBaseComponent implements AfterViewInit {
   @Input()
   conversationParticipants!: CommunicationParticipantExtended[];
 

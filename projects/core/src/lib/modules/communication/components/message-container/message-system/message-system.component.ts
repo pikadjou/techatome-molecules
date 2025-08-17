@@ -4,9 +4,10 @@ import { Communication, CommunicationParticipantExtended } from '../../../servic
 import { SwitchCases } from '../../../services/dto/switch-cases';
 
 @Component({
-  selector: 'ta-communication-message-system',
+selector: 'ta-communication-message-system',
   templateUrl: './message-system.component.html',
-  styleUrls: ['./message-system.component.scss'],
+  styleUrls: ['./message-system.component.scss'],,
+  standalone: true,
 })
 export class MessageSystemComponent {
   @Input()

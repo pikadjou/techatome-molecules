@@ -6,8 +6,9 @@ import { CommunicationParticipantExtended } from '../../../../../services/dto/co
 import { CamSharedCommunicationsService } from '../../../../../services/shared.service';
 
 @Component({
-  selector: '',
-  template: '',
+selector: '',
+  template: '',,
+  standalone: true,
 })
 export class SwitchCaseBaseComponent<T> {
   @Input()

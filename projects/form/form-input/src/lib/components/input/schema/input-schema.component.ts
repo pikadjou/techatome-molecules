@@ -1,3 +1,5 @@
+import { NgIf } from '@angular/common';
+import { LocalIconComponent } from '@ta/icons';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,9 +10,11 @@ import { CamAbstractInputComponent } from '../../abstract.component';
 import { InputSchemaModal } from './modal/input-schema-modal.component';
 
 @Component({
-  selector: 'ta-input-schema',
+selector: 'ta-input-schema',
   templateUrl: './input-schema.component.html',
-  styleUrls: ['./input-schema.component.scss'],
+  styleUrls: ['./input-schema.component.scss'],,
+  standalone: true,
+  imports: [NgIf, LocalIconComponent],
 })
 export class InputSchemaComponent extends CamAbstractInputComponent<InputSchema> {
   get pics(): FileData[] | null {

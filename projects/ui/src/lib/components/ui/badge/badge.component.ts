@@ -1,10 +1,15 @@
+import { NgIf, NgClass } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type BadgeType = 'danger' | 'warning' | 'success' | 'primary' | 'secondary' | 'info' | 'purple' | 'orange';
 @Component({
-  selector: 'ta-badge',
+selector: 'ta-badge',
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgClass, FontIconComponent, TranslateModule],
 })
 export class BadgeComponent {
   /**

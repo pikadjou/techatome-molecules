@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
-
 import { AbstractNotificationTemplateComponent } from '../abstract';
+import { IconComponent } from '../icon/icon.component';
+import { ItemComponent } from '../item/item.component';
+import { TitleComponent } from '../title/title.component';
+import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
-@Component({
-  selector: 'ta-to-do-due-today',
-  templateUrl: './to-do-due-today.component.html',
-  styleUrls: ['./to-do-due-today.component.scss'],
+    IconComponent,
+    ItemComponent,
+    TitleComponent,
+    TranslateModule
+  ],
 })
 export class ToDoDueTodayComponent extends AbstractNotificationTemplateComponent {
   override goTo() {

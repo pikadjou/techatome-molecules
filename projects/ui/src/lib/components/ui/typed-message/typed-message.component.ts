@@ -1,11 +1,15 @@
+import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MessageLevel } from '@ta/utils';
 
 @Component({
-  selector: 'ta-typed-message',
+selector: 'ta-typed-message',
   templateUrl: './typed-message.component.html',
   styleUrls: ['./typed-message.component.scss'],
+  standalone: true,
+  imports: [FontIconComponent, TranslateModule],
 })
 export class TypedMessageComponent {
   @Input() text!: string;

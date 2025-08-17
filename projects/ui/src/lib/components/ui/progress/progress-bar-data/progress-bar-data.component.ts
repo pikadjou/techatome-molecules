@@ -1,9 +1,16 @@
+import { NgIf, NgClass } from '@angular/common';
+import { MaterialIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { TitleComponent } from '../../title/title.component';
+import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
 
 @Component({
-  selector: 'ta-progress-bar-data',
+selector: 'ta-progress-bar-data',
   templateUrl: './progress-bar-data.component.html',
   styleUrls: ['./progress-bar-data.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgClass, MaterialIconComponent, TranslateModule, TitleComponent, ProgressBarComponent],
 })
 export class ProgressBarDataComponent {
   @Input()

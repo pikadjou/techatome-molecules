@@ -1,3 +1,5 @@
+import { NgIf } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, Input, OnInit } from '@angular/core';
 
 import { InputTextBox } from '@ta/form-model';
@@ -5,9 +7,11 @@ import { InputTextBox } from '@ta/form-model';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-textbox',
+selector: 'ta-input-textbox',
   templateUrl: './text-box.component.html',
-  styleUrls: ['./text-box.component.scss'],
+  styleUrls: ['./text-box.component.scss'],,
+  standalone: true,
+  imports: [NgIf, FontIconComponent],
 })
 export class TextBoxComponent extends CamAbstractInputComponent<InputTextBox> implements OnInit {
   @Input()

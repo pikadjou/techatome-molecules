@@ -29,38 +29,21 @@ import { CamTranslationLayout } from './translation.service';
 import { LayoutWithBottomNavComponent } from './with-bottom-nav/layout-with-bottom-nav.component';
 import { LayoutWithPanelComponent } from './with-panel/layout-with-panel.component';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamLayoutModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { LayoutFlexComponent, LayoutContentComponent, LayoutHeaderComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    LayoutContentComponent,
-    LayoutHeaderComponent,
-    LayoutNavComponent,
-    LayoutPanelComponent,
-    LayoutWithBottomNavComponent,
-    LayoutWithPanelComponent,
-    LayoutPageComponent,
-    LayoutTitleComponent,
-    LayoutHeaderDefaultComponent,
-    LayoutModalComponent,
-    LayoutModalComponent,
-    LayoutHeaderLogoComponent,
-    LayoutFullPanelComponent,
-    LayoutSideCtaComponent,
-    LayoutSideComponent,
-    LayoutSideContentComponent,
-    TemplateModalContainer,
-    LayoutNotFoundComponent,
-    LayoutFlexComponent,
-  ],
-  imports: [
-    CommonModule,
-    MatSidenavModule,
-    CamUiModule,
-    CamIconsModule,
-    MatMenuModule,
-    CamDirectivePipeModule,
-    MatDialogModule,
-    TranslatePipe,
-  ],
+
+  declarations: [],
+  imports: [CommonModule, MatSidenavModule, CamUiModule, CamIconsModule, MatMenuModule, CamDirectivePipeModule, MatDialogModule, TranslatePipe, LayoutContentComponent, LayoutHeaderComponent, LayoutNavComponent, LayoutPanelComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LayoutPageComponent, LayoutTitleComponent, LayoutHeaderDefaultComponent, LayoutModalComponent, LayoutHeaderLogoComponent, LayoutFullPanelComponent, LayoutSideCtaComponent, LayoutSideComponent, LayoutSideContentComponent, TemplateModalContainer, LayoutNotFoundComponent, LayoutFlexComponent],
   exports: [
     LayoutFlexComponent,
     LayoutContentComponent,
@@ -81,6 +64,7 @@ import { LayoutWithPanelComponent } from './with-panel/layout-with-panel.compone
     LayoutSideComponent,
     LayoutSideContentComponent,
   ],
+
 })
 export class CamLayoutModule {
   constructor() {

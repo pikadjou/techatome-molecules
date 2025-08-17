@@ -1,17 +1,20 @@
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { UserLogoData } from '@ta/ui';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable, of } from 'rxjs';
 
 import { CommunicationParticipantExtended } from '../../services/dto/communication';
 
 @Component({
-  selector: 'ta-communication-participants-list',
+selector: 'ta-communication-participants-list',
   templateUrl: './participants-list.component.html',
-  styleUrls: ['./participants-list.component.scss'],
+  styleUrls: ['./participants-list.component.scss'],,
+  standalone: true,
+  imports: [NgIf],
 })
-export class ParticipantsListComponent extends CamBaseComponent {
+export class ParticipantsListComponent extends TaBaseComponent {
   @Input()
   conversationParticipants!: CommunicationParticipantExtended[];
 

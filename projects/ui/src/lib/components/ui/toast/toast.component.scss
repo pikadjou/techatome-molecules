@@ -2,7 +2,7 @@
 @use "ta/utils/mixins/common";
 
 .card {
-  @include shadow-mixin(brand, md);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: common.get-var(space, md);
   overflow: hidden;
 

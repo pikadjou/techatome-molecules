@@ -1,8 +1,9 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 
 import { InputBase } from '@ta/form-model';
 import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@ta/notification';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable, combineLatest } from 'rxjs';
 
 import { TemplateVariant } from '../../../../services/dto/template';
@@ -10,11 +11,13 @@ import { CamCommunicationsTemplateFormService } from '../../../../services/form/
 import { CamCommunicationsTemplatesService } from '../../../../services/templates.service';
 
 @Component({
-  selector: 'ta-communication-template-variant-edit',
+selector: 'ta-communication-template-variant-edit',
   templateUrl: './variant-edit.component.html',
-  styleUrls: ['./variant-edit.component.scss'],
+  styleUrls: ['./variant-edit.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe],
 })
-export class VariantEditComponent extends CamBaseComponent implements OnInit {
+export class VariantEditComponent extends TaBaseComponent implements OnInit {
   @Input()
   id!: string;
 

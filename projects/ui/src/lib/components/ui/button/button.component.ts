@@ -1,18 +1,22 @@
+import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FontIconComponent } from '@ta/icons';
 
-import { CamState } from '@ta/styles';
+import { TaState } from '../../../types/sizes';
 
 @Component({
   selector: 'ta-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+  standalone: true,
+  imports: [NgClass, NgIf, FontIconComponent],
 })
 export class ButtonComponent {
   /**
    * Is button type
    */
   @Input()
-  state: CamState = 'classic';
+  state: TaState = 'classic';
 
   /**
    * Indicate the button type

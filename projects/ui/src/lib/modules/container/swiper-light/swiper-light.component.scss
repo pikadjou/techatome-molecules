@@ -1,7 +1,10 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
 .items {
-  @include flex-start();
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   position: relative;
   width: 100%;
 
@@ -13,12 +16,12 @@
   flex-wrap: nowrap;
 }
 
-@include mobileDevice() {
+@media screen and (max-width: 767px) {
   .items::-webkit-scrollbar {
     display: none;
   }
 }
-@include desktopDevice() {
+@media screen and (min-width: 768px) {
   .items::-webkit-scrollbar {
     height: common.get-var(space, xs);
   }

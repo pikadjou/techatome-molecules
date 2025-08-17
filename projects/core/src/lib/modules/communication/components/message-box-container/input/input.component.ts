@@ -12,12 +12,14 @@ import {
   inject,
 } from '@angular/core';
 
+import { NgIf, NgFor } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { map } from 'rxjs/operators';
 
 import { InputChoices, InputChoicesOption } from '@ta/form-model';
 import { Menu, MenuIcon } from '@ta/menu';
 import { CamContactService, CamUsersService, Contact, User } from '@ta/user';
-import { CamBaseComponent, fullName, isValidEmail } from '@ta/utils';
+import { TaBaseComponent, fullName, isValidEmail } from '@ta/utils';
 import { Observable, combineLatest, of } from 'rxjs';
 
 import {
@@ -38,11 +40,13 @@ export type OutputCorrespondentInput = {
 };
 
 @Component({
-  selector: 'ta-message-box-input',
+selector: 'ta-message-box-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  styleUrls: ['./input.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, FontIconComponent],
 })
-export class InputComponent extends CamBaseComponent implements OnInit, OnChanges, AfterViewInit {
+export class InputComponent extends TaBaseComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   activeTab!: CommunicationType;
   @Input()

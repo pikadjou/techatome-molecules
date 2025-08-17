@@ -23,7 +23,9 @@
   text-align: center;
   padding: common.get-var(space, sm) 0;
   &.horizontal {
-    @include flex-start();
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     gap: common.get-var(space, xs);
   }
 

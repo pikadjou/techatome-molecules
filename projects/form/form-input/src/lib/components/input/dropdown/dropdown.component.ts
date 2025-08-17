@@ -1,3 +1,5 @@
+import { NgIf, NgFor } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, Input, ViewChild } from '@angular/core';
 
 import { InputDropdown } from '@ta/form-model';
@@ -6,9 +8,11 @@ import { CamOverlayPanelComponent } from '@ta/ui';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-dropdown',
+selector: 'ta-input-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss'],
+  styleUrls: ['./dropdown.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, FontIconComponent],
 })
 export class DropdownComponent extends CamAbstractInputComponent<InputDropdown<any>, any> {
   @Input() space = true;

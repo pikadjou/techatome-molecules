@@ -1,15 +1,18 @@
+import { AsyncPipe } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 
 import { CamSharedMenuService } from '@ta/services';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { combineLatest, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'ta-layout-with-bottom-nav',
   templateUrl: './layout-with-bottom-nav.component.html',
   styleUrls: ['./layout-with-bottom-nav.component.scss'],
+  standalone: true,
+  imports: [AsyncPipe],
 })
-export class LayoutWithBottomNavComponent extends CamBaseComponent implements AfterViewChecked {
+export class LayoutWithBottomNavComponent extends TaBaseComponent implements AfterViewChecked {
   @Input()
   type!: string;
 

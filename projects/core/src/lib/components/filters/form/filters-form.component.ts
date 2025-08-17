@@ -1,15 +1,18 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { InputBase } from '@ta/form-model';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'ta-filters-form',
+selector: 'ta-filters-form',
   templateUrl: './filters-form.component.html',
-  styleUrls: ['./filters-form.component.scss'],
+  styleUrls: ['./filters-form.component.scss'],,
+  standalone: true,
+  imports: [NgIf],
 })
-export class FiltersFormComponent extends CamBaseComponent {
+export class FiltersFormComponent extends TaBaseComponent {
   @Input()
   form: InputBase<any>[] = [];
 

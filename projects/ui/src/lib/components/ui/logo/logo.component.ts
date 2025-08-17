@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'ta-logo',
+selector: 'ta-logo',
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss'],
+  standalone: true,
 })
 export class LogoComponent {
   /**

@@ -1,17 +1,20 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamBaseComponent, fullName, sendMail } from '@ta/utils';
+import { TaBaseComponent, fullName, sendMail } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
-  selector: 'ta-user-my-profile',
+selector: 'ta-user-my-profile',
   templateUrl: './user-my-profile.component.html',
-  styleUrls: ['./user-my-profile.component.scss'],
+  styleUrls: ['./user-my-profile.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe],
 })
-export class UserMyProfileComponent extends CamBaseComponent {
+export class UserMyProfileComponent extends TaBaseComponent {
   @Input()
   canModify: boolean = true;
 

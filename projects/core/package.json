@@ -19,7 +19,6 @@
     "@ta/styles": "^3.16.0-beta.4",
     "@ta/translation": "^3.16.0-beta.4",
     "@ta/ui": "^3.16.0-beta.4",
-    "@ta/user": "^3.16.0-beta.4",
     "@ta/utils": "^3.16.0-beta.4",
     "ag-grid-angular": "^31.0.1",
     "ag-grid-community": "^31.0.1",

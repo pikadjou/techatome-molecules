@@ -6,9 +6,10 @@ import intlTelInput from 'intl-tel-input';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-phone',
+selector: 'ta-input-phone',
   templateUrl: './input-phone.component.html',
-  styleUrls: ['./input-phone.component.scss'],
+  styleUrls: ['./input-phone.component.scss'],,
+  standalone: true,
 })
 export class InputPhoneComponent extends CamAbstractInputComponent<InputPhone> {
   @ViewChild('phoneInput', { static: false }) phoneInput!: ElementRef;

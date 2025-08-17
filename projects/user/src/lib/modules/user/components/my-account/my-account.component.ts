@@ -1,21 +1,26 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
+import { CamStopPropagationDirective } from '@ta/utils';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 
 import { Menu, MenuIcon, MenuPanel } from '@ta/menu';
 import { CamSizes } from '@ta/styles';
 import { UserLogoNaming } from '@ta/ui';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable, map } from 'rxjs';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 import { CamUsersService } from '../../services/users.service';
 
 @Component({
-  selector: 'ta-my-account',
+selector: 'ta-my-account',
   templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss'],
+  styleUrls: ['./my-account.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, FontIconComponent, CamStopPropagationDirective],
 })
-export class MyAccountComponent extends CamBaseComponent {
+export class MyAccountComponent extends TaBaseComponent {
   @Input()
   infosMenu: Menu | null = null;
 

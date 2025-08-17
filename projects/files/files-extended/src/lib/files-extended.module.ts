@@ -14,21 +14,23 @@ import { FilesDisplayComponent } from './components/display/files-display.compon
 import { UploadComponent } from './components/upload/files-upload.component';
 import { UploadDocumentFormService } from './services/document/upload-document-form.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamFilesExtendedModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { FilesDisplayComponent, UploadComponent, CamFilesBasicModule } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [FilesDisplayComponent, UploadComponent],
-  imports: [
-    CamContainerModule,
-    CamDirectivePipeModule,
-    CamFormModule,
-    CamUiModule,
-    CamCardModule,
-    CommonModule,
-    CamFormInputsModule,
-    CamFilesBasicModule,
-    CamIconsModule,
-    CamMenuModule,
-  ],
+
+  declarations: [],
+  imports: [CamContainerModule, CamDirectivePipeModule, CamFormModule, CamUiModule, CamCardModule, CommonModule, CamFormInputsModule, CamFilesBasicModule, CamIconsModule, CamMenuModule, FilesDisplayComponent, UploadComponent],
   exports: [FilesDisplayComponent, UploadComponent, CamFilesBasicModule],
   providers: [CamEnumerationService, UploadDocumentFormService],
+
 })
 export class CamFilesExtendedModule {}

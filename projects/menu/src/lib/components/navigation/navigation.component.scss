@@ -5,9 +5,11 @@
 .element-list {
   gap: common.get-var(space, md);
 
-  @include flex-row;
+  display: flex;
+  flex-direction: row;
   &.vertical {
-    @include flex-column;
+    display: flex;
+    flex-direction: column;
   }
 }
 .tags {

@@ -5,9 +5,10 @@ import { CamBaseModal, FileStructure, newGuid } from '@ta/utils';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: '',
+selector: '',
   styleUrls: ['./input-schema-modal.component.scss'],
-  templateUrl: './input-schema-modal.component.html',
+  templateUrl: './input-schema-modal.component.html',,
+  standalone: true,
 })
 export class InputSchemaModal extends CamBaseModal {
   public askImage$ = new Subject<null>();

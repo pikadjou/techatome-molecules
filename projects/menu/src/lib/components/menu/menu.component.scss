@@ -1,26 +1,29 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
 @mixin menu-item-horizontal() {
   li {
-    @include make-col();
+    flex: 1;
   }
 }
 
 @mixin menu-item-vertical() {
   li {
-    @include make-col(12);
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
 .menu {
-  @include make-row(0);
+  @include flex.flex-row();
 
   list-style: none;
   padding: 0;
   margin: 0;
 
   li {
-    @include make-col-ready();
+    padding: 0;
+    margin: 0;
   }
   &.horizontal {
     @include menu-item-horizontal();
@@ -31,11 +34,11 @@
   }
 
   &.responsive {
-    @include media-breakpoint-down(mobile) {
+    @media screen and (max-width: 767px) {
       @include menu-item-horizontal();
       width: 100%;
     }
-    @include media-breakpoint-up(mobile) {
+    @media screen and (min-width: 768px) {
       @include menu-item-vertical();
     }
   }
@@ -43,7 +46,7 @@
 
 ul.second {
   list-style: none;
-  @include make-row(0);
+  @include flex.flex-row();
 
   padding: 0;
   margin: 0;
@@ -51,7 +54,8 @@ ul.second {
   background-color: common.get-var(neutral, 50);
 
   li {
-    @include make-col-ready();
-    @include make-col();
+    padding: 0;
+    margin: 0;
+    flex: 1;
   }
 }

@@ -10,8 +10,10 @@ import {
   ViewChild,
 } from '@angular/core';
 
+import { NgIf, NgFor, NgClass } from '@angular/common';
+import { FontIconComponent, MaterialIconComponent } from '@ta/icons';
 import { InputSlider } from '@ta/form-model';
-import { CamBaseComponent, determineNewSize, getBlobImage, isLight } from '@ta/utils';
+import { TaBaseComponent, determineNewSize, getBlobImage, isLight } from '@ta/utils';
 import { Observable } from 'rxjs';
 import ImageEditor from 'tui-image-editor';
 
@@ -19,11 +21,13 @@ type Selection = 'line' | 'shape' | 'text' | '';
 type ShapeSelection = 'rect' | 'triangle' | 'circle' | 'line' | '';
 
 @Component({
-  selector: 'ta-files-edit',
+selector: 'ta-files-edit',
   templateUrl: './files-edit.component.html',
-  styleUrls: ['./files-edit.component.scss'],
+  styleUrls: ['./files-edit.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, FontIconComponent, MaterialIconComponent],
 })
-export class FileEditComponent extends CamBaseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FileEditComponent extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   imagePath!: string;
 

@@ -6,7 +6,7 @@
   padding-top: common.get-var(space, md);
 }
 
-@include in-context('.no-card-border') {
+.no-card-border {
   .cta {
     border-width: 0px;
   }

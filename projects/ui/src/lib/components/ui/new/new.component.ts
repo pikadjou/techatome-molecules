@@ -1,11 +1,15 @@
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '../../../types/sizes';
+import { BulletComponent } from '../bullet/bullet.component';
 
 @Component({
-  selector: 'ta-new',
+selector: 'ta-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss'],
+  standalone: true,
+  imports: [NgIf, BulletComponent],
 })
 export class NewComponent {
   @Input()
@@ -15,5 +19,5 @@ export class NewComponent {
   isRelative: boolean = false;
 
   @Input()
-  size: CamSizes = 'md';
+  size: TaSizes = 'md';
 }

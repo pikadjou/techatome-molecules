@@ -7,16 +7,21 @@ import { ListSubTitleComponent } from './sub-title/list-sub-title.component';
 import { ListTagComponent } from './tag/list-tag.component';
 import { ListTitleComponent } from './title/list-title.component';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamListModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { ListTitleComponent, ListElementComponent, ListContainerComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    ListTitleComponent,
-    ListElementComponent,
-    ListContainerComponent,
-    ListSubTitleComponent,
-    ListTagComponent,
-    ListExtraInformationComponent,
-  ],
-  imports: [],
+
+  declarations: [],
+  imports: [ListTitleComponent, ListElementComponent, ListContainerComponent, ListSubTitleComponent, ListTagComponent, ListExtraInformationComponent],
   exports: [
     ListTitleComponent,
     ListElementComponent,
@@ -26,5 +31,6 @@ import { ListTitleComponent } from './title/list-title.component';
     ListExtraInformationComponent,
   ],
   providers: [],
+
 })
 export class CamListModule {}

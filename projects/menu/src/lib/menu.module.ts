@@ -20,34 +20,21 @@ import { QuickActionsCustomComponent } from './components/quick-actions-custom/q
 import { QuickActionsComponent } from './components/quick-actions/quick-actions.component';
 import { ToggleNavigationComponent } from './components/toggle-navigation/toggle-navigation.component';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamMenuModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    MenuComponent,
-    MenuItemComponent,
-    BottomSheetTemplateBasicComponent,
-    QuickActionsComponent,
-    QuickActionsCustomComponent,
-    ToggleNavigationComponent,
-    ContextMenuComponent,
-    BottomSheetTemplateGenericComponent,
-    MainMenuComponent,
-    ListComponent,
-    NavigationComponent,
-  ],
-  imports: [
-    CamUiModule,
-    CamSwiperModule,
-    CamContainerModule,
-    CamDirectivePipeModule,
-    CamLayoutModule,
-    CamUiModule,
-    CamListModule,
-    CommonModule,
-    RouterModule,
-    CamIconsModule,
-    MatMenuModule,
-    TranslatePipe,
-  ],
+
+  declarations: [],
+  imports: [CamUiModule, CamSwiperModule, CamContainerModule, CamDirectivePipeModule, CamLayoutModule, CamListModule, CommonModule, RouterModule, CamIconsModule, MatMenuModule, TranslatePipe, MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent, QuickActionsComponent, QuickActionsCustomComponent, ToggleNavigationComponent, ContextMenuComponent, BottomSheetTemplateGenericComponent, MainMenuComponent, ListComponent, NavigationComponent],
   exports: [
     MenuComponent,
     MenuItemComponent,
@@ -60,5 +47,6 @@ import { ToggleNavigationComponent } from './components/toggle-navigation/toggle
     MainMenuComponent,
     NavigationComponent,
   ],
+
 })
 export class CamMenuModule {}

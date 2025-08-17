@@ -4,7 +4,7 @@
 
 .header {
   gap: common.get-var(space, md);
-  @include flex-row;
+  @include flex.flex-row();
   @include flex.align-center();
 }
 .icon {
@@ -21,7 +21,9 @@
 }
 .value {
   @include fonts.fontSizeBody(md, true);
-  @include text-overflow();
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .content {

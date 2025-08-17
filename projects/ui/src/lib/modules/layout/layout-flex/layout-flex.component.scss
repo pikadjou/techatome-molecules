@@ -1,11 +1,12 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
 .flex-container {
-  @include flex-row;
+  @include flex.flex-row();
 }
 .main {
-  @include flex-column;
-  @include full-width;
+  @include flex.flex-column();
+  width: 100%;
 
   .left,
   .center {
@@ -16,8 +17,8 @@
     padding-top: common.get-var(space, md);
   }
 
-  @include media-breakpoint-up(xxl) {
-    @include flex-row;
+  @media screen and (min-width: 1400px) {
+    @include flex.flex-row();
 
     .left,
     .center {

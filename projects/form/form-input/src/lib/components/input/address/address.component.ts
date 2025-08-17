@@ -5,9 +5,10 @@ import { InputAddress } from '@ta/form-model';
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-  selector: 'ta-input-address',
+selector: 'ta-input-address',
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss'],
+  styleUrls: ['./address.component.scss'],,
+  standalone: true,
 })
 export class InputAddressComponent extends CamAbstractInputComponent<InputAddress> {
   @ViewChild('addresstext') addresstext: any;

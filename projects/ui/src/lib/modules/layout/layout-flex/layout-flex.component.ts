@@ -1,7 +1,12 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamState } from '@ta/styles';
-import { CamBaseComponent } from '@ta/utils';
+import { FontIconComponent } from '@ta/icons';
+import { TaBaseComponent } from '@ta/utils';
+
+import { ButtonComponent } from '../../../components/ui/button/button.component';
+import { TaState } from '../../../types/sizes';
+import { LayoutFullPanelComponent } from '../layout-full-panel/layout-full-panel.component';
 
 type Panel = 'left' | 'right' | 'center';
 
@@ -9,8 +14,10 @@ type Panel = 'left' | 'right' | 'center';
   selector: 'ta-layout-flex',
   templateUrl: './layout-flex.component.html',
   styleUrls: ['./layout-flex.component.scss'],
+  standalone: true,
+  imports: [NgIf, AsyncPipe, FontIconComponent, ButtonComponent, LayoutFullPanelComponent],
 })
-export class LayoutFlexComponent extends CamBaseComponent {
+export class LayoutFlexComponent extends TaBaseComponent {
   @Input()
   allowClose = false;
 
@@ -28,7 +35,7 @@ export class LayoutFlexComponent extends CamBaseComponent {
   }
   public view: Panel[] = ['left', 'right', 'center'];
 
-  public state(panel: Panel): CamState {
+  public state(panel: Panel): TaState {
     if (!this.onlyOne()) {
       return 'classic';
     }

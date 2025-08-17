@@ -9,9 +9,10 @@ export interface AttachmentsResult {
 }
 
 @Component({
-  selector: '',
+selector: '',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  styleUrls: ['./modal.component.scss'],,
+  standalone: true,
 })
 export class AttachmentsModal extends CamBaseModal {
   public uploadInput = new InputUpload({

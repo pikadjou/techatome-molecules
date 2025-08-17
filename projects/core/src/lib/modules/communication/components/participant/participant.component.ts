@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { fullName } from '@ta/utils';
@@ -5,9 +6,11 @@ import { fullName } from '@ta/utils';
 import { CommunicationParticipant, CommunicationParticipantExtended } from '../../services/dto/communication';
 
 @Component({
-  selector: 'ta-communication-participant',
+selector: 'ta-communication-participant',
   templateUrl: './participant.component.html',
-  styleUrls: ['./participant.component.scss'],
+  styleUrls: ['./participant.component.scss'],,
+  standalone: true,
+  imports: [NgIf],
 })
 export class ParticipantComponent {
   @Input()

@@ -1,16 +1,20 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, inject } from '@angular/core';
 
-import { CamBaseComponent, openExternalUrl } from '@ta/utils';
+import { TaBaseComponent, openExternalUrl } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 
 @Component({
-  selector: 'ta-tenant-url-displayer',
+selector: 'ta-tenant-url-displayer',
   templateUrl: './tenant-url-displayer.component.html',
-  styleUrls: ['./tenant-url-displayer.component.scss'],
+  styleUrls: ['./tenant-url-displayer.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, FontIconComponent],
 })
-export class TenantUrlDisplayerComponent extends CamBaseComponent {
+export class TenantUrlDisplayerComponent extends TaBaseComponent {
   @Input()
   contactId!: string;
 

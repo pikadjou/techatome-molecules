@@ -58,71 +58,21 @@ import { WysiswygComponent } from './components/input/wysiswyg/wysiswyg.componen
 import { FormLabelComponent } from './components/label/label.component';
 import { CamTranslationInput } from './translation.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamFormInputsModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { CheckboxComponent, ColorPickerComponent, DatePickerComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    CheckboxComponent,
-    ColorPickerComponent,
-    DatePickerComponent,
-    DropdownComponent,
-    LabelComponent,
-    RadioComponent,
-    SearchFieldComponent,
-    SliderComponent,
-    SwitchComponent,
-    TextareaComponent,
-    TextBoxComponent,
-    TimePickerComponent,
-    ToggleComponent,
-    InputImagesComponent,
-    InputImageModal,
-    InputSchemaComponent,
-    InputSchemaModal,
-    InputImageComponent,
-    InputChoicesComponent,
-    WysiswygComponent,
-    UploadComponent,
-    InputPhoneComponent,
-    InputAddressComponent,
-    CultureComponent,
-    InputContainerComponent,
-  ],
-  imports: [
-    FormLabelComponent,
-    InputLayoutComponent,
-    InputErrorComponent,
-    CamDirectivePipeModule,
-    CamUiModule,
-    CamLayoutModule,
-    CommonModule,
-    FormsModule,
-    MatAutocompleteModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule,
-    NgxMaterialTimepickerModule,
-    CamFilesBasicModule,
-    CamIconsModule,
-    CamListModule,
-    CamContainerModule,
-    CamMenuModule,
-    MatMenuModule,
-    CamWysiswygModule,
-    CamCardModule,
-    MatProgressBarModule,
-    MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
-    CdkMenuModule,
-    TranslatePipe,
-    ComponentInputComponent,
-    CamOverlayPanelComponent,
-  ],
+
+  declarations: [],
+  imports: [FormLabelComponent, InputLayoutComponent, InputErrorComponent, CamDirectivePipeModule, CamUiModule, CamLayoutModule, CommonModule, FormsModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, ReactiveFormsModule, NgxMaterialTimepickerModule, CamFilesBasicModule, CamIconsModule, CamListModule, CamContainerModule, CamMenuModule, MatMenuModule, CamWysiswygModule, CamCardModule, MatProgressBarModule, MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'), CdkMenuModule, TranslatePipe, ComponentInputComponent, CamOverlayPanelComponent, CheckboxComponent, ColorPickerComponent, DatePickerComponent, DropdownComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, InputImagesComponent, InputImageModal, InputSchemaComponent, InputSchemaModal, InputImageComponent, InputChoicesComponent, WysiswygComponent, UploadComponent, InputPhoneComponent, InputAddressComponent, CultureComponent, InputContainerComponent],
   exports: [
     CheckboxComponent,
     ColorPickerComponent,
@@ -152,6 +102,7 @@ import { CamTranslationInput } from './translation.service';
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     PARENT_OR_NEW_MENU_STACK_PROVIDER,
   ],
+
 })
 export class CamFormInputsModule {
   constructor() {

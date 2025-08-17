@@ -1,15 +1,18 @@
+import { NgIf, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { OutputBlockData } from '@editorjs/editorjs';
 import { ENotificationCode } from '@ta/notification';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'ta-cms-editor-blocks',
+selector: 'ta-cms-editor-blocks',
   templateUrl: './block-text.component.html',
-  styleUrls: ['./block-text.component.scss'],
+  styleUrls: ['./block-text.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor],
 })
-export class BlockTextComponent extends CamBaseComponent {
+export class BlockTextComponent extends TaBaseComponent {
   @Input()
   blocks!: OutputBlockData[];
 

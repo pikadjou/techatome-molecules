@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -12,9 +13,11 @@ export interface UploadDocumentResult {
 }
 
 @Component({
-  selector: 'ta-upload-document',
+selector: 'ta-upload-document',
   templateUrl: './upload-document.component.html',
-  styleUrls: ['./upload-document.component.scss'],
+  styleUrls: ['./upload-document.component.scss'],,
+  standalone: true,
+  imports: [NgIf],
 })
 export class UploadDocumentModal implements OnInit {
   public form: InputBase<any>[] = [];

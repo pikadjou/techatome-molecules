@@ -1,3 +1,4 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { InputTextBox } from '@ta/form-model';
@@ -6,9 +7,11 @@ import { Observable, map, startWith } from 'rxjs';
 import { Template } from '../../../../services/dto/template';
 
 @Component({
-  selector: 'ta-choice-list',
+selector: 'ta-choice-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  styleUrls: ['./list.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe],
 })
 export class ChoiceListComponent implements OnInit, OnDestroy {
   @Input()

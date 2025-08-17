@@ -12,10 +12,23 @@ import { RichTextComponent } from './components/types/rich-text/rich-text.compon
 import { TextComponent } from './components/types/text/text.component';
 import { CamTranslationStrapi } from './translation.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamStrapiModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { CmsComponent, SaleComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [CmsComponent, RichTextComponent, LinkComponent, TextComponent, SaleComponent],
-  imports: [CommonModule, CamUiModule, CamDirectivePipeModule, CamContainerModule, CamFormInputsModule],
+
+  declarations: [],
+  imports: [CommonModule, CamUiModule, CamDirectivePipeModule, CamContainerModule, CamFormInputsModule, CmsComponent, RichTextComponent, LinkComponent, TextComponent, SaleComponent],
   exports: [CmsComponent, SaleComponent],
+
 })
 export class CamStrapiModule {
   constructor() {

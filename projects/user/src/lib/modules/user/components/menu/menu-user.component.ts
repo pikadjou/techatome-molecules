@@ -1,19 +1,23 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { CamStopPropagationDirective } from '@ta/utils';
 import { Component, OnDestroy, inject } from '@angular/core';
 
 import { InputDropdown } from '@ta/form-model';
 import { CamTranslationService } from '@ta/translation';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { of } from 'rxjs';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 import { CamPermissionsService } from '../../services/permissions.service';
 
 @Component({
-  selector: 'ta-user-menu',
+selector: 'ta-user-menu',
   templateUrl: './menu-user.component.html',
-  styleUrls: ['./menu-user.component.scss'],
+  styleUrls: ['./menu-user.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, CamStopPropagationDirective],
 })
-export class MenuUserComponent extends CamBaseComponent implements OnDestroy {
+export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
   public readonly _permissionsService = inject(CamPermissionsService);
 
   get roles() {

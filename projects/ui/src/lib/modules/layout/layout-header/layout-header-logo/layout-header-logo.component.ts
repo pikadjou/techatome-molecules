@@ -1,21 +1,32 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, Input, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
-import { CamBaseComponent } from '@ta/utils';
+import { FontIconComponent } from '@ta/icons';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
-import { UserLogoNaming } from '../../../../components/ui/user-logo/user-logo.component';
 import {
   TemplateModalContainer,
   TemplateModalContainerData,
 } from '../../layout-modal/layout-modal-container/layout-modal-container.component';
 
+interface UserLogoNaming {
+  name: string;
+  firstName: string | null;
+  trigram: string;
+}
+
 @Component({
   selector: 'ta-layout-header-logo',
   templateUrl: './layout-header-logo.component.html',
   styleUrls: ['./layout-header-logo.component.scss'],
+  standalone: true,
+  imports: [NgIf, FontIconComponent, MatMenuModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class LayoutHeaderLogoComponent extends CamBaseComponent {
+export class LayoutHeaderLogoComponent extends TaBaseComponent {
   @Input()
   profile: {
     template: TemplateRef<any>;

@@ -5,9 +5,10 @@ import { WysiswgBlockData } from '@ta/wysiswyg';
 import { Communication, CommunicationParticipantExtended } from '../../../services/dto/communication';
 
 @Component({
-  selector: 'ta-communication-message-chat',
+selector: 'ta-communication-message-chat',
   templateUrl: './message-chat.component.html',
-  styleUrls: ['./message-chat.component.scss'],
+  styleUrls: ['./message-chat.component.scss'],,
+  standalone: true,
 })
 export class MessageChatComponent {
   @Input()

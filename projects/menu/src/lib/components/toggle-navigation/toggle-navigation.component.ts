@@ -1,4 +1,10 @@
+import { NgIf, NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+import { SwiperLightComponent } from '@ta/ui';
 
 import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
@@ -10,9 +16,11 @@ import { Menu } from '../../models/menu/menu';
  ** @deprecated
  */
 @Component({
-  selector: 'ta-toggle-navigation',
+selector: 'ta-toggle-navigation',
   templateUrl: './toggle-navigation.component.html',
   styleUrls: ['./toggle-navigation.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgClass, NgTemplateOutlet, RouterModule, TranslateModule, FontIconComponent, LocalIconComponent, SwiperLightComponent],
 })
 export class ToggleNavigationComponent implements OnInit {
   @Input()

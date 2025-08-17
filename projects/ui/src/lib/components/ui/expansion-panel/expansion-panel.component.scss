@@ -14,7 +14,7 @@
     background-color: common.get-var(surface, primary);
 
     &.mat-expanded {
-      @include shadow-mixin(black, md);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: common.get-var(space, xs) !important;
     }
   }

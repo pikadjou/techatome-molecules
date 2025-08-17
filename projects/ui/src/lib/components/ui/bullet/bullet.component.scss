@@ -79,6 +79,6 @@
 
   div {
     @include flex.align-center();
-    @include justify-center;
+    @include flex.justify-center();
   }
 }

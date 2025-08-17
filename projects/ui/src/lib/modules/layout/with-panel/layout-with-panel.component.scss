@@ -9,6 +9,6 @@ mat-drawer-container {
 
 .isOpen {
   .app-layout-content-container {
-    @include setHeight($isMinHeight: false, $withBottom: true);
+    height: calc(100vh - 80px);
   }
 }

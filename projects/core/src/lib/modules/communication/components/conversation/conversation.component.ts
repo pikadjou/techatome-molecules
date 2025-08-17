@@ -1,3 +1,5 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -15,7 +17,7 @@ import {
 } from '@angular/core';
 
 import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@ta/notification';
-import { CamBaseComponent, RequestState, isNonNullable } from '@ta/utils';
+import { TaBaseComponent, RequestState, isNonNullable } from '@ta/utils';
 import { convertBlocksToHtml } from '@ta/wysiswyg';
 import { Observable, Subject, combineLatest, map, of, startWith } from 'rxjs';
 
@@ -28,11 +30,13 @@ import { CorrespondentInput } from '../message-box-container/input/input.compone
 import { MessageBoxOutputMessage } from '../message-box-container/message-box-container.component';
 
 @Component({
-  selector: 'ta-conversation',
+selector: 'ta-conversation',
   templateUrl: './conversation.component.html',
-  styleUrls: ['./conversation.component.scss'],
+  styleUrls: ['./conversation.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, FontIconComponent],
 })
-export class ConversationComponent extends CamBaseComponent implements OnChanges, AfterViewInit {
+export class ConversationComponent extends TaBaseComponent implements OnChanges, AfterViewInit {
   @Input()
   taskId!: string;
 

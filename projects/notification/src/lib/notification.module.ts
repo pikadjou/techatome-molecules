@@ -29,29 +29,23 @@ import { CamNotificationService, LAZY_SERVICE_TOKEN } from './services/notificat
 import { CamNotificationSharedService } from './services/shared.service';
 import { CamTranslationNotification } from './translation.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamNotificationModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { NotificationInlineComponent, ContainerComponent, BulletComponent } from '@ta/library-name';
+ */
 @NgModule({
-  imports: [CommonModule, CamDirectivePipeModule, CamIconsModule, CamUiModule, CamContainerModule, TranslatePipe],
-  declarations: [
-    NotificationBoxComponent,
-    NotificationInlineComponent,
-    ContainerComponent,
-    ItemComponent,
-    IconComponent,
-    ItemInfoComponent,
-    ProjectStatusChangedComponent,
-    NewQuotationVersionComponent,
-    NewInvoiceComponent,
-    InvoicePaymentStatusChangedComponent,
-    NotificationTitleComponent,
-    TaskAssignedComponent,
-    ToDoAssignedComponent,
-    TaskDueTodayComponent,
-    ToDoDueTodayComponent,
-    TaskNewActivityComponent,
-    UserTaggedInConversationComponent,
-    BulletComponent,
-  ],
+
+  imports: [CommonModule, CamDirectivePipeModule, CamIconsModule, CamUiModule, CamContainerModule, TranslatePipe, NotificationBoxComponent, NotificationInlineComponent, ContainerComponent, ItemComponent, IconComponent, ItemInfoComponent, ProjectStatusChangedComponent, NewQuotationVersionComponent, NewInvoiceComponent, InvoicePaymentStatusChangedComponent, NotificationTitleComponent, TaskAssignedComponent, ToDoAssignedComponent, TaskDueTodayComponent, ToDoDueTodayComponent, TaskNewActivityComponent, UserTaggedInConversationComponent, BulletComponent],
+  declarations: [],
   exports: [NotificationInlineComponent, ContainerComponent, BulletComponent, NotificationBoxComponent],
+
 })
 export class CamNotificationModule {
   static forRoot(): ModuleWithProviders<CamNotificationModule> {

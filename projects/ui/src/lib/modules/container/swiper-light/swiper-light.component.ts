@@ -1,14 +1,17 @@
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 
 import { CamDeviceInfoService } from '@ta/capacitor';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 @Component({
   selector: 'ta-swiper-light',
   templateUrl: './swiper-light.component.html',
   styleUrls: ['./swiper-light.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, AsyncPipe],
 })
-export class SwiperLightComponent extends CamBaseComponent implements OnInit {
+export class SwiperLightComponent extends TaBaseComponent implements OnInit {
   @Input()
   items!: any[];
 

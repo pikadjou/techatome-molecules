@@ -3,9 +3,10 @@ import { Component, Input } from '@angular/core';
 import { CommunicationType } from '../../services/dto/communication';
 
 @Component({
-  selector: 'ta-communication-type',
+selector: 'ta-communication-type',
   templateUrl: './communication-type.component.html',
-  styleUrls: ['./communication-type.component.scss'],
+  styleUrls: ['./communication-type.component.scss'],,
+  standalone: true,
 })
 export class CommunicationTypeComponent {
   @Input()

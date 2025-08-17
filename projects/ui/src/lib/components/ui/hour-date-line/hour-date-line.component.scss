@@ -4,13 +4,13 @@
 
 
 .hour-date-line-container {
-  @include flex.@include flex.space-between();
+  @include flex.space-between();
 
   align-items: flex-start;
 
   .label {
-    @include fonts.@include fonts.fontSizeBody(md);
+    @include fonts.fontSizeBody(md);
 
-    color: common.common.get-var(neutral, 900);
+    color: common.get-var(neutral, 900);
   }
 }

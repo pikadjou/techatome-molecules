@@ -6,7 +6,10 @@ $spacing: common.get-var(space, md);
 
 .card {
   &.hover {
-    @include hover-bgc();
+    cursor: pointer;
+    &:hover {
+      background-color: common.get-var(surface, hover, primary);
+    }
   }
   border-radius: common.get-var(space, md);
 
@@ -27,12 +30,12 @@ $spacing: common.get-var(space, md);
     border-color: 1px solid common.get-var(border, secondary);
   }
   &.card-shadow {
-    @include shadow-mixin(black, md);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .responsive-content {
     @include flex.flex-column();
-    @include media-breakpoint-up(tablette) {
+    @media screen and (min-width: 768px) {
       @include flex.flex-row();
       .img-container {
         order: 2;
@@ -41,7 +44,7 @@ $spacing: common.get-var(space, md);
   }
 }
 
-@include in-context('.card-force-mobile') {
+.card-force-mobile {
   .card {
     .responsive-content {
       @include flex.flex-column();

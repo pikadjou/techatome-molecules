@@ -60,70 +60,21 @@ import {
 } from './components/templates/list/list.component';
 import { CamTranslationCommunication } from './translation.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamCommunicationModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { MessageBoxContainerComponent, MessageContainerComponent, ListComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    MessageBoxContainerComponent,
-    MessageContainerComponent,
-    ParticipantComponent,
-    MessageMailComponent,
-    MessageChatComponent,
-    LightComponent,
-    ListComponent,
-    ConversationComponent,
-    InputComponent,
-    AttachmentsComponent,
-    AttachmentsModal,
-    MessageSystemComponent,
-    SwitchCasesTypeChangedComponent,
-    SwitchCasesToDoAddedComponent,
-    SwitchCaseBaseComponent,
-    SwitchCasesAssigneeChangedComponent,
-    SwitchCasesToDoClosedComponent,
-    SwitchCasesSubTaskCreatedComponent,
-    SwitchCasesTaskStatusChangedComponent,
-    SwitchCasesCriticityChangedComponent,
-    SwitchCasesTeamChangedComponent,
-    SwitchCasesSubTypeChangedComponent,
-    FiltersComponent,
-    ParticipantsListComponent,
-    SwitchCasesTaskMergedComponent,
-    CommunicationTemplateListComponent,
-    CommunicationTemplateEditComponent,
-    VariantEditComponent,
-    CommunicationTemplateChoiceComponent,
-    CommunicationTemplateChoiceDesktopComponent,
-    CommunicationTemplateChoiceMobileComponent,
-    ChoiceDetailComponent,
-    ChoiceListComponent,
-    CultureCellComponent,
-    VariantsCellComponent,
-    CommunicationTypeCellComponent,
-    CommunicationTypeComponent,
-    CommunicationStatusComponent,
-    ResponseToCommunicationComponent,
-  ],
-  imports: [
-    CommonModule,
-    CamIconsModule,
-    CamMenuModule,
-    CamWysiswygModule,
-    CamUiModule,
-    CamContainerModule,
-    CamDirectivePipeModule,
-    CamFormInputsModule,
-    CamFilesBasicModule,
-    CamFilesExtendedModule,
-    CamFormModule,
-    MatBottomSheetModule,
-    CamCardModule,
-    CamLayoutModule,
-    CamGridModule,
-    CamCoreModule,
-    AiToolsComponent,
-    TranslatePipe,
-    SafePipe,
-    ConversationAttachmentsComponent,
-  ],
+
+  declarations: [],
+  imports: [CommonModule, CamIconsModule, CamMenuModule, CamWysiswygModule, CamUiModule, CamContainerModule, CamDirectivePipeModule, CamFormInputsModule, CamFilesBasicModule, CamFilesExtendedModule, CamFormModule, MatBottomSheetModule, CamCardModule, CamLayoutModule, CamGridModule, CamCoreModule, AiToolsComponent, TranslatePipe, SafePipe, ConversationAttachmentsComponent, MessageBoxContainerComponent, MessageContainerComponent, ParticipantComponent, MessageMailComponent, MessageChatComponent, LightComponent, ListComponent, ConversationComponent, InputComponent, AttachmentsComponent, AttachmentsModal, MessageSystemComponent, SwitchCasesTypeChangedComponent, SwitchCasesToDoAddedComponent, SwitchCaseBaseComponent, SwitchCasesAssigneeChangedComponent, SwitchCasesToDoClosedComponent, SwitchCasesSubTaskCreatedComponent, SwitchCasesTaskStatusChangedComponent, SwitchCasesCriticityChangedComponent, SwitchCasesTeamChangedComponent, SwitchCasesSubTypeChangedComponent, FiltersComponent, ParticipantsListComponent, SwitchCasesTaskMergedComponent, CommunicationTemplateListComponent, CommunicationTemplateEditComponent, VariantEditComponent, CommunicationTemplateChoiceComponent, CommunicationTemplateChoiceDesktopComponent, CommunicationTemplateChoiceMobileComponent, ChoiceDetailComponent, ChoiceListComponent, CultureCellComponent, VariantsCellComponent, CommunicationTypeCellComponent, CommunicationTypeComponent, CommunicationStatusComponent, ResponseToCommunicationComponent],
   exports: [
     MessageBoxContainerComponent,
     MessageContainerComponent,
@@ -134,6 +85,7 @@ import { CamTranslationCommunication } from './translation.service';
     CommunicationTemplateEditComponent,
     CommunicationTemplateChoiceComponent,
   ],
+
 })
 export class CamCommunicationModule {
   constructor() {

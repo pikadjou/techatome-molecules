@@ -1,14 +1,17 @@
+import { FontIconComponent } from '@ta/icons';
 import { Component, Input, inject } from '@angular/core';
 
 import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@ta/notification';
-import { CamBaseComponent, copyTextToClipboard } from '@ta/utils';
+import { TaBaseComponent, copyTextToClipboard } from '@ta/utils';
 
 @Component({
-  selector: 'ta-text-to-clipboard',
+selector: 'ta-text-to-clipboard',
   templateUrl: './text-to-clipboard.component.html',
-  styleUrls: ['./text-to-clipboard.component.scss'],
+  styleUrls: ['./text-to-clipboard.component.scss'],,
+  standalone: true,
+  imports: [FontIconComponent],
 })
-export class TextToClipboardComponent extends CamBaseComponent {
+export class TextToClipboardComponent extends TaBaseComponent {
   @Input()
   value!: string;
 

@@ -1,16 +1,20 @@
+import { NgIf } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { InputBase } from '@ta/form-model';
 import { BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams } from '@ta/menu';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 @Component({
-  selector: 'ta-filter-displayer',
+selector: 'ta-filter-displayer',
   templateUrl: './filter-displayer.component.html',
-  styleUrls: ['./filter-displayer.component.scss'],
+  styleUrls: ['./filter-displayer.component.scss'],,
+  standalone: true,
+  imports: [NgIf, FontIconComponent],
 })
-export class FilterDisplayerComponent extends CamBaseComponent {
+export class FilterDisplayerComponent extends TaBaseComponent {
   @Input()
   form: InputBase<any>[] = [];
 

@@ -1,11 +1,15 @@
+import { NgIf } from '@angular/common';
+import { MaterialIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
 
 import { Civility } from '@ta/utils';
 
 @Component({
-  selector: 'ta-civility',
+selector: 'ta-civility',
   templateUrl: './civility.component.html',
   styleUrls: ['./civility.component.scss'],
+  standalone: true,
+  imports: [NgIf, MaterialIconComponent],
 })
 export class CivilityComponent {
   /**

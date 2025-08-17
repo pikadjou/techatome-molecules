@@ -11,18 +11,22 @@ import {
   signal,
 } from '@angular/core';
 
+import { NgIf, NgClass } from '@angular/common';
+import { CamStopPropagationDirective } from '@ta/utils';
 import { InputBase } from '@ta/form-model';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export type Layout = 'row' | 'column';
 
 @Component({
-  selector: 'ta-edit-field',
+selector: 'ta-edit-field',
   templateUrl: './edit-field.component.html',
-  styleUrls: ['./edit-field.component.scss'],
+  styleUrls: ['./edit-field.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgClass, CamStopPropagationDirective],
 })
-export class EditFieldComponent extends CamBaseComponent implements OnInit, OnChanges {
+export class EditFieldComponent extends TaBaseComponent implements OnInit, OnChanges {
   @Input()
   getInput!: () => InputBase<any>;
 

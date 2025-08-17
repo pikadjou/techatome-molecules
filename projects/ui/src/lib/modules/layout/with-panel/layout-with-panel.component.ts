@@ -1,10 +1,13 @@
+import { NgClass } from '@angular/common';
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'ta-layout-with-panel',
+selector: 'ta-layout-with-panel',
   templateUrl: './layout-with-panel.component.html',
   styleUrls: ['./layout-with-panel.component.scss'],
+  standalone: true,
+  imports: [NgClass, MatDrawer, MatDrawerContainer],
 })
 export class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
   @Input()

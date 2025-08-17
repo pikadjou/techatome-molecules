@@ -1,9 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'ta-expandable-text',
+selector: 'ta-expandable-text',
   templateUrl: './expandable-text.component.html',
   styleUrls: ['./expandable-text.component.scss'],
+  standalone: true,
+  imports: [NgIf, TranslateModule],
 })
 export class ExpandableTextComponent {
   @Input()

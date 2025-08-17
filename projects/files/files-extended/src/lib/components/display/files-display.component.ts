@@ -1,17 +1,20 @@
+import { NgIf, AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Menu } from '@ta/menu';
-import { CamBaseComponent, FileData, FileStructure, FileType } from '@ta/utils';
+import { TaBaseComponent, FileData, FileStructure, FileType } from '@ta/utils';
 import { Observable } from 'rxjs';
 
 import { Feature } from '../upload/files-upload.component';
 
 @Component({
-  selector: 'ta-files-display',
+selector: 'ta-files-display',
   templateUrl: './files-display.component.html',
-  styleUrls: ['./files-display.component.scss'],
+  styleUrls: ['./files-display.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe],
 })
-export class FilesDisplayComponent extends CamBaseComponent {
+export class FilesDisplayComponent extends TaBaseComponent {
   @Input() files$!: Observable<FileData[]>;
   @Input() menu!: Menu;
   @Input() canAddFile: boolean = true;

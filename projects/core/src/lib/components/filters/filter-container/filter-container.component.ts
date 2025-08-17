@@ -1,15 +1,18 @@
+import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { InputBase } from '@ta/form-model';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'ta-filter-container',
+selector: 'ta-filter-container',
   templateUrl: './filter-container.component.html',
-  styleUrls: ['./filter-container.component.scss'],
+  styleUrls: ['./filter-container.component.scss'],,
+  standalone: true,
+  imports: [FontIconComponent],
 })
-export class FilterContainerComponent extends CamBaseComponent implements OnInit {
+export class FilterContainerComponent extends TaBaseComponent implements OnInit {
   @Input()
   form: InputBase<any>[] = [];
 

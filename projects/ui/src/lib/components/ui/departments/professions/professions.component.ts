@@ -1,11 +1,15 @@
+import { NgIf, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '../../../../types/sizes';
+import { BadgeComponent } from '../../badge/badge.component';
 
 @Component({
-  selector: 'ta-department-professions',
+selector: 'ta-department-professions',
   templateUrl: './professions.component.html',
   styleUrls: ['./professions.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor, BadgeComponent],
 })
 export class DepartmentProfessionsComponent {
   /**
@@ -18,7 +22,7 @@ export class DepartmentProfessionsComponent {
    * font-size
    */
   @Input()
-  fontSize: CamSizes = 'xs';
+  fontSize: TaSizes = 'xs';
 
   @Input() maxVisible?: number;
 

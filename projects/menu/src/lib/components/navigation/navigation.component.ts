@@ -1,6 +1,12 @@
+import { NgIf, NgFor, NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { CamSizes } from '@ta/styles';
+import { FontIconComponent } from '@ta/icons';
+import { NotificationBadgeComponent, NotificationBadgeContainerComponent, SwiperLightComponent } from '@ta/ui';
+// Type défini localement pour éviter la dépendance vers @ta/styles
+type TaSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big';
 import { CamAbstractComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
@@ -10,9 +16,11 @@ import { MenuBase } from '../../models/menu/item/base';
 import { Menu, MenuIcon } from '../../models/public-api';
 
 @Component({
-  selector: 'ta-menu-navigation',
+selector: 'ta-menu-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, NgTemplateOutlet, RouterModule, TranslateModule, FontIconComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, SwiperLightComponent],
 })
 export class NavigationComponent extends CamAbstractComponent implements OnInit {
   @Input()
@@ -26,7 +34,7 @@ export class NavigationComponent extends CamAbstractComponent implements OnInit 
 
   @Input()
   options: {
-    spaceElement?: CamSizes | null;
+    spaceElement?: TaSizes | null;
   } = {};
 
   @Input()

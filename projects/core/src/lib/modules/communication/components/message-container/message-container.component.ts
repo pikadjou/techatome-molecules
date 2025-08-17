@@ -1,3 +1,5 @@
+import { NgIf } from '@angular/common';
+import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -10,9 +12,11 @@ import {
 import { CommunicationErrorModal } from '../communication-status/modal/modal.component';
 
 @Component({
-  selector: 'ta-communication-message-container',
+selector: 'ta-communication-message-container',
   templateUrl: './message-container.component.html',
-  styleUrls: ['./message-container.component.scss'],
+  styleUrls: ['./message-container.component.scss'],,
+  standalone: true,
+  imports: [NgIf, FontIconComponent],
 })
 export class MessageContainerComponent {
   @Input()

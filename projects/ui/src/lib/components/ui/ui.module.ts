@@ -56,62 +56,21 @@ import { UsersListComponent } from './users-list/users-list.component';
 
 register();
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamUiModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { ActionButtonComponent, BadgeComponent, ButtonComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    ActionButtonComponent,
-    BadgeComponent,
-    ButtonComponent,
-    CivilityComponent,
-    ContactInformationComponent,
-    DepartmentIconListComponent,
-    DepartmentProfessionsComponent,
-    DepartmentsComponent,
-    HelloUserComponent,
-    HourDateLineComponent,
-    LinkComponent,
-    LogoComponent,
-    ProgressCircleComponent,
-    TitleComponent,
-    TrigramComponent,
-    UserLogoComponent,
-    ProfileDataComponent,
-    TextComponent,
-    HelloUserComponent,
-    ProgressBarDataComponent,
-    ProgressBarComponent,
-    PictureInfoMessageComponent,
-    TypedMessageComponent,
-    CamExpansionPanelComponent,
-    DualButtonComponent,
-    NotificationBadgeContainerComponent,
-    NotificationBadgeComponent,
-    PwaComponent,
-    ExpandableTextComponent,
-    InlineProfileDataComponent,
-    UiProfileDisplayComponent,
-    ToastComponent,
-    LabelComponent,
-    NewComponent,
-    BulletComponent,
-    MegaoctetComponent,
-    FileImageComponent,
-    TimeAgoComponent,
-    DurationComponent,
-    UsersListComponent,
-    ButtonToolComponent,
-    CultureComponent,
-    CriticityComponent,
-  ],
-  imports: [
-    CommonModule,
-    MatBottomSheetModule,
-    MatIconModule,
-    CamDirectivePipeModule,
-    TranslatePipe,
-    CamIconsModule,
-    MatExpansionModule,
-    MatDialogModule,
-  ],
+
+  declarations: [],
+  imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HelloUserComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, ProfileDataComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, InlineProfileDataComponent, UiProfileDisplayComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
   exports: [
     ActionButtonComponent,
     BadgeComponent,
@@ -156,6 +115,7 @@ register();
     CultureComponent,
   ],
   providers: [CamIconsService],
+
 })
 export class CamUiModule {
   constructor() {

@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { openModal } from '../common-modal';
 
 @Component({
   selector: 'ta-container-validation',
   templateUrl: './container-validation.component.html',
+  standalone: true,
 })
-export class ContainerValidationComponent extends CamBaseComponent {
+export class ContainerValidationComponent extends TaBaseComponent {
   @Input()
   disabled = false;
 

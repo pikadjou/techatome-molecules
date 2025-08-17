@@ -1,12 +1,17 @@
 import { Component, Inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ModalParameter } from '../common-modal';
+import { ButtonComponent } from '../../../../components/ui/button/button.component';
+import { LayoutModalComponent } from '../../../layout/layout-modal/layout-modal.component';
 
 @Component({
-  selector: '',
+selector: '',
   templateUrl: './modal-validation.component.html',
   styleUrls: ['./modal-validation.component.scss'],
+  standalone: true,
+  imports: [TranslateModule, ButtonComponent, LayoutModalComponent],
 })
 export class ValidationModal {
   public get title(): string {

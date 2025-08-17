@@ -1,11 +1,14 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
-import { SwiperData } from '@ta/ui';
+import { SwiperData, SwiperComponent } from '@ta/ui';
 
 @Component({
-  selector: 'ta-quick-actions-custom',
+selector: 'ta-quick-actions-custom',
   templateUrl: './quick-actions-custom.component.html',
   styleUrls: ['./quick-actions-custom.component.scss'],
+  standalone: true,
+  imports: [NgIf, SwiperComponent],
 })
 export class QuickActionsCustomComponent {
   @Input()

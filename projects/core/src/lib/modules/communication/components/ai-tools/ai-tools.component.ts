@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject, sign
 
 import { CamMenuModule, Menu, MenuIcon } from '@ta/menu';
 import { CamContainerModule, CamUiModule } from '@ta/ui';
-import { CamBaseComponent, CamDirectivePipeModule, extractEnum } from '@ta/utils';
+import { CamDirectivePipeModule, TaBaseComponent, extractEnum } from '@ta/utils';
 import { WysiswgBlockData, convertBlocksToHtml } from '@ta/wysiswyg';
 
 import { CamCommunicationsAiService } from '../../services/ai.service';
@@ -18,7 +18,7 @@ import { Tones } from '../../services/dto/tones';
   templateUrl: './ai-tools.component.html',
   styleUrl: './ai-tools.component.scss',
 })
-export class AiToolsComponent extends CamBaseComponent implements OnInit {
+export class AiToolsComponent extends TaBaseComponent implements OnInit {
   @Input()
   taskId!: string;
   @Input()

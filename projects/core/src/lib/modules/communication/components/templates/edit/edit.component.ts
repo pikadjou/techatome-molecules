@@ -1,9 +1,10 @@
+import { NgIf, AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, inject } from '@angular/core';
 
 import { InputBase } from '@ta/form-model';
 import { ENotificationCode, LAZY_SERVICE_TOKEN } from '@ta/notification';
-import { CamBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable } from 'rxjs';
 
 import { Template } from '../../../services/dto/template';
@@ -11,11 +12,13 @@ import { CamCommunicationsTemplateFormService } from '../../../services/form/tem
 import { CamCommunicationsTemplatesService } from '../../../services/templates.service';
 
 @Component({
-  selector: 'ta-communication-template-edit',
+selector: 'ta-communication-template-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'],
+  styleUrls: ['./edit.component.scss'],,
+  standalone: true,
+  imports: [NgIf, AsyncPipe],
 })
-export class CommunicationTemplateEditComponent extends CamBaseComponent implements OnChanges {
+export class CommunicationTemplateEditComponent extends TaBaseComponent implements OnChanges {
   @Input()
   id: string | null = null;
 

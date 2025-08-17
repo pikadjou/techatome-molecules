@@ -7,7 +7,7 @@
 
 .header-title {
   border-bottom: 1px solid common.get-var(neutral, main);
-  @include in-context('.no-card-border') {
+  .no-card-border & {
     border-width: 0px;
   }
   padding-bottom: common.get-var(space, xs);
@@ -18,7 +18,7 @@
     @include fonts.fontSizeBody(xs);
   }
 }
-@include in-context('.no-card-border') {
+.no-card-border {
   .header-title {
     border-width: 0px;
   }

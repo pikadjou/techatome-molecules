@@ -8,7 +8,7 @@
   gap: common.get-var(space, md);
   @include flex.flex-column();
 
-  @include media-breakpoint-up(mobile) {
+  @media screen and (min-width: 768px) {
     @include flex.flex-row();
   }
 
@@ -17,13 +17,13 @@
   }
   .title,
   .subtitle {
-    @include media-breakpoint-up(xl) {
+    @media screen and (min-width: 1200px) {
       width: calc(100% - 170px);
     }
   }
   .subtitle {
     display: none;
-    @include media-breakpoint-up(mobile) {
+    @media screen and (min-width: 768px) {
       display: block;
     }
   }

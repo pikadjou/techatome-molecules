@@ -1,3 +1,4 @@
+import { NgIf, NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Camera, CameraResultType } from '@capacitor/camera';
@@ -8,9 +9,11 @@ import { FileStructure, pathToFile, pickImages } from '@ta/utils';
 export type Feature = 'take-pic' | 'upload-pic' | 'upload-file';
 
 @Component({
-  selector: 'ta-files-upload',
+selector: 'ta-files-upload',
   templateUrl: './files-upload.component.html',
-  styleUrls: ['./files-upload.component.scss'],
+  styleUrls: ['./files-upload.component.scss'],,
+  standalone: true,
+  imports: [NgIf, NgFor],
 })
 export class UploadComponent {
   @Input()

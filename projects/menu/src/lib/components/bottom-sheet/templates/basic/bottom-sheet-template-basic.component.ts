@@ -1,5 +1,10 @@
+import { NgIf, NgFor, NgClass, AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { FontIconComponent } from '@ta/icons';
+import { ContainerValidationComponent } from '@ta/ui';
 
 import { Observable } from 'rxjs';
 
@@ -10,9 +15,11 @@ export interface BottomSheetTemplateBasicParams {
   menu$: Observable<BottomSheetData[]>;
 }
 @Component({
-  selector: 'ta-bottom-sheet-template-basic',
+selector: 'ta-bottom-sheet-template-basic',
   templateUrl: './bottom-sheet-template-basic.component.html',
   styleUrls: ['./bottom-sheet-template-basic.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, AsyncPipe, NgTemplateOutlet, TranslateModule, FontIconComponent, ContainerValidationComponent],
 })
 export class BottomSheetTemplateBasicComponent {
   public typeItem!: { item: BottomSheetData };

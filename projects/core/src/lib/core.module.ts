@@ -28,40 +28,21 @@ import { SearchHistoryDisplayerComponent } from './components/historical-researc
 import { TextToClipboardComponent } from './components/text-to-clipboard/text-to-clipboard.component';
 import { CamTranslationCore } from './translation.service';
 
+/**
+ * @deprecated Use standalone components instead.
+ * This module will be removed in a future version.
+ * 
+ * @example
+ * // Instead of importing the module:
+ * // import { CamCoreModule } from '@ta/library-name';
+ * 
+ * // Import the standalone components directly:
+ * import { FiltersContainerComponent, DocumentsComponent, CallTemplateComponent } from '@ta/library-name';
+ */
 @NgModule({
-  declarations: [
-    FiltersComponent,
-    FiltersContainerComponent,
-    FiltersFormComponent,
-    FiltersTagComponent,
-    DocumentsComponent,
-    UploadDocumentModal,
-    CallTemplateComponent,
-    MailTemplateComponent,
-    SnoozeTemplateComponent,
-    FilterContainerComponent,
-    SearchHistoryDisplayerComponent,
-    SearchDisplayerComponent,
-    ReturnTemplateComponent,
-    FilterDisplayerComponent,
-    TextToClipboardComponent,
-  ],
-  imports: [
-    CommonModule,
-    CamLayoutModule,
-    CamUiModule,
-    CamFormModule,
-    CamIconsModule,
-    CamDirectivePipeModule,
-    CamCardModule,
-    CamFilesExtendedModule,
-    CamFormInputsModule,
-    CamContainerModule,
-    CamListModule,
-    MatMenuModule,
-    MatDialogModule,
-    TranslatePipe,
-  ],
+
+  declarations: [],
+  imports: [CommonModule, CamLayoutModule, CamUiModule, CamFormModule, CamIconsModule, CamDirectivePipeModule, CamCardModule, CamFilesExtendedModule, CamFormInputsModule, CamContainerModule, CamListModule, MatMenuModule, MatDialogModule, TranslatePipe, FiltersComponent, FiltersContainerComponent, FiltersFormComponent, FiltersTagComponent, DocumentsComponent, UploadDocumentModal, CallTemplateComponent, MailTemplateComponent, SnoozeTemplateComponent, FilterContainerComponent, SearchHistoryDisplayerComponent, SearchDisplayerComponent, ReturnTemplateComponent, FilterDisplayerComponent, TextToClipboardComponent],
   exports: [
     FiltersContainerComponent,
     DocumentsComponent,
@@ -76,6 +57,7 @@ import { CamTranslationCore } from './translation.service';
     FiltersTagComponent,
     TextToClipboardComponent,
   ],
+
 })
 export class CamCoreModule {
   constructor() {
