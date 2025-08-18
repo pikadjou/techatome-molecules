@@ -1,9 +1,9 @@
 <ng-container *ngFor="let entity of this.link.children">
   <ta-link (action)="this.goTo()">
-    <ng-container [ngSwitch]="entity.type">
-      <ng-container *ngSwitchCase="'text'">
+    @switch (entity.type) {
+      @case ('text') {
         <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
-      </ng-container>
-    </ng-container>
+      }
+    }
   </ta-link>
 </ng-container>

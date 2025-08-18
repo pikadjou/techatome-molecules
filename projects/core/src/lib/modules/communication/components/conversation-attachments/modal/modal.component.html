@@ -27,8 +27,8 @@
 </ta-layout-modal>
 
 <ng-template #contentTemplate>
-  <ng-container [ngSwitch]="this.documentType">
-    <ng-container *ngSwitchCase="EDocumentType.linkedDocuments">
+  @switch (this.documentType) {
+    @case (EDocumentType.linkedDocuments) {
       <div class="mb-space-md space-between align-center">
         <ta-title [level]="3" [isBold]="true">
           {{ 'communication.documents.modal.title.add-linked-document' | translate }}
@@ -43,8 +43,8 @@
         </div>
       </ta-loader>
       <ng-container [ngTemplateOutlet]="buttonTemplate"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="EDocumentType.newDocuments">
+    }
+    @case (EDocumentType.newDocuments) {
       <div class="mb-space-md space-between align-center">
         <ta-title [level]="3" [isBold]="true">
           {{ 'communication.documents.modal.title.add-new-document' | translate }}
@@ -57,21 +57,21 @@
       >
       </ta-input-upload>
       <ng-container [ngTemplateOutlet]="buttonTemplate"></ng-container>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </ng-template>
 
 <ng-template #documentDetailTemplate>
-  <ng-container [ngSwitch]="this.filterHelper.filter">
-    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.uploaded">
+  @switch (this.filterHelper.filter) {
+    @case (this.EDocumentDetailMenuKey.uploaded) {
       <ta-documents-list
         [documentsIds]="this.extractInputUploadValueId(this.uploadInput.value)"
         [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.communication'"
         actions="delete"
         (remove)="this.removedUploadDocument($event)"
       ></ta-documents-list>
-    </ng-container>
-    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.communication">
+    }
+    @case (this.EDocumentDetailMenuKey.communication) {
       <ta-documents-list
         [documentsIds]="this.documentsIds.communication"
         [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.communication'"
@@ -79,8 +79,8 @@
         actions="select"
         (checkedFilesChanged)="this.onDocumentSelectedChange('communication')($event)"
       ></ta-documents-list>
-    </ng-container>
-    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.task">
+    }
+    @case (this.EDocumentDetailMenuKey.task) {
       <ta-documents-list
         [documentsIds]="this.documentsIds.task"
         [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.task'"
@@ -88,8 +88,8 @@
         actions="select"
         (checkedFilesChanged)="this.onDocumentSelectedChange('task')($event)"
       ></ta-documents-list>
-    </ng-container>
-    <ng-container *ngSwitchCase="this.EDocumentDetailMenuKey.project">
+    }
+    @case (this.EDocumentDetailMenuKey.project) {
       <ta-documents-list
         [documentsIds]="this.documentsIds.project"
         [emptyMessage]="'communication.documents.modal.detail.menu.empty-message.documents.project'"
@@ -97,20 +97,20 @@
         actions="select"
         (checkedFilesChanged)="this.onDocumentSelectedChange('project')($event)"
       ></ta-documents-list>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </ng-template>
 
 <ng-template #buttonTemplate>
-  <ng-container [ngSwitch]="this.documentType">
-    <ng-container *ngSwitchCase="this.EDocumentType.linkedDocuments">
+  @switch (this.documentType) {
+    @case (this.EDocumentType.linkedDocuments) {
       <div class="display-button d-flex">
         <ta-button size="small" type="secondary" icon="add" (action)="this.switchView(this.EDocumentType.newDocuments)">
           {{ 'communication.documents.modal.cta.add-new-document' | translate }}
         </ta-button>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="this.EDocumentType.newDocuments">
+    }
+    @case (this.EDocumentType.newDocuments) {
       <div class="display-button d-flex">
         <ta-button
           size="small"
@@ -121,6 +121,6 @@
           {{ 'communication.documents.modal.cta.add-linked-document' | translate }}
         </ta-button>
       </div>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </ng-template>

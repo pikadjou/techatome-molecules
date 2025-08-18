@@ -7,16 +7,16 @@
 
 <ng-template #Item let-placeholderItem="placeholder">
   <ng-container *ngFor="let index of this.getFakeArray(placeholderItem.repeat)">
-    <ng-container [ngSwitch]="placeholderItem.type">
-      <ng-container *ngSwitchCase="'container'">
+    @switch (placeholderItem.type) {
+      @case ('container') {
         <ng-template
           [ngTemplateOutlet]="Children"
           [ngTemplateOutletContext]="{
             children: placeholderItem.children
           }"
         ></ng-template>
-      </ng-container>
-      <ng-container *ngSwitchCase="'row'">
+      }
+      @case ('row') {
         <div
           class="ph-row"
           [ngClass]="this.getAttributesClass(placeholderItem.attributes)"
@@ -28,8 +28,8 @@
             }"
           ></ng-template>
         </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'item'">
+      }
+      @case ('item') {
         <div
           class="ph-item"
           [ngClass]="this.getAttributesClass(placeholderItem.attributes)"
@@ -41,8 +41,8 @@
             }"
           ></ng-template>
         </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'col'">
+      }
+      @case ('col') {
         <div
           [ngClass]="
             this.getColClass(placeholderItem.gridSize) +
@@ -57,28 +57,28 @@
             }"
           ></ng-template>
         </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'picture'">
+      }
+      @case ('picture') {
         <div
           class="ph-picture"
           [ngClass]="this.getColClass(placeholderItem.gridSize)"
         ></div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'avatar'">
+      }
+      @case ('avatar') {
         <div
           class="ph-avatar"
           [ngClass]="this.getColClass(placeholderItem.gridSize)"
         ></div>
-      </ng-container>
-      <ng-container *ngSwitchDefault>
+      }
+      @default {
         <ng-template
           [ngTemplateOutlet]="Children"
           [ngTemplateOutletContext]="{
             children: placeholderItem.children
           }"
         ></ng-template>
-      </ng-container>
-    </ng-container>
+      }
+    }
   </ng-container>
 </ng-template>
 

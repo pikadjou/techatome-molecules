@@ -1,4 +1,4 @@
-import { NgClass, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,6 +8,7 @@ import { LinkComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
 import { ENotificationCode } from '../../../enum';
+import { CamTranslationNotification } from '../../../translation.service';
 import { openErrorModal } from '../../error-box/error-box.component';
 
 @Component({
@@ -15,7 +16,7 @@ import { openErrorModal } from '../../error-box/error-box.component';
   templateUrl: './notification-inline.component.html',
   styleUrls: ['./notification-inline.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, LinkComponent, NgIf, NgSwitch, NgSwitchCase, TranslateModule],
+  imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule],
 })
 export class NotificationInlineComponent extends TaBaseComponent {
   @Input() set message(value: string) {
@@ -56,6 +57,7 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   constructor() {
     super();
+    CamTranslationNotification.getInstance();
   }
 
   public close = () => {

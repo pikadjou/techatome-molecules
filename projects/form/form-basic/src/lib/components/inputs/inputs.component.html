@@ -7,8 +7,8 @@
 ></ng-container>
 
 <ng-template #inputsTemplate let-input="input" let-matcher="matcher">
-  <ng-container [ngSwitch]="input.controlType">
-    <ng-container *ngSwitchCase="'textbox'">
+  @switch (input.controlType) {
+    @case ('textbox') {
       <ta-input-textbox
         [input]="input"
         [matcher]="matcher"
@@ -16,16 +16,16 @@
         [standalone]="this.standalone"
         [space]="this.space"
       ></ta-input-textbox>
-    </ng-container>
-    <ng-container *ngSwitchCase="'textarea'">
+    }
+    @case ('textarea') {
       <ta-input-textarea
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-textarea>
-    </ng-container>
-    <ng-container *ngSwitchCase="'dropdown'">
+    }
+    @case ('dropdown') {
       <ta-input-dropdown
         [input]="input"
         [matcher]="matcher"
@@ -33,154 +33,154 @@
         [standalone]="this.standalone"
         [space]="this.space"
       ></ta-input-dropdown>
-    </ng-container>
-    <ng-container *ngSwitchCase="'datePicker'">
+    }
+    @case ('datePicker') {
       <ta-input-date-picker
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-date-picker>
-    </ng-container>
-    <ng-container *ngSwitchCase="'timePicker'">
+    }
+    @case ('timePicker') {
       <ta-input-time-picker
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-time-picker>
-    </ng-container>
-    <ng-container *ngSwitchCase="'radio'">
+    }
+    @case ('radio') {
       <ta-input-radio
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-radio>
-    </ng-container>
-    <ng-container *ngSwitchCase="'dynamic'">
+    }
+    @case ('dynamic') {
       <ta-input-dynamic [input]="input" [inputsTemplate]="inputsTemplate"></ta-input-dynamic>
-    </ng-container>
-    <ng-container *ngSwitchCase="'checkbox'">
+    }
+    @case ('checkbox') {
       <ta-input-checkbox
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-checkbox>
-    </ng-container>
-    <ng-container *ngSwitchCase="'toggle'">
+    }
+    @case ('toggle') {
       <ta-input-toggle
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-toggle>
-    </ng-container>
-    <ng-container *ngSwitchCase="'panel'">
+    }
+    @case ('panel') {
       <ta-form-panel [panel]="input" [inputsTemplate]="inputsTemplate"></ta-form-panel>
-    </ng-container>
-    <ng-container *ngSwitchCase="'label'">
+    }
+    @case ('label') {
       <ta-input-label [input]="input"></ta-input-label>
-    </ng-container>
-    <ng-container *ngSwitchCase="'switch'">
+    }
+    @case ('switch') {
       <ta-input-switch
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-switch>
-    </ng-container>
-    <ng-container *ngSwitchCase="'images'">
+    }
+    @case ('images') {
       <ta-input-images
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-images>
-    </ng-container>
-    <ng-container *ngSwitchCase="'image'">
+    }
+    @case ('image') {
       <ta-input-image
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-image>
-    </ng-container>
-    <ng-container *ngSwitchCase="'schema'">
+    }
+    @case ('schema') {
       <ta-input-schema
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-schema>
-    </ng-container>
-    <ng-container *ngSwitchCase="'upload'">
+    }
+    @case ('upload') {
       <ta-input-upload
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-upload>
-    </ng-container>
-    <ng-container *ngSwitchCase="'slider'">
+    }
+    @case ('slider') {
       <ta-input-slider
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-slider>
-    </ng-container>
-    <ng-container *ngSwitchCase="'choices'">
+    }
+    @case ('choices') {
       <ta-input-choices
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-choices>
-    </ng-container>
-    <ng-container *ngSwitchCase="'wysiswyg'">
+    }
+    @case ('wysiswyg') {
       <ta-input-wysiswyg
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-wysiswyg>
-    </ng-container>
-    <ng-container *ngSwitchCase="'translation'">
+    }
+    @case ('translation') {
       <ta-input-translation [input]="input" [inputsTemplate]="inputsTemplate"></ta-input-translation>
-    </ng-container>
-    <ng-container *ngSwitchCase="'phone'">
+    }
+    @case ('phone') {
       <ta-input-phone
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-phone>
-    </ng-container>
-    <ng-container *ngSwitchCase="'address'">
+    }
+    @case ('address') {
       <ta-input-address
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-address>
-    </ng-container>
-    <ng-container *ngSwitchCase="'culture'">
+    }
+    @case ('culture') {
       <ta-input-culture
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-culture>
-    </ng-container>
-    <ng-container *ngSwitchCase="'component'">
+    }
+    @case ('component') {
       <ta-input-component
         [input]="input"
         [matcher]="matcher"
         [onFocus]="this.onFocus"
         [standalone]="this.standalone"
       ></ta-input-component>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </ng-template>

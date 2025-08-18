@@ -29,33 +29,33 @@
     </div>
   </div>
   <div class="message-wrapper mb-space-xs">
-    <ng-container [ngSwitch]="this.communication.type">
-      <ng-container *ngSwitchCase="this.CommunicationType.Mail">
+    @switch (this.communication.type) {
+      @case (this.CommunicationType.Mail) {
         <ta-communication-message-mail
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
           [taskId]="this.taskId"
         ></ta-communication-message-mail>
-      </ng-container>
-      <ng-container *ngSwitchCase="this.CommunicationType.Chat">
+      }
+      @case (this.CommunicationType.Chat) {
         <ta-communication-message-chat
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
         ></ta-communication-message-chat>
-      </ng-container>
-      <ng-container *ngSwitchCase="this.CommunicationType.Intern">
+      }
+      @case (this.CommunicationType.Intern) {
         <ta-communication-message-chat
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
         ></ta-communication-message-chat>
-      </ng-container>
-      <ng-container *ngSwitchCase="this.CommunicationType.System">
+      }
+      @case (this.CommunicationType.System) {
         <ta-communication-message-system
           [communication]="this.communication"
           [conversationParticipants]="this.conversationParticipants"
         ></ta-communication-message-system>
-      </ng-container>
-    </ng-container>
+      }
+    }
     <div
       class="documents-container pt-space-md"
       *ngIf="this.communication.documentsIds && this.communication.documentsIds.length > 0"

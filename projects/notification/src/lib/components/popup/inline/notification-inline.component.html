@@ -3,23 +3,25 @@
     <div class="text">
       <div class="label" [ngClass]="this.getTypeClass()">
         <ta-font-icon class="mr-space-xs" [name]="this.getIcon()" type="md"></ta-font-icon>
-        <ng-container [ngSwitch]="true" *ngIf="!this.message">
-          <ng-container *ngSwitchCase="this.isError">
-            {{ 'notification.inline.label.error' | translate }}
-          </ng-container>
-          <ng-container *ngSwitchCase="this.isWarning">
-            {{ 'notification.inline.label.warning' | translate }}
-          </ng-container>
-          <ng-container *ngSwitchCase="this.isInformation">
-            {{ 'notification.inline.label.info' | translate }}
-          </ng-container>
-          <ng-container *ngSwitchCase="this.isSuccess">
-            {{ 'notification.inline.label.success' | translate }}
-          </ng-container>
-        </ng-container>
-        <ng-container [ngSwitch]="true" *ngIf="this.message">
+        @if (!this.message) {
+          @switch (true) {
+            @case (this.isError) {
+              {{ 'notification.inline.label.error' | translate }}
+            }
+            @case (this.isWarning) {
+              {{ 'notification.inline.label.warning' | translate }}
+            }
+            @case (this.isInformation) {
+              {{ 'notification.inline.label.info' | translate }}
+            }
+            @case (this.isSuccess) {
+              {{ 'notification.inline.label.success' | translate }}
+            }
+          }
+        }
+        @if (this.message) {
           {{ this.message | translate }}
-        </ng-container>
+        }
       </div>
     </div>
     <span class="close" (click)="this.close()" *ngIf="this.showClose">

@@ -1,4 +1,4 @@
-import { NgFor, NgClass, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgFor, NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { createRange } from '@ta/utils';
@@ -10,7 +10,7 @@ selector: 'ta-placeholder',
   templateUrl: './placeholder.component.html',
   styleUrls: ['./placeholder.component.scss'],
   standalone: true,
-  imports: [NgFor, NgClass, NgSwitch, NgSwitchCase],
+  imports: [NgFor, NgClass],
 })
 export class PlaceholderComponent {
   @Input()

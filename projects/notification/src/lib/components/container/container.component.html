@@ -8,38 +8,38 @@
     >
       <div class="notification-container">
         <div *ngFor="let notif of this.notifications" class="item-container c-pointer">
-          <ng-container [ngSwitch]="notif.type">
-            <ng-container *ngSwitchCase="'ProjectStatusChanged'">
+          @switch (notif.type) {
+            @case ('ProjectStatusChanged') {
               <ta-notification-project-status-changed [notification]="notif"></ta-notification-project-status-changed>
-            </ng-container>
-            <ng-container *ngSwitchCase="'NewQuotationVersion'">
+            }
+            @case ('NewQuotationVersion') {
               <ta-new-quotation-version [notification]="notif"></ta-new-quotation-version>
-            </ng-container>
-            <ng-container *ngSwitchCase="'NewInvoice'">
+            }
+            @case ('NewInvoice') {
               <ta-new-invoice [notification]="notif"></ta-new-invoice>
-            </ng-container>
-            <ng-container *ngSwitchCase="'InvoicePaymentStatusChanged'">
+            }
+            @case ('InvoicePaymentStatusChanged') {
               <ta-invoice-payment-status-changed [notification]="notif"></ta-invoice-payment-status-changed>
-            </ng-container>
-            <ng-container *ngSwitchCase="'TaskAssigned'">
+            }
+            @case ('TaskAssigned') {
               <ta-task-assigned [notification]="notif"></ta-task-assigned>
-            </ng-container>
-            <ng-container *ngSwitchCase="'ToDoAssigned'">
+            }
+            @case ('ToDoAssigned') {
               <ta-to-do-assigned [notification]="notif"></ta-to-do-assigned>
-            </ng-container>
-            <ng-container *ngSwitchCase="'TaskDueToday'">
+            }
+            @case ('TaskDueToday') {
               <ta-task-due-today [notification]="notif"></ta-task-due-today>
-            </ng-container>
-            <ng-container *ngSwitchCase="'ToDoDueToday'">
+            }
+            @case ('ToDoDueToday') {
               <ta-to-do-due-today [notification]="notif"></ta-to-do-due-today>
-            </ng-container>
-            <ng-container *ngSwitchCase="'TaskNewActivity'">
+            }
+            @case ('TaskNewActivity') {
               <ta-task-new-activity [notification]="notif"></ta-task-new-activity>
-            </ng-container>
-            <ng-container *ngSwitchCase="'UserTaggedInConversation'">
+            }
+            @case ('UserTaggedInConversation') {
               <ta-user-tagged-in-conversation [notification]="notif"></ta-user-tagged-in-conversation>
-            </ng-container>
-          </ng-container>
+            }
+          }
         </div>
       </div>
     </ta-empty>

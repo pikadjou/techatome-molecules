@@ -1,16 +1,16 @@
 @for (block of this.blocks; track block.id) {
-  <ng-container [ngSwitch]="block.type">
-    <ng-container *ngSwitchCase="'header'">
+  @switch (block.type) {
+    @case ('header') {
       <ta-title [level]="block.data.level">
         {{ block.data.text }}
       </ta-title>
-    </ng-container>
-    <ng-container *ngSwitchCase="'paragraph'">
+    }
+    @case ('paragraph') {
       <ta-text>
         <div [innerHTML]="block.data.text | safe: 'html'"></div>
       </ta-text>
-    </ng-container>
-    <ng-container *ngSwitchCase="'list'">
+    }
+    @case ('list') {
       <ng-container *ngIf="block.data.style === 'ordered'">
         <ol>
           <li *ngFor="let item of block.data.items">
@@ -25,20 +25,20 @@
           </li>
         </ul>
       </ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="'delimiter'">
+    }
+    @case ('delimiter') {
       <hr />
-    </ng-container>
-    <ng-container *ngSwitchCase="'image'">
+    }
+    @case ('image') {
       <img [src]="block.data.file.url" style="max-width: 100%" />
-    </ng-container>
-    <ng-container *ngSwitchCase="'quote'">
+    }
+    @case ('quote') {
       <div class="flex-start g-space-xs">
         <div *ngIf="block.data.caption">{{ block.data.caption }}:</div>
         <q [innerHTML]="block.data.text | safe: 'html'"></q>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'warning'">
+    }
+    @case ('warning') {
       <ta-toast>
         <ta-notification-inline
           [message]="block.data.message"
@@ -46,6 +46,6 @@
           [showClose]="false"
         ></ta-notification-inline>
       </ta-toast>
-    </ng-container>
-  </ng-container>
+    }
+  }
 }

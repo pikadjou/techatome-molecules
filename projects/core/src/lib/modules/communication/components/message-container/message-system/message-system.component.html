@@ -1,62 +1,62 @@
-<ng-container [ngSwitch]="this.getBody().Type">
-  <ng-container *ngSwitchCase="'TaskMerged'">
+@switch (this.getBody().Type) {
+  @case ('TaskMerged') {
     <ta-switch-cases-task-merged
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-task-merged>
-  </ng-container>
-  <ng-container *ngSwitchCase="'TypeChanged'">
+  }
+  @case ('TypeChanged') {
     <ta-switch-cases-type-changed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-type-changed>
-  </ng-container>
-  <ng-container *ngSwitchCase="'SubTypeChanged'">
+  }
+  @case ('SubTypeChanged') {
     <ta-switch-cases-sub-type-changed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-sub-type-changed>
-  </ng-container>
-  <ng-container *ngSwitchCase="'TaskStatusChanged'">
+  }
+  @case ('TaskStatusChanged') {
     <ta-switch-cases-task-status-changed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-task-status-changed>
-  </ng-container>
-  <ng-container *ngSwitchCase="'ToDoAdded'">
+  }
+  @case ('ToDoAdded') {
     <ta-switch-cases-to-do-added
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-to-do-added>
-  </ng-container>
-  <ng-container *ngSwitchCase="'ToDoClosed'">
+  }
+  @case ('ToDoClosed') {
     <ta-switch-cases-to-do-closed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-to-do-closed>
-  </ng-container>
-  <ng-container *ngSwitchCase="'AssigneeChanged'">
+  }
+  @case ('AssigneeChanged') {
     <ta-switch-cases-assignee-changed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-assignee-changed>
-  </ng-container>
-  <ng-container *ngSwitchCase="'SubTaskCreated'">
+  }
+  @case ('SubTaskCreated') {
     <ta-switch-cases-sub-task-created
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-sub-task-created>
-  </ng-container>
-  <ng-container *ngSwitchCase="'CriticityChanged'">
+  }
+  @case ('CriticityChanged') {
     <ta-switch-cases-criticity-changed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-criticity-changed>
-  </ng-container>
-  <ng-container *ngSwitchCase="'TeamChanged'">
+  }
+  @case ('TeamChanged') {
     <ta-switch-cases-team-changed
       [case]="$any(this.getBody())"
       [conversationParticipants]="this.conversationParticipants"
     ></ta-switch-cases-team-changed>
-  </ng-container>
-</ng-container>
+  }
+}

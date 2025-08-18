@@ -1,4 +1,4 @@
-import { NgSwitch, NgSwitchCase, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, Inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -34,8 +34,6 @@ export enum EDocumentType {
     CamFilesBasicModule,
     CamMenuModule,
     CamUiModule,
-    NgSwitch,
-    NgSwitchCase,
     NgTemplateOutlet,
     TranslatePipe,
     CamLayoutModule,

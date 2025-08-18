@@ -11,13 +11,19 @@ import { TaskNewActivityComponent } from '../items/item/template/task-new-activi
 import { ToDoAssignedComponent } from '../items/item/template/to-do-assigned/to-do-assigned.component';
 import { ToDoDueTodayComponent } from '../items/item/template/to-do-due-today/to-do-due-today.component';
 import { UserTaggedInConversationComponent } from '../items/item/template/user-tagged-in-conversation/user-tagged-in-conversation.component';
-import { AsyncPipe, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
-import { TaBaseComponent, NgLetDirective } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 import { Observable, tap } from 'rxjs';
 
+@Component({
+  selector: 'ta-notification-container',
+  templateUrl: './container.component.html',
+  styleUrls: ['./container.component.scss'],
+  standalone: true,
+  imports: [
     AsyncPipe,
     EmptyComponent,
     ErrorComponent,
@@ -26,9 +32,6 @@ import { Observable, tap } from 'rxjs';
     NewInvoiceComponent,
     NewQuotationVersionComponent,
     NgFor,
-    NgLetDirective,
-    NgSwitch,
-    NgSwitchCase,
     ProjectStatusChangedComponent,
     TaskAssignedComponent,
     TaskDueTodayComponent,

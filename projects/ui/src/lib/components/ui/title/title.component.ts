@@ -1,4 +1,4 @@
-import { NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -6,7 +6,7 @@ selector: 'ta-title',
   templateUrl: './title.component.html',
   styleUrls: ['./title.component.scss'],
   standalone: true,
-  imports: [NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault],
+  imports: [NgClass],
 })
 export class TitleComponent {
   /**
