@@ -3,6 +3,8 @@ import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { CamTranslationUI } from '../../translation.service';
+
 export interface DualButtonInput {
   icon: string;
   label: string;
@@ -29,7 +31,9 @@ export class DualButtonComponent {
   @Input()
   type: 'primary' | 'secondary' = 'primary';
 
-  constructor() {}
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 
   public getClass() {
     const css: { [index: string]: boolean } = {};

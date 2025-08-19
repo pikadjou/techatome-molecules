@@ -13,6 +13,7 @@ import {
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { FontIconComponent, MaterialIconComponent } from '@ta/icons';
 import { InputSlider } from '@ta/form-model';
+import { LoaderComponent } from '@ta/ui';
 import { TaBaseComponent, determineNewSize, getBlobImage, isLight } from '@ta/utils';
 import { Observable } from 'rxjs';
 import ImageEditor from 'tui-image-editor';
@@ -23,9 +24,9 @@ type ShapeSelection = 'rect' | 'triangle' | 'circle' | 'line' | '';
 @Component({
 selector: 'ta-files-edit',
   templateUrl: './files-edit.component.html',
-  styleUrls: ['./files-edit.component.scss'],,
+  styleUrls: ['./files-edit.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, FontIconComponent, MaterialIconComponent],
+  imports: [NgIf, NgFor, NgClass, FontIconComponent, LoaderComponent, MaterialIconComponent],
 })
 export class FileEditComponent extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()

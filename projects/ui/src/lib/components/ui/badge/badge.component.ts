@@ -3,6 +3,8 @@ import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { CamTranslationUI } from '../translation.service';
+
 export type BadgeType = 'danger' | 'warning' | 'success' | 'primary' | 'secondary' | 'info' | 'purple' | 'orange';
 @Component({
 selector: 'ta-badge',
@@ -37,7 +39,9 @@ export class BadgeComponent {
   @Output()
   clickAction = new EventEmitter();
 
-  constructor() {}
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 
   public getClass(): string {
     return `badge-${this.type}`;

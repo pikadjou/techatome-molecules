@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
+import { CamTranslationLayout } from '../../translation.service';
+
 import { ButtonComponent } from '../../../../components/ui/button/button.component';
 
 @Component({
@@ -16,6 +18,7 @@ import { ButtonComponent } from '../../../../components/ui/button/button.compone
 export class LayoutNotFoundComponent extends TaBaseComponent {
   constructor() {
     super();
+    CamTranslationLayout.getInstance();
   }
 
   public goToHome() {

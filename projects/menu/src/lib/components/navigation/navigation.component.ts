@@ -14,6 +14,7 @@ import { getFontIcon, hasFontIcon } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { Menu, MenuIcon } from '../../models/public-api';
+import { CamTranslationMenu } from '../../translation.service';
 
 @Component({
 selector: 'ta-menu-navigation',
@@ -48,6 +49,7 @@ export class NavigationComponent extends CamAbstractComponent implements OnInit 
 
   constructor() {
     super();
+    CamTranslationMenu.getInstance();
   }
 
   ngOnInit() {

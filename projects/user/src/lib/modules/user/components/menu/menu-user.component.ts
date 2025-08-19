@@ -1,21 +1,33 @@
-import { NgIf, AsyncPipe } from '@angular/common';
-import { CamStopPropagationDirective } from '@ta/utils';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 
-import { InputDropdown } from '@ta/form-model';
-import { CamTranslationService } from '@ta/translation';
-import { TaBaseComponent } from '@ta/utils';
+import { ButtonComponent, TrigramComponent } from 'projects/ui/dist';
 import { of } from 'rxjs';
+
+import { DropdownComponent } from '@ta/form-input';
+import { InputDropdown } from '@ta/form-model';
+import { CamTranslationService, TranslatePipe } from '@ta/translation';
+import { JoinPipe, StopPropagationDirective } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 import { CamPermissionsService } from '../../services/permissions.service';
 
 @Component({
-selector: 'ta-user-menu',
+  selector: 'ta-user-menu',
   templateUrl: './menu-user.component.html',
-  styleUrls: ['./menu-user.component.scss'],,
+  styleUrls: ['./menu-user.component.scss'],
   standalone: true,
-  imports: [NgIf, AsyncPipe, CamStopPropagationDirective],
+  imports: [
+    NgIf,
+    AsyncPipe,
+    StopPropagationDirective,
+    TrigramComponent,
+    ButtonComponent,
+    TranslatePipe,
+    JoinPipe,
+    DropdownComponent,
+  ],
 })
 export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
   public readonly _permissionsService = inject(CamPermissionsService);
@@ -43,14 +55,8 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
     super();
 
     this.language.value = this.translateService.getLanguage();
-    this.language.createFormControl();
 
     this._registerSubscription(this.language.changeValue$.subscribe(value => this.translateService.use(value)));
-  }
-
-  override ngOnDestroy() {
-    super.ngOnDestroy();
-    this.language.destroy();
   }
 
   public login() {

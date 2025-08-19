@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { Culture } from '@ta/utils';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-culture',
   templateUrl: './culture.component.html',
@@ -14,4 +16,8 @@ selector: 'ta-culture',
 export class CultureComponent {
   @Input()
   cultures!: Culture[];
+
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 }

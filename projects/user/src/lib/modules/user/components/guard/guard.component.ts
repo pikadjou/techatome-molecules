@@ -1,19 +1,21 @@
 import { NgIf } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
 import { Component, Input, inject } from '@angular/core';
 
+import { FontIconComponent } from '@ta/icons';
 import { CamIconType } from '@ta/icons';
 import { CamMainRoute, CamRoutes } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
 import { CamAbstractComponent } from '@ta/utils';
 
 import { CamPermissionsService, Domain, Level, PermissionFeature } from '../../services/permissions.service';
 
 @Component({
-selector: 'ta-guard',
+  selector: 'ta-guard',
   templateUrl: './guard.component.html',
-  styleUrls: ['./guard.component.scss'],,
+  styleUrls: ['./guard.component.scss'],
   standalone: true,
-  imports: [NgIf, FontIconComponent],
+  imports: [NgIf, FontIconComponent, ButtonComponent, TranslatePipe],
 })
 export class GuardComponent extends CamAbstractComponent {
   @Input()

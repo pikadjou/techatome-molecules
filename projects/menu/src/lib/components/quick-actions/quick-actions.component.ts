@@ -7,6 +7,7 @@ import { SwiperComponent } from '@ta/ui';
 
 import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
+import { CamTranslationMenu } from '../../translation.service';
 
 @Component({
 selector: 'ta-quick-actions',
@@ -33,7 +34,9 @@ export class QuickActionsComponent {
 
   typeToken!: { element: MenuIcon };
 
-  constructor() {}
+  constructor() {
+    CamTranslationMenu.getInstance();
+  }
 
   public onQuickActionSelected(menuIcon: MenuIcon) {
     if (menuIcon.disabled) {

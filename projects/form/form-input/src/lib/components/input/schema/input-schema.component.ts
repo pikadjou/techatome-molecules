@@ -1,5 +1,7 @@
 import { NgIf } from '@angular/common';
 import { LocalIconComponent } from '@ta/icons';
+import { ButtonComponent } from '@ta/ui';
+import { FileListComponent } from '@ta/files-basic';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -7,14 +9,15 @@ import { InputSchema } from '@ta/form-model';
 import { FileData, FileStructure, getBase64FromFile } from '@ta/utils';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 import { InputSchemaModal } from './modal/input-schema-modal.component';
 
 @Component({
 selector: 'ta-input-schema',
   templateUrl: './input-schema.component.html',
-  styleUrls: ['./input-schema.component.scss'],,
+  styleUrls: ['./input-schema.component.scss'],
   standalone: true,
-  imports: [NgIf, LocalIconComponent],
+  imports: [NgIf, LocalIconComponent, ButtonComponent, FileListComponent, InputLayoutComponent],
 })
 export class InputSchemaComponent extends CamAbstractInputComponent<InputSchema> {
   get pics(): FileData[] | null {

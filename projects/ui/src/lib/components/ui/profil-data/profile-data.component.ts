@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { call, sendMail } from '@ta/utils';
 
+import { CamTranslationUI } from '../translation.service';
+
 import { UserLogoNaming } from '../user-logo/user-logo.component';
 import { IProfileData } from './IProfileData';
 import { UserLogoComponent } from '../user-logo/user-logo.component';
@@ -40,7 +42,9 @@ export class ProfileDataComponent {
   @Output()
   action = new EventEmitter();
 
-  constructor() {}
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 
   public tel() {
     if (this.profile.phoneNumber) {

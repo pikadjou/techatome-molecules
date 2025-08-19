@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { MessageLevel } from '@ta/utils';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-typed-message',
   templateUrl: './typed-message.component.html',
@@ -28,5 +30,9 @@ export class TypedMessageComponent {
       default:
         return '';
     }
+  }
+
+  constructor() {
+    CamTranslationUI.getInstance();
   }
 }

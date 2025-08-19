@@ -35,7 +35,7 @@ export type EditorInputSavedData = { blocks: WysiswgBlockData[]; tags: string[] 
 @Component({
 selector: 'ta-cms-editor-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],,
+  styleUrls: ['./input.component.scss'],
   standalone: true,
 })
 export class EditorInputComponent extends TaBaseComponent implements OnInit, AfterViewInit {

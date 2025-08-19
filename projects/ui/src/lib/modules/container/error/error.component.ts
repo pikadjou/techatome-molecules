@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PictureInfoMessageComponent } from '../../../components/ui/picture-info-message/picture-info-message.component';
 
+import { CamTranslationContainer } from '../translation.service';
+
 @Component({
 selector: 'ta-error',
   templateUrl: './error.component.html',
@@ -17,5 +19,7 @@ export class ErrorComponent {
   @Input()
   code = 200;
 
-  constructor() {}
+  constructor() {
+    CamTranslationContainer.getInstance();
+  }
 }

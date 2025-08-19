@@ -1,15 +1,16 @@
-import { NgIf, NgFor, NgClass, AsyncPipe } from '@angular/common';
+import { NgIf, NgFor, NgClass, AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
 
 import { InputPanel } from '@ta/form-model';
+import { TranslatePipe } from '@ta/translation';
 import { TaBaseComponent } from '@ta/utils';
 
 @Component({
 selector: 'ta-form-panel',
   templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.scss'],,
+  styleUrls: ['./panel.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, AsyncPipe],
+  imports: [NgIf, NgFor, NgClass, AsyncPipe, NgTemplateOutlet, TranslatePipe],
 })
 export class PanelComponent extends TaBaseComponent {
   @Input()

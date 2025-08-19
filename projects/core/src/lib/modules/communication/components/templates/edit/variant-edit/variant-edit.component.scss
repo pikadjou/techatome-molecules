@@ -1,5 +1,0 @@
-@use "ta/utils/mixins/common";
-
-ta-text-to-clipboard {
-  color: common.get-var(icon, brand, secondary);
-}

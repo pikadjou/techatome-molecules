@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TranslatePipe } from '@ta/translation';
 import { TaBaseComponent } from '@ta/utils';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
   selector: 'ta-banner',
   templateUrl: './banner.component.html',
@@ -14,4 +16,9 @@ import { TaBaseComponent } from '@ta/utils';
 export class BannerComponent extends TaBaseComponent {
   @Input()
   message!: string;
+
+  constructor() {
+    super();
+    CamTranslationUI.getInstance();
+  }
 }

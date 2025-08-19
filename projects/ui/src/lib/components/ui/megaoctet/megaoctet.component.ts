@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { octetsToMo, roundToDecimal } from '@ta/utils';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-megaoctet',
   templateUrl: './megaoctet.component.html',
@@ -18,6 +20,10 @@ export class MegaoctetComponent {
 
   @Input()
   icon: boolean = false;
+
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 
   get megaoctet() {
     return roundToDecimal(octetsToMo(this.octet), 2);

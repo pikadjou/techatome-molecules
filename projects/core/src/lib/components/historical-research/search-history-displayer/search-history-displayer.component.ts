@@ -1,18 +1,42 @@
-import { NgIf, NgFor } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 
-import { InputTextBox } from '@ta/form-model';
 import { LocalStorage } from 'storage-manager-js';
 
+import { SearchFieldComponent } from '@ta/form-input';
+import { InputTextBox } from '@ta/form-model';
+import { FontIconComponent } from '@ta/icons';
+import {
+  ContactInformationComponent,
+  EmptyComponent,
+  ListContainerComponent,
+  ListElementComponent,
+  ListTagComponent,
+  ListTitleComponent,
+} from '@ta/ui';
+
 @Component({
-selector: 'ta-search-history-displayer',
+  selector: 'ta-search-history-displayer',
   templateUrl: './search-history-displayer.component.html',
-  styleUrls: ['./search-history-displayer.component.scss'],,
+  styleUrls: ['./search-history-displayer.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, FontIconComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    FontIconComponent,
+    ContactInformationComponent,
+    EmptyComponent,
+    ListContainerComponent,
+    ListElementComponent,
+    ListTitleComponent,
+    ListTagComponent,
+    SearchFieldComponent,
+    MatMenu,
+    MatMenuTrigger,
+    NgTemplateOutlet,
+  ],
 })
 export class SearchHistoryDisplayerComponent {
   @Input()

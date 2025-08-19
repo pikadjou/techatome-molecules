@@ -4,10 +4,7 @@
 
 export * from './lib/components/public-api';
 
-export * from './lib/modules/grid/public-api';
 export * from './lib/modules/maps/public-api';
-
-export * from './lib/modules/communication/public-api';
 
 export * from './lib/core.module';
 

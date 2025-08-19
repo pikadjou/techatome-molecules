@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { differenceInCalendarDays } from 'date-fns';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-time-ago',
   templateUrl: './time-ago.component.html',
@@ -47,5 +49,9 @@ export class TimeAgoComponent {
       return 'ui.common.ahead';
     }
     return 'ui.common.to-date';
+  }
+
+  constructor() {
+    CamTranslationUI.getInstance();
   }
 }

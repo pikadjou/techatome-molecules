@@ -1,7 +1,14 @@
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
-import { CamStopPropagationDirective } from '@ta/utils';
+import { ButtonComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, LabelComponent, TextComponent } from '@ta/ui';
+import { SearchFieldComponent } from '../search-field/search-field.component';
+import { CheckboxComponent } from '../checkbox/checkbox.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StopPropagationDirective } from '@ta/utils';
 import { Component, ViewChild } from '@angular/core';
+
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
 import { CamOverlayPanelComponent } from '@ta/ui';
@@ -24,9 +31,9 @@ import { CamAbstractInputComponent } from '../../abstract.component';
 @Component({
 selector: 'ta-input-choices',
   templateUrl: './choices.component.html',
-  styleUrls: ['./choices.component.scss'],,
+  styleUrls: ['./choices.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, FontIconComponent, CamStopPropagationDirective],
+  imports: [NgIf, NgFor, AsyncPipe, FontIconComponent, StopPropagationDirective, TranslateModule, ButtonComponent, LinkComponent, CamOverlayPanelComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, SearchFieldComponent, LabelComponent, TextComponent, CheckboxComponent, ReactiveFormsModule, InputLayoutComponent],
 })
 export class InputChoicesComponent extends CamAbstractInputComponent<InputChoices> {
   @ViewChild(CamOverlayPanelComponent) overlayPanelRef!: CamOverlayPanelComponent;

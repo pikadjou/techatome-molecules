@@ -5,6 +5,8 @@ import { PluralTranslatePipe } from '@ta/utils';
 
 import { Duration, intervalToDuration } from 'date-fns';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-duration',
   templateUrl: './duration.component.html',
@@ -20,6 +22,10 @@ export class DurationComponent implements OnInit {
   endDate: number | string = Date.now();
 
   public interval: Duration | null = null;
+
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 
   ngOnInit() {
     if (this.startDate && this.endDate) {

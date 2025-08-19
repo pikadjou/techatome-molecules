@@ -5,8 +5,8 @@ import { CamLazyTranslationService } from '@ta/translation';
 @Injectable({
   providedIn: 'root',
 })
-export class CamTranslationCommunication extends CamLazyTranslationService {
+export class CamTranslationMenu extends CamLazyTranslationService {
   constructor() {
-    super('communication');
+    super('menu');
   }
 }

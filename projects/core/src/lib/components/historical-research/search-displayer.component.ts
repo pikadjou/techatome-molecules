@@ -1,17 +1,20 @@
 import { NgIf } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
+import { FontIconComponent } from '@ta/icons';
 import { BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams } from '@ta/menu';
+import { ButtonComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
+import { SearchHistoryDisplayerComponent } from './search-history-displayer/search-history-displayer.component';
+
 @Component({
-selector: 'ta-search-displayer',
+  selector: 'ta-search-displayer',
   templateUrl: './search-displayer.component.html',
-  styleUrls: ['./search-displayer.component.scss'],,
+  styleUrls: ['./search-displayer.component.scss'],
   standalone: true,
-  imports: [NgIf, FontIconComponent],
+  imports: [NgIf, FontIconComponent, SearchHistoryDisplayerComponent, ButtonComponent],
 })
 export class SearchDisplayerComponent extends TaBaseComponent {
   @Input()

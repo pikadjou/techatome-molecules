@@ -2,6 +2,8 @@ import { NgIf, AsyncPipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+import { FileListComponent } from '@ta/files-basic';
+import { DualButtonComponent } from '@ta/ui';
 import { CamBaseModal, FileData, TemporaryFile, pickImages } from '@ta/utils';
 import { map } from 'rxjs';
 
@@ -10,9 +12,9 @@ import { DialogData } from '../input-images.component';
 @Component({
 selector: '',
   styleUrls: ['./input-images-modal.component.scss'],
-  templateUrl: './input-images-modal.component.html',,
+  templateUrl: './input-images-modal.component.html',
   standalone: true,
-  imports: [NgIf, AsyncPipe],
+  imports: [NgIf, AsyncPipe, FileListComponent, DualButtonComponent],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class InputImageModal extends CamBaseModal implements OnInit {

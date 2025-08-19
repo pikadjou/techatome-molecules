@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
+import { CamTranslationLayout } from '../translation.service';
+
 import { TitleComponent } from '../../../components/ui/title/title.component';
 import { LayoutContentComponent } from '../layout-content/layout-content.component';
 import { LayoutHeaderComponent } from '../layout-header/layout-header.component';
@@ -34,6 +36,7 @@ export class LayoutModalComponent extends TaBaseComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<any>) {
     super();
+    CamTranslationLayout.getInstance();
   }
 
   ngOnInit() {

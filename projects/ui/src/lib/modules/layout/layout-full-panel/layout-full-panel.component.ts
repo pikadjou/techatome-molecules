@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
+import { CamTranslationLayout } from '../translation.service';
+
 import { TitleComponent } from '../../../components/ui/title/title.component';
 import { LayoutHeaderComponent } from '../layout-header/layout-header.component';
 import { LayoutTitleComponent } from '../layout-title/layout-title.component';
@@ -27,6 +29,7 @@ export class LayoutFullPanelComponent extends TaBaseComponent {
 
   constructor() {
     super();
+    CamTranslationLayout.getInstance();
   }
 
   public askClose() {

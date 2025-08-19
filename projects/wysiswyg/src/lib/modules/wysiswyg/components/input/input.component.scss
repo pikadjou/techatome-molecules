@@ -16,7 +16,7 @@
     gap: common.get-var(space, sm);
 
     .ce-inline-tool--color__action-list {
-      @include flex-start();
+      @include flex.flex-start();
       list-style-type: none;
       margin: 0;
       padding: common.get-var(space, sm);

@@ -6,6 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
+import { CamTranslationLayout } from '../../translation.service';
+
 @Component({
   selector: 'ta-layout-header-default',
   templateUrl: './layout-header-default.component.html',
@@ -25,6 +27,11 @@ export class LayoutHeaderDefaultComponent extends TaBaseComponent {
 
   @Output()
   backEvent = new EventEmitter();
+
+  constructor() {
+    super();
+    CamTranslationLayout.getInstance();
+  }
 
   public showBackAction() {
     this._location.back();

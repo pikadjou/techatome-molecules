@@ -1,14 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 
 import { InputAddress } from '@ta/form-model';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
+import { FormLabelComponent } from '../../label/label.component';
 
 @Component({
 selector: 'ta-input-address',
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss'],,
+  styleUrls: ['./address.component.scss'],
   standalone: true,
+  imports: [TranslateModule, MatGoogleMapsAutocompleteModule, FormLabelComponent],
 })
 export class InputAddressComponent extends CamAbstractInputComponent<InputAddress> {
   @ViewChild('addresstext') addresstext: any;

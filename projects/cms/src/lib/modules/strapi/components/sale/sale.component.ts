@@ -2,19 +2,22 @@ import { NgIf, AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Inject, OnInit, Optional, Output } from '@angular/core';
 
+import { ToggleComponent } from '@ta/form-input';
 import { InputCheckBox } from '@ta/form-model';
 import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
+import { LoaderComponent, ErrorComponent, EmptyComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 import { of } from 'rxjs';
 
 import { CamSaleService } from '../../services/sale.service';
+import { RichTextComponent } from '../types/rich-text/rich-text.component';
 
 @Component({
 selector: 'ta-sale',
   templateUrl: './sale.component.html',
-  styleUrls: ['./sale.component.scss'],,
+  styleUrls: ['./sale.component.scss'],
   standalone: true,
-  imports: [NgIf, AsyncPipe],
+  imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, RichTextComponent, ToggleComponent],
 })
 export class SaleComponent extends TaBaseComponent implements OnInit {
   @Output()

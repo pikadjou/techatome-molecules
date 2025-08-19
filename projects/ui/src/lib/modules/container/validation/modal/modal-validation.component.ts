@@ -3,6 +3,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ModalParameter } from '../common-modal';
+
+import { CamTranslationContainer } from '../../translation.service';
 import { ButtonComponent } from '../../../../components/ui/button/button.component';
 import { LayoutModalComponent } from '../../../layout/layout-modal/layout-modal.component';
 
@@ -25,7 +27,9 @@ export class ValidationModal {
   constructor(
     public dialogRef: MatDialogRef<ValidationModal>,
     @Inject(MAT_DIALOG_DATA) public data?: ModalParameter
-  ) {}
+  ) {
+    CamTranslationContainer.getInstance();
+  }
 
   public onNoClick(): void {
     this.dialogRef.close(false);

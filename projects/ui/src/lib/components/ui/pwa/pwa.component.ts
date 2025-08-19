@@ -7,6 +7,8 @@ import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 import { LocalStorage } from 'storage-manager-js';
 
+import { CamTranslationUI } from '../translation.service';
+
 import { ButtonComponent } from '../button/button.component';
 import { LinkComponent } from '../link/link.component';
 import { LogoComponent } from '../logo/logo.component';
@@ -38,6 +40,7 @@ export class PwaComponent extends TaBaseComponent implements OnInit {
 
   constructor(private _pwa: CamPwaService) {
     super();
+    CamTranslationUI.getInstance();
     this._pwa.isPWaCapability$.subscribe(
       capability => (this.isShowed = capability && !LocalStorage.get('askForPwaAbility'))
     );

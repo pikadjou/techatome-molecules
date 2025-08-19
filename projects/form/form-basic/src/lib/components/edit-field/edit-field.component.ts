@@ -12,19 +12,21 @@ import {
 } from '@angular/core';
 
 import { NgIf, NgClass } from '@angular/common';
-import { CamStopPropagationDirective } from '@ta/utils';
+import { StopPropagationDirective } from '@ta/utils';
 import { InputBase } from '@ta/form-model';
+import { LoaderComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { InputsComponent } from '../inputs/inputs.component';
 
 export type Layout = 'row' | 'column';
 
 @Component({
 selector: 'ta-edit-field',
   templateUrl: './edit-field.component.html',
-  styleUrls: ['./edit-field.component.scss'],,
+  styleUrls: ['./edit-field.component.scss'],
   standalone: true,
-  imports: [NgIf, NgClass, CamStopPropagationDirective],
+  imports: [NgIf, NgClass, StopPropagationDirective, LoaderComponent, InputsComponent],
 })
 export class EditFieldComponent extends TaBaseComponent implements OnInit, OnChanges {
   @Input()

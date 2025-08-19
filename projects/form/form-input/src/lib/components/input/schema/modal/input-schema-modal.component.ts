@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
+import { FileEditComponent } from '@ta/files-basic';
 import { CamBaseModal, FileStructure, newGuid } from '@ta/utils';
 import { Subject } from 'rxjs';
 
 @Component({
 selector: '',
   styleUrls: ['./input-schema-modal.component.scss'],
-  templateUrl: './input-schema-modal.component.html',,
+  templateUrl: './input-schema-modal.component.html',
   standalone: true,
+  imports: [FileEditComponent],
 })
 export class InputSchemaModal extends CamBaseModal {
   public askImage$ = new Subject<null>();

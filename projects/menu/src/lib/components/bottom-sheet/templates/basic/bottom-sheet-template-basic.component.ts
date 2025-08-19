@@ -9,6 +9,7 @@ import { ContainerValidationComponent } from '@ta/ui';
 import { Observable } from 'rxjs';
 
 import { BottomSheetData } from '../../../../models/bottom/bottom-sheet-data';
+import { CamTranslationMenu } from '../../../../translation.service';
 
 export interface BottomSheetTemplateBasicParams {
   orientation: 'horizontal' | 'vertical';
@@ -24,5 +25,7 @@ selector: 'ta-bottom-sheet-template-basic',
 export class BottomSheetTemplateBasicComponent {
   public typeItem!: { item: BottomSheetData };
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetTemplateBasicParams) {}
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetTemplateBasicParams) {
+    CamTranslationMenu.getInstance();
+  }
 }

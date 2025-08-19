@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CamIconType } from '@ta/icons';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-contact-information',
   templateUrl: './contact-information.component.html',
@@ -31,5 +33,7 @@ export class ContactInformationComponent {
   @Input()
   localIcon!: CamIconType;
 
-  constructor() {}
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 }

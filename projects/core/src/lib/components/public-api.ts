@@ -6,8 +6,3 @@ export * from './filters/tag/filters-tag.component';
 
 export * from './historical-research/search-displayer.component';
 export * from './historical-research/search-history-displayer/search-history-displayer.component';
-
-export * from './communication-handler/snooze-template/snooze-template.component';
-export * from './communication-handler/call-template/call-template.component';
-export * from './communication-handler/mail-template/mail-template.component';
-export * from './communication-handler/return-template/return-template.component';

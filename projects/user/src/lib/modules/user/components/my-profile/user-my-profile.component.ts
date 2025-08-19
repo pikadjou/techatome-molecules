@@ -1,18 +1,46 @@
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { TranslatePipe } from '@ta/translation';
+import {
+  EmptyComponent,
+  ErrorComponent,
+  LinkComponent,
+  ListContainerComponent,
+  ListElementComponent,
+  ListExtraInformationComponent,
+  ListTitleComponent,
+  LoaderComponent,
+  TitleComponent,
+  UiProfileDisplayComponent,
+} from '@ta/ui';
 import { TaBaseComponent, fullName, sendMail } from '@ta/utils';
 
 import { CamUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
-selector: 'ta-user-my-profile',
+  selector: 'ta-user-my-profile',
   templateUrl: './user-my-profile.component.html',
-  styleUrls: ['./user-my-profile.component.scss'],,
+  styleUrls: ['./user-my-profile.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe],
+  imports: [
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    TitleComponent,
+    ListContainerComponent,
+    ListElementComponent,
+    ListTitleComponent,
+    ListExtraInformationComponent,
+    LoaderComponent,
+    ErrorComponent,
+    EmptyComponent,
+    UiProfileDisplayComponent,
+    LinkComponent,
+    TranslatePipe,
+  ],
 })
 export class UserMyProfileComponent extends TaBaseComponent {
   @Input()

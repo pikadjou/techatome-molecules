@@ -2,17 +2,19 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FontIconComponent } from '@ta/icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { InputUploadValue } from '@ta/form-model';
 import { CamDocumentsService, DocumentDto, FileType } from '@ta/services';
+import { ButtonToolComponent, EmptyComponent, ErrorComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent, TimeAgoComponent } from '@ta/ui';
 import { TaBaseComponent, downloadFile } from '@ta/utils';
 
 @Component({
 selector: 'ta-documents-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],,
+  styleUrls: ['./list.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, FontIconComponent],
+  imports: [NgIf, NgFor, AsyncPipe, ButtonToolComponent, EmptyComponent, ErrorComponent, FontIconComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent, TimeAgoComponent, TranslateModule],
 })
 export class DocumentsListComponent extends TaBaseComponent implements OnInit, OnChanges {
   @Input()

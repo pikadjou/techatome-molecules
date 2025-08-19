@@ -2,6 +2,8 @@ import { NgIf } from '@angular/common';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-expandable-text',
   templateUrl: './expandable-text.component.html',
@@ -18,6 +20,10 @@ export class ExpandableTextComponent {
 
   @ViewChild('myText')
   public _myText!: ElementRef<HTMLDivElement>;
+
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 
   get textHeight() {
     if (this._myText) {

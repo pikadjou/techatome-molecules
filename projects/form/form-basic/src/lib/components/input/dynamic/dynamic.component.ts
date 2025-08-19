@@ -1,16 +1,18 @@
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgIf, NgFor, NgClass, NgTemplateOutlet } from '@angular/common';
 import { LocalIconComponent } from '@ta/icons';
 import { Component, Input, TemplateRef } from '@angular/core';
 
 import { InputBase, InputDynamic } from '@ta/form-model';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
 @Component({
 selector: 'ta-input-dynamic',
   templateUrl: './dynamic.component.html',
-  styleUrls: ['./dynamic.component.scss'],,
+  styleUrls: ['./dynamic.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, LocalIconComponent],
+  imports: [NgIf, NgFor, NgClass, NgTemplateOutlet, LocalIconComponent, ButtonComponent, TranslatePipe],
 })
 export class DynamicComponent extends TaBaseComponent {
   @Input()

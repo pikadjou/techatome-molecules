@@ -1,15 +1,33 @@
-import { NgIf, NgFor } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
-import { CamTranslationService } from '@ta/translation';
+import {
+  ListContainerComponent,
+  ListElementComponent,
+  ListTagComponent,
+  ListTitleComponent,
+  LoaderComponent,
+} from 'projects/ui/dist';
+
+import { FontIconComponent } from '@ta/icons';
+import { CamTranslationService, TranslatePipe } from '@ta/translation';
 
 @Component({
-selector: 'ta-switch-language',
+  selector: 'ta-switch-language',
   templateUrl: './switch-language.component.html',
-  styleUrls: ['./switch-language.component.scss'],,
+  styleUrls: ['./switch-language.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, FontIconComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    FontIconComponent,
+    ListTagComponent,
+    LoaderComponent,
+    ListContainerComponent,
+    ListElementComponent,
+    ListTitleComponent,
+    TranslatePipe,
+  ],
 })
 export class SwitchLanguageComponent {
   readonly translateService = inject(CamTranslationService);

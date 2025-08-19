@@ -8,6 +8,7 @@ import { CamIconType } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
 import { MessageLevel } from '@ta/utils';
 
+import { CamTranslationUI } from '../translation.service';
 import { TypedMessageComponent } from '../typed-message/typed-message.component';
 
 @Component({
@@ -37,5 +38,9 @@ export class PictureInfoMessageComponent {
 
   public isLocalIcon(icon: CamIconType | string): boolean {
     return isLocalIcon(icon);
+  }
+
+  constructor() {
+    CamTranslationUI.getInstance();
   }
 }

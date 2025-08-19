@@ -2,14 +2,15 @@ import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { CamIconType } from '@ta/icons';
+import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent } from '@ta/ui';
 import { EFileExtension, FileData } from '@ta/utils';
 
 @Component({
 selector: 'ta-file-card',
   templateUrl: './file-card.component.html',
-  styleUrls: ['./file-card.component.scss'],,
+  styleUrls: ['./file-card.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, LocalIconComponent],
+  imports: [BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, FontIconComponent, LocalIconComponent, TitleComponent, TrigramComponent],
 })
 export class FileCardComponent {
   @Input() file!: FileData;

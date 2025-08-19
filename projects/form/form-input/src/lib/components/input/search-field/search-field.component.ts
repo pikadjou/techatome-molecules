@@ -1,18 +1,22 @@
 import { FontIconComponent } from '@ta/icons';
-import { CamStopPropagationDirective } from '@ta/utils';
+import { StopPropagationDirective } from '@ta/utils';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
+
 import { InputNumber, InputTextBox } from '@ta/form-model';
-import { CamSizes } from '@ta/styles';
+import { TaSizes } from '@ta/styles';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
 selector: 'ta-search-field',
   templateUrl: './search-field.component.html',
-  styleUrls: ['./search-field.component.scss'],,
+  styleUrls: ['./search-field.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, CamStopPropagationDirective],
+  imports: [FontIconComponent, StopPropagationDirective, ReactiveFormsModule, TranslateModule, InputLayoutComponent],
 })
 export class SearchFieldComponent
   extends CamAbstractInputComponent<InputTextBox | InputNumber>
@@ -28,7 +32,7 @@ export class SearchFieldComponent
   space = true;
 
   @Input()
-  type: CamSizes = 'sm';
+  type: TaSizes = 'sm';
 
   @Output()
   valueCompleted = new EventEmitter();

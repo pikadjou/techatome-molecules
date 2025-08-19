@@ -1,5 +1,0 @@
-@use "ta/utils/mixins/fonts";
-
-.label {
-  @include fonts.fontSizeBody(sm, true);
-}

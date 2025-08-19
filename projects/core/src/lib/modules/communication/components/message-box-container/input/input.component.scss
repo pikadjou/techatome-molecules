@@ -1,6 +1,0 @@
-@use "ta/utils/mixins/common";
-
-.is-selected {
-  border: 1px solid common.get-var(border, secondary);
-  border-radius: common.get-var(radius, full);
-}

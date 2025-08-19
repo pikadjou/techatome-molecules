@@ -3,16 +3,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 
 import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
+import { LoaderComponent, ErrorComponent, EmptyComponent, TitleComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
 import { CamCmsService } from '../../services/cms.service';
+import { RichTextComponent } from '../types/rich-text/rich-text.component';
 
 @Component({
 selector: 'ta-cms',
   templateUrl: './cms.component.html',
-  styleUrls: ['./cms.component.scss'],,
+  styleUrls: ['./cms.component.scss'],
   standalone: true,
-  imports: [NgIf, AsyncPipe],
+  imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, TitleComponent, RichTextComponent],
 })
 export class CmsComponent extends TaBaseComponent implements OnInit {
   @Input()

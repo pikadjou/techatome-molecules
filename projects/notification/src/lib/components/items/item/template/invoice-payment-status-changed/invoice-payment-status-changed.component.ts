@@ -1,16 +1,23 @@
 import { AbstractNotificationTemplateComponent } from '../abstract';
-import { IconComponent } from '../icon/icon.component';
-import { ItemComponent } from '../item/item.component';
-import { TitleComponent } from '../title/title.component';
-import { NgIf } from '@angular/common';
+import { IconComponent } from '../../icon/icon.component';
+import { ItemComponent } from '../../item.component';
+import { NotificationTitleComponent } from '../../title/title.component';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { KeyValue } from '@ta/server';
 
+@Component({
+  selector: 'ta-invoice-payment-status-changed',
+  templateUrl: './invoice-payment-status-changed.component.html',
+  styleUrls: ['./invoice-payment-status-changed.component.scss'],
+  standalone: true,
+  imports: [
     IconComponent,
     ItemComponent,
     NgIf,
-    TitleComponent,
+    NgTemplateOutlet,
+    NotificationTitleComponent,
     TranslateModule
   ],
 })

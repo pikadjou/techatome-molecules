@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TitleComponent } from '../../title/title.component';
 import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
 
+import { CamTranslationUI } from '../../translation.service';
+
 @Component({
 selector: 'ta-progress-bar-data',
   templateUrl: './progress-bar-data.component.html',
@@ -38,5 +40,9 @@ export class ProgressBarDataComponent {
     if ((this.current || this.current === 0) && (this.max || this.max === 0)) return `${this.current}/${this.max}`;
 
     return (this.current ?? this.max)?.toString() ?? '';
+  }
+
+  constructor() {
+    CamTranslationUI.getInstance();
   }
 }

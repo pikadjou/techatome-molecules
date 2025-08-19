@@ -1,22 +1,22 @@
 <div>
-  <ng-container [ngSwitch]="input.matchtype()">
-    <ng-container *ngSwitchCase="'textbox'">
+  @switch (input.matchtype()) {
+    @case ('textbox') {
       <ta-input-textbox [input]="$any(input)"></ta-input-textbox>
-    </ng-container>
-    <ng-container *ngSwitchCase="'number'">
+    }
+    @case ('number') {
       <ta-input-textbox [input]="$any(input)"></ta-input-textbox>
-    </ng-container>
-    <ng-container *ngSwitchCase="'checkbox'">
+    }
+    @case ('checkbox') {
       <ta-input-checkbox [input]="$any(input)"></ta-input-checkbox>
-    </ng-container>
-    <ng-container *ngSwitchCase="'datePicker'">
+    }
+    @case ('datePicker') {
       <ta-input-date-picker [input]="$any(input)"></ta-input-date-picker>
-    </ng-container>
-    <ng-container *ngSwitchCase="'dropdown'">
+    }
+    @case ('dropdown') {
       <ta-input-dropdown [input]="$any(input)"></ta-input-dropdown>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
+    }
+    @default {
       <span>Aucune valeur selectionnée</span>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </div>

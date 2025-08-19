@@ -11,6 +11,7 @@ import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
+import { CamTranslationMenu } from '../../translation.service';
 
 @Component({
   selector: 'ta-context-menu',
@@ -25,6 +26,7 @@ export class ContextMenuComponent extends TaBaseComponent {
 
   constructor() {
     super();
+    CamTranslationMenu.getInstance();
   }
 
   public hasFontIcon(item: MenuIcon | MenuAction | MenuBase): boolean {

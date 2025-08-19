@@ -1,15 +1,18 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { InputPhone } from '@ta/form-model';
 import intlTelInput from 'intl-tel-input';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
 selector: 'ta-input-phone',
   templateUrl: './input-phone.component.html',
-  styleUrls: ['./input-phone.component.scss'],,
+  styleUrls: ['./input-phone.component.scss'],
   standalone: true,
+  imports: [InputLayoutComponent, ReactiveFormsModule],
 })
 export class InputPhoneComponent extends CamAbstractInputComponent<InputPhone> {
   @ViewChild('phoneInput', { static: false }) phoneInput!: ElementRef;

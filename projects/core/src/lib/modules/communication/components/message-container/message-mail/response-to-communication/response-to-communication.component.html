@@ -1,5 +1,0 @@
-<div *ngLet="(responseToCommunication$() | async) || [] as responseToCommunication">
-  @if (responseToCommunication) {
-    <div [innerHTML]="responseToCommunication[0].bodyPreview | safe: 'html'" class="mt-space-md innerHTML"></div>
-  }
-</div>

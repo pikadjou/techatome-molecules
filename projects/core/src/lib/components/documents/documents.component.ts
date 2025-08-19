@@ -4,7 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { map } from 'rxjs/operators';
 
-import { Document, FileMetadata } from '@ta/files-extended';
+import { Observable, combineLatest, of } from 'rxjs';
+
+import { Document, FileMetadata, FilesDisplayComponent } from '@ta/files-extended';
 import {
   BottomSheetData,
   BottomSheetTemplateBasicComponent,
@@ -13,16 +15,16 @@ import {
   Menu,
 } from '@ta/menu';
 import { openModal } from '@ta/ui';
-import { TaBaseComponent, FileData, downloadFile, getFileExtension } from '@ta/utils';
-import { Observable, combineLatest, of } from 'rxjs';
+import { FileData, TaBaseComponent, downloadFile, getFileExtension } from '@ta/utils';
 
 import { UploadDocumentModal, UploadDocumentResult } from './upload/upload-visit-document/upload-document.component';
 
 @Component({
-selector: 'ta-documents',
+  selector: 'ta-documents',
   templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.scss'],,
+  styleUrls: ['./documents.component.scss'],
   standalone: true,
+  imports: [FilesDisplayComponent],
 })
 export class DocumentsComponent extends TaBaseComponent implements OnInit {
   @Input()

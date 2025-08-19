@@ -7,6 +7,12 @@ import { ToastComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 import { tap } from 'rxjs/operators';
 
+@Component({
+  selector: 'ta-notification-box',
+  templateUrl: './notification-box.component.html',
+  styleUrls: ['./notification-box.component.scss'],
+  standalone: true,
+  imports: [
     NgFor,
     NotificationInlineComponent,
     ToastComponent

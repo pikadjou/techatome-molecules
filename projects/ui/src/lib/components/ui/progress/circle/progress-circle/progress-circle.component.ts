@@ -2,6 +2,8 @@ import { NgIf, DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { CamTranslationUI } from '../../../translation.service';
+
 @Component({
 selector: 'ta-progress-circle',
   templateUrl: './progress-circle.component.html',
@@ -31,5 +33,9 @@ export class ProgressCircleComponent {
 
   get canDisplayText() {
     return !Number.isNaN(this.progress);
+  }
+
+  constructor() {
+    CamTranslationUI.getInstance();
   }
 }

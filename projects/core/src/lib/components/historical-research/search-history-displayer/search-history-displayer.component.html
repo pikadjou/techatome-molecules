@@ -1,24 +1,3 @@
-<ta-search-field
-  #searchField
-  [isOpen]="true"
-  [placeholder]="this.placeholder"
-  [input]="this.input"
-  (valueCompleted)="this.searchCompleted($event)"
-  [matMenuTriggerFor]="this.searchHistory?.type && this.isDropDown === true ? menu : null"
-></ta-search-field>
-
-<mat-menu #menu="matMenu">
-  <div class="" [style.width.px]="this.searchFieldWidth">
-    <ng-container *ngIf="this.menuTemplate">
-      <ng-container *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"></ng-container>
-    </ng-container>
-  </div>
-</mat-menu>
-
-<ng-container *ngIf="this.menuTemplate && this.searchHistory?.type && this.isDropDown === false">
-  <ng-container *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"></ng-container>
-</ng-container>
-
 <ng-template #menuTemplate>
   <div class="p-space-md">
     <ta-contact-information icon="history" value="core.historical-research.last-searches">
@@ -39,3 +18,26 @@
     </ta-contact-information>
   </div>
 </ng-template>
+
+<ta-search-field
+  #searchField
+  [isOpen]="true"
+  [placeholder]="this.placeholder"
+  [input]="this.input"
+  (valueCompleted)="this.searchCompleted($event)"
+  [matMenuTriggerFor]="this.searchHistory?.type && this.isDropDown === true ? menu : null"
+></ta-search-field>
+
+<mat-menu #menu="matMenu">
+  <div class="" [style.width.px]="this.searchFieldWidth">
+    <ng-container *ngIf="menuTemplate">
+      <ng-container *ngTemplateOutlet="menuTemplate; context: { element: menu }"></ng-container>
+    </ng-container>
+  </div>
+</mat-menu>
+
+<ng-container *ngIf="menuTemplate && this.searchHistory?.type && this.isDropDown === false">
+  <ng-container *ngTemplateOutlet="menuTemplate; context: { element: menu }"></ng-container>
+</ng-container>
+
+

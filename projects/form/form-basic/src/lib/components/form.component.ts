@@ -1,19 +1,22 @@
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { IInputsError, InputBase } from '@ta/form-model';
-import { ENotificationCode } from '@ta/notification';
+import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
+import { TranslatePipe } from '@ta/translation';
+import { LoaderComponent, ButtonComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
+import { InputsComponent } from './inputs/inputs.component';
 import deepEqual from 'fast-deep-equal';
 import { Observable, distinctUntilChanged } from 'rxjs';
 
 @Component({
 selector: 'ta-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],,
+  styleUrls: ['./form.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe],
+  imports: [NgIf, NgFor, AsyncPipe, ReactiveFormsModule, NotificationInlineComponent, LoaderComponent, ButtonComponent, TranslatePipe, InputsComponent],
 })
 export class FormComponent extends TaBaseComponent implements OnInit, OnChanges, OnDestroy {
   @Input()

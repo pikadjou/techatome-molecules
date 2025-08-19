@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(for file in \"projects/ui/src/lib/components/ui/hello-user/hello-user.component.html\" \"projects/ui/src/lib/components/ui/picture-info-message/picture-info-message.component.html\" \"projects/ui/src/lib/components/ui/duration/duration.component.html\")",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(done)",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

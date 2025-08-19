@@ -2,10 +2,13 @@ import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
+import { Observable } from 'rxjs';
+
 import { UploadDocumentFormService } from '@ta/files-extended';
+import { FormComponent } from '@ta/form-basic';
 import { IInputsError, InputBase } from '@ta/form-model';
 import { CamEnumerationService, TranslatedEnumeration } from '@ta/services';
-import { Observable } from 'rxjs';
+import { LayoutModalComponent } from '@ta/ui';
 
 export interface UploadDocumentResult {
   description?: string;
@@ -13,11 +16,11 @@ export interface UploadDocumentResult {
 }
 
 @Component({
-selector: 'ta-upload-document',
+  selector: 'ta-upload-document',
   templateUrl: './upload-document.component.html',
-  styleUrls: ['./upload-document.component.scss'],,
+  styleUrls: ['./upload-document.component.scss'],
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, LayoutModalComponent, FormComponent],
 })
 export class UploadDocumentModal implements OnInit {
   public form: InputBase<any>[] = [];

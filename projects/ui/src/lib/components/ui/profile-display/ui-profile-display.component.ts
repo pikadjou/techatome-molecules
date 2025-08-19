@@ -8,6 +8,8 @@ import { UserLogoComponent } from '../user-logo/user-logo.component';
 import { TitleComponent } from '../title/title.component';
 import { ButtonComponent } from '../button/button.component';
 
+import { CamTranslationUI } from '../translation.service';
+
 @Component({
 selector: 'ta-ui-profile-display',
   templateUrl: './ui-profile-display.component.html',
@@ -39,4 +41,8 @@ export class UiProfileDisplayComponent {
     icon: string;
     callback: () => void;
   };
+
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 }

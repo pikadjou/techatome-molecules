@@ -5,7 +5,7 @@ $search-field-size: 44px;
 $search-field-deploy-size: 100%;
 
 .input-group {
-  @include simple-flex();
+  @include flex.simple-flex();
   @include flex.align-center();
   padding: common.get-var(space, sm);
   gap: common.get-var(space, sm);

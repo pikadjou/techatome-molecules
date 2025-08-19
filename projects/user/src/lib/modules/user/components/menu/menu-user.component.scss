@@ -22,7 +22,7 @@
   width: 350px;
 
   .user-info {
-    border-bottom: 1px solid $primary;
+    border-bottom: 1px solid common.get-var(border, primary);
     padding-bottom: common.get-var(space, xs);
     margin: 0;
     margin-bottom: common.get-var(space, xs);
@@ -43,8 +43,8 @@
   }
 }
 
-@include mobileDevice() {
-  .overlay {
-    width: calc(100vw - 30px);
-  }
-}
+// @include mobileDevice() {
+//   .overlay {
+//     width: calc(100vw - 30px);
+//   }
+// }

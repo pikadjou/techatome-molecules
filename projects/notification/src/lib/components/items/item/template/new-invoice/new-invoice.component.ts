@@ -1,13 +1,19 @@
 import { AbstractNotificationTemplateComponent } from '../abstract';
-import { IconComponent } from '../icon/icon.component';
-import { ItemComponent } from '../item/item.component';
-import { TitleComponent } from '../title/title.component';
+import { IconComponent } from '../../icon/icon.component';
+import { ItemComponent } from '../../item.component';
+import { NotificationTitleComponent } from '../../title/title.component';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+@Component({
+  selector: 'ta-new-invoice',
+  templateUrl: './new-invoice.component.html',
+  styleUrls: ['./new-invoice.component.scss'],
+  standalone: true,
+  imports: [
     IconComponent,
     ItemComponent,
-    TitleComponent,
+    NotificationTitleComponent,
     TranslateModule
   ],
 })

@@ -1,7 +1,0 @@
-@use "ta/utils/mixins/common";
-
-.communication-status {
-  ta-font-icon {
-    margin-left: common.get-var(space, xs);
-  }
-}

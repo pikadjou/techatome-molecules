@@ -1,24 +1,47 @@
-import { NgIf, AsyncPipe } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
-import { CamStopPropagationDirective } from '@ta/utils';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 
-import { Menu, MenuIcon, MenuPanel } from '@ta/menu';
-import { CamSizes } from '@ta/styles';
-import { UserLogoNaming } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
 import { Observable, map } from 'rxjs';
+
+import { FontIconComponent } from '@ta/icons';
+import { Menu, MenuComponent, MenuIcon, MenuPanel } from '@ta/menu';
+import { TaSizes } from '@ta/styles';
+import { TranslatePipe } from '@ta/translation';
+import {
+  ButtonComponent,
+  EmptyComponent,
+  ErrorComponent,
+  InlineProfileDataComponent,
+  LoaderComponent,
+  UserLogoNaming,
+} from '@ta/ui';
+import { StopPropagationDirective } from '@ta/utils';
+import { TaBaseComponent } from '@ta/utils';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
 import { CamUsersService } from '../../services/users.service';
+import { SwitchLanguageComponent } from '../switch-language/switch-language.component';
 
 @Component({
-selector: 'ta-my-account',
+  selector: 'ta-my-account',
   templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss'],,
+  styleUrls: ['./my-account.component.scss'],
   standalone: true,
-  imports: [NgIf, AsyncPipe, FontIconComponent, CamStopPropagationDirective],
+  imports: [
+    NgIf,
+    AsyncPipe,
+    FontIconComponent,
+    StopPropagationDirective,
+    LoaderComponent,
+    ErrorComponent,
+    EmptyComponent,
+    InlineProfileDataComponent,
+    ButtonComponent,
+    MenuComponent,
+    SwitchLanguageComponent,
+    TranslatePipe,
+  ],
 })
 export class MyAccountComponent extends TaBaseComponent {
   @Input()
@@ -74,7 +97,7 @@ export class MyAccountComponent extends TaBaseComponent {
       profilePictureUrl?: string;
       naming: UserLogoNaming;
     };
-    size?: CamSizes;
+    size?: TaSizes;
   } | null> {
     return this.currentUser$.pipe(
       map(x => {

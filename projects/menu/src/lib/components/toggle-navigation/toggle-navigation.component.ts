@@ -11,6 +11,7 @@ import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
+import { CamTranslationMenu } from '../../translation.service';
 
 /*
  ** @deprecated
@@ -33,7 +34,9 @@ export class ToggleNavigationComponent implements OnInit {
   public readonly typeItem!: { item: MenuBase | MenuAction | MenuIcon };
   public notifEnabled: boolean = false;
 
-  constructor() {}
+  constructor() {
+    CamTranslationMenu.getInstance();
+  }
 
   get containerCss() {
     return this.container ?? '';

@@ -1,16 +1,17 @@
 import { NgIf, NgFor } from '@angular/common';
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
-import { CamStopPropagationDirective } from '@ta/utils';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { TaBaseComponent, FileData, FileType } from '@ta/utils';
+import { EmptyComponent } from '@ta/ui';
+import { TaBaseComponent, FileData, FileType, StopPropagationDirective, SafePipe } from '@ta/utils';
+import { FileCardComponent } from './card/file/file-card.component';
 
 @Component({
 selector: 'ta-files-list',
   templateUrl: './files-list.component.html',
-  styleUrls: ['./files-list.component.scss'],,
+  styleUrls: ['./files-list.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, FontIconComponent, LocalIconComponent, CamStopPropagationDirective],
+  imports: [NgIf, NgFor, EmptyComponent, FileCardComponent, FontIconComponent, LocalIconComponent, SafePipe, StopPropagationDirective],
 })
 export class FileListComponent extends TaBaseComponent {
   @Input()

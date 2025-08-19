@@ -1,13 +1,15 @@
-<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.content$ | async as content">
-  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
-    <ta-empty [isEmpty]="!content">
-      <ng-container *ngIf="content">
-        <ta-rich-text [richText]="content.Content"></ta-rich-text>
+<ng-container *ngIf="this.content$ | async as content">
+  <ta-loader [isLoading]="this.requestState.isLoading()">
+    <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+      <ta-empty [isEmpty]="!content">
+        <ng-container *ngIf="content">
+          <ta-rich-text [richText]="content.Content"></ta-rich-text>
 
-        <div class="checkbox ta-r">
-          <ta-input-toggle [input]="this.checkbox"></ta-input-toggle>
-        </div>
-      </ng-container>
-    </ta-empty>
-  </ta-error>
-</ta-loader>
+          <div class="checkbox ta-r">
+            <ta-input-toggle [input]="this.checkbox"></ta-input-toggle>
+          </div>
+        </ng-container>
+      </ta-empty>
+    </ta-error>
+  </ta-loader>
+</ng-container>

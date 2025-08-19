@@ -1,4 +1,5 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/text";
 
 .upload-container {
   display: flex;
@@ -15,7 +16,7 @@
       color: common.get-var(surface, brand, secondary);
     }
     .name {
-      @include text-overflow();
+      @include text.text-overflow();
     }
   }
   .content {

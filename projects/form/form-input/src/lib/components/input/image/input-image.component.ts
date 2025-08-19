@@ -2,15 +2,16 @@ import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { InputImages } from '@ta/form-model';
+import { UserLogoComponent } from '@ta/ui';
 
 import { CamAbstractInputComponent } from '../../abstract.component';
 
 @Component({
 selector: 'ta-input-image',
   templateUrl: './input-image.component.html',
-  styleUrls: ['./input-image.component.scss'],,
+  styleUrls: ['./input-image.component.scss'],
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, UserLogoComponent],
 })
 export class InputImageComponent extends CamAbstractInputComponent<InputImages> {
   get selection(): string[] {

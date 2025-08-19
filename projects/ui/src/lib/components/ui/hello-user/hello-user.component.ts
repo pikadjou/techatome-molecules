@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaSizes } from '@ta/styles';
 
+import { CamTranslationUI } from '../translation.service';
 import { UserLogoNaming } from '../user-logo/user-logo.component';
 import { UserLogoComponent } from '../user-logo/user-logo.component';
 
@@ -22,4 +23,8 @@ export class HelloUserComponent {
   };
   @Input() bulletSize: TaSizes = 'lg';
   @Input() footer?: string;
+
+  constructor() {
+    CamTranslationUI.getInstance();
+  }
 }
