@@ -1,0 +1,21 @@
+/* Storybook styles - Bootstrap import disabled for now to avoid dependency issues */
+
+/* Basic Storybook-specific styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Basic component styles that might be needed */
+.ta-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.ta-button:hover {
+  background: #f5f5f5;
+}

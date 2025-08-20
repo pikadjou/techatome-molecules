@@ -1,7 +1,4 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { ExpandableTextComponent } from './expandable-text.component';
 
 type StoryType = ExpandableTextComponent & { text: string };
@@ -10,12 +7,6 @@ export default {
   title: 'UI/Expandable text',
   component: ExpandableTextComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [ExpandableTextComponent],
-      imports: [CamDirectivePipeModule, TranslatePipe],
-    }),
-  ],
   render: args => {
     const { text, ...props } = args;
     return {

@@ -1,6 +1,4 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { Meta, StoryObj } from '@storybook/angular';
 
 import { ButtonComponent } from './button.component';
 
@@ -9,11 +7,6 @@ type StoryType = ButtonComponent & { label?: string };
 export default {
   title: 'UI/Button/Basic',
   component: ButtonComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [CamIconsModule, CamDirectivePipeModule],
-    }),
-  ],
   tags: ['autodocs'],
   render: args => {
     const { label, ...props } = args;

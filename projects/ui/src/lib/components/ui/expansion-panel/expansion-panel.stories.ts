@@ -1,10 +1,4 @@
-import { MatExpansionModule } from '@angular/material/expansion';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { CamExpansionPanelComponent } from './expansion-panel.component';
 
 type StoryType = CamExpansionPanelComponent;
@@ -13,11 +7,6 @@ export default {
   title: 'UI/Expansion panel',
   component: CamExpansionPanelComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [CamIconsModule, MatExpansionModule, BrowserAnimationsModule, RouterTestingModule],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

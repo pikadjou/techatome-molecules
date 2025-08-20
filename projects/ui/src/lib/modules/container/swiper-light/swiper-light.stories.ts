@@ -1,21 +1,10 @@
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamDeviceInfoService } from '@ta/capacitor';
-import { CamUiModule } from '@ta/ui';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { SwiperLightComponent } from './swiper-light.component';
 
 export default {
   title: 'Container/Swiper Light',
   component: SwiperLightComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [RouterTestingModule, CamUiModule],
-      providers: [CamDeviceInfoService],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

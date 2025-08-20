@@ -1,8 +1,5 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { TranslatePipe } from '@ta/translation';
+import { Meta, StoryObj } from '@storybook/angular';
 import { ButtonComponent } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
-
 import { NotificationBadgeContainerComponent } from './notification-badge-container.component';
 import { NotificationBadgeComponent } from './notification-badge/notification-badge.component';
 
@@ -12,12 +9,9 @@ export default {
   title: 'UI/Notification badge',
   component: NotificationBadgeContainerComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [NotificationBadgeComponent, ButtonComponent],
-      imports: [CamDirectivePipeModule, TranslatePipe],
-    }),
-  ],
+  moduleMetadata: {
+    declarations: [ButtonComponent, NotificationBadgeComponent],
+  },
   render: args => {
     const { ...props } = args;
     return {

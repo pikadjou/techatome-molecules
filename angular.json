@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Camelot": {
+    "Techatome": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -81,13 +81,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Camelot:build:production"
+              "buildTarget": "Techatome:build:production"
             },
             "development": {
-              "buildTarget": "Camelot:build:development"
+              "buildTarget": "Techatome:build:development"
             },
             "local": {
-              "buildTarget": "Camelot:build:local"
+              "buildTarget": "Techatome:build:local"
             }
           },
           "defaultConfiguration": "development"
@@ -95,7 +95,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Camelot:build"
+            "buildTarget": "Techatome:build"
           }
         },
         "test": {
@@ -113,7 +113,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "Camelot:build",
+            "browserTarget": "Techatome:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],
             "port": 6006,
@@ -138,7 +138,7 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "Camelot:build",
+            "browserTarget": "Techatome:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],
             "outputDir": "storybook-static",
@@ -146,8 +146,7 @@
               "includePaths": ["projects/styles/src/style"]
             },
             "styles": [
-              "projects/styles/src/index.scss",
-              "node_modules/angular-calendar/css/angular-calendar.css"
+              "projects/styles/src/index.scss"
             ]
           }
         },

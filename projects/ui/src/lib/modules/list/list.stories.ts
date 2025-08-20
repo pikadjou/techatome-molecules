@@ -1,12 +1,6 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { DepartmentIconListComponent } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { Meta, StoryObj } from '@storybook/angular';
 
 import { ListElementComponent } from './element/list-element.component';
-import { ListContainerComponent } from './list-container/list-container.component';
-import { ListSubTitleComponent } from './sub-title/list-sub-title.component';
-import { ListTagComponent } from './tag/list-tag.component';
-import { ListTitleComponent } from './title/list-title.component';
 
 type StoryType = { list: any[]; withSeparator: boolean; flexColumn: boolean };
 
@@ -14,18 +8,6 @@ export default {
   title: 'LIST/List',
   component: ListElementComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [
-        ListTitleComponent,
-        ListSubTitleComponent,
-        ListTagComponent,
-        DepartmentIconListComponent,
-        ListContainerComponent,
-      ],
-      imports: [CamDirectivePipeModule],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

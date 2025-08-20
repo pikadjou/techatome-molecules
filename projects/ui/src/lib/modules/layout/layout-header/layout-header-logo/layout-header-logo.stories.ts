@@ -1,12 +1,4 @@
-import { MatMenuModule } from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { LayoutHeaderLogoComponent } from './layout-header-logo.component';
 
 type StoryType = LayoutHeaderLogoComponent;
@@ -15,18 +7,6 @@ export default {
   title: 'LAYOUT/header/login',
   component: LayoutHeaderLogoComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [
-        CamIconsModule,
-        MatMenuModule,
-        TranslatePipe,
-        CamDirectivePipeModule,
-        RouterTestingModule,
-        BrowserAnimationsModule,
-      ],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

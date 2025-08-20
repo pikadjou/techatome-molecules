@@ -1,5 +1,5 @@
-import { Meta, StoryObj, componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
-import { CamIconType, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
+import { Meta, StoryObj, componentWrapperDecorator } from '@storybook/angular';
+import { CamIconType } from '@ta/icons';
 
 import { ActionButtonComponent } from './action-button.component';
 
@@ -8,9 +8,6 @@ export default {
   component: ActionButtonComponent,
   tags: ['autodocs'],
   decorators: [
-    moduleMetadata({
-      declarations: [MaterialIconComponent, LocalIconComponent],
-    }),
     componentWrapperDecorator(story => `<div style="height: 50px; padding-top: 50px">${story}</div>`),
   ],
 

@@ -1,7 +1,4 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { Meta, StoryObj } from '@storybook/angular';
 
 import { BadgeComponent } from './badge.component';
 
@@ -11,11 +8,6 @@ export default {
   title: 'UI/Badge',
   component: BadgeComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [CamDirectivePipeModule, TranslatePipe, CamIconsModule],
-    }),
-  ],
   render: args => ({ props: args }),
   argTypes: {
     value: {

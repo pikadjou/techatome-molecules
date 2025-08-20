@@ -1,17 +1,10 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { ProgressCircleComponent } from './progress-circle.component';
 
 export default {
   title: 'UI/Progress circle',
   component: ProgressCircleComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [CamDirectivePipeModule],
-    }),
-  ],
   render: args => ({ props: args }),
   args: {
     progress: 50,

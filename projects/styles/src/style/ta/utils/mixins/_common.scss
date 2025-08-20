@@ -41,10 +41,18 @@
 
 /** Generate CSS custom properties from a map **/
 @mixin generateMap($name, $map, $prefix: '') {
-  $flat: flat-map($name, $map);
-  
-  @each $key, $value in $flat {
-    $var-name: if($prefix != '', $prefix + '-' + $key, $key);
-    --ta-#{$var-name}: #{$value};
+  @if length($map) > 0 {
+    $flat: flat-map($name, $map);
+    
+    @if length($flat) > 0 {
+      :root {
+        @each $key, $value in $flat {
+          @if $value != null and $value != () {
+            $var-name: if($prefix != '', $prefix + '-' + $key, $key);
+            --ta-#{$var-name}: #{$value};
+          }
+        }
+      }
+    }
   }
 }

@@ -1,10 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
 import { LayoutContentComponent, LayoutPanelComponent, LayoutWithPanelComponent } from '../public-api';
 
 type StoryType = LayoutWithPanelComponent & { isOpen: boolean };
@@ -15,8 +9,7 @@ export default {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      declarations: [LayoutPanelComponent, LayoutContentComponent],
-      imports: [CommonModule, BrowserAnimationsModule, RouterTestingModule, MatSidenavModule],
+      imports: [LayoutContentComponent, LayoutPanelComponent],
     }),
   ],
   render: args => {

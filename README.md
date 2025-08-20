@@ -1,4 +1,4 @@
-# Camelot
+# Techatome
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.1.
 
@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Download repo
 
-<https://merlin-software@dev.azure.com/merlin-software/Camelot/_git/Camelot>
+<https://merlin-software@dev.azure.com/merlin-software/Techatome/_git/Techatome>
 
 ## Install yarn
 

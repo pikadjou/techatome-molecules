@@ -1,18 +1,11 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { __userInfo } from '../../../__mocks__/userInfo';
-import { TrigramComponent } from '../trigram/trigram.component';
 import { UserLogoComponent } from './user-logo.component';
 
 export default {
   title: 'UI/User Logo',
   component: UserLogoComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [TrigramComponent],
-    }),
-  ],
   render: (args) => ({ props: args }),
   args: {
     userInfo: __userInfo,

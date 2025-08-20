@@ -1,17 +1,10 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { DepartmentIconListComponent } from './department-icon-list.component';
 
 export default {
   title: 'UI/Department/icons',
   component: DepartmentIconListComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [CamDirectivePipeModule],
-    }),
-  ],
   render: args => ({ props: args }),
   args: {
     departments: [

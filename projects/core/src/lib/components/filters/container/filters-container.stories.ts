@@ -1,15 +1,5 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamFormModule } from '@ta/form-basic';
-import { CamIconsModule } from '@ta/icons';
-import { CamLayoutModule, CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { Meta, StoryObj } from '@storybook/angular';
 import { __basicForm } from 'projects/form/__mock__/form';
-
-import { FiltersFormComponent } from '../form/filters-form.component';
-import { FiltersTagComponent } from '../tag/filters-tag.component';
 import { FiltersContainerComponent } from './filters-container.component';
 
 type StoryType = FiltersContainerComponent;
@@ -18,20 +8,6 @@ export default {
   title: 'CORE/Filters',
   component: FiltersContainerComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [FiltersFormComponent, FiltersTagComponent],
-      imports: [
-        BrowserAnimationsModule,
-        RouterTestingModule,
-        CamUiModule,
-        CamDirectivePipeModule,
-        CamLayoutModule,
-        CamIconsModule,
-        CamFormModule,
-      ],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

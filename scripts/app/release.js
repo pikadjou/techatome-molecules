@@ -90,7 +90,7 @@ function writePackageJson(packageJson) {
 }
 
 // Met à jour les dépendances @ta/ dans le package.json
-function updateCamelotPackages(version) {
+function updateTechatomePackages(version) {
   const packageJsonPath = './package.json';
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 
@@ -143,7 +143,7 @@ async function waitForPackageAvailability(packageName, version) {
 }
 
 // Fonction pour supprimer les chemins @ta/ du tsconfig.json
-function removeCamelotPathsFromTsconfig() {
+function removeTechatomePathsFromTsconfig() {
   try {
     const tsconfig = JSON.parse(fs.readFileSync('tsconfig.json', 'utf8'));
 
@@ -294,10 +294,10 @@ async function main() {
   packageJson.version = releaseVersion;
   writePackageJson(packageJson);
 
-  updateCamelotPackages(taVersion);
+  updateTechatomePackages(taVersion);
 
   // Suppression des chemins @ta/ dans tsconfig.json
-  removeCamelotPathsFromTsconfig();
+  removeTechatomePathsFromTsconfig();
 
   // Installation des dépendances et construction du projet
   await installDependencies();

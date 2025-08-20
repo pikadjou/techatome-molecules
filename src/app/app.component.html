@@ -1,10 +1,14 @@
-<main class="main">
-  <nav class="nav">
-    <!-- <app-main-menu [menuMain]="this.menuServices.getMainMenu()"></app-main-menu> -->
+<ta-layout-page>
+  <nav class="sidebar" slot="sidebar">
+    <div class="sidebar-header">
+      <h2>{{ title }}</h2>
+    </div>
+    <ta-navigation [menu]="mainMenu"></ta-navigation>
   </nav>
-  <section class="container">
+  
+  <main class="main-content" slot="content">
     <router-outlet />
-  </section>
+  </main>
+</ta-layout-page>
 
-  <ta-notification-box></ta-notification-box>
-</main>
+<ta-notification-box></ta-notification-box>

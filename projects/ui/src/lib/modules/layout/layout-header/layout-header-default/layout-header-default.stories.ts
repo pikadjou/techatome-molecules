@@ -1,12 +1,4 @@
-import { MatMenuModule } from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { LayoutHeaderDefaultComponent } from './layout-header-default.component';
 
 type StoryType = LayoutHeaderDefaultComponent;
@@ -15,18 +7,6 @@ export default {
   title: 'LAYOUT/header/default',
   component: LayoutHeaderDefaultComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [
-        CamIconsModule,
-        MatMenuModule,
-        TranslatePipe,
-        CamDirectivePipeModule,
-        RouterTestingModule,
-        BrowserAnimationsModule,
-      ],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

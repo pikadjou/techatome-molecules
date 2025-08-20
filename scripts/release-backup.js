@@ -60,7 +60,7 @@ const handleExistingBranch = async branchName => {
 };
 
 // Met à jour les dépendances @ta/ dans le package.json
-const updateCamelotPackages = version => {
+const updateTechatomePackages = version => {
   const packageJsonPath = './package.json';
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 
@@ -147,7 +147,7 @@ async function main() {
     },
   ]);
 
-  updateCamelotPackages(taVersion);
+  updateTechatomePackages(taVersion);
   updatePackageVersion(releaseVersion);
 
   runCommand('yarn install');

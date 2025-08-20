@@ -1,8 +1,4 @@
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { CamContainerModule } from '@ta/ui';
+import { Meta, StoryObj } from '@storybook/angular';
 import { Subject } from 'rxjs';
 
 import { FileEditComponent } from './files-edit.component';
@@ -13,11 +9,6 @@ export default {
   title: 'FILES/Editor',
   component: FileEditComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [CamIconsModule, RouterTestingModule, CamContainerModule],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

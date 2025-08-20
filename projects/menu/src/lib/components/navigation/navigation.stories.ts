@@ -1,11 +1,4 @@
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { Menu } from '../../models/menu/menu';
 import {
   __classicIconMenu,
@@ -33,12 +26,6 @@ export default {
       `,
     };
   },
-  decorators: [
-    moduleMetadata({
-      declarations: [],
-      imports: [RouterTestingModule, TranslatePipe, CamDirectivePipeModule, CamUiModule, CamIconsModule],
-    }),
-  ],
   args: {
     menu: __classicMenu,
     container: 'tags',

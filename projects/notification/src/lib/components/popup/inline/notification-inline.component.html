@@ -30,9 +30,9 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!this.showMessage">
-  <ng-content></ng-content>
-</ng-container>
+@if (!this.showMessage) {
+    <ng-content></ng-content>
+}
 
 @if (this.isError) {
   <ta-link size="sm" class="color-semantic-orange-dark flex-end" (action)="this.openErrorBox()">Open</ta-link>

@@ -1,22 +1,11 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { MaterialIconComponent } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { TitleComponent } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { Meta, StoryObj } from '@storybook/angular';
 
-import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { ProgressBarDataComponent } from './progress-bar-data.component';
 
 export default {
   title: 'UI/Progress Bar Data',
   component: ProgressBarDataComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [ProgressBarComponent, TitleComponent, MaterialIconComponent],
-      imports: [TranslatePipe, CamDirectivePipeModule],
-    }),
-  ],
   render: args => ({ props: args }),
   args: {
     title: 'Visites',

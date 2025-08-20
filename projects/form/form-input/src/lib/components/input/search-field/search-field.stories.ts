@@ -1,18 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { InputTextBox } from '@ta/form-model';
-import { CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
-
 import { SearchFieldComponent } from './search-field.component';
 
 type StoryType = SearchFieldComponent;
@@ -36,14 +27,6 @@ export default {
       imports: [
         MatInputModule,
         MatFormFieldModule,
-        CamDirectivePipeModule,
-        TranslatePipe,
-        CommonModule,
-        CamUiModule,
-        CamIconsModule,
-        RouterTestingModule,
-        CamDirectivePipeModule,
-        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
       ],

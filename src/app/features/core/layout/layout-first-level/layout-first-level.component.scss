@@ -1,7 +1,0 @@
-@use 'ta/utils/mixins/common';
-
-ta-title {
-  display: block;
-  padding-bottom: common.get-var(space, md);
-  border-bottom: 1px solid common.get-var(border, primary);
-}

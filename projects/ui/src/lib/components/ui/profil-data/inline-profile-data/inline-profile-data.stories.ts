@@ -1,9 +1,4 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
-
-import { ButtonComponent, UserLogoComponent } from '../../public-api';
+import { Meta, StoryObj } from '@storybook/angular';
 import { InlineProfileDataComponent } from './inline-profile-data.component';
 
 type StoryType = InlineProfileDataComponent;
@@ -12,12 +7,6 @@ export default {
   title: 'UI/Profil Data/Inline',
   component: InlineProfileDataComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [ButtonComponent, UserLogoComponent],
-      imports: [CamIconsModule, CamDirectivePipeModule, TranslatePipe],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

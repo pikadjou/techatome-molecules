@@ -1,9 +1,5 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconType, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { TypedMessageComponent } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
-
+import { Meta, StoryObj } from '@storybook/angular';
+import { CamIconType } from '@ta/icons';
 import { PictureInfoMessageComponent } from './picture-info-message.component';
 
 type StoryType = PictureInfoMessageComponent;
@@ -12,12 +8,6 @@ export default {
   title: 'UI/Picture info message',
   component: PictureInfoMessageComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [LocalIconComponent, TypedMessageComponent, MaterialIconComponent],
-      imports: [TranslatePipe, CamDirectivePipeModule],
-    }),
-  ],
   render: args => ({ props: args }),
   args: {
     text: "It's meee, Marioooo",

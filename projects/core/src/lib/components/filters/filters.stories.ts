@@ -1,9 +1,4 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { CamLayoutModule, CamUiModule } from '@ta/ui';
-
+import { Meta, StoryObj } from '@storybook/angular';
 import { FiltersComponent } from './filters.component';
 
 type StoryType = FiltersComponent;
@@ -23,12 +18,6 @@ export default {
       `,
     };
   },
-  decorators: [
-    moduleMetadata({
-      declarations: [],
-      imports: [BrowserAnimationsModule, CamLayoutModule, CamUiModule, CamIconsModule],
-    }),
-  ],
   args: {},
 } as Meta<StoryType>;
 

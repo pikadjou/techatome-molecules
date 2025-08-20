@@ -1,6 +1,4 @@
-import { Meta, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-
+import { Meta } from '@storybook/angular';
 import { TextToClipboardComponent } from './text-to-clipboard.component';
 
 type StoryType = TextToClipboardComponent;
@@ -8,11 +6,6 @@ type StoryType = TextToClipboardComponent;
 export default {
   title: 'CORE/TextToClipboard',
   component: TextToClipboardComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [CamIconsModule],
-    }),
-  ],
   tags: ['autodocs'],
   render: args => {
     const { ...props } = args;

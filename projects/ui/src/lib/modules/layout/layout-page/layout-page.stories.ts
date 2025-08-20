@@ -1,21 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconsModule } from '@ta/icons';
-import { CamMenuModule, Menu } from '@ta/menu';
-import { TranslatePipe } from '@ta/translation';
-import { CamCardModule, CamUiModule } from '@ta/ui';
+import { Meta, StoryObj } from '@storybook/angular';
 import { __classicMenu } from 'projects/menu/src/lib/components/menu/__mock__/menu';
 
-import {
-  LayoutHeaderComponent,
-  LayoutHeaderDefaultComponent,
-  LayoutNavComponent,
-  LayoutTitleComponent,
-  LayoutWithBottomNavComponent,
-} from '../public-api';
+import { Menu } from '@ta/menu';
+
 import { LayoutPageComponent } from './layout-page.component';
 
 type StoryType = LayoutPageComponent & { menu: Menu; withHeader: boolean };
@@ -24,27 +11,6 @@ export default {
   title: 'LAYOUT/Page',
   component: LayoutPageComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [
-        LayoutHeaderComponent,
-        LayoutHeaderDefaultComponent,
-        LayoutTitleComponent,
-        LayoutNavComponent,
-        LayoutWithBottomNavComponent,
-      ],
-      imports: [
-        CommonModule,
-        CamUiModule,
-        TranslatePipe,
-        CamIconsModule,
-        CamMenuModule,
-        CamCardModule,
-        RouterTestingModule,
-        MatMenuModule,
-      ],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {

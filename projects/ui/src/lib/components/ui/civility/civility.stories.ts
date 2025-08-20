@@ -1,18 +1,11 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { Civility } from '@ta/utils';
-
-import { CamUiModule } from '../ui.module';
 import { CivilityComponent } from './civility.component';
 
 export default {
   title: 'UI/Civility',
   component: CivilityComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [CamUiModule],
-    }),
-  ],
   render: args => ({ props: args }),
   argTypes: {
     civility: {

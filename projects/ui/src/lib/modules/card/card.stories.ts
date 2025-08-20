@@ -1,9 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamDirectivePipeModule } from '@ta/utils';
-
-import { DepartmentIconListComponent } from '../../components/ui/departments/department-icon-list/department-icon-list.component';
 import { Department } from '../../components/ui/departments/interface';
-import { HourDateLineComponent } from '../../components/ui/hour-date-line/hour-date-line.component';
 import { CardComponent } from './card.component';
 import {
   CardContentComponent,
@@ -26,17 +22,7 @@ export default {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      declarations: [
-        CardHeaderComponent,
-        CardTagComponent,
-        CardTitleComponent,
-        CardSubtitleComponent,
-        CardContentComponent,
-        CardCtaComponent,
-        DepartmentIconListComponent,
-        HourDateLineComponent,
-      ],
-      imports: [CamDirectivePipeModule],
+      imports: [CardContentComponent, CardCtaComponent, CardHeaderComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent],
     }),
   ],
   render: args => {

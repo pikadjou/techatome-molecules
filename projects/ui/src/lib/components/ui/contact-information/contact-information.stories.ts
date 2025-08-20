@@ -1,9 +1,6 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CamIconType, CamIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { Meta, StoryObj } from '@storybook/angular';
+import { CamIconType } from '@ta/icons';
 
-import { TitleComponent } from '../public-api';
 import { ContactInformationComponent } from './contact-information.component';
 
 type StoryType = ContactInformationComponent;
@@ -12,12 +9,6 @@ export default {
   title: 'UI/Contact Information',
   component: ContactInformationComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      declarations: [TitleComponent],
-      imports: [CamDirectivePipeModule, TranslatePipe, TranslatePipe, CamIconsModule],
-    }),
-  ],
   render: args => {
     const { ...props } = args;
     return {
