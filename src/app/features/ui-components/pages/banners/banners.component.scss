@@ -1,0 +1,39 @@
+@use 'ta/utils/mixins/common';
+
+.coming-soon {
+  text-align: center;
+  padding: common.get-var(space, xxl) common.get-var(space, xl);
+  background: common.get-var(surface, primary);
+  border-radius: common.get-var(radius, lg);
+  border: 1px solid common.get-var(border, primary);
+}
+
+.icon .material-icons {
+  font-size: common.get-var(font-size, xxl);
+  color: common.get-var(color, warning);
+}
+
+.title-with-back {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, md);
+}
+
+.back-button {
+  background: none;
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, sm);
+  padding: common.get-var(space, sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: common.get-var(text, secondary);
+
+  &:hover {
+    background: common.get-var(surface, hover);
+    border-color: common.get-var(border, hover);
+    color: common.get-var(text, primary);
+  }
+}

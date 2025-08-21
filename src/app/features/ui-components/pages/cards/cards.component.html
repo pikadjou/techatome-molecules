@@ -1,0 +1,23 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      <div class="title-with-back">
+        <ta-button class="back-button" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </ta-button>
+        <ta-title [level]="1">Cards Demo</ta-title>
+      </div>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-lg">
+      <div class="coming-soon">
+        <div class="icon">
+          <span class="material-icons">credit_card</span>
+        </div>
+        <ta-title [level]="2">Cards Demo à venir</ta-title>
+        <ta-text>Cette page contiendra la démonstration des cartes et conteneurs.</ta-text>
+      </div>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

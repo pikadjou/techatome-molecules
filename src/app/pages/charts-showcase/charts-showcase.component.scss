@@ -1,0 +1,20 @@
+@use 'ta/utils/mixins/common';
+
+.charts-showcase {
+  max-width: common.get-var(space, xxxl);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.coming-soon {
+  background: common.get-var(surface, secondary);
+  padding: common.get-var(space, xl);
+  border-radius: common.get-var(radius, md);
+  margin-top: common.get-var(space, xl);
+  text-align: left;
+  
+  ul {
+    margin: common.get-var(space, md) 0 0 common.get-var(space, md);
+    color: common.get-var(text, secondary);
+  }
+}

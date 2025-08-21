@@ -1,0 +1,79 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      <ta-title [level]="1">Charts & Visualizations</ta-title>
+      <div class="breadcrumb">
+        <span>Sandbox</span> / <span>Charts</span>
+      </div>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-lg">
+      <div class="showcase-intro">
+        <ta-title [level]="2">Graphiques et visualisations</ta-title>
+        <ta-text>Explorez les différents types de graphiques disponibles avec la librairie &#64;ta/charts</ta-text>
+        <div class="info-badge">
+          <span class="material-icons">info</span>
+          Intégration Chart.js pour des visualisations interactives
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <a 
+          *ngFor="let chart of chartTypes" 
+          [routerLink]="chart.route"
+          class="chart-card">
+          <div class="card-header">
+            <div class="chart-icon" [style.color]="chart.color">
+              <span class="material-icons">{{ chart.icon }}</span>
+            </div>
+            <div class="status-badge" [class.coming-soon]="chart.status === 'À venir'">
+              {{ chart.status }}
+            </div>
+          </div>
+          <div class="card-content">
+            <ta-title [level]="3">{{ chart.title }}</ta-title>
+            <ta-text>{{ chart.description }}</ta-text>
+          </div>
+          <div class="card-arrow">
+            <span class="material-icons">arrow_forward</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="features-section">
+        <ta-title [level]="3">Fonctionnalités des graphiques</ta-title>
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="material-icons">touch_app</span>
+            <div>
+              <h4>Interactifs</h4>
+              <ta-text>Graphiques interactifs avec tooltips et animations</ta-text>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="material-icons">palette</span>
+            <div>
+              <h4>Personnalisables</h4>
+              <ta-text>Couleurs, styles et thèmes adaptables</ta-text>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="material-icons">devices</span>
+            <div>
+              <h4>Responsive</h4>
+              <ta-text>Adaptation automatique à tous les écrans</ta-text>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="material-icons">speed</span>
+            <div>
+              <h4>Performants</h4>
+              <ta-text>Optimisés pour de grandes quantités de données</ta-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

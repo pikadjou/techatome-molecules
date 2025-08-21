@@ -1,0 +1,20 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      <div class="title-with-back">
+        <button class="back-button" (click)="goBack()" aria-label="Retour">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <ta-title [level]="1">Buttons Demo</ta-title>
+      </div>
+      <div class="breadcrumb">
+        <span>Sandbox</span> / <span>UI Components</span> / <span>Buttons</span>
+      </div>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-lg">
+      <app-buttons-demo></app-buttons-demo>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

@@ -1,0 +1,135 @@
+<div class="buttons-demo">
+  <div class="demo-header">
+    <ta-title [level]="2">Buttons Demo</ta-title>
+    <ta-text class="subtitle">Démonstration des différents types de boutons disponibles</ta-text>
+  </div>
+
+  <div class="demo-sections">
+    <!-- Button Types -->
+    <section class="demo-section">
+      <ta-title [level]="3">Types de boutons</ta-title>
+      <div class="demo-grid">
+        <div *ngFor="let type of buttonTypes" class="demo-item">
+          <button 
+            [class]="'btn ' + type.class"
+            (click)="onButtonClick(type.name)">
+            {{ type.name }}
+          </button>
+          <div class="demo-description">
+            <strong>{{ type.name }}</strong>
+            <ta-text>{{ type.description }}</ta-text>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Button Sizes -->
+    <section class="demo-section">
+      <ta-title [level]="3">Tailles de boutons</ta-title>
+      <div class="demo-grid">
+        <div *ngFor="let size of buttonSizes" class="demo-item">
+          <button 
+            [class]="'btn btn-primary ' + size.class"
+            (click)="onButtonClick(size.name)">
+            {{ size.name }}
+          </button>
+          <div class="demo-description">
+            <strong>{{ size.name }}</strong>
+            <ta-text>{{ size.description }}</ta-text>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Button States -->
+    <section class="demo-section">
+      <ta-title [level]="3">États des boutons</ta-title>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <button class="btn btn-primary" (click)="onButtonClick('normal')">
+            Normal
+          </button>
+          <div class="demo-description">
+            <strong>Normal</strong>
+            <ta-text>État par défaut</ta-text>
+          </div>
+        </div>
+        
+        <div class="demo-item">
+          <button class="btn btn-primary" disabled>
+            Disabled
+          </button>
+          <div class="demo-description">
+            <strong>Disabled</strong>
+            <ta-text>Bouton désactivé</ta-text>
+          </div>
+        </div>
+        
+        <div class="demo-item">
+          <button class="btn btn-primary loading" (click)="onButtonClick('loading')">
+            <span class="spinner"></span>
+            Loading
+          </button>
+          <div class="demo-description">
+            <strong>Loading</strong>
+            <ta-text>État de chargement</ta-text>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Button with Icons -->
+    <section class="demo-section">
+      <ta-title [level]="3">Boutons avec icônes</ta-title>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <button class="btn btn-primary" (click)="onButtonClick('icon-left')">
+            <span class="material-icons">add</span>
+            Ajouter
+          </button>
+          <div class="demo-description">
+            <strong>Icône à gauche</strong>
+            <ta-text>Icône avant le texte</ta-text>
+          </div>
+        </div>
+        
+        <div class="demo-item">
+          <button class="btn btn-secondary" (click)="onButtonClick('icon-right')">
+            Télécharger
+            <span class="material-icons">download</span>
+          </button>
+          <div class="demo-description">
+            <strong>Icône à droite</strong>
+            <ta-text>Icône après le texte</ta-text>
+          </div>
+        </div>
+        
+        <div class="demo-item">
+          <button class="btn btn-primary icon-only" (click)="onButtonClick('icon-only')">
+            <span class="material-icons">edit</span>
+          </button>
+          <div class="demo-description">
+            <strong>Icône seule</strong>
+            <ta-text>Bouton avec icône uniquement</ta-text>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="demo-info">
+    <ta-title [level]="3">Utilisation</ta-title>
+    <ta-text>
+      Les boutons sont les éléments d'interaction principaux de l'interface. 
+      Utilisez les différents types en fonction du contexte et de l'importance de l'action.
+    </ta-text>
+    <ul>
+      <li><strong>Primary :</strong> Action principale de la page ou section</li>
+      <li><strong>Secondary :</strong> Actions secondaires ou alternatives</li>
+      <li><strong>Success :</strong> Actions de validation ou confirmation</li>
+      <li><strong>Warning :</strong> Actions nécessitant attention</li>
+      <li><strong>Danger :</strong> Actions destructives ou suppression</li>
+      <li><strong>Outline :</strong> Actions tertiaires ou optionnelles</li>
+    </ul>
+  </div>
+</div>

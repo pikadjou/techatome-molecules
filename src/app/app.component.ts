@@ -1,81 +1,35 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 import { NotificationBoxComponent } from '@ta/notification';
-import { LayoutPageComponent } from '@ta/ui';
-import { NavigationComponent, MainMenuComponent } from '@ta/menu';
-import { MenuItem } from '@ta/menu';
+import { TitleComponent } from '@ta/ui';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationBoxComponent, LayoutPageComponent, NavigationComponent, MainMenuComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, NgFor, NotificationBoxComponent, TitleComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'Techatome Molecules Sandbox';
 
-  mainMenu: MenuItem[] = [
+  mainMenu = [
     {
-      id: 'dashboard',
       title: 'Dashboard',
-      route: '/dashboard',
+      route: '/dashboard/overview',
       icon: { name: 'dashboard' }
     },
     {
-      id: 'ui',
       title: 'UI Components',
-      route: '/ui',
+      route: '/ui-components/showcase',
       icon: { name: 'widgets' }
     },
     {
-      id: 'menu',
-      title: 'Menu Components',
-      route: '/menu',
-      icon: { name: 'menu' }
-    },
-    {
-      id: 'forms',
-      title: 'Form Components',
-      route: '/forms',
-      icon: { name: 'edit' }
-    },
-    {
-      id: 'layout',
-      title: 'Layout Components',
-      route: '/layout',
-      icon: { name: 'view_quilt' }
-    },
-    {
-      id: 'charts',
       title: 'Charts',
-      route: '/charts',
+      route: '/charts/showcase',
       icon: { name: 'bar_chart' }
-    },
-    {
-      id: 'icons',
-      title: 'Icons',
-      route: '/icons',
-      icon: { name: 'emoji_symbols' }
-    },
-    {
-      id: 'files',
-      title: 'File Management',
-      route: '/files',
-      icon: { name: 'folder' }
-    },
-    {
-      id: 'core',
-      title: 'Core Components',
-      route: '/core',
-      icon: { name: 'settings' }
-    },
-    {
-      id: 'notification',
-      title: 'Notifications',
-      route: '/notification',
-      icon: { name: 'notifications' }
     }
   ];
 }

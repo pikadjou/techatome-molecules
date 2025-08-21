@@ -1,0 +1,45 @@
+<div class="dashboard">
+  <div class="dashboard-header">
+    <ta-title [level]="1">Techatome Molecules Sandbox</ta-title>
+    <ta-text class="subtitle">Explorez et testez tous les composants de la librairie Techatome Molecules</ta-text>
+  </div>
+
+  <div class="sections-grid">
+    <div 
+      *ngFor="let section of sections" 
+      class="section-card"
+      [routerLink]="section.route">
+      <div class="card-content">
+        <div class="card-icon" [style.color]="section.color">
+          <span class="material-icons">{{ section.icon }}</span>
+        </div>
+        <div class="card-text">
+          <ta-title [level]="3">{{ section.title }}</ta-title>
+          <ta-text>{{ section.description }}</ta-text>
+        </div>
+        <div class="card-arrow">
+          <span class="material-icons">arrow_forward</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-card">
+      <div class="card-content">
+        <ta-title [level]="3">À propos de cette sandbox</ta-title>
+        <ta-text>
+          Cette application de démonstration vous permet de tester et d'explorer toutes les fonctionnalités 
+          des librairies Techatome Molecules. Chaque section présente les composants disponibles avec 
+          des exemples d'utilisation pratiques.
+        </ta-text>
+        <ul>
+          <li>Plus de 20 librairies spécialisées</li>
+          <li>Architecture micro-library avec Angular</li>
+          <li>Composants standalone et modulaires</li>
+          <li>Documentation intégrée avec Storybook</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

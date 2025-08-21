@@ -1,0 +1,38 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      <ta-title [level]="1">UI Components</ta-title>
+      <div class="breadcrumb">
+        <span>Sandbox</span> / <span>UI Components</span>
+      </div>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-lg">
+      <div class="showcase-intro">
+        <ta-title [level]="2">Composants d'interface utilisateur</ta-title>
+        <ta-text>Explorez les différents composants UI disponibles dans la librairie &#64;ta/ui</ta-text>
+      </div>
+
+      <div class="components-grid">
+        <a 
+          *ngFor="let component of components" 
+          [routerLink]="component.route"
+          class="component-card">
+          <div class="card-content">
+            <div class="card-icon" [style.color]="component.color">
+              <span class="material-icons">{{ component.icon }}</span>
+            </div>
+            <div class="card-text">
+              <ta-title [level]="3">{{ component.title }}</ta-title>
+              <ta-text>{{ component.description }}</ta-text>
+            </div>
+            <div class="card-arrow">
+              <span class="material-icons">arrow_forward</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

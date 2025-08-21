@@ -1,0 +1,41 @@
+@use 'ta/utils/mixins/common';
+
+.notification-showcase {
+  max-width: common.get-var(space, xxxl);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.demo-sections {
+  margin-top: common.get-var(space, xl);
+}
+
+.demo-section {
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, md);
+  padding: common.get-var(space, xl);
+  margin-bottom: common.get-var(space, xl);
+  text-align: left;
+}
+
+.demo-section ta-title[level="2"] {
+  margin: 0 0 common.get-var(space, lg) 0;
+  border-bottom: 2px solid common.get-var(border, secondary);
+  padding-bottom: common.get-var(space, sm);
+}
+
+.buttons-group {
+  display: flex;
+  gap: common.get-var(space, md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ul {
+  line-height: 1.8;
+}
+
+strong {
+  color: common.get-var(text, primary);
+}

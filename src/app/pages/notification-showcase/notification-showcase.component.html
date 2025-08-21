@@ -1,0 +1,26 @@
+<div class="notification-showcase">
+  <ta-title [level]="1">Notification Components</ta-title>
+  <ta-text class="subtitle">Messages, alertes et notifications (@ta/notification)</ta-text>
+  
+  <div class="demo-sections">
+    <section class="demo-section">
+      <ta-title [level]="2">Test Notifications</ta-title>
+      <div class="buttons-group">
+        <ta-button variant="success" (click)="showSuccess()">Success</ta-button>
+        <ta-button variant="info" (click)="showInfo()">Info</ta-button>
+        <ta-button variant="warning" (click)="showWarning()">Warning</ta-button>
+        <ta-button variant="error" (click)="showError()">Error</ta-button>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <ta-title [level]="2">Composants disponibles</ta-title>
+      <ul>
+        <li><strong>NotificationBox :</strong> Container principal des notifications</li>
+        <li><strong>NotificationInline :</strong> Notifications inline</li>
+        <li><strong>ErrorBox :</strong> Boîte d'erreur dédiée</li>
+        <li><strong>NotificationService :</strong> Service de gestion des notifications</li>
+      </ul>
+    </section>
+  </div>
+</div>

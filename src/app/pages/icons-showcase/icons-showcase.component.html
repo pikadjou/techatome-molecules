@@ -1,0 +1,59 @@
+<div class="icons-showcase">
+  <div class="demo-header">
+    <ta-title [level]="1">Icons Components</ta-title>
+    <ta-text class="subtitle">Material Icons, Font Icons et Local Icons (@ta/icons)</ta-text>
+  </div>
+
+  <div class="demo-sections">
+    <!-- Material Icons -->
+    <section class="demo-section">
+      <ta-title [level]="2">Material Icons</ta-title>
+      <div class="icons-grid">
+        <div *ngFor="let icon of materialIcons" class="icon-item">
+          <ta-material-icon [name]="icon"></ta-material-icon>
+          <span class="icon-name">{{ icon }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Icon Sizes -->
+    <section class="demo-section">
+      <ta-title [level]="2">Icon Sizes</ta-title>
+      <div class="sizes-demo">
+        <div *ngFor="let size of iconSizes" class="size-group">
+          <h4>{{ size | titlecase }}</h4>
+          <ta-material-icon name="star" [size]="size"></ta-material-icon>
+          <ta-material-icon name="favorite" [size]="size"></ta-material-icon>
+          <ta-material-icon name="settings" [size]="size"></ta-material-icon>
+        </div>
+      </div>
+    </section>
+
+    <!-- Font Icons -->
+    <section class="demo-section">
+      <ta-title [level]="2">Font Icons</ta-title>
+      <div class="font-icons-demo">
+        <ta-font-icon name="icon-sample"></ta-font-icon>
+        <ta-text>Font icons utilisant des polices d'icônes personnalisées</ta-text>
+      </div>
+    </section>
+
+    <!-- Local Icons -->
+    <section class="demo-section">
+      <ta-title [level]="2">Local Icons</ta-title>
+      <div class="local-icons-demo">
+        <ta-local-icon src="/assets/icons/sample-icon.svg"></ta-local-icon>
+        <ta-text>Icônes locales utilisant des fichiers SVG ou images</ta-text>
+      </div>
+    </section>
+  </div>
+
+  <div class="demo-info">
+    <ta-title [level]="3">Types d'icônes disponibles</ta-title>
+    <ul>
+      <li><strong>Material Icons :</strong> Icônes Google Material Design</li>
+      <li><strong>Font Icons :</strong> Polices d'icônes personnalisées</li>
+      <li><strong>Local Icons :</strong> Fichiers SVG/images locaux</li>
+    </ul>
+  </div>
+</div>

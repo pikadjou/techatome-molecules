@@ -1,0 +1,39 @@
+@use 'ta/utils/mixins/common';
+
+@use "ta/utils/mixins/common";
+
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: common.get-var('spacing-md');
+  padding: common.get-var('spacing-md') 0;
+}
+
+.document-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:focus {
+    outline: common.get-var('border-width-thick') solid common.get-var(brand, 700);
+    outline-offset: 2px;
+  }
+}
+
+.document-icon {
+  color: common.get-var(brand, 700);
+  margin-left: auto;
+}
+
+.document-preview {
+  line-height: 1.4;
+  color: common.get-var(text, secondary);
+}
+
+.text-muted {
+  color: common.get-var(text, body);
+}

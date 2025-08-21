@@ -1,0 +1,43 @@
+<div class="core-showcase">
+  <div class="demo-header">
+    <ta-title [level]="1">Core Components</ta-title>
+    <ta-text class="subtitle">Composants centraux et utilitaires (@ta/core)</ta-text>
+  </div>
+
+  <div class="demo-sections">
+    <!-- Filters -->
+    <section class="demo-section">
+      <ta-title [level]="2">Filters Component</ta-title>
+      <div class="filters-demo">
+        <ta-filters 
+          [options]="filterOptions"
+          (filterChange)="onFilterChange($event)">
+        </ta-filters>
+      </div>
+    </section>
+
+    <!-- Text to Clipboard -->
+    <section class="demo-section">
+      <ta-title [level]="2">Text to Clipboard</ta-title>
+      <div class="clipboard-demo">
+        <ta-text-to-clipboard 
+          [text]="sampleText"
+          (copied)="onTextCopied()">
+        </ta-text-to-clipboard>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="demo-section">
+      <ta-title [level]="2">Autres composants Core disponibles</ta-title>
+      <div class="other-components">
+        <ul>
+          <li><strong>Documents :</strong> Gestion et affichage de documents</li>
+          <li><strong>Historical Research :</strong> Recherche et historique</li>
+          <li><strong>Maps Integration :</strong> Intégration Google Maps</li>
+          <li><strong>Translation Service :</strong> Service de traduction</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>

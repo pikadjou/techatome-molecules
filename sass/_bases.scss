@@ -1,13 +1,8 @@
-@import './partners/vars';
+@use 'ta';
+@use "ta/utils/mixins/fonts";
 
-@import 'ta';
+@include fonts.font('Roboto', 'roboto/', 'Roboto-Light', 300);
 
-// @include font('Diodrum Cyrillic', 'diodrum/', 'DiodrumCyrillic-Extralight', 200);
-// @include font('Diodrum Cyrillic', 'diodrum/', 'DiodrumCyrillic-Light', 300);
+@include fonts.font('Roboto', 'roboto/', 'Roboto-Regular', 400);
 
-// @include font('Diodrum Cyrillic', 'diodrum/', 'DiodrumCyrillic-Regular', 400);
-
-// @include font('Diodrum Cyrillic', 'diodrum/', 'DiodrumCyrillic-Medium', 500);
-// @include font('Diodrum Cyrillic', 'diodrum/', 'DiodrumCyrillic-Semibold', 600);
-
-// @include font('Diodrum Cyrillic', 'diodrum/', 'DiodrumCyrillic-Bold', bold);
+@include fonts.font('Roboto', 'roboto/', 'Roboto-SemiBold', 600);

@@ -1,26 +1,61 @@
+@use 'ta/utils/mixins/common';
+
+.app-layout {
+  display: flex;
+  height: common.get-var('viewport-height');
+}
+
 .sidebar {
-  background: #f5f5f5;
-  border-right: 1px solid #e0e0e0;
-  height: 100vh;
+  width: common.get-var('sidebar-width', 280px);
+  background: common.get-var('color-neutral-100');
+  border-right: common.get-var('border-width') solid common.get-var('color-neutral-300');
   overflow-y: auto;
 
   .sidebar-header {
-    padding: 1rem;
-    border-bottom: 1px solid #e0e0e0;
-    background: white;
+    padding: common.get-var('spacing-md');
+    border-bottom: common.get-var('border-width') solid common.get-var('color-neutral-300');
+    background: common.get-var('color-background-primary');
 
-    h2 {
+    ta-title {
       margin: 0;
-      color: #333;
-      font-size: 1.2rem;
-      font-weight: 600;
+      color: common.get-var('color-text-primary');
+      font-size: common.get-var('font-size-h3');
+      font-weight: common.get-var('font-weight-semibold');
+    }
+  }
+
+  .nav-menu {
+    padding: common.get-var('spacing-md') 0;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: common.get-var('spacing-sm');
+      padding: common.get-var('spacing-sm') common.get-var('spacing-md');
+      text-decoration: none;
+      color: common.get-var('color-text-secondary');
+      transition: all common.get-var('transition-duration') ease;
+
+      &:hover {
+        background: common.get-var('color-neutral-200');
+        color: common.get-var('color-text-primary');
+      }
+
+      &.active {
+        background: common.get-var('color-primary');
+        color: common.get-var('color-on-primary');
+      }
+
+      .material-icons {
+        font-size: common.get-var('font-size-icon');
+      }
     }
   }
 }
 
 .main-content {
-  padding: 2rem;
-  background: white;
-  min-height: 100vh;
+  flex: 1;
+  padding: common.get-var('spacing-lg');
+  background: common.get-var('color-background-primary');
   overflow-y: auto;
 }

@@ -3,8 +3,9 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 
 import { map } from 'rxjs/operators';
 
-import { CamRoutes } from '@ta/menu';
 import { Observable } from 'rxjs';
+
+import { TaRoutes } from '@ta/menu';
 
 import { CamPermissionsService } from '../services/permissions.service';
 
@@ -36,6 +37,6 @@ export class AuthGuard {
   }
 
   public setRedirect(): void {
-    this.router.navigateByUrl(CamRoutes.getLogin());
+    this.router.navigateByUrl(TaRoutes.getLogin());
   }
 }

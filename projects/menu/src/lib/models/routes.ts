@@ -14,7 +14,7 @@ export interface IRoute {
   children?: IRoute[];
 }
 
-export class CamRoutesCore {
+export class TaRoutesCore {
   public routes: IRoute[] = [
     {
       key: CamMainRoute.HOME,
@@ -44,7 +44,7 @@ export class CamRoutesCore {
     this.routes.push(route);
   }
   public addRoutes(routes: IRoute[]) {
-    routes.forEach((route) => this.addRoute(route));
+    routes.forEach(route => this.addRoute(route));
   }
   public getHome() {
     return this.getAbsoluteUrl([CamMainRoute.HOME]);
@@ -59,18 +59,11 @@ export class CamRoutesCore {
     const url = this._replaceParams(this._getUrl(eNums), params);
     return strict ? this._removeParams(url) : url;
   }
-  public getAbsoluteUrl(
-    eNums: string[],
-    params: {} = {},
-    strict = false
-  ): string {
+  public getAbsoluteUrl(eNums: string[], params: {} = {}, strict = false): string {
     const url = this._replaceParams(this._getUrl(eNums, true), params);
     return strict ? this._removeParams(url) : url;
   }
-  public addQueryParamsToUrl(
-    route: ActivatedRouteSnapshot,
-    params: { [index: string]: any } = {}
-  ): string {
+  public addQueryParamsToUrl(route: ActivatedRouteSnapshot, params: { [index: string]: any } = {}): string {
     const keys = Object.keys(params);
 
     for (let key of keys) {
@@ -103,10 +96,7 @@ export class CamRoutesCore {
   private _getRouteByENum(eNums: any[]): IRoute | null {
     let route: IRoute | null = null;
     for (const eNum of eNums) {
-      route = this._getByENum(
-        route === null ? this.routes : route.children,
-        eNum
-      );
+      route = this._getByENum(route === null ? this.routes : route.children, eNum);
       if (route === null) {
         return null;
       }
@@ -118,10 +108,7 @@ export class CamRoutesCore {
     let route: IRoute | null = null;
     let url = '';
     for (const eNum of eNums) {
-      route = this._getByENum(
-        route === null ? this.routes : route.children,
-        eNum
-      );
+      route = this._getByENum(route === null ? this.routes : route.children, eNum);
       if (route === null) {
         break;
       }
@@ -130,10 +117,7 @@ export class CamRoutesCore {
     return route === null ? '' : absolute === false ? route.url : '/' + url;
   }
 
-  private _getByENum(
-    routes: IRoute[] | null | undefined,
-    eNum: string
-  ): IRoute | null {
+  private _getByENum(routes: IRoute[] | null | undefined, eNum: string): IRoute | null {
     if (!routes) {
       return null;
     }
@@ -145,4 +129,4 @@ export class CamRoutesCore {
     return null;
   }
 }
-export const CamRoutes = new CamRoutesCore();
+export const TaRoutes = new TaRoutesCore();

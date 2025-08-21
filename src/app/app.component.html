@@ -1,14 +1,22 @@
-<ta-layout-page>
-  <nav class="sidebar" slot="sidebar">
+<div class="app-layout">
+  <nav class="sidebar">
     <div class="sidebar-header">
-      <h2>{{ title }}</h2>
+      <ta-title [level]="2">{{ title }}</ta-title>
     </div>
-    <ta-navigation [menu]="mainMenu"></ta-navigation>
+    <div class="nav-menu">
+      <a *ngFor="let item of mainMenu" 
+         [routerLink]="item.route" 
+         class="nav-item"
+         routerLinkActive="active">
+        <span class="material-icons">{{ item.icon.name }}</span>
+        {{ item.title }}
+      </a>
+    </div>
   </nav>
   
-  <main class="main-content" slot="content">
+  <main class="main-content">
     <router-outlet />
   </main>
-</ta-layout-page>
+</div>
 
 <ta-notification-box></ta-notification-box>

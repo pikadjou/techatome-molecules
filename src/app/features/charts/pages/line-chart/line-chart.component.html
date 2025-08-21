@@ -1,0 +1,28 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      <div class="title-with-back">
+        <ta-button 
+          variant="outline" 
+          size="small"
+          (click)="goBack()" 
+          aria-label="Retour"
+          class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </ta-button>
+        <ta-title [level]="1">Line Chart</ta-title>
+      </div>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-lg">
+      <ta-banner type="success" class="coming-soon">
+        <div class="icon">
+          <span class="material-icons">show_chart</span>
+        </div>
+        <ta-title [level]="2">Line Chart à venir</ta-title>
+        <ta-text>Cette page contiendra la démonstration des graphiques linéaires.</ta-text>
+      </ta-banner>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

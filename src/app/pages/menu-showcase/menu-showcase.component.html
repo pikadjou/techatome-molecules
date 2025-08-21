@@ -1,0 +1,55 @@
+<div class="menu-showcase">
+  <div class="demo-header">
+    <ta-title [level]="1">Menu Components</ta-title>
+    <ta-text class="subtitle">Navigation, menus contextuels et actions rapides</ta-text>
+  </div>
+
+  <div class="demo-sections">
+    <!-- Navigation Menu -->
+    <section class="demo-section">
+      <ta-title [level]="2">Navigation Menu</ta-title>
+      <div class="navigation-demo">
+        <ta-navigation [menu]="sampleMenu"></ta-navigation>
+      </div>
+    </section>
+
+    <!-- Basic Menu -->
+    <section class="demo-section">
+      <ta-title [level]="2">Basic Menu</ta-title>
+      <div class="menu-demo">
+        <ta-menu [items]="sampleMenu"></ta-menu>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="demo-section">
+      <ta-title [level]="2">Quick Actions</ta-title>
+      <div class="quick-actions-demo">
+        <ta-quick-actions [actions]="quickActions"></ta-quick-actions>
+      </div>
+    </section>
+
+    <!-- Context Menu -->
+    <section class="demo-section">
+      <ta-title [level]="2">Context Menu</ta-title>
+      <div class="context-menu-demo">
+        <div class="context-trigger" 
+             (contextmenu)="$event.preventDefault()">
+          Right-click here for context menu
+        </div>
+        <ta-context-menu [items]="contextMenuItems"></ta-context-menu>
+      </div>
+    </section>
+  </div>
+
+  <div class="demo-info">
+    <ta-title [level]="3">Menu Components Overview</ta-title>
+    <ta-text>La librairie menu propose plusieurs types de composants de navigation :</ta-text>
+    <ul>
+      <li><strong>Navigation :</strong> Menu principal avec support hierarchique</li>
+      <li><strong>Menu :</strong> Menu basique avec items et actions</li>
+      <li><strong>Quick Actions :</strong> Actions rapides avec icônes</li>
+      <li><strong>Context Menu :</strong> Menu contextuel au clic droit</li>
+    </ul>
+  </div>
+</div>

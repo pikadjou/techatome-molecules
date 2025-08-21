@@ -1,0 +1,70 @@
+@use 'ta/utils/mixins/common';
+
+.layout-showcase {
+  max-width: common.get-var('container-max-width', 1000px);
+  margin: 0 auto;
+
+  ta-title {
+    font-size: common.get-var('font-size-h1');
+    color: common.get-var('color-text-primary');
+    text-align: center;
+    margin: 0 0 common.get-var('spacing-xs') 0;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: common.get-var('color-text-secondary');
+    margin: 0 0 common.get-var('spacing-lg') 0;
+  }
+
+  .demo-sections {
+    .demo-section {
+      background: common.get-var('color-background-primary');
+      border: common.get-var('border-width') solid common.get-var('color-neutral-300');
+      border-radius: common.get-var('border-radius-md');
+      padding: common.get-var('spacing-lg');
+      margin-bottom: common.get-var('spacing-lg');
+
+      ta-title {
+        font-size: common.get-var('font-size-h2');
+        color: common.get-var('color-text-primary');
+        margin: 0 0 common.get-var('spacing-md') 0;
+        border-bottom: common.get-var('border-width-thick') solid common.get-var('color-neutral-200');
+        padding-bottom: common.get-var('spacing-xs');
+      }
+
+      .layout-demo,
+      .header-demo,
+      .content-demo,
+      .side-demo {
+        background: common.get-var('color-neutral-100');
+        border: common.get-var('border-width') solid common.get-var('color-neutral-300');
+        border-radius: common.get-var('border-radius-sm');
+        padding: common.get-var('spacing-md');
+
+        .demo-layout {
+          height: common.get-var('demo-layout-height', 200px);
+          border: common.get-var('border-width') solid common.get-var('color-neutral-400');
+          
+          .demo-sidebar {
+            background: common.get-var('color-neutral-300');
+            padding: common.get-var('spacing-md');
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .demo-content {
+            background: common.get-var('color-neutral-100');
+            padding: common.get-var('spacing-md');
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}

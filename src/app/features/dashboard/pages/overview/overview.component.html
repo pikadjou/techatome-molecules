@@ -1,0 +1,102 @@
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      <ta-title [level]="1">Techatome Molecules Sandbox</ta-title>
+      <div class="version-badge">
+        <span class="badge">v1.0.0</span>
+      </div>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-lg">
+      
+      <!-- Welcome Section -->
+      <div class="welcome-section">
+        <div class="welcome-content">
+          <ta-title [level]="2">Bienvenue dans la Sandbox</ta-title>
+          <ta-text class="lead">
+            Explorez et testez tous les composants de la librairie Techatome Molecules. 
+            Cette sandbox vous permet de découvrir les fonctionnalités, de voir les composants en action 
+            et de comprendre leur utilisation dans vos projets.
+          </ta-text>
+        </div>
+        <div class="welcome-visual">
+          <div class="molecules-logo">
+            <span class="material-icons">science</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div *ngFor="let stat of stats" class="stat-card">
+          <div class="stat-icon">
+            <span class="material-icons">{{ stat.icon }}</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="features-section">
+        <ta-title [level]="3">Explorez les fonctionnalités</ta-title>
+        <div class="features-grid">
+          <a 
+            *ngFor="let feature of features" 
+            [routerLink]="feature.route"
+            class="feature-card">
+            <div class="feature-header">
+              <div class="feature-icon" [style.color]="feature.color">
+                <span class="material-icons">{{ feature.icon }}</span>
+              </div>
+              <div class="feature-stats">{{ feature.stats }}</div>
+            </div>
+            <div class="feature-content">
+              <h4>{{ feature.title }}</h4>
+              <ta-text>{{ feature.description }}</ta-text>
+            </div>
+            <div class="feature-arrow">
+              <span class="material-icons">arrow_forward</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="about-section">
+        <div class="about-card">
+          <div class="about-content">
+            <ta-title [level]="3">À propos de Techatome Molecules</ta-title>
+            <ta-text>
+              Techatome Molecules est une collection de librairies Angular spécialisées, 
+              conçues selon une architecture micro-library pour offrir une flexibilité maximale 
+              et une maintenabilité optimale.
+            </ta-text>
+            <div class="features-list">
+              <div class="feature-item">
+                <span class="material-icons">check_circle</span>
+                <span>Plus de 20 librairies spécialisées</span>
+              </div>
+              <div class="feature-item">
+                <span class="material-icons">check_circle</span>
+                <span>Architecture micro-library avec Angular</span>
+              </div>
+              <div class="feature-item">
+                <span class="material-icons">check_circle</span>
+                <span>Composants standalone et modulaires</span>
+              </div>
+              <div class="feature-item">
+                <span class="material-icons">check_circle</span>
+                <span>Documentation intégrée avec Storybook</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </app-layout-content>
+</app-layout-first-level>

@@ -1,0 +1,45 @@
+@use 'ta/utils/mixins/common';
+
+.cards-demo {
+  max-width: common.get-var(space, xxxl);
+  margin: 0 auto;
+}
+
+.demo-section {
+  margin-bottom: common.get-var(space, xxl);
+}
+
+.demo-section ta-title[level="2"] {
+  font-size: common.get-var(font-size, lg);
+  color: common.get-var(text, primary);
+  margin-bottom: common.get-var(space, lg);
+  border-bottom: 2px solid common.get-var(border, secondary);
+  padding-bottom: common.get-var(space, sm);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: common.get-var(space, lg);
+}
+
+.card-content {
+  padding: common.get-var(space, lg);
+}
+
+.card-content ta-title[level="3"] {
+  margin: 0 0 common.get-var(space, md) 0;
+  color: common.get-var(text, primary);
+}
+
+.card-content ta-text {
+  margin: 0 0 common.get-var(space, md) 0;
+  color: common.get-var(text, secondary);
+  line-height: 1.5;
+}
+
+.card-actions {
+  display: flex;
+  gap: common.get-var(space, sm);
+  margin-top: common.get-var(space, md);
+}

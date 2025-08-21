@@ -1,0 +1,47 @@
+<div class="layout-showcase">
+  <ta-title [level]="1">Layout Components</ta-title>
+  <ta-text class="subtitle">Composants de mise en page et structure (@ta/ui layout modules)</ta-text>
+
+  <div class="demo-sections">
+    <!-- Layout Page Demo -->
+    <section class="demo-section">
+      <ta-title [level]="2">Layout Page</ta-title>
+      <div class="layout-demo">
+        <ta-layout-page class="demo-layout">
+          <div slot="sidebar" class="demo-sidebar">Sidebar</div>
+          <div slot="content" class="demo-content">Main Content</div>
+        </ta-layout-page>
+      </div>
+    </section>
+
+    <!-- Layout Header Demo -->
+    <section class="demo-section">
+      <ta-title [level]="2">Layout Header</ta-title>
+      <div class="header-demo">
+        <ta-layout-header title="Page Title" subtitle="Page Subtitle"></ta-layout-header>
+      </div>
+    </section>
+
+    <!-- Layout Content Demo -->
+    <section class="demo-section">
+      <ta-title [level]="2">Layout Content</ta-title>
+      <div class="content-demo">
+        <ta-layout-content>
+          <ta-text>This is content wrapped in a layout-content component.</ta-text>
+          <ta-text>It provides consistent padding and structure for page content.</ta-text>
+        </ta-layout-content>
+      </div>
+    </section>
+
+    <!-- Layout Side Demo -->
+    <section class="demo-section">
+      <ta-title [level]="2">Layout Side</ta-title>
+      <div class="side-demo">
+        <ta-layout-side>
+          <div>Side content area</div>
+          <div>Typically used for sidebars, panels, etc.</div>
+        </ta-layout-side>
+      </div>
+    </section>
+  </div>
+</div>

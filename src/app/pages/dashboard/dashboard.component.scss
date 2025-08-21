@@ -1,0 +1,161 @@
+@use 'ta/utils/mixins/common';
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: common.get-var('spacing-3xl');
+
+    ta-title {
+      font-size: common.get-var('font-size-h1');
+      color: common.get-var('color-text-primary');
+      margin: 0 0 common.get-var('spacing-md') 0;
+      font-weight: 300;
+    }
+
+    .subtitle {
+      font-size: common.get-var('font-size-xl');
+      color: common.get-var('color-text-secondary');
+      margin: 0;
+    }
+  }
+
+  .sections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: common.get-var('spacing-lg');
+    margin-bottom: common.get-var('spacing-3xl');
+
+    .section-card {
+      background: common.get-var('color-background-primary');
+      border: common.get-var('border-width') solid common.get-var('color-neutral-300');
+      border-radius: common.get-var('border-radius-md');
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 common.get-var('border-radius-md') 25px rgba(0, 0, 0, 0.15);
+        text-decoration: none;
+        color: inherit;
+
+        .card-arrow {
+          transform: translateX(4px);
+        }
+      }
+
+      .card-content {
+        display: flex;
+        align-items: center;
+        padding: common.get-var('spacing-lg');
+        gap: common.get-var('spacing-md');
+
+        .card-icon {
+          font-size: common.get-var('font-size-h1');
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          border-radius: 12px;
+          background: rgba(0, 0, 0, 0.05);
+
+          .material-icons {
+            font-size: inherit;
+          }
+        }
+
+        .card-text {
+          flex: 1;
+
+          ta-title {
+            margin: 0 0 common.get-var('spacing-xs') 0;
+            color: common.get-var('color-text-primary');
+            font-size: common.get-var('font-size-xl');
+            font-weight: 600;
+          }
+
+          ta-text {
+            margin: 0;
+            color: common.get-var('color-text-secondary');
+            font-size: 0.95rem;
+            line-height: 1.4;
+          }
+        }
+
+        .card-arrow {
+          color: common.get-var('color-text-tertiary');
+          transition: transform 0.3s ease;
+
+          .material-icons {
+            font-size: common.get-var('font-size-lg');
+          }
+        }
+      }
+    }
+  }
+
+  .info-section {
+    .info-card {
+      background: common.get-var('color-background-primary');
+      border: common.get-var('border-width') solid common.get-var('color-neutral-300');
+      border-radius: common.get-var('border-radius-md');
+      
+      .card-content {
+        padding: common.get-var('spacing-xl');
+
+        ta-title {
+          margin: 0 0 common.get-var('spacing-md') 0;
+          color: common.get-var('color-text-primary');
+          font-size: common.get-var('font-size-lg');
+          font-weight: 600;
+        }
+
+        ta-text {
+          margin: 0 0 common.get-var('spacing-lg') 0;
+          color: common.get-var('color-text-secondary');
+          line-height: 1.6;
+          font-size: common.get-var('font-size-md');
+        }
+
+        ul {
+          margin: 0;
+          color: common.get-var('color-text-secondary');
+
+          li {
+            margin: common.get-var('spacing-xs') 0;
+            line-height: 1.4;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: common.get-var('breakpoint-md')) {
+  .dashboard {
+    .sections-grid {
+      grid-template-columns: 1fr;
+      gap: common.get-var('spacing-md');
+
+      .section-card .card-content {
+        padding: common.get-var('spacing-md');
+        
+        .card-icon {
+          width: 50px;
+          height: 50px;
+          font-size: common.get-var('font-size-xl');
+        }
+      }
+    }
+
+    .dashboard-header ta-title {
+      font-size: common.get-var('font-size-xl');
+    }
+  }
+}

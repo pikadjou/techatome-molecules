@@ -3,8 +3,9 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
 import { map } from 'rxjs/operators';
 
-import { CamRoutes } from '@ta/menu';
 import { Observable } from 'rxjs';
+
+import { TaRoutes } from '@ta/menu';
 
 import { CamPermissionsService, Domain, Level, PermissionFeature } from '../services/permissions.service';
 
@@ -35,7 +36,7 @@ export class FeatureGuard {
   }
 
   public setRedirect(): void {
-    this.router.navigateByUrl(CamRoutes.getHome());
+    this.router.navigateByUrl(TaRoutes.getHome());
   }
 
   private _isValidPermission(feature: string, level: string) {
