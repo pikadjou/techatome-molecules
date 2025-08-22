@@ -1,9 +1,9 @@
 @use 'ta/utils/mixins/common';
 
 .layout-title {
-  background: common.get-var('color-background-primary');
-  border-bottom: common.get-var('border-width') solid common.get-var('color-neutral-300');
-  padding: common.get-var('spacing-lg') common.get-var('spacing-xl');
+  background: common.get-var(surface, primary);
+  border-bottom: 1px solid common.get-var(border, primary);
+  padding: common.get-var(space, lg) common.get-var(space, xl);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -15,20 +15,9 @@
     
     h1, h2, ta-title {
       margin: 0;
-      color: common.get-var('color-text-primary');
+      color: common.get-var(text, primary);
       font-weight: 600;
-    }
-    
-    ta-title {
-      font-size: 1.8rem;
-    }
-    
-    ta-title {
-      font-size: common.get-var('font-size-lg');
-    }
-    
-    ta-title {
-      font-size: common.get-var('font-size-xl');
+      font-size: common.get-var(font-size, xl);
     }
   }
 
@@ -43,20 +32,12 @@
     align-items: center;
   }
 
-  @media (max-width: common.get-var('breakpoint-md')) {
-    padding: common.get-var('spacing-md');
+  @media (max-width: 768px) {
+    padding: common.get-var(space, md);
     
     .title-content {
-      ta-title {
-        font-size: common.get-var('font-size-lg');
-      }
-      
-      ta-title {
-        font-size: common.get-var('font-size-xl');
-      }
-      
-      ta-title {
-        font-size: common.get-var('font-size-md');
+      h1, h2, ta-title {
+        font-size: common.get-var(font-size, lg);
       }
     }
   }

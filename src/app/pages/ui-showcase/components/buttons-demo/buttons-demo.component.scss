@@ -1,85 +1,85 @@
 @use 'ta/utils/mixins/common';
 
 .buttons-demo {
-  max-width: common.get-var('container-max-width', 1000px);
+  max-width: 1000px;
   margin: 0 auto;
 
   .demo-header {
     text-align: center;
-    margin-bottom: common.get-var('spacing-xl');
+    margin-bottom: common.get-var(space, xl);
 
     ta-title {
-      font-size: common.get-var('font-size-h1');
-      color: common.get-var('color-text-primary');
+      font-size: common.get-var(font-size, xl);
+      color: common.get-var(text, primary);
       margin: 0 0 1rem 0;
     }
 
     .subtitle {
-      color: common.get-var('color-text-secondary');
+      color: common.get-var(text, secondary);
       margin: 0;
     }
   }
 
   .demo-sections {
     .demo-section {
-      background: common.get-var('color-background-primary');
-      border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-      border-radius: common.get-var('border-radius-md');
-      padding: common.get-var('spacing-xl');
-      margin-bottom: common.get-var('spacing-xl');
+      background: common.get-var(surface, primary);
+      border: 1px solid common.get-var(border, primary);
+      border-radius: common.get-var(radius, md);
+      padding: common.get-var(space, xl);
+      margin-bottom: common.get-var(space, xl);
 
       ta-title {
-        font-size: common.get-var('font-size-h2');
-        color: common.get-var('color-text-primary');
+        font-size: common.get-var(font-size, lg);
+        color: common.get-var(text, primary);
         margin: 0 0 1.5rem 0;
-        border-bottom: common.get-var('border-width-thick') solid common.get-var('color-neutral-200');
+        border-bottom: 2px solid common.get-var(border, secondary);
         padding-bottom: 0.5rem;
       }
 
       .demo-group {
         display: flex;
         flex-wrap: wrap;
-        gap: common.get-var('spacing-md');
+        gap: common.get-var(space, md);
         align-items: center;
 
         ta-button,
         ta-action-button,
         ta-dual-button {
-          margin-bottom: common.get-var('spacing-xs');
+          margin-bottom: common.get-var(space, xs);
         }
       }
     }
   }
 
   .demo-info {
-    background: common.get-var('color-neutral-100');
+    background: common.get-var(surface, secondary);
     border: common.get-var('border-width') solid common.get-var('color-neutral-300');
     border-radius: common.get-var('border-radius-md');
     padding: common.get-var('spacing-xl');
     margin-top: 2rem;
 
     ta-title {
-      font-size: common.get-var('font-size-h3');
-      color: common.get-var('color-text-primary');
+      font-size: common.get-var(font-size, md);
+      color: common.get-var(text, primary);
       margin: 0 0 1rem 0;
     }
 
     ta-text {
-      color: common.get-var('color-text-secondary');
-      line-height: common.get-var('line-height-normal');
+      color: common.get-var(text, secondary);
+      line-height: 1.5;
       margin: 0 0 1rem 0;
     }
 
     ul {
-      color: common.get-var('color-text-secondary');
-      line-height: common.get-var('line-height-normal');
+      color: common.get-var(text, secondary);
+      line-height: 1.5;
       margin: 0;
 
       li {
-        margin: common.get-var('spacing-xs') 0;
+        margin: common.get-var(space, xs) 0;
 
         strong {
-          color: common.get-var('color-text-primary');
+          color: common.get-var(text, primary);
         }
       }
     }

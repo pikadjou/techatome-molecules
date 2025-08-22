@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { TitleComponent, TextComponent } from '@ta/ui';
+import { TitleComponent, TextComponent, ButtonComponent as TaButtonComponent } from '@ta/ui';
 
 @Component({
   standalone: true,
   selector: 'app-buttons-demo',
-  imports: [NgFor, TextComponent, TitleComponent],
+  imports: [NgFor, TextComponent, TitleComponent, TaButtonComponent],
   templateUrl: './buttons-demo.component.html',
   styleUrl: './buttons-demo.component.scss'
 })

@@ -21,7 +21,7 @@
       <ta-title [level]="2">Icon Sizes</ta-title>
       <div class="sizes-demo">
         <div *ngFor="let size of iconSizes" class="size-group">
-          <h4>{{ size | titlecase }}</h4>
+          <ta-title [level]="4">{{ size | titlecase }}</ta-title>
           <ta-material-icon name="star" [size]="size"></ta-material-icon>
           <ta-material-icon name="favorite" [size]="size"></ta-material-icon>
           <ta-material-icon name="settings" [size]="size"></ta-material-icon>
@@ -50,10 +50,10 @@
 
   <div class="demo-info">
     <ta-title [level]="3">Types d'icônes disponibles</ta-title>
-    <ul>
-      <li><strong>Material Icons :</strong> Icônes Google Material Design</li>
-      <li><strong>Font Icons :</strong> Polices d'icônes personnalisées</li>
-      <li><strong>Local Icons :</strong> Fichiers SVG/images locaux</li>
-    </ul>
+    <div class="icons-types-list">
+      <ta-text><strong>Material Icons :</strong> Icônes Google Material Design</ta-text>
+      <ta-text><strong>Font Icons :</strong> Polices d'icônes personnalisées</ta-text>
+      <ta-text><strong>Local Icons :</strong> Fichiers SVG/images locaux</ta-text>
+    </div>
   </div>
 </div>

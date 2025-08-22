@@ -15,5 +15,6 @@
     "chart.js": "^4.4.6",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "license": "MIT"
 }

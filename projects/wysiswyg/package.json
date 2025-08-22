@@ -31,5 +31,6 @@
     "editorjs-html": "^3.4.3",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "license": "MIT"
 }

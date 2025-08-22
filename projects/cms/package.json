@@ -19,5 +19,6 @@
     "@ta/utils": "^3.16.0-beta.4",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "license": "MIT"
 }

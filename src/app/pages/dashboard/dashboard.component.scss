@@ -1,7 +1,7 @@
 @use 'ta/utils/mixins/common';
 
 .dashboard {
-  max-width: 1200px;
+  max-width: common.get-var(container-max-width, 1200px);
   margin: 0 auto;
 
   .dashboard-header {
@@ -24,7 +24,7 @@
 
   .sections-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(common.get-var(card-min-width, 350px), 1fr));
     gap: common.get-var('spacing-lg');
     margin-bottom: common.get-var('spacing-3xl');
 
@@ -39,13 +39,13 @@
       display: block;
 
       &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 common.get-var('border-radius-md') 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(common.get-var(transform-hover-offset, -4px));
+        box-shadow: 0 common.get-var(border-radius, md) common.get-var(shadow-blur-lg, 25px) common.get-var(shadow-color-light, rgba(0, 0, 0, 0.15));
         text-decoration: none;
         color: inherit;
 
         .card-arrow {
-          transform: translateX(4px);
+          transform: translateX(common.get-var(transform-translate-sm, 4px));
         }
       }
 
@@ -60,10 +60,10 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 60px;
-          height: 60px;
-          border-radius: 12px;
-          background: rgba(0, 0, 0, 0.05);
+          width: common.get-var(icon-size, 60px);
+          height: common.get-var(icon-size, 60px);
+          border-radius: common.get-var(radius, md);
+          background: common.get-var(surface, neutral-light, rgba(0, 0, 0, 0.05));
 
           .material-icons {
             font-size: inherit;
@@ -83,7 +83,7 @@
           ta-text {
             margin: 0;
             color: common.get-var('color-text-secondary');
-            font-size: 0.95rem;
+            font-size: common.get-var(font-size, sm);
             line-height: 1.4;
           }
         }
@@ -147,8 +147,8 @@
         padding: common.get-var('spacing-md');
         
         .card-icon {
-          width: 50px;
-          height: 50px;
+          width: common.get-var(icon-size-sm, 50px);
+          height: common.get-var(icon-size-sm, 50px);
           font-size: common.get-var('font-size-xl');
         }
       }

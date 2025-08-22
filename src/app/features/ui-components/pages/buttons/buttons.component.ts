@@ -4,7 +4,7 @@ import { LayoutTitleComponent } from '../../../core/layout/layout-title/layout-t
 import { LayoutContentComponent } from '../../../core/layout/layout-content/layout-content.component';
 import { ButtonComponent } from '../../components/buttons-demo/buttons-demo.component';
 import { MatIcon } from '@angular/material/icon';
-import { TitleComponent } from '@ta/ui';
+import { TitleComponent, ButtonComponent as TaButtonComponent } from '@ta/ui';
 
 @Component({
   standalone: true,
@@ -16,6 +16,7 @@ import { TitleComponent } from '@ta/ui';
     ButtonComponent,
     MatIcon,
     TitleComponent,
+    TaButtonComponent,
   ],
   templateUrl: './buttons.component.html',
   styleUrl: './buttons.component.scss',

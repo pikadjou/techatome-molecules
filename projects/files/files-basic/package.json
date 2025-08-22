@@ -23,5 +23,6 @@
     "tui-image-editor": "^3.7.2"
   },
   "sideEffects": false,
+  "license": "MIT",
   "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
 }

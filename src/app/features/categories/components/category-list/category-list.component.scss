@@ -1,7 +1,5 @@
 @use 'ta/utils/mixins/common';
 
-@use "ta/utils/mixins/common";
-
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -10,7 +8,7 @@
   
   // Animation d'apparition progressive pour les cartes
   > .category-card {
-    animation: fadeIn common.get-var(transition, normal) ease-out;
+    animation: fadeIn 0.3s ease-out;
     
     @for $i from 1 through 10 {
       &:nth-child(#{$i}) {
@@ -23,9 +21,9 @@
 .category-card {
   position: relative;
   cursor: pointer;
-  transition: all common.get-var(transition, normal);
-  border: common.get-var('border-width') solid rgba(0, 0, 0, 0.08);
-  border-radius: common.get-var(radius, label);
+  transition: all 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: common.get-var(radius, md);
   background: common.get-var(surface, primary);
   overflow: hidden;
   
@@ -40,12 +38,12 @@
     background: linear-gradient(90deg, common.get-var(brand, 700), common.get-var(brand, 400));
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform common.get-var(transition, normal);
+    transition: transform 0.3s;
   }
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: common.get-var(shadow, black, lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     border-color: common.get-var(brand, 700);
     
     &::before {
@@ -59,7 +57,7 @@
   }
 
   &:focus-visible {
-    outline: common.get-var('border-width-thick') solid common.get-var(brand, 700);
+    outline: 2px solid common.get-var(brand, 700);
     outline-offset: 2px;
     
     &::before {
@@ -74,8 +72,8 @@
       position: absolute;
       top: common.get-var(space, md);
       right: common.get-var(space, md);
-      width: common.get-var('border-radius-md');
-      height: common.get-var('border-radius-md');
+      width: common.get-var(space, sm);
+      height: common.get-var(space, sm);
       background: common.get-var(brand, 600);
       border-radius: 50%;
     }
@@ -84,13 +82,13 @@
   .category-header {
     .category-icon {
       color: common.get-var(brand, 700);
-      font-size: 20px;
+      font-size: common.get-var(font-size, lg);
       opacity: 0.8;
     }
     
     .subcategory-indicator {
       color: common.get-var(brand, 600);
-      font-size: common.get-var('font-size-sm');
+      font-size: common.get-var(font-size, sm);
       margin-left: common.get-var(space, xs);
     }
   }
@@ -99,7 +97,7 @@
     
     &.category-meta {
       padding: common.get-var(space, sm) common.get-var(space, lg) common.get-var(space, lg);
-      border-top: common.get-var('border-width') solid rgba(0, 0, 0, 0.06);
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
       background: rgba(0, 0, 0, 0.02);
       
       .meta-row {
@@ -114,7 +112,7 @@
           gap: common.get-var(space, xs);
           
           .meta-icon {
-            font-size: 14px;
+            font-size: common.get-var(font-size, sm);
             opacity: 0.7;
           }
         }
@@ -127,14 +125,14 @@
     }
     
     .category-description {
-      font-size: 0.95rem;
+      font-size: common.get-var(font-size, md);
       margin-bottom: common.get-var(space, sm);
       line-height: 1.6;
       color: common.get-var(text, secondary);
     }
     
     .text-muted {
-      font-size: 0.875rem;
+      font-size: common.get-var(font-size, sm);
       margin-top: common.get-var(space, sm);
       line-height: 1.6;
       color: common.get-var(text, secondary);
@@ -148,19 +146,19 @@
   margin-left: auto;
   opacity: 0.7;
   transform: translateX(4px);
-  transition: all common.get-var(transition, normal);
+  transition: all 0.3s;
   
   .action-button {
     mat-icon {
-      font-size: common.get-var('font-size-md');
-      width: common.get-var('font-size-md');
-      height: common.get-var('font-size-md');
+      font-size: common.get-var(font-size, md);
+      width: common.get-var(font-size, md);
+      height: common.get-var(font-size, md);
     }
   }
 }
 
 .text-muted {
-  color: common.get-var(text, body);
+  color: common.get-var(text, secondary);
 }
 
 // États de chargement
@@ -193,7 +191,7 @@
 }
 
 // Responsive design
-@media (max-width: common.get-var('breakpoint-md')) {
+@media (max-width: 768px) {
   .categories-grid {
     grid-template-columns: 1fr;
     gap: common.get-var(space, md);
@@ -222,7 +220,7 @@
       gap: common.get-var(space, sm);
       
       ta-card-title {
-        font-size: common.get-var('font-size-md');
+        font-size: common.get-var(font-size, md);
       }
     }
     
@@ -242,12 +240,12 @@
   padding: common.get-var(space, xxl);
   text-align: center;
   background: common.get-var(surface, primary);
-  border-radius: common.get-var(radius, label);
+  border-radius: common.get-var(radius, md);
   border: 2px dashed rgba(0, 0, 0, 0.1);
   min-height: 300px;
   
   .empty-icon {
-    font-size: 64px;
+    font-size: common.get-var(font-size, xxl);
     color: common.get-var(text, tertiary);
     margin-bottom: common.get-var(space, lg);
     opacity: 0.6;
@@ -255,7 +253,7 @@
   
   ta-title {
     margin: 0 0 common.get-var(space, md);
-    font-size: common.get-var('font-size-lg');
+    font-size: common.get-var(font-size, lg);
     font-weight: 600;
     color: common.get-var(text, primary);
   }
