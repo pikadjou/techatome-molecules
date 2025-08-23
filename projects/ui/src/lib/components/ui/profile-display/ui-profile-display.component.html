@@ -1,13 +1,17 @@
-<div class="ta-r" *ngIf="this.sideIcon">
-  <ta-button [options]="{ circular: 'small' }" [style]="'secondary'" (action)="sideIcon.callback()">
-    <ta-font-icon [name]="this.sideIcon.icon"></ta-font-icon>
-  </ta-button>
-</div>
+@if (this.sideIcon) {
+  <div class="ta-r">
+    <ta-button [options]="{ circular: 'small' }" [style]="'secondary'" (action)="sideIcon.callback()">
+      <ta-font-icon [name]="this.sideIcon.icon"></ta-font-icon>
+    </ta-button>
+  </div>
+}
 
 <div class="profile">
-  <div class="ta-c" *ngIf="this.userLogo">
-    <ta-user-logo class="justify-center" [userInfo]="this.userLogo.userInfo" size="lg"></ta-user-logo>
-  </div>
+  @if (this.userLogo) {
+    <div class="ta-c">
+      <ta-user-logo class="justify-center" [userInfo]="this.userLogo.userInfo" size="lg"></ta-user-logo>
+    </div>
+  }
 
   <div class="ta-c mx-a">
     <ta-title [level]="2">{{ this.label }}</ta-title>
@@ -15,16 +19,22 @@
 
   <ng-content></ng-content>
 
-  <div class="align-center justify-content-around pt-space-xxl" *ngIf="this.ctas">
-    <div *ngFor="let cta of this.ctas">
-      <ta-button (action)="cta?.callback()" size="large">
-        <div class="align-center">
-          <ta-font-icon *ngIf="cta.icon" [name]="cta.icon" class="mr-space-xs"></ta-font-icon>
-          <div *ngIf="cta.label">
-            {{ cta.label | translate }}
+  @if (this.ctas) {
+    <div class="align-center justify-content-around pt-space-xxl">
+      <div *ngFor="let cta of this.ctas">
+        <ta-button (action)="cta?.callback()" size="large">
+          <div class="align-center">
+            @if (cta.icon) {
+              <ta-font-icon [name]="cta.icon" class="mr-space-xs"></ta-font-icon>
+            }
+            @if (cta.label) {
+              <div>
+                {{ cta.label | translate }}
+              </div>
+            }
           </div>
-        </div>
-      </ta-button>
+        </ta-button>
+      </div>
     </div>
-  </div>
+  }
 </div>

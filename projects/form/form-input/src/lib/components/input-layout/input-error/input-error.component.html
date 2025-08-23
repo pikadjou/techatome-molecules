@@ -4,23 +4,23 @@
   <small class="form-text text-danger">
     {{ this.input.formControl?.getError("message") }}
   </small>
-  } @if(this.input.formControl?.hasError('minlength')) {
+  } @else if(this.input.formControl?.hasError('minlength')) {
   <small class="form-text text-danger">
     {{ "form.text-box.minimum-length" | translate }}
   </small>
-  } @if(this.input.formControl?.hasError('type')) {
+  } @else if(this.input.formControl?.hasError('type')) {
   <div class="error">
     <small class="form-text text-danger">
       {{ "form.text-box.error-occured" | translate }}
     </small>
   </div>
-  } @if(this.input.formControl?.hasError('required')) {
+  } @else if(this.input.formControl?.hasError('required')) {
   <small class="form-text text-danger">
     {{ "form.text-box.is-mandatory" | translate }}
   </small>
-  } @if(this.input.formControl?.errors?.['minlength']) {
+  } @else if(this.input.formControl?.errors?.['minlength']) {
   <span>{{ "form.layout.input-too-short" | translate }}</span>
-  } @if(this.input.formControl?.hasError('validatePhoneNumber')) {
+  } @else if(this.input.formControl?.hasError('validatePhoneNumber')) {
   <span>{{ "form.phone.placeholder" | translate }} </span>
   }
 </div>

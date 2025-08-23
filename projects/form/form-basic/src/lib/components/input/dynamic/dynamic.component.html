@@ -4,22 +4,26 @@
   </div>
 
   <div *ngFor="let key of getKeys(); trackBy: trackByFn">
-    <div *ngIf="this.canRemove(key)" class="remove-action">
-      <ta-button class="remove-action" [style]="'danger'" (action)="remove(key)">
-        <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
-      </ta-button>
-    </div>
+    @if (this.canRemove(key)) {
+      <div class="remove-action">
+        <ta-button class="remove-action" [style]="'danger'" (action)="remove(key)">
+          <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
+        </ta-button>
+      </div>
+    }
 
     <ng-container *ngFor="let input of this.getInputs(key); trackBy: trackInputByFn">
-      <div [ngClass]="input.class" *ngIf="input">
-        <ng-container
-          [ngTemplateOutlet]="this.inputsTemplate"
-          [ngTemplateOutletContext]="{
-            input: input,
-          }"
-        >
-        </ng-container>
-      </div>
+      @if (input) {
+        <div [ngClass]="input.class">
+          <ng-container
+            [ngTemplateOutlet]="this.inputsTemplate"
+            [ngTemplateOutletContext]="{
+              input: input,
+            }"
+          >
+          </ng-container>
+        </div>
+      }
     </ng-container>
   </div>
   <ta-button (action)="add()">{{ 'form.dynamic.add' | translate }}</ta-button>

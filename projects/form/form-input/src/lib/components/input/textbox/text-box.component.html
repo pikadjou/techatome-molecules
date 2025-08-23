@@ -1,7 +1,6 @@
 @if (this.input.type === 'textarea') {
   <ta-input-textarea [input]="this.input" [matcher]="this.matcher"></ta-input-textarea>
-}
-@if (this.input.type !== 'textarea') {
+} @else {
   <ta-input-layout [input]="this.input">
     <div>
       <input

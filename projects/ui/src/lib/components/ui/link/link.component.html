@@ -6,7 +6,9 @@
   [class.bold]="this.bold"
 >
   <div class="flex-row g-space-sm">
-    <ta-font-icon *ngIf="this.icon" [name]="this.icon"></ta-font-icon>
+    @if (this.icon) {
+      <ta-font-icon [name]="this.icon"></ta-font-icon>
+    }
     <div class="content" [class.underline]="this.underline">
       <ng-content></ng-content>
     </div>

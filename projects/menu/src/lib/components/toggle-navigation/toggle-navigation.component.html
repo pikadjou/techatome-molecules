@@ -8,57 +8,70 @@
 </div>
 
 <ng-template #template let-element="element">
-  <div
-    *ngIf="element.callback || element.disabled"
-    (click)="this.callback(element)"
-    class="toggle-element"
-    [class.active]="this.isActive(element)"
-    [class.disabled]="element.disabled"
-  >
-    <ng-template
-      [ngTemplateOutlet]="Item"
-      [ngTemplateOutletContext]="{
-        item: element,
-      }"
+  @if (element.callback || element.disabled) {
+    <div
+      (click)="this.callback(element)"
+      class="toggle-element"
+      [class.active]="this.isActive(element)"
+      [class.disabled]="element.disabled"
     >
-    </ng-template>
-  </div>
-  <div
-    *ngIf="!element.callback && !element.disabled"
-    class="toggle-element"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: element.exact }"
-    [routerLink]="[this.getLink(element)]"
-    [queryParamsHandling]="element.queryParamsHandling"
-    [replaceUrl]="element.replaceUrl"
-    [ngClass]="{ disabled: element.disabled }"
-  >
-    <ng-template
-      [ngTemplateOutlet]="Item"
-      [ngTemplateOutletContext]="{
-        item: element,
-      }"
+      <ng-template
+        [ngTemplateOutlet]="Item"
+        [ngTemplateOutletContext]="{
+          item: element,
+        }"
+      >
+      </ng-template>
+    </div>
+  } @else {
+    <div
+      class="toggle-element"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: element.exact }"
+      [routerLink]="[this.getLink(element)]"
+      [queryParamsHandling]="element.queryParamsHandling"
+      [replaceUrl]="element.replaceUrl"
+      [ngClass]="{ disabled: element.disabled }"
     >
-    </ng-template>
-  </div>
+      <ng-template
+        [ngTemplateOutlet]="Item"
+        [ngTemplateOutletContext]="{
+          item: element,
+        }"
+      >
+      </ng-template>
+    </div>
+  }
 </ng-template>
 
 <ng-template #Item let-item="item" [typedTemplate]="this.typeItem">
   <div class="label flex-row align-center mb-space-xs">
-    <div class="icon" *ngIf="this.hasFontIcon(item) || this.hasIconImage(item)">
-      <span *ngIf="this.hasFontIcon(item)" class="icon-material">
-        <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
-      </span>
-      <span *ngIf="this.hasIconImage(item)" class="icon-image">
-        <ta-local-icon [type]="this.getIcon(item)" size="xs"></ta-local-icon>
-      </span>
-    </div>
-    <div class="text-truncate" *ngIf="item.label">
-      {{ item.label | translate }}
-    </div>
-    <div class="badge ml-space-xs" *ngIf="item.options?.notificationBadge !== null">
-      {{ item.options?.notificationBadge?.label }}
-    </div>
-    <div *ngIf="item.translationData?.length">({{ item.translationData?.length }})</div>
+    @if (this.hasFontIcon(item) || this.hasIconImage(item)) {
+      <div class="icon">
+        @if (this.hasFontIcon(item)) {
+          <span class="icon-material">
+            <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
+          </span>
+        }
+        @if (this.hasIconImage(item)) {
+          <span class="icon-image">
+            <ta-local-icon [type]="this.getIcon(item)" size="xs"></ta-local-icon>
+          </span>
+        }
+      </div>
+    }
+    @if (item.label) {
+      <div class="text-truncate">
+        {{ item.label | translate }}
+      </div>
+    }
+    @if (item.options?.notificationBadge !== null) {
+      <div class="badge ml-space-xs">
+        {{ item.options?.notificationBadge?.label }}
+      </div>
+    }
+    @if (item.translationData?.length) {
+      <div>({{ item.translationData?.length }})</div>
+    }
   </div>
 </ng-template>

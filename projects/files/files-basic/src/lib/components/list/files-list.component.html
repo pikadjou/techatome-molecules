@@ -1,40 +1,53 @@
 <ta-empty [isEmpty]="this.files.length === 0">
-  <div class="files-container" *ngIf="this.canDisplayFileType('Image')">
-    <ng-container *ngFor="let file of this.files; index as i; trackBy: this.trackById">
-      <div class="info-container" (click)="this.onFileSelected(file, i)">
-        <div class="delete" (click)="this.deleteFile(file)" *ngIf="this.canDeleteFile" appStopPropagation>
-          <div class="delete-icon">
-            <ta-font-icon type="sm" name="close"></ta-font-icon>
-          </div>
+  @if (this.canDisplayFileType('Image')) {
+    <div class="files-container">
+      <ng-container *ngFor="let file of this.files; index as i; trackBy: this.trackById">
+        <div class="info-container" (click)="this.onFileSelected(file, i)">
+          @if (this.canDeleteFile) {
+            <div class="delete" (click)="this.deleteFile(file)" appStopPropagation>
+              <div class="delete-icon">
+                <ta-font-icon type="sm" name="close"></ta-font-icon>
+              </div>
+            </div>
+          }
+
+          @if (file.type === 'Image') {
+            <img [src]="file.thumbnailUrl || file.url | safe: 'url'" />
+          } @else if (file.type === 'Document') {
+            <ta-file-card [file]="file"></ta-file-card>
+          }
+
+          @if (file.isLoading) {
+            <div class="is-loading">
+              <ta-local-icon
+                class="align-middle"
+                [rotation]="file.isLoading"
+                [type]="this.icon.Loader"
+                [size]="'xs'"
+              ></ta-local-icon>
+            </div>
+          }
+          @if (file.isSelected) {
+            <div class="is-selected">
+              <ta-local-icon class="align-middle" [type]="this.icon.Checked" [size]="'xs'"></ta-local-icon>
+            </div>
+          }
         </div>
-
-        <img *ngIf="file.type === 'Image'" [src]="file.thumbnailUrl || file.url | safe: 'url'" />
-
-        <ta-file-card *ngIf="file.type === 'Document'" [file]="file"></ta-file-card>
-
-        <div class="is-loading" *ngIf="file.isLoading">
-          <ta-local-icon
-            class="align-middle"
-            [rotation]="file.isLoading"
-            [type]="this.icon.Loader"
-            [size]="'xs'"
-          ></ta-local-icon>
-        </div>
-        <div class="is-selected" *ngIf="file.isSelected">
-          <ta-local-icon class="align-middle" [type]="this.icon.Checked" [size]="'xs'"></ta-local-icon>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-
-  <div class="row g-2 row-cols-1 row-cols-md-2 row-cols-xl-3 mb-space-lg" *ngIf="canDisplayFileType('Document')">
-    <div *ngFor="let file of this.files; index as i; trackBy: this.trackById">
-      <ta-file-card
-        *ngIf="file.type === 'Document'"
-        (fileSelected)="this.onFileSelected(file, i)"
-        (moreInformationSelected)="this.onMoreInformationSelected(file)"
-        [file]="file"
-      ></ta-file-card>
+      </ng-container>
     </div>
-  </div>
+  }
+
+  @if (canDisplayFileType('Document')) {
+    <div class="row g-2 row-cols-1 row-cols-md-2 row-cols-xl-3 mb-space-lg">
+      <div *ngFor="let file of this.files; index as i; trackBy: this.trackById">
+        @if (file.type === 'Document') {
+          <ta-file-card
+            (fileSelected)="this.onFileSelected(file, i)"
+            (moreInformationSelected)="this.onMoreInformationSelected(file)"
+            [file]="file"
+          ></ta-file-card>
+        }
+      </div>
+    </div>
+  }
 </ta-empty>

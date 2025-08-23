@@ -1,18 +1,18 @@
-<div *ngIf="this.value" class="header">
-  <div class="icon">
-    <ng-container *ngIf="this.localIcon">
-      <ta-local-icon class="local-icon" [type]="this.localIcon"></ta-local-icon>
-    </ng-container>
+@if (this.value) {
+  <div class="header">
+    <div class="icon">
+      @if (this.localIcon) {
+        <ta-local-icon class="local-icon" [type]="this.localIcon"></ta-local-icon>
+      } @else if (this.icon) {
+        <ta-font-icon [name]="this.icon" type="sm"></ta-font-icon>
+      }
+    </div>
 
-    <ng-container *ngIf="this.icon">
-      <ta-font-icon [name]="this.icon" type="sm"></ta-font-icon>
-    </ng-container>
+    <div class="value">
+      <div class="text">{{ this.value | translate }}</div>
+    </div>
   </div>
-
-  <div class="value">
-    <div class="text">{{ this.value | translate }}</div>
-  </div>
-</div>
+}
 <div class="content">
   <ng-content></ng-content>
 </div>

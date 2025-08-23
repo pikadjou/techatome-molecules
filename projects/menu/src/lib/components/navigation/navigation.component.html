@@ -1,14 +1,13 @@
 <div class="navigation-container" [class]="this.container">
   <div class="list">
-    <ng-container *ngIf="this.swiper">
+    @if (this.swiper) {
       <ta-swiper-light
         [items]="this.menu.elements"
         [template]="template"
         [forced]="true"
         [swiperClasses]="this.getSpaceClass()"
       ></ta-swiper-light>
-    </ng-container>
-    <ng-container *ngIf="!this.swiper">
+    } @else {
       <div class="element-list" [ngClass]="this.menu.direction + ' ' + this.getSpaceClass()">
         <div class="element" *ngFor="let element of this.menu.elements">
           <ng-template
@@ -20,59 +19,67 @@
           </ng-template>
         </div>
       </div>
-    </ng-container>
+    }
   </div>
 </div>
 
 <ng-template #template let-element="element">
   <ta-notification-badge-container class="c-pointer">
-    <div
-      *ngIf="element.callback || element.disabled"
-      (click)="this.callback(element)"
-      class="item-container"
-      [ngClass]="{ active: this.isActive(element), disabled: element.disabled }"
-    >
-      <ng-template
-        [ngTemplateOutlet]="Item"
-        [ngTemplateOutletContext]="{
-          item: element,
-        }"
+    @if (element.callback || element.disabled) {
+      <div
+        (click)="this.callback(element)"
+        class="item-container"
+        [ngClass]="{ active: this.isActive(element), disabled: element.disabled }"
       >
-      </ng-template>
-    </div>
-    <div
-      *ngIf="!element.callback && !element.disabled"
-      class="item-container"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: element.exact }"
-      [routerLink]="[this.getLink(element)]"
-      [queryParamsHandling]="element.queryParamsHandling"
-    >
-      <ng-template
-        [ngTemplateOutlet]="Item"
-        [ngTemplateOutletContext]="{
-          item: element,
-        }"
+        <ng-template
+          [ngTemplateOutlet]="Item"
+          [ngTemplateOutletContext]="{
+            item: element,
+          }"
+        >
+        </ng-template>
+      </div>
+    } @else {
+      <div
+        class="item-container"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: element.exact }"
+        [routerLink]="[this.getLink(element)]"
+        [queryParamsHandling]="element.queryParamsHandling"
       >
-      </ng-template>
-    </div>
-    <ta-notification-badge
-      *ngIf="element.options?.notificationBadge?.label"
-      [number]="element.options?.notificationBadge?.label || 0"
-      [style]="element.options?.notificationBadge?.style"
-      fontSize="xs"
-    ></ta-notification-badge>
+        <ng-template
+          [ngTemplateOutlet]="Item"
+          [ngTemplateOutletContext]="{
+            item: element,
+          }"
+        >
+        </ng-template>
+      </div>
+    }
+    @if (element.options?.notificationBadge?.label) {
+      <ta-notification-badge
+        [number]="element.options?.notificationBadge?.label || 0"
+        [style]="element.options?.notificationBadge?.style"
+        fontSize="xs"
+      ></ta-notification-badge>
+    }
   </ta-notification-badge-container>
 </ng-template>
 
 <ng-template #Item let-item="item" [typedTemplate]="this.typeItem">
   <div class="item" [class.disabled]="item.disabled">
-    <div class="icon" *ngIf="this.hasFontIcon(item)">
-      <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
-    </div>
-    <div class="label" *ngIf="item.label">
-      {{ item.label | translate }}
-    </div>
-    <div class="bullet" *ngIf="item.translationData?.length">({{ item.translationData?.length }})</div>
+    @if (this.hasFontIcon(item)) {
+      <div class="icon">
+        <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
+      </div>
+    }
+    @if (item.label) {
+      <div class="label">
+        {{ item.label | translate }}
+      </div>
+    }
+    @if (item.translationData?.length) {
+      <div class="bullet">({{ item.translationData?.length }})</div>
+    }
   </div>
 </ng-template>

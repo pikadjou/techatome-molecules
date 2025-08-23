@@ -3,7 +3,9 @@
     <ta-list-element>
       <ta-list-title>
         <div>
-          <ta-font-icon *ngIf="item.icon" [name]="$any(item.icon)"></ta-font-icon>
+          @if (item.icon) {
+            <ta-font-icon [name]="$any(item.icon)"></ta-font-icon>
+          }
           {{ item.label }}
         </div>
       </ta-list-title>

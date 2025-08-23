@@ -30,14 +30,14 @@
 
 <mat-menu #menu="matMenu">
   <div class="" [style.width.px]="this.searchFieldWidth">
-    <ng-container *ngIf="menuTemplate">
+    @if (menuTemplate) {
       <ng-container *ngTemplateOutlet="menuTemplate; context: { element: menu }"></ng-container>
-    </ng-container>
+    }
   </div>
 </mat-menu>
 
-<ng-container *ngIf="menuTemplate && this.searchHistory?.type && this.isDropDown === false">
+@if (menuTemplate && this.searchHistory?.type && this.isDropDown === false) {
   <ng-container *ngTemplateOutlet="menuTemplate; context: { element: menu }"></ng-container>
-</ng-container>
+}
 
 

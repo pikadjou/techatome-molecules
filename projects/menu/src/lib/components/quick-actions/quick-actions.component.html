@@ -1,12 +1,14 @@
-<div class="tabs my-space-2" *ngIf="this.menu">
-  <div class="menu-tab">
-    <ta-swiper
-      [slidesPerPage]="this.elementPerPage"
-      [swipeTemplate]="swipeTemplate"
-      [slides]="this.menu.elements"
-    ></ta-swiper>
+@if (this.menu) {
+  <div class="tabs my-space-2">
+    <div class="menu-tab">
+      <ta-swiper
+        [slidesPerPage]="this.elementPerPage"
+        [swipeTemplate]="swipeTemplate"
+        [slides]="this.menu.elements"
+      ></ta-swiper>
+    </div>
   </div>
-</div>
+}
 
 <ng-template #swipeTemplate let-element="element" [typedTemplate]="typeToken">
   <div
@@ -15,7 +17,9 @@
     [class.disabled]="element.disabled === true"
     (click)="this.onQuickActionSelected(element)"
   >
-    <ta-local-icon *ngIf="element.icon" [type]="element.icon" [size]="'xs'"></ta-local-icon>
+    @if (element.icon) {
+      <ta-local-icon [type]="element.icon" [size]="'xs'"></ta-local-icon>
+    }
     <p class="text-truncate">{{ element.label | translate }}</p>
     <div class="bottom"></div>
   </div>

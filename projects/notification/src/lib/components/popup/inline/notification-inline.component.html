@@ -1,4 +1,4 @@
-<ng-container *ngIf="this.showMessage">
+@if (this.showMessage) {
   <div class="notification-container">
     <div class="text">
       <div class="label" [ngClass]="this.getTypeClass()">
@@ -18,17 +18,18 @@
               {{ 'notification.inline.label.success' | translate }}
             }
           }
-        }
-        @if (this.message) {
+        } @else {
           {{ this.message | translate }}
         }
       </div>
     </div>
-    <span class="close" (click)="this.close()" *ngIf="this.showClose">
-      <ta-font-icon name="close"></ta-font-icon>
-    </span>
+    @if (this.showClose) {
+      <span class="close" (click)="this.close()">
+        <ta-font-icon name="close"></ta-font-icon>
+      </span>
+    }
   </div>
-</ng-container>
+}
 
 @if (!this.showMessage) {
     <ng-content></ng-content>

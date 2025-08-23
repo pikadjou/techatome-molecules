@@ -2,12 +2,13 @@
   <div class="ta-r">
     <ta-button (action)="this.clear()">{{ 'core.filter.clear' | translate }}</ta-button>
   </div>
-  <ta-form
-    *ngIf="this.form"
-    [inputs]="this.form"
-    [canDisplayButton]="false"
-    [askValidation$]="this.askValidation$"
-    (valid)="this.apply($event)"
-  >
-  </ta-form>
+  @if (this.form) {
+    <ta-form
+      [inputs]="this.form"
+      [canDisplayButton]="false"
+      [askValidation$]="this.askValidation$"
+      (valid)="this.apply($event)"
+    >
+    </ta-form>
+  }
 </div>

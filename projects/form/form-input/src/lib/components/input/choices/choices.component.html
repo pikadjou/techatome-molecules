@@ -92,8 +92,7 @@
           </div>
         </ta-layout-side-cta>
       </ta-layout-side>
-    }
-    @if (this.input.choiceTemplate && this.filteredOptions$) {
+    } @else if (this.input.choiceTemplate && this.filteredOptions$) {
       @if (this.input.withSearch) {
         <ta-search-field
           [isOpen]="true"
@@ -120,8 +119,7 @@
                   ></ng-template>
                 </div>
               </ta-empty>
-            }
-            @if (this.input.choiceTemplate.list) {
+            } @else if (this.input.choiceTemplate.list) {
               <ng-template
                 [ngTemplateOutlet]="this.input.choiceTemplate.list"
                 [ngTemplateOutletContext]="{

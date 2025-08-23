@@ -1,8 +1,7 @@
-<ng-container *ngIf="this.showInActionButton">
+@if (this.showInActionButton) {
   <ta-action-button [actions]="this.addActions"> </ta-action-button>
-</ng-container>
-<ng-container *ngIf="!this.showInActionButton">
+} @else {
   <ta-button *ngFor="let action of this.addActions" (action)="action.callback()">
     {{ action.label }}
   </ta-button>
-</ng-container>
+}

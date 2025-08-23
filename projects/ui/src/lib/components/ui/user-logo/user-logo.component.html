@@ -1,4 +1,4 @@
-<ng-container *ngIf="this.user?.picture || this.userInfo?.profilePictureUrl">
+@if (this.user?.picture || this.userInfo?.profilePictureUrl) {
   <div class="img-container">
     <img
       [src]="this.user?.picture || this.userInfo?.profilePictureUrl"
@@ -6,14 +6,13 @@
       class="user-image"
     />
   </div>
-</ng-container>
-<ng-container *ngIf="!(this.user?.picture || this.userInfo?.profilePictureUrl)">
-  <ta-trigram *ngIf="this.defaultType === 'trigram'" [value]="this.getTrigram()" [size]="this.sizeValue"></ta-trigram>
+} @else if (this.defaultType === 'trigram') {
+  <ta-trigram [value]="this.getTrigram()" [size]="this.sizeValue"></ta-trigram>
+} @else if (this.defaultType === 'font') {
   <div
-    *ngIf="this.defaultType === 'font'"
     class="profile-icon"
     [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }"
   >
     <ta-font-icon name="profil-picture" [type]="this.size ?? 'lg'"></ta-font-icon>
   </div>
-</ng-container>
+}

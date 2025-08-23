@@ -5,14 +5,14 @@
         <div #focusedElement class="custom-dropdown-button form-control" [class.disabled]="this.input.disabled">
           <span class="selected-value align-center g-space-xs">
             @if (!this.input.multiple) {
-              <span *ngIf="this.input.value; else placeholder">
-                {{ this.getOptionName(this.input.value) | translate }}
-              </span>
-              <ng-template #placeholder>
+              @if (this.input.value) {
+                <span>
+                  {{ this.getOptionName(this.input.value) | translate }}
+                </span>
+              } @else {
                 {{ 'form.input.dropdown.novalue' | translate }}
-              </ng-template>
-            }
-            @if (this.input.multiple) {
+              }
+            } @else if (this.input.multiple) {
               <ta-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
                 {{ this.getOptionName(value) | translate }}
               </ta-label>
@@ -25,9 +25,9 @@
 
     <ng-template #panelContent>
       <div class="custom-menu">
-        <ng-container *ngIf="this.input.withSearch">
+        @if (this.input.withSearch) {
           <input class="input-search" type="search" placeholder="Rechercher..." (input)="this.onSearchChange($event)" />
-        </ng-container>
+        }
 
         <button
           *ngFor="let opt of this.filteredOptions"

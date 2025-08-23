@@ -6,9 +6,11 @@
           <ta-list-title class="d-flex p-space-xs">
             {{ language.name | translate }}
           </ta-list-title>
-          <ta-list-tag *ngIf="language.id === this.activeLanguage">
-            <ta-font-icon name="check-line" class="color-semantic-token-success"></ta-font-icon>
-          </ta-list-tag>
+          @if (language.id === this.activeLanguage) {
+            <ta-list-tag>
+              <ta-font-icon name="check-line" class="color-semantic-token-success"></ta-font-icon>
+            </ta-list-tag>
+          }
         </ta-list-element>
       </ng-container>
     </ta-list-container>

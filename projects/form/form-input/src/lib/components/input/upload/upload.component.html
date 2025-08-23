@@ -10,8 +10,7 @@
                 <ta-text class="name" size="sm">
                   {{ item.name }}
                 </ta-text>
-              }
-              @if (item.progress === 100 && item.completed) {
+              } @else if (item.progress === 100 && item.completed) {
                 <ta-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</ta-link>
               }
             </div>
@@ -21,8 +20,7 @@
                 <ta-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
                   <ta-font-icon name="close" type="sm"></ta-font-icon>
                 </ta-link>
-              }
-              @if (item.progress === 100 && item.completed) {
+              } @else if (item.progress === 100 && item.completed) {
                 <ta-text size="sm" class="justify-end">
                   <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
                 </ta-text>

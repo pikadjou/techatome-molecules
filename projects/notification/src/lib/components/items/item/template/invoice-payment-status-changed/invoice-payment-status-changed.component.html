@@ -3,13 +3,14 @@
     <div class="flex-row g-space-sm">
       {{ 'notification.items.invoice-payment-status-changed.title' | translate: this.getTranslation() }}
       <div class="flex">
-        <ng-container
-          *ngIf="this.template"
-          [ngTemplateOutlet]="this.template"
-          [ngTemplateOutletContext]="{
-            data: this.paymentStatus,
-          }"
-        ></ng-container>
+        @if (this.template) {
+          <ng-container
+            [ngTemplateOutlet]="this.template"
+            [ngTemplateOutletContext]="{
+              data: this.paymentStatus,
+            }"
+          ></ng-container>
+        }
       </div>
     </div>
   </ta-notification-item-title>

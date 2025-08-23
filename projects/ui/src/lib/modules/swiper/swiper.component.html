@@ -14,14 +14,16 @@
   active-index="3"
 >
   <ng-container *ngFor="let element of this.slides; trackBy: this.trackByKey">
-    <swiper-slide *ngIf="element.visible$ | async">
-      <ng-container
-        [ngTemplateOutlet]="this.swipeTemplate"
-        [ngTemplateOutletContext]="{
-          element: element
-        }"
-      >
-      </ng-container>
-    </swiper-slide>
+    @if (element.visible$ | async) {
+      <swiper-slide>
+        <ng-container
+          [ngTemplateOutlet]="this.swipeTemplate"
+          [ngTemplateOutletContext]="{
+            element: element
+          }"
+        >
+        </ng-container>
+      </swiper-slide>
+    }
   </ng-container>
 </swiper-container>

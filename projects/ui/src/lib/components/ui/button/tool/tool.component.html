@@ -8,6 +8,8 @@
   (click)="this.handleClick()"
 >
   <div class="flex-row g-space-sm align-c enter">
-    <ta-font-icon *ngIf="this.icon" [name]="this.icon" [type]="this.size"></ta-font-icon>
+    @if (this.icon) {
+      <ta-font-icon [name]="this.icon" [type]="this.size"></ta-font-icon>
+    }
   </div>
 </button>

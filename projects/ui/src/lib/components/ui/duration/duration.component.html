@@ -1,41 +1,39 @@
-<ng-container *ngIf="this.interval">
-  <ng-container
-    *ngIf="
-      !this.interval.years &&
-      !this.interval.months &&
-      !this.interval.days &&
-      !this.interval?.hours
-    "
-  >
+@if (this.interval) {
+  @if (
+    !this.interval.years &&
+    !this.interval.months &&
+    !this.interval.days &&
+    !this.interval?.hours
+  ) {
     {{ "ui.duration.less-than-one" | translate }}
-  </ng-container>
+  }
 
-  <ng-container *ngIf="this.interval.years">
+  @if (this.interval.years) {
     {{
       "ui.duration.years"
         | pluralTranslate : this.interval.years
         | translate : { years: this.interval.years }
     }}
-  </ng-container>
-  <ng-container *ngIf="this.interval.months">
+  }
+  @if (this.interval.months) {
     {{
       "ui.duration.months"
         | pluralTranslate : this.interval.months
         | translate : { months: this.interval.months }
     }}
-  </ng-container>
-  <ng-container *ngIf="this.interval.days">
+  }
+  @if (this.interval.days) {
     {{
       "ui.duration.days"
         | pluralTranslate : this.interval.days
         | translate : { days: this.interval.days }
     }}
-  </ng-container>
-  <ng-container *ngIf="this.interval.hours">
+  }
+  @if (this.interval.hours) {
     {{
       "ui.duration.hours"
         | pluralTranslate : this.interval.hours
         | translate : { hours: this.interval.hours }
     }}
-  </ng-container>
-</ng-container>
+  }
+}

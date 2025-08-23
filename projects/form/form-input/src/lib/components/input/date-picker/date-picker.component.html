@@ -17,8 +17,7 @@
         <mat-datepicker touchUi #picker></mat-datepicker>
         <mat-datepicker-toggle matSuffix [for]="this.picker"></mat-datepicker-toggle>
       </div>
-    }
-    @if (this.input.rangeEnabled) {
+    } @else {
       <div class="align-center">
         <mat-date-range-input [formGroup]="this.range" [rangePicker]="this.picker">
           <input

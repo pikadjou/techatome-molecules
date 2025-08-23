@@ -1,15 +1,15 @@
-<ng-container *ngIf="this.content$ | async as content">
+@if (this.content$ | async; as content) {
   <ta-loader [isLoading]="this.requestState.isLoading()">
     <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
       <ta-empty [isEmpty]="!content">
-        <ng-container *ngIf="content">
+        @if (content) {
           <ta-title>
             {{ content.Title }}
           </ta-title>
 
           <ta-rich-text [richText]="content.Description"></ta-rich-text>
-        </ng-container>
+        }
       </ta-empty>
     </ta-error>
   </ta-loader>
-</ng-container>
+}

@@ -8,12 +8,14 @@
       <ng-content></ng-content>
     </div>
   </div>
-  <button *ngIf="this.hasTooBigText" (click)="toggleText()">
-    {{
-      (this.showFullText
-        ? "ui.expandabletext.seeless"
-        : "ui.expandabletext.seemore"
-      ) | translate
-    }}
-  </button>
+  @if (this.hasTooBigText) {
+    <button (click)="toggleText()">
+      {{
+        (this.showFullText
+          ? "ui.expandabletext.seeless"
+          : "ui.expandabletext.seemore"
+        ) | translate
+      }}
+    </button>
+  }
 </div>

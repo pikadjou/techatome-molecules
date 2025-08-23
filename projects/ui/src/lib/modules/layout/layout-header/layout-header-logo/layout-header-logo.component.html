@@ -18,13 +18,13 @@
 </div>
 
 <mat-menu #showNotificationTemplate="matMenu">
-  <ng-container *ngIf="this.notificationTemplate">
+  @if (this.notificationTemplate) {
     <ng-template *ngTemplateOutlet="this.notificationTemplate"></ng-template>
-  </ng-container>
+  }
 </mat-menu>
 
 <mat-menu #showProfileTemplate="matMenu">
-  <ng-container *ngIf="this.profile">
+  @if (this.profile) {
     <ng-template *ngTemplateOutlet="this.profile.template"></ng-template>
-  </ng-container>
+  }
 </mat-menu>

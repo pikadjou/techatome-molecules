@@ -9,29 +9,35 @@
               [userLogo]="this.userLogo$ | async"
               (click)="this.navigateToProfile()"
             ></ta-inline-profile-data>
-            <div class="my-space-md" *ngIf="this.isEditable">
-              <ta-button (action)="this.navigateToEditProfile()" [style]="'secondary'">
-                <div class="align-center button-content">
-                  <ta-font-icon name="modify" class="mr-space-xs modify-icon"></ta-font-icon>
-                  <div class="text">
-                    {{ 'user.modify' | translate }}
+            @if (this.isEditable) {
+              <div class="my-space-md">
+                <ta-button (action)="this.navigateToEditProfile()" [style]="'secondary'">
+                  <div class="align-center button-content">
+                    <ta-font-icon name="modify" class="mr-space-xs modify-icon"></ta-font-icon>
+                    <div class="text">
+                      {{ 'user.modify' | translate }}
+                    </div>
                   </div>
-                </div>
-              </ta-button>
-            </div>
+                </ta-button>
+              </div>
+            }
           </div>
         </div>
       </ta-empty>
     </ta-error>
   </ta-loader>
 
-  <div *ngIf="this.profileMenu" class="bdp-b color-border-primary pt-space-xs">
-    <ta-menu [menu]="this.profileMenu" [style]="'dark'"></ta-menu>
-  </div>
+  @if (this.profileMenu) {
+    <div class="bdp-b color-border-primary pt-space-xs">
+      <ta-menu [menu]="this.profileMenu" [style]="'dark'"></ta-menu>
+    </div>
+  }
 
-  <div *ngIf="this.disconnectionMenu" class="bdp-b pt-space-xs">
-    <ta-menu [menu]="this.disconnectionMenu" [style]="'dark'"></ta-menu>
-  </div>
+  @if (this.disconnectionMenu) {
+    <div class="bdp-b pt-space-xs">
+      <ta-menu [menu]="this.disconnectionMenu" [style]="'dark'"></ta-menu>
+    </div>
+  }
   <div class="ta-c">
     <small>{{ this.appVersion }}</small>
   </div>
@@ -42,7 +48,9 @@
 </ng-template>
 
 <ng-template #infosTemplate>
-  <div class="mx-space-sm info-panel" *ngIf="this.infosMenu">
-    <ta-menu [menu]="this.infosMenu" [style]="'dark'"></ta-menu>
-  </div>
+  @if (this.infosMenu) {
+    <div class="mx-space-sm info-panel">
+      <ta-menu [menu]="this.infosMenu" [style]="'dark'"></ta-menu>
+    </div>
+  }
 </ng-template>

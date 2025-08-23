@@ -7,7 +7,9 @@
   (click)="handleClick()"
 >
   <div class="flex-row g-space-sm align-center">
-    <ta-font-icon *ngIf="this.icon" [name]="this.icon"></ta-font-icon>
+    @if (this.icon) {
+      <ta-font-icon [name]="this.icon"></ta-font-icon>
+    }
     <ng-content></ng-content>
   </div>
 </button>

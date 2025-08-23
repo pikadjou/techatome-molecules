@@ -1,14 +1,20 @@
 <div class="align-center">
-  <div class="mr-space-xs" *ngIf="this.userLogo">
-    <ta-user-logo [userInfo]="this.userLogo.userInfo" [size]="this.userLogo.size"></ta-user-logo>
-  </div>
+  @if (this.userLogo) {
+    <div class="mr-space-xs">
+      <ta-user-logo [userInfo]="this.userLogo.userInfo" [size]="this.userLogo.size"></ta-user-logo>
+    </div>
+  }
 
   <div class="text">
-    <div class="text" *ngIf="this.profile.title?.second">
-      {{ this.profile.title?.second }}
-    </div>
-    <div *ngIf="this.profile.email" class="mail">
-      {{ this.profile.email }}
-    </div>
+    @if (this.profile.title?.second) {
+      <div class="text">
+        {{ this.profile.title?.second }}
+      </div>
+    }
+    @if (this.profile.email) {
+      <div class="mail">
+        {{ this.profile.email }}
+      </div>
+    }
   </div>
 </div>

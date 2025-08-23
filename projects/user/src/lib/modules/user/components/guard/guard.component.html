@@ -1,11 +1,17 @@
 <div class="guard">
-  <div class="guard-valid" *ngIf="this.isGuardValid()">
-    <ng-content></ng-content>
-  </div>
-  <div class="guard-no-valid ta-c" *ngIf="!this.isGuardValid() && this.canDisplayErrorMessage">
-    <ta-font-icon name="close-tool" size="md"></ta-font-icon>
-    {{ 'container.guard.content' | translate }}
+  @if (this.isGuardValid()) {
+    <div class="guard-valid">
+      <ng-content></ng-content>
+    </div>
+  }
+  @if (!this.isGuardValid() && this.canDisplayErrorMessage) {
+    <div class="guard-no-valid ta-c">
+      <ta-font-icon name="close-tool" size="md"></ta-font-icon>
+      {{ 'container.guard.content' | translate }}
 
-    <ta-button (action)="this.goToLogin()" *ngIf="this.level === 'authenticated'"> Me connecter </ta-button>
-  </div>
+      @if (this.level === 'authenticated') {
+        <ta-button (action)="this.goToLogin()"> Me connecter </ta-button>
+      }
+    </div>
+  }
 </div>

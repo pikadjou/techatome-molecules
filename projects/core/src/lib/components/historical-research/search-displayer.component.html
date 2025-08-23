@@ -1,22 +1,21 @@
-<ng-container *ngIf="this.mobileDetection">
-  <ng-container *ngIf="this.container === 'button'">
+@if (this.mobileDetection) {
+  @if (this.container === 'button') {
     <ta-button [options]="{ circular: true }" (action)="this.openDialog()">
       <ta-font-icon [name]="'search'"></ta-font-icon>
     </ta-button>
-  </ng-container>
-  <ng-container *ngIf="this.container === 'link'">
+  } @else if (this.container === 'link') {
     <div (click)="this.openDialog()">
       <ta-font-icon [name]="'search'"></ta-font-icon>
     </div>
-  </ng-container>
-</ng-container>
+  }
+}
 
-<ng-container *ngIf="!this.mobileDetection">
+@if (!this.mobileDetection) {
   <ng-template
     [ngTemplateOutlet]="searchTemplate"
     [ngTemplateOutletContext]="{ options: { isDropDown: true } }"
   ></ng-template>
-</ng-container>
+}
 
 <ng-template #searchTemplate let-options="options">
   <ta-search-history-displayer

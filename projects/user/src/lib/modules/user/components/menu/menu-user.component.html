@@ -8,16 +8,18 @@
     </div>
   </div>
 
-  <ng-container *ngIf="this.authService.isAuthenticated$ | async">
+  @if (this.authService.isAuthenticated$ | async) {
     <div class="row user-info">
       <div class="col-2">
         <ta-trigram [value]="this.getFirstLetter"></ta-trigram>
       </div>
       <div class="col">
         <div class="title">{{ (this.authService.user$ | async)?.name }}</div>
-        <div class="subtitle" *ngIf="this.roles.length > 0">
-          {{ this.roles | join }}
-        </div>
+        @if (this.roles.length > 0) {
+          <div class="subtitle">
+            {{ this.roles | join }}
+          </div>
+        }
       </div>
     </div>
 
@@ -26,5 +28,5 @@
         {{ 'user.logout' | translate }}
       </ta-button>
     </div>
-  </ng-container>
+  }
 </div>

@@ -1,4 +1,6 @@
 <div class="flex-row align-items-center">
-  <ta-font-icon *ngIf="this.icon" name="database" size="xs"></ta-font-icon>
+  @if (this.icon) {
+    <ta-font-icon name="database" size="xs"></ta-font-icon>
+  }
   <span>{{ 'ui.megaoctet' | translate: { size: this.megaoctet } }}</span>
 </div>

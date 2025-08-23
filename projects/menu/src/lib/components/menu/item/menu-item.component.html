@@ -1,60 +1,69 @@
-<ng-container *ngIf="!this.hasChild()" [style.cursor]="this.item.callback ? 'pointer' : 'default'">
-  <ng-container *ngIf="this.getLink()">
-    <a
-      class="link"
-      [ngClass]="this.getStyleType()"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: this.item.exact }"
-      [routerLink]="[this.getLink()]"
-      [replaceUrl]="this.item.replaceUrl"
-    >
-      <ng-template [ngTemplateOutlet]="Item"></ng-template>
-    </a>
+@if (!this.hasChild()) {
+  <ng-container [style.cursor]="this.item.callback ? 'pointer' : 'default'">
+    @if (this.getLink()) {
+      <a
+        class="link"
+        [ngClass]="this.getStyleType()"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: this.item.exact }"
+        [routerLink]="[this.getLink()]"
+        [replaceUrl]="this.item.replaceUrl"
+      >
+        <ng-template [ngTemplateOutlet]="Item"></ng-template>
+      </a>
+    } @else {
+      <a (click)="this.executeCallback()" class="link" [ngClass]="this.getStyleType()">
+        <ng-template [ngTemplateOutlet]="Item"></ng-template>
+      </a>
+    }
   </ng-container>
-  <ng-container *ngIf="!this.getLink()">
-    <a (click)="this.executeCallback()" class="link" [ngClass]="this.getStyleType()">
-      <ng-template [ngTemplateOutlet]="Item"></ng-template>
-    </a>
-  </ng-container>
-</ng-container>
+}
 
 <ng-template #Item [typedTemplate]="this.typeToken">
   <div class="item pointer" [class.disable]="item.disabled">
     <div class="icon">
-      <span *ngIf="this.hasFontIcon()" class="icon-material">
-        <ta-font-icon [name]="this.getFontIcon()" size="xs" [ngClass]="item.iconsColor"></ta-font-icon>
-      </span>
-      <span *ngIf="this.hasIconImage()" class="icon-image">
-        <ta-local-icon [type]="this.getIcon()" size="xs" [ngClass]="item.iconsColor"></ta-local-icon>
-      </span>
+      @if (this.hasFontIcon()) {
+        <span class="icon-material">
+          <ta-font-icon [name]="this.getFontIcon()" size="xs" [ngClass]="item.iconsColor"></ta-font-icon>
+        </span>
+      } @else if (this.hasIconImage()) {
+        <span class="icon-image">
+          <ta-local-icon [type]="this.getIcon()" size="xs" [ngClass]="item.iconsColor"></ta-local-icon>
+        </span>
+      }
     </div>
 
     <div class="title">{{ item.label | translate }}</div>
 
     <div class="badge-container d-flex">
-      <ta-notification-badge
-        *ngIf="item.options?.notificationBadge?.label"
-        [number]="item.options?.notificationBadge?.label || 0"
-        [style]="'brand-700'"
-        fontSize="xs"
-        [relative]="true"
-      ></ta-notification-badge>
+      @if (item.options?.notificationBadge?.label) {
+        <ta-notification-badge
+          [number]="item.options?.notificationBadge?.label || 0"
+          [style]="'brand-700'"
+          fontSize="xs"
+          [relative]="true"
+        ></ta-notification-badge>
+      }
       <ng-container *ngLet="item.options?.extraTemplate as extraTemplate">
-        <ng-template *ngIf="extraTemplate" [ngTemplateOutlet]="extraTemplate"></ng-template>
+        @if (extraTemplate) {
+          <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
+        }
       </ng-container>
     </div>
-    <div class="ending-icon-container" *ngIf="item.endingIcon">
-      <ta-font-icon [name]="item.endingIcon" [ngClass]="item.iconsColor"></ta-font-icon>
-    </div>
+    @if (item.endingIcon) {
+      <div class="ending-icon-container">
+        <ta-font-icon [name]="item.endingIcon" [ngClass]="item.iconsColor"></ta-font-icon>
+      </div>
+    }
     <ng-container *ngLet="this.getTemplate() as template">
-      <ng-container *ngIf="template">
+      @if (template) {
         <div class="trigger-container">
           <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
           <mat-menu #menu="matMenu">
             <ng-container *ngTemplateOutlet="template"></ng-container>
           </mat-menu>
         </div>
-      </ng-container>
+      }
     </ng-container>
   </div>
 </ng-template>

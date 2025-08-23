@@ -1,21 +1,21 @@
-<ng-container *ngIf="this.icon">
+@if (this.icon) {
   <div class="card">
-    <ta-local-icon
-      *ngIf="this.isLocalIcon(this.icon)"
-      [type]="this.icon"
-      [size]="this.iconSize ?? 'md'"
-    ></ta-local-icon>
-    <ta-font-icon
-      class="font-icon"
-      *ngIf="this.isFontIcon(this.icon)"
-      [name]="this.getFontIcon(this.icon)"
-      [type]="this.iconSize ?? 'md'"
-    ></ta-font-icon>
+    @if (this.isLocalIcon(this.icon)) {
+      <ta-local-icon
+        [type]="this.icon"
+        [size]="this.iconSize ?? 'md'"
+      ></ta-local-icon>
+    }
+    @if (this.isFontIcon(this.icon)) {
+      <ta-font-icon
+        class="font-icon"
+        [name]="this.getFontIcon(this.icon)"
+        [type]="this.iconSize ?? 'md'"
+      ></ta-font-icon>
+    }
 
     <div class="pt-space-xs">{{ this.displayedText | translate }}</div>
   </div>
-</ng-container>
-
-<ng-container *ngIf="!this.icon">
+} @else {
   <ta-typed-message [text]="this.displayedText" [type]="this.type ?? 'info'"></ta-typed-message>
-</ng-container>
+}

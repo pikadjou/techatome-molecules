@@ -11,20 +11,19 @@
       </ta-text>
     }
     @case ('list') {
-      <ng-container *ngIf="block.data.style === 'ordered'">
+      @if (block.data.style === 'ordered') {
         <ol>
           <li *ngFor="let item of block.data.items">
             {{ item }}
           </li>
         </ol>
-      </ng-container>
-      <ng-container *ngIf="block.data.style === 'unordered'">
+      } @else if (block.data.style === 'unordered') {
         <ul>
           <li *ngFor="let item of block.data.items">
             {{ item }}
           </li>
         </ul>
-      </ng-container>
+      }
     }
     @case ('delimiter') {
       <hr />
@@ -34,7 +33,9 @@
     }
     @case ('quote') {
       <div class="flex-start g-space-xs">
-        <div *ngIf="block.data.caption">{{ block.data.caption }}:</div>
+        @if (block.data.caption) {
+          <div>{{ block.data.caption }}:</div>
+        }
         <q [innerHTML]="block.data.text | safe: 'html'"></q>
       </div>
     }

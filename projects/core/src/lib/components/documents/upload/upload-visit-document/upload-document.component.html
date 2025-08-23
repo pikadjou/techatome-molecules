@@ -1,11 +1,12 @@
 <ta-layout-modal>
-  <ta-form
-    *ngIf="this.form.length > 0"
-    class="form"
-    [inputs]="this.form"
-    [error]="this.error"
-    [loader]="this.loader"
-    (valid)="this.onSaveClick($any($event))"
-  >
-  </ta-form>
+  @if (this.form.length > 0) {
+    <ta-form
+      class="form"
+      [inputs]="this.form"
+      [error]="this.error"
+      [loader]="this.loader"
+      (valid)="this.onSaveClick($any($event))"
+    >
+    </ta-form>
+  }
 </ta-layout-modal>

@@ -1,3 +1,5 @@
-<ta-material-icon *ngIf="this.civility">
-  {{ this.getIcon() }}
-</ta-material-icon>
+@if (this.civility) {
+  <ta-material-icon>
+    {{ this.getIcon() }}
+  </ta-material-icon>
+}

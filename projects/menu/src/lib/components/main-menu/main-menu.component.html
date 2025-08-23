@@ -7,16 +7,20 @@
     <div class="menu-nav">
       <ta-menu class="menu" [menu]="this.menuMain" [container]="'main'"></ta-menu>
     </div>
-    <div *ngIf="this.menuUser" class="user-nav">
-      <div class="sep"></div>
-      <ta-menu class="menu" [menu]="this.menuUser" [container]="'main'"></ta-menu>
-    </div>
-    <div class="expansion-nav" (click)="this.toggleView()" *ngIf="(this.breakpoints.isMobile$ | async) === false">
-      <ta-font-icon
-        class="d-flex"
-        name="arrow-double"
-        [ngClass]="(this.sharedMenu.isMinimized$ | async) ? 'close' : 'open'"
-      ></ta-font-icon>
-    </div>
+    @if (this.menuUser) {
+      <div class="user-nav">
+        <div class="sep"></div>
+        <ta-menu class="menu" [menu]="this.menuUser" [container]="'main'"></ta-menu>
+      </div>
+    }
+    @if ((this.breakpoints.isMobile$ | async) === false) {
+      <div class="expansion-nav" (click)="this.toggleView()">
+        <ta-font-icon
+          class="d-flex"
+          name="arrow-double"
+          [ngClass]="(this.sharedMenu.isMinimized$ | async) ? 'close' : 'open'"
+        ></ta-font-icon>
+      </div>
+    }
   </div>
 </div>

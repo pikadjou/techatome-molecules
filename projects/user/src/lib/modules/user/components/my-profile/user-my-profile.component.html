@@ -1,7 +1,7 @@
 <ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.currentUser$ | async as currentUser">
   <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
     <ta-empty [isEmpty]="!currentUser">
-      <ng-container *ngIf="currentUser">
+      @if (currentUser) {
         <ta-ui-profile-display
           [label]="this.getFullName(currentUser.firstName, currentUser.lastName)"
           [ctas]="this.canModify ? this.ctas : null"
@@ -18,43 +18,49 @@
                 {{ currentUser.phoneNumber }}
               </ta-title>
             </div>
-            <div *ngIf="currentUser.tenantInformations.length === 1" class="align-center">
-              <ta-title class="m-a" [level]="3">
-                {{ 'user.clientnumber' | translate }}
-                {{ currentUser.tenantInformations[0].customerId }}
-              </ta-title>
-            </div>
-            <div *ngIf="currentUser.tenantInformations.length > 1">
-              <div class="pt-space-xxl align-center">
+            @if (currentUser.tenantInformations.length === 1) {
+              <div class="align-center">
                 <ta-title class="m-a" [level]="3">
-                  {{ 'user.tenantlisttitle' | translate }}
+                  {{ 'user.clientnumber' | translate }}
+                  {{ currentUser.tenantInformations[0].customerId }}
                 </ta-title>
               </div>
-              <div class="list">
-                <div class="tenant-list">
-                  <ta-list-container>
-                    <ng-container *ngFor="let tenantInformation of currentUser.tenantInformations">
-                      <ta-list-element [withSeparator]="false">
-                        <ta-list-title>
-                          <div>{{ tenantInformation.tenantName }}</div>
-                        </ta-list-title>
-                        <ta-list-extra-information>
-                          <div *ngIf="tenantInformation.customerId" class="align-center">
-                            <div class="mr-space-sm">
-                              {{ tenantInformation.customerId }}
-                            </div>
-                            <!-- <ta-text-to-clipboard [value]="tenantInformation.customerId.toString()" ></ta-text-to-clipboard> -->
-                          </div>
-                        </ta-list-extra-information>
-                      </ta-list-element>
-                    </ng-container>
-                  </ta-list-container>
+            }
+            @if (currentUser.tenantInformations.length > 1) {
+              <div>
+                <div class="pt-space-xxl align-center">
+                  <ta-title class="m-a" [level]="3">
+                    {{ 'user.tenantlisttitle' | translate }}
+                  </ta-title>
+                </div>
+                <div class="list">
+                  <div class="tenant-list">
+                    <ta-list-container>
+                      <ng-container *ngFor="let tenantInformation of currentUser.tenantInformations">
+                        <ta-list-element [withSeparator]="false">
+                          <ta-list-title>
+                            <div>{{ tenantInformation.tenantName }}</div>
+                          </ta-list-title>
+                          <ta-list-extra-information>
+                            @if (tenantInformation.customerId) {
+                              <div class="align-center">
+                                <div class="mr-space-sm">
+                                  {{ tenantInformation.customerId }}
+                                </div>
+                                <!-- <ta-text-to-clipboard [value]="tenantInformation.customerId.toString()" ></ta-text-to-clipboard> -->
+                              </div>
+                            }
+                          </ta-list-extra-information>
+                        </ta-list-element>
+                      </ng-container>
+                    </ta-list-container>
+                  </div>
                 </div>
               </div>
-            </div>
+            }
           </div>
         </ta-ui-profile-display>
-      </ng-container>
+      }
     </ta-empty>
   </ta-error>
 </ta-loader>
