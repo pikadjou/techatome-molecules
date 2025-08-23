@@ -36,7 +36,7 @@
                 <div class="list">
                   <div class="tenant-list">
                     <ta-list-container>
-                      <ng-container *ngFor="let tenantInformation of currentUser.tenantInformations">
+                      @for (tenantInformation of currentUser.tenantInformations; track tenantInformation) {
                         <ta-list-element [withSeparator]="false">
                           <ta-list-title>
                             <div>{{ tenantInformation.tenantName }}</div>
@@ -52,7 +52,7 @@
                             }
                           </ta-list-extra-information>
                         </ta-list-element>
-                      </ng-container>
+                      }
                     </ta-list-container>
                   </div>
                 </div>

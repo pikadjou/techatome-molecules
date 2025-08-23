@@ -1,10 +1,12 @@
 <div class="form-container">
   <form (ngSubmit)="onSubmit()" [formGroup]="this.form">
-    <div *ngFor="let input of this.inputs; trackBy: trackByKey">
-      @if (input.visible$ | async) {
-        <ta-inputs [input]="input"></ta-inputs>
-      }
-    </div>
+    @for (input of this.inputs; track trackByKey($index, input)) {
+      <div>
+        @if (input.visible$ | async) {
+          <ta-inputs [input]="input"></ta-inputs>
+        }
+      </div>
+    }
     <div>
       <ta-notification-inline [message]="this.error.message" [code]="this.error.status" class="my-space-sm">
         <div class="justify-end">

@@ -1,5 +1,5 @@
 <ta-list-container class="content">
-  <ng-container *ngFor="let item of this.menu.elements">
+  @for (item of this.menu.elements; track item) {
     <ta-list-element>
       <ta-list-title>
         <div>
@@ -10,5 +10,5 @@
         </div>
       </ta-list-title>
     </ta-list-element>
-  </ng-container>
+  }
 </ta-list-container>

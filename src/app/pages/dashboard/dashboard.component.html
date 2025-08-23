@@ -5,23 +5,24 @@
   </div>
 
   <div class="sections-grid">
-    <div 
-      *ngFor="let section of sections" 
-      class="section-card"
-      [routerLink]="section.route">
-      <div class="card-content">
-        <div class="card-icon" [style.color]="section.color">
-          <span class="material-icons">{{ section.icon }}</span>
-        </div>
-        <div class="card-text">
-          <ta-title [level]="3">{{ section.title }}</ta-title>
-          <ta-text>{{ section.description }}</ta-text>
-        </div>
-        <div class="card-arrow">
-          <span class="material-icons">arrow_forward</span>
+    @for (section of sections; track section) {
+      <div 
+        class="section-card"
+        [routerLink]="section.route">
+        <div class="card-content">
+          <div class="card-icon" [style.color]="section.color">
+            <span class="material-icons">{{ section.icon }}</span>
+          </div>
+          <div class="card-text">
+            <ta-title [level]="3">{{ section.title }}</ta-title>
+            <ta-text>{{ section.description }}</ta-text>
+          </div>
+          <div class="card-arrow">
+            <span class="material-icons">arrow_forward</span>
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 
   <div class="info-section">

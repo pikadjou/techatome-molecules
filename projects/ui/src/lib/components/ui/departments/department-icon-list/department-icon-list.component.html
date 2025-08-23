@@ -1,22 +1,26 @@
 @if (this.withName) {
   <div class="departements-container text-truncate">
-    <div *ngFor="let department of this.departments; let last = last" class="department">
-      <div class="img-container align-center">
-        @if (department.iconPath) {
-          <img [src]="department.iconPath" [alt]="department.name" />
-        }
+    @for (department of this.departments; track department; let last = $last) {
+      <div class="department">
+        <div class="img-container align-center">
+          @if (department.iconPath) {
+            <img [src]="department.iconPath" [alt]="department.name" />
+          }
+        </div>
+        <p>{{ department.name }}{{ !last ? ',' : '' }}</p>
       </div>
-      <p>{{ department.name }}{{ !last ? ',' : '' }}</p>
-    </div>
+    }
   </div>
 } @else {
   <div class="departements-container">
-    <div *ngFor="let department of this.departments" class="department">
-      <div class="img-container align-center">
-        @if (department.iconPath) {
-          <img [src]="department.iconPath" [alt]="department.name" />
-        }
+    @for (department of this.departments; track department) {
+      <div class="department">
+        <div class="img-container align-center">
+          @if (department.iconPath) {
+            <img [src]="department.iconPath" [alt]="department.name" />
+          }
+        </div>
       </div>
-    </div>
+    }
   </div>
 }

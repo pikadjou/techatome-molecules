@@ -1,9 +1,9 @@
 <ul class="menu" [ngClass]="this.containerCss">
-  <ng-container *ngFor="let item of this.menu.elements; trackBy: this.trackByKey">
+  @for (item of this.menu.elements; track this.trackByKey($index, item)) {
     @if ((item.visible$ | async) === true) {
       <li>
         <ta-menu-item [item]="item" [class]="item.key" [styleType]="this.menu.direction"></ta-menu-item>
       </li>
     }
-  </ng-container>
+  }
 </ul>

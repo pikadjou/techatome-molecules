@@ -9,15 +9,17 @@
       ></ta-swiper-light>
     } @else {
       <div class="element-list" [ngClass]="this.menu.direction + ' ' + this.getSpaceClass()">
-        <div class="element" *ngFor="let element of this.menu.elements">
-          <ng-template
-            [ngTemplateOutlet]="template"
-            [ngTemplateOutletContext]="{
-              element: element,
-            }"
-          >
-          </ng-template>
-        </div>
+        @for (element of this.menu.elements; track element) {
+          <div class="element">
+            <ng-template
+              [ngTemplateOutlet]="template"
+              [ngTemplateOutletContext]="{
+                element: element,
+              }"
+            >
+            </ng-template>
+          </div>
+        }
       </div>
     }
   </div>

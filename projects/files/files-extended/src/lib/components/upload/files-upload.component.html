@@ -1,7 +1,9 @@
 @if (this.showInActionButton) {
   <ta-action-button [actions]="this.addActions"> </ta-action-button>
 } @else {
-  <ta-button *ngFor="let action of this.addActions" (action)="action.callback()">
-    {{ action.label }}
-  </ta-button>
+  @for (action of this.addActions; track action) {
+    <ta-button (action)="action.callback()">
+      {{ action.label }}
+    </ta-button>
+  }
 }

@@ -52,8 +52,7 @@
           <span class="icon-material">
             <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
           </span>
-        }
-        @if (this.hasIconImage(item)) {
+        } @else if (this.hasIconImage(item)) {
           <span class="icon-image">
             <ta-local-icon [type]="this.getIcon(item)" size="xs"></ta-local-icon>
           </span>

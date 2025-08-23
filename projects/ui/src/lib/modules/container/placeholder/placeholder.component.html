@@ -6,7 +6,7 @@
 </div>
 
 <ng-template #Item let-placeholderItem="placeholder">
-  <ng-container *ngFor="let index of this.getFakeArray(placeholderItem.repeat)">
+  @for (index of this.getFakeArray(placeholderItem.repeat); track index) {
     @switch (placeholderItem.type) {
       @case ('container') {
         <ng-template
@@ -79,14 +79,14 @@
         ></ng-template>
       }
     }
-  </ng-container>
+  }
 </ng-template>
 
 <ng-template #Children let-children="children">
-  <ng-container *ngFor="let child of children">
+  @for (child of children; track child) {
     <ng-template
       [ngTemplateOutlet]="Item"
       [ngTemplateOutletContext]="{ placeholder: child }"
     ></ng-template>
-  </ng-container>
+  }
 </ng-template>

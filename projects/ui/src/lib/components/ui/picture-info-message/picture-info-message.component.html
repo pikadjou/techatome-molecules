@@ -5,8 +5,7 @@
         [type]="this.icon"
         [size]="this.iconSize ?? 'md'"
       ></ta-local-icon>
-    }
-    @if (this.isFontIcon(this.icon)) {
+    } @else if (this.isFontIcon(this.icon)) {
       <ta-font-icon
         class="font-icon"
         [name]="this.getFontIcon(this.icon)"

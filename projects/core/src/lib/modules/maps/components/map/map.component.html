@@ -28,7 +28,9 @@
   <div>
     <h3>Détails du trajet</h3>
     <ul>
-      <li *ngFor="let step of routeDetails()">{{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}</li>
+      @for (step of routeDetails(); track step) {
+        <li>{{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}</li>
+      }
     </ul>
   </div>
 }

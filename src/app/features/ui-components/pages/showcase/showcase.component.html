@@ -15,23 +15,24 @@
       </div>
 
       <div class="components-grid">
-        <a 
-          *ngFor="let component of components" 
-          [routerLink]="component.route"
-          class="component-card">
-          <div class="card-content">
-            <div class="card-icon" [style.color]="component.color">
-              <span class="material-icons">{{ component.icon }}</span>
+        @for (component of components; track component) {
+          <a 
+            [routerLink]="component.route"
+            class="component-card">
+            <div class="card-content">
+              <div class="card-icon" [style.color]="component.color">
+                <span class="material-icons">{{ component.icon }}</span>
+              </div>
+              <div class="card-text">
+                <ta-title [level]="3">{{ component.title }}</ta-title>
+                <ta-text>{{ component.description }}</ta-text>
+              </div>
+              <div class="card-arrow">
+                <span class="material-icons">arrow_forward</span>
+              </div>
             </div>
-            <div class="card-text">
-              <ta-title [level]="3">{{ component.title }}</ta-title>
-              <ta-text>{{ component.description }}</ta-text>
-            </div>
-            <div class="card-arrow">
-              <span class="material-icons">arrow_forward</span>
-            </div>
-          </div>
-        </a>
+          </a>
+        }
       </div>
     </div>
   </app-layout-content>

@@ -19,26 +19,27 @@
       </div>
 
       <div class="charts-grid">
-        <a 
-          *ngFor="let chart of chartTypes" 
-          [routerLink]="chart.route"
-          class="chart-card">
-          <div class="card-header">
-            <div class="chart-icon" [style.color]="chart.color">
-              <span class="material-icons">{{ chart.icon }}</span>
+        @for (chart of chartTypes; track chart) {
+          <a 
+            [routerLink]="chart.route"
+            class="chart-card">
+            <div class="card-header">
+              <div class="chart-icon" [style.color]="chart.color">
+                <span class="material-icons">{{ chart.icon }}</span>
+              </div>
+              <div class="status-badge" [class.coming-soon]="chart.status === 'À venir'">
+                {{ chart.status }}
+              </div>
             </div>
-            <div class="status-badge" [class.coming-soon]="chart.status === 'À venir'">
-              {{ chart.status }}
+            <div class="card-content">
+              <ta-title [level]="3">{{ chart.title }}</ta-title>
+              <ta-text>{{ chart.description }}</ta-text>
             </div>
-          </div>
-          <div class="card-content">
-            <ta-title [level]="3">{{ chart.title }}</ta-title>
-            <ta-text>{{ chart.description }}</ta-text>
-          </div>
-          <div class="card-arrow">
-            <span class="material-icons">arrow_forward</span>
-          </div>
-        </a>
+            <div class="card-arrow">
+              <span class="material-icons">arrow_forward</span>
+            </div>
+          </a>
+        }
       </div>
 
       <div class="features-section">

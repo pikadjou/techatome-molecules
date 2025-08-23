@@ -1,5 +1,7 @@
 <div>
-  <span class="badge-container" *ngFor="let filter of this.activeFilter; trackBy: trackById">
-    <ta-badge [value]="filter.name" type="info" icon="close" (clickAction)="this.remove(filter)"></ta-badge>
-  </span>
+  @for (filter of this.activeFilter; track trackById($index, filter)) {
+    <span class="badge-container">
+      <ta-badge [value]="filter.name" type="info" icon="close" (clickAction)="this.remove(filter)"></ta-badge>
+    </span>
+  }
 </div>

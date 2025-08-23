@@ -4,13 +4,14 @@
       <ta-title [level]="2">{{ title }}</ta-title>
     </div>
     <div class="nav-menu">
-      <a *ngFor="let item of mainMenu" 
-         [routerLink]="item.route" 
-         class="nav-item"
-         routerLinkActive="active">
-        <span class="material-icons">{{ item.icon.name }}</span>
-        {{ item.title }}
-      </a>
+      @for (item of mainMenu; track item) {
+        <a [routerLink]="item.route" 
+           class="nav-item"
+           routerLinkActive="active">
+          <span class="material-icons">{{ item.icon.name }}</span>
+          {{ item.title }}
+        </a>
+      }
     </div>
   </nav>
   

@@ -13,9 +13,11 @@
                 {{ 'form.input.dropdown.novalue' | translate }}
               }
             } @else if (this.input.multiple) {
-              <ta-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
-                {{ this.getOptionName(value) | translate }}
-              </ta-label>
+              @for (value of this.input.value; track value) {
+                <ta-label size="sm" class="d-flex">
+                  {{ this.getOptionName(value) | translate }}
+                </ta-label>
+              }
             }
           </span>
           <ta-font-icon name="arrow-big-bottom" type="sm"></ta-font-icon>
@@ -29,19 +31,20 @@
           <input class="input-search" type="search" placeholder="Rechercher..." (input)="this.onSearchChange($event)" />
         }
 
-        <button
-          *ngFor="let opt of this.filteredOptions"
-          [attr.cdkMenuItem]="!this.input.multiple ? '' : null"
-          (click)="this.selectOption(opt.id, $event)"
-          [class.selected]="this.isSelected(opt.id)"
-          [class.disabled]="opt.disabled"
-          class="dropdown-option space-between"
-        >
-          {{ opt.name | translate }}
-          @if (this.isSelected(opt.id)) {
-            <ta-font-icon class="checkmark" name="check-line"></ta-font-icon>
-          }
-        </button>
+        @for (opt of this.filteredOptions; track opt.id) {
+          <button
+            [attr.cdkMenuItem]="!this.input.multiple ? '' : null"
+            (click)="this.selectOption(opt.id, $event)"
+            [class.selected]="this.isSelected(opt.id)"
+            [class.disabled]="opt.disabled"
+            class="dropdown-option space-between"
+          >
+            {{ opt.name | translate }}
+            @if (this.isSelected(opt.id)) {
+              <ta-font-icon class="checkmark" name="check-line"></ta-font-icon>
+            }
+          </button>
+        }
       </div>
     </ng-template>
   </ta-overlay-panel>

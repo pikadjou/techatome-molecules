@@ -1,4 +1,4 @@
-<ng-container *ngFor="let entity of this.link.children">
+@for (entity of this.link.children; track entity) {
   <ta-link (action)="this.goTo()">
     @switch (entity.type) {
       @case ('text') {
@@ -6,4 +6,4 @@
       }
     }
   </ta-link>
-</ng-container>
+}

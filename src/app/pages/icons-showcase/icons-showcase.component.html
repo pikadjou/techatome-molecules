@@ -9,10 +9,12 @@
     <section class="demo-section">
       <ta-title [level]="2">Material Icons</ta-title>
       <div class="icons-grid">
-        <div *ngFor="let icon of materialIcons" class="icon-item">
-          <ta-material-icon [name]="icon"></ta-material-icon>
-          <span class="icon-name">{{ icon }}</span>
-        </div>
+        @for (icon of materialIcons; track icon) {
+          <div class="icon-item">
+            <ta-material-icon [name]="icon"></ta-material-icon>
+            <span class="icon-name">{{ icon }}</span>
+          </div>
+        }
       </div>
     </section>
 
@@ -20,12 +22,14 @@
     <section class="demo-section">
       <ta-title [level]="2">Icon Sizes</ta-title>
       <div class="sizes-demo">
-        <div *ngFor="let size of iconSizes" class="size-group">
-          <ta-title [level]="4">{{ size | titlecase }}</ta-title>
-          <ta-material-icon name="star" [size]="size"></ta-material-icon>
-          <ta-material-icon name="favorite" [size]="size"></ta-material-icon>
-          <ta-material-icon name="settings" [size]="size"></ta-material-icon>
-        </div>
+        @for (size of iconSizes; track size) {
+          <div class="size-group">
+            <ta-title [level]="4">{{ size | titlecase }}</ta-title>
+            <ta-material-icon name="star" [size]="size"></ta-material-icon>
+            <ta-material-icon name="favorite" [size]="size"></ta-material-icon>
+            <ta-material-icon name="settings" [size]="size"></ta-material-icon>
+          </div>
+        }
       </div>
     </section>
 

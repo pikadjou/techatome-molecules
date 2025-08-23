@@ -7,9 +7,11 @@
             <input type="hidden" [formControl]="$any(this.input.formControl)" [value]="this.input.value" />
 
             <div class="flex-start g-space-xs">
-              <ta-label *ngFor="let value of this.input.value" size="sm" class="d-flex">
-                {{ (getName$(value) | async) ?? '' | translate }}
-              </ta-label>
+              @for (value of this.input.value; track value) {
+                <ta-label size="sm" class="d-flex">
+                  {{ (getName$(value) | async) ?? '' | translate }}
+                </ta-label>
+              }
             </div>
             @if (this.input.message) {
               <div class="message">
@@ -58,14 +60,15 @@
                   ></ta-input-checkbox>
                 </div>
               }
-              <div
-                *ngFor="let option of this.filteredOptions$ | async"
-                class="flex-row pointer m-space-sm p-space-sm"
-                [class.is-selected]="this.isSelected(option)"
-                (click)="this.select(option)"
-              >
-                <ta-text>{{ option.name }}</ta-text>
-              </div>
+              @for (option of this.filteredOptions$ | async; track option) {
+                <div
+                  class="flex-row pointer m-space-sm p-space-sm"
+                  [class.is-selected]="this.isSelected(option)"
+                  (click)="this.select(option)"
+                >
+                  <ta-text>{{ option.name }}</ta-text>
+                </div>
+              }
             </ta-empty>
           </ta-loader>
         </ta-layout-side-content>
@@ -107,17 +110,18 @@
           <ta-loader [isLoading]="this.requestState.isLoading()">
             @if (this.input.choiceTemplate.one) {
               <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
-                <div
-                  *ngFor="let option of this.filteredOptions$ | async"
-                  class="flex-row pointer m-space-sm p-space-sm"
-                  [class.is-selected]="this.isSelected(option)"
-                  (click)="this.select(option)"
-                >
-                  <ng-template
-                    [ngTemplateOutlet]="this.input.choiceTemplate.one"
-                    [ngTemplateOutletContext]="{ item: option.data }"
-                  ></ng-template>
-                </div>
+                @for (option of this.filteredOptions$ | async; track option) {
+                  <div
+                    class="flex-row pointer m-space-sm p-space-sm"
+                    [class.is-selected]="this.isSelected(option)"
+                    (click)="this.select(option)"
+                  >
+                    <ng-template
+                      [ngTemplateOutlet]="this.input.choiceTemplate.one"
+                      [ngTemplateOutletContext]="{ item: option.data }"
+                    ></ng-template>
+                  </div>
+                }
               </ta-empty>
             } @else if (this.input.choiceTemplate.list) {
               <ng-template

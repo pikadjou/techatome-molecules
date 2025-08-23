@@ -1,7 +1,7 @@
 <ta-loader [isLoading]="this.changeLanguageAsked">
   <div class="mx-space-sm language-panel">
     <ta-list-container>
-      <ng-container *ngFor="let language of this.languages">
+      @for (language of this.languages; track language.id) {
         <ta-list-element [withSeparator]="false" (click)="this.changeLanguage(language.id)">
           <ta-list-title class="d-flex p-space-xs">
             {{ language.name | translate }}
@@ -12,7 +12,7 @@
             </ta-list-tag>
           }
         </ta-list-element>
-      </ng-container>
+      }
     </ta-list-container>
   </div>
 </ta-loader>

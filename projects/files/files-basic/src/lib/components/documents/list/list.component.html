@@ -6,11 +6,13 @@
       [showMessage]="!!this.emptyMessage"
     >
       <div class="list flex-column g-space-sm">
-        <div *ngFor="let doc of documents">
-          <ng-container
-            *ngTemplateOutlet="this.actions !== 'select' ? defaultTemplate : selectTemplate; context: { doc: doc }"
-          ></ng-container>
-        </div>
+        @for (doc of documents; track doc) {
+          <div>
+            <ng-container
+              *ngTemplateOutlet="this.actions !== 'select' ? defaultTemplate : selectTemplate; context: { doc: doc }"
+            ></ng-container>
+          </div>
+        }
       </div>
     </ta-empty>
   </ta-error>
@@ -66,8 +68,7 @@
     <div class="button align-content-center">
       @if (this.actions === 'select') {
         <input type="checkbox" [checked]="this.isChecked(doc)" />
-      }
-      @if (this.actions === 'delete') {
+      } @else if (this.actions === 'delete') {
         <ta-button-tool (action)="this.removeDocument(doc)" icon="delete" [size]="'sm'"></ta-button-tool>
       }
     </div>

@@ -4,9 +4,7 @@
   }
 
   <div [ngClass]="this.panel.contentClass">
-    <ng-container
-      *ngFor="let input of this.panel.children; trackBy: this.trackByKey"
-    >
+    @for (input of this.panel.children; track this.trackByKey($index, input)) {
       @if (input) {
         <div
           [ngClass]="input.class"
@@ -22,6 +20,6 @@
           </ng-container>
         </div>
       }
-    </ng-container>
+    }
   </div>
 </div>

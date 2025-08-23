@@ -3,35 +3,37 @@
     <div class="flex-responsive-ctr g-space-md">
       @if (this.inProgressFiles.length > 0) {
         <div class="files-list flex-column g-space-sm">
-          <div class="flex-column" *ngFor="let item of this.inProgressFiles">
-            <div class="flex-row align-center">
-              <ta-font-icon name="doc" size="xs"></ta-font-icon>
-              @if (item.progress < 100) {
-                <ta-text class="name" size="sm">
-                  {{ item.name }}
-                </ta-text>
-              } @else if (item.progress === 100 && item.completed) {
-                <ta-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</ta-link>
-              }
-            </div>
-            <div class="extra flex-row g-space-md">
-              @if (item.progress < 100) {
-                <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
-                <ta-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
-                  <ta-font-icon name="close" type="sm"></ta-font-icon>
-                </ta-link>
-              } @else if (item.progress === 100 && item.completed) {
-                <ta-text size="sm" class="justify-end">
-                  <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
-                </ta-text>
-                @if (item.completed.id) {
-                  <ta-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
+          @for (item of this.inProgressFiles; track item) {
+            <div class="flex-column">
+              <div class="flex-row align-center">
+                <ta-font-icon name="doc" size="xs"></ta-font-icon>
+                @if (item.progress < 100) {
+                  <ta-text class="name" size="sm">
+                    {{ item.name }}
+                  </ta-text>
+                } @else if (item.progress === 100 && item.completed) {
+                  <ta-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</ta-link>
+                }
+              </div>
+              <div class="extra flex-row g-space-md">
+                @if (item.progress < 100) {
+                  <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
+                  <ta-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
                     <ta-font-icon name="close" type="sm"></ta-font-icon>
                   </ta-link>
+                } @else if (item.progress === 100 && item.completed) {
+                  <ta-text size="sm" class="justify-end">
+                    <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
+                  </ta-text>
+                  @if (item.completed.id) {
+                    <ta-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
+                      <ta-font-icon name="close" type="sm"></ta-font-icon>
+                    </ta-link>
+                  }
                 }
-              }
+              </div>
             </div>
-          </div>
+          }
         </div>
       }
       <div class="content ta-c">

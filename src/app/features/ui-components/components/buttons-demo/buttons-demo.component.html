@@ -9,17 +9,19 @@
     <section class="demo-section">
       <ta-title [level]="3">Types de boutons</ta-title>
       <div class="demo-grid">
-        <div *ngFor="let type of buttonTypes" class="demo-item">
-          <ta-button 
-            [class]="'btn ' + type.class"
-            (click)="onButtonClick(type.name)">
-            {{ type.name }}
-          </ta-button>
-          <div class="demo-description">
-            <strong>{{ type.name }}</strong>
-            <ta-text>{{ type.description }}</ta-text>
+        @for (type of buttonTypes; track type) {
+          <div class="demo-item">
+            <ta-button 
+              [class]="'btn ' + type.class"
+              (click)="onButtonClick(type.name)">
+              {{ type.name }}
+            </ta-button>
+            <div class="demo-description">
+              <strong>{{ type.name }}</strong>
+              <ta-text>{{ type.description }}</ta-text>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </section>
 
@@ -27,17 +29,19 @@
     <section class="demo-section">
       <ta-title [level]="3">Tailles de boutons</ta-title>
       <div class="demo-grid">
-        <div *ngFor="let size of buttonSizes" class="demo-item">
-          <ta-button 
-            [class]="'btn btn-primary ' + size.class"
-            (click)="onButtonClick(size.name)">
-            {{ size.name }}
-          </ta-button>
-          <div class="demo-description">
-            <strong>{{ size.name }}</strong>
-            <ta-text>{{ size.description }}</ta-text>
+        @for (size of buttonSizes; track size) {
+          <div class="demo-item">
+            <ta-button 
+              [class]="'btn btn-primary ' + size.class"
+              (click)="onButtonClick(size.name)">
+              {{ size.name }}
+            </ta-button>
+            <div class="demo-description">
+              <strong>{{ size.name }}</strong>
+              <ta-text>{{ size.description }}</ta-text>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </section>
 

@@ -1,7 +1,9 @@
 <div class="notification-box_container flex-column g-space-sm">
-  <div *ngFor="let item of this.list">
-    <ta-toast [code]="item.code">
-      <ta-notification-inline [message]="item.message" [code]="item.code" [showClose]="false"></ta-notification-inline>
-    </ta-toast>
-  </div>
+  @for (item of this.list; track item) {
+    <div>
+      <ta-toast [code]="item.code">
+        <ta-notification-inline [message]="item.message" [code]="item.code" [showClose]="false"></ta-notification-inline>
+      </ta-toast>
+    </div>
+  }
 </div>

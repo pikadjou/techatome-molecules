@@ -13,7 +13,7 @@
   class="w-full"
   active-index="3"
 >
-  <ng-container *ngFor="let element of this.slides; trackBy: this.trackByKey">
+  @for (element of this.slides; track this.trackByKey($index, element)) {
     @if (element.visible$ | async) {
       <swiper-slide>
         <ng-container
@@ -25,5 +25,5 @@
         </ng-container>
       </swiper-slide>
     }
-  </ng-container>
+  }
 </swiper-container>

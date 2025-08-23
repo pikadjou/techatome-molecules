@@ -2,12 +2,14 @@
   <div class="bullet" (click)="this.openBullet()" [ngClass]="{ open: this.isOpen }"></div>
 
   <div class="items">
-    <div *ngFor="let action of actions" class="item" (click)="this.action.callback()" [ngClass]="{ show: this.isOpen }">
-      @if (this.isFontIcon(action)) {
-        <ta-font-icon [name]="getFontIcon(action)"></ta-font-icon>
-      } @else if (this.isLocalIcon(action)) {
-        <ta-local-icon [type]="action.icon"></ta-local-icon>
-      }
-    </div>
+    @for (action of actions; track action) {
+      <div class="item" (click)="this.action.callback()" [ngClass]="{ show: this.isOpen }">
+        @if (this.isFontIcon(action)) {
+          <ta-font-icon [name]="getFontIcon(action)"></ta-font-icon>
+        } @else if (this.isLocalIcon(action)) {
+          <ta-local-icon [type]="action.icon"></ta-local-icon>
+        }
+      </div>
+    }
   </div>
 </div>

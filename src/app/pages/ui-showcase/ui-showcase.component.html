@@ -5,22 +5,23 @@
   </div>
 
   <div class="components-grid">
-    <ta-card 
-      *ngFor="let component of components" 
-      class="component-card"
-      [routerLink]="component.route">
-      <div class="card-content">
-        <div class="card-icon">
-          <span class="material-icons">{{ component.icon }}</span>
+    @for (component of components; track component) {
+      <ta-card 
+        class="component-card"
+        [routerLink]="component.route">
+        <div class="card-content">
+          <div class="card-icon">
+            <span class="material-icons">{{ component.icon }}</span>
+          </div>
+          <div class="card-text">
+            <ta-title [level]="3">{{ component.title }}</ta-title>
+            <ta-text>{{ component.description }}</ta-text>
+          </div>
+          <div class="card-arrow">
+            <span class="material-icons">arrow_forward</span>
+          </div>
         </div>
-        <div class="card-text">
-          <ta-title [level]="3">{{ component.title }}</ta-title>
-          <ta-text>{{ component.description }}</ta-text>
-        </div>
-        <div class="card-arrow">
-          <span class="material-icons">arrow_forward</span>
-        </div>
-      </div>
-    </ta-card>
+      </ta-card>
+    }
   </div>
 </div>

@@ -3,7 +3,7 @@
     <ta-contact-information icon="history" value="core.historical-research.last-searches">
       <ta-empty [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown">
         <ta-list-container class="list-container">
-          <ng-container *ngFor="let search of this.listRecentSearches">
+          @for (search of this.listRecentSearches; track search) {
             <ta-list-element (click)="this.searchCompleted(search)">
               <ta-list-title>
                 {{ search }}
@@ -12,7 +12,7 @@
                 <ta-font-icon name="arrow-big-right" type="sm"></ta-font-icon>
               </ta-list-tag>
             </ta-list-element>
-          </ng-container>
+          }
         </ta-list-container>
       </ta-empty>
     </ta-contact-information>

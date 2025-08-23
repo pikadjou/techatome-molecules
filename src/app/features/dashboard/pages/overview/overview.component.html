@@ -29,39 +29,42 @@
 
       <!-- Stats Cards -->
       <div class="stats-grid">
-        <div *ngFor="let stat of stats" class="stat-card">
-          <div class="stat-icon">
-            <span class="material-icons">{{ stat.icon }}</span>
+        @for (stat of stats; track stat) {
+          <div class="stat-card">
+            <div class="stat-icon">
+              <span class="material-icons">{{ stat.icon }}</span>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value">{{ stat.value }}</div>
+              <div class="stat-label">{{ stat.label }}</div>
+            </div>
           </div>
-          <div class="stat-content">
-            <div class="stat-value">{{ stat.value }}</div>
-            <div class="stat-label">{{ stat.label }}</div>
-          </div>
-        </div>
+        }
       </div>
 
       <!-- Features Grid -->
       <div class="features-section">
         <ta-title [level]="3">Explorez les fonctionnalités</ta-title>
         <div class="features-grid">
-          <a 
-            *ngFor="let feature of features" 
-            [routerLink]="feature.route"
-            class="feature-card">
-            <div class="feature-header">
-              <div class="feature-icon" [style.color]="feature.color">
-                <span class="material-icons">{{ feature.icon }}</span>
+          @for (feature of features; track feature) {
+            <a 
+              [routerLink]="feature.route"
+              class="feature-card">
+              <div class="feature-header">
+                <div class="feature-icon" [style.color]="feature.color">
+                  <span class="material-icons">{{ feature.icon }}</span>
+                </div>
+                <div class="feature-stats">{{ feature.stats }}</div>
               </div>
-              <div class="feature-stats">{{ feature.stats }}</div>
-            </div>
-            <div class="feature-content">
-              <ta-title [level]="4">{{ feature.title }}</ta-title>
-              <ta-text>{{ feature.description }}</ta-text>
-            </div>
-            <div class="feature-arrow">
-              <span class="material-icons">arrow_forward</span>
-            </div>
-          </a>
+              <div class="feature-content">
+                <ta-title [level]="4">{{ feature.title }}</ta-title>
+                <ta-text>{{ feature.description }}</ta-text>
+              </div>
+              <div class="feature-arrow">
+                <span class="material-icons">arrow_forward</span>
+              </div>
+            </a>
+          }
         </div>
       </div>
 

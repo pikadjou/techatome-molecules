@@ -13,15 +13,19 @@
     @case ('list') {
       @if (block.data.style === 'ordered') {
         <ol>
-          <li *ngFor="let item of block.data.items">
-            {{ item }}
-          </li>
+          @for (item of block.data.items; track item) {
+            <li>
+              {{ item }}
+            </li>
+          }
         </ol>
       } @else if (block.data.style === 'unordered') {
         <ul>
-          <li *ngFor="let item of block.data.items">
-            {{ item }}
-          </li>
+          @for (item of block.data.items; track item) {
+            <li>
+              {{ item }}
+            </li>
+          }
         </ul>
       }
     }

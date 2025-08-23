@@ -10,7 +10,7 @@
   </div>
 
   <div class="pt-space-md">
-    <ng-container *ngFor="let input of this.getInputs(this.currentCulture)">
+    @for (input of this.getInputs(this.currentCulture); track input) {
       @if (input) {
         <div [ngClass]="input.class">
           <ng-container
@@ -22,20 +22,22 @@
           </ng-container>
         </div>
       }
-    </ng-container>
+    }
   </div>
 </div>
 
 <mat-menu #menu="matMenu">
-  <div *ngFor="let culture of this.cultureList">
-    <div class="flex-row g-space-sm p-space-sm">
-      @if (this.hasKey(culture.name)) {
-        <ta-font-icon name="check-line" class="checked"></ta-font-icon>
-        <ta-link (action)="this.remove(culture.name)">{{ culture.name }}</ta-link>
-      } @else {
-        <ta-font-icon name="check-line"> </ta-font-icon>
-        <ta-link (action)="this.add(culture.name)">{{ culture.name }}</ta-link>
-      }
+  @for (culture of this.cultureList; track culture) {
+    <div>
+      <div class="flex-row g-space-sm p-space-sm">
+        @if (this.hasKey(culture.name)) {
+          <ta-font-icon name="check-line" class="checked"></ta-font-icon>
+          <ta-link (action)="this.remove(culture.name)">{{ culture.name }}</ta-link>
+        } @else {
+          <ta-font-icon name="check-line"> </ta-font-icon>
+          <ta-link (action)="this.add(culture.name)">{{ culture.name }}</ta-link>
+        }
+      </div>
     </div>
-  </div>
+  }
 </mat-menu>

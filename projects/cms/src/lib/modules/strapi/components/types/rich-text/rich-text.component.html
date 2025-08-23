@@ -1,4 +1,4 @@
-<ng-container *ngFor="let rich of this.richText">
+@for (rich of this.richText; track rich) {
   @switch (rich.type) {
     @case ('heading') {
       <ta-title [level]="rich.level">
@@ -11,10 +11,10 @@
       </div>
     }
   }
-</ng-container>
+}
 
 <ng-template #textTemplate let-childrenText="childrenText" [typedTemplate]="this.typeToken">
-  <ng-container *ngFor="let entity of childrenText">
+  @for (entity of childrenText; track entity) {
     @switch (entity.type) {
       @case ('text') {
         <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
@@ -23,5 +23,5 @@
         <ta-rich-paragraph-link [link]="$any(entity)"></ta-rich-paragraph-link>
       }
     }
-  </ng-container>
+  }
 </ng-template>

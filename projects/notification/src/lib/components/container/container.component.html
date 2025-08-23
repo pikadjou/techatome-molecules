@@ -7,40 +7,42 @@
       text="notification.empty"
     >
       <div class="notification-container">
-        <div *ngFor="let notif of this.notifications" class="item-container c-pointer">
-          @switch (notif.type) {
-            @case ('ProjectStatusChanged') {
-              <ta-notification-project-status-changed [notification]="notif"></ta-notification-project-status-changed>
+        @for (notif of this.notifications; track notif) {
+          <div class="item-container c-pointer">
+            @switch (notif.type) {
+              @case ('ProjectStatusChanged') {
+                <ta-notification-project-status-changed [notification]="notif"></ta-notification-project-status-changed>
+              }
+              @case ('NewQuotationVersion') {
+                <ta-new-quotation-version [notification]="notif"></ta-new-quotation-version>
+              }
+              @case ('NewInvoice') {
+                <ta-new-invoice [notification]="notif"></ta-new-invoice>
+              }
+              @case ('InvoicePaymentStatusChanged') {
+                <ta-invoice-payment-status-changed [notification]="notif"></ta-invoice-payment-status-changed>
+              }
+              @case ('TaskAssigned') {
+                <ta-task-assigned [notification]="notif"></ta-task-assigned>
+              }
+              @case ('ToDoAssigned') {
+                <ta-to-do-assigned [notification]="notif"></ta-to-do-assigned>
+              }
+              @case ('TaskDueToday') {
+                <ta-task-due-today [notification]="notif"></ta-task-due-today>
+              }
+              @case ('ToDoDueToday') {
+                <ta-to-do-due-today [notification]="notif"></ta-to-do-due-today>
+              }
+              @case ('TaskNewActivity') {
+                <ta-task-new-activity [notification]="notif"></ta-task-new-activity>
+              }
+              @case ('UserTaggedInConversation') {
+                <ta-user-tagged-in-conversation [notification]="notif"></ta-user-tagged-in-conversation>
+              }
             }
-            @case ('NewQuotationVersion') {
-              <ta-new-quotation-version [notification]="notif"></ta-new-quotation-version>
-            }
-            @case ('NewInvoice') {
-              <ta-new-invoice [notification]="notif"></ta-new-invoice>
-            }
-            @case ('InvoicePaymentStatusChanged') {
-              <ta-invoice-payment-status-changed [notification]="notif"></ta-invoice-payment-status-changed>
-            }
-            @case ('TaskAssigned') {
-              <ta-task-assigned [notification]="notif"></ta-task-assigned>
-            }
-            @case ('ToDoAssigned') {
-              <ta-to-do-assigned [notification]="notif"></ta-to-do-assigned>
-            }
-            @case ('TaskDueToday') {
-              <ta-task-due-today [notification]="notif"></ta-task-due-today>
-            }
-            @case ('ToDoDueToday') {
-              <ta-to-do-due-today [notification]="notif"></ta-to-do-due-today>
-            }
-            @case ('TaskNewActivity') {
-              <ta-task-new-activity [notification]="notif"></ta-task-new-activity>
-            }
-            @case ('UserTaggedInConversation') {
-              <ta-user-tagged-in-conversation [notification]="notif"></ta-user-tagged-in-conversation>
-            }
-          }
-        </div>
+          </div>
+        }
       </div>
     </ta-empty>
   </ta-error>

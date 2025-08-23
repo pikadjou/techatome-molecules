@@ -1,7 +1,7 @@
 <ta-empty [isEmpty]="this.files.length === 0">
   @if (this.canDisplayFileType('Image')) {
     <div class="files-container">
-      <ng-container *ngFor="let file of this.files; index as i; trackBy: this.trackById">
+      @for (file of this.files; track this.trackById($index, file); let i = $index) {
         <div class="info-container" (click)="this.onFileSelected(file, i)">
           @if (this.canDeleteFile) {
             <div class="delete" (click)="this.deleteFile(file)" appStopPropagation>
@@ -33,21 +33,23 @@
             </div>
           }
         </div>
-      </ng-container>
+      }
     </div>
   }
 
   @if (canDisplayFileType('Document')) {
     <div class="row g-2 row-cols-1 row-cols-md-2 row-cols-xl-3 mb-space-lg">
-      <div *ngFor="let file of this.files; index as i; trackBy: this.trackById">
-        @if (file.type === 'Document') {
-          <ta-file-card
-            (fileSelected)="this.onFileSelected(file, i)"
-            (moreInformationSelected)="this.onMoreInformationSelected(file)"
-            [file]="file"
-          ></ta-file-card>
-        }
-      </div>
+      @for (file of this.files; track this.trackById($index, file); let i = $index) {
+        <div>
+          @if (file.type === 'Document') {
+            <ta-file-card
+              (fileSelected)="this.onFileSelected(file, i)"
+              (moreInformationSelected)="this.onMoreInformationSelected(file)"
+              [file]="file"
+            ></ta-file-card>
+          }
+        </div>
+      }
     </div>
   }
 </ta-empty>
