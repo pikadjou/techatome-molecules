@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of form-basic
+ */
+export * from './lib/components/public-api';
+export * from './lib/form.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyw2QkFBNkIsQ0FBQztBQUU1QyxjQUFjLG1CQUFtQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBmb3JtLWJhc2ljXG4gKi9cblxuZXhwb3J0ICogZnJvbSAnLi9saWIvY29tcG9uZW50cy9wdWJsaWMtYXBpJztcblxuZXhwb3J0ICogZnJvbSAnLi9saWIvZm9ybS5tb2R1bGUnO1xuIl19

@@ -1,0 +1,8 @@
+/*
+ * Public API Surface of notification
+ */
+export * from './lib/components/public-api';
+export * from './lib/enum';
+export * from './lib/services/notification.service';
+export * from './lib/notification.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyw2QkFBNkIsQ0FBQztBQUU1QyxjQUFjLFlBQVksQ0FBQztBQUUzQixjQUFjLHFDQUFxQyxDQUFDO0FBRXBELGNBQWMsMkJBQTJCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIG5vdGlmaWNhdGlvblxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbXBvbmVudHMvcHVibGljLWFwaSc7XG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL2VudW0nO1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9zZXJ2aWNlcy9ub3RpZmljYXRpb24uc2VydmljZSc7XG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL25vdGlmaWNhdGlvbi5tb2R1bGUnO1xuIl19

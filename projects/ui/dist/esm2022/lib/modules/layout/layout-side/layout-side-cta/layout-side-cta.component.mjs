@@ -1,0 +1,16 @@
+import { Component, Input } from '@angular/core';
+import * as i0 from "@angular/core";
+export class LayoutSideCtaComponent {
+    constructor() {
+        this.background = true;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideCtaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutSideCtaComponent, isStandalone: true, selector: "ta-layout-side-cta", inputs: { background: "background" }, ngImport: i0, template: "<div class=\"side-cta-container\" [class.background]=\"this.background\">\n  <ng-content></ng-content>\n</div>\n", styles: [".side-cta-container{padding:var(--ta-space-md);padding-bottom:calc(var(--ta-space-md) + env(safe-area-inset-bottom))}.side-cta-container.background{background-color:var(--ta-surface-brand-tertiary)}\n"] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideCtaComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-layout-side-cta', standalone: true, template: "<div class=\"side-cta-container\" [class.background]=\"this.background\">\n  <ng-content></ng-content>\n</div>\n", styles: [".side-cta-container{padding:var(--ta-space-md);padding-bottom:calc(var(--ta-space-md) + env(safe-area-inset-bottom))}.side-cta-container.background{background-color:var(--ta-surface-brand-tertiary)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { background: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGF5b3V0LXNpZGUtY3RhLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvbW9kdWxlcy9sYXlvdXQvbGF5b3V0LXNpZGUvbGF5b3V0LXNpZGUtY3RhL2xheW91dC1zaWRlLWN0YS5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvbGF5b3V0L2xheW91dC1zaWRlL2xheW91dC1zaWRlLWN0YS9sYXlvdXQtc2lkZS1jdGEuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxLQUFLLEVBQUUsTUFBTSxlQUFlLENBQUM7O0FBUWpELE1BQU0sT0FBTyxzQkFBc0I7SUFJakM7UUFGQSxlQUFVLEdBQVksSUFBSSxDQUFDO0lBRVosQ0FBQzsrR0FKTCxzQkFBc0I7bUdBQXRCLHNCQUFzQixvSENSbkMsa0hBR0E7OzRGREthLHNCQUFzQjtrQkFObEMsU0FBUzsrQkFDQSxvQkFBb0IsY0FHaEIsSUFBSTt3REFJaEIsVUFBVTtzQkFEVCxLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBJbnB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5AQ29tcG9uZW50KHtcbnNlbGVjdG9yOiAndGEtbGF5b3V0LXNpZGUtY3RhJyxcbiAgdGVtcGxhdGVVcmw6ICcuL2xheW91dC1zaWRlLWN0YS5jb21wb25lbnQuaHRtbCcsXG4gIHN0eWxlVXJsczogWycuL2xheW91dC1zaWRlLWN0YS5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxufSlcbmV4cG9ydCBjbGFzcyBMYXlvdXRTaWRlQ3RhQ29tcG9uZW50IHtcbiAgQElucHV0KClcbiAgYmFja2dyb3VuZDogYm9vbGVhbiA9IHRydWU7XG5cbiAgY29uc3RydWN0b3IoKSB7fVxufVxuIiwiPGRpdiBjbGFzcz1cInNpZGUtY3RhLWNvbnRhaW5lclwiIFtjbGFzcy5iYWNrZ3JvdW5kXT1cInRoaXMuYmFja2dyb3VuZFwiPlxuICA8bmctY29udGVudD48L25nLWNvbnRlbnQ+XG48L2Rpdj5cbiJdfQ==

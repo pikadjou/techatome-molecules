@@ -1,0 +1,39 @@
+{
+  "name": "@ta/user",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "peerDependencies": {
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
+  },
+  "dependencies": {
+    "@auth0/auth0-angular": "^2.2.3",
+    "@ta/core": "^3.16.0-beta.4",
+    "@ta/form-input": "^3.16.0-beta.4",
+    "@ta/form-model": "^3.16.0-beta.4",
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/server": "^3.16.0-beta.4",
+    "@ta/services": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/translation": "^3.16.0-beta.4",
+    "@ta/ui": "^3.16.0-beta.4",
+    "@ta/utils": "^3.16.0-beta.4",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e",
+  "module": "fesm2022/ta-user.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/ta-user.mjs",
+      "esm": "./esm2022/ta-user.mjs",
+      "default": "./fesm2022/ta-user.mjs"
+    }
+  }
+}

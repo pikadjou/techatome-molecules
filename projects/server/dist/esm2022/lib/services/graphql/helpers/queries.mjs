@@ -1,0 +1,13 @@
+export const graphQlTake = (take) => {
+    return `take: ${take || 1000}`;
+};
+export const graphQlPaginationFields = () => {
+    return `
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+        totalCount
+    `;
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicXVlcmllcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvc2VydmljZXMvZ3JhcGhxbC9oZWxwZXJzL3F1ZXJpZXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxDQUFDLE1BQU0sV0FBVyxHQUFHLENBQUMsSUFBb0IsRUFBRSxFQUFFO0lBQ2xELE9BQU8sU0FBUyxJQUFJLElBQUksSUFBSSxFQUFFLENBQUM7QUFDakMsQ0FBQyxDQUFDO0FBRUYsTUFBTSxDQUFDLE1BQU0sdUJBQXVCLEdBQUcsR0FBRyxFQUFFO0lBQzFDLE9BQU87Ozs7OztLQU1KLENBQUM7QUFDTixDQUFDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY29uc3QgZ3JhcGhRbFRha2UgPSAodGFrZT86IG51bWJlciB8IG51bGwpID0+IHtcbiAgcmV0dXJuIGB0YWtlOiAke3Rha2UgfHwgMTAwMH1gO1xufTtcblxuZXhwb3J0IGNvbnN0IGdyYXBoUWxQYWdpbmF0aW9uRmllbGRzID0gKCkgPT4ge1xuICByZXR1cm4gYFxuICAgICAgICBwYWdlSW5mbyB7XG4gICAgICAgICAgICBoYXNOZXh0UGFnZVxuICAgICAgICAgICAgaGFzUHJldmlvdXNQYWdlXG4gICAgICAgIH1cbiAgICAgICAgdG90YWxDb3VudFxuICAgIGA7XG59O1xuIl19

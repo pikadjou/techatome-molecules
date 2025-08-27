@@ -1,0 +1,32 @@
+import { OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { TaBaseComponent } from '@ta/utils';
+import { MenuAction } from '../../../models/menu/item/action';
+import { MenuBase } from '../../../models/menu/item/base';
+import { MenuIcon } from '../../../models/menu/item/icon';
+import { MenuPanel } from '../../../models/menu/item/panel';
+import * as i0 from "@angular/core";
+export declare class MenuItemComponent extends TaBaseComponent implements OnInit {
+    modal: MatDialog;
+    item: MenuIcon | MenuAction | MenuBase | MenuPanel;
+    styleType: String;
+    triggerMenu: MatMenuTrigger;
+    readonly typeToken: MenuIcon | MenuAction | MenuBase | MenuPanel;
+    isOpen: boolean;
+    constructor(modal: MatDialog);
+    ngOnInit(): void;
+    getStyleType(): string;
+    hasFontIcon(): boolean;
+    hasIconImage(): boolean;
+    getIcon(): string | import("@ta/icons").CamIconType;
+    getFontIcon(): string;
+    hasChild(): boolean;
+    toggle(): void;
+    getTemplate(): import("@angular/core").TemplateRef<any> | null;
+    trackByFn(index: any, item: MenuBase): string;
+    executeCallback(): void;
+    getLink(): string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MenuItemComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MenuItemComponent, "ta-menu-item", never, { "item": { "alias": "item"; "required": false; }; "styleType": { "alias": "styleType"; "required": false; }; }, {}, never, never, true, never>;
+}

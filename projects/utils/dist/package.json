@@ -1,0 +1,35 @@
+{
+  "name": "@ta/utils",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "peerDependencies": {
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
+  },
+  "dependencies": {
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
+    "@capacitor/camera": "^5.0.4",
+    "@capacitor/core": "^5.0.5",
+    "compressorjs": "^1.2.1",
+    "date-fns": "^2.29.3",
+    "slugify": "^1.6.5",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e",
+  "module": "fesm2022/ta-utils.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/ta-utils.mjs",
+      "esm": "./esm2022/ta-utils.mjs",
+      "default": "./fesm2022/ta-utils.mjs"
+    }
+  }
+}

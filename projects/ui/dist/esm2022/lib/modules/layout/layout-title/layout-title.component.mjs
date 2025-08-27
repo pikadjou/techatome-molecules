@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+export class LayoutTitleComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutTitleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutTitleComponent, isStandalone: true, selector: "ta-layout-title", ngImport: i0, template: "<div class=\"title\">\n  <ng-content></ng-content>\n</div>\n", styles: [".title{padding:0 var(--ta-space-sm)}\n"] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutTitleComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-layout-title', standalone: true, template: "<div class=\"title\">\n  <ng-content></ng-content>\n</div>\n", styles: [".title{padding:0 var(--ta-space-sm)}\n"] }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGF5b3V0LXRpdGxlLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvbW9kdWxlcy9sYXlvdXQvbGF5b3V0LXRpdGxlL2xheW91dC10aXRsZS5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvbGF5b3V0L2xheW91dC10aXRsZS9sYXlvdXQtdGl0bGUuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxNQUFNLGVBQWUsQ0FBQzs7QUFRMUMsTUFBTSxPQUFPLG9CQUFvQjsrR0FBcEIsb0JBQW9CO21HQUFwQixvQkFBb0IsMkVDUmpDLDhEQUdBOzs0RkRLYSxvQkFBb0I7a0JBTmhDLFNBQVM7K0JBQ0EsaUJBQWlCLGNBR2IsSUFBSSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5AQ29tcG9uZW50KHtcbnNlbGVjdG9yOiAndGEtbGF5b3V0LXRpdGxlJyxcbiAgdGVtcGxhdGVVcmw6ICcuL2xheW91dC10aXRsZS5jb21wb25lbnQuaHRtbCcsXG4gIHN0eWxlVXJsczogWycuL2xheW91dC10aXRsZS5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxufSlcbmV4cG9ydCBjbGFzcyBMYXlvdXRUaXRsZUNvbXBvbmVudCB7fVxuIiwiPGRpdiBjbGFzcz1cInRpdGxlXCI+XG4gIDxuZy1jb250ZW50PjwvbmctY29udGVudD5cbjwvZGl2PlxuIl19

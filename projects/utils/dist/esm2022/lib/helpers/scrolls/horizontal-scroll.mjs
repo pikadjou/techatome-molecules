@@ -1,0 +1,30 @@
+/**
+ * Must be used after ngAfterViewInit
+ */
+export class HorizontalScroll {
+    constructor(element) {
+        this._isDown = false;
+        this.mouseDown = (event) => {
+            this._isDown = true;
+            this._startX = event.pageX - this._elementRef.offsetLeft;
+            this._scrollLeft = this._elementRef.scrollLeft;
+        };
+        this.mouseLeft = () => {
+            this._isDown = false;
+        };
+        this.mouseMove = (event) => {
+            if (!this._isDown)
+                return;
+            event.preventDefault();
+            const horizontalOffset = event.pageX - this._elementRef.offsetLeft;
+            const walk = horizontalOffset - this._startX;
+            this._elementRef.scrollLeft = this._scrollLeft - walk;
+        };
+        this._elementRef = element;
+        this._elementRef.addEventListener('mousedown', this.mouseDown);
+        this._elementRef.addEventListener('mousemove', this.mouseMove);
+        this._elementRef.addEventListener('mouseleave', this.mouseLeft);
+        this._elementRef.addEventListener('mouseup', this.mouseLeft);
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaG9yaXpvbnRhbC1zY3JvbGwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9zcmMvbGliL2hlbHBlcnMvc2Nyb2xscy9ob3Jpem9udGFsLXNjcm9sbC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUNILE1BQU0sT0FBTyxnQkFBZ0I7SUFNM0IsWUFBWSxPQUFvQjtRQUh4QixZQUFPLEdBQUcsS0FBSyxDQUFDO1FBWWpCLGNBQVMsR0FBRyxDQUFDLEtBQWlCLEVBQUUsRUFBRTtZQUN2QyxJQUFJLENBQUMsT0FBTyxHQUFHLElBQUksQ0FBQztZQUNwQixJQUFJLENBQUMsT0FBTyxHQUFHLEtBQUssQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQyxVQUFVLENBQUM7WUFDekQsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDLFVBQVUsQ0FBQztRQUNqRCxDQUFDLENBQUM7UUFFSyxjQUFTLEdBQUcsR0FBRyxFQUFFO1lBQ3RCLElBQUksQ0FBQyxPQUFPLEdBQUcsS0FBSyxDQUFDO1FBQ3ZCLENBQUMsQ0FBQztRQUVLLGNBQVMsR0FBRyxDQUFDLEtBQWlCLEVBQUUsRUFBRTtZQUN2QyxJQUFJLENBQUMsSUFBSSxDQUFDLE9BQU87Z0JBQUUsT0FBTztZQUUxQixLQUFLLENBQUMsY0FBYyxFQUFFLENBQUM7WUFDdkIsTUFBTSxnQkFBZ0IsR0FBRyxLQUFLLENBQUMsS0FBSyxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsVUFBVSxDQUFDO1lBQ25FLE1BQU0sSUFBSSxHQUFHLGdCQUFnQixHQUFHLElBQUksQ0FBQyxPQUFPLENBQUM7WUFDN0MsSUFBSSxDQUFDLFdBQVcsQ0FBQyxVQUFVLEdBQUcsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUM7UUFDeEQsQ0FBQyxDQUFDO1FBekJBLElBQUksQ0FBQyxXQUFXLEdBQUcsT0FBTyxDQUFDO1FBRTNCLElBQUksQ0FBQyxXQUFXLENBQUMsZ0JBQWdCLENBQUMsV0FBVyxFQUFFLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQztRQUMvRCxJQUFJLENBQUMsV0FBVyxDQUFDLGdCQUFnQixDQUFDLFdBQVcsRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7UUFDL0QsSUFBSSxDQUFDLFdBQVcsQ0FBQyxnQkFBZ0IsQ0FBQyxZQUFZLEVBQUUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ2hFLElBQUksQ0FBQyxXQUFXLENBQUMsZ0JBQWdCLENBQUMsU0FBUyxFQUFFLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQztJQUMvRCxDQUFDO0NBb0JGIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBNdXN0IGJlIHVzZWQgYWZ0ZXIgbmdBZnRlclZpZXdJbml0XG4gKi9cbmV4cG9ydCBjbGFzcyBIb3Jpem9udGFsU2Nyb2xsIHtcbiAgcHJpdmF0ZSBfc3RhcnRYITogbnVtYmVyO1xuICBwcml2YXRlIF9zY3JvbGxMZWZ0ITogbnVtYmVyO1xuICBwcml2YXRlIF9pc0Rvd24gPSBmYWxzZTtcbiAgcHJpdmF0ZSByZWFkb25seSBfZWxlbWVudFJlZjogSFRNTEVsZW1lbnQ7XG5cbiAgY29uc3RydWN0b3IoZWxlbWVudDogSFRNTEVsZW1lbnQpIHtcbiAgICB0aGlzLl9lbGVtZW50UmVmID0gZWxlbWVudDtcblxuICAgIHRoaXMuX2VsZW1lbnRSZWYuYWRkRXZlbnRMaXN0ZW5lcignbW91c2Vkb3duJywgdGhpcy5tb3VzZURvd24pO1xuICAgIHRoaXMuX2VsZW1lbnRSZWYuYWRkRXZlbnRMaXN0ZW5lcignbW91c2Vtb3ZlJywgdGhpcy5tb3VzZU1vdmUpO1xuICAgIHRoaXMuX2VsZW1lbnRSZWYuYWRkRXZlbnRMaXN0ZW5lcignbW91c2VsZWF2ZScsIHRoaXMubW91c2VMZWZ0KTtcbiAgICB0aGlzLl9lbGVtZW50UmVmLmFkZEV2ZW50TGlzdGVuZXIoJ21vdXNldXAnLCB0aGlzLm1vdXNlTGVmdCk7XG4gIH1cblxuICBwdWJsaWMgbW91c2VEb3duID0gKGV2ZW50OiBNb3VzZUV2ZW50KSA9PiB7XG4gICAgdGhpcy5faXNEb3duID0gdHJ1ZTtcbiAgICB0aGlzLl9zdGFydFggPSBldmVudC5wYWdlWCAtIHRoaXMuX2VsZW1lbnRSZWYub2Zmc2V0TGVmdDtcbiAgICB0aGlzLl9zY3JvbGxMZWZ0ID0gdGhpcy5fZWxlbWVudFJlZi5zY3JvbGxMZWZ0O1xuICB9O1xuXG4gIHB1YmxpYyBtb3VzZUxlZnQgPSAoKSA9PiB7XG4gICAgdGhpcy5faXNEb3duID0gZmFsc2U7XG4gIH07XG5cbiAgcHVibGljIG1vdXNlTW92ZSA9IChldmVudDogTW91c2VFdmVudCkgPT4ge1xuICAgIGlmICghdGhpcy5faXNEb3duKSByZXR1cm47XG5cbiAgICBldmVudC5wcmV2ZW50RGVmYXVsdCgpO1xuICAgIGNvbnN0IGhvcml6b250YWxPZmZzZXQgPSBldmVudC5wYWdlWCAtIHRoaXMuX2VsZW1lbnRSZWYub2Zmc2V0TGVmdDtcbiAgICBjb25zdCB3YWxrID0gaG9yaXpvbnRhbE9mZnNldCAtIHRoaXMuX3N0YXJ0WDtcbiAgICB0aGlzLl9lbGVtZW50UmVmLnNjcm9sbExlZnQgPSB0aGlzLl9zY3JvbGxMZWZ0IC0gd2FsaztcbiAgfTtcbn1cbiJdfQ==

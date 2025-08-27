@@ -1,0 +1,15 @@
+import { Component, Input } from '@angular/core';
+import * as i0 from "@angular/core";
+export class ProgressBarComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressBarComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: ProgressBarComponent, isStandalone: true, selector: "ta-progress-bar", inputs: { current: "current", max: "max" }, ngImport: i0, template: "<progress\n  class=\"progress-bar\"\n  max=\"{{ this.max }}\"\n  value=\"{{ this.current }}\"\n></progress>\n", styles: [".progress-bar{appearance:none;width:100%;height:2px}progress::-webkit-progress-bar{background-color:var(--ta-neutral-300)}progress::-webkit-progress-value{background-color:var(--ta-surface-brand-primary)}\n"] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressBarComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-progress-bar', standalone: true, template: "<progress\n  class=\"progress-bar\"\n  max=\"{{ this.max }}\"\n  value=\"{{ this.current }}\"\n></progress>\n", styles: [".progress-bar{appearance:none;width:100%;height:2px}progress::-webkit-progress-bar{background-color:var(--ta-neutral-300)}progress::-webkit-progress-value{background-color:var(--ta-surface-brand-primary)}\n"] }]
+        }], propDecorators: { current: [{
+                type: Input
+            }], max: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvZ3Jlc3MtYmFyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50cy91aS9wcm9ncmVzcy1iYXIvcHJvZ3Jlc3MtYmFyLmNvbXBvbmVudC50cyIsIi4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50cy91aS9wcm9ncmVzcy1iYXIvcHJvZ3Jlc3MtYmFyLmNvbXBvbmVudC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLE1BQU0sZUFBZSxDQUFDOztBQVFqRCxNQUFNLE9BQU8sb0JBQW9COytHQUFwQixvQkFBb0I7bUdBQXBCLG9CQUFvQix1SENSakMsK0dBS0E7OzRGREdhLG9CQUFvQjtrQkFOaEMsU0FBUzsrQkFDQSxpQkFBaUIsY0FHYixJQUFJOzhCQUdQLE9BQU87c0JBQWYsS0FBSztnQkFDRyxHQUFHO3NCQUFYLEtBQUsiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIElucHV0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbkBDb21wb25lbnQoe1xuc2VsZWN0b3I6ICd0YS1wcm9ncmVzcy1iYXInLFxuICB0ZW1wbGF0ZVVybDogJy4vcHJvZ3Jlc3MtYmFyLmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vcHJvZ3Jlc3MtYmFyLmNvbXBvbmVudC5zY3NzJ10sXG4gIHN0YW5kYWxvbmU6IHRydWUsXG59KVxuZXhwb3J0IGNsYXNzIFByb2dyZXNzQmFyQ29tcG9uZW50IHtcbiAgQElucHV0KCkgY3VycmVudCE6IG51bWJlcjtcbiAgQElucHV0KCkgbWF4ITogbnVtYmVyO1xufVxuIiwiPHByb2dyZXNzXG4gIGNsYXNzPVwicHJvZ3Jlc3MtYmFyXCJcbiAgbWF4PVwie3sgdGhpcy5tYXggfX1cIlxuICB2YWx1ZT1cInt7IHRoaXMuY3VycmVudCB9fVwiXG4+PC9wcm9ncmVzcz5cbiJdfQ==

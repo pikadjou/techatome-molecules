@@ -1,0 +1,5 @@
+/*
+ * Public API Surface of wysiswyg
+ */
+export * from './lib/modules/wysiswyg/public-api';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyxtQ0FBbUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygd3lzaXN3eWdcbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9tb2R1bGVzL3d5c2lzd3lnL3B1YmxpYy1hcGknO1xuIl19

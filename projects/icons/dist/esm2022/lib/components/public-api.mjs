@@ -1,0 +1,7 @@
+/**
+ * Common component
+ */
+export * from './local-icon/local-icon.component';
+export * from './material-icon/material-icon.component';
+export * from './font-icon/font-icon.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50cy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyxtQ0FBbUMsQ0FBQztBQUNsRCxjQUFjLHlDQUF5QyxDQUFDO0FBQ3hELGNBQWMsaUNBQWlDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIENvbW1vbiBjb21wb25lbnRcbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL2xvY2FsLWljb24vbG9jYWwtaWNvbi5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9tYXRlcmlhbC1pY29uL21hdGVyaWFsLWljb24uY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vZm9udC1pY29uL2ZvbnQtaWNvbi5jb21wb25lbnQnO1xuIl19

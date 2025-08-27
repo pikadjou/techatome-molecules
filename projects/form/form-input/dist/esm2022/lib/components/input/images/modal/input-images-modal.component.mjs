@@ -1,0 +1,59 @@
+import { NgIf, AsyncPipe } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FileListComponent } from '@ta/files-basic';
+import { DualButtonComponent } from '@ta/ui';
+import { CamBaseModal, TemporaryFile, pickImages } from '@ta/utils';
+import { map } from 'rxjs';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/material/dialog";
+// eslint-disable-next-line @angular-eslint/component-class-suffix
+export class InputImageModal extends CamBaseModal {
+    constructor(dialogRef, data) {
+        super();
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.selection = [];
+        this.tempFiles = new TemporaryFile();
+        this.uploadPics = async () => {
+            const pics = await pickImages();
+            if (this.data.input.update) {
+                this.tempFiles.addFiles(pics);
+                this.data.input.update(pics);
+            }
+        };
+        this.selected = () => {
+            this.dialogRef.close(this.selection);
+        };
+        this.dialogRef.addPanelClass(['full-screen-modal', 'forced']);
+        this.selection = this.data.selection;
+    }
+    ngOnInit() {
+        if (this.data.input.files$) {
+            this._registerSubscription(this.data.input.files$.subscribe(() => this.tempFiles.removeAll()));
+        }
+    }
+    getPics$() {
+        return this.data.input.files$?.pipe(map(files => files.map(file => ({
+            ...file,
+            isSelected: this.selection.includes(file.url),
+        }))));
+    }
+    onFileSelected(file) {
+        if (this.selection.includes(file.url)) {
+            this.selection = this.selection.filter(url => file.url !== url);
+            return;
+        }
+        this.selection = [...this.selection, file.url];
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputImageModal, deps: [{ token: i1.MatDialogRef }, { token: MAT_DIALOG_DATA }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InputImageModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<div class=\"input-image-container\">\n  @if (this.tempFiles.files.length > 0) {\n    <ta-files-list [files]=\"this.tempFiles.files\"></ta-files-list>\n    <hr />\n  }\n\n  <ta-files-list [files]=\"(this.getPics$() | async) || []\" (fileSelected)=\"this.onFileSelected($event)\">\n  </ta-files-list>\n\n  <div class=\"cta-container\">\n    <ta-dual-button\n      [isFull]=\"true\"\n      [first]=\"{\n        icon: 'add',\n        label: 'input.images.add',\n        callback: this.uploadPics,\n      }\"\n      [second]=\"{\n        icon: 'check-line',\n        label: 'input.images.pick',\n        callback: this.selected,\n      }\"\n    ></ta-dual-button>\n  </div>\n</div>\n", styles: [".input-image-container{padding-bottom:70px}.cta-container{position:fixed;bottom:env(safe-area-inset-bottom);right:0;left:0;margin:space(xs)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }, { kind: "component", type: DualButtonComponent, selector: "ta-dual-button", inputs: ["isFull", "first", "second", "type"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputImageModal, decorators: [{
+            type: Component,
+            args: [{ selector: '', standalone: true, imports: [NgIf, AsyncPipe, FileListComponent, DualButtonComponent], template: "<div class=\"input-image-container\">\n  @if (this.tempFiles.files.length > 0) {\n    <ta-files-list [files]=\"this.tempFiles.files\"></ta-files-list>\n    <hr />\n  }\n\n  <ta-files-list [files]=\"(this.getPics$() | async) || []\" (fileSelected)=\"this.onFileSelected($event)\">\n  </ta-files-list>\n\n  <div class=\"cta-container\">\n    <ta-dual-button\n      [isFull]=\"true\"\n      [first]=\"{\n        icon: 'add',\n        label: 'input.images.add',\n        callback: this.uploadPics,\n      }\"\n      [second]=\"{\n        icon: 'check-line',\n        label: 'input.images.pick',\n        callback: this.selected,\n      }\"\n    ></ta-dual-button>\n  </div>\n</div>\n", styles: [".input-image-container{padding-bottom:70px}.cta-container{position:fixed;bottom:env(safe-area-inset-bottom);right:0;left:0;margin:space(xs)}\n"] }]
+        }], ctorParameters: () => [{ type: i1.MatDialogRef }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [MAT_DIALOG_DATA]
+                }] }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5wdXQtaW1hZ2VzLW1vZGFsLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50cy9pbnB1dC9pbWFnZXMvbW9kYWwvaW5wdXQtaW1hZ2VzLW1vZGFsLmNvbXBvbmVudC50cyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50cy9pbnB1dC9pbWFnZXMvbW9kYWwvaW5wdXQtaW1hZ2VzLW1vZGFsLmNvbXBvbmVudC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxJQUFJLEVBQUUsU0FBUyxFQUFFLE1BQU0saUJBQWlCLENBQUM7QUFDbEQsT0FBTyxFQUFFLFNBQVMsRUFBRSxNQUFNLEVBQVUsTUFBTSxlQUFlLENBQUM7QUFDMUQsT0FBTyxFQUFFLGVBQWUsRUFBZ0IsTUFBTSwwQkFBMEIsQ0FBQztBQUV6RSxPQUFPLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUNwRCxPQUFPLEVBQUUsbUJBQW1CLEVBQUUsTUFBTSxRQUFRLENBQUM7QUFDN0MsT0FBTyxFQUFFLFlBQVksRUFBWSxhQUFhLEVBQUUsVUFBVSxFQUFFLE1BQU0sV0FBVyxDQUFDO0FBQzlFLE9BQU8sRUFBRSxHQUFHLEVBQUUsTUFBTSxNQUFNLENBQUM7OztBQVczQixrRUFBa0U7QUFDbEUsTUFBTSxPQUFPLGVBQWdCLFNBQVEsWUFBWTtJQUsvQyxZQUNTLFNBQXdDLEVBQ2YsSUFBZ0I7UUFFaEQsS0FBSyxFQUFFLENBQUM7UUFIRCxjQUFTLEdBQVQsU0FBUyxDQUErQjtRQUNmLFNBQUksR0FBSixJQUFJLENBQVk7UUFOM0MsY0FBUyxHQUFhLEVBQUUsQ0FBQztRQUV6QixjQUFTLEdBQUcsSUFBSSxhQUFhLEVBQUUsQ0FBQztRQW1DaEMsZUFBVSxHQUFHLEtBQUssSUFBSSxFQUFFO1lBQzdCLE1BQU0sSUFBSSxHQUFHLE1BQU0sVUFBVSxFQUFFLENBQUM7WUFDaEMsSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLEVBQUUsQ0FBQztnQkFDM0IsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLENBQUM7Z0JBQzlCLElBQUksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsQ0FBQztZQUMvQixDQUFDO1FBQ0gsQ0FBQyxDQUFDO1FBQ0ssYUFBUSxHQUFHLEdBQUcsRUFBRTtZQUNyQixJQUFJLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7UUFDdkMsQ0FBQyxDQUFDO1FBcENBLElBQUksQ0FBQyxTQUFTLENBQUMsYUFBYSxDQUFDLENBQUMsbUJBQW1CLEVBQUUsUUFBUSxDQUFDLENBQUMsQ0FBQztRQUM5RCxJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDO0lBQ3ZDLENBQUM7SUFFRCxRQUFRO1FBQ04sSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLEVBQUUsQ0FBQztZQUMzQixJQUFJLENBQUMscUJBQXFCLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxHQUFHLEVBQUUsQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLFNBQVMsRUFBRSxDQUFDLENBQUMsQ0FBQztRQUNqRyxDQUFDO0lBQ0gsQ0FBQztJQUVNLFFBQVE7UUFDYixPQUFPLElBQUksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sRUFBRSxJQUFJLENBQ2pDLEdBQUcsQ0FBQyxLQUFLLENBQUMsRUFBRSxDQUNWLEtBQUssQ0FBQyxHQUFHLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxDQUFDO1lBQ2pCLEdBQUcsSUFBSTtZQUNQLFVBQVUsRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDO1NBQzlDLENBQUMsQ0FBQyxDQUNKLENBQ0YsQ0FBQztJQUNKLENBQUM7SUFDTSxjQUFjLENBQUMsSUFBYztRQUNsQyxJQUFJLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDO1lBQ3RDLElBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxJQUFJLENBQUMsR0FBRyxLQUFLLEdBQUcsQ0FBQyxDQUFDO1lBQ2hFLE9BQU87UUFDVCxDQUFDO1FBQ0QsSUFBSSxDQUFDLFNBQVMsR0FBRyxDQUFDLEdBQUcsSUFBSSxDQUFDLFNBQVMsRUFBRSxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUM7SUFDakQsQ0FBQzsrR0FyQ1UsZUFBZSw4Q0FPaEIsZUFBZTttR0FQZCxlQUFlLCtGQ25CNUIseXFCQXlCQSxtTURUa0IsU0FBUyw4Q0FBRSxpQkFBaUIsbUtBQUUsbUJBQW1COzs0RkFHdEQsZUFBZTtrQkFSM0IsU0FBUzsrQkFDQSxFQUFFLGNBR0UsSUFBSSxXQUNQLENBQUMsSUFBSSxFQUFFLFNBQVMsRUFBRSxpQkFBaUIsRUFBRSxtQkFBbUIsQ0FBQzs7MEJBVS9ELE1BQU07MkJBQUMsZUFBZSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nSWYsIEFzeW5jUGlwZSB9IGZyb20gJ0Bhbmd1bGFyL2NvbW1vbic7XG5pbXBvcnQgeyBDb21wb25lbnQsIEluamVjdCwgT25Jbml0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBNQVRfRElBTE9HX0RBVEEsIE1hdERpYWxvZ1JlZiB9IGZyb20gJ0Bhbmd1bGFyL21hdGVyaWFsL2RpYWxvZyc7XG5cbmltcG9ydCB7IEZpbGVMaXN0Q29tcG9uZW50IH0gZnJvbSAnQHRhL2ZpbGVzLWJhc2ljJztcbmltcG9ydCB7IER1YWxCdXR0b25Db21wb25lbnQgfSBmcm9tICdAdGEvdWknO1xuaW1wb3J0IHsgQ2FtQmFzZU1vZGFsLCBGaWxlRGF0YSwgVGVtcG9yYXJ5RmlsZSwgcGlja0ltYWdlcyB9IGZyb20gJ0B0YS91dGlscyc7XG5pbXBvcnQgeyBtYXAgfSBmcm9tICdyeGpzJztcblxuaW1wb3J0IHsgRGlhbG9nRGF0YSB9IGZyb20gJy4uL2lucHV0LWltYWdlcy5jb21wb25lbnQnO1xuXG5AQ29tcG9uZW50KHtcbnNlbGVjdG9yOiAnJyxcbiAgc3R5bGVVcmxzOiBbJy4vaW5wdXQtaW1hZ2VzLW1vZGFsLmNvbXBvbmVudC5zY3NzJ10sXG4gIHRlbXBsYXRlVXJsOiAnLi9pbnB1dC1pbWFnZXMtbW9kYWwuY29tcG9uZW50Lmh0bWwnLFxuICBzdGFuZGFsb25lOiB0cnVlLFxuICBpbXBvcnRzOiBbTmdJZiwgQXN5bmNQaXBlLCBGaWxlTGlzdENvbXBvbmVudCwgRHVhbEJ1dHRvbkNvbXBvbmVudF0sXG59KVxuLy8gZXNsaW50LWRpc2FibGUtbmV4dC1saW5lIEBhbmd1bGFyLWVzbGludC9jb21wb25lbnQtY2xhc3Mtc3VmZml4XG5leHBvcnQgY2xhc3MgSW5wdXRJbWFnZU1vZGFsIGV4dGVuZHMgQ2FtQmFzZU1vZGFsIGltcGxlbWVudHMgT25Jbml0IHtcbiAgcHVibGljIHNlbGVjdGlvbjogc3RyaW5nW10gPSBbXTtcblxuICBwdWJsaWMgdGVtcEZpbGVzID0gbmV3IFRlbXBvcmFyeUZpbGUoKTtcblxuICBjb25zdHJ1Y3RvcihcbiAgICBwdWJsaWMgZGlhbG9nUmVmOiBNYXREaWFsb2dSZWY8SW5wdXRJbWFnZU1vZGFsPixcbiAgICBASW5qZWN0KE1BVF9ESUFMT0dfREFUQSkgcHVibGljIGRhdGE6IERpYWxvZ0RhdGFcbiAgKSB7XG4gICAgc3VwZXIoKTtcblxuICAgIHRoaXMuZGlhbG9nUmVmLmFkZFBhbmVsQ2xhc3MoWydmdWxsLXNjcmVlbi1tb2RhbCcsICdmb3JjZWQnXSk7XG4gICAgdGhpcy5zZWxlY3Rpb24gPSB0aGlzLmRhdGEuc2VsZWN0aW9uO1xuICB9XG5cbiAgbmdPbkluaXQoKSB7XG4gICAgaWYgKHRoaXMuZGF0YS5pbnB1dC5maWxlcyQpIHtcbiAgICAgIHRoaXMuX3JlZ2lzdGVyU3Vic2NyaXB0aW9uKHRoaXMuZGF0YS5pbnB1dC5maWxlcyQuc3Vic2NyaWJlKCgpID0+IHRoaXMudGVtcEZpbGVzLnJlbW92ZUFsbCgpKSk7XG4gICAgfVxuICB9XG5cbiAgcHVibGljIGdldFBpY3MkKCkge1xuICAgIHJldHVybiB0aGlzLmRhdGEuaW5wdXQuZmlsZXMkPy5waXBlKFxuICAgICAgbWFwKGZpbGVzID0+XG4gICAgICAgIGZpbGVzLm1hcChmaWxlID0+ICh7XG4gICAgICAgICAgLi4uZmlsZSxcbiAgICAgICAgICBpc1NlbGVjdGVkOiB0aGlzLnNlbGVjdGlvbi5pbmNsdWRlcyhmaWxlLnVybCksXG4gICAgICAgIH0pKVxuICAgICAgKVxuICAgICk7XG4gIH1cbiAgcHVibGljIG9uRmlsZVNlbGVjdGVkKGZpbGU6IEZpbGVEYXRhKSB7XG4gICAgaWYgKHRoaXMuc2VsZWN0aW9uLmluY2x1ZGVzKGZpbGUudXJsKSkge1xuICAgICAgdGhpcy5zZWxlY3Rpb24gPSB0aGlzLnNlbGVjdGlvbi5maWx0ZXIodXJsID0+IGZpbGUudXJsICE9PSB1cmwpO1xuICAgICAgcmV0dXJuO1xuICAgIH1cbiAgICB0aGlzLnNlbGVjdGlvbiA9IFsuLi50aGlzLnNlbGVjdGlvbiwgZmlsZS51cmxdO1xuICB9XG4gIHB1YmxpYyB1cGxvYWRQaWNzID0gYXN5bmMgKCkgPT4ge1xuICAgIGNvbnN0IHBpY3MgPSBhd2FpdCBwaWNrSW1hZ2VzKCk7XG4gICAgaWYgKHRoaXMuZGF0YS5pbnB1dC51cGRhdGUpIHtcbiAgICAgIHRoaXMudGVtcEZpbGVzLmFkZEZpbGVzKHBpY3MpO1xuICAgICAgdGhpcy5kYXRhLmlucHV0LnVwZGF0ZShwaWNzKTtcbiAgICB9XG4gIH07XG4gIHB1YmxpYyBzZWxlY3RlZCA9ICgpID0+IHtcbiAgICB0aGlzLmRpYWxvZ1JlZi5jbG9zZSh0aGlzLnNlbGVjdGlvbik7XG4gIH07XG59XG4iLCI8ZGl2IGNsYXNzPVwiaW5wdXQtaW1hZ2UtY29udGFpbmVyXCI+XG4gIEBpZiAodGhpcy50ZW1wRmlsZXMuZmlsZXMubGVuZ3RoID4gMCkge1xuICAgIDx0YS1maWxlcy1saXN0IFtmaWxlc109XCJ0aGlzLnRlbXBGaWxlcy5maWxlc1wiPjwvdGEtZmlsZXMtbGlzdD5cbiAgICA8aHIgLz5cbiAgfVxuXG4gIDx0YS1maWxlcy1saXN0IFtmaWxlc109XCIodGhpcy5nZXRQaWNzJCgpIHwgYXN5bmMpIHx8IFtdXCIgKGZpbGVTZWxlY3RlZCk9XCJ0aGlzLm9uRmlsZVNlbGVjdGVkKCRldmVudClcIj5cbiAgPC90YS1maWxlcy1saXN0PlxuXG4gIDxkaXYgY2xhc3M9XCJjdGEtY29udGFpbmVyXCI+XG4gICAgPHRhLWR1YWwtYnV0dG9uXG4gICAgICBbaXNGdWxsXT1cInRydWVcIlxuICAgICAgW2ZpcnN0XT1cIntcbiAgICAgICAgaWNvbjogJ2FkZCcsXG4gICAgICAgIGxhYmVsOiAnaW5wdXQuaW1hZ2VzLmFkZCcsXG4gICAgICAgIGNhbGxiYWNrOiB0aGlzLnVwbG9hZFBpY3MsXG4gICAgICB9XCJcbiAgICAgIFtzZWNvbmRdPVwie1xuICAgICAgICBpY29uOiAnY2hlY2stbGluZScsXG4gICAgICAgIGxhYmVsOiAnaW5wdXQuaW1hZ2VzLnBpY2snLFxuICAgICAgICBjYWxsYmFjazogdGhpcy5zZWxlY3RlZCxcbiAgICAgIH1cIlxuICAgID48L3RhLWR1YWwtYnV0dG9uPlxuICA8L2Rpdj5cbjwvZGl2PlxuIl19

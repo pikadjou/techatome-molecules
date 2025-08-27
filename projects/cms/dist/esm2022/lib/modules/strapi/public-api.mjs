@@ -1,0 +1,8 @@
+/*
+ * Public API Surface of cms
+ */
+export * from './components/cms/cms.component';
+export * from './components/sale/sale.component';
+export * from './services/public-api';
+export * from './strapi.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3NyYy9saWIvbW9kdWxlcy9zdHJhcGkvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsZ0NBQWdDLENBQUM7QUFDL0MsY0FBYyxrQ0FBa0MsQ0FBQztBQUVqRCxjQUFjLHVCQUF1QixDQUFDO0FBRXRDLGNBQWMsaUJBQWlCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIGNtc1xuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vY29tcG9uZW50cy9jbXMvY21zLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2NvbXBvbmVudHMvc2FsZS9zYWxlLmNvbXBvbmVudCc7XG5cbmV4cG9ydCAqIGZyb20gJy4vc2VydmljZXMvcHVibGljLWFwaSc7XG5cbmV4cG9ydCAqIGZyb20gJy4vc3RyYXBpLm1vZHVsZSc7XG4iXX0=

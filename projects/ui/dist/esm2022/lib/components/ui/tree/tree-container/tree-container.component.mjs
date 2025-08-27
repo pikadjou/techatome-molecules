@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+export class CamTreeContainerComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamTreeContainerComponent, isStandalone: true, selector: "ta-tree-container", ngImport: i0, template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [""] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeContainerComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-tree-container', standalone: true, imports: [], template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHJlZS1jb250YWluZXIuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnRzL3VpL3RyZWUvdHJlZS1jb250YWluZXIvdHJlZS1jb250YWluZXIuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnRzL3VpL3RyZWUvdHJlZS1jb250YWluZXIvdHJlZS1jb250YWluZXIuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxNQUFNLGVBQWUsQ0FBQzs7QUFTMUMsTUFBTSxPQUFPLHlCQUF5QjsrR0FBekIseUJBQXlCO21HQUF6Qix5QkFBeUIsNkVDVHRDLG9EQUdBOzs0RkRNYSx5QkFBeUI7a0JBUHJDLFNBQVM7K0JBQ0UsbUJBQW1CLGNBQ2pCLElBQUksV0FDUCxFQUFFIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ3RhLXRyZWUtY29udGFpbmVyJyxcbiAgc3RhbmRhbG9uZTogdHJ1ZSxcbiAgaW1wb3J0czogW10sXG4gIHRlbXBsYXRlVXJsOiAnLi90cmVlLWNvbnRhaW5lci5jb21wb25lbnQuaHRtbCcsXG4gIHN0eWxlVXJsOiAnLi90cmVlLWNvbnRhaW5lci5jb21wb25lbnQuc2NzcycsXG59KVxuZXhwb3J0IGNsYXNzIENhbVRyZWVDb250YWluZXJDb21wb25lbnQge31cbiIsIjxkaXY+XHJcbiAgPG5nLWNvbnRlbnQ+PC9uZy1jb250ZW50PlxyXG48L2Rpdj5cclxuIl19

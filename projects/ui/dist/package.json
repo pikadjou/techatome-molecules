@@ -1,0 +1,39 @@
+{
+  "name": "@ta/ui",
+  "version": "3.16.0-beta.4",
+  "main": "./dist",
+  "peerDependencies": {
+    "@angular/animations": "^18.2.13",
+    "@angular/cdk": "^18.2.13",
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/material": "^18.2.13"
+  },
+  "dependencies": {
+    "@ta/capacitor": "^3.16.0-beta.4",
+    "@ta/icons": "^3.16.0-beta.4",
+    "@ta/server": "^3.16.0-beta.4",
+    "@ta/services": "^3.16.0-beta.4",
+    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/utils": "^3.16.0-beta.4",
+    "storage-manager-js": "4.2.0",
+    "swiper": "^9.1.0",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e",
+  "module": "fesm2022/ta-ui.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/ta-ui.mjs",
+      "esm": "./esm2022/ta-ui.mjs",
+      "default": "./fesm2022/ta-ui.mjs"
+    }
+  }
+}

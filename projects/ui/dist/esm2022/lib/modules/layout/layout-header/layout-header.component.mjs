@@ -1,0 +1,12 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+export class LayoutHeaderComponent {
+    constructor() { }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutHeaderComponent, isStandalone: true, selector: "ta-layout-header", ngImport: i0, template: "<div class=\"header\">\n  <ng-content></ng-content>\n</div>\n", styles: ["@media screen and (max-width: 767px){.header{color:var(--ta-text-primary);padding:var(--ta-space-sm)}}\n"] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutHeaderComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-layout-header', standalone: true, template: "<div class=\"header\">\n  <ng-content></ng-content>\n</div>\n", styles: ["@media screen and (max-width: 767px){.header{color:var(--ta-text-primary);padding:var(--ta-space-sm)}}\n"] }]
+        }], ctorParameters: () => [] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGF5b3V0LWhlYWRlci5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvbGF5b3V0L2xheW91dC1oZWFkZXIvbGF5b3V0LWhlYWRlci5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvbGF5b3V0L2xheW91dC1oZWFkZXIvbGF5b3V0LWhlYWRlci5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDOztBQVExQyxNQUFNLE9BQU8scUJBQXFCO0lBQ2hDLGdCQUFlLENBQUM7K0dBREwscUJBQXFCO21HQUFyQixxQkFBcUIsNEVDUmxDLCtEQUdBOzs0RkRLYSxxQkFBcUI7a0JBTmpDLFNBQVM7K0JBQ0Esa0JBQWtCLGNBR2QsSUFBSSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5AQ29tcG9uZW50KHtcbnNlbGVjdG9yOiAndGEtbGF5b3V0LWhlYWRlcicsXG4gIHRlbXBsYXRlVXJsOiAnLi9sYXlvdXQtaGVhZGVyLmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vbGF5b3V0LWhlYWRlci5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxufSlcbmV4cG9ydCBjbGFzcyBMYXlvdXRIZWFkZXJDb21wb25lbnQge1xuICBjb25zdHJ1Y3RvcigpIHt9XG59XG4iLCI8ZGl2IGNsYXNzPVwiaGVhZGVyXCI+XG4gIDxuZy1jb250ZW50PjwvbmctY29udGVudD5cbjwvZGl2PlxuIl19

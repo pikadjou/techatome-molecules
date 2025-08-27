@@ -1,0 +1,32 @@
+import { AbstractNotificationTemplateComponent } from '../abstract';
+import { IconComponent } from '../../icon/icon.component';
+import { ItemComponent } from '../../item.component';
+import { NotificationTitleComponent } from '../../title/title.component';
+import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import * as i0 from "@angular/core";
+import * as i1 from "@ngx-translate/core";
+export class NewInvoiceComponent extends AbstractNotificationTemplateComponent {
+    goTo() {
+        if (!this.sharedService.routing || !this.sharedService.routing.invoice) {
+            return;
+        }
+        super.goTo();
+        this.sharedService.routing?.invoice({
+            projectId: this.extractredirectContext('ProjectId'),
+            invoiceId: this.extractredirectContext('InvoiceId'),
+        });
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: NewInvoiceComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: NewInvoiceComponent, isStandalone: true, selector: "ta-new-invoice", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{ 'notification.items.new-invoice.title' | translate: this.getTranslation() }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: NewInvoiceComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-new-invoice', standalone: true, imports: [
+                        IconComponent,
+                        ItemComponent,
+                        NotificationTitleComponent,
+                        TranslateModule
+                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{ 'notification.items.new-invoice.title' | translate: this.getTranslation() }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmV3LWludm9pY2UuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnRzL2l0ZW1zL2l0ZW0vdGVtcGxhdGUvbmV3LWludm9pY2UvbmV3LWludm9pY2UuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnRzL2l0ZW1zL2l0ZW0vdGVtcGxhdGUvbmV3LWludm9pY2UvbmV3LWludm9pY2UuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLHFDQUFxQyxFQUFFLE1BQU0sYUFBYSxDQUFDO0FBQ3BFLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQztBQUMxRCxPQUFPLEVBQUUsYUFBYSxFQUFFLE1BQU0sc0JBQXNCLENBQUM7QUFDckQsT0FBTyxFQUFFLDBCQUEwQixFQUFFLE1BQU0sNkJBQTZCLENBQUM7QUFDekUsT0FBTyxFQUFFLFNBQVMsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUMxQyxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0scUJBQXFCLENBQUM7OztBQWN0RCxNQUFNLE9BQU8sbUJBQW9CLFNBQVEscUNBQXFDO0lBQ25FLElBQUk7UUFDWCxJQUFJLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxPQUFPLElBQUksQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLE9BQU8sQ0FBQyxPQUFPLEVBQUUsQ0FBQztZQUN2RSxPQUFPO1FBQ1QsQ0FBQztRQUNELEtBQUssQ0FBQyxJQUFJLEVBQUUsQ0FBQztRQUNiLElBQUksQ0FBQyxhQUFhLENBQUMsT0FBTyxFQUFFLE9BQU8sQ0FBQztZQUNsQyxTQUFTLEVBQUUsSUFBSSxDQUFDLHNCQUFzQixDQUFDLFdBQVcsQ0FBQztZQUNuRCxTQUFTLEVBQUUsSUFBSSxDQUFDLHNCQUFzQixDQUFDLFdBQVcsQ0FBQztTQUNwRCxDQUFDLENBQUM7SUFDTCxDQUFDOytHQVZVLG1CQUFtQjttR0FBbkIsbUJBQW1CLGlHQ25CaEMsZ1ZBTUEsMERET0ksYUFBYSxpR0FDYixhQUFhLDJGQUNiLDBCQUEwQixzRUFDMUIsZUFBZTs7NEZBR04sbUJBQW1CO2tCQVovQixTQUFTOytCQUNFLGdCQUFnQixjQUdkLElBQUksV0FDUDt3QkFDUCxhQUFhO3dCQUNiLGFBQWE7d0JBQ2IsMEJBQTBCO3dCQUMxQixlQUFlO3FCQUNoQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEFic3RyYWN0Tm90aWZpY2F0aW9uVGVtcGxhdGVDb21wb25lbnQgfSBmcm9tICcuLi9hYnN0cmFjdCc7XG5pbXBvcnQgeyBJY29uQ29tcG9uZW50IH0gZnJvbSAnLi4vLi4vaWNvbi9pY29uLmNvbXBvbmVudCc7XG5pbXBvcnQgeyBJdGVtQ29tcG9uZW50IH0gZnJvbSAnLi4vLi4vaXRlbS5jb21wb25lbnQnO1xuaW1wb3J0IHsgTm90aWZpY2F0aW9uVGl0bGVDb21wb25lbnQgfSBmcm9tICcuLi8uLi90aXRsZS90aXRsZS5jb21wb25lbnQnO1xuaW1wb3J0IHsgQ29tcG9uZW50IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBUcmFuc2xhdGVNb2R1bGUgfSBmcm9tICdAbmd4LXRyYW5zbGF0ZS9jb3JlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAndGEtbmV3LWludm9pY2UnLFxuICB0ZW1wbGF0ZVVybDogJy4vbmV3LWludm9pY2UuY29tcG9uZW50Lmh0bWwnLFxuICBzdHlsZVVybHM6IFsnLi9uZXctaW52b2ljZS5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxuICBpbXBvcnRzOiBbXG4gICAgSWNvbkNvbXBvbmVudCxcbiAgICBJdGVtQ29tcG9uZW50LFxuICAgIE5vdGlmaWNhdGlvblRpdGxlQ29tcG9uZW50LFxuICAgIFRyYW5zbGF0ZU1vZHVsZVxuICBdLFxufSlcbmV4cG9ydCBjbGFzcyBOZXdJbnZvaWNlQ29tcG9uZW50IGV4dGVuZHMgQWJzdHJhY3ROb3RpZmljYXRpb25UZW1wbGF0ZUNvbXBvbmVudCB7XG4gIG92ZXJyaWRlIGdvVG8oKSB7XG4gICAgaWYgKCF0aGlzLnNoYXJlZFNlcnZpY2Uucm91dGluZyB8fCAhdGhpcy5zaGFyZWRTZXJ2aWNlLnJvdXRpbmcuaW52b2ljZSkge1xuICAgICAgcmV0dXJuO1xuICAgIH1cbiAgICBzdXBlci5nb1RvKCk7XG4gICAgdGhpcy5zaGFyZWRTZXJ2aWNlLnJvdXRpbmc/Lmludm9pY2Uoe1xuICAgICAgcHJvamVjdElkOiB0aGlzLmV4dHJhY3RyZWRpcmVjdENvbnRleHQoJ1Byb2plY3RJZCcpLFxuICAgICAgaW52b2ljZUlkOiB0aGlzLmV4dHJhY3RyZWRpcmVjdENvbnRleHQoJ0ludm9pY2VJZCcpLFxuICAgIH0pO1xuICB9XG59XG4iLCI8dGEtbm90aWZpY2F0aW9uLWl0ZW0gW25vdGlmaWNhdGlvbl09XCJ0aGlzLm5vdGlmaWNhdGlvblwiIChjbGljayk9XCJ0aGlzLmdvVG8oKVwiPlxuICA8dGEtbm90aWZpY2F0aW9uLWl0ZW0tdGl0bGU+XG4gICAge3sgJ25vdGlmaWNhdGlvbi5pdGVtcy5uZXctaW52b2ljZS50aXRsZScgfCB0cmFuc2xhdGU6IHRoaXMuZ2V0VHJhbnNsYXRpb24oKSB9fVxuICA8L3RhLW5vdGlmaWNhdGlvbi1pdGVtLXRpdGxlPlxuICA8dGEtbm90aWZpY2F0aW9uLWl0ZW0taWNvbiBpY29uPVwiYmlsbHNcIj48L3RhLW5vdGlmaWNhdGlvbi1pdGVtLWljb24+XG48L3RhLW5vdGlmaWNhdGlvbi1pdGVtPlxuIl19

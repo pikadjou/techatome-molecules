@@ -1,0 +1,31 @@
+import { AbstractNotificationTemplateComponent } from '../abstract';
+import { IconComponent } from '../../icon/icon.component';
+import { ItemComponent } from '../../item.component';
+import { NotificationTitleComponent } from '../../title/title.component';
+import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import * as i0 from "@angular/core";
+import * as i1 from "@ngx-translate/core";
+export class TaskDueTodayComponent extends AbstractNotificationTemplateComponent {
+    goTo() {
+        if (!this.sharedService.routing || !this.sharedService.routing.task) {
+            return;
+        }
+        super.goTo();
+        this.sharedService.routing?.task({
+            taskId: this.extractredirectContext('TaskId'),
+        });
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaskDueTodayComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaskDueTodayComponent, isStandalone: true, selector: "ta-task-due-today", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{ 'notification.items.task-due-today.title' | translate: this.getTranslation() }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaskDueTodayComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-task-due-today', standalone: true, imports: [
+                        IconComponent,
+                        ItemComponent,
+                        NotificationTitleComponent,
+                        TranslateModule
+                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{ 'notification.items.task-due-today.title' | translate: this.getTranslation() }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGFzay1kdWUtdG9kYXkuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnRzL2l0ZW1zL2l0ZW0vdGVtcGxhdGUvdGFzay1kdWUtdG9kYXkvdGFzay1kdWUtdG9kYXkuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnRzL2l0ZW1zL2l0ZW0vdGVtcGxhdGUvdGFzay1kdWUtdG9kYXkvdGFzay1kdWUtdG9kYXkuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLHFDQUFxQyxFQUFFLE1BQU0sYUFBYSxDQUFDO0FBQ3BFLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQztBQUMxRCxPQUFPLEVBQUUsYUFBYSxFQUFFLE1BQU0sc0JBQXNCLENBQUM7QUFDckQsT0FBTyxFQUFFLDBCQUEwQixFQUFFLE1BQU0sNkJBQTZCLENBQUM7QUFDekUsT0FBTyxFQUFFLFNBQVMsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUMxQyxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0scUJBQXFCLENBQUM7OztBQWN0RCxNQUFNLE9BQU8scUJBQXNCLFNBQVEscUNBQXFDO0lBQ3JFLElBQUk7UUFDWCxJQUFJLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxPQUFPLElBQUksQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLE9BQU8sQ0FBQyxJQUFJLEVBQUUsQ0FBQztZQUNwRSxPQUFPO1FBQ1QsQ0FBQztRQUNELEtBQUssQ0FBQyxJQUFJLEVBQUUsQ0FBQztRQUNiLElBQUksQ0FBQyxhQUFhLENBQUMsT0FBTyxFQUFFLElBQUksQ0FBQztZQUMvQixNQUFNLEVBQUUsSUFBSSxDQUFDLHNCQUFzQixDQUFDLFFBQVEsQ0FBQztTQUM5QyxDQUFDLENBQUM7SUFDTCxDQUFDOytHQVRVLHFCQUFxQjttR0FBckIscUJBQXFCLG9HQ25CbEMsbVZBTUEsMERET0ksYUFBYSxpR0FDYixhQUFhLDJGQUNiLDBCQUEwQixzRUFDMUIsZUFBZTs7NEZBR04scUJBQXFCO2tCQVpqQyxTQUFTOytCQUNFLG1CQUFtQixjQUdqQixJQUFJLFdBQ1A7d0JBQ1AsYUFBYTt3QkFDYixhQUFhO3dCQUNiLDBCQUEwQjt3QkFDMUIsZUFBZTtxQkFDaEIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBBYnN0cmFjdE5vdGlmaWNhdGlvblRlbXBsYXRlQ29tcG9uZW50IH0gZnJvbSAnLi4vYWJzdHJhY3QnO1xuaW1wb3J0IHsgSWNvbkNvbXBvbmVudCB9IGZyb20gJy4uLy4uL2ljb24vaWNvbi5jb21wb25lbnQnO1xuaW1wb3J0IHsgSXRlbUNvbXBvbmVudCB9IGZyb20gJy4uLy4uL2l0ZW0uY29tcG9uZW50JztcbmltcG9ydCB7IE5vdGlmaWNhdGlvblRpdGxlQ29tcG9uZW50IH0gZnJvbSAnLi4vLi4vdGl0bGUvdGl0bGUuY29tcG9uZW50JztcbmltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgVHJhbnNsYXRlTW9kdWxlIH0gZnJvbSAnQG5neC10cmFuc2xhdGUvY29yZSc7XG5cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ3RhLXRhc2stZHVlLXRvZGF5JyxcbiAgdGVtcGxhdGVVcmw6ICcuL3Rhc2stZHVlLXRvZGF5LmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vdGFzay1kdWUtdG9kYXkuY29tcG9uZW50LnNjc3MnXSxcbiAgc3RhbmRhbG9uZTogdHJ1ZSxcbiAgaW1wb3J0czogW1xuICAgIEljb25Db21wb25lbnQsXG4gICAgSXRlbUNvbXBvbmVudCxcbiAgICBOb3RpZmljYXRpb25UaXRsZUNvbXBvbmVudCxcbiAgICBUcmFuc2xhdGVNb2R1bGVcbiAgXSxcbn0pXG5leHBvcnQgY2xhc3MgVGFza0R1ZVRvZGF5Q29tcG9uZW50IGV4dGVuZHMgQWJzdHJhY3ROb3RpZmljYXRpb25UZW1wbGF0ZUNvbXBvbmVudCB7XG4gIG92ZXJyaWRlIGdvVG8oKSB7XG4gICAgaWYgKCF0aGlzLnNoYXJlZFNlcnZpY2Uucm91dGluZyB8fCAhdGhpcy5zaGFyZWRTZXJ2aWNlLnJvdXRpbmcudGFzaykge1xuICAgICAgcmV0dXJuO1xuICAgIH1cbiAgICBzdXBlci5nb1RvKCk7XG4gICAgdGhpcy5zaGFyZWRTZXJ2aWNlLnJvdXRpbmc/LnRhc2soe1xuICAgICAgdGFza0lkOiB0aGlzLmV4dHJhY3RyZWRpcmVjdENvbnRleHQoJ1Rhc2tJZCcpLFxuICAgIH0pO1xuICB9XG59XG4iLCI8dGEtbm90aWZpY2F0aW9uLWl0ZW0gW25vdGlmaWNhdGlvbl09XCJ0aGlzLm5vdGlmaWNhdGlvblwiIChjbGljayk9XCJ0aGlzLmdvVG8oKVwiPlxuICA8dGEtbm90aWZpY2F0aW9uLWl0ZW0tdGl0bGU+XG4gICAge3sgJ25vdGlmaWNhdGlvbi5pdGVtcy50YXNrLWR1ZS10b2RheS50aXRsZScgfCB0cmFuc2xhdGU6IHRoaXMuZ2V0VHJhbnNsYXRpb24oKSB9fVxuICA8L3RhLW5vdGlmaWNhdGlvbi1pdGVtLXRpdGxlPlxuICA8dGEtbm90aWZpY2F0aW9uLWl0ZW0taWNvbiBpY29uPVwidGFza3NcIj48L3RhLW5vdGlmaWNhdGlvbi1pdGVtLWljb24+XG48L3RhLW5vdGlmaWNhdGlvbi1pdGVtPlxuIl19

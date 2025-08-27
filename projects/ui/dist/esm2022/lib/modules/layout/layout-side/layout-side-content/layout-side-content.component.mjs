@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+export class LayoutSideContentComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideContentComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutSideContentComponent, isStandalone: true, selector: "ta-layout-side-content", ngImport: i0, template: "<div class=\"form-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [""] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideContentComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-layout-side-content', standalone: true, template: "<div class=\"form-container\">\n  <ng-content></ng-content>\n</div>\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGF5b3V0LXNpZGUtY29udGVudC5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvbGF5b3V0L2xheW91dC1zaWRlL2xheW91dC1zaWRlLWNvbnRlbnQvbGF5b3V0LXNpZGUtY29udGVudC5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvbGF5b3V0L2xheW91dC1zaWRlL2xheW91dC1zaWRlLWNvbnRlbnQvbGF5b3V0LXNpZGUtY29udGVudC5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDOztBQVExQyxNQUFNLE9BQU8sMEJBQTBCOytHQUExQiwwQkFBMEI7bUdBQTFCLDBCQUEwQixrRkNSdkMsdUVBR0E7OzRGREthLDBCQUEwQjtrQkFOdEMsU0FBUzsrQkFDQSx3QkFBd0IsY0FHcEIsSUFBSSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5AQ29tcG9uZW50KHtcbnNlbGVjdG9yOiAndGEtbGF5b3V0LXNpZGUtY29udGVudCcsXG4gIHRlbXBsYXRlVXJsOiAnLi9sYXlvdXQtc2lkZS1jb250ZW50LmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vbGF5b3V0LXNpZGUtY29udGVudC5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxufSlcbmV4cG9ydCBjbGFzcyBMYXlvdXRTaWRlQ29udGVudENvbXBvbmVudCB7fVxuIiwiPGRpdiBjbGFzcz1cImZvcm0tY29udGFpbmVyXCI+XG4gIDxuZy1jb250ZW50PjwvbmctY29udGVudD5cbjwvZGl2PlxuIl19

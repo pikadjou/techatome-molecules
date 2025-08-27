@@ -1,0 +1,32 @@
+import { CommonModule } from '@angular/common';
+import { Component, Inject, Input, Optional } from '@angular/core';
+import { MENU_MAX_HEIGHT, MENU_TEMPLATE } from '../overlay.service';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/common";
+export class CamDefaultPanelComponent {
+    constructor(templateRef, maxHeight) {
+        this.templateRef = templateRef;
+        this.maxHeight = maxHeight;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDefaultPanelComponent, deps: [{ token: MENU_TEMPLATE, optional: true }, { token: MENU_MAX_HEIGHT, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CamDefaultPanelComponent, isStandalone: true, selector: "ta-default-panel", inputs: { template: "template" }, host: { styleAttribute: "display: block; width: 100%;" }, ngImport: i0, template: "<div class=\"menu-panel\" [style.max-height.px]=\"this.maxHeight\">\n  @if (this.templateRef) {\n    <ng-container *ngTemplateOutlet=\"this.templateRef\"></ng-container>\n  } @else {\n    <ng-template> Ceci est le template par defaut. Il faut renseigner un template. </ng-template>\n  }\n</div>\n", styles: [".menu-panel{width:100%;box-sizing:border-box;background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-md);overflow-y:auto}.custom-panel-header{flex:0 0 auto;padding:var(--ta-space-md);border-bottom:1px solid var(--ta-neutral-200)}.custom-panel-content{flex:1 1 auto;overflow-y:auto;padding:var(--ta-space-md)}.custom-panel-cta{flex:0 0 auto;padding:var(--ta-space-md);border-top:1px solid var(--ta-neutral-200);background:var(--ta-neutral-white)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDefaultPanelComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-default-panel', standalone: true, host: {
+                        style: 'display: block; width: 100%;',
+                    }, imports: [CommonModule], template: "<div class=\"menu-panel\" [style.max-height.px]=\"this.maxHeight\">\n  @if (this.templateRef) {\n    <ng-container *ngTemplateOutlet=\"this.templateRef\"></ng-container>\n  } @else {\n    <ng-template> Ceci est le template par defaut. Il faut renseigner un template. </ng-template>\n  }\n</div>\n", styles: [".menu-panel{width:100%;box-sizing:border-box;background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-md);overflow-y:auto}.custom-panel-header{flex:0 0 auto;padding:var(--ta-space-md);border-bottom:1px solid var(--ta-neutral-200)}.custom-panel-content{flex:1 1 auto;overflow-y:auto;padding:var(--ta-space-md)}.custom-panel-cta{flex:0 0 auto;padding:var(--ta-space-md);border-top:1px solid var(--ta-neutral-200);background:var(--ta-neutral-white)}\n"] }]
+        }], ctorParameters: () => [{ type: i0.TemplateRef, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [MENU_TEMPLATE]
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [MENU_MAX_HEIGHT]
+                }] }], propDecorators: { template: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVmYXVsdC1wYW5lbC5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvb3ZlcmxheS1wYW5lbC9kZWZhdWx0LXBhbmVsL2RlZmF1bHQtcGFuZWwuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9tb2R1bGVzL292ZXJsYXktcGFuZWwvZGVmYXVsdC1wYW5lbC9kZWZhdWx0LXBhbmVsLmNvbXBvbmVudC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUsU0FBUyxFQUFFLE1BQU0sRUFBRSxLQUFLLEVBQUUsUUFBUSxFQUFlLE1BQU0sZUFBZSxDQUFDO0FBRWhGLE9BQU8sRUFBRSxlQUFlLEVBQUUsYUFBYSxFQUFFLE1BQU0sb0JBQW9CLENBQUM7OztBQVlwRSxNQUFNLE9BQU8sd0JBQXdCO0lBR25DLFlBQzRDLFdBQTZCLEVBQzNCLFNBQWlCO1FBRG5CLGdCQUFXLEdBQVgsV0FBVyxDQUFrQjtRQUMzQixjQUFTLEdBQVQsU0FBUyxDQUFRO0lBQzVELENBQUM7K0dBTk8sd0JBQXdCLGtCQUliLGFBQWEsNkJBQ2IsZUFBZTttR0FMMUIsd0JBQXdCLHdLQ2ZyQywwU0FPQSwyaUJETVksWUFBWTs7NEZBRVgsd0JBQXdCO2tCQVZwQyxTQUFTOytCQUNFLGtCQUFrQixjQUdoQixJQUFJLFFBQ1Y7d0JBQ0osS0FBSyxFQUFFLDhCQUE4QjtxQkFDdEMsV0FDUSxDQUFDLFlBQVksQ0FBQzs7MEJBTXBCLFFBQVE7OzBCQUFJLE1BQU07MkJBQUMsYUFBYTs7MEJBQ2hDLFFBQVE7OzBCQUFJLE1BQU07MkJBQUMsZUFBZTt5Q0FKNUIsUUFBUTtzQkFBaEIsS0FBSyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbW1vbk1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvbW1vbic7XG5pbXBvcnQgeyBDb21wb25lbnQsIEluamVjdCwgSW5wdXQsIE9wdGlvbmFsLCBUZW1wbGF0ZVJlZiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5pbXBvcnQgeyBNRU5VX01BWF9IRUlHSFQsIE1FTlVfVEVNUExBVEUgfSBmcm9tICcuLi9vdmVybGF5LnNlcnZpY2UnO1xuXG5AQ29tcG9uZW50KHtcbiAgc2VsZWN0b3I6ICd0YS1kZWZhdWx0LXBhbmVsJyxcbiAgdGVtcGxhdGVVcmw6ICcuL2RlZmF1bHQtcGFuZWwuY29tcG9uZW50Lmh0bWwnLFxuICBzdHlsZVVybHM6IFsnLi9kZWZhdWx0LXBhbmVsLmNvbXBvbmVudC5zY3NzJ10sXG4gIHN0YW5kYWxvbmU6IHRydWUsXG4gIGhvc3Q6IHtcbiAgICBzdHlsZTogJ2Rpc3BsYXk6IGJsb2NrOyB3aWR0aDogMTAwJTsnLFxuICB9LFxuICBpbXBvcnRzOiBbQ29tbW9uTW9kdWxlXSxcbn0pXG5leHBvcnQgY2xhc3MgQ2FtRGVmYXVsdFBhbmVsQ29tcG9uZW50IHtcbiAgQElucHV0KCkgdGVtcGxhdGU/OiBUZW1wbGF0ZVJlZjxhbnk+O1xuXG4gIGNvbnN0cnVjdG9yKFxuICAgIEBPcHRpb25hbCgpIEBJbmplY3QoTUVOVV9URU1QTEFURSkgcHVibGljIHRlbXBsYXRlUmVmOiBUZW1wbGF0ZVJlZjxhbnk+LFxuICAgIEBPcHRpb25hbCgpIEBJbmplY3QoTUVOVV9NQVhfSEVJR0hUKSBwdWJsaWMgbWF4SGVpZ2h0OiBudW1iZXJcbiAgKSB7fVxufVxuIiwiPGRpdiBjbGFzcz1cIm1lbnUtcGFuZWxcIiBbc3R5bGUubWF4LWhlaWdodC5weF09XCJ0aGlzLm1heEhlaWdodFwiPlxuICBAaWYgKHRoaXMudGVtcGxhdGVSZWYpIHtcbiAgICA8bmctY29udGFpbmVyICpuZ1RlbXBsYXRlT3V0bGV0PVwidGhpcy50ZW1wbGF0ZVJlZlwiPjwvbmctY29udGFpbmVyPlxuICB9IEBlbHNlIHtcbiAgICA8bmctdGVtcGxhdGU+IENlY2kgZXN0IGxlIHRlbXBsYXRlIHBhciBkZWZhdXQuIElsIGZhdXQgcmVuc2VpZ25lciB1biB0ZW1wbGF0ZS4gPC9uZy10ZW1wbGF0ZT5cbiAgfVxuPC9kaXY+XG4iXX0=

@@ -1,0 +1,9 @@
+export class GraphSchema {
+    constructor(_fields) {
+        this._fields = _fields;
+    }
+    get(field) {
+        return this._fields.find((x) => x === field);
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ3JhcGhTY2hlbWEuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL3NlcnZpY2VzL2dyYXBocWwvbW9kZWxzL2dyYXBoU2NoZW1hLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE1BQU0sT0FBTyxXQUFXO0lBQ3RCLFlBQW9CLE9BQXVCO1FBQXZCLFlBQU8sR0FBUCxPQUFPLENBQWdCO0lBQUcsQ0FBQztJQUUvQyxHQUFHLENBQUMsS0FBYztRQUNoQixPQUFPLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxDQUFDLEtBQUssS0FBSyxDQUFDLENBQUM7SUFDL0MsQ0FBQztDQUNGIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNsYXNzIEdyYXBoU2NoZW1hPFQ+IHtcbiAgY29uc3RydWN0b3IocHJpdmF0ZSBfZmllbGRzOiBBcnJheTxrZXlvZiBUPikge31cblxuICBnZXQoZmllbGQ6IGtleW9mIFQpIHtcbiAgICByZXR1cm4gdGhpcy5fZmllbGRzLmZpbmQoKHgpID0+IHggPT09IGZpZWxkKTtcbiAgfVxufVxuIl19

@@ -1,0 +1,8 @@
+/*
+ * Public API Surface of menu
+ */
+export * from './lib/components/public-api';
+export * from './lib/helpers/public-api';
+export * from './lib/models/public-api';
+export * from './lib/menu.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyw2QkFBNkIsQ0FBQztBQUM1QyxjQUFjLDBCQUEwQixDQUFDO0FBQ3pDLGNBQWMseUJBQXlCLENBQUM7QUFFeEMsY0FBYyxtQkFBbUIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2YgbWVudVxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbXBvbmVudHMvcHVibGljLWFwaSc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9oZWxwZXJzL3B1YmxpYy1hcGknO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvbW9kZWxzL3B1YmxpYy1hcGknO1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9tZW51Lm1vZHVsZSc7XG4iXX0=

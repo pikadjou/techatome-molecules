@@ -1,0 +1,33 @@
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { TaBaseComponent } from '@ta/utils';
+import { MenuItemComponent } from './item/menu-item.component';
+import * as i0 from "@angular/core";
+export class MenuComponent extends TaBaseComponent {
+    get containerCss() {
+        switch (this.container) {
+            case 'overflow':
+                return 'overflow';
+            case 'second':
+                return 'second';
+            case 'main':
+                return 'main-nav responsive';
+            default:
+                return '';
+        }
+    }
+    constructor() {
+        super();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MenuComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: MenuComponent, isStandalone: true, selector: "ta-menu", inputs: { menu: "menu", container: "container" }, usesInheritance: true, ngImport: i0, template: "<ul class=\"menu\" [ngClass]=\"this.containerCss\">\n  @for (item of this.menu.elements; track this.trackByKey($index, item)) {\n    @if ((item.visible$ | async) === true) {\n      <li>\n        <ta-menu-item [item]=\"item\" [class]=\"item.key\" [styleType]=\"this.menu.direction\"></ta-menu-item>\n      </li>\n    }\n  }\n</ul>\n", styles: [".menu{display:flex;flex-direction:row;list-style:none;padding:0;margin:0}.menu li{padding:0;margin:0}.menu.horizontal li{flex:1}.menu.vertical li{flex:0 0 100%;max-width:100%}@media screen and (max-width: 767px){.menu.responsive{width:100%}.menu.responsive li{flex:1}}@media screen and (min-width: 768px){.menu.responsive li{flex:0 0 100%;max-width:100%}}ul.second{list-style:none;display:flex;flex-direction:row;padding:0;margin:0;background-color:var(--ta-neutral-50)}ul.second li{padding:0;margin:0;flex:1}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: MenuItemComponent, selector: "ta-menu-item", inputs: ["item", "styleType"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MenuComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-menu', standalone: true, imports: [NgIf, NgFor, NgClass, AsyncPipe, MenuItemComponent], template: "<ul class=\"menu\" [ngClass]=\"this.containerCss\">\n  @for (item of this.menu.elements; track this.trackByKey($index, item)) {\n    @if ((item.visible$ | async) === true) {\n      <li>\n        <ta-menu-item [item]=\"item\" [class]=\"item.key\" [styleType]=\"this.menu.direction\"></ta-menu-item>\n      </li>\n    }\n  }\n</ul>\n", styles: [".menu{display:flex;flex-direction:row;list-style:none;padding:0;margin:0}.menu li{padding:0;margin:0}.menu.horizontal li{flex:1}.menu.vertical li{flex:0 0 100%;max-width:100%}@media screen and (max-width: 767px){.menu.responsive{width:100%}.menu.responsive li{flex:1}}@media screen and (min-width: 768px){.menu.responsive li{flex:0 0 100%;max-width:100%}}ul.second{list-style:none;display:flex;flex-direction:row;padding:0;margin:0;background-color:var(--ta-neutral-50)}ul.second li{padding:0;margin:0;flex:1}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { menu: [{
+                type: Input
+            }], container: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVudS5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudHMvbWVudS9tZW51LmNvbXBvbmVudC50cyIsIi4uLy4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50cy9tZW51L21lbnUuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxPQUFPLEVBQUUsS0FBSyxFQUFFLElBQUksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQ2xFLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRWpELE9BQU8sRUFBRSxlQUFlLEVBQUUsTUFBTSxXQUFXLENBQUM7QUFHNUMsT0FBTyxFQUFFLGlCQUFpQixFQUFFLE1BQU0sNEJBQTRCLENBQUM7O0FBUy9ELE1BQU0sT0FBTyxhQUFjLFNBQVEsZUFBZTtJQU9oRCxJQUFJLFlBQVk7UUFDZCxRQUFRLElBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQztZQUN2QixLQUFLLFVBQVU7Z0JBQ2IsT0FBTyxVQUFVLENBQUM7WUFDcEIsS0FBSyxRQUFRO2dCQUNYLE9BQU8sUUFBUSxDQUFDO1lBQ2xCLEtBQUssTUFBTTtnQkFDVCxPQUFPLHFCQUFxQixDQUFDO1lBQy9CO2dCQUNFLE9BQU8sRUFBRSxDQUFDO1FBQ2QsQ0FBQztJQUNILENBQUM7SUFFRDtRQUNFLEtBQUssRUFBRSxDQUFDO0lBQ1YsQ0FBQzsrR0F0QlUsYUFBYTttR0FBYixhQUFhLDRJQ2YxQiw2VUFTQSx5akJESXlCLE9BQU8sK0VBQUUsU0FBUyw4Q0FBRSxpQkFBaUI7OzRGQUVqRCxhQUFhO2tCQVB6QixTQUFTOytCQUNFLFNBQVMsY0FHUCxJQUFJLFdBQ1AsQ0FBQyxJQUFJLEVBQUUsS0FBSyxFQUFFLE9BQU8sRUFBRSxTQUFTLEVBQUUsaUJBQWlCLENBQUM7d0RBSTdELElBQUk7c0JBREgsS0FBSztnQkFJTixTQUFTO3NCQURSLEtBQUsiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBBc3luY1BpcGUsIE5nQ2xhc3MsIE5nRm9yLCBOZ0lmIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuaW1wb3J0IHsgVGFCYXNlQ29tcG9uZW50IH0gZnJvbSAnQHRhL3V0aWxzJztcblxuaW1wb3J0IHsgTWVudSB9IGZyb20gJy4uLy4uL21vZGVscy9tZW51L21lbnUnO1xuaW1wb3J0IHsgTWVudUl0ZW1Db21wb25lbnQgfSBmcm9tICcuL2l0ZW0vbWVudS1pdGVtLmNvbXBvbmVudCc7XG5cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ3RhLW1lbnUnLFxuICB0ZW1wbGF0ZVVybDogJy4vbWVudS5jb21wb25lbnQuaHRtbCcsXG4gIHN0eWxlVXJsczogWycuL21lbnUuY29tcG9uZW50LnNjc3MnXSxcbiAgc3RhbmRhbG9uZTogdHJ1ZSxcbiAgaW1wb3J0czogW05nSWYsIE5nRm9yLCBOZ0NsYXNzLCBBc3luY1BpcGUsIE1lbnVJdGVtQ29tcG9uZW50XSxcbn0pXG5leHBvcnQgY2xhc3MgTWVudUNvbXBvbmVudCBleHRlbmRzIFRhQmFzZUNvbXBvbmVudCB7XG4gIEBJbnB1dCgpXG4gIG1lbnUhOiBNZW51O1xuXG4gIEBJbnB1dCgpXG4gIGNvbnRhaW5lciE6ICdzZWNvbmQnIHwgJ292ZXJmbG93JyB8ICdtYWluJyB8ICdwYW5lbCc7XG5cbiAgZ2V0IGNvbnRhaW5lckNzcygpIHtcbiAgICBzd2l0Y2ggKHRoaXMuY29udGFpbmVyKSB7XG4gICAgICBjYXNlICdvdmVyZmxvdyc6XG4gICAgICAgIHJldHVybiAnb3ZlcmZsb3cnO1xuICAgICAgY2FzZSAnc2Vjb25kJzpcbiAgICAgICAgcmV0dXJuICdzZWNvbmQnO1xuICAgICAgY2FzZSAnbWFpbic6XG4gICAgICAgIHJldHVybiAnbWFpbi1uYXYgcmVzcG9uc2l2ZSc7XG4gICAgICBkZWZhdWx0OlxuICAgICAgICByZXR1cm4gJyc7XG4gICAgfVxuICB9XG5cbiAgY29uc3RydWN0b3IoKSB7XG4gICAgc3VwZXIoKTtcbiAgfVxufVxuIiwiPHVsIGNsYXNzPVwibWVudVwiIFtuZ0NsYXNzXT1cInRoaXMuY29udGFpbmVyQ3NzXCI+XG4gIEBmb3IgKGl0ZW0gb2YgdGhpcy5tZW51LmVsZW1lbnRzOyB0cmFjayB0aGlzLnRyYWNrQnlLZXkoJGluZGV4LCBpdGVtKSkge1xuICAgIEBpZiAoKGl0ZW0udmlzaWJsZSQgfCBhc3luYykgPT09IHRydWUpIHtcbiAgICAgIDxsaT5cbiAgICAgICAgPHRhLW1lbnUtaXRlbSBbaXRlbV09XCJpdGVtXCIgW2NsYXNzXT1cIml0ZW0ua2V5XCIgW3N0eWxlVHlwZV09XCJ0aGlzLm1lbnUuZGlyZWN0aW9uXCI+PC90YS1tZW51LWl0ZW0+XG4gICAgICA8L2xpPlxuICAgIH1cbiAgfVxuPC91bD5cbiJdfQ==

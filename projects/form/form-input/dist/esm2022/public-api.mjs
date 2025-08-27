@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of form
+ */
+export * from './lib/components/public-api';
+export * from './lib/inputs.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyw2QkFBNkIsQ0FBQztBQUU1QyxjQUFjLHFCQUFxQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBmb3JtXG4gKi9cbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbXBvbmVudHMvcHVibGljLWFwaSc7XG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL2lucHV0cy5tb2R1bGUnO1xuIl19
