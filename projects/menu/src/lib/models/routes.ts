@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
 
-export enum CamMainRoute {
+export enum TaMainRoute {
   HOME = 'HOME',
   USERLOGIN = 'USERLOGIN',
   USERLOGOUT = 'USERLOGOUT',
@@ -17,23 +17,23 @@ export interface IRoute {
 export class TaRoutesCore {
   public routes: IRoute[] = [
     {
-      key: CamMainRoute.HOME,
+      key: TaMainRoute.HOME,
       url: '',
     },
     {
-      key: CamMainRoute.USERLOGIN,
+      key: TaMainRoute.USERLOGIN,
       url: 'login',
     },
     {
-      key: CamMainRoute.USERLOGOUT,
+      key: TaMainRoute.USERLOGOUT,
       url: 'logout',
     },
     {
-      key: CamMainRoute.NOTIFICATIONS,
+      key: TaMainRoute.NOTIFICATIONS,
       url: 'notifications',
     },
     {
-      key: CamMainRoute.REDIRECT,
+      key: TaMainRoute.REDIRECT,
       url: 'redirect',
     },
   ];
@@ -47,13 +47,13 @@ export class TaRoutesCore {
     routes.forEach(route => this.addRoute(route));
   }
   public getHome() {
-    return this.getAbsoluteUrl([CamMainRoute.HOME]);
+    return this.getAbsoluteUrl([TaMainRoute.HOME]);
   }
   public getLogin() {
-    return this.getAbsoluteUrl([CamMainRoute.USERLOGIN]);
+    return this.getAbsoluteUrl([TaMainRoute.USERLOGIN]);
   }
   public getLogout() {
-    return this.getAbsoluteUrl([CamMainRoute.USERLOGOUT]);
+    return this.getAbsoluteUrl([TaMainRoute.USERLOGOUT]);
   }
   public getUrl(eNums: string[], params: {} = {}, strict = false): string {
     const url = this._replaceParams(this._getUrl(eNums), params);

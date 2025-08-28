@@ -1,7 +1,7 @@
 import * as i0 from '@angular/core';
 import { Injectable, inject, InjectionToken, Component, EventEmitter, ViewChild, Output, Input, Optional, Inject, NgModule } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { TaRoutes, MenuPanel, MenuIcon, Menu, MenuComponent, CamMainRoute, CamMenuModule } from '@ta/menu';
+import { TaRoutes, MenuPanel, MenuIcon, Menu, MenuComponent, TaMainRoute, CamMenuModule } from '@ta/menu';
 import { Logger, CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, HandleComplexRequest, HandleSimpleRequest, GRAPHQL_SERVER_CONFIG } from '@ta/server';
 import { isNonNullable, APPLICATION_CONFIG, TaBaseComponent, StopPropagationDirective, JoinPipe, sendMail, fullName, openExternalUrl, CamAbstractComponent, Culture, DEFAULT_USER_LANGUAGE, CamDirectivePipeModule, trigram } from '@ta/utils';
 import { BehaviorSubject, filter, map as map$1, tap, of, switchMap, catchError, distinct } from 'rxjs';
@@ -1383,7 +1383,7 @@ class GuardComponent extends CamAbstractComponent {
         return this._permissionsService.canDirectAccess(this.feature, this.level);
     }
     goToLogin() {
-        this._router.navigateByUrl(TaRoutes.getUrl([CamMainRoute.USERLOGIN]));
+        this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: "level", feature: "feature", canDisplayErrorMessage: "canDisplayErrorMessage" }, usesInheritance: true, ngImport: i0, template: "<div class=\"guard\">\n  @if (this.isGuardValid()) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!this.isGuardValid() && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }

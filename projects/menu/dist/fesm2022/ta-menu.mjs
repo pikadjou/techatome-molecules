@@ -503,35 +503,35 @@ class MenuPanel extends MenuIcon {
     }
 }
 
-var CamMainRoute;
-(function (CamMainRoute) {
-    CamMainRoute["HOME"] = "HOME";
-    CamMainRoute["USERLOGIN"] = "USERLOGIN";
-    CamMainRoute["USERLOGOUT"] = "USERLOGOUT";
-    CamMainRoute["NOTIFICATIONS"] = "NOTIFICATIONS";
-    CamMainRoute["REDIRECT"] = "REDIRECT";
-})(CamMainRoute || (CamMainRoute = {}));
+var TaMainRoute;
+(function (TaMainRoute) {
+    TaMainRoute["HOME"] = "HOME";
+    TaMainRoute["USERLOGIN"] = "USERLOGIN";
+    TaMainRoute["USERLOGOUT"] = "USERLOGOUT";
+    TaMainRoute["NOTIFICATIONS"] = "NOTIFICATIONS";
+    TaMainRoute["REDIRECT"] = "REDIRECT";
+})(TaMainRoute || (TaMainRoute = {}));
 class TaRoutesCore {
     constructor() {
         this.routes = [
             {
-                key: CamMainRoute.HOME,
+                key: TaMainRoute.HOME,
                 url: '',
             },
             {
-                key: CamMainRoute.USERLOGIN,
+                key: TaMainRoute.USERLOGIN,
                 url: 'login',
             },
             {
-                key: CamMainRoute.USERLOGOUT,
+                key: TaMainRoute.USERLOGOUT,
                 url: 'logout',
             },
             {
-                key: CamMainRoute.NOTIFICATIONS,
+                key: TaMainRoute.NOTIFICATIONS,
                 url: 'notifications',
             },
             {
-                key: CamMainRoute.REDIRECT,
+                key: TaMainRoute.REDIRECT,
                 url: 'redirect',
             },
         ];
@@ -543,13 +543,13 @@ class TaRoutesCore {
         routes.forEach(route => this.addRoute(route));
     }
     getHome() {
-        return this.getAbsoluteUrl([CamMainRoute.HOME]);
+        return this.getAbsoluteUrl([TaMainRoute.HOME]);
     }
     getLogin() {
-        return this.getAbsoluteUrl([CamMainRoute.USERLOGIN]);
+        return this.getAbsoluteUrl([TaMainRoute.USERLOGIN]);
     }
     getLogout() {
-        return this.getAbsoluteUrl([CamMainRoute.USERLOGOUT]);
+        return this.getAbsoluteUrl([TaMainRoute.USERLOGOUT]);
     }
     getUrl(eNums, params = {}, strict = false) {
         const url = this._replaceParams(this._getUrl(eNums), params);
@@ -742,5 +742,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { BottomSheetTemplateBasicComponent, BottomSheetTemplateGenericComponent, CamMainRoute, CamMenuModule, ContextMenuComponent, FilterHelper, MainMenuComponent, Menu, MenuBase, MenuComponent, MenuIcon, MenuItemComponent, MenuPanel, NavigationComponent, QuickActionsComponent, QuickActionsCustomComponent, TaRoutes, TaRoutesCore, ToggleNavigationComponent };
+export { BottomSheetTemplateBasicComponent, BottomSheetTemplateGenericComponent, CamMenuModule, ContextMenuComponent, FilterHelper, MainMenuComponent, Menu, MenuBase, MenuComponent, MenuIcon, MenuItemComponent, MenuPanel, NavigationComponent, QuickActionsComponent, QuickActionsCustomComponent, TaMainRoute, TaRoutes, TaRoutesCore, ToggleNavigationComponent };
 //# sourceMappingURL=ta-menu.mjs.map

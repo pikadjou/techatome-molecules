@@ -3,7 +3,7 @@ import { Component, Input, inject } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
 import { CamIconType } from '@ta/icons';
-import { CamMainRoute, TaRoutes } from '@ta/menu';
+import { TaMainRoute, TaRoutes } from '@ta/menu';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent } from '@ta/ui';
 import { CamAbstractComponent } from '@ta/utils';
@@ -41,6 +41,6 @@ export class GuardComponent extends CamAbstractComponent {
   }
 
   public goToLogin() {
-    this._router.navigateByUrl(TaRoutes.getUrl([CamMainRoute.USERLOGIN]));
+    this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
   }
 }
