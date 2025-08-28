@@ -1,6 +1,6 @@
 {
   "name": "@ta/styles",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "peerDependencies": {
     "@angular/common": "^19.0.0",

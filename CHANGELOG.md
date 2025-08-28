@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.16.0-beta.4](https://dev.azure.com/merlin-software/Camelot/_git/Camelot/compare/v3.16.0-beta.3...v3.16.0-beta.4) (2025-06-10)
+# [0.0.0](https://dev.azure.com/merlin-software/Camelot/_git/Camelot/compare/v3.16.0-beta.3...v0.0.0) (2025-06-10)
 
 **Note:** Version bump only for package ta
 

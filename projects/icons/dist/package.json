@@ -1,6 +1,6 @@
 {
   "name": "@ta/icons",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "peerDependencies": {
     "@angular/common": "^18.2.13",
@@ -8,7 +8,7 @@
     "@angular/material": "^18.2.13"
   },
   "dependencies": {
-    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/styles": "^0.0.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

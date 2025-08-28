@@ -1,6 +1,6 @@
 {
   "name": "@ta/server",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/server",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.11.0",
-    "@ta/utils": "^3.16.0-beta.4",
+    "@ta/utils": "^0.0.0",
     "apollo-angular": "5.0.2",
     "graphql": "^16.10.0",
     "tslib": "^2.3.0"

@@ -1,6 +1,6 @@
 {
   "name": "@ta/capacitor",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/capacitor",
@@ -12,8 +12,8 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@ta/server": "^3.16.0-beta.4",
-    "@ta/styles": "^3.16.0-beta.4",
+    "@ta/server": "^0.0.0",
+    "@ta/styles": "^0.0.0",
     "@capacitor/core": "5.0.4",
     "@capacitor/device": "^5.0.4",
     "@capacitor/geolocation": "^5.0.4",

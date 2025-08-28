@@ -1,6 +1,6 @@
 {
   "name": "@ta/prettier-config",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "index.js",
   "description": "> TODO: description",
   "author": "Geoffrey L <g.lambert@merlinsoftware.be>",

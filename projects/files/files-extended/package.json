@@ -1,6 +1,6 @@
 {
   "name": "@ta/files-extended",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/files-extended",
@@ -12,9 +12,9 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@ta/form-basic": "^3.16.0-beta.4",
-    "@ta/icons": "^3.16.0-beta.4",
-    "@ta/menu": "^3.16.0-beta.4",
+    "@ta/form-basic": "^0.0.0",
+    "@ta/icons": "^0.0.0",
+    "@ta/menu": "^0.0.0",
     "@capacitor/camera": "^5.0.4",
     "@capawesome/capacitor-file-picker": "^0.6.2",
     "tslib": "^2.3.0",

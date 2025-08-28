@@ -1,6 +1,6 @@
 {
   "name": "@ta/wysiswyg",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/wysiswyg",
@@ -12,9 +12,9 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@ta/notification": "^3.16.0-beta.4",
-    "@ta/services": "^3.16.0-beta.4",
-    "@ta/utils": "^3.16.0-beta.4",
+    "@ta/notification": "^0.0.0",
+    "@ta/services": "^0.0.0",
+    "@ta/utils": "^0.0.0",
     "@editorjs/delimiter": "^1.4.2",
     "@editorjs/editorjs": "^2.30.5",
     "@editorjs/header": "^2.8.7",

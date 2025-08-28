@@ -1,6 +1,6 @@
 {
   "name": "@ta/menu",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/menu",
@@ -12,11 +12,11 @@
     "@angular/core": "^18.2.13"
   },
   "devDependencies": {
-    "@ta/icons": "^3.16.0-beta.4",
-    "@ta/styles": "^3.16.0-beta.4",
-    "@ta/translation": "^3.16.0-beta.4",
-    "@ta/ui": "^3.16.0-beta.4",
-    "@ta/utils": "^3.16.0-beta.4",
+    "@ta/icons": "^0.0.0",
+    "@ta/styles": "^0.0.0",
+    "@ta/translation": "^0.0.0",
+    "@ta/ui": "^0.0.0",
+    "@ta/utils": "^0.0.0",
     "swiper": "^9.1.0",
     "tslib": "^2.3.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@ta/form-model",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/form-model",
@@ -12,11 +12,11 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@ta/notification": "^3.16.0-beta.4",
-    "@ta/services": "^3.16.0-beta.4",
-    "@ta/styles": "^3.16.0-beta.4",
-    "@ta/utils": "^3.16.0-beta.4",
-    "@ta/wysiswyg": "^3.16.0-beta.4",
+    "@ta/notification": "^0.0.0",
+    "@ta/services": "^0.0.0",
+    "@ta/styles": "^0.0.0",
+    "@ta/utils": "^0.0.0",
+    "@ta/wysiswyg": "^0.0.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

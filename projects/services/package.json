@@ -1,6 +1,6 @@
 {
   "name": "@ta/services",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/services",
@@ -12,8 +12,8 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@ta/server": "^3.16.0-beta.4",
-    "@ta/utils": "^3.16.0-beta.4",
+    "@ta/server": "^0.0.0",
+    "@ta/utils": "^0.0.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

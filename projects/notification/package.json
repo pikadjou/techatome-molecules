@@ -1,6 +1,6 @@
 {
   "name": "@ta/notification",
-  "version": "3.16.0-beta.4",
+  "version": "0.0.0",
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/notification",
@@ -12,12 +12,12 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
-    "@ta/icons": "^3.16.0-beta.4",
-    "@ta/server": "^3.16.0-beta.4",
-    "@ta/styles": "^3.16.0-beta.4",
-    "@ta/translation": "^3.16.0-beta.4",
-    "@ta/ui": "^3.16.0-beta.4",
-    "@ta/utils": "^3.16.0-beta.4",
+    "@ta/icons": "^0.0.0",
+    "@ta/server": "^0.0.0",
+    "@ta/styles": "^0.0.0",
+    "@ta/translation": "^0.0.0",
+    "@ta/ui": "^0.0.0",
+    "@ta/utils": "^0.0.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,
