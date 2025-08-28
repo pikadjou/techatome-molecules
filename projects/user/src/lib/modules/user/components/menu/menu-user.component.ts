@@ -1,12 +1,12 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 
-import { ButtonComponent, TrigramComponent } from 'projects/ui/dist';
 import { of } from 'rxjs';
 
 import { DropdownComponent } from '@ta/form-input';
 import { InputDropdown } from '@ta/form-model';
 import { CamTranslationService, TranslatePipe } from '@ta/translation';
+import { ButtonComponent, TrigramComponent } from '@ta/ui';
 import { JoinPipe, StopPropagationDirective } from '@ta/utils';
 import { TaBaseComponent } from '@ta/utils';
 
