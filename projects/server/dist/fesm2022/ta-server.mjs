@@ -1,4 +1,4 @@
-import { isNonNullable, ObjectKeys, APPLICATION_CONFIG, isURL, LOCAL, newId } from '@ta/utils';
+import { isNonNullable, ObjectKeys, APPLICATION_CONFIG, isURL, newId } from '@ta/utils';
 import { BehaviorSubject, filter, tap, map, Subject, switchMap, catchError, throwError, take, of, share } from 'rxjs';
 import * as i1 from '@angular/common/http';
 import { HttpHeaders, HttpClient, HttpResponse, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -482,9 +482,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
         }], ctorParameters: () => [] });
 
 class CamGraphService {
-    constructor(_graphConfig, _local, httpLink, apollo) {
+    constructor(_graphConfig, httpLink, apollo) {
         this._graphConfig = _graphConfig;
-        this._local = _local;
         this.httpLink = httpLink;
         this.apollo = apollo;
         this.contactsLoaded$ = new BehaviorSubject(false);
@@ -595,15 +594,8 @@ class CamGraphService {
         }));
     }
     registerGraphEndpoint(graphEndpoint, options) {
-        const url = options?.visitor === true && this._graphConfig.config?.visitor
-            ? this._graphConfig.config?.visitor
-            : this._graphConfig.config?.url;
+        const url = options?.visitor === true && this._graphConfig?.visitor ? this._graphConfig?.visitor : this._graphConfig?.url;
         let uri = isURL(graphEndpoint.endpoint) ? graphEndpoint.endpoint : url + graphEndpoint.endpoint;
-        if (this._local?.isLocal) {
-            if (this._graphConfig.config.local_urls) {
-                uri = this._graphConfig.config.local_urls[graphEndpoint.endpoint] ?? uri;
-            }
-        }
         const newHttpLink = this.httpLink.create({
             headers: graphEndpoint.headers,
             uri: uri,
@@ -625,7 +617,7 @@ class CamGraphService {
         }
         return this.contactsLoaded$.pipe(filter(loaded => loaded));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: LOCAL, optional: true }, { token: i1$1.HttpLink }, { token: i2.Apollo }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: i1$1.HttpLink }, { token: i2.Apollo }], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, decorators: [{
@@ -638,11 +630,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }, {
                     type: Inject,
                     args: [GRAPHQL_SERVER_CONFIG]
-                }] }, { type: undefined, decorators: [{
-                    type: Optional
-                }, {
-                    type: Inject,
-                    args: [LOCAL]
                 }] }, { type: i1$1.HttpLink }, { type: i2.Apollo }] });
 
 class CamBaseService {
@@ -744,12 +731,12 @@ class CamStrapiService extends CamBaseService {
         super();
         this._strapiConfig = _strapiConfig;
         const headers = new HttpHeaders({
-            authorization: `Bearer ${this._strapiConfig.config.token}`,
+            authorization: `Bearer ${this._strapiConfig.token}`,
         });
         super.registerRoutes({
             graphEndpoint: {
                 clientName: 'strapi',
-                endpoint: this._strapiConfig.config.url,
+                endpoint: this._strapiConfig.url,
                 headers: headers,
             },
         });
@@ -794,9 +781,7 @@ class TenantInterceptor {
         this.graphQlConfig = graphQlConfig;
     }
     intercept(req, next) {
-        if (this.tenantConfig?.tenantId &&
-            this.graphQlConfig?.config?.url &&
-            req.url.startsWith(this.graphQlConfig?.config?.url)) {
+        if (this.tenantConfig?.tenantId && this.graphQlConfig?.url && req.url.startsWith(this.graphQlConfig?.url)) {
             const tenantRequest = req.clone({
                 headers: req.headers.set('TenantId', this.tenantConfig.tenantId.toString()),
             });
@@ -831,6 +816,13 @@ const provideServer = (data) => [
         provide: HTTP_INTERCEPTORS,
         useClass: TenantInterceptor,
         multi: true,
+    },
+];
+const provideStrapi = (data) => [
+    importProvidersFrom(ApolloModule),
+    {
+        provide: STRAPI_SERVER_CONFIG,
+        useValue: data.strapiConfig,
     },
 ];
 
@@ -898,5 +890,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, CamBaseService, CamBaseStrapiService, CamGraphService, CamServerErrorService, CamServerModule, CamServerSevice, CamStrapiService, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer };
+export { CacheInterceptor, CamBaseService, CamBaseStrapiService, CamGraphService, CamServerErrorService, CamServerModule, CamServerSevice, CamStrapiService, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map

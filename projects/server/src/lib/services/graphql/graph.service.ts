@@ -1,10 +1,11 @@
 import { Inject, Injectable, Optional, inject } from '@angular/core';
 
 import { ApolloClient, ApolloError, ApolloLink, InMemoryCache } from '@apollo/client/core';
-import { APPLICATION_CONFIG, IApplicationConfig, ILocalConfig, LOCAL, isURL } from '@ta/utils';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { BehaviorSubject, catchError, filter, map, switchMap, take, tap, throwError } from 'rxjs';
+
+import { APPLICATION_CONFIG, IApplicationConfig, isURL } from '@ta/utils';
 
 import { CamServerErrorService } from '../error.service';
 import { Logger } from '../logger';
@@ -36,7 +37,6 @@ export class CamGraphService {
     @Optional()
     @Inject(GRAPHQL_SERVER_CONFIG)
     private _graphConfig: IGraphConfig,
-    @Optional() @Inject(LOCAL) private _local: ILocalConfig,
     private httpLink: HttpLink,
     private apollo: Apollo
   ) {
@@ -210,17 +210,9 @@ export class CamGraphService {
 
   public registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions) {
     const url =
-      options?.visitor === true && this._graphConfig.config?.visitor
-        ? this._graphConfig.config?.visitor
-        : this._graphConfig.config?.url;
+      options?.visitor === true && this._graphConfig?.visitor ? this._graphConfig?.visitor : this._graphConfig?.url;
 
     let uri = isURL(graphEndpoint.endpoint) ? graphEndpoint.endpoint : url + graphEndpoint.endpoint;
-
-    if (this._local?.isLocal) {
-      if (this._graphConfig.config.local_urls) {
-        uri = this._graphConfig.config.local_urls[graphEndpoint.endpoint] ?? uri;
-      }
-    }
 
     const newHttpLink = this.httpLink.create({
       headers: graphEndpoint.headers,

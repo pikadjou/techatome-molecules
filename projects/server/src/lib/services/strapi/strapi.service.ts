@@ -1,8 +1,9 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
-import { isNonNullable } from '@ta/utils';
 import { filter, map } from 'rxjs';
+
+import { isNonNullable } from '@ta/utils';
 
 import { GraphQueryPayload } from '../graphql/models/graphPayload';
 import { CamBaseService } from '../server/baseService';
@@ -30,13 +31,13 @@ export class CamStrapiService extends CamBaseService {
     super();
 
     const headers = new HttpHeaders({
-      authorization: `Bearer ${this._strapiConfig.config.token}`,
+      authorization: `Bearer ${this._strapiConfig.token}`,
     });
 
     super.registerRoutes({
       graphEndpoint: {
         clientName: 'strapi',
-        endpoint: this._strapiConfig.config.url,
+        endpoint: this._strapiConfig.url,
         headers: headers,
       },
     });

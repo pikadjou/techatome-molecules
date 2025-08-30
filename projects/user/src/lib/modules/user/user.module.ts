@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -20,7 +19,6 @@ import { UserMyProfileComponent } from './components/my-profile/user-my-profile.
 import { SwitchLanguageCtaComponent } from './components/switch-language/switch-language-cta/switch-language-cta.component';
 import { SwitchLanguageComponent } from './components/switch-language/switch-language.component';
 import { TenantUrlDisplayerComponent } from './components/tenant-url-displayer/tenant-url-displayer.component';
-import { ContactScopeInterceptor } from './contactScopeInterceptor';
 import { TaUsersService } from './services/users.service';
 import { CamTranslationUser } from './translation.service';
 
@@ -86,11 +84,6 @@ export class CamUserModule {
           provide: DEFAULT_USER_LANGUAGE,
           deps: [TaUsersService],
           useFactory: (usersService: TaUsersService) => usersService.currentUser.get()?.culture ?? Culture.FR_BE,
-        },
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: ContactScopeInterceptor,
-          multi: true,
         },
       ],
     };

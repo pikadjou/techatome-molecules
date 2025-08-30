@@ -17,11 +17,7 @@ export class TenantInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (
-      this.tenantConfig?.tenantId &&
-      this.graphQlConfig?.config?.url &&
-      req.url.startsWith(this.graphQlConfig?.config?.url)
-    ) {
+    if (this.tenantConfig?.tenantId && this.graphQlConfig?.url && req.url.startsWith(this.graphQlConfig?.url)) {
       const tenantRequest = req.clone({
         headers: req.headers.set('TenantId', this.tenantConfig.tenantId.toString()),
       });

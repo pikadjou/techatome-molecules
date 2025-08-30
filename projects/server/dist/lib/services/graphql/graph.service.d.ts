@@ -1,4 +1,3 @@
-import { ILocalConfig } from '@ta/utils';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { BehaviorSubject } from 'rxjs';
@@ -10,7 +9,6 @@ export type GraphOptions = {
 };
 export declare class CamGraphService {
     private _graphConfig;
-    private _local;
     private httpLink;
     private apollo;
     contactsLoaded$: BehaviorSubject<boolean>;
@@ -19,7 +17,7 @@ export declare class CamGraphService {
     private _applicationConfig;
     private _defaultEndpoint;
     private _cache;
-    constructor(_graphConfig: IGraphConfig, _local: ILocalConfig, httpLink: HttpLink, apollo: Apollo);
+    constructor(_graphConfig: IGraphConfig, httpLink: HttpLink, apollo: Apollo);
     clearCache(key: string): void;
     fetchQueryList<T>(payload: GraphQueryPayload, node: string, context: string): import("rxjs").Observable<T[]>;
     fetchPagedQueryList<T>(payload: GraphQueryPayload, node: string, context: string): import("rxjs").Observable<{
@@ -32,6 +30,6 @@ export declare class CamGraphService {
     registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions): void;
     private _setupData;
     private _getWrapper;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamGraphService, [{ optional: true; }, { optional: true; }, null, null]>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<CamGraphService, [{ optional: true; }, null, null]>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CamGraphService>;
 }

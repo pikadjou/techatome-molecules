@@ -1,9 +1,9 @@
 import * as i0 from '@angular/core';
-import { Injectable, inject, InjectionToken, Component, EventEmitter, ViewChild, Output, Input, Optional, Inject, NgModule } from '@angular/core';
+import { Injectable, inject, InjectionToken, Component, EventEmitter, ViewChild, Output, Input, NgModule, Inject } from '@angular/core';
 import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuPanel, MenuIcon, Menu, MenuComponent, TaMainRoute, CamMenuModule } from '@ta/menu';
 import { BehaviorSubject, filter, map, tap, of, switchMap, catchError, distinct } from 'rxjs';
-import { Logger, CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, HandleComplexRequest, HandleSimpleRequest, GRAPHQL_SERVER_CONFIG } from '@ta/server';
+import { Logger, CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
 import { isNonNullable, APPLICATION_CONFIG, TaBaseComponent, StopPropagationDirective, JoinPipe, sendMail, fullName, openExternalUrl, TaAbstractComponent, Culture, DEFAULT_USER_LANGUAGE, CamDirectivePipeModule, trigram } from '@ta/utils';
 import * as i1 from '@angular/router';
 import { gql } from 'apollo-angular';
@@ -1372,48 +1372,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-switch-language-cta', standalone: true, imports: [FontIconComponent, MatMenu, SwitchLanguageComponent, MatMenuTrigger], template: "<div [matMenuTriggerFor]=\"menu\" class=\"flex-start g-space-sm c-pointer\">\n  {{ this.activeLanguage.toLocaleUpperCase() }}\n  <ta-font-icon name=\"arrow-big-bottom\"></ta-font-icon>\n</div>\n\n<mat-menu #menu=\"matMenu\">\n  <ta-switch-language></ta-switch-language>\n</mat-menu>\n" }]
         }] });
 
-class ContactScopeInterceptor {
-    constructor(graphQlConfig, _userService) {
-        this.graphQlConfig = graphQlConfig;
-        this._userService = _userService;
-        this._applicationConfig = inject(APPLICATION_CONFIG);
-    }
-    intercept(req, next) {
-        if (req.url.endsWith('.json')) {
-            return next.handle(req);
-        }
-        if (!this._applicationConfig.isCustomerApplication) {
-            return next.handle(req);
-        }
-        if (!this.graphQlConfig?.config?.url ||
-            !req.url.startsWith(this.graphQlConfig?.config?.url) ||
-            req.url.endsWith('user')) {
-            return next.handle(req);
-        }
-        if (this.graphQlConfig?.config?.visitor && req.url.startsWith(this.graphQlConfig?.config?.visitor)) {
-            return next.handle(req);
-        }
-        return this._setContactToHeader(req, next);
-    }
-    _setContactToHeader(req, next) {
-        const contactIds = this._userService.currentUserContactIds.get()?.join(';') ?? '';
-        const contactIdsRequest = req.clone({
-            headers: req.headers.set('ContactIds', contactIds),
-        });
-        return next.handle(contactIdsRequest);
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: TaUsersService }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor, decorators: [{
-            type: Injectable
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Optional
-                }, {
-                    type: Inject,
-                    args: [GRAPHQL_SERVER_CONFIG]
-                }] }, { type: TaUsersService }] });
-
 class CamTranslationUser extends CamLazyTranslationService {
     constructor() {
         super('user');
@@ -1451,11 +1409,6 @@ class CamUserModule {
                     provide: DEFAULT_USER_LANGUAGE,
                     deps: [TaUsersService],
                     useFactory: (usersService) => usersService.currentUser.get()?.culture ?? Culture.FR_BE,
-                },
-                {
-                    provide: HTTP_INTERCEPTORS,
-                    useClass: ContactScopeInterceptor,
-                    multi: true,
                 },
             ],
         };
