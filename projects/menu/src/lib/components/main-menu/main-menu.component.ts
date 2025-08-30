@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
@@ -14,7 +14,7 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss'],
   standalone: true,
-  imports: [NgIf, NgClass, AsyncPipe, FontIconComponent, LogoComponent, MenuComponent],
+  imports: [NgClass, AsyncPipe, FontIconComponent, LogoComponent, MenuComponent],
 })
 export class MainMenuComponent extends TaBaseComponent {
   @Input()
@@ -22,6 +22,9 @@ export class MainMenuComponent extends TaBaseComponent {
 
   @Input()
   menuUser!: Menu;
+
+  @Input()
+  direction: 'horizontal' | 'vertical' = 'vertical';
 
   public sharedMenu = inject(CamSharedMenuService);
 

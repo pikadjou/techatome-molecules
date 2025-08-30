@@ -56,6 +56,9 @@
     padding-bottom: calc(common.get-var(space, md) + env(safe-area-inset-bottom));
   }
 
+  &.vertical {
+    flex-direction: row;
+  }
   .logo {
     margin: auto;
     @media screen and (max-width: 575px) {

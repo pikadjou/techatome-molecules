@@ -5,8 +5,9 @@ import * as i0 from "@angular/core";
 export declare class MainMenuComponent extends TaBaseComponent {
     menuMain: Menu;
     menuUser: Menu;
+    direction: 'horizontal' | 'vertical';
     sharedMenu: CamSharedMenuService;
     toggleView(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MainMenuComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MainMenuComponent, "ta-main-menu", never, { "menuMain": { "alias": "menuMain"; "required": false; }; "menuUser": { "alias": "menuUser"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MainMenuComponent, "ta-main-menu", never, { "menuMain": { "alias": "menuMain"; "required": false; }; "menuUser": { "alias": "menuUser"; "required": false; }; "direction": { "alias": "direction"; "required": false; }; }, {}, never, never, true, never>;
 }
