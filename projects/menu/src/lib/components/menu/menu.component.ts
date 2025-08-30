@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { TaBaseComponent } from '@ta/utils';
@@ -11,7 +11,7 @@ import { MenuItemComponent } from './item/menu-item.component';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, AsyncPipe, MenuItemComponent],
+  imports: [NgClass, AsyncPipe, MenuItemComponent],
 })
 export class MenuComponent extends TaBaseComponent {
   @Input()
@@ -27,7 +27,7 @@ export class MenuComponent extends TaBaseComponent {
       case 'second':
         return 'second';
       case 'main':
-        return 'main-nav responsive';
+        return 'main-nav ' + this.menu.direction;
       default:
         return '';
     }

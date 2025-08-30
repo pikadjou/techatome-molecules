@@ -153,7 +153,7 @@ class MenuComponent extends TaBaseComponent {
             case 'second':
                 return 'second';
             case 'main':
-                return 'main-nav responsive';
+                return 'main-nav ' + this.menu.direction;
             default:
                 return '';
         }
@@ -166,7 +166,7 @@ class MenuComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MenuComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-menu', standalone: true, imports: [NgIf, NgFor, NgClass, AsyncPipe, MenuItemComponent], template: "<ul class=\"menu\" [ngClass]=\"this.containerCss\">\n  @for (item of this.menu.elements; track this.trackByKey($index, item)) {\n    @if ((item.visible$ | async) === true) {\n      <li>\n        <ta-menu-item [item]=\"item\" [class]=\"item.key\" [styleType]=\"this.menu.direction\"></ta-menu-item>\n      </li>\n    }\n  }\n</ul>\n", styles: [".menu{display:flex;flex-direction:row;list-style:none;padding:0;margin:0}.menu li{padding:0;margin:0}.menu.horizontal li{flex:1}.menu.vertical li{flex:0 0 100%;max-width:100%}@media screen and (max-width: 767px){.menu.responsive{width:100%}.menu.responsive li{flex:1}}@media screen and (min-width: 768px){.menu.responsive li{flex:0 0 100%;max-width:100%}}ul.second{list-style:none;display:flex;flex-direction:row;padding:0;margin:0;background-color:var(--ta-neutral-50)}ul.second li{padding:0;margin:0;flex:1}\n"] }]
+            args: [{ selector: 'ta-menu', standalone: true, imports: [NgClass, AsyncPipe, MenuItemComponent], template: "<ul class=\"menu\" [ngClass]=\"this.containerCss\">\n  @for (item of this.menu.elements; track this.trackByKey($index, item)) {\n    @if ((item.visible$ | async) === true) {\n      <li>\n        <ta-menu-item [item]=\"item\" [class]=\"item.key\" [styleType]=\"this.menu.direction\"></ta-menu-item>\n      </li>\n    }\n  }\n</ul>\n", styles: [".menu{display:flex;flex-direction:row;list-style:none;padding:0;margin:0}.menu li{padding:0;margin:0}.menu.horizontal li{flex:1}.menu.vertical li{flex:0 0 100%;max-width:100%}@media screen and (max-width: 767px){.menu.responsive{width:100%}.menu.responsive li{flex:1}}@media screen and (min-width: 768px){.menu.responsive li{flex:0 0 100%;max-width:100%}}ul.second{list-style:none;display:flex;flex-direction:row;padding:0;margin:0;background-color:var(--ta-neutral-50)}ul.second li{padding:0;margin:0;flex:1}\n"] }]
         }], ctorParameters: () => [], propDecorators: { menu: [{
                 type: Input
             }], container: [{
@@ -467,7 +467,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 
 class Menu {
     constructor(options = {}) {
-        this.direction = options.direction || '';
+        this.direction = 'responsive';
+        this.direction = options.direction || 'responsive';
         this.elements = options.elements || [];
     }
 }
