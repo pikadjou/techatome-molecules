@@ -8,7 +8,6 @@ export * from './lib/modules/user/services/contact.service';
 export * from './lib/modules/user/services/users.service';
 export * from './lib/modules/user/services/functions.service';
 export * from './lib/modules/user/services/auth.service';
-export * from './lib/modules/user/services/permissions';
 export * from './lib/modules/user/services/permissions.service';
 export * from './lib/modules/user/services/dto/user-profile';
 export * from './lib/modules/user/services/users/form/functions.service';

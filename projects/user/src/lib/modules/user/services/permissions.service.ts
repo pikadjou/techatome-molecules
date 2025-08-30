@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Logger } from '@ta/server';
-import { isNonNullable } from '@ta/utils';
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 
-import { Permissions } from './permissions';
+import { Logger } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 
 export type Level = 'authenticated' | 'authorize' | 'reader' | 'contributor' | 'administrator' | 'read';
 
@@ -54,10 +53,10 @@ export class CamPermissionsService {
   ) {
     Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
 
-    this.features = info.features || [];
-    this.roles = info.roles || [];
+    this.features = info.features ?? [];
+    this.roles = info.roles ?? [];
 
-    this.guards = info.roles
+    this.guards = this.roles
       .map(role => role.replace('Merlin_', ''))
       .reduce<typeof this.guards>((acc, role) => {
         if (!role.includes('-')) {
@@ -77,7 +76,6 @@ export class CamPermissionsService {
     this._isFill.permissions = true;
 
     this.setSilentAuthenticated(isAuthenticated);
-    Permissions.set(info, isAuthenticated);
 
     this._canYouUpdate();
   }
@@ -85,14 +83,11 @@ export class CamPermissionsService {
   public setSilentAuthenticated(isAuthenticated: boolean) {
     this.isAuthenticated = isAuthenticated;
     this._isFill.isAuthenticated = true;
-    Permissions.setSilentAuthenticated(isAuthenticated);
 
     this._canYouUpdate();
   }
   public setAuthenticated(isAuthenticated: boolean) {
     this.isAuthenticated = isAuthenticated;
-
-    Permissions.setAuthenticated(isAuthenticated);
 
     this._updated$.next(Date.now());
   }
@@ -111,12 +106,12 @@ export class CamPermissionsService {
     }
 
     if (!feature) {
-      return Permissions.canDirectAccess(feature, level);
+      return true;
     }
 
     const featureGuard = this.guards[feature];
     if (!featureGuard) {
-      return Permissions.canDirectAccess(feature, level);
+      return true;
     }
 
     return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);

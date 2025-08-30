@@ -1,10 +1,10 @@
 import * as i0 from '@angular/core';
 import { Injectable, inject, InjectionToken, Component, EventEmitter, ViewChild, Output, Input, Optional, Inject, NgModule } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuPanel, MenuIcon, Menu, MenuComponent, TaMainRoute, CamMenuModule } from '@ta/menu';
+import { BehaviorSubject, filter, map, tap, of, switchMap, catchError, distinct } from 'rxjs';
 import { Logger, CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, HandleComplexRequest, HandleSimpleRequest, GRAPHQL_SERVER_CONFIG } from '@ta/server';
 import { isNonNullable, APPLICATION_CONFIG, TaBaseComponent, StopPropagationDirective, JoinPipe, sendMail, fullName, openExternalUrl, TaAbstractComponent, Culture, DEFAULT_USER_LANGUAGE, CamDirectivePipeModule, trigram } from '@ta/utils';
-import { BehaviorSubject, filter, map as map$1, tap, of, switchMap, catchError, distinct } from 'rxjs';
 import * as i1 from '@angular/router';
 import { gql } from 'apollo-angular';
 import { Validators } from '@angular/forms';
@@ -22,81 +22,6 @@ import { AuthService, provideAuth0 as provideAuth0$1, AuthHttpInterceptor } from
 import * as i3 from '@ta/services';
 import { CamConfigurationService } from '@ta/services';
 
-/** @deprecated */
-class PermissionsCore {
-    get received() {
-        return this._updated$.value !== null;
-    }
-    constructor() {
-        this._updated$ = new BehaviorSubject(null);
-        this._isFill = { permissions: false, isAuthenticated: false };
-        this.guards = {};
-        this.roles = [];
-        this.isAuthenticated = false;
-        this.updated$ = this._updated$.pipe(filter(isNonNullable));
-    }
-    set(info, isAuthenticated) {
-        Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
-        this.guards = {};
-        if (info.permissions) {
-            for (let perm of info.permissions) {
-                const access = perm.split(':');
-                if (!this.guards[access[1]]) {
-                    this.guards[access[1]] = [];
-                }
-                this.guards[access[1]].push(access[0]);
-            }
-        }
-        this.roles = info.roles || [];
-        this._isFill.permissions = true;
-        this.setSilentAuthenticated(isAuthenticated);
-        this._canYouUpdate();
-        Logger.LogInfo('[PERMISSIONS] List:', this.guards, this.roles);
-    }
-    setSilentAuthenticated(isAuthenticated) {
-        this.isAuthenticated = isAuthenticated;
-        this._isFill.isAuthenticated = true;
-        this._canYouUpdate();
-    }
-    setAuthenticated(isAuthenticated) {
-        this.isAuthenticated = isAuthenticated;
-        this._updated$.next(Date.now());
-    }
-    hasRole(role) {
-        return this.roles.some(x => x.includes(role));
-    }
-    canDirectAccess(feature, level) {
-        if (level === 'authenticated') {
-            return this.isAuthenticated;
-        }
-        if (!feature) {
-            return true;
-        }
-        const featureGuard = this.guards[feature];
-        if (!featureGuard) {
-            return false;
-        }
-        if (featureGuard.includes('all')) {
-            return true;
-        }
-        if (!featureGuard.includes(level)) {
-            return false;
-        }
-        return true;
-    }
-    canAccess(feature, level) {
-        return this._updated$.pipe(map(() => this.canDirectAccess(feature, level)));
-    }
-    _canYouUpdate() {
-        if (!this._isFill.isAuthenticated || !this._isFill.permissions) {
-            return;
-        }
-        this._updated$.next(Date.now());
-    }
-}
-/** @deprecated */
-const Permissions = new PermissionsCore();
-
 const accessLevels = ['reader', 'contributor', 'administrator'];
 class CamPermissionsService {
     get received() {
@@ -113,9 +38,9 @@ class CamPermissionsService {
     }
     set(info, isAuthenticated) {
         Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
-        this.features = info.features || [];
-        this.roles = info.roles || [];
-        this.guards = info.roles
+        this.features = info.features ?? [];
+        this.roles = info.roles ?? [];
+        this.guards = this.roles
             .map(role => role.replace('Merlin_', ''))
             .reduce((acc, role) => {
             if (!role.includes('-')) {
@@ -131,18 +56,15 @@ class CamPermissionsService {
         Logger.LogInfo('[PERMISSIONS] Guard', this.guards);
         this._isFill.permissions = true;
         this.setSilentAuthenticated(isAuthenticated);
-        Permissions.set(info, isAuthenticated);
         this._canYouUpdate();
     }
     setSilentAuthenticated(isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
         this._isFill.isAuthenticated = true;
-        Permissions.setSilentAuthenticated(isAuthenticated);
         this._canYouUpdate();
     }
     setAuthenticated(isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
-        Permissions.setAuthenticated(isAuthenticated);
         this._updated$.next(Date.now());
     }
     hasRole(role) {
@@ -156,16 +78,16 @@ class CamPermissionsService {
             return this.features.includes(feature);
         }
         if (!feature) {
-            return Permissions.canDirectAccess(feature, level);
+            return true;
         }
         const featureGuard = this.guards[feature];
         if (!featureGuard) {
-            return Permissions.canDirectAccess(feature, level);
+            return true;
         }
         return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);
     }
     canAccess$(feature, level) {
-        return this._updated$.pipe(map$1(() => this.canDirectAccess(feature, level)));
+        return this._updated$.pipe(map(() => this.canDirectAccess(feature, level)));
     }
     _canYouUpdate() {
         if (!this._isFill.isAuthenticated || !this._isFill.permissions) {
@@ -190,7 +112,7 @@ class AuthGuard {
     }
     canActivate(next, state) {
         if (!this._permissionsService.received) {
-            return this._permissionsService.updated$.pipe(map(() => {
+            return this._permissionsService.updated$.pipe(map$1(() => {
                 if (this._permissionsService.isAuthenticated) {
                     return true;
                 }
@@ -230,7 +152,7 @@ class FeatureGuard {
         if (this._permissionsService.received === true) {
             return this._isValidPermission(feature, level);
         }
-        return this._permissionsService.updated$.pipe(map(() => {
+        return this._permissionsService.updated$.pipe(map$1(() => {
             return this._isValidPermission(feature, level);
         }));
     }
@@ -364,10 +286,10 @@ class CamContactService extends CamBaseService {
             ${contactProps.get('phoneNumber')}
             ${contactProps.get('tenantPersonId')}
           `), 'contacts', graphEndpoint$2.clientName)
-            .pipe(filter(isNonNullable), map$1(data => ({
+            .pipe(filter(isNonNullable), map(data => ({
             ...data,
             items: data.items ?? [],
-        })), filter(data => data.items.length > 0), map$1(data => data.items[0])));
+        })), filter(data => data.items.length > 0), map(data => data.items[0])));
     }
     fetchContact$() {
         return this.contacts.fetch(this._graphService
@@ -378,7 +300,7 @@ class CamContactService extends CamBaseService {
               ${contactProps.get('mail')}
               ${contactProps.get('phoneNumber')}
             `), 'contactsLight', graphEndpoint$2.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? [])));
+            .pipe(filter(isNonNullable), map(data => data.items ?? [])));
     }
     fetchContactsByIds$(ids) {
         return this.contacts.fetch(this._graphService
@@ -388,7 +310,7 @@ class CamContactService extends CamBaseService {
               ${contactProps.get('lastName')}
               ${contactProps.get('mail')}
             `), 'contactsLight', graphEndpoint$2.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? [])));
+            .pipe(filter(isNonNullable), map(data => data.items ?? [])));
     }
     fetchSearchContact$(search) {
         if (!search || search.length < 3) {
@@ -401,7 +323,7 @@ class CamContactService extends CamBaseService {
               ${contactProps.get('lastName')}
               ${contactProps.get('mail')}
             `, `order: { lastName: ASC }`), 'searchContactsLight', graphEndpoint$2.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? []), tap(list => list.forEach(element => {
+            .pipe(filter(isNonNullable), map(data => data.items ?? []), tap(list => list.forEach(element => {
             this.contactById.add(element.id, element);
         })));
     }
@@ -729,7 +651,7 @@ class TaUsersService extends CamBaseService {
               ${userProps.get('picture')}
               
             `, `order: { lastName: ASC }`), 'users', graphEndpoint$1.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? [])));
+            .pipe(filter(isNonNullable), map(data => data.items ?? [])));
     }
     fetchContactTenantRoute$(contactId) {
         return this.contactTenantRoute.fetch(this._graphService
@@ -746,7 +668,7 @@ class TaUsersService extends CamBaseService {
               ${userProps.get('picture')}
               ${userProps.get('trigram')}
             `, `order: { lastName: ASC }`), 'users', graphEndpoint$1.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? [])));
+            .pipe(filter(isNonNullable), map(data => data.items ?? [])));
     }
     fetchUser$(id) {
         return this.user.fetch(id, this._graphService.fetchQuery(GET_USER_BY_ID(id), 'userById', graphEndpoint$1.clientName));
@@ -758,7 +680,7 @@ class TaUsersService extends CamBaseService {
         return this.currentUserContactIds
             .fetch(this._graphService
             .fetchQueryList(GET_MY_CONTACTS(), 'myContacts', graphEndpoint$1.clientName)
-            .pipe(map$1(data => data ?? [])))
+            .pipe(map(data => data ?? [])))
             .pipe(tap(() => {
             this._graphService.contactsLoaded$.next(true);
         }));
@@ -776,7 +698,7 @@ class TaUsersService extends CamBaseService {
               ${userProps.get('lastName')}
               ${userProps.get('userName')}
             `), 'searchUsersCustomers', graphEndpoint$1.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? []), tap(list => list.forEach(element => {
+            .pipe(filter(isNonNullable), map(data => data.items ?? []), tap(list => list.forEach(element => {
             this.userById.add(element.id, element);
         })));
     }
@@ -840,7 +762,7 @@ class CamFunctionsService extends CamBaseService {
                 ${roleProps.get('name')}
               }
             `), 'functions', graphEndpoint.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? [])));
+            .pipe(filter(isNonNullable), map(data => data.items ?? [])));
     }
     fetchRoles$() {
         return this.roles.fetch(this._graphService
@@ -848,7 +770,7 @@ class CamFunctionsService extends CamBaseService {
               ${roleProps.get('id')}
               ${roleProps.get('name')}
             `), 'roles', graphEndpoint.clientName)
-            .pipe(filter(isNonNullable), map$1(data => data.items ?? [])));
+            .pipe(filter(isNonNullable), map(data => data.items ?? [])));
     }
     addFunction$(functionAddedPayload) {
         return this._graphService
@@ -949,7 +871,7 @@ class CamFunctionsFormService {
                         label: 'user.functions.form.roles',
                         class: 'pt-xxl',
                         withSearch: true,
-                        options: this._functionsService.fetchRoles$().pipe(filter(isNonNullable), map$1(roles => roles.map(role => ({
+                        options: this._functionsService.fetchRoles$().pipe(filter(isNonNullable), map(roles => roles.map(role => ({
                             id: role.id,
                             name: role.name,
                             data: role,
@@ -1118,7 +1040,7 @@ class MyAccountComponent extends TaBaseComponent {
         this._fetch();
     }
     get profile$() {
-        return this.currentUser$.pipe(map$1(data => {
+        return this.currentUser$.pipe(map(data => {
             return {
                 title: {
                     second: data?.firstName || data?.lastName,
@@ -1128,7 +1050,7 @@ class MyAccountComponent extends TaBaseComponent {
         }));
     }
     get userLogo$() {
-        return this.currentUser$.pipe(map$1(x => {
+        return this.currentUser$.pipe(map(x => {
             if (!x) {
                 return null;
             }
@@ -1740,5 +1662,5 @@ const provideAuth0 = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { AuthGuard, CAM_AUTH_TOKEN, CamAuthService, CamContactService, CamFunctionsFormService, CamFunctionsService, CamPermissionsService, CamUserModule, CamUserService, ContactCardComponent, EFunctionFormFields, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MenuUserComponent, MyAccountComponent, Permissions, PermissionsCore, SwitchLanguageCtaComponent, TaUsersService, TenantUrlDisplayerComponent, UserMyProfileComponent, cachedQueryName, contactProps, functionProps, provideAuth0, roleProps, userProps };
+export { AuthGuard, CAM_AUTH_TOKEN, CamAuthService, CamContactService, CamFunctionsFormService, CamFunctionsService, CamPermissionsService, CamUserModule, CamUserService, ContactCardComponent, EFunctionFormFields, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MenuUserComponent, MyAccountComponent, SwitchLanguageCtaComponent, TaUsersService, TenantUrlDisplayerComponent, UserMyProfileComponent, cachedQueryName, contactProps, functionProps, provideAuth0, roleProps, userProps };
 //# sourceMappingURL=ta-user.mjs.map
