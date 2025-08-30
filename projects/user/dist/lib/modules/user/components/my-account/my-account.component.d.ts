@@ -4,7 +4,7 @@ import { Menu, MenuIcon } from '@ta/menu';
 import { TaSizes } from '@ta/styles';
 import { UserLogoNaming } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
-import { CamUsersService } from '../../services/users.service';
+import { TaUsersService } from '../../services/users.service';
 import * as i0 from "@angular/core";
 export declare class MyAccountComponent extends TaBaseComponent {
     private _usersService;
@@ -19,7 +19,7 @@ export declare class MyAccountComponent extends TaBaseComponent {
     profileMenu: Menu | null;
     disconnectionMenu: Menu | null;
     get currentUser$(): Observable<import("@ta/user").User | null>;
-    constructor(_usersService: CamUsersService);
+    constructor(_usersService: TaUsersService);
     get profile$(): Observable<{
         title: {
             second: string | undefined;

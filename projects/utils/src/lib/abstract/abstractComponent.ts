@@ -2,15 +2,16 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CamIconType } from '@ta/icons';
 import { Subscription } from 'rxjs';
+
+import { CamIconType } from '@ta/icons';
 
 import { BreakpointDetection } from '../helpers/breakpoints/detection';
 import { RequestState } from '../helpers/request/state';
 import { SubscriberHandler } from '../helpers/subscriber/handler';
 
 @Component({ template: '' })
-export abstract class CamAbstractComponent implements OnDestroy {
+export abstract class TaAbstractComponent implements OnDestroy {
   public breakpoints = new BreakpointDetection();
   public requestState = new RequestState();
 

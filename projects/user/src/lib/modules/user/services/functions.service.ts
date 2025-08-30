@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 
-import { CamBaseService, GraphEndpoint, HandleSimpleRequest } from '@ta/server';
-import { isNonNullable } from '@ta/utils';
 import { Observable, catchError, filter, map, of, switchMap } from 'rxjs';
 
-import { CamUsersService } from './users.service';
+import { CamBaseService, GraphEndpoint, HandleSimpleRequest } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
+
+import { TaUsersService } from './users.service';
 import { Function, FunctionCreationPayload, FunctionModifierPayload, functionProps } from './users/dto/function';
 import { Role, roleProps } from './users/dto/role';
 import { UserFunctionPayload } from './users/dto/user';
@@ -23,7 +24,7 @@ export class CamFunctionsService extends CamBaseService {
   public functions = new HandleSimpleRequest<Function[]>();
   public roles = new HandleSimpleRequest<Role[]>();
 
-  private _usersService = inject(CamUsersService);
+  private _usersService = inject(TaUsersService);
 
   constructor() {
     super();

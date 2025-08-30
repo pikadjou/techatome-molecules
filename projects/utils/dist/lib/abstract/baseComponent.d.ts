@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
-import { CamAbstractComponent } from './abstractComponent';
+import { TaAbstractComponent } from './abstractComponent';
 import * as i0 from "@angular/core";
-export declare abstract class TaBaseComponent extends CamAbstractComponent implements OnDestroy {
+export declare abstract class TaBaseComponent extends TaAbstractComponent implements OnDestroy {
     constructor();
     trackById(_: any, item: {
         id: number | string;

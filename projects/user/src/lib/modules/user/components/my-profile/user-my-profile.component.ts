@@ -17,7 +17,7 @@ import {
 } from '@ta/ui';
 import { TaBaseComponent, fullName, sendMail } from '@ta/utils';
 
-import { CamUsersService } from '../../services/users.service';
+import { TaUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
@@ -61,7 +61,7 @@ export class UserMyProfileComponent extends TaBaseComponent {
   get currentUser$() {
     return this._userService.currentUser.get$();
   }
-  constructor(private _userService: CamUsersService) {
+  constructor(private _userService: TaUsersService) {
     super();
     this._fetch();
   }

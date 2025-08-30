@@ -20,7 +20,7 @@ import { StopPropagationDirective } from '@ta/utils';
 import { TaBaseComponent } from '@ta/utils';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
-import { CamUsersService } from '../../services/users.service';
+import { TaUsersService } from '../../services/users.service';
 import { SwitchLanguageComponent } from '../switch-language/switch-language.component';
 
 @Component({
@@ -74,7 +74,7 @@ export class MyAccountComponent extends TaBaseComponent {
     return this._usersService.currentUser.get$();
   }
 
-  constructor(private _usersService: CamUsersService) {
+  constructor(private _usersService: TaUsersService) {
     super();
     this._fetch();
   }

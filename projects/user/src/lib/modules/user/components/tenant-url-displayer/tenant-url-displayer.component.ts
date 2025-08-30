@@ -6,7 +6,7 @@ import { FontIconComponent } from '@ta/icons';
 import { ButtonComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
 import { TaBaseComponent, openExternalUrl } from '@ta/utils';
 
-import { CamUsersService } from '../../services/users.service';
+import { TaUsersService } from '../../services/users.service';
 
 @Component({
   selector: 'ta-tenant-url-displayer',
@@ -26,7 +26,7 @@ export class TenantUrlDisplayerComponent extends TaBaseComponent {
     return this._usersService.contactTenantRoute.get$();
   }
 
-  private _usersService = inject(CamUsersService);
+  private _usersService = inject(TaUsersService);
 
   constructor() {
     super();

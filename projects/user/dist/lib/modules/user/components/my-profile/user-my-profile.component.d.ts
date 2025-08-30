@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { TaBaseComponent } from '@ta/utils';
-import { CamUsersService } from '../../services/users.service';
+import { TaUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 import * as i0 from "@angular/core";
 export declare class UserMyProfileComponent extends TaBaseComponent {
@@ -14,7 +14,7 @@ export declare class UserMyProfileComponent extends TaBaseComponent {
         callback: () => void;
     }[];
     get currentUser$(): import("rxjs").Observable<User | null>;
-    constructor(_userService: CamUsersService);
+    constructor(_userService: TaUsersService);
     getFullName(firstName: string, lastName: string): string;
     getUserLogo(user: User): {
         userInfo: {

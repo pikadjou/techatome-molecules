@@ -3,7 +3,7 @@ import { Injectable, inject, InjectionToken, Component, EventEmitter, ViewChild,
 import { map } from 'rxjs/operators';
 import { TaRoutes, MenuPanel, MenuIcon, Menu, MenuComponent, TaMainRoute, CamMenuModule } from '@ta/menu';
 import { Logger, CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, HandleComplexRequest, HandleSimpleRequest, GRAPHQL_SERVER_CONFIG } from '@ta/server';
-import { isNonNullable, APPLICATION_CONFIG, TaBaseComponent, StopPropagationDirective, JoinPipe, sendMail, fullName, openExternalUrl, CamAbstractComponent, Culture, DEFAULT_USER_LANGUAGE, CamDirectivePipeModule, trigram } from '@ta/utils';
+import { isNonNullable, APPLICATION_CONFIG, TaBaseComponent, StopPropagationDirective, JoinPipe, sendMail, fullName, openExternalUrl, TaAbstractComponent, Culture, DEFAULT_USER_LANGUAGE, CamDirectivePipeModule, trigram } from '@ta/utils';
 import { BehaviorSubject, filter, map as map$1, tap, of, switchMap, catchError, distinct } from 'rxjs';
 import * as i1 from '@angular/router';
 import { gql } from 'apollo-angular';
@@ -700,7 +700,7 @@ const graphEndpoint$1 = {
     clientName: 'userService',
     endpoint: 'user',
 };
-class CamUsersService extends CamBaseService {
+class TaUsersService extends CamBaseService {
     constructor() {
         super();
         this.users = new HandleSimpleRequest();
@@ -806,10 +806,10 @@ class CamUsersService extends CamBaseService {
             return of(null);
         }));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUsersService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUsersService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUsersService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUsersService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUsersService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUsersService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -827,7 +827,7 @@ class CamFunctionsService extends CamBaseService {
         super();
         this.functions = new HandleSimpleRequest();
         this.roles = new HandleSimpleRequest();
-        this._usersService = inject(CamUsersService);
+        this._usersService = inject(TaUsersService);
         super.registerRoutes({ graphEndpoint: graphEndpoint });
     }
     fetchFunctions$() {
@@ -904,7 +904,7 @@ class CamAuthService extends CamBaseService {
         this.isAuthenticated$ = this._permissionsService.canAccess$('', 'authenticated');
         this.user$ = new BehaviorSubject(null);
         this._applicationConfig = inject(APPLICATION_CONFIG);
-        this._userService = inject(CamUsersService);
+        this._userService = inject(TaUsersService);
         this.user$
             .pipe(filter(user => !!user), filter(() => this._applicationConfig.isCustomerApplication), switchMap(() => this.fetchUserContactIds()))
             .subscribe();
@@ -1221,7 +1221,7 @@ class MyAccountComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, deps: [{ token: CamUsersService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, deps: [{ token: TaUsersService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: MyAccountComponent, isStandalone: true, selector: "ta-my-account", inputs: { infosMenu: "infosMenu", appVersion: "appVersion", isEditable: "isEditable" }, outputs: { navigateEvent: "navigateEvent", navigateEditEvent: "navigateEditEvent" }, viewQueries: [{ propertyName: "languageTemplate", first: true, predicate: ["languageTemplate"], descendants: true, static: true }, { propertyName: "infosTemplate", first: true, predicate: ["infosTemplate"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"mx-space-sm\" appStopPropagation>\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.profile$ | async as profile\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!profile\">\n        <div class=\"bdp-b color-border-primary\">\n          <div class=\"pt-space-xs m-xs\">\n            <ta-inline-profile-data\n              [profile]=\"profile ?? {}\"\n              [userLogo]=\"this.userLogo$ | async\"\n              (click)=\"this.navigateToProfile()\"\n            ></ta-inline-profile-data>\n            @if (this.isEditable) {\n              <div class=\"my-space-md\">\n                <ta-button (action)=\"this.navigateToEditProfile()\" [style]=\"'secondary'\">\n                  <div class=\"align-center button-content\">\n                    <ta-font-icon name=\"modify\" class=\"mr-space-xs modify-icon\"></ta-font-icon>\n                    <div class=\"text\">\n                      {{ 'user.modify' | translate }}\n                    </div>\n                  </div>\n                </ta-button>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n\n  @if (this.profileMenu) {\n    <div class=\"bdp-b color-border-primary pt-space-xs\">\n      <ta-menu [menu]=\"this.profileMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n\n  @if (this.disconnectionMenu) {\n    <div class=\"bdp-b pt-space-xs\">\n      <ta-menu [menu]=\"this.disconnectionMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n  <div class=\"ta-c\">\n    <small>{{ this.appVersion }}</small>\n  </div>\n</div>\n\n<ng-template #languageTemplate>\n  <ta-switch-language></ta-switch-language>\n</ng-template>\n\n<ng-template #infosTemplate>\n  @if (this.infosMenu) {\n    <div class=\"mx-space-sm info-panel\">\n      <ta-menu [menu]=\"this.infosMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n</ng-template>\n", styles: [".modify-icon{color:var(--ta-brand-700)}.language-panel{min-width:240px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.button-content{justify-content:center}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: InlineProfileDataComponent, selector: "ta-inline-profile-data", inputs: ["profile", "userLogo"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: MenuComponent, selector: "ta-menu", inputs: ["menu", "container"] }, { kind: "component", type: SwitchLanguageComponent, selector: "ta-switch-language" }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, decorators: [{
@@ -1240,7 +1240,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         SwitchLanguageComponent,
                         TranslatePipe,
                     ], template: "<div class=\"mx-space-sm\" appStopPropagation>\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.profile$ | async as profile\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!profile\">\n        <div class=\"bdp-b color-border-primary\">\n          <div class=\"pt-space-xs m-xs\">\n            <ta-inline-profile-data\n              [profile]=\"profile ?? {}\"\n              [userLogo]=\"this.userLogo$ | async\"\n              (click)=\"this.navigateToProfile()\"\n            ></ta-inline-profile-data>\n            @if (this.isEditable) {\n              <div class=\"my-space-md\">\n                <ta-button (action)=\"this.navigateToEditProfile()\" [style]=\"'secondary'\">\n                  <div class=\"align-center button-content\">\n                    <ta-font-icon name=\"modify\" class=\"mr-space-xs modify-icon\"></ta-font-icon>\n                    <div class=\"text\">\n                      {{ 'user.modify' | translate }}\n                    </div>\n                  </div>\n                </ta-button>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n\n  @if (this.profileMenu) {\n    <div class=\"bdp-b color-border-primary pt-space-xs\">\n      <ta-menu [menu]=\"this.profileMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n\n  @if (this.disconnectionMenu) {\n    <div class=\"bdp-b pt-space-xs\">\n      <ta-menu [menu]=\"this.disconnectionMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n  <div class=\"ta-c\">\n    <small>{{ this.appVersion }}</small>\n  </div>\n</div>\n\n<ng-template #languageTemplate>\n  <ta-switch-language></ta-switch-language>\n</ng-template>\n\n<ng-template #infosTemplate>\n  @if (this.infosMenu) {\n    <div class=\"mx-space-sm info-panel\">\n      <ta-menu [menu]=\"this.infosMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n</ng-template>\n", styles: [".modify-icon{color:var(--ta-brand-700)}.language-panel{min-width:240px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.button-content{justify-content:center}\n"] }]
-        }], ctorParameters: () => [{ type: CamUsersService }], propDecorators: { infosMenu: [{
+        }], ctorParameters: () => [{ type: TaUsersService }], propDecorators: { infosMenu: [{
                 type: Input
             }], appVersion: [{
                 type: Input
@@ -1304,7 +1304,7 @@ class UserMyProfileComponent extends TaBaseComponent {
     _modifyProfile() {
         this.modifyAction.emit();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserMyProfileComponent, deps: [{ token: CamUsersService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserMyProfileComponent, deps: [{ token: TaUsersService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UserMyProfileComponent, isStandalone: true, selector: "ta-user-my-profile", inputs: { canModify: "canModify" }, outputs: { modifyAction: "modifyAction" }, usesInheritance: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.currentUser$ | async as currentUser\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty [isEmpty]=\"!currentUser\">\n      @if (currentUser) {\n        <ta-ui-profile-display\n          [label]=\"this.getFullName(currentUser.firstName, currentUser.lastName)\"\n          [ctas]=\"this.canModify ? this.ctas : null\"\n          [userLogo]=\"this.getUserLogo(currentUser)\"\n        >\n          <div class=\"pt-space-xxl\">\n            <div class=\"pt-space-xs align-center\">\n              <ta-title class=\"m-a\" [level]=\"3\">\n                <ta-link (action)=\"this.mailTo(currentUser.userName)\">{{ currentUser.userName }}</ta-link>\n              </ta-title>\n            </div>\n            <div class=\"pt-space-xs align-center\">\n              <ta-title class=\"m-a\" [level]=\"3\">\n                {{ currentUser.phoneNumber }}\n              </ta-title>\n            </div>\n            @if (currentUser.tenantInformations.length === 1) {\n              <div class=\"align-center\">\n                <ta-title class=\"m-a\" [level]=\"3\">\n                  {{ 'user.clientnumber' | translate }}\n                  {{ currentUser.tenantInformations[0].customerId }}\n                </ta-title>\n              </div>\n            }\n            @if (currentUser.tenantInformations.length > 1) {\n              <div>\n                <div class=\"pt-space-xxl align-center\">\n                  <ta-title class=\"m-a\" [level]=\"3\">\n                    {{ 'user.tenantlisttitle' | translate }}\n                  </ta-title>\n                </div>\n                <div class=\"list\">\n                  <div class=\"tenant-list\">\n                    <ta-list-container>\n                      @for (tenantInformation of currentUser.tenantInformations; track tenantInformation) {\n                        <ta-list-element [withSeparator]=\"false\">\n                          <ta-list-title>\n                            <div>{{ tenantInformation.tenantName }}</div>\n                          </ta-list-title>\n                          <ta-list-extra-information>\n                            @if (tenantInformation.customerId) {\n                              <div class=\"align-center\">\n                                <div class=\"mr-space-sm\">\n                                  {{ tenantInformation.customerId }}\n                                </div>\n                                <!-- <ta-text-to-clipboard [value]=\"tenantInformation.customerId.toString()\" ></ta-text-to-clipboard> -->\n                              </div>\n                            }\n                          </ta-list-extra-information>\n                        </ta-list-element>\n                      }\n                    </ta-list-container>\n                  </div>\n                </div>\n              </div>\n            }\n          </div>\n        </ta-ui-profile-display>\n      }\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".text{font-size:var(--ta-font-key-key-default-size);line-height:var(--ta-font-key-key-default-line);font-weight:var(--ta-font-key-key-default-weight);display:flex;justify-content:center;line-height:32px}.list{display:flex;justify-content:center}.list .tenant-list{min-width:240px}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: ListContainerComponent, selector: "ta-list-container" }, { kind: "component", type: ListElementComponent, selector: "ta-list-element", inputs: ["withSeparator", "flexColumn"], outputs: ["action"] }, { kind: "component", type: ListTitleComponent, selector: "ta-list-title" }, { kind: "component", type: ListExtraInformationComponent, selector: "ta-list-extra-information" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: UiProfileDisplayComponent, selector: "ta-ui-profile-display", inputs: ["label", "userLogo", "ctas", "sideIcon"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserMyProfileComponent, decorators: [{
@@ -1325,7 +1325,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         LinkComponent,
                         TranslatePipe,
                     ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.currentUser$ | async as currentUser\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty [isEmpty]=\"!currentUser\">\n      @if (currentUser) {\n        <ta-ui-profile-display\n          [label]=\"this.getFullName(currentUser.firstName, currentUser.lastName)\"\n          [ctas]=\"this.canModify ? this.ctas : null\"\n          [userLogo]=\"this.getUserLogo(currentUser)\"\n        >\n          <div class=\"pt-space-xxl\">\n            <div class=\"pt-space-xs align-center\">\n              <ta-title class=\"m-a\" [level]=\"3\">\n                <ta-link (action)=\"this.mailTo(currentUser.userName)\">{{ currentUser.userName }}</ta-link>\n              </ta-title>\n            </div>\n            <div class=\"pt-space-xs align-center\">\n              <ta-title class=\"m-a\" [level]=\"3\">\n                {{ currentUser.phoneNumber }}\n              </ta-title>\n            </div>\n            @if (currentUser.tenantInformations.length === 1) {\n              <div class=\"align-center\">\n                <ta-title class=\"m-a\" [level]=\"3\">\n                  {{ 'user.clientnumber' | translate }}\n                  {{ currentUser.tenantInformations[0].customerId }}\n                </ta-title>\n              </div>\n            }\n            @if (currentUser.tenantInformations.length > 1) {\n              <div>\n                <div class=\"pt-space-xxl align-center\">\n                  <ta-title class=\"m-a\" [level]=\"3\">\n                    {{ 'user.tenantlisttitle' | translate }}\n                  </ta-title>\n                </div>\n                <div class=\"list\">\n                  <div class=\"tenant-list\">\n                    <ta-list-container>\n                      @for (tenantInformation of currentUser.tenantInformations; track tenantInformation) {\n                        <ta-list-element [withSeparator]=\"false\">\n                          <ta-list-title>\n                            <div>{{ tenantInformation.tenantName }}</div>\n                          </ta-list-title>\n                          <ta-list-extra-information>\n                            @if (tenantInformation.customerId) {\n                              <div class=\"align-center\">\n                                <div class=\"mr-space-sm\">\n                                  {{ tenantInformation.customerId }}\n                                </div>\n                                <!-- <ta-text-to-clipboard [value]=\"tenantInformation.customerId.toString()\" ></ta-text-to-clipboard> -->\n                              </div>\n                            }\n                          </ta-list-extra-information>\n                        </ta-list-element>\n                      }\n                    </ta-list-container>\n                  </div>\n                </div>\n              </div>\n            }\n          </div>\n        </ta-ui-profile-display>\n      }\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".text{font-size:var(--ta-font-key-key-default-size);line-height:var(--ta-font-key-key-default-line);font-weight:var(--ta-font-key-key-default-weight);display:flex;justify-content:center;line-height:32px}.list{display:flex;justify-content:center}.list .tenant-list{min-width:240px}\n"] }]
-        }], ctorParameters: () => [{ type: CamUsersService }], propDecorators: { canModify: [{
+        }], ctorParameters: () => [{ type: TaUsersService }], propDecorators: { canModify: [{
                 type: Input
             }], modifyAction: [{
                 type: Output
@@ -1338,7 +1338,7 @@ class TenantUrlDisplayerComponent extends TaBaseComponent {
     constructor() {
         super();
         this.display = 'icon';
-        this._usersService = inject(CamUsersService);
+        this._usersService = inject(TaUsersService);
     }
     ngOnInit() {
         this._fetch();
@@ -1369,7 +1369,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class GuardComponent extends CamAbstractComponent {
+class GuardComponent extends TaAbstractComponent {
     get noAccessIcon() {
         return CamIconType.NoAccess;
     }
@@ -1427,13 +1427,13 @@ class ContactCardComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactCardComponent, deps: [{ token: CamUsersService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactCardComponent, deps: [{ token: TaUsersService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ContactCardComponent, isStandalone: true, selector: "ta-contact-card", inputs: { userId: "userId" }, usesInheritance: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.user$ | async as user\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty [isEmpty]=\"!user\">\n      @if (user) {\n        <ta-user-logo class=\"user-logo\" [user]=\"this.getUserLogoData(user)\"></ta-user-logo>\n      }\n      <div class=\"contact-name\">{{ user?.firstName }} {{ user?.lastName }}</div>\n      <div class=\"contacts align-center\">\n        <div class=\"phone align-center\">\n          <ta-font-icon class=\"mr-space-xs\" name=\"phone\"></ta-font-icon>\n          {{ user?.phoneNumber }}\n        </div>\n        <div class=\"mail align-center\">\n          <ta-font-icon class=\"mr-space-xs\" name=\"mail\"></ta-font-icon>\n          {{ user?.userName }}\n        </div>\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".contact-name{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.user-logo{display:flex;padding-bottom:var(--ta-space-xs)}.contacts{padding-top:var(--ta-space-sm);gap:var(--ta-space-xl)}ta-font-icon{color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["userInfo", "user", "size", "forcedSize", "defaultType"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactCardComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-contact-card', standalone: true, imports: [NgIf, AsyncPipe, FontIconComponent, LoaderComponent, ErrorComponent, EmptyComponent, UserLogoComponent], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.user$ | async as user\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty [isEmpty]=\"!user\">\n      @if (user) {\n        <ta-user-logo class=\"user-logo\" [user]=\"this.getUserLogoData(user)\"></ta-user-logo>\n      }\n      <div class=\"contact-name\">{{ user?.firstName }} {{ user?.lastName }}</div>\n      <div class=\"contacts align-center\">\n        <div class=\"phone align-center\">\n          <ta-font-icon class=\"mr-space-xs\" name=\"phone\"></ta-font-icon>\n          {{ user?.phoneNumber }}\n        </div>\n        <div class=\"mail align-center\">\n          <ta-font-icon class=\"mr-space-xs\" name=\"mail\"></ta-font-icon>\n          {{ user?.userName }}\n        </div>\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".contact-name{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.user-logo{display:flex;padding-bottom:var(--ta-space-xs)}.contacts{padding-top:var(--ta-space-sm);gap:var(--ta-space-xl)}ta-font-icon{color:var(--ta-icon-brand-primary)}\n"] }]
-        }], ctorParameters: () => [{ type: CamUsersService }], propDecorators: { userId: [{
+        }], ctorParameters: () => [{ type: TaUsersService }], propDecorators: { userId: [{
                 type: Input
             }] } });
 
@@ -1480,7 +1480,7 @@ class ContactScopeInterceptor {
         });
         return next.handle(contactIdsRequest);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: CamUsersService }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: TaUsersService }], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactScopeInterceptor, decorators: [{
@@ -1490,7 +1490,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }, {
                     type: Inject,
                     args: [GRAPHQL_SERVER_CONFIG]
-                }] }, { type: CamUsersService }] });
+                }] }, { type: TaUsersService }] });
 
 class CamTranslationUser extends CamLazyTranslationService {
     constructor() {
@@ -1527,7 +1527,7 @@ class CamUserModule {
             providers: [
                 {
                     provide: DEFAULT_USER_LANGUAGE,
-                    deps: [CamUsersService],
+                    deps: [TaUsersService],
                     useFactory: (usersService) => usersService.currentUser.get()?.culture ?? Culture.FR_BE,
                 },
                 {
@@ -1539,7 +1539,27 @@ class CamUserModule {
         };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUserModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamUserModule, imports: [CamUiModule, CamCardModule, CamDirectivePipeModule, CamFormInputsModule, CommonModule, CamMenuModule, CamIconsModule, CamListModule, CamContainerModule, MatMenuModule, TranslatePipe, LoginCardComponent, MenuUserComponent, MyAccountComponent, GuardComponent, LoginRedirectComponent, TenantUrlDisplayerComponent, ContactCardComponent, SwitchLanguageComponent, SwitchLanguageCtaComponent, UserMyProfileComponent], exports: [LoginCardComponent,
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamUserModule, imports: [CamUiModule,
+            CamCardModule,
+            CamDirectivePipeModule,
+            CamFormInputsModule,
+            CommonModule,
+            CamMenuModule,
+            CamIconsModule,
+            CamListModule,
+            CamContainerModule,
+            MatMenuModule,
+            TranslatePipe,
+            LoginCardComponent,
+            MenuUserComponent,
+            MyAccountComponent,
+            GuardComponent,
+            LoginRedirectComponent,
+            TenantUrlDisplayerComponent,
+            ContactCardComponent,
+            SwitchLanguageComponent,
+            SwitchLanguageCtaComponent,
+            UserMyProfileComponent], exports: [LoginCardComponent,
             MenuUserComponent,
             MyAccountComponent,
             GuardComponent,
@@ -1548,13 +1568,53 @@ class CamUserModule {
             ContactCardComponent,
             SwitchLanguageCtaComponent,
             UserMyProfileComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUserModule, imports: [CamUiModule, CamCardModule, CamDirectivePipeModule, CamFormInputsModule, CommonModule, CamMenuModule, CamIconsModule, CamListModule, CamContainerModule, MatMenuModule, LoginCardComponent, MenuUserComponent, MyAccountComponent, GuardComponent, TenantUrlDisplayerComponent, ContactCardComponent, SwitchLanguageComponent, SwitchLanguageCtaComponent, UserMyProfileComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUserModule, imports: [CamUiModule,
+            CamCardModule,
+            CamDirectivePipeModule,
+            CamFormInputsModule,
+            CommonModule,
+            CamMenuModule,
+            CamIconsModule,
+            CamListModule,
+            CamContainerModule,
+            MatMenuModule,
+            LoginCardComponent,
+            MenuUserComponent,
+            MyAccountComponent,
+            GuardComponent,
+            TenantUrlDisplayerComponent,
+            ContactCardComponent,
+            SwitchLanguageComponent,
+            SwitchLanguageCtaComponent,
+            UserMyProfileComponent] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUserModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CamUiModule, CamCardModule, CamDirectivePipeModule, CamFormInputsModule, CommonModule, CamMenuModule, CamIconsModule, CamListModule, CamContainerModule, MatMenuModule, TranslatePipe, LoginCardComponent, MenuUserComponent, MyAccountComponent, GuardComponent, LoginRedirectComponent, TenantUrlDisplayerComponent, ContactCardComponent, SwitchLanguageComponent, SwitchLanguageCtaComponent, UserMyProfileComponent],
+                    imports: [
+                        CamUiModule,
+                        CamCardModule,
+                        CamDirectivePipeModule,
+                        CamFormInputsModule,
+                        CommonModule,
+                        CamMenuModule,
+                        CamIconsModule,
+                        CamListModule,
+                        CamContainerModule,
+                        MatMenuModule,
+                        TranslatePipe,
+                        LoginCardComponent,
+                        MenuUserComponent,
+                        MyAccountComponent,
+                        GuardComponent,
+                        LoginRedirectComponent,
+                        TenantUrlDisplayerComponent,
+                        ContactCardComponent,
+                        SwitchLanguageComponent,
+                        SwitchLanguageCtaComponent,
+                        UserMyProfileComponent,
+                    ],
                     exports: [
                         LoginCardComponent,
                         MenuUserComponent,
@@ -1680,5 +1740,5 @@ const provideAuth0 = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { AuthGuard, CAM_AUTH_TOKEN, CamAuthService, CamContactService, CamFunctionsFormService, CamFunctionsService, CamPermissionsService, CamUserModule, CamUserService, CamUsersService, ContactCardComponent, EFunctionFormFields, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MenuUserComponent, MyAccountComponent, Permissions, PermissionsCore, SwitchLanguageCtaComponent, TenantUrlDisplayerComponent, UserMyProfileComponent, cachedQueryName, contactProps, functionProps, provideAuth0, roleProps, userProps };
+export { AuthGuard, CAM_AUTH_TOKEN, CamAuthService, CamContactService, CamFunctionsFormService, CamFunctionsService, CamPermissionsService, CamUserModule, CamUserService, ContactCardComponent, EFunctionFormFields, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MenuUserComponent, MyAccountComponent, Permissions, PermissionsCore, SwitchLanguageCtaComponent, TaUsersService, TenantUrlDisplayerComponent, UserMyProfileComponent, cachedQueryName, contactProps, functionProps, provideAuth0, roleProps, userProps };
 //# sourceMappingURL=ta-user.mjs.map

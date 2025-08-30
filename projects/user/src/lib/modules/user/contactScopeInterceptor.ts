@@ -1,11 +1,12 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, Optional, inject } from '@angular/core';
 
-import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from '@ta/server';
-import { APPLICATION_CONFIG, IApplicationConfig } from '@ta/utils';
 import { Observable } from 'rxjs';
 
-import { CamUsersService } from './services/users.service';
+import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from '@ta/server';
+import { APPLICATION_CONFIG, IApplicationConfig } from '@ta/utils';
+
+import { TaUsersService } from './services/users.service';
 
 @Injectable()
 export class ContactScopeInterceptor implements HttpInterceptor {
@@ -15,7 +16,7 @@ export class ContactScopeInterceptor implements HttpInterceptor {
     @Optional()
     @Inject(GRAPHQL_SERVER_CONFIG)
     private graphQlConfig: IGraphConfig,
-    private _userService: CamUsersService
+    private _userService: TaUsersService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

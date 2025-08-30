@@ -6,7 +6,7 @@ import { FontIconComponent } from '@ta/icons';
 import { EmptyComponent, ErrorComponent, LoaderComponent, UserLogoComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
-import { CamUsersService } from '../../services/users.service';
+import { TaUsersService } from '../../services/users.service';
 import { User } from '../../services/users/dto/user';
 
 @Component({
@@ -24,7 +24,7 @@ export class ContactCardComponent extends TaBaseComponent {
     return this._usersService.user.get$(this.userId);
   }
 
-  constructor(private _usersService: CamUsersService) {
+  constructor(private _usersService: TaUsersService) {
     super();
   }
 

@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 
-import { CamAbstractComponent } from './abstractComponent';
+import { TaAbstractComponent } from './abstractComponent';
 
 @Component({ template: '' })
-export abstract class TaBaseComponent extends CamAbstractComponent implements OnDestroy {
+export abstract class TaBaseComponent extends TaAbstractComponent implements OnDestroy {
   constructor() {
     super();
   }

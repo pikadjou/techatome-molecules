@@ -1,13 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { InjectionToken } from '@angular/core';
 
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+
 import { CamBaseService, MappingApiType } from '@ta/server';
 import { APPLICATION_CONFIG, IApplicationConfig } from '@ta/utils';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 
 import { UserProfile } from './dto/user-profile';
 import { CamPermissionsService } from './permissions.service';
-import { CamUsersService } from './users.service';
+import { TaUsersService } from './users.service';
 
 export const CAM_AUTH_TOKEN = new InjectionToken<CamAuthService<any>>('CamAuthService');
 
@@ -30,7 +31,7 @@ export abstract class CamAuthService<T> extends CamBaseService {
   abstract logout(): Promise<null>;
 
   private _applicationConfig: IApplicationConfig = inject(APPLICATION_CONFIG);
-  private _userService: CamUsersService = inject(CamUsersService);
+  private _userService: TaUsersService = inject(TaUsersService);
 
   constructor(apiRoutes?: MappingApiType) {
     super(apiRoutes);

@@ -458,7 +458,7 @@ class SubscriberHandler {
     }
 }
 
-class CamAbstractComponent {
+class TaAbstractComponent {
     get isMobile() {
         return this.breakpoints.isMobile;
     }
@@ -481,15 +481,15 @@ class CamAbstractComponent {
     _registerSubscription(subscription) {
         this._subscriberHandler.registerSubscription(subscription);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamAbstractComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamAbstractComponent, selector: "ng-component", ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaAbstractComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaAbstractComponent, selector: "ng-component", ngImport: i0, template: '', isInline: true }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamAbstractComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaAbstractComponent, decorators: [{
             type: Component,
             args: [{ template: '' }]
         }], ctorParameters: () => [] });
 
-class TaBaseComponent extends CamAbstractComponent {
+class TaBaseComponent extends TaAbstractComponent {
     constructor() {
         super();
     }
@@ -569,7 +569,7 @@ const removeObjectKeys = (obj, keysToRemove) => {
     }, {});
 };
 
-class CamBasePage extends CamAbstractComponent {
+class CamBasePage extends TaAbstractComponent {
     constructor() {
         super();
     }
@@ -580,15 +580,14 @@ class CamBasePage extends CamAbstractComponent {
         return this._filterParams(this._route.queryParams, getPropertyTypes(data));
     }
     _filterParams(routeParams, paramsAsked) {
-        return routeParams.pipe(map((params) => convertToParamMap(params)), map((params) => this._getParamsTyped(paramsAsked, params)), distinctUntilChanged());
+        return routeParams.pipe(map(params => convertToParamMap(params)), map(params => this._getParamsTyped(paramsAsked, params)), distinctUntilChanged());
     }
     _getParamsTyped(paramsAsked, params) {
         let paramObject = {};
         for (let param in paramsAsked) {
             const value = params.get(param);
             if (value)
-                paramObject[param] =
-                    paramsAsked[param] === 'number' ? Number(value) : value;
+                paramObject[param] = paramsAsked[param] === 'number' ? Number(value) : value;
         }
         return paramObject;
     }
@@ -600,7 +599,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ template: '' }]
         }], ctorParameters: () => [] });
 
-class CamBaseModal extends CamAbstractComponent {
+class CamBaseModal extends TaAbstractComponent {
     constructor() {
         super();
     }
@@ -1052,5 +1051,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken('default_user_language');
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, CamAbstractComponent, CamBaseModal, CamBasePage, CamDirectivePipeModule, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaBaseComponent, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, CamBaseModal, CamBasePage, CamDirectivePipeModule, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaBaseComponent, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map

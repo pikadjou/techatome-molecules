@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { CamBaseService, MappingApiType } from '@ta/server';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { CamBaseService, MappingApiType } from '@ta/server';
 import { UserProfile } from './dto/user-profile';
 import { CamPermissionsService } from './permissions.service';
 import * as i0 from "@angular/core";

@@ -1,8 +1,8 @@
 import { CamIconType } from '@ta/icons';
-import { CamAbstractComponent } from '@ta/utils';
+import { TaAbstractComponent } from '@ta/utils';
 import { Domain, Level, PermissionFeature } from '../../services/permissions.service';
 import * as i0 from "@angular/core";
-export declare class GuardComponent extends CamAbstractComponent {
+export declare class GuardComponent extends TaAbstractComponent {
     level: Level | string;
     feature: PermissionFeature | Domain | string;
     canDisplayErrorMessage: boolean;

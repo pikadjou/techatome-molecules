@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { CamAbstractComponent } from './abstractComponent';
+import { TaAbstractComponent } from './abstractComponent';
 import * as i0 from "@angular/core";
-export declare abstract class CamBasePage extends CamAbstractComponent {
+export declare abstract class CamBasePage extends TaAbstractComponent {
     constructor();
     protected _getPathParams<T extends object>(data: T): Observable<T>;
     protected _getQueryParams<T extends object>(data: T): Observable<T>;

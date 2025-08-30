@@ -6,7 +6,7 @@ import { CamIconType } from '@ta/icons';
 import { TaMainRoute, TaRoutes } from '@ta/menu';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent } from '@ta/ui';
-import { CamAbstractComponent } from '@ta/utils';
+import { TaAbstractComponent } from '@ta/utils';
 
 import { CamPermissionsService, Domain, Level, PermissionFeature } from '../../services/permissions.service';
 
@@ -17,7 +17,7 @@ import { CamPermissionsService, Domain, Level, PermissionFeature } from '../../s
   standalone: true,
   imports: [NgIf, FontIconComponent, ButtonComponent, TranslatePipe],
 })
-export class GuardComponent extends CamAbstractComponent {
+export class GuardComponent extends TaAbstractComponent {
   @Input()
   level!: Level | string;
 

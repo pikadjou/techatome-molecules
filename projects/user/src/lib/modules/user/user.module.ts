@@ -21,24 +21,45 @@ import { SwitchLanguageCtaComponent } from './components/switch-language/switch-
 import { SwitchLanguageComponent } from './components/switch-language/switch-language.component';
 import { TenantUrlDisplayerComponent } from './components/tenant-url-displayer/tenant-url-displayer.component';
 import { ContactScopeInterceptor } from './contactScopeInterceptor';
-import { CamUsersService } from './services/users.service';
+import { TaUsersService } from './services/users.service';
 import { CamTranslationUser } from './translation.service';
 
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
  * // import { CamUserModule } from '@ta/library-name';
- * 
+ *
  * // Import the standalone components directly:
  * import { LoginCardComponent, MenuUserComponent, MyAccountComponent } from '@ta/library-name';
  */
 @NgModule({
-
   declarations: [],
-  imports: [CamUiModule, CamCardModule, CamDirectivePipeModule, CamFormInputsModule, CommonModule, CamMenuModule, CamIconsModule, CamListModule, CamContainerModule, MatMenuModule, TranslatePipe, LoginCardComponent, MenuUserComponent, MyAccountComponent, GuardComponent, LoginRedirectComponent, TenantUrlDisplayerComponent, ContactCardComponent, SwitchLanguageComponent, SwitchLanguageCtaComponent, UserMyProfileComponent],
+  imports: [
+    CamUiModule,
+    CamCardModule,
+    CamDirectivePipeModule,
+    CamFormInputsModule,
+    CommonModule,
+    CamMenuModule,
+    CamIconsModule,
+    CamListModule,
+    CamContainerModule,
+    MatMenuModule,
+    TranslatePipe,
+    LoginCardComponent,
+    MenuUserComponent,
+    MyAccountComponent,
+    GuardComponent,
+    LoginRedirectComponent,
+    TenantUrlDisplayerComponent,
+    ContactCardComponent,
+    SwitchLanguageComponent,
+    SwitchLanguageCtaComponent,
+    UserMyProfileComponent,
+  ],
   exports: [
     LoginCardComponent,
     MenuUserComponent,
@@ -51,7 +72,6 @@ import { CamTranslationUser } from './translation.service';
     UserMyProfileComponent,
   ],
   providers: [],
-
 })
 export class CamUserModule {
   constructor() {
@@ -64,8 +84,8 @@ export class CamUserModule {
       providers: [
         {
           provide: DEFAULT_USER_LANGUAGE,
-          deps: [CamUsersService],
-          useFactory: (usersService: CamUsersService) => usersService.currentUser.get()?.culture ?? Culture.FR_BE,
+          deps: [TaUsersService],
+          useFactory: (usersService: TaUsersService) => usersService.currentUser.get()?.culture ?? Culture.FR_BE,
         },
         {
           provide: HTTP_INTERCEPTORS,

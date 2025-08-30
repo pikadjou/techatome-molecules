@@ -1,5 +1,5 @@
-import { CamBaseService, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
 import { Observable } from 'rxjs';
+import { CamBaseService, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
 import { ModifyUserPayloadInput } from './users/dto/modifyUserPayloadInput';
 import { User } from './users/dto/user';
 import { UserAddedPayload } from './users/dto/userAddedPayload';
@@ -7,7 +7,7 @@ import * as i0 from "@angular/core";
 export declare const cachedQueryName: {
     currentUser: string;
 };
-export declare class CamUsersService extends CamBaseService {
+export declare class TaUsersService extends CamBaseService {
     users: HandleSimpleRequest<User[]>;
     usersCustomers: HandleSimpleRequest<User[]>;
     userById: HandleComplexRequest<User>;
@@ -27,6 +27,6 @@ export declare class CamUsersService extends CamBaseService {
     disableUser$(userId: string): Observable<User | null>;
     disableCurrentUser$(): Observable<User | null>;
     updateCurrentUser$(user: ModifyUserPayloadInput): Observable<User | null>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamUsersService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamUsersService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaUsersService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaUsersService>;
 }

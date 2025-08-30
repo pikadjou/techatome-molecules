@@ -1,13 +1,13 @@
 import { Location } from '@angular/common';
 import { OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CamIconType } from '@ta/icons';
 import { Subscription } from 'rxjs';
+import { CamIconType } from '@ta/icons';
 import { BreakpointDetection } from '../helpers/breakpoints/detection';
 import { RequestState } from '../helpers/request/state';
 import { SubscriberHandler } from '../helpers/subscriber/handler';
 import * as i0 from "@angular/core";
-export declare abstract class CamAbstractComponent implements OnDestroy {
+export declare abstract class TaAbstractComponent implements OnDestroy {
     breakpoints: BreakpointDetection;
     requestState: RequestState;
     icon: typeof CamIconType;
@@ -20,6 +20,6 @@ export declare abstract class CamAbstractComponent implements OnDestroy {
     constructor();
     ngOnDestroy(): void;
     protected _registerSubscription(subscription: Subscription): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamAbstractComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<CamAbstractComponent, "ng-component", never, {}, {}, never, never, false, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaAbstractComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractComponent, "ng-component", never, {}, {}, never, never, false, never>;
 }
