@@ -12,6 +12,6 @@ export class CamConfigurationService {
   constructor() {}
 
   public set(user: User) {
-    this.organizationName$.next(user['merlinsoftware/orgname']);
+    this.organizationName$.next(user['g-lambert/orgname']);
   }
 }

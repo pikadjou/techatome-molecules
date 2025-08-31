@@ -47,11 +47,17 @@
   flex-direction: row;
   text-decoration: none;
 
-  padding: common.get-var(space, xs) 0;
+  padding: common.get-var(space, xs);
+
+  .icon,
+  .title {
+    padding: 0;
+    margin: 0;
+    color: common.get-var(icon, tertiary);
+  }
 
   &.dark {
-    .icon,
-    .title {
+    .icon {
       color: common.get-var(icon, primary);
     }
     .title {
@@ -74,8 +80,6 @@
       .title {
         color: common.get-var(icon, invert, primary);
       }
-      background-color: common.get-var(brand, 700);
-      border-radius: 16px;
     }
   }
 
@@ -113,16 +117,6 @@
       .title {
         display: none;
       }
-    }
-  }
-
-  .icon,
-  .title {
-    padding: 0;
-    margin: 0;
-    color: common.get-var(neutral, 300);
-    @media screen and (min-width: 768px) {
-      color: common.get-var(brand, 400);
     }
   }
 

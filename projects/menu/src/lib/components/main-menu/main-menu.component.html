@@ -13,14 +13,5 @@
         <ta-menu class="menu" [menu]="this.menuUser" [container]="'main'"></ta-menu>
       </div>
     }
-    @if ((this.breakpoints.isMobile$ | async) === false) {
-      <div class="expansion-nav" (click)="this.toggleView()">
-        <ta-font-icon
-          class="d-flex"
-          name="arrow-double"
-          [ngClass]="(this.sharedMenu.isMinimized$ | async) ? 'close' : 'open'"
-        ></ta-font-icon>
-      </div>
-    }
   </div>
 </div>

@@ -2,35 +2,16 @@
 @use "ta/utils/mixins/common";
 
 .main-nav-container {
-  @media screen and (min-width: 576px) {
-    position: sticky;
-    top: 0;
-    height: 100vh;
 
-    display: flex;
-  }
-
-  .expansion-nav {
-    display: none;
-  }
-
-  @media screen and (min-width: 1200px) {
-    &:hover {
-      .expansion-nav {
-        display: block;
-      }
-    }
-  }
 }
 .main-nav {
   display: flex;
   flex-flow: column;
-  padding: common.get-var(space, sm) common.get-var(space, sm) 0 common.get-var(space, sm);
-  padding-bottom: calc(common.get-var(space, sm) + env(safe-area-inset-bottom));
+  padding: common.get-var(space, sm);
 
   border-radius: 3px 3px 0px 0px;
 
-  background-color: common.get-var(surface, primary);
+  background-color: common.get-var(neutral, white);
 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
@@ -43,17 +24,13 @@
 
   @media screen and (min-width: 576px) {
     border-radius: 0px 3px 3px 0px;
-    padding: common.get-var(components, header, top) common.get-var(space, sm) 0 common.get-var(space, sm);
-    padding-bottom: calc(common.get-var(space, sm) + env(safe-area-inset-bottom));
+    padding: common.get-var(space, sm);
 
     align-content: space-between;
-
-    background-color: common.get-var(brand, 900);
   }
 
   @media screen and (min-width: 992px) {
-    padding: common.get-var(components, header, top) common.get-var(space, md) 0 common.get-var(space, md);
-    padding-bottom: calc(common.get-var(space, md) + env(safe-area-inset-bottom));
+    padding: common.get-var(space, md);
   }
 
   &.vertical {
@@ -66,7 +43,6 @@
     }
 
     @media screen and (min-width: 576px) {
-      margin-bottom: common.get-var(space, lg);
       width: 48px;
       .small {
         display: block;
@@ -76,9 +52,7 @@
       }
     }
     @media screen and (min-width: 992px) {
-      margin-left: 0;
-      margin-bottom: common.get-var(space, xxl);
-      width: 190px;
+      width: 80px;
       .small {
         display: none;
       }
@@ -116,26 +90,5 @@
       border-bottom: 1px solid common.get-var(surface, brand, primary);
       margin: common.get-var(space, sm);
     }
-  }
-}
-
-.expansion-nav {
-  position: absolute;
-  bottom: 15px;
-  right: -20px;
-
-  color: common.get-var(icon, invert, primary);
-  border-radius: common.get-var(radius, full);
-  background-color: common.get-var(surface, brand, primary);
-
-  padding: common.get-var(space, sm);
-
-  .open,
-  .close {
-    transition-duration: 0.8s;
-    transition-property: transform;
-  }
-  .close {
-    transform: rotate(180deg);
   }
 }

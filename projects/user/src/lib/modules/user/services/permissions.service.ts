@@ -56,21 +56,18 @@ export class CamPermissionsService {
     this.features = info.features ?? [];
     this.roles = info.roles ?? [];
 
-    this.guards = this.roles
-      .map(role => role.replace('Merlin_', ''))
-      .reduce<typeof this.guards>((acc, role) => {
-        if (!role.includes('-')) {
-          return acc;
-        }
-        const [domain, access] = role.split('-');
+    this.guards = this.roles.reduce<typeof this.guards>((acc, role) => {
+      if (!role.includes('-')) {
+        return acc;
+      }
+      const [domain, access] = role.split('-');
 
-        const lastAccess =
-          accessLevels.indexOf(access) > accessLevels.indexOf(acc[domain] || '') ? access : acc[domain];
-        return {
-          ...acc,
-          [domain]: <Level>lastAccess,
-        };
-      }, {});
+      const lastAccess = accessLevels.indexOf(access) > accessLevels.indexOf(acc[domain] || '') ? access : acc[domain];
+      return {
+        ...acc,
+        [domain]: <Level>lastAccess,
+      };
+    }, {});
     Logger.LogInfo('[PERMISSIONS] Guard', this.guards);
 
     this._isFill.permissions = true;

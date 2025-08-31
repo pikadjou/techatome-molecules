@@ -89,8 +89,8 @@
     "projects/features/*"
   ],
   "main": "index.js",
-  "repository": "https://merlin-software@dev.azure.com/merlin-software/Techatome/_git/Techatome",
-  "author": "Geoffrey L <g.lambert@merlinsoftware.be>",
+  "repository": "https://techatome@dev.azure.com/techatome/Techatome/_git/Techatome",
+  "author": "Geoffrey L <g.lambert@g-lambert.be>",
   "license": "MIT",
   "sideEffects": false
 }

@@ -40,9 +40,7 @@ class CamPermissionsService {
         Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
         this.features = info.features ?? [];
         this.roles = info.roles ?? [];
-        this.guards = this.roles
-            .map(role => role.replace('Merlin_', ''))
-            .reduce((acc, role) => {
+        this.guards = this.roles.reduce((acc, role) => {
             if (!role.includes('-')) {
                 return acc;
             }
@@ -1535,9 +1533,9 @@ class CamAuth0Service extends CamAuthService {
             Logger.LogInfo('user info', user);
             if (user) {
                 this._permissionsService.set({
-                    permissions: user['merlinsoftware/permissions'],
-                    roles: user['merlinsoftware/roles'],
-                    features: user['merlinsoftware/features'],
+                    permissions: user['g-lambert/permissions'],
+                    roles: user['g-lambert/roles'],
+                    features: user['g-lambert/features'],
                 }, true);
                 configurationService.set(user);
                 this.fetchUserProfile().subscribe();

@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Download repo
 
-<https://merlin-software@dev.azure.com/merlin-software/Techatome/_git/Techatome>
+<https://techatome@dev.azure.com/techatome/Techatome/_git/Techatome>
 
 ## Install yarn
 

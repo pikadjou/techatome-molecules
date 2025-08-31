@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { AuthService, User } from '@auth0/auth0-angular';
+import { distinct, filter, tap } from 'rxjs';
+
 import { Logger, MappingApiType } from '@ta/server';
 import { CamConfigurationService } from '@ta/services';
 import { isNonNullable, trigram } from '@ta/utils';
-import { distinct, filter, tap } from 'rxjs';
 
 import { CamAuthService } from '../../user/services/auth.service';
 import { CamUserService } from '../../user/services/user.service';
@@ -54,9 +55,9 @@ export class CamAuth0Service extends CamAuthService<User> {
           if (user) {
             this._permissionsService.set(
               {
-                permissions: user['merlinsoftware/permissions'],
-                roles: user['merlinsoftware/roles'],
-                features: user['merlinsoftware/features'],
+                permissions: user['g-lambert/permissions'],
+                roles: user['g-lambert/roles'],
+                features: user['g-lambert/features'],
               },
               true
             );

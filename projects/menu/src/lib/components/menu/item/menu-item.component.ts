@@ -1,11 +1,12 @@
-import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+
+import { FontIconComponent } from '@ta/icons';
 import { NotificationBadgeComponent } from '@ta/ui';
 import { TemplateModalContainer, TemplateModalContainerData } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
@@ -23,15 +24,12 @@ import { CamTranslationMenu } from '../../../translation.service';
   styleUrls: ['./menu-item.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     NgClass,
-    NgFor,
     NgTemplateOutlet,
     RouterModule,
     MatMenuModule,
     TranslateModule,
     FontIconComponent,
-    LocalIconComponent,
     NotificationBadgeComponent,
   ],
 })

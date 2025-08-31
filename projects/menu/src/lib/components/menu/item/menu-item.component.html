@@ -26,10 +26,6 @@
         <span class="icon-material">
           <ta-font-icon [name]="this.getFontIcon()" size="xs" [ngClass]="item.iconsColor"></ta-font-icon>
         </span>
-      } @else if (this.hasIconImage()) {
-        <span class="icon-image">
-          <ta-local-icon [type]="this.getIcon()" size="xs" [ngClass]="item.iconsColor"></ta-local-icon>
-        </span>
       }
     </div>
 
@@ -44,26 +40,24 @@
           [relative]="true"
         ></ta-notification-badge>
       }
-      <ng-container *ngLet="item.options?.extraTemplate as extraTemplate">
-        @if (extraTemplate) {
-          <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
-        }
-      </ng-container>
+      @let extraTemplate = item.options?.extraTemplate;
+      @if (extraTemplate) {
+        <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
+      }
     </div>
     @if (item.endingIcon) {
       <div class="ending-icon-container">
         <ta-font-icon [name]="item.endingIcon" [ngClass]="item.iconsColor"></ta-font-icon>
       </div>
     }
-    <ng-container *ngLet="this.getTemplate() as template">
-      @if (template) {
-        <div class="trigger-container">
-          <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
-          <mat-menu #menu="matMenu">
-            <ng-container *ngTemplateOutlet="template"></ng-container>
-          </mat-menu>
-        </div>
-      }
-    </ng-container>
+    @let template = this.getTemplate();
+    @if (template) {
+      <div class="trigger-container">
+        <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
+        <mat-menu #menu="matMenu">
+          <ng-container *ngTemplateOutlet="template"></ng-container>
+        </mat-menu>
+      </div>
+    }
   </div>
 </ng-template>

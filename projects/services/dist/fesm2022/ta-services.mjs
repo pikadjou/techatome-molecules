@@ -10,7 +10,7 @@ class CamConfigurationService {
         this.organizationName$ = new BehaviorSubject('');
     }
     set(user) {
-        this.organizationName$.next(user['merlinsoftware/orgname']);
+        this.organizationName$.next(user['g-lambert/orgname']);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamConfigurationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamConfigurationService, providedIn: 'root' }); }

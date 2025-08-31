@@ -1,3 +1,3 @@
-Copyright (c) [2023] [Merlin Software]
+Copyright (c) [2023] [techatome Software]
 
 It's ours ! Don't touch this

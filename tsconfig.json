@@ -31,7 +31,6 @@
     "skipLibCheck": true,
     "paths": {
       "@angular/*": ["node_modules/@angular/*"],
-      "@ta/testing": ["projects/testing"],
       "@ta/ui": ["projects/ui"],
       "@ta/server": ["projects/server"],
       "@ta/services": ["projects/services"],
@@ -55,7 +54,6 @@
       "@ta/cms": ["projects/cms"],
       "@ta/wysiswyg": ["projects/wysiswyg"],
       "@ta/charts": ["projects/charts"],
-      "@ta/project": ["projects/features/project"]
     },
     "lib": ["ES2022", "dom"]
   }
