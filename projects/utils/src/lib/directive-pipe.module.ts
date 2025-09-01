@@ -22,16 +22,9 @@ import { SafePipe } from './pipe/safe.pipe';
  * import { FileSizePipe, JoinPipe, LetDirective } from '@ta/library-name';
  */
 @NgModule({
-  declarations: [FileSizePipe, LetDirective, TypedTemplateDirective, OnRenderDirective],
-  imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe],
-  exports: [
-    FileSizePipe,
-    LetDirective,
-    PluralTranslatePipe,
-    StopPropagationDirective,
-    TypedTemplateDirective,
-    OnRenderDirective,
-  ],
+  declarations: [FileSizePipe, LetDirective, OnRenderDirective],
+  imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective],
+  exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective],
 })
 export class CamDirectivePipeModule {
   constructor() {}

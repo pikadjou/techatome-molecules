@@ -5,14 +5,8 @@
 @mixin menu-item-horizontal() {
   justify-content: center;
 
-  .icon,
-  .title {
-    flex: 0 0 100%;
-    max-width: 100%;
-    @include fonts.fontSizeBody(sm);
-  }
-
   .item {
+    @include flex.flex-full();
     position: relative;
 
     .badge-container {
@@ -25,10 +19,6 @@
 
 @mixin menu-item-vertical() {
   padding: common.get-var(space, md) common.get-var(space, md);
-
-  .item {
-    @include flex.align-center();
-  }
 
   .icon,
   .title {
@@ -49,36 +39,52 @@
 
   padding: common.get-var(space, xs);
 
+  .item {
+    width: 100%;
+    text-align: center;
+    @include flex.align-center();
+    @include flex.flex-start();
+  }
   .icon,
   .title {
     padding: 0;
     margin: 0;
-    color: common.get-var(icon, tertiary);
+    color: common.get-var(text, primary);
+  }
+  .icon {
+    margin-right: common.get-var(space, sm);
   }
 
-  &.dark {
-    .icon {
-      color: common.get-var(icon, primary);
-    }
-    .title {
-      color: common.get-var(text, primary);
-    }
-  }
 
-  &.active {
+  &.active, &:hover {
     .icon {
       color: common.get-var(icon, brand, primary);
     }
     .title {
       color: common.get-var(text, brand, primary);
     }
+  }
 
-    @media screen and (min-width: 768px) {
-      .icon {
-        color: common.get-var(icon, invert, primary);
-      }
-      .title {
-        color: common.get-var(icon, invert, primary);
+  &.dark {
+    .icon,
+    .ending-icon {
+      color: get-var(icon, tertiary);
+    }
+    .title {
+      color: get-var(text, primary);
+    }
+
+    &:hover {
+      &:not(.disabled):not(.active) {
+        .icon,
+        .ending-icon {
+          color: get-var(icon, brand, primary);
+        }
+        .title {
+          color: get-var(text, brand, primary);
+        }
+        background-color: get-var(surface, brand, tertiary);
+        border-radius: get-var(radius, label);
       }
     }
   }
@@ -122,11 +128,6 @@
 
   .disable {
     opacity: 0.5;
-  }
-
-  .item {
-    width: 100%;
-    text-align: center;
   }
 
   .icon-image {

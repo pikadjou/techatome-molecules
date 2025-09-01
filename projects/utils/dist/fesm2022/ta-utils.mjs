@@ -48,11 +48,11 @@ class TypedTemplateDirective {
         return true;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TypedTemplateDirective, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.13", type: TypedTemplateDirective, selector: "ng-template[typedTemplate]", inputs: { typedTemplate: "typedTemplate" }, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.13", type: TypedTemplateDirective, isStandalone: true, selector: "ng-template[typedTemplate]", inputs: { typedTemplate: "typedTemplate" }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TypedTemplateDirective, decorators: [{
             type: Directive,
-            args: [{ selector: 'ng-template[typedTemplate]' }]
+            args: [{ selector: 'ng-template[typedTemplate]', standalone: true }]
         }], ctorParameters: () => [{ type: i0.TemplateRef }], propDecorators: { typedTemplate: [{
                 type: Input
             }] } });
@@ -223,27 +223,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class CamDirectivePipeModule {
     constructor() { }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDirectivePipeModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamDirectivePipeModule, declarations: [FileSizePipe, LetDirective, TypedTemplateDirective, OnRenderDirective], imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe], exports: [FileSizePipe,
-            LetDirective,
-            PluralTranslatePipe,
-            StopPropagationDirective,
-            TypedTemplateDirective,
-            OnRenderDirective] }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamDirectivePipeModule, declarations: [FileSizePipe, LetDirective, OnRenderDirective], imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective], exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective] }); }
     static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDirectivePipeModule, imports: [CommonModule] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDirectivePipeModule, decorators: [{
             type: NgModule,
             args: [{
-                    declarations: [FileSizePipe, LetDirective, TypedTemplateDirective, OnRenderDirective],
-                    imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe],
-                    exports: [
-                        FileSizePipe,
-                        LetDirective,
-                        PluralTranslatePipe,
-                        StopPropagationDirective,
-                        TypedTemplateDirective,
-                        OnRenderDirective,
-                    ],
+                    declarations: [FileSizePipe, LetDirective, OnRenderDirective],
+                    imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective],
+                    exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective],
                 }]
         }], ctorParameters: () => [] });
 

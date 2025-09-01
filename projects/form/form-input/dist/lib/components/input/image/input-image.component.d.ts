@@ -4,8 +4,9 @@ import * as i0 from "@angular/core";
 export declare class InputImageComponent extends CamAbstractInputComponent<InputImages> {
     get selection(): string[];
     get userInfo(): {
-        profilePictureUrl: string;
-        naming: null;
+        picture: string;
+        firstname: string;
+        lastname: string;
     };
     static ɵfac: i0.ɵɵFactoryDeclaration<InputImageComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<InputImageComponent, "ta-input-image", never, {}, {}, never, never, true, never>;

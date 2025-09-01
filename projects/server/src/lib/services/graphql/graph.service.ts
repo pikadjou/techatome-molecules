@@ -5,7 +5,7 @@ import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { BehaviorSubject, catchError, filter, map, switchMap, take, tap, throwError } from 'rxjs';
 
-import { APPLICATION_CONFIG, IApplicationConfig, isURL } from '@ta/utils';
+import { isURL } from '@ta/utils';
 
 import { CamServerErrorService } from '../error.service';
 import { Logger } from '../logger';
@@ -24,12 +24,10 @@ type WrapperData = {
 @Injectable({
   providedIn: 'root',
 })
-export class CamGraphService {
-  public contactsLoaded$ = new BehaviorSubject<boolean>(false);
+export class TaGraphService {
   public isReady$ = new BehaviorSubject<boolean>(true);
 
   private _errorServices = inject(CamServerErrorService);
-  private _applicationConfig: IApplicationConfig = inject(APPLICATION_CONFIG);
 
   private _defaultEndpoint;
   private _cache;
@@ -45,8 +43,6 @@ export class CamGraphService {
     });
 
     this._cache = new InMemoryCache();
-
-    //  (<any>window).apolloCache = this._cache;
 
     this.apollo.client = new ApolloClient({
       cache: this._cache,
@@ -231,17 +227,6 @@ export class CamGraphService {
   }
 
   private _getWrapper(data?: WrapperData) {
-    if (!this._applicationConfig.isCustomerApplication) {
-      return this.isReady$;
-    }
-
-    if (data?.context === 'userService') {
-      return this.isReady$;
-    }
-    if (data?.context?.includes('Visitor')) {
-      return this.isReady$;
-    }
-
-    return this.contactsLoaded$.pipe(filter(loaded => loaded));
+    return this.isReady$;
   }
 }

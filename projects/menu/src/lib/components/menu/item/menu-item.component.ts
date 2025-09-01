@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
 import { NotificationBadgeComponent } from '@ta/ui';
 import { TemplateModalContainer, TemplateModalContainerData } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { TaBaseComponent, TypedTemplateDirective } from '@ta/utils';
 
 import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../../helpers/icon-manager';
 import { MenuAction } from '../../../models/menu/item/action';
@@ -31,6 +31,7 @@ import { CamTranslationMenu } from '../../../translation.service';
     TranslateModule,
     FontIconComponent,
     NotificationBadgeComponent,
+    TypedTemplateDirective,
   ],
 })
 export class MenuItemComponent extends TaBaseComponent implements OnInit {

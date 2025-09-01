@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 import { TaRoutes } from '@ta/menu';
 
-import { CamPermissionsService, Domain, Level, PermissionFeature } from '../services/permissions.service';
+import { Domain, Level, PermissionFeature, TaPermissionsService } from '../services/permissions.service';
 
 export interface FeatureRouteData {
   feature: PermissionFeature | Domain;
@@ -17,7 +17,7 @@ export interface FeatureRouteData {
   providedIn: 'root',
 })
 export class FeatureGuard {
-  public readonly _permissionsService = inject(CamPermissionsService);
+  public readonly _permissionsService = inject(TaPermissionsService);
 
   constructor(private router: Router) {}
 

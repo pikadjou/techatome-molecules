@@ -27,7 +27,6 @@ import { DurationComponent } from './duration/duration.component';
 import { ExpandableTextComponent } from './expandable-text/expandable-text.component';
 import { CamExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { FileImageComponent } from './file-image/file-image.component';
-import { HelloUserComponent } from './hello-user/hello-user.component';
 import { HourDateLineComponent } from './hour-date-line/hour-date-line.component';
 import { LabelComponent } from './label/label.component';
 import { LinkComponent } from './link/link.component';
@@ -37,9 +36,6 @@ import { NewComponent } from './new/new.component';
 import { NotificationBadgeContainerComponent } from './notification-badge/notification-badge-container.component';
 import { NotificationBadgeComponent } from './notification-badge/notification-badge/notification-badge.component';
 import { PictureInfoMessageComponent } from './picture-info-message/picture-info-message.component';
-import { InlineProfileDataComponent } from './profil-data/inline-profile-data/inline-profile-data.component';
-import { ProfileDataComponent } from './profil-data/profile-data.component';
-import { UiProfileDisplayComponent } from './profile-display/ui-profile-display.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { ProgressCircleComponent } from './progress/circle/progress-circle/progress-circle.component';
 import { ProgressBarDataComponent } from './progress/progress-bar-data/progress-bar-data.component';
@@ -70,7 +66,7 @@ register();
 @NgModule({
 
   declarations: [],
-  imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HelloUserComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, ProfileDataComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, InlineProfileDataComponent, UiProfileDisplayComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
+  imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
   exports: [
     ActionButtonComponent,
     BadgeComponent,
@@ -80,7 +76,6 @@ register();
     DepartmentIconListComponent,
     DepartmentProfessionsComponent,
     DepartmentsComponent,
-    HelloUserComponent,
     HourDateLineComponent,
     LinkComponent,
     LogoComponent,
@@ -88,7 +83,6 @@ register();
     TitleComponent,
     TrigramComponent,
     UserLogoComponent,
-    ProfileDataComponent,
     ProgressBarDataComponent,
     ProgressBarComponent,
     PictureInfoMessageComponent,
@@ -98,8 +92,6 @@ register();
     NotificationBadgeComponent,
     PwaComponent,
     ExpandableTextComponent,
-    InlineProfileDataComponent,
-    UiProfileDisplayComponent,
     ToastComponent,
     LabelComponent,
     NewComponent,

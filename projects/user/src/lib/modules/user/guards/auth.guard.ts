@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
 
 import { TaRoutes } from '@ta/menu';
 
-import { CamPermissionsService } from '../services/permissions.service';
+import { TaPermissionsService } from '../services/permissions.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard {
-  public readonly _permissionsService = inject(CamPermissionsService);
+  public readonly _permissionsService = inject(TaPermissionsService);
 
   constructor(private router: Router) {}
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {

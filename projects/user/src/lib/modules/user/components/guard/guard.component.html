@@ -1,10 +1,12 @@
+@let isValid = this.isGuardValid$() | async;
+
 <div class="guard">
-  @if (this.isGuardValid()) {
+  @if (isValid) {
     <div class="guard-valid">
       <ng-content></ng-content>
     </div>
   }
-  @if (!this.isGuardValid() && this.canDisplayErrorMessage) {
+  @if (!isValid && this.canDisplayErrorMessage) {
     <div class="guard-no-valid ta-c">
       <ta-font-icon name="close-tool" size="md"></ta-font-icon>
       {{ 'container.guard.content' | translate }}

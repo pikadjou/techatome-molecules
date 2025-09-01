@@ -23,7 +23,7 @@ export class MenuComponent extends TaBaseComponent {
   get containerCss() {
     switch (this.container) {
       case 'overflow':
-        return 'overflow';
+        return 'overflow vertical';
       case 'second':
         return 'second';
       case 'main':

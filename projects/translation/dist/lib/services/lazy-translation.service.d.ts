@@ -1,5 +1,5 @@
-import { CamBaseStrapiService } from '@ta/server';
 import { Observable } from 'rxjs';
+import { CamBaseStrapiService } from '@ta/server';
 import { ITranslation } from './translation-registry.service';
 export declare abstract class CamLazyTranslationService extends CamBaseStrapiService implements ITranslation {
     get id(): string;

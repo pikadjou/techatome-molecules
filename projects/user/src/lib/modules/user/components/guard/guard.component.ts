@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
@@ -8,14 +8,14 @@ import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent } from '@ta/ui';
 import { TaAbstractComponent } from '@ta/utils';
 
-import { CamPermissionsService, Domain, Level, PermissionFeature } from '../../services/permissions.service';
+import { Domain, Level, PermissionFeature, TaPermissionsService } from '../../services/permissions.service';
 
 @Component({
   selector: 'ta-guard',
   templateUrl: './guard.component.html',
   styleUrls: ['./guard.component.scss'],
   standalone: true,
-  imports: [NgIf, FontIconComponent, ButtonComponent, TranslatePipe],
+  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe],
 })
 export class GuardComponent extends TaAbstractComponent {
   @Input()
@@ -27,7 +27,7 @@ export class GuardComponent extends TaAbstractComponent {
   @Input()
   canDisplayErrorMessage: boolean = true;
 
-  private readonly _permissionsService = inject(CamPermissionsService);
+  private readonly _permissionsService = inject(TaPermissionsService);
   get noAccessIcon() {
     return CamIconType.NoAccess;
   }
@@ -36,8 +36,8 @@ export class GuardComponent extends TaAbstractComponent {
     super();
   }
 
-  public isGuardValid(): boolean {
-    return this._permissionsService.canDirectAccess(this.feature, this.level);
+  public isGuardValid$() {
+    return this._permissionsService.canAccess$(this.feature, this.level);
   }
 
   public goToLogin() {

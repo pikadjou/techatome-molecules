@@ -1,7 +1,7 @@
-import { AsyncPipe, NgClass } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { Component, Input, TemplateRef, inject } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 
-import { FontIconComponent } from '@ta/icons';
 import { CamSharedMenuService } from '@ta/services';
 import { LogoComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
@@ -14,7 +14,7 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss'],
   standalone: true,
-  imports: [NgClass, AsyncPipe, FontIconComponent, LogoComponent, MenuComponent],
+  imports: [NgClass, LogoComponent, MenuComponent, MatExpansionModule, NgTemplateOutlet],
 })
 export class MainMenuComponent extends TaBaseComponent {
   @Input()
@@ -22,6 +22,9 @@ export class MainMenuComponent extends TaBaseComponent {
 
   @Input()
   menuUser!: Menu;
+
+  @Input()
+  userMenuTemplate?: TemplateRef<any>;
 
   @Input()
   direction: 'horizontal' | 'vertical' = 'vertical';

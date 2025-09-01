@@ -1,5 +1,5 @@
 import * as i1$4 from '@angular/common';
-import { NgClass, NgIf, NgFor, NgStyle, DatePipe, NgTemplateOutlet, DecimalPipe, AsyncPipe, CommonModule } from '@angular/common';
+import { NgClass, NgIf, NgFor, DatePipe, DecimalPipe, NgTemplateOutlet, NgStyle, AsyncPipe, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Injectable, EventEmitter, Output, Input, Component, ViewChild, NgModule, Inject, CUSTOM_ELEMENTS_SCHEMA, inject, ViewEncapsulation, InjectionToken, Injector, Optional, ContentChild } from '@angular/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -10,7 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { FontIconComponent, isFontIcon, getFontIcon, isLocalIcon, LocalIconComponent, MaterialIconComponent, CamIconType, CamIconsModule, CamIconsService } from '@ta/icons';
 import { CamLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, call, sendMail, CamDirectivePipeModule, CamBaseModal, createRange } from '@ta/utils';
+import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, CamDirectivePipeModule, CamBaseModal, createRange } from '@ta/utils';
 import { register } from 'swiper/element/bundle';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -562,106 +562,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class TrigramComponent {
-    constructor() {
-        /**
-         * Size of trigram
-         */
-        this.size = 35;
-    }
-    getFontSize() {
-        return Math.round(this.size / 3);
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TrigramComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TrigramComponent, isStandalone: true, selector: "ta-trigram", inputs: { value: "value", size: "size" }, ngImport: i0, template: "@if (this.value) {\n  <div\n    class=\"trigram\"\n    [ngStyle]=\"{\n      'width.px': this.size,\n      'height.px': this.size,\n      'line-height.px': this.size,\n      'font-size.px': this.getFontSize()\n    }\"\n  >\n    {{ this.value }}\n  </div>\n}\n", styles: [".trigram{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);background-color:var(--ta-surface-brand-primary);color:var(--ta-neutral-100);border-radius:100%;width:36px;height:36px;line-height:36px;text-align:center;vertical-align:middle;margin:auto}\n"], dependencies: [{ kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TrigramComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-trigram', standalone: true, imports: [NgIf, NgStyle], template: "@if (this.value) {\n  <div\n    class=\"trigram\"\n    [ngStyle]=\"{\n      'width.px': this.size,\n      'height.px': this.size,\n      'line-height.px': this.size,\n      'font-size.px': this.getFontSize()\n    }\"\n  >\n    {{ this.value }}\n  </div>\n}\n", styles: [".trigram{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);background-color:var(--ta-surface-brand-primary);color:var(--ta-neutral-100);border-radius:100%;width:36px;height:36px;line-height:36px;text-align:center;vertical-align:middle;margin:auto}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { value: [{
-                type: Input
-            }], size: [{
-                type: Input
-            }] } });
-
-class UserLogoComponent {
-    constructor() {
-        /**
-         * Size of user logo desired
-         */
-        this.size = 'lg';
-        this.defaultType = 'font';
-        this._trigram = (name) => {
-            if (!name)
-                return '';
-            if (name.length < 4)
-                return name;
-            return (name[0] + name[2] + name[3]).toUpperCase();
-        };
-    }
-    get sizeValue() {
-        if (this.forcedSize) {
-            return this.forcedSize;
-        }
-        switch (this.size) {
-            case 'sm':
-                return 16;
-            case 'md':
-                return 24;
-            case 'lg':
-                return 48;
-            case 'xl':
-                return 70;
-            default:
-                return 48;
-        }
-    }
-    getTrigram() {
-        const trigram = this.user?.trigram || this.userInfo?.naming?.trigram;
-        if (trigram) {
-            return trigram;
-        }
-        return this._trigram(this.user?.firstName || this.userInfo?.naming?.trigram);
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserLogoComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UserLogoComponent, isStandalone: true, selector: "ta-user-logo", inputs: { userInfo: "userInfo", user: "user", size: "size", forcedSize: "forcedSize", defaultType: "defaultType" }, ngImport: i0, template: "@if (this.user?.picture || this.userInfo?.profilePictureUrl) {\n  <div class=\"img-container\">\n    <img\n      [src]=\"this.user?.picture || this.userInfo?.profilePictureUrl\"\n      [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n      class=\"user-image\"\n    />\n  </div>\n} @else if (this.defaultType === 'trigram') {\n  <ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n  <div\n    class=\"profile-icon\"\n    [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n  >\n    <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n  </div>\n}\n", styles: [".user-image{border-radius:100%}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"], dependencies: [{ kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TrigramComponent, selector: "ta-trigram", inputs: ["value", "size"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserLogoComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-user-logo', standalone: true, imports: [NgIf, NgStyle, FontIconComponent, TrigramComponent], template: "@if (this.user?.picture || this.userInfo?.profilePictureUrl) {\n  <div class=\"img-container\">\n    <img\n      [src]=\"this.user?.picture || this.userInfo?.profilePictureUrl\"\n      [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n      class=\"user-image\"\n    />\n  </div>\n} @else if (this.defaultType === 'trigram') {\n  <ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n  <div\n    class=\"profile-icon\"\n    [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n  >\n    <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n  </div>\n}\n", styles: [".user-image{border-radius:100%}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"] }]
-        }], propDecorators: { userInfo: [{
-                type: Input
-            }], user: [{
-                type: Input
-            }], size: [{
-                type: Input
-            }], forcedSize: [{
-                type: Input
-            }], defaultType: [{
-                type: Input
-            }] } });
-
-class HelloUserComponent {
-    constructor() {
-        this.bulletSize = 'lg';
-        CamTranslationUI.getInstance();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: HelloUserComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: HelloUserComponent, isStandalone: true, selector: "ta-hello-user", inputs: { title: "title", userInfo: "userInfo", bulletSize: "bulletSize", footer: "footer" }, ngImport: i0, template: "<div class=\"hello-user-container\">\n  @if (this.title) {\n    <div class=\"title\">{{ this.title | translate }}</div>\n  }\n\n  @if (this.userInfo) {\n    <div class=\"trigram\">\n      <ta-user-logo [userInfo]=\"this.userInfo\" [size]=\"this.bulletSize\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"footer\">\n    @if (this.userInfo?.naming?.firstName) {\n      <div>\n        {{ this.userInfo?.naming?.firstName }}\n      </div>\n    }\n    @if (this.userInfo?.naming?.name) {\n      <div>\n        {{ this.userInfo?.naming?.name }}\n      </div>\n    }\n    @if (this.footer) {\n      <div>{{ this.footer | translate }}</div>\n    }\n  </div>\n</div>\n", styles: [".hello-user-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}.hello-user-container .title{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);line-height:24px;letter-spacing:0;text-align:center;color:var(--ta-neutral-900)}.hello-user-container .trigram{margin:auto}.hello-user-container .footer{font-size:var(--ta-font-h1-default-size);line-height:var(--ta-font-h1-default-line);font-weight:var(--ta-font-h1-default-weight);text-align:center;color:var(--ta-neutral-900)}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["userInfo", "user", "size", "forcedSize", "defaultType"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: HelloUserComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-hello-user', standalone: true, imports: [NgIf, TranslateModule, UserLogoComponent], template: "<div class=\"hello-user-container\">\n  @if (this.title) {\n    <div class=\"title\">{{ this.title | translate }}</div>\n  }\n\n  @if (this.userInfo) {\n    <div class=\"trigram\">\n      <ta-user-logo [userInfo]=\"this.userInfo\" [size]=\"this.bulletSize\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"footer\">\n    @if (this.userInfo?.naming?.firstName) {\n      <div>\n        {{ this.userInfo?.naming?.firstName }}\n      </div>\n    }\n    @if (this.userInfo?.naming?.name) {\n      <div>\n        {{ this.userInfo?.naming?.name }}\n      </div>\n    }\n    @if (this.footer) {\n      <div>{{ this.footer | translate }}</div>\n    }\n  </div>\n</div>\n", styles: [".hello-user-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}.hello-user-container .title{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);line-height:24px;letter-spacing:0;text-align:center;color:var(--ta-neutral-900)}.hello-user-container .trigram{margin:auto}.hello-user-container .footer{font-size:var(--ta-font-h1-default-size);line-height:var(--ta-font-h1-default-line);font-weight:var(--ta-font-h1-default-weight);text-align:center;color:var(--ta-neutral-900)}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { title: [{
-                type: Input
-            }], userInfo: [{
-                type: Input
-            }], bulletSize: [{
-                type: Input
-            }], footer: [{
-                type: Input
-            }] } });
-
 class HourDateLineComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: HourDateLineComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: HourDateLineComponent, isStandalone: true, selector: "ta-hour-date-line", inputs: { startDate: "startDate", endDate: "endDate" }, ngImport: i0, template: "<div class=\"hour-date-line-container\">\n  @if (this.startDate) {\n    <span class=\"label date mr-space-xs\">\n      {{ this.startDate | date : \"shortDate\" }}\n    </span>\n  }\n\n  <span class=\"label hour\">\n    @if (this.startDate) {\n      <span>{{ this.startDate | date : \"HH:mm\" }}</span>\n    }\n    -\n    @if (this.endDate) {\n      <span>{{ this.endDate | date : \"HH:mm\" }}</span>\n    }\n  </span>\n</div>\n", styles: [".hour-date-line-container{display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start}.hour-date-line-container .label{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-neutral-900)}\n"], dependencies: [{ kind: "pipe", type: DatePipe, name: "date" }] }); }
@@ -903,108 +803,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class InlineProfileDataComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InlineProfileDataComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InlineProfileDataComponent, isStandalone: true, selector: "ta-inline-profile-data", inputs: { profile: "profile", userLogo: "userLogo" }, ngImport: i0, template: "<div class=\"align-center\">\n  @if (this.userLogo) {\n    <div class=\"mr-space-xs\">\n      <ta-user-logo [userInfo]=\"this.userLogo.userInfo\" [size]=\"this.userLogo.size\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"text\">\n    @if (this.profile.title?.second) {\n      <div class=\"text\">\n        {{ this.profile.title?.second }}\n      </div>\n    }\n    @if (this.profile.email) {\n      <div class=\"mail\">\n        {{ this.profile.email }}\n      </div>\n    }\n  </div>\n</div>\n", styles: [".mail{color:var(--ta-neutral-500);font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.text{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}\n"], dependencies: [{ kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["userInfo", "user", "size", "forcedSize", "defaultType"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InlineProfileDataComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-inline-profile-data', standalone: true, imports: [NgIf, UserLogoComponent], template: "<div class=\"align-center\">\n  @if (this.userLogo) {\n    <div class=\"mr-space-xs\">\n      <ta-user-logo [userInfo]=\"this.userLogo.userInfo\" [size]=\"this.userLogo.size\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"text\">\n    @if (this.profile.title?.second) {\n      <div class=\"text\">\n        {{ this.profile.title?.second }}\n      </div>\n    }\n    @if (this.profile.email) {\n      <div class=\"mail\">\n        {{ this.profile.email }}\n      </div>\n    }\n  </div>\n</div>\n", styles: [".mail{color:var(--ta-neutral-500);font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.text{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}\n"] }]
-        }], propDecorators: { profile: [{
-                type: Input
-            }], userLogo: [{
-                type: Input
-            }] } });
-
-/**
- * @deprecated
- */
-class ProfileDataComponent {
-    constructor() {
-        this.callAction = new EventEmitter();
-        this.action = new EventEmitter();
-        CamTranslationUI.getInstance();
-    }
-    tel() {
-        if (this.profile.phoneNumber) {
-            call(this.profile.phoneNumber);
-            this.callAction.emit();
-        }
-    }
-    mail() {
-        if (this.profile.email) {
-            sendMail(this.profile.email);
-        }
-    }
-    launchAction() {
-        this.action.emit();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProfileDataComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ProfileDataComponent, isStandalone: true, selector: "ta-profile-data", inputs: { profile: "profile", userLogo: "userLogo", sideIcon: "sideIcon" }, outputs: { callAction: "callAction", action: "action" }, ngImport: i0, template: "@if (this.sideIcon) {\n  <div class=\"ta-r pt-space-xl\">\n    <ta-button [options]=\"{ circular: 'small' }\" [style]=\"'secondary'\" (action)=\"this.launchAction()\">\n      <ta-font-icon [name]=\"this.sideIcon\"></ta-font-icon>\n    </ta-button>\n  </div>\n}\n\n<div class=\"profile\">\n  @if (this.userLogo) {\n    <div class=\"ta-c\">\n      <ta-user-logo [userInfo]=\"this.userLogo.userInfo\" size=\"xl\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"title\">\n    <div class=\"second text\">{{ this.profile.title?.second }}</div>\n    <div class=\"main text\">{{ this.profile.title?.main }}</div>\n  </div>\n\n  <div class=\"sub-title text\">\n    {{ this.profile.title?.sub ?? '' | translate }}\n  </div>\n\n  <div class=\"ta-c cta-buttons g-space-sm\">\n    @if (this.profile.phoneNumber) {\n      <ta-button\n        [ngClass]=\"{ 'mr-space-xs': this.profile.email }\"\n        [options]=\"{ circular: 'big' }\"\n        (action)=\"this.tel()\"\n      >\n        <ta-font-icon name=\"phone\" type=\"md\"></ta-font-icon>\n      </ta-button>\n    }\n    @if (this.profile.email) {\n      <ta-button [options]=\"{ circular: 'big' }\" (action)=\"this.mail()\">\n        <ta-font-icon name=\"mail\" type=\"md\"></ta-font-icon>\n      </ta-button>\n    }\n  </div>\n</div>\n", styles: [".profile{margin-bottom:var(--ta-space-xl)}.profile .cta-buttons{display:flex;flex-direction:row;justify-content:center}.profile .title{font-size:var(--ta-font-key-xl-default-size);line-height:var(--ta-font-key-xl-default-line);font-weight:var(--ta-font-key-xl-default-weight);text-align:center;line-height:50px;margin-bottom:var(--ta-space-sm)}.profile .title .main{text-transform:uppercase}.profile .sub-title{font-size:var(--ta-font-key-lg-default-size);line-height:var(--ta-font-key-lg-default-line);font-weight:var(--ta-font-key-lg-default-weight);text-align:center;color:var(--ta-neutral-500);margin-bottom:var(--ta-space-md)}.profile .text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["userInfo", "user", "size", "forcedSize", "defaultType"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProfileDataComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-profile-data', standalone: true, imports: [NgIf, NgClass, FontIconComponent, TranslateModule, UserLogoComponent, ButtonComponent], template: "@if (this.sideIcon) {\n  <div class=\"ta-r pt-space-xl\">\n    <ta-button [options]=\"{ circular: 'small' }\" [style]=\"'secondary'\" (action)=\"this.launchAction()\">\n      <ta-font-icon [name]=\"this.sideIcon\"></ta-font-icon>\n    </ta-button>\n  </div>\n}\n\n<div class=\"profile\">\n  @if (this.userLogo) {\n    <div class=\"ta-c\">\n      <ta-user-logo [userInfo]=\"this.userLogo.userInfo\" size=\"xl\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"title\">\n    <div class=\"second text\">{{ this.profile.title?.second }}</div>\n    <div class=\"main text\">{{ this.profile.title?.main }}</div>\n  </div>\n\n  <div class=\"sub-title text\">\n    {{ this.profile.title?.sub ?? '' | translate }}\n  </div>\n\n  <div class=\"ta-c cta-buttons g-space-sm\">\n    @if (this.profile.phoneNumber) {\n      <ta-button\n        [ngClass]=\"{ 'mr-space-xs': this.profile.email }\"\n        [options]=\"{ circular: 'big' }\"\n        (action)=\"this.tel()\"\n      >\n        <ta-font-icon name=\"phone\" type=\"md\"></ta-font-icon>\n      </ta-button>\n    }\n    @if (this.profile.email) {\n      <ta-button [options]=\"{ circular: 'big' }\" (action)=\"this.mail()\">\n        <ta-font-icon name=\"mail\" type=\"md\"></ta-font-icon>\n      </ta-button>\n    }\n  </div>\n</div>\n", styles: [".profile{margin-bottom:var(--ta-space-xl)}.profile .cta-buttons{display:flex;flex-direction:row;justify-content:center}.profile .title{font-size:var(--ta-font-key-xl-default-size);line-height:var(--ta-font-key-xl-default-line);font-weight:var(--ta-font-key-xl-default-weight);text-align:center;line-height:50px;margin-bottom:var(--ta-space-sm)}.profile .title .main{text-transform:uppercase}.profile .sub-title{font-size:var(--ta-font-key-lg-default-size);line-height:var(--ta-font-key-lg-default-line);font-weight:var(--ta-font-key-lg-default-weight);text-align:center;color:var(--ta-neutral-500);margin-bottom:var(--ta-space-md)}.profile .text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { profile: [{
-                type: Input
-            }], userLogo: [{
-                type: Input
-            }], sideIcon: [{
-                type: Input
-            }], callAction: [{
-                type: Output
-            }], action: [{
-                type: Output
-            }] } });
-
-class TitleComponent {
-    constructor() {
-        /**
-         * Title level
-         * Higher value means lower title size
-         */
-        this.level = 1;
-        /**
-         * Title theme
-         * If set to true, title will be themed with CSS
-         */
-        this.isTheme = false;
-        this.isBold = false;
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TitleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TitleComponent, isStandalone: true, selector: "ta-title", inputs: { level: "level", isTheme: "isTheme", isBold: "isBold" }, ngImport: i0, template: "@switch (this.level) {\n  @case (1) {\n    <h1 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h1>\n  }\n  @case (2) {\n    <h2 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h2>\n  }\n  @case (3) {\n    <h3 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h3>\n  }\n  @case (4) {\n    <h4 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h4>\n  }\n  @case (5) {\n    <h5 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h5>\n  }\n  @case (6) {\n    <h6 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h6>\n  }\n}\n\n<ng-template #contentTemplate>\n  <ng-content></ng-content>\n</ng-template>\n", styles: ["h1{font-size:var(--ta-font-h1-default-size);line-height:var(--ta-font-h1-default-line);font-weight:var(--ta-font-h1-default-weight);margin:0}h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-default-weight);margin:0}.bold h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-bold-weight)}h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-default-weight);margin:0}h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-default-weight);margin:0}.theme-title{color:var(--ta-surface-brand-primary)}.bold h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-bold-weight)}.bold h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-bold-weight)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TitleComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-title', standalone: true, imports: [NgClass, NgTemplateOutlet], template: "@switch (this.level) {\n  @case (1) {\n    <h1 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h1>\n  }\n  @case (2) {\n    <h2 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h2>\n  }\n  @case (3) {\n    <h3 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h3>\n  }\n  @case (4) {\n    <h4 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h4>\n  }\n  @case (5) {\n    <h5 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h5>\n  }\n  @case (6) {\n    <h6 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h6>\n  }\n}\n\n<ng-template #contentTemplate>\n  <ng-content></ng-content>\n</ng-template>\n", styles: ["h1{font-size:var(--ta-font-h1-default-size);line-height:var(--ta-font-h1-default-line);font-weight:var(--ta-font-h1-default-weight);margin:0}h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-default-weight);margin:0}.bold h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-bold-weight)}h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-default-weight);margin:0}h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-default-weight);margin:0}.theme-title{color:var(--ta-surface-brand-primary)}.bold h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-bold-weight)}.bold h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-bold-weight)}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { level: [{
-                type: Input
-            }], isTheme: [{
-                type: Input
-            }], isBold: [{
-                type: Input
-            }] } });
-
-class UiProfileDisplayComponent {
-    constructor() {
-        CamTranslationUI.getInstance();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UiProfileDisplayComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UiProfileDisplayComponent, isStandalone: true, selector: "ta-ui-profile-display", inputs: { label: "label", userLogo: "userLogo", ctas: "ctas", sideIcon: "sideIcon" }, ngImport: i0, template: "@if (this.sideIcon) {\n  <div class=\"ta-r\">\n    <ta-button [options]=\"{ circular: 'small' }\" [style]=\"'secondary'\" (action)=\"sideIcon.callback()\">\n      <ta-font-icon [name]=\"this.sideIcon.icon\"></ta-font-icon>\n    </ta-button>\n  </div>\n}\n\n<div class=\"profile\">\n  @if (this.userLogo) {\n    <div class=\"ta-c\">\n      <ta-user-logo class=\"justify-center\" [userInfo]=\"this.userLogo.userInfo\" size=\"lg\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"ta-c mx-a\">\n    <ta-title [level]=\"2\">{{ this.label }}</ta-title>\n  </div>\n\n  <ng-content></ng-content>\n\n  @if (this.ctas) {\n    <div class=\"align-center justify-content-around pt-space-xxl\">\n      @for (cta of this.ctas; track cta) {\n        <div>\n          <ta-button (action)=\"cta?.callback()\" size=\"large\">\n            <div class=\"align-center\">\n              @if (cta.icon) {\n                <ta-font-icon [name]=\"cta.icon\" class=\"mr-space-xs\"></ta-font-icon>\n              }\n              @if (cta.label) {\n                <div>\n                  {{ cta.label | translate }}\n                </div>\n              }\n            </div>\n          </ta-button>\n        </div>\n      }\n    </div>\n  }\n</div>\n", styles: [".profile{margin-bottom:var(--ta-space-xl)}.profile .title{font-size:var(--ta-font-key-key-default-size);line-height:var(--ta-font-key-key-default-line);font-weight:var(--ta-font-key-key-default-weight);text-align:center;line-height:32px;margin-bottom:var(--ta-space-sm);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.profile .title .main{text-transform:uppercase}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["userInfo", "user", "size", "forcedSize", "defaultType"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UiProfileDisplayComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-ui-profile-display', standalone: true, imports: [NgIf, NgFor, FontIconComponent, TranslateModule, UserLogoComponent, TitleComponent, ButtonComponent], template: "@if (this.sideIcon) {\n  <div class=\"ta-r\">\n    <ta-button [options]=\"{ circular: 'small' }\" [style]=\"'secondary'\" (action)=\"sideIcon.callback()\">\n      <ta-font-icon [name]=\"this.sideIcon.icon\"></ta-font-icon>\n    </ta-button>\n  </div>\n}\n\n<div class=\"profile\">\n  @if (this.userLogo) {\n    <div class=\"ta-c\">\n      <ta-user-logo class=\"justify-center\" [userInfo]=\"this.userLogo.userInfo\" size=\"lg\"></ta-user-logo>\n    </div>\n  }\n\n  <div class=\"ta-c mx-a\">\n    <ta-title [level]=\"2\">{{ this.label }}</ta-title>\n  </div>\n\n  <ng-content></ng-content>\n\n  @if (this.ctas) {\n    <div class=\"align-center justify-content-around pt-space-xxl\">\n      @for (cta of this.ctas; track cta) {\n        <div>\n          <ta-button (action)=\"cta?.callback()\" size=\"large\">\n            <div class=\"align-center\">\n              @if (cta.icon) {\n                <ta-font-icon [name]=\"cta.icon\" class=\"mr-space-xs\"></ta-font-icon>\n              }\n              @if (cta.label) {\n                <div>\n                  {{ cta.label | translate }}\n                </div>\n              }\n            </div>\n          </ta-button>\n        </div>\n      }\n    </div>\n  }\n</div>\n", styles: [".profile{margin-bottom:var(--ta-space-xl)}.profile .title{font-size:var(--ta-font-key-key-default-size);line-height:var(--ta-font-key-key-default-line);font-weight:var(--ta-font-key-key-default-weight);text-align:center;line-height:32px;margin-bottom:var(--ta-space-sm);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.profile .title .main{text-transform:uppercase}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { label: [{
-                type: Input
-            }], userLogo: [{
-                type: Input
-            }], ctas: [{
-                type: Input
-            }], sideIcon: [{
-                type: Input
-            }] } });
-
 class ProgressBarComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressBarComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: ProgressBarComponent, isStandalone: true, selector: "ta-progress-bar", inputs: { current: "current", max: "max" }, ngImport: i0, template: "<progress\n  class=\"progress-bar\"\n  max=\"{{ this.max }}\"\n  value=\"{{ this.current }}\"\n></progress>\n", styles: [".progress-bar{appearance:none;width:100%;height:2px}progress::-webkit-progress-bar{background-color:var(--ta-neutral-300)}progress::-webkit-progress-value{background-color:var(--ta-surface-brand-primary)}\n"] }); }
@@ -1043,6 +841,34 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             }], upTitle: [{
                 type: Input
             }], downTitle: [{
+                type: Input
+            }] } });
+
+class TitleComponent {
+    constructor() {
+        /**
+         * Title level
+         * Higher value means lower title size
+         */
+        this.level = 1;
+        /**
+         * Title theme
+         * If set to true, title will be themed with CSS
+         */
+        this.isTheme = false;
+        this.isBold = false;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TitleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TitleComponent, isStandalone: true, selector: "ta-title", inputs: { level: "level", isTheme: "isTheme", isBold: "isBold" }, ngImport: i0, template: "@switch (this.level) {\n  @case (1) {\n    <h1 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h1>\n  }\n  @case (2) {\n    <h2 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h2>\n  }\n  @case (3) {\n    <h3 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h3>\n  }\n  @case (4) {\n    <h4 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h4>\n  }\n  @case (5) {\n    <h5 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h5>\n  }\n  @case (6) {\n    <h6 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h6>\n  }\n}\n\n<ng-template #contentTemplate>\n  <ng-content></ng-content>\n</ng-template>\n", styles: ["h1{font-size:var(--ta-font-h1-default-size);line-height:var(--ta-font-h1-default-line);font-weight:var(--ta-font-h1-default-weight);margin:0}h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-default-weight);margin:0}.bold h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-bold-weight)}h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-default-weight);margin:0}h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-default-weight);margin:0}.theme-title{color:var(--ta-surface-brand-primary)}.bold h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-bold-weight)}.bold h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-bold-weight)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TitleComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-title', standalone: true, imports: [NgClass, NgTemplateOutlet], template: "@switch (this.level) {\n  @case (1) {\n    <h1 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h1>\n  }\n  @case (2) {\n    <h2 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h2>\n  }\n  @case (3) {\n    <h3 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h3>\n  }\n  @case (4) {\n    <h4 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h4>\n  }\n  @case (5) {\n    <h5 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h5>\n  }\n  @case (6) {\n    <h6 [ngClass]=\"{ 'theme-title': this.isTheme, bold: this.isBold }\">\n      <ng-container *ngTemplateOutlet=\"contentTemplate\"></ng-container>\n    </h6>\n  }\n}\n\n<ng-template #contentTemplate>\n  <ng-content></ng-content>\n</ng-template>\n", styles: ["h1{font-size:var(--ta-font-h1-default-size);line-height:var(--ta-font-h1-default-line);font-weight:var(--ta-font-h1-default-weight);margin:0}h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-default-weight);margin:0}.bold h2{font-size:var(--ta-font-h2-default-size);line-height:var(--ta-font-h2-default-line);font-weight:var(--ta-font-h2-bold-weight)}h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-default-weight);margin:0}h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-default-weight);margin:0}.theme-title{color:var(--ta-surface-brand-primary)}.bold h3{font-size:var(--ta-font-h3-default-size);line-height:var(--ta-font-h3-default-line);font-weight:var(--ta-font-h3-bold-weight)}.bold h4{font-size:var(--ta-font-h4-default-size);line-height:var(--ta-font-h4-default-line);font-weight:var(--ta-font-h4-bold-weight)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { level: [{
+                type: Input
+            }], isTheme: [{
+                type: Input
+            }], isBold: [{
                 type: Input
             }] } });
 
@@ -1241,13 +1067,86 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
+class TrigramComponent {
+    constructor() {
+        /**
+         * Size of trigram
+         */
+        this.size = 35;
+    }
+    getFontSize() {
+        return Math.round(this.size / 3);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TrigramComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TrigramComponent, isStandalone: true, selector: "ta-trigram", inputs: { value: "value", size: "size" }, ngImport: i0, template: "@if (this.value) {\n  <div\n    class=\"trigram\"\n    [ngStyle]=\"{\n      'width.px': this.size,\n      'height.px': this.size,\n      'line-height.px': this.size,\n      'font-size.px': this.getFontSize()\n    }\"\n  >\n    {{ this.value }}\n  </div>\n}\n", styles: [".trigram{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);background-color:var(--ta-surface-brand-primary);color:var(--ta-neutral-100);border-radius:100%;width:36px;height:36px;line-height:36px;text-align:center;vertical-align:middle;margin:auto}\n"], dependencies: [{ kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TrigramComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-trigram', standalone: true, imports: [NgIf, NgStyle], template: "@if (this.value) {\n  <div\n    class=\"trigram\"\n    [ngStyle]=\"{\n      'width.px': this.size,\n      'height.px': this.size,\n      'line-height.px': this.size,\n      'font-size.px': this.getFontSize()\n    }\"\n  >\n    {{ this.value }}\n  </div>\n}\n", styles: [".trigram{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);background-color:var(--ta-surface-brand-primary);color:var(--ta-neutral-100);border-radius:100%;width:36px;height:36px;line-height:36px;text-align:center;vertical-align:middle;margin:auto}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { value: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }] } });
+
+class UserLogoComponent {
+    constructor() {
+        /**
+         * Size of user logo desired
+         */
+        this.size = 'lg';
+        this.defaultType = 'font';
+        this._trigram = (name) => {
+            if (!name)
+                return '';
+            if (name.length < 4)
+                return name;
+            return (name[0] + name[2] + name[3]).toUpperCase();
+        };
+    }
+    get sizeValue() {
+        if (this.forcedSize) {
+            return this.forcedSize;
+        }
+        switch (this.size) {
+            case 'sm':
+                return 16;
+            case 'md':
+                return 24;
+            case 'lg':
+                return 48;
+            case 'xl':
+                return 70;
+            default:
+                return 48;
+        }
+    }
+    getTrigram() {
+        return this._trigram(this.user?.firstname);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserLogoComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UserLogoComponent, isStandalone: true, selector: "ta-user-logo", inputs: { user: "user", size: "size", forcedSize: "forcedSize", defaultType: "defaultType" }, ngImport: i0, template: "@if (this.user?.picture) {\n  <div class=\"img-container\">\n    <img\n      [src]=\"this.user?.picture\"\n      [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n      class=\"user-image\"\n    />\n  </div>\n} @else if (this.defaultType === 'trigram') {\n  <ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n  <div\n    class=\"profile-icon\"\n    [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n  >\n    <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n  </div>\n}\n", styles: [".user-image{border-radius:100%}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"], dependencies: [{ kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TrigramComponent, selector: "ta-trigram", inputs: ["value", "size"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UserLogoComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-user-logo', standalone: true, imports: [NgStyle, FontIconComponent, TrigramComponent], template: "@if (this.user?.picture) {\n  <div class=\"img-container\">\n    <img\n      [src]=\"this.user?.picture\"\n      [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n      class=\"user-image\"\n    />\n  </div>\n} @else if (this.defaultType === 'trigram') {\n  <ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n  <div\n    class=\"profile-icon\"\n    [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n  >\n    <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n  </div>\n}\n", styles: [".user-image{border-radius:100%}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"] }]
+        }], propDecorators: { user: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }], forcedSize: [{
+                type: Input
+            }], defaultType: [{
+                type: Input
+            }] } });
+
 class UsersListComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UsersListComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UsersListComponent, isStandalone: true, selector: "ta-users-list", inputs: { users: "users" }, ngImport: i0, template: "<div class=\"flex-row g-space-xs\">\n  @for (user of this.users | async; track user.firstName + ' ' + user.lastName) {\n    <ta-user-logo\n      [user]=\"user\"\n      size=\"md\"\n      defaultType=\"trigram\"\n      [attr.title]=\"user.firstName + ' ' + user.lastName\"\n    ></ta-user-logo>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["userInfo", "user", "size", "forcedSize", "defaultType"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UsersListComponent, isStandalone: true, selector: "ta-users-list", inputs: { users: "users" }, ngImport: i0, template: "<div class=\"flex-row g-space-xs\">\n  @for (user of this.users | async; track user.firstname + ' ' + user.lastname) {\n    <ta-user-logo\n      [user]=\"user\"\n      size=\"md\"\n      defaultType=\"trigram\"\n      [attr.title]=\"user.firstname + ' ' + user.lastname\"\n    ></ta-user-logo>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["user", "size", "forcedSize", "defaultType"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UsersListComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-users-list', standalone: true, imports: [NgFor, AsyncPipe, UserLogoComponent], template: "<div class=\"flex-row g-space-xs\">\n  @for (user of this.users | async; track user.firstName + ' ' + user.lastName) {\n    <ta-user-logo\n      [user]=\"user\"\n      size=\"md\"\n      defaultType=\"trigram\"\n      [attr.title]=\"user.firstName + ' ' + user.lastName\"\n    ></ta-user-logo>\n  }\n</div>\n" }]
+            args: [{ selector: 'ta-users-list', standalone: true, imports: [NgFor, AsyncPipe, UserLogoComponent], template: "<div class=\"flex-row g-space-xs\">\n  @for (user of this.users | async; track user.firstname + ' ' + user.lastname) {\n    <ta-user-logo\n      [user]=\"user\"\n      size=\"md\"\n      defaultType=\"trigram\"\n      [attr.title]=\"user.firstname + ' ' + user.lastname\"\n    ></ta-user-logo>\n  }\n</div>\n" }]
         }], propDecorators: { users: [{
                 type: Input
             }] } });
@@ -1269,7 +1168,7 @@ class CamUiModule {
         CamTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HelloUserComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, ProfileDataComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, InlineProfileDataComponent, UiProfileDisplayComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent], exports: [ActionButtonComponent,
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent], exports: [ActionButtonComponent,
             BadgeComponent,
             ButtonComponent,
             CivilityComponent,
@@ -1277,7 +1176,6 @@ class CamUiModule {
             DepartmentIconListComponent,
             DepartmentProfessionsComponent,
             DepartmentsComponent,
-            HelloUserComponent,
             HourDateLineComponent,
             LinkComponent,
             LogoComponent,
@@ -1285,7 +1183,6 @@ class CamUiModule {
             TitleComponent,
             TrigramComponent,
             UserLogoComponent,
-            ProfileDataComponent,
             ProgressBarDataComponent,
             ProgressBarComponent,
             PictureInfoMessageComponent,
@@ -1295,8 +1192,6 @@ class CamUiModule {
             NotificationBadgeComponent,
             PwaComponent,
             ExpandableTextComponent,
-            InlineProfileDataComponent,
-            UiProfileDisplayComponent,
             ToastComponent,
             LabelComponent,
             NewComponent,
@@ -1310,13 +1205,13 @@ class CamUiModule {
             UsersListComponent,
             ButtonToolComponent,
             CultureComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, providers: [CamIconsService], imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentProfessionsComponent, DepartmentsComponent, HelloUserComponent, LinkComponent, ProgressCircleComponent, UserLogoComponent, ProfileDataComponent, ProgressBarDataComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, PwaComponent, ExpandableTextComponent, InlineProfileDataComponent, UiProfileDisplayComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, providers: [CamIconsService], imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentProfessionsComponent, DepartmentsComponent, LinkComponent, ProgressCircleComponent, UserLogoComponent, ProgressBarDataComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, PwaComponent, ExpandableTextComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HelloUserComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, ProfileDataComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, InlineProfileDataComponent, UiProfileDisplayComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
+                    imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
                     exports: [
                         ActionButtonComponent,
                         BadgeComponent,
@@ -1326,7 +1221,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         DepartmentIconListComponent,
                         DepartmentProfessionsComponent,
                         DepartmentsComponent,
-                        HelloUserComponent,
                         HourDateLineComponent,
                         LinkComponent,
                         LogoComponent,
@@ -1334,7 +1228,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         TitleComponent,
                         TrigramComponent,
                         UserLogoComponent,
-                        ProfileDataComponent,
                         ProgressBarDataComponent,
                         ProgressBarComponent,
                         PictureInfoMessageComponent,
@@ -1344,8 +1237,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         NotificationBadgeComponent,
                         PwaComponent,
                         ExpandableTextComponent,
-                        InlineProfileDataComponent,
-                        UiProfileDisplayComponent,
                         ToastComponent,
                         LabelComponent,
                         NewComponent,
@@ -1403,6 +1294,19 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             type: Component,
             args: [{ selector: 'ta-banner', standalone: true, imports: [TranslatePipe, TranslateModule], template: "<div class=\"banner\">\n  {{ this.message | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-semantic-yellow-light);color:var(--ta-semantic-yellow-dark);padding:var(--ta-space-xs) var(--ta-space-md);text-align:center;box-shadow:var(--ta-shadow-black-sm)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { message: [{
+                type: Input
+            }] } });
+
+class InlineProfileDataComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InlineProfileDataComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InlineProfileDataComponent, isStandalone: true, selector: "ta-inline-profile-data", inputs: { profile: "profile", userLogo: "userLogo" }, ngImport: i0, template: "<div class=\"align-center\">\r\n  @if (this.userLogo) {\r\n    <div class=\"mr-space-xs\">\r\n      <ta-user-logo [user]=\"this.userLogo.user\" [size]=\"this.userLogo.size\"></ta-user-logo>\r\n    </div>\r\n  }\r\n\r\n  <div class=\"text\">\r\n    @if (this.profile.title?.second) {\r\n      <div class=\"text\">\r\n        {{ this.profile.title?.second }}\r\n      </div>\r\n    }\r\n    @if (this.profile.email) {\r\n      <div class=\"mail\">\r\n        {{ this.profile.email }}\r\n      </div>\r\n    }\r\n  </div>\r\n</div>\r\n", styles: [".mail{color:var(--ta-neutral-500);font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.text{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}\n"], dependencies: [{ kind: "component", type: UserLogoComponent, selector: "ta-user-logo", inputs: ["user", "size", "forcedSize", "defaultType"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InlineProfileDataComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-inline-profile-data', standalone: true, imports: [UserLogoComponent], template: "<div class=\"align-center\">\r\n  @if (this.userLogo) {\r\n    <div class=\"mr-space-xs\">\r\n      <ta-user-logo [user]=\"this.userLogo.user\" [size]=\"this.userLogo.size\"></ta-user-logo>\r\n    </div>\r\n  }\r\n\r\n  <div class=\"text\">\r\n    @if (this.profile.title?.second) {\r\n      <div class=\"text\">\r\n        {{ this.profile.title?.second }}\r\n      </div>\r\n    }\r\n    @if (this.profile.email) {\r\n      <div class=\"mail\">\r\n        {{ this.profile.email }}\r\n      </div>\r\n    }\r\n  </div>\r\n</div>\r\n", styles: [".mail{color:var(--ta-neutral-500);font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.text{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}\n"] }]
+        }], propDecorators: { profile: [{
+                type: Input
+            }], userLogo: [{
                 type: Input
             }] } });
 
@@ -2870,5 +2774,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, BadgeComponent, BannerComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CamCardModule, CamContainerModule, CamDefaultPanelComponent, CamExpansionPanelComponent, CamLayoutModule, CamListModule, CamOverlayPanelComponent, CamSwiperModule, CamTreeChildrenComponent, CamTreeContainerComponent, CamTreeItemComponent, CamUiModule, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HelloUserComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProfileDataComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UiProfileDisplayComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
+export { ActionButtonComponent, BadgeComponent, BannerComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CamCardModule, CamContainerModule, CamDefaultPanelComponent, CamExpansionPanelComponent, CamLayoutModule, CamListModule, CamOverlayPanelComponent, CamSwiperModule, CamTreeChildrenComponent, CamTreeContainerComponent, CamTreeItemComponent, CamUiModule, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

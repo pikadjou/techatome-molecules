@@ -1,12 +1,8 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/common";
 
-.main-nav-container {
-
-}
 .main-nav {
-  display: flex;
-  flex-flow: column;
+  @include flex.space-between();
   padding: common.get-var(space, sm);
 
   border-radius: 3px 3px 0px 0px;
@@ -37,7 +33,6 @@
     flex-direction: row;
   }
   .logo {
-    margin: auto;
     @media screen and (max-width: 575px) {
       display: none;
     }

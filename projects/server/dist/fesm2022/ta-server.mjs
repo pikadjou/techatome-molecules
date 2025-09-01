@@ -1,4 +1,4 @@
-import { isNonNullable, ObjectKeys, APPLICATION_CONFIG, isURL, newId } from '@ta/utils';
+import { isNonNullable, ObjectKeys, isURL, newId } from '@ta/utils';
 import { BehaviorSubject, filter, tap, map, Subject, switchMap, catchError, throwError, take, of, share } from 'rxjs';
 import * as i1 from '@angular/common/http';
 import { HttpHeaders, HttpClient, HttpResponse, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -177,7 +177,7 @@ var StatusReponse;
 })(StatusReponse || (StatusReponse = {}));
 
 const SERVER_CONFIG_KEY = new InjectionToken('config_server');
-class CamServerSevice {
+class TaServerSevice {
     get requestInProgressNumber() {
         return this._correlations.length;
     }
@@ -202,7 +202,7 @@ class CamServerSevice {
             this._resolveCorrelation(id, response.body);
         };
         this._resolveCorrelation = (corrId, body) => {
-            const correlation = this._correlations.find((item) => item.id === corrId);
+            const correlation = this._correlations.find(item => item.id === corrId);
             if (!correlation) {
                 return;
             }
@@ -219,7 +219,7 @@ class CamServerSevice {
                 content = body;
             }
             this._resolveResponseStatus(correlation, content);
-            this._correlations = this._correlations.filter((item) => item !== correlation);
+            this._correlations = this._correlations.filter(item => item !== correlation);
             if (this.requestInProgressNumber === 0) {
                 this._retryPending();
             }
@@ -333,10 +333,10 @@ class CamServerSevice {
             params: { cacheTime: request.cacheTime },
         })
             .subscribe({
-            next: (response) => {
+            next: response => {
                 this._onPacketReceived(request.id, this._formatReponse(response, 200));
             },
-            error: (message) => {
+            error: message => {
                 this._onPacketReceived(request.id, this._formatReponse(message, message.status));
             },
             complete: () => Logger.LogDebug('API GET CLOSE'),
@@ -348,35 +348,29 @@ class CamServerSevice {
             headers: this._headers(),
         })
             .subscribe({
-            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
             complete: () => Logger.LogDebug('API POST CLOSE'),
         });
     }
     _patch(url, request) {
-        this.$http
-            .patch(url, request.Content, { headers: this._headers() })
-            .subscribe({
-            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+        this.$http.patch(url, request.Content, { headers: this._headers() }).subscribe({
+            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
             complete: () => Logger.LogDebug('API PATCH CLOSE'),
         });
     }
     _put(url, request) {
-        this.$http
-            .put(url, request.Content, { headers: this._headers() })
-            .subscribe({
-            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+        this.$http.put(url, request.Content, { headers: this._headers() }).subscribe({
+            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
             complete: () => Logger.LogDebug('API PUT CLOSE'),
         });
     }
     _delete(url, request) {
-        this.$http
-            .delete(url, { headers: this._headers() })
-            .subscribe({
-            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+        this.$http.delete(url, { headers: this._headers() }).subscribe({
+            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
             complete: () => Logger.LogDebug('API DELETE CLOSE'),
         });
     }
@@ -388,10 +382,10 @@ class CamServerSevice {
             }),
         })
             .subscribe({
-            next: (response) => {
+            next: response => {
                 this._onPacketReceived(request.id, this._formatReponse(response));
             },
-            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
             complete: () => Logger.LogDebug('API DELETE CLOSE'),
         });
     }
@@ -403,10 +397,10 @@ class CamServerSevice {
             }),
         })
             .subscribe({
-            next: (response) => {
+            next: response => {
                 this._onPacketReceived(request.id, this._formatReponse(response));
             },
-            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
             complete: () => Logger.LogDebug('API DELETE CLOSE'),
         });
     }
@@ -422,10 +416,10 @@ class CamServerSevice {
         Logger.LogInfo('[SERVER] Api Request Header:', headers);
         return headers;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerSevice, deps: [{ token: HttpClient }, { token: SERVER_CONFIG_KEY, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerSevice, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerSevice, deps: [{ token: HttpClient }, { token: SERVER_CONFIG_KEY, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerSevice, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerSevice, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerSevice, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -481,20 +475,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
-class CamGraphService {
+class TaGraphService {
     constructor(_graphConfig, httpLink, apollo) {
         this._graphConfig = _graphConfig;
         this.httpLink = httpLink;
         this.apollo = apollo;
-        this.contactsLoaded$ = new BehaviorSubject(false);
         this.isReady$ = new BehaviorSubject(true);
         this._errorServices = inject(CamServerErrorService);
-        this._applicationConfig = inject(APPLICATION_CONFIG);
         this._defaultEndpoint = new ApolloLink((operation, forward) => {
             return forward(operation);
         });
         this._cache = new InMemoryCache();
-        //  (<any>window).apolloCache = this._cache;
         this.apollo.client = new ApolloClient({
             cache: this._cache,
             link: this._defaultEndpoint,
@@ -606,21 +597,12 @@ class CamGraphService {
         return { ...payload, ...{ context: { clientName: context } } };
     }
     _getWrapper(data) {
-        if (!this._applicationConfig.isCustomerApplication) {
-            return this.isReady$;
-        }
-        if (data?.context === 'userService') {
-            return this.isReady$;
-        }
-        if (data?.context?.includes('Visitor')) {
-            return this.isReady$;
-        }
-        return this.contactsLoaded$.pipe(filter(loaded => loaded));
+        return this.isReady$;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: i1$1.HttpLink }, { token: i2.Apollo }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaGraphService, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: i1$1.HttpLink }, { token: i2.Apollo }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaGraphService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamGraphService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaGraphService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -635,8 +617,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class CamBaseService {
     constructor(apiRoutes) {
         this._subscriptionList = [];
-        this._serverService = inject(CamServerSevice);
-        this._graphService = inject(CamGraphService);
+        this._serverService = inject(TaServerSevice);
+        this._graphService = inject(TaGraphService);
         this.registerRoutes({ apiRoutes });
     }
     registerRoutes(routes, options) {
@@ -646,7 +628,7 @@ class CamBaseService {
             this._graphService.registerGraphEndpoint(routes.graphEndpoint, options);
     }
     ngOnDestroy() {
-        this._subscriptionList.forEach((subscription) => subscription.unsubscribe());
+        this._subscriptionList.forEach(subscription => subscription.unsubscribe());
     }
     _registerSubscription(subscription) {
         this._subscriptionList.push(subscription);
@@ -857,7 +839,7 @@ class CamServerModule {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
     static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, imports: [CommonModule, HttpClientModule, ApolloModule], exports: [ApolloModule] }); }
     static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, providers: [
-            CamGraphService,
+            TaGraphService,
             {
                 provide: HTTP_INTERCEPTORS,
                 useClass: CacheInterceptor,
@@ -872,7 +854,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                     imports: [CommonModule, HttpClientModule, ApolloModule],
                     exports: [ApolloModule],
                     providers: [
-                        CamGraphService,
+                        TaGraphService,
                         {
                             provide: HTTP_INTERCEPTORS,
                             useClass: CacheInterceptor,
@@ -890,5 +872,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, CamBaseService, CamBaseStrapiService, CamGraphService, CamServerErrorService, CamServerModule, CamServerSevice, CamStrapiService, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, CamBaseService, CamBaseStrapiService, CamServerErrorService, CamServerModule, CamStrapiService, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaGraphService, TaServerSevice, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map

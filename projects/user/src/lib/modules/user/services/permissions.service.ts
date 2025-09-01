@@ -26,7 +26,7 @@ const accessLevels = ['reader', 'contributor', 'administrator'];
 @Injectable({
   providedIn: 'root',
 })
-export class CamPermissionsService {
+export class TaPermissionsService {
   private _updated$ = new BehaviorSubject<number | null>(null);
   private _isFill = { permissions: false, isAuthenticated: false };
 
@@ -96,6 +96,9 @@ export class CamPermissionsService {
   public canDirectAccess(feature: PermissionFeature | Domain | string, level: Level | string) {
     if (level === 'authenticated') {
       return this.isAuthenticated;
+    }
+    if (level === 'unauthenticated') {
+      return !this.isAuthenticated;
     }
 
     if (level === 'authorize') {

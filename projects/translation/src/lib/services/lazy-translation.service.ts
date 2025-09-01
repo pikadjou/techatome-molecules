@@ -1,10 +1,11 @@
 import { inject } from '@angular/core';
 
+import { Observable, map, of } from 'rxjs';
+
 import { CamBaseStrapiService } from '@ta/server';
-import { Observable, map } from 'rxjs';
 
 import { Translation } from './dto/translation';
-import { GET_TRANSLATIONS } from './queries';
+// import { GET_TRANSLATIONS } from './queries';
 import { CamTranslationRegistryService, ITranslation } from './translation-registry.service';
 
 export abstract class CamLazyTranslationService extends CamBaseStrapiService implements ITranslation {
@@ -29,7 +30,8 @@ export abstract class CamLazyTranslationService extends CamBaseStrapiService imp
   }
 
   public getTranslation(lang: string): Observable<object | null> {
-    return this._strapiService.fetchQueryList$<Translation>(GET_TRANSLATIONS(lang, this._id), 'translations').pipe(
+    // this._strapiService.fetchQueryList$<Translation>(GET_TRANSLATIONS(lang, this._id), 'translations')
+    return of<Translation[]>([]).pipe(
       map(translations =>
         translations.reduce<{ [index: string]: string }>((acc, translation) => {
           acc[(this._isApp ? '' : this._id + '.') + translation.key.trim()] = translation.value;

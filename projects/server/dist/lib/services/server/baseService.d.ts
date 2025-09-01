@@ -1,13 +1,13 @@
 import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CamGraphService, GraphEndpoint, GraphOptions } from '../graphql/public-api';
+import { GraphEndpoint, GraphOptions, TaGraphService } from '../graphql/public-api';
 import { MappingApiType } from './api/requestMap';
-import { CamServerSevice } from './api/server.service';
+import { TaServerSevice } from './api/server.service';
 import * as i0 from "@angular/core";
 export declare abstract class CamBaseService implements OnDestroy {
     protected _subscriptionList: Subscription[];
-    protected _serverService: CamServerSevice;
-    protected _graphService: CamGraphService;
+    protected _serverService: TaServerSevice;
+    protected _graphService: TaGraphService;
     constructor(apiRoutes?: MappingApiType);
     registerRoutes(routes: {
         apiRoutes?: MappingApiType;

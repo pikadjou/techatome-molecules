@@ -1,6 +1,15 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+  inject,
+  signal,
+} from '@angular/core';
 
 import { Observable, map } from 'rxjs';
 
@@ -8,19 +17,13 @@ import { FontIconComponent } from '@ta/icons';
 import { Menu, MenuComponent, MenuIcon, MenuPanel } from '@ta/menu';
 import { TaSizes } from '@ta/styles';
 import { TranslatePipe } from '@ta/translation';
-import {
-  ButtonComponent,
-  EmptyComponent,
-  ErrorComponent,
-  InlineProfileDataComponent,
-  LoaderComponent,
-  UserLogoNaming,
-} from '@ta/ui';
+import { ButtonComponent, EmptyComponent, ErrorComponent, LoaderComponent, UserLogoData } from '@ta/ui';
+import { InlineProfileDataComponent } from '@ta/ui';
 import { StopPropagationDirective } from '@ta/utils';
 import { TaBaseComponent } from '@ta/utils';
 
 import { CAM_AUTH_TOKEN } from '../../services/auth.service';
-import { TaUsersService } from '../../services/users.service';
+import { TaUserService } from '../../services/user.service';
 import { SwitchLanguageComponent } from '../switch-language/switch-language.component';
 
 @Component({
@@ -29,21 +32,21 @@ import { SwitchLanguageComponent } from '../switch-language/switch-language.comp
   styleUrls: ['./my-account.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     FontIconComponent,
     StopPropagationDirective,
     LoaderComponent,
     ErrorComponent,
     EmptyComponent,
-    InlineProfileDataComponent,
     ButtonComponent,
     MenuComponent,
     SwitchLanguageComponent,
     TranslatePipe,
+    InlineProfileDataComponent,
+    StopPropagationDirective,
   ],
 })
-export class MyAccountComponent extends TaBaseComponent {
+export class MyAccountComponent extends TaBaseComponent implements AfterViewInit {
   @Input()
   infosMenu: Menu | null = null;
 
@@ -67,52 +70,41 @@ export class MyAccountComponent extends TaBaseComponent {
 
   private _authService = inject(CAM_AUTH_TOKEN);
 
-  public profileMenu: Menu | null = null;
-  public disconnectionMenu: Menu | null = null;
+  public profileMenu = signal<Menu | null>(null);
+  public disconnectionMenu = signal<Menu | null>(null);
 
-  get currentUser$() {
-    return this._usersService.currentUser.get$();
-  }
-
-  constructor(private _usersService: TaUsersService) {
+  constructor(private _usersService: TaUserService) {
     super();
-    this._fetch();
   }
 
   get profile$() {
-    return this.currentUser$.pipe(
+    return this._usersService.userProfile.get$().pipe(
       map(data => {
         return {
           title: {
-            second: data?.firstName || data?.lastName,
+            second: data?.firstname || data?.lastname,
           },
-          email: data?.userName,
+          email: data?.email || '',
         };
       })
     );
   }
 
   get userLogo$(): Observable<{
-    userInfo: {
-      profilePictureUrl?: string;
-      naming: UserLogoNaming;
-    };
+    user: UserLogoData;
     size?: TaSizes;
   } | null> {
-    return this.currentUser$.pipe(
+    return this._usersService.userProfile.get$().pipe(
       map(x => {
         if (!x) {
           return null;
         }
 
         return {
-          userInfo: {
-            profilePictureUrl: x.picture,
-            naming: {
-              name: x.firstName || '',
-              firstName: x.lastName || '',
-              trigram: x.trigram || '',
-            },
+          user: {
+            picture: x.picture,
+            lastname: x.lastname || '',
+            firstname: x.firstname || '',
           },
           size: 'lg',
         };
@@ -120,9 +112,9 @@ export class MyAccountComponent extends TaBaseComponent {
     );
   }
 
-  ngAfterViewChecked() {
-    this.profileMenu = this.getProfileMenu(this.languageTemplate, this.infosTemplate);
-    this.disconnectionMenu = this.getDisconnectionMenu();
+  ngAfterViewInit() {
+    this.profileMenu.set(this.getProfileMenu(this.languageTemplate, this.infosTemplate));
+    this.disconnectionMenu.set(this.getDisconnectionMenu());
   }
 
   public navigateToProfile() {
@@ -193,15 +185,5 @@ export class MyAccountComponent extends TaBaseComponent {
 
   public navigateToEditProfile() {
     this.navigateEditEvent.emit();
-  }
-
-  private _fetch() {
-    this.requestState.asked();
-    this._usersService.fetchCurrentUser$().subscribe({
-      complete: () => this.requestState.completed(),
-      error: (error: HttpErrorResponse) => {
-        this.requestState.onError(error.status, error.statusText);
-      },
-    });
   }
 }

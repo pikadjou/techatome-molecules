@@ -1,14 +1,11 @@
 import { TaSizes } from '@ta/styles';
-import { UserLogoNaming } from '../../user-logo/user-logo.component';
+import { UserLogoData } from '../../user-logo/user-logo.component';
 import { IProfileData } from '../IProfileData';
 import * as i0 from "@angular/core";
 export declare class InlineProfileDataComponent {
     profile: IProfileData;
     userLogo?: {
-        userInfo: {
-            profilePictureUrl?: string;
-            naming: UserLogoNaming;
-        };
+        user: UserLogoData;
         size?: TaSizes;
     } | null;
     static ɵfac: i0.ɵɵFactoryDeclaration<InlineProfileDataComponent, never>;

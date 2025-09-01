@@ -4,7 +4,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { ApolloModule } from 'apollo-angular';
 
-import { CamGraphService } from './services/graphql/graph.service';
+import { TaGraphService } from './services/graphql/graph.service';
 import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from './services/graphql/models/graphConfig';
 import { CacheInterceptor } from './services/server/cacheInterceptor';
 import { TenantInterceptor } from './services/server/tenantInterceptor';
@@ -14,11 +14,11 @@ export { gql as Apollo_gql } from 'apollo-angular';
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
  * // import { CamServerModule } from '@ta/library-name';
- * 
+ *
  * // Import the standalone components directly:
  * import { ApolloModule } from '@ta/library-name';
  */
@@ -27,7 +27,7 @@ export { gql as Apollo_gql } from 'apollo-angular';
   imports: [CommonModule, HttpClientModule, ApolloModule],
   exports: [ApolloModule],
   providers: [
-    CamGraphService,
+    TaGraphService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CacheInterceptor,

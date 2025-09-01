@@ -1,7 +1,11 @@
+import { GraphSchema } from '@ta/server';
+
 export interface UserProfile {
-  id: number;
-  firstName: string;
-  lastName: string;
-  profilePictureUrl: string;
-  trigram: string;
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  picture: string;
 }
+
+export const UserProfileProps = new GraphSchema<UserProfile>(['id', 'firstname', 'lastname', 'email', 'picture']);

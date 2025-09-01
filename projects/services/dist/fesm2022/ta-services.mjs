@@ -1,26 +1,9 @@
+import { compare, isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 import * as i0 from '@angular/core';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map as map$1, filter as filter$1 } from 'rxjs';
-import { compare, isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 import { map, filter, tap } from 'rxjs/operators';
 import { CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, HandleSimpleRequest, HandleComplexRequest } from '@ta/server';
-
-class CamConfigurationService {
-    constructor() {
-        this.organizationName$ = new BehaviorSubject('');
-    }
-    set(user) {
-        this.organizationName$.next(user['g-lambert/orgname']);
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamConfigurationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamConfigurationService, providedIn: 'root' }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamConfigurationService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root',
-                }]
-        }], ctorParameters: () => [] });
+import { BehaviorSubject, map as map$1, filter as filter$1 } from 'rxjs';
 
 const sortByTranslatedValue = (translated) => {
     return translated.sort((a, b) => compare(a.translatedValue || '', b.translatedValue || '', true));
@@ -387,5 +370,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamConfigurationService, CamDocumentsService, CamEnumerationService, CamProjectsService, CamSharedMenuService, FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, documentProps, projectProps, sortByTranslatedValue };
+export { CamDocumentsService, CamEnumerationService, CamProjectsService, CamSharedMenuService, FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, documentProps, projectProps, sortByTranslatedValue };
 //# sourceMappingURL=ta-services.mjs.map

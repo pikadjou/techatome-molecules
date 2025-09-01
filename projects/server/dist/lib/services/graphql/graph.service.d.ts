@@ -7,14 +7,12 @@ import * as i0 from "@angular/core";
 export type GraphOptions = {
     visitor: boolean;
 };
-export declare class CamGraphService {
+export declare class TaGraphService {
     private _graphConfig;
     private httpLink;
     private apollo;
-    contactsLoaded$: BehaviorSubject<boolean>;
     isReady$: BehaviorSubject<boolean>;
     private _errorServices;
-    private _applicationConfig;
     private _defaultEndpoint;
     private _cache;
     constructor(_graphConfig: IGraphConfig, httpLink: HttpLink, apollo: Apollo);
@@ -30,6 +28,6 @@ export declare class CamGraphService {
     registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions): void;
     private _setupData;
     private _getWrapper;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamGraphService, [{ optional: true; }, null, null]>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamGraphService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaGraphService, [{ optional: true; }, null, null]>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaGraphService>;
 }

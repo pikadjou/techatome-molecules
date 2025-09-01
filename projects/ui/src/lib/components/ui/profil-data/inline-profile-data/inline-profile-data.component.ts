@@ -1,9 +1,8 @@
-import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { TaSizes } from '@ta/styles';
 
-import { UserLogoNaming } from '../../user-logo/user-logo.component';
+import { UserLogoData } from '../../user-logo/user-logo.component';
 import { UserLogoComponent } from '../../user-logo/user-logo.component';
 import { IProfileData } from '../IProfileData';
 
@@ -12,7 +11,7 @@ import { IProfileData } from '../IProfileData';
   templateUrl: './inline-profile-data.component.html',
   styleUrls: ['./inline-profile-data.component.scss'],
   standalone: true,
-  imports: [NgIf, UserLogoComponent],
+  imports: [UserLogoComponent],
 })
 export class InlineProfileDataComponent {
   @Input()
@@ -20,7 +19,7 @@ export class InlineProfileDataComponent {
 
   @Input()
   userLogo?: {
-    userInfo: { profilePictureUrl?: string; naming: UserLogoNaming };
+    user: UserLogoData;
     size?: TaSizes;
   } | null;
 }

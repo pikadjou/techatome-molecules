@@ -6,17 +6,10 @@ import { Subject } from 'rxjs';
 import { Logger } from '../../logger';
 import { Correlation, TempRequest } from '../interface';
 import { Request } from '../request';
-import {
-  IBackResponse,
-  IBaseResponse,
-  IResponse,
-  StatusReponse,
-} from '../response';
+import { IBackResponse, IBaseResponse, IResponse, StatusReponse } from '../response';
 import { MappingApiType, RequestMap } from './requestMap';
 
-export const SERVER_CONFIG_KEY = new InjectionToken<IServerConfig>(
-  'config_server'
-);
+export const SERVER_CONFIG_KEY = new InjectionToken<IServerConfig>('config_server');
 export interface IServerConfig {
   pendindRequestId: number;
   serverUrl: string;
@@ -25,7 +18,7 @@ export interface IServerConfig {
 @Injectable({
   providedIn: 'root',
 })
-export class CamServerSevice {
+export class TaServerSevice {
   get requestInProgressNumber(): number {
     return this._correlations.length;
   }
@@ -134,15 +127,11 @@ export class CamServerSevice {
 
     this._resolveCorrelation(id, response.body);
   };
-  private _addCorrelation(
-    corrId: number,
-    request: Request,
-    sub: Subject<Object>
-  ) {
+  private _addCorrelation(corrId: number, request: Request, sub: Subject<Object>) {
     this._correlations.push({ id: corrId, request: request, subject: sub });
   }
   private _resolveCorrelation = (corrId: number, body: string | Object) => {
-    const correlation = this._correlations.find((item) => item.id === corrId);
+    const correlation = this._correlations.find(item => item.id === corrId);
 
     if (!correlation) {
       return;
@@ -159,22 +148,13 @@ export class CamServerSevice {
     }
     this._resolveResponseStatus(correlation, content);
 
-    this._correlations = this._correlations.filter(
-      (item) => item !== correlation
-    );
+    this._correlations = this._correlations.filter(item => item !== correlation);
     if (this.requestInProgressNumber === 0) {
       this._retryPending();
     }
   };
-  private _resolveResponseStatus(
-    correlation: Correlation,
-    content: IBaseResponse
-  ) {
-    Logger.LogInfo(
-      '[SERVER] Api Reponse content:',
-      content.Status,
-      content.Content
-    );
+  private _resolveResponseStatus(correlation: Correlation, content: IBaseResponse) {
+    Logger.LogInfo('[SERVER] Api Reponse content:', content.Status, content.Content);
     switch (content.Status) {
       case StatusReponse.Successful:
       case StatusReponse.NoContent:
@@ -210,17 +190,11 @@ export class CamServerSevice {
         params: { cacheTime: request.cacheTime },
       })
       .subscribe({
-        next: (response) => {
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(response, 200)
-          );
+        next: response => {
+          this._onPacketReceived(request.id, this._formatReponse(response, 200));
         },
-        error: (message) => {
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          );
+        error: message => {
+          this._onPacketReceived(request.id, this._formatReponse(message, message.status));
         },
         complete: () => Logger.LogDebug('API GET CLOSE'),
       });
@@ -231,57 +205,31 @@ export class CamServerSevice {
         headers: this._headers(),
       })
       .subscribe({
-        next: (response) =>
-          this._onPacketReceived(request.id, this._formatReponse(response)),
-        error: (message) =>
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          ),
+        next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+        error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
         complete: () => Logger.LogDebug('API POST CLOSE'),
       });
   }
   private _patch(url: string, request: Request) {
-    this.$http
-      .patch<IBackResponse>(url, request.Content, { headers: this._headers() })
-      .subscribe({
-        next: (response) =>
-          this._onPacketReceived(request.id, this._formatReponse(response)),
-        error: (message) =>
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          ),
-        complete: () => Logger.LogDebug('API PATCH CLOSE'),
-      });
+    this.$http.patch<IBackResponse>(url, request.Content, { headers: this._headers() }).subscribe({
+      next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+      error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+      complete: () => Logger.LogDebug('API PATCH CLOSE'),
+    });
   }
   private _put(url: string, request: Request) {
-    this.$http
-      .put<IBackResponse>(url, request.Content, { headers: this._headers() })
-      .subscribe({
-        next: (response) =>
-          this._onPacketReceived(request.id, this._formatReponse(response)),
-        error: (message) =>
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          ),
-        complete: () => Logger.LogDebug('API PUT CLOSE'),
-      });
+    this.$http.put<IBackResponse>(url, request.Content, { headers: this._headers() }).subscribe({
+      next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+      error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+      complete: () => Logger.LogDebug('API PUT CLOSE'),
+    });
   }
   private _delete(url: string, request: Request) {
-    this.$http
-      .delete<IBackResponse>(url, { headers: this._headers() })
-      .subscribe({
-        next: (response) =>
-          this._onPacketReceived(request.id, this._formatReponse(response)),
-        error: (message) =>
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          ),
-        complete: () => Logger.LogDebug('API DELETE CLOSE'),
-      });
+    this.$http.delete<IBackResponse>(url, { headers: this._headers() }).subscribe({
+      next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
+      error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+      complete: () => Logger.LogDebug('API DELETE CLOSE'),
+    });
   }
   private _files(url: string, request: Request) {
     this.$http
@@ -291,14 +239,10 @@ export class CamServerSevice {
         }),
       })
       .subscribe({
-        next: (response) => {
+        next: response => {
           this._onPacketReceived(request.id, this._formatReponse(response));
         },
-        error: (message) =>
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          ),
+        error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
         complete: () => Logger.LogDebug('API DELETE CLOSE'),
       });
   }
@@ -310,14 +254,10 @@ export class CamServerSevice {
         }),
       })
       .subscribe({
-        next: (response) => {
+        next: response => {
           this._onPacketReceived(request.id, this._formatReponse(response));
         },
-        error: (message) =>
-          this._onPacketReceived(
-            request.id,
-            this._formatReponse(message, message.status)
-          ),
+        error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
         complete: () => Logger.LogDebug('API DELETE CLOSE'),
       });
   }
@@ -328,16 +268,10 @@ export class CamServerSevice {
     let headers = new HttpHeaders();
 
     if (option?.contentType !== '') {
-      headers = headers.set(
-        'Content-Type',
-        option?.contentType ? option?.contentType : 'application/json'
-      );
+      headers = headers.set('Content-Type', option?.contentType ? option?.contentType : 'application/json');
     }
 
-    headers = headers.set(
-      'Access-Control-Allow-Origin',
-      this._config?.serverUrl ?? ''
-    );
+    headers = headers.set('Access-Control-Allow-Origin', this._config?.serverUrl ?? '');
 
     Logger.LogInfo('[SERVER] Api Request Header:', headers);
 

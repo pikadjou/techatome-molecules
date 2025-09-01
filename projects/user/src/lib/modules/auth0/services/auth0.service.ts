@@ -1,49 +1,27 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { AuthService, User } from '@auth0/auth0-angular';
+import { AuthService } from '@auth0/auth0-angular';
 import { distinct, filter, tap } from 'rxjs';
 
-import { Logger, MappingApiType } from '@ta/server';
-import { CamConfigurationService } from '@ta/services';
-import { isNonNullable, trigram } from '@ta/utils';
+import { Logger } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 
 import { CamAuthService } from '../../user/services/auth.service';
-import { CamUserService } from '../../user/services/user.service';
-
-const apiRoutes: MappingApiType = {
-  GetUserProfile: {
-    type: 'GET',
-    url: '{ApiUrl}/UserProfile',
-  },
-};
+import { TaUserService } from '../../user/services/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CamAuth0Service extends CamAuthService<User> {
-  get trigram() {
-    return trigram(this.user$.value?.nickname);
-  }
-
-  get firstLetter() {
-    const name = this.user$.value?.nickname;
-    if (!name) {
-      return '-';
-    }
-    return name[0].toUpperCase();
-  }
-
+export class CamAuth0Service extends CamAuthService {
   get userProfile$() {
-    return this.userService.userProfile$;
+    return this.userService.userProfile.get$();
   }
 
   constructor(
     @Inject(AuthService) public auth: AuthService,
-    @Inject(CamUserService) public userService: CamUserService,
-    @Inject(CamConfigurationService)
-    public configurationService: CamConfigurationService
+    @Inject(TaUserService) public userService: TaUserService
   ) {
-    super(apiRoutes);
+    super();
 
     this.auth.user$
       .pipe(
@@ -55,14 +33,12 @@ export class CamAuth0Service extends CamAuthService<User> {
           if (user) {
             this._permissionsService.set(
               {
-                permissions: user['g-lambert/permissions'],
-                roles: user['g-lambert/roles'],
-                features: user['g-lambert/features'],
+                permissions: [],
+                roles: [],
+                features: [],
               },
               true
             );
-            configurationService.set(user);
-            this.fetchUserProfile().subscribe();
           }
         })
       )
@@ -98,8 +74,8 @@ export class CamAuth0Service extends CamAuthService<User> {
       .subscribe();
   }
 
-  public fetchUserProfile() {
-    return this.userService.fetchUserProfile();
+  public fetchUserProfile$() {
+    return this.userService.fetchUserProfile$();
   }
 
   public load() {}

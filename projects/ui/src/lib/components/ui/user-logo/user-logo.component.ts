@@ -1,4 +1,4 @@
-import { NgIf, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
@@ -13,9 +13,8 @@ export interface UserLogoNaming {
 }
 
 export interface UserLogoData {
-  firstName: string;
-  lastName: string;
-  trigram?: string;
+  firstname: string;
+  lastname: string;
   picture?: string;
 }
 @Component({
@@ -23,19 +22,9 @@ export interface UserLogoData {
   templateUrl: './user-logo.component.html',
   styleUrls: ['./user-logo.component.scss'],
   standalone: true,
-  imports: [NgIf, NgStyle, FontIconComponent, TrigramComponent],
+  imports: [NgStyle, FontIconComponent, TrigramComponent],
 })
 export class UserLogoComponent {
-  /**
-   * @deprecated
-   * User information containing his profile picture and his naming
-   */
-  @Input()
-  userInfo?: { profilePictureUrl?: string; naming: UserLogoNaming | null };
-
-  /**
-   * User information containing his profile picture and his naming
-   */
   @Input()
   user?: UserLogoData;
 
@@ -70,12 +59,7 @@ export class UserLogoComponent {
   }
 
   public getTrigram() {
-    const trigram = this.user?.trigram || this.userInfo?.naming?.trigram;
-    if (trigram) {
-      return trigram;
-    }
-
-    return this._trigram(this.user?.firstName || this.userInfo?.naming?.trigram);
+    return this._trigram(this.user?.firstname);
   }
 
   private _trigram = (name: string | null | undefined) => {

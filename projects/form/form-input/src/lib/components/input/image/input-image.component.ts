@@ -20,8 +20,9 @@ export class InputImageComponent extends CamAbstractInputComponent<InputImages> 
 
   get userInfo() {
     return this.selection.map(selection => ({
-      profilePictureUrl: selection,
-      naming: null,
+      picture: selection,
+      firstname: '',
+      lastname: '',      
     }))[0];
   }
 }

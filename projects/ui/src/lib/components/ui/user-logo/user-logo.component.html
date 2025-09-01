@@ -1,7 +1,7 @@
-@if (this.user?.picture || this.userInfo?.profilePictureUrl) {
+@if (this.user?.picture) {
   <div class="img-container">
     <img
-      [src]="this.user?.picture || this.userInfo?.profilePictureUrl"
+      [src]="this.user?.picture"
       [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }"
       class="user-image"
     />

@@ -1,45 +1,35 @@
 import { Injectable } from '@angular/core';
 
-import { Request } from '@ta/server';
-import { CamBaseService, MappingApiType } from '@ta/server';
-import { BehaviorSubject, filter, tap } from 'rxjs';
+import { filter } from 'rxjs';
+
+import { GraphEndpoint, HandleSimpleRequest } from '@ta/server';
+import { CamBaseService } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 
 import { UserProfile } from './dto/user-profile';
+import { userInfo } from './queries';
 
-const apiRoutes: MappingApiType = {
-  GetUserProfile: {
-    type: 'GET',
-    url: '{ApiUrl}/UserProfile',
-  },
+const graphEndpoint: GraphEndpoint = {
+  clientName: 'userService',
+  endpoint: '',
 };
 
 @Injectable({
   providedIn: 'root',
 })
-export class CamUserService extends CamBaseService {
-  public userProfile$ = new BehaviorSubject<UserProfile | null>(null);
+export class TaUserService extends CamBaseService {
+  public userProfile = new HandleSimpleRequest<UserProfile>();
 
   constructor() {
-    super(apiRoutes);
+    super();
+    super.registerRoutes({ graphEndpoint: graphEndpoint });
   }
 
-  public fetchUserProfile() {
-    return this._serverService.request<UserProfile>(new Request({ type: 'GetUserProfile', cacheTime: -1 })).pipe(
-      filter(data => !!data),
-      tap(data => {
-        this.userProfile$.next(data);
-      })
-      // GOOGLE TAG MANAGER NOT USED YET
-      // tap(data => {
-      //   this._gtmService.pushTag({
-      //     event: 'userProfile',
-      //     userProfile: {
-      //       id: data.id,
-      //       lastName: data.lastName,
-      //       firstName: data.firstName,
-      //     },
-      //   });
-      // })
+  public fetchUserProfile$() {
+    return this.userProfile.fetch(
+      this._graphService
+        .fetchQuery<UserProfile>(userInfo(), 'userInfo', graphEndpoint.clientName)
+        .pipe(filter(isNonNullable))
     );
   }
 }

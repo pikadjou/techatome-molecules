@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TaSizes } from '@ta/styles';
 
@@ -8,7 +9,7 @@ import { TaSizes } from '@ta/styles';
   templateUrl: './font-icon.component.html',
   styleUrls: ['./font-icon.component.scss'],
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, MatIconModule],
 })
 export class FontIconComponent {
   @Input()

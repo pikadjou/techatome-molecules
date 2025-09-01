@@ -11,7 +11,7 @@ export interface IServerConfig {
     serverUrl: string;
     apiExt?: string;
 }
-export declare class CamServerSevice {
+export declare class TaServerSevice {
     $http: HttpClient;
     private _config?;
     get requestInProgressNumber(): number;
@@ -42,6 +42,6 @@ export declare class CamServerSevice {
     private _updateFiles;
     private _formatReponse;
     private _headers;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamServerSevice, [null, { optional: true; }]>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamServerSevice>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaServerSevice, [null, { optional: true; }]>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaServerSevice>;
 }
