@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './tree-children.component.html',
   styleUrl: './tree-children.component.scss',
 })
-export class CamTreeChildrenComponent {}
+export class TaTreeChildrenComponent {}

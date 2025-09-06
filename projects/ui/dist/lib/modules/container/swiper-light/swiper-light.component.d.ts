@@ -1,5 +1,5 @@
 import { OnInit, TemplateRef } from '@angular/core';
-import { CamDeviceInfoService } from '@ta/capacitor';
+import { TaDeviceInfoService } from '@ta/capacitor';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class SwiperLightComponent extends TaBaseComponent implements OnInit {
@@ -10,7 +10,7 @@ export declare class SwiperLightComponent extends TaBaseComponent implements OnI
     containerClasses?: string;
     forced?: boolean;
     classes: string;
-    constructor(_deviceInfoService: CamDeviceInfoService);
+    constructor(_deviceInfoService: TaDeviceInfoService);
     ngOnInit(): void;
     track: (_: any, item: any) => any;
     static ɵfac: i0.ɵɵFactoryDeclaration<SwiperLightComponent, never>;

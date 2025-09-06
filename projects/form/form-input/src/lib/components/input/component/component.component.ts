@@ -3,23 +3,24 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { InputComponent } from '@ta/form-model';
-import { CamIconsModule } from '@ta/icons';
-import { CamLayoutModule, CamUiModule } from '@ta/ui';
-import { CamBaseModal } from '@ta/utils';
 import { Subject } from 'rxjs';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputComponent } from '@ta/form-model';
+import { TaIconsModule } from '@ta/icons';
+import { TaLayoutModule, TaUiModule } from '@ta/ui';
+import { TaBaseModal } from '@ta/utils';
+
+import { TaAbstractInputComponent } from '../../abstract.component';
 import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
   selector: 'ta-input-component',
   standalone: true,
-  imports: [InputLayoutComponent, ReactiveFormsModule, CamIconsModule],
+  imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule],
   templateUrl: './component.component.html',
   styleUrl: './component.component.scss',
 })
-export class ComponentInputComponent extends CamAbstractInputComponent<InputComponent> {
+export class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
   readonly dialog = inject(MatDialog);
 
   public open() {
@@ -37,10 +38,10 @@ type TemplateModalData = {
 @Component({
   selector: '',
   standalone: true,
-  imports: [NgTemplateOutlet, CamLayoutModule, CamUiModule],
+  imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule],
   templateUrl: './modal.html',
 })
-export class TemplateModal extends CamBaseModal {
+export class TemplateModal extends TaBaseModal {
   readonly dialogRef = inject(MatDialogRef<TemplateModal>);
   readonly data: TemplateModalData = inject(MAT_DIALOG_DATA);
 

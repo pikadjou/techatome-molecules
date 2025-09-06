@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 
 import { InputTextBox } from '@ta/form-model';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-selector: 'ta-input-color-picker',
+  selector: 'ta-input-color-picker',
   templateUrl: './color-picker.component.html',
   styleUrls: ['./color-picker.component.scss'],
   standalone: true,
 })
-export class ColorPickerComponent extends CamAbstractInputComponent<InputTextBox> {
+export class ColorPickerComponent extends TaAbstractInputComponent<InputTextBox> {
   constructor() {
     super();
   }

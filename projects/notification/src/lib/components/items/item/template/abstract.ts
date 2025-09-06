@@ -2,17 +2,17 @@ import { Component, Input, inject } from '@angular/core';
 
 import { KeyValue } from '@ta/server';
 
-import { CamNotificationDataService } from '../../../../services/data.service';
+import { TaNotificationDataService } from '../../../../services/data.service';
 import { NotificationDto } from '../../../../services/dto/notification';
-import { CamNotificationSharedService } from '../../../../services/shared.service';
+import { TaNotificationSharedService } from '../../../../services/shared.service';
 
 @Component({ template: '' })
 export abstract class AbstractNotificationTemplateComponent {
   @Input()
   notification!: NotificationDto;
 
-  public sharedService = inject(CamNotificationSharedService);
-  public dataService = inject(CamNotificationDataService);
+  public sharedService = inject(TaNotificationSharedService);
+  public dataService = inject(TaNotificationDataService);
 
   public goTo() {
     this.dataService.isRead$(this.notification.id).subscribe();

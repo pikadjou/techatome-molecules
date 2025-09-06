@@ -14,7 +14,7 @@ import {
 
 import { TaBaseComponent } from '@ta/utils';
 
-import { CamDefaultPanelComponent } from '../default-panel/default-panel.component';
+import { TaDefaultPanelComponent } from '../default-panel/default-panel.component';
 import { OverlayMenuConfig, OverlayService } from '../overlay.service';
 
 @Component({
@@ -25,7 +25,7 @@ import { OverlayMenuConfig, OverlayService } from '../overlay.service';
   styleUrls: ['./overlay-panel.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CamOverlayPanelComponent extends TaBaseComponent implements AfterViewInit {
+export class TaOverlayPanelComponent extends TaBaseComponent implements AfterViewInit {
   @ContentChild('panelTrigger') triggerTpl!: TemplateRef<any>;
   @ContentChild('panelContent') contentTpl!: TemplateRef<any>;
 
@@ -55,7 +55,7 @@ export class CamOverlayPanelComponent extends TaBaseComponent implements AfterVi
 
     const configWithDefaults = {
       ...this.panelConfig,
-      menuComponent: this.panelConfig.menuComponent ?? CamDefaultPanelComponent,
+      menuComponent: this.panelConfig.menuComponent ?? TaDefaultPanelComponent,
       triggerElement: this.triggerHostRef?.nativeElement,
       template: this.contentTpl,
     };

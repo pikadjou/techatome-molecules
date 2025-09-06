@@ -1,7 +1,7 @@
-import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
+import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from '@ta/server';
 import { Project } from './dto/project';
 import * as i0 from "@angular/core";
-export declare class CamProjectsService extends CamBaseService {
+export declare class TaProjectsService extends TaBaseService {
     protected _graphEndpoint: GraphEndpoint;
     projects: HandleSimpleRequest<Project[]>;
     project: HandleComplexRequest<Project>;
@@ -11,6 +11,6 @@ export declare class CamProjectsService extends CamBaseService {
     fetchProjectsByContact$(contactId: string): import("rxjs").Observable<Project[]>;
     fetchProjects$(): import("rxjs").Observable<Project[]>;
     fetchProject$(id: string): import("rxjs").Observable<Project>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamProjectsService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamProjectsService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaProjectsService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaProjectsService>;
 }

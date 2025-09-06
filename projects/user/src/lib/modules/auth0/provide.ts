@@ -3,14 +3,14 @@ import { Provider } from '@angular/core';
 
 import { AuthConfig, AuthHttpInterceptor, provideAuth0 as provideBaseAuth0 } from '@auth0/auth0-angular';
 
-import { CAM_AUTH_TOKEN } from '../user/services/auth.service';
-import { CamAuth0Service } from './services/auth0.service';
+import { TA_AUTH_TOKEN } from '../user/services/auth.service';
+import { TaAuth0Service } from './services/auth0.service';
 
-export interface CamAuth0Environment extends AuthConfig {}
+export interface TaAuth0Environment extends AuthConfig {}
 
-export const provideAuth0 = (data: { config: CamAuth0Environment }): Provider => [
+export const provideAuth0 = (data: { config: TaAuth0Environment }): Provider => [
   provideBaseAuth0(data.config),
-  { provide: CAM_AUTH_TOKEN, useClass: CamAuth0Service },
+  { provide: TA_AUTH_TOKEN, useClass: TaAuth0Service },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHttpInterceptor,

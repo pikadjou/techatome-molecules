@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { CamBaseService, GraphEndpoint, HandleComplexRequest, HandleSimpleRequest } from '@ta/server';
 import { map } from 'rxjs';
+
+import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from '@ta/server';
 
 import { Project, projectProps } from './dto/project';
 import { GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID } from './queries';
@@ -14,7 +15,7 @@ const graphEndpoint: GraphEndpoint = {
 @Injectable({
   providedIn: 'root',
 })
-export class CamProjectsService extends CamBaseService {
+export class TaProjectsService extends TaBaseService {
   protected _graphEndpoint = graphEndpoint;
   public projects = new HandleSimpleRequest<Project[]>();
   public project = new HandleComplexRequest<Project>();

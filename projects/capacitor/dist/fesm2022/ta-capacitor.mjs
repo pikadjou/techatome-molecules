@@ -7,20 +7,20 @@ import { Network } from '@capacitor/network';
 import { Logger } from '@ta/server';
 import { Geolocation } from '@capacitor/geolocation';
 
-class CamDeviceInfoService {
+class TaDeviceInfoService {
     constructor() {
         this._getInfo$ = new BehaviorSubject(null);
-        Device.getInfo().then((deviceInformation) => this._getInfo$.next(deviceInformation));
-        this.os$ = this._getInfo$.pipe(filter((deviceInfo) => !!deviceInfo), map((deviceInfo) => deviceInfo?.operatingSystem ?? 'unknown'));
-        this.deviceClasses$ = this.os$.pipe(map((os) => {
+        Device.getInfo().then(deviceInformation => this._getInfo$.next(deviceInformation));
+        this.os$ = this._getInfo$.pipe(filter(deviceInfo => !!deviceInfo), map(deviceInfo => deviceInfo?.operatingSystem ?? 'unknown'));
+        this.deviceClasses$ = this.os$.pipe(map(os => {
             return [os, this._getMobileClass(os)];
         }));
     }
     isMobileOs$() {
-        return this.os$.pipe(map((value) => this.isMobileOs(value)));
+        return this.os$.pipe(map(value => this.isMobileOs(value)));
     }
     isWeb$() {
-        return this.os$.pipe(map((value) => !this.isMobileOs(value)));
+        return this.os$.pipe(map(value => !this.isMobileOs(value)));
     }
     isMobileOs(os) {
         return os === 'android' || os === 'ios';
@@ -28,17 +28,17 @@ class CamDeviceInfoService {
     _getMobileClass(os) {
         return this.isMobileOs(os) ? 'mobile-device' : 'desktop-device';
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDeviceInfoService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDeviceInfoService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDeviceInfoService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDeviceInfoService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDeviceInfoService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDeviceInfoService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
                 }]
         }], ctorParameters: () => [] });
 
-class CamDeviceNetworkService {
+class TaDeviceNetworkService {
     constructor() {
         this.isConnected$ = new BehaviorSubject(false);
         this._delayToDisplayNewNotification = 10 * 1000; // in ms
@@ -75,17 +75,17 @@ class CamDeviceNetworkService {
         else
             Logger.LogWarning(`[Network] connection lost ${canDisplayNotification ? '[notification] send' : ''}`);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDeviceNetworkService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDeviceNetworkService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDeviceNetworkService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDeviceNetworkService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDeviceNetworkService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDeviceNetworkService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
                 }]
         }], ctorParameters: () => [] });
 
-class CamDevicePositionService {
+class TaDevicePositionService {
     get currentPosition() {
         return this._currentPosition$.getValue();
     }
@@ -97,17 +97,17 @@ class CamDevicePositionService {
         this._canAccessPosition$ = new BehaviorSubject(false);
     }
     fetchCanAccessPosition() {
-        Geolocation.checkPermissions().then((permissionStatus) => this._canAccessPosition$.next(permissionStatus.location !== 'denied'));
+        Geolocation.checkPermissions().then(permissionStatus => this._canAccessPosition$.next(permissionStatus.location !== 'denied'));
     }
     fetchCurrentPosition() {
-        Geolocation.getCurrentPosition().then((position) => {
+        Geolocation.getCurrentPosition().then(position => {
             this._currentPosition$.next(position);
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDevicePositionService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDevicePositionService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDevicePositionService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDevicePositionService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDevicePositionService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDevicePositionService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -115,12 +115,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
         }], ctorParameters: () => [] });
 
 const PWA_CONFIG_KEY = 'config_pwa';
-class CamPwaService {
+class TaPwaService {
     constructor(_config) {
         this._config = _config;
         this.isPWaCapability$ = new BehaviorSubject(false);
         if (this._config.active) {
-            window.addEventListener('beforeinstallprompt', (event) => {
+            window.addEventListener('beforeinstallprompt', event => {
                 this._promptEvent = event;
                 this.isPWaCapability$.next(true);
             });
@@ -134,10 +134,10 @@ class CamPwaService {
             this._promptEvent.prompt();
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamPwaService, deps: [{ token: PWA_CONFIG_KEY }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamPwaService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaPwaService, deps: [{ token: PWA_CONFIG_KEY }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaPwaService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamPwaService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaPwaService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -151,12 +151,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
  */
-class CamCapacitorModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCapacitorModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamCapacitorModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCapacitorModule }); }
+class TaCapacitorModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCapacitorModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaCapacitorModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCapacitorModule }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCapacitorModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCapacitorModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
@@ -173,5 +173,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamCapacitorModule, CamDeviceInfoService, CamDeviceNetworkService, CamDevicePositionService, CamPwaService, PWA_CONFIG_KEY };
+export { PWA_CONFIG_KEY, TaCapacitorModule, TaDeviceInfoService, TaDeviceNetworkService, TaDevicePositionService, TaPwaService };
 //# sourceMappingURL=ta-capacitor.mjs.map

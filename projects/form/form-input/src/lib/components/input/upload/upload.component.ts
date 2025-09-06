@@ -1,16 +1,17 @@
-import { NgIf, NgFor } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FontIconComponent } from '@ta/icons';
-import { ButtonComponent, TextComponent, MegaoctetComponent, LinkComponent, LoaderComponent } from '@ta/ui';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { FilePicker, PickedFile } from '@capawesome/capacitor-file-picker';
+import { TranslateModule } from '@ngx-translate/core';
+
 import { InputUpload, InputUploadValue } from '@ta/form-model';
-import { CamDocumentsService, DocumentDto } from '@ta/services';
+import { FontIconComponent } from '@ta/icons';
+import { DocumentDto, TaDocumentsService } from '@ta/services';
+import { ButtonComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent } from '@ta/ui';
 import { downloadFile, isNonNullable } from '@ta/utils';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 
 type InProgressFile = {
   name: string;
@@ -19,18 +20,29 @@ type InProgressFile = {
 };
 
 @Component({
-selector: 'ta-input-upload',
+  selector: 'ta-input-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, FontIconComponent, ButtonComponent, TranslateModule, TextComponent, MegaoctetComponent, LinkComponent, LoaderComponent, MatProgressBarModule],
+  imports: [
+    NgIf,
+    NgFor,
+    FontIconComponent,
+    ButtonComponent,
+    TranslateModule,
+    TextComponent,
+    MegaoctetComponent,
+    LinkComponent,
+    LoaderComponent,
+    MatProgressBarModule,
+  ],
 })
-export class UploadComponent extends CamAbstractInputComponent<InputUpload> implements OnInit {
+export class UploadComponent extends TaAbstractInputComponent<InputUpload> implements OnInit {
   @Output() uploadStatusChanged = new EventEmitter<boolean>();
 
   @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
 
-  private readonly _documentsService = inject(CamDocumentsService);
+  private readonly _documentsService = inject(TaDocumentsService);
   private _invervalId: number;
 
   public inProgressFiles: InProgressFile[] = [];

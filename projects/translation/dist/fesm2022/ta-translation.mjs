@@ -4,9 +4,9 @@ import * as i0 from '@angular/core';
 import { Injectable, inject, Optional, Inject, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { Subject, BehaviorSubject, debounceTime, mergeMap, of, map, forkJoin } from 'rxjs';
 import { SessionStorage } from 'storage-manager-js';
-import { CamBaseStrapiService } from '@ta/server';
+import { TaBaseStrapiService } from '@ta/server';
 
-class CamTranslationRegistryService {
+class TaTranslationRegistryService {
     constructor() {
         this.registered = [];
         this.newRegistrationSubscription$ = new Subject();
@@ -18,10 +18,10 @@ class CamTranslationRegistryService {
     getTranslations(lang) {
         return this.registered.map(r => r.getTranslation(lang));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationRegistryService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationRegistryService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationRegistryService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationRegistryService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationRegistryService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationRegistryService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -31,9 +31,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 /**
  * @deprecated
  */
-class CamAbstractTranslationModule {
+class TaAbstractTranslationModule {
     constructor(id, lang) {
-        this._registry = inject(CamTranslationRegistryService);
+        this._registry = inject(TaTranslationRegistryService);
         this.translation = new BehaviorSubject({});
         this.id = id;
         this._lang = lang;
@@ -54,14 +54,14 @@ class CamAbstractTranslationModule {
 }
 
 const TRANSLATION_CONFIG = 'config_translation';
-class CamTranslationService {
+class TaTranslationService {
     constructor(_config = {
         default: 'fr',
         supportedLanguages: ['fr'],
     }) {
         this._config = _config;
         this.translateService = inject(TranslateService);
-        this._registry = inject(CamTranslationRegistryService);
+        this._registry = inject(TaTranslationRegistryService);
         // this language will be used as a fallback when a translation isn't found in the current language
         this.translateService.setDefaultLang(this._config.default);
         // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -99,10 +99,10 @@ class CamTranslationService {
     use(lang) {
         return this.translateService.use(lang);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationService, deps: [{ token: TRANSLATION_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationService, deps: [{ token: TRANSLATION_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -114,13 +114,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                     args: [TRANSLATION_CONFIG]
                 }] }] });
 
-class CamLazyTranslationService extends CamBaseStrapiService {
+class TaLazyTranslationService extends TaBaseStrapiService {
     get id() {
         return this._id;
     }
     constructor(id, isApp = false) {
         super();
-        this._registry = inject(CamTranslationRegistryService);
+        this._registry = inject(TaTranslationRegistryService);
         this._id = '';
         this._isApp = false;
         this._id = id;
@@ -151,9 +151,9 @@ class CamLazyTranslationService extends CamBaseStrapiService {
     }
 }
 
-class CamTranslationLoader {
+class TaTranslationLoader {
     constructor() {
-        this.registry = inject(CamTranslationRegistryService);
+        this.registry = inject(TaTranslationRegistryService);
     }
     getTranslation(lang) {
         return forkJoin([...this.registry.getTranslations(lang)]).pipe(map(translations => translations.reduce((acc, translation) => {
@@ -201,7 +201,7 @@ class CamTranslationLoader {
 }
 
 function HttpLoaderFactory() {
-    return new CamTranslationLoader();
+    return new TaTranslationLoader();
 }
 function initTranslation(service) {
     const fn = () => service.init();
@@ -211,18 +211,18 @@ const provideTranslation = (data) => [
     provideTranslateService({
         loader: {
             provide: TranslateLoader,
-            useClass: CamTranslationLoader,
+            useClass: TaTranslationLoader,
         },
     }),
     {
         provide: LOCALE_ID,
-        deps: [CamTranslationService],
+        deps: [TaTranslationService],
         useFactory: (TranslationService) => TranslationService.getLanguage(),
     },
     {
         provide: APP_INITIALIZER,
         useFactory: initTranslation,
-        deps: [CamTranslationService],
+        deps: [TaTranslationService],
         multi: true,
     },
     {
@@ -242,5 +242,5 @@ const provideTranslation = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { CamAbstractTranslationModule, CamLazyTranslationService, CamTranslationRegistryService, CamTranslationService, HttpLoaderFactory, TRANSLATION_CONFIG, initTranslation, provideTranslation };
+export { HttpLoaderFactory, TRANSLATION_CONFIG, TaAbstractTranslationModule, TaLazyTranslationService, TaTranslationRegistryService, TaTranslationService, initTranslation, provideTranslation };
 //# sourceMappingURL=ta-translation.mjs.map

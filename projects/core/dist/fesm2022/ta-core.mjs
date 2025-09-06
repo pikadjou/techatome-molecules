@@ -2,17 +2,17 @@ import { NgIf, NgFor, NgTemplateOutlet, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { EventEmitter, Output, Input, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, inject, NgModule } from '@angular/core';
 import { Subject, combineLatest, of } from 'rxjs';
-import { FontIconComponent, CamIconsModule } from '@ta/icons';
-import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent, LayoutModalComponent, openModal, CamLayoutModule, CamUiModule, CamCardModule, CamContainerModule, CamListModule } from '@ta/ui';
-import { TaBaseComponent, downloadFile, getFileExtension, copyTextToClipboard, CamDirectivePipeModule } from '@ta/utils';
-import { FormComponent, CamFormModule } from '@ta/form-basic';
-import { TranslatePipe, CamLazyTranslationService } from '@ta/translation';
+import { FontIconComponent, TaIconsModule } from '@ta/icons';
+import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent, LayoutModalComponent, openModal, TaLayoutModule, TaUiModule, TaCardModule, TaContainerModule, TaListModule } from '@ta/ui';
+import { TaBaseComponent, downloadFile, getFileExtension, copyTextToClipboard, TaDirectivePipeModule } from '@ta/utils';
+import { FormComponent, TaFormModule } from '@ta/form-basic';
+import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
 import { BottomSheetTemplateGenericComponent, FilterHelper, BottomSheetTemplateBasicComponent } from '@ta/menu';
 import * as i1 from '@angular/material/bottom-sheet';
 import { Validators } from '@angular/forms';
 import { MatMenu, MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { LocalStorage } from 'storage-manager-js';
-import { SearchFieldComponent, CamFormInputsModule } from '@ta/form-input';
+import { SearchFieldComponent, TaFormInputsModule } from '@ta/form-input';
 import { InputTextBox } from '@ta/form-model';
 import * as i2 from '@angular/google-maps';
 import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
@@ -21,7 +21,7 @@ import * as i1$1 from '@angular/common/http';
 import * as i2$1 from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import * as i3 from '@ta/files-extended';
-import { FilesDisplayComponent, CamFilesExtendedModule } from '@ta/files-extended';
+import { FilesDisplayComponent, TaFilesExtendedModule } from '@ta/files-extended';
 import { map } from 'rxjs/operators';
 import * as i1$2 from '@ta/services';
 import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
@@ -657,13 +657,13 @@ class UploadDocumentModal {
             documentTypes$: this.fileTypes$,
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadDocumentModal, deps: [{ token: i1$2.CamEnumerationService }, { token: i2$1.MatDialogRef }, { token: i3.UploadDocumentFormService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadDocumentModal, deps: [{ token: i1$2.TaEnumerationService }, { token: i2$1.MatDialogRef }, { token: i3.UploadDocumentFormService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UploadDocumentModal, isStandalone: true, selector: "ta-upload-document", ngImport: i0, template: "<ta-layout-modal>\n  @if (this.form.length > 0) {\n    <ta-form\n      class=\"form\"\n      [inputs]=\"this.form\"\n      [error]=\"this.error\"\n      [loader]=\"this.loader\"\n      (valid)=\"this.onSaveClick($any($event))\"\n    >\n    </ta-form>\n  }\n</ta-layout-modal>\n", styles: [".form{padding:10px}\n"], dependencies: [{ kind: "component", type: LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }, { kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadDocumentModal, decorators: [{
             type: Component,
             args: [{ selector: 'ta-upload-document', standalone: true, imports: [NgIf, LayoutModalComponent, FormComponent], template: "<ta-layout-modal>\n  @if (this.form.length > 0) {\n    <ta-form\n      class=\"form\"\n      [inputs]=\"this.form\"\n      [error]=\"this.error\"\n      [loader]=\"this.loader\"\n      (valid)=\"this.onSaveClick($any($event))\"\n    >\n    </ta-form>\n  }\n</ta-layout-modal>\n", styles: [".form{padding:10px}\n"] }]
-        }], ctorParameters: () => [{ type: i1$2.CamEnumerationService }, { type: i2$1.MatDialogRef }, { type: i3.UploadDocumentFormService }] });
+        }], ctorParameters: () => [{ type: i1$2.TaEnumerationService }, { type: i2$1.MatDialogRef }, { type: i3.UploadDocumentFormService }] });
 
 class DocumentsComponent extends TaBaseComponent {
     constructor(_bottomSheet, _dialog) {
@@ -857,14 +857,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class CamTranslationCore extends CamLazyTranslationService {
+class TaTranslationCore extends TaLazyTranslationService {
     constructor() {
         super('core');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationCore, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationCore, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationCore, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationCore, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationCore, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationCore, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -877,27 +877,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamCoreModule } from '@ta/library-name';
+ * // import { TaCoreModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FiltersContainerComponent, DocumentsComponent, CallTemplateComponent } from '@ta/library-name';
  */
-class CamCoreModule {
+class TaCoreModule {
     constructor() {
-        CamTranslationCore.getInstance();
+        TaTranslationCore.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCoreModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamCoreModule, imports: [CommonModule,
-            CamLayoutModule,
-            CamUiModule,
-            CamFormModule,
-            CamIconsModule,
-            CamDirectivePipeModule,
-            CamCardModule,
-            CamFilesExtendedModule,
-            CamFormInputsModule,
-            CamContainerModule,
-            CamListModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
+            TaLayoutModule,
+            TaUiModule,
+            TaFormModule,
+            TaIconsModule,
+            TaDirectivePipeModule,
+            TaCardModule,
+            TaFilesExtendedModule,
+            TaFormInputsModule,
+            TaContainerModule,
+            TaListModule,
             MatMenuModule,
             MatDialogModule,
             TranslatePipe,
@@ -919,17 +919,17 @@ class CamCoreModule {
             FilterDisplayerComponent,
             FiltersTagComponent,
             TextToClipboardComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCoreModule, imports: [CommonModule,
-            CamLayoutModule,
-            CamUiModule,
-            CamFormModule,
-            CamIconsModule,
-            CamDirectivePipeModule,
-            CamCardModule,
-            CamFilesExtendedModule,
-            CamFormInputsModule,
-            CamContainerModule,
-            CamListModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
+            TaLayoutModule,
+            TaUiModule,
+            TaFormModule,
+            TaIconsModule,
+            TaDirectivePipeModule,
+            TaCardModule,
+            TaFilesExtendedModule,
+            TaFormInputsModule,
+            TaContainerModule,
+            TaListModule,
             MatMenuModule,
             MatDialogModule,
             FiltersComponent,
@@ -944,22 +944,22 @@ class CamCoreModule {
             FilterDisplayerComponent,
             TextToClipboardComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCoreModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
                     imports: [
                         CommonModule,
-                        CamLayoutModule,
-                        CamUiModule,
-                        CamFormModule,
-                        CamIconsModule,
-                        CamDirectivePipeModule,
-                        CamCardModule,
-                        CamFilesExtendedModule,
-                        CamFormInputsModule,
-                        CamContainerModule,
-                        CamListModule,
+                        TaLayoutModule,
+                        TaUiModule,
+                        TaFormModule,
+                        TaIconsModule,
+                        TaDirectivePipeModule,
+                        TaCardModule,
+                        TaFilesExtendedModule,
+                        TaFormInputsModule,
+                        TaContainerModule,
+                        TaListModule,
                         MatMenuModule,
                         MatDialogModule,
                         TranslatePipe,
@@ -996,5 +996,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamCoreModule, DocumentsComponent, FilterContainerComponent, FilterDisplayerComponent, FiltersContainerComponent, FiltersTagComponent, MapComponent, SearchDisplayerComponent, SearchHistoryDisplayerComponent, TextToClipboardComponent, UploadDocumentModal, initializeGoogleMaps, provideGoogleMaps };
+export { DocumentsComponent, FilterContainerComponent, FilterDisplayerComponent, FiltersContainerComponent, FiltersTagComponent, MapComponent, SearchDisplayerComponent, SearchHistoryDisplayerComponent, TaCoreModule, TextToClipboardComponent, UploadDocumentModal, initializeGoogleMaps, provideGoogleMaps };
 //# sourceMappingURL=ta-core.mjs.map

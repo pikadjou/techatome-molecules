@@ -26,14 +26,14 @@ import * as i21 from "./components/text-to-clipboard/text-to-clipboard.component
  *
  * @example
  * // Instead of importing the module:
- * // import { CamCoreModule } from '@ta/library-name';
+ * // import { TaCoreModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FiltersContainerComponent, DocumentsComponent, CallTemplateComponent } from '@ta/library-name';
  */
-export declare class CamCoreModule {
+export declare class TaCoreModule {
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamCoreModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamCoreModule, never, [typeof i1.CommonModule, typeof i2.CamLayoutModule, typeof i2.CamUiModule, typeof i3.CamFormModule, typeof i4.CamIconsModule, typeof i5.CamDirectivePipeModule, typeof i2.CamCardModule, typeof i6.CamFilesExtendedModule, typeof i7.CamFormInputsModule, typeof i2.CamContainerModule, typeof i2.CamListModule, typeof i8.MatMenuModule, typeof i9.MatDialogModule, typeof i10.TranslatePipe, typeof i11.FiltersComponent, typeof i12.FiltersContainerComponent, typeof i13.FiltersFormComponent, typeof i14.FiltersTagComponent, typeof i15.DocumentsComponent, typeof i16.UploadDocumentModal, typeof i17.FilterContainerComponent, typeof i18.SearchHistoryDisplayerComponent, typeof i19.SearchDisplayerComponent, typeof i20.FilterDisplayerComponent, typeof i21.TextToClipboardComponent], [typeof i12.FiltersContainerComponent, typeof i15.DocumentsComponent, typeof i17.FilterContainerComponent, typeof i19.SearchDisplayerComponent, typeof i18.SearchHistoryDisplayerComponent, typeof i20.FilterDisplayerComponent, typeof i14.FiltersTagComponent, typeof i21.TextToClipboardComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamCoreModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaCoreModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaCoreModule, never, [typeof i1.CommonModule, typeof i2.TaLayoutModule, typeof i2.TaUiModule, typeof i3.TaFormModule, typeof i4.TaIconsModule, typeof i5.TaDirectivePipeModule, typeof i2.TaCardModule, typeof i6.TaFilesExtendedModule, typeof i7.TaFormInputsModule, typeof i2.TaContainerModule, typeof i2.TaListModule, typeof i8.MatMenuModule, typeof i9.MatDialogModule, typeof i10.TranslatePipe, typeof i11.FiltersComponent, typeof i12.FiltersContainerComponent, typeof i13.FiltersFormComponent, typeof i14.FiltersTagComponent, typeof i15.DocumentsComponent, typeof i16.UploadDocumentModal, typeof i17.FilterContainerComponent, typeof i18.SearchHistoryDisplayerComponent, typeof i19.SearchDisplayerComponent, typeof i20.FilterDisplayerComponent, typeof i21.TextToClipboardComponent], [typeof i12.FiltersContainerComponent, typeof i15.DocumentsComponent, typeof i17.FilterContainerComponent, typeof i19.SearchDisplayerComponent, typeof i18.SearchHistoryDisplayerComponent, typeof i20.FilterDisplayerComponent, typeof i14.FiltersTagComponent, typeof i21.TextToClipboardComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaCoreModule>;
 }

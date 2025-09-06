@@ -5,7 +5,7 @@ import { Menu, MenuIcon } from '@ta/menu';
 @Injectable({
   providedIn: 'root',
 })
-export class CamUserMenuService {
+export class TaUserMenuService {
   constructor() {}
 
   public infosMenu() {

@@ -1,20 +1,44 @@
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
 import { InputUploadValue } from '@ta/form-model';
-import { CamDocumentsService, DocumentDto, FileType } from '@ta/services';
-import { ButtonToolComponent, EmptyComponent, ErrorComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent, TimeAgoComponent } from '@ta/ui';
+import { FontIconComponent } from '@ta/icons';
+import { DocumentDto, FileType, TaDocumentsService } from '@ta/services';
+import {
+  ButtonToolComponent,
+  EmptyComponent,
+  ErrorComponent,
+  LinkComponent,
+  LoaderComponent,
+  MegaoctetComponent,
+  TextComponent,
+  TimeAgoComponent,
+} from '@ta/ui';
 import { TaBaseComponent, downloadFile } from '@ta/utils';
 
 @Component({
-selector: 'ta-documents-list',
+  selector: 'ta-documents-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, ButtonToolComponent, EmptyComponent, ErrorComponent, FontIconComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent, TimeAgoComponent, TranslateModule],
+  imports: [
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    ButtonToolComponent,
+    EmptyComponent,
+    ErrorComponent,
+    FontIconComponent,
+    LinkComponent,
+    LoaderComponent,
+    MegaoctetComponent,
+    TextComponent,
+    TimeAgoComponent,
+    TranslateModule,
+  ],
 })
 export class DocumentsListComponent extends TaBaseComponent implements OnInit, OnChanges {
   @Input()
@@ -38,7 +62,7 @@ export class DocumentsListComponent extends TaBaseComponent implements OnInit, O
   @Output()
   checkedFilesChanged = new EventEmitter<InputUploadValue[]>();
 
-  private readonly _documentsService = inject(CamDocumentsService);
+  private readonly _documentsService = inject(TaDocumentsService);
 
   private _checkedFiles: InputUploadValue[] = [];
   public FileType = FileType;

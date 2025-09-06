@@ -1,14 +1,14 @@
 import { NgIf, NgFor, NgClass, AsyncPipe, CommonModule } from '@angular/common';
-import { CamIconType, FontIconComponent, LocalIconComponent, MaterialIconComponent, CamIconsModule } from '@ta/icons';
+import { TaIconType, FontIconComponent, LocalIconComponent, MaterialIconComponent, TaIconsModule } from '@ta/icons';
 import * as i0 from '@angular/core';
 import { EventEmitter, Output, Input, Component, ViewChild, inject, NgModule } from '@angular/core';
-import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent, EmptyComponent, LoaderComponent, ButtonToolComponent, ErrorComponent, LinkComponent, MegaoctetComponent, TextComponent, TimeAgoComponent, CamUiModule, CamCardModule, CamContainerModule } from '@ta/ui';
-import { EFileExtension, TaBaseComponent, SafePipe, StopPropagationDirective, isLight, getBlobImage, determineNewSize, downloadFile, CamDirectivePipeModule } from '@ta/utils';
+import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent, EmptyComponent, LoaderComponent, ButtonToolComponent, ErrorComponent, LinkComponent, MegaoctetComponent, TextComponent, TimeAgoComponent, TaUiModule, TaCardModule, TaContainerModule } from '@ta/ui';
+import { EFileExtension, TaBaseComponent, SafePipe, StopPropagationDirective, isLight, getBlobImage, determineNewSize, downloadFile, TaDirectivePipeModule } from '@ta/utils';
 import { InputSlider } from '@ta/form-model';
 import ImageEditor from 'tui-image-editor';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { CamDocumentsService, FileType } from '@ta/services';
+import { TaDocumentsService, FileType } from '@ta/services';
 import { TranslatePipe } from '@ta/translation';
 
 class FileCardComponent {
@@ -19,15 +19,15 @@ class FileCardComponent {
     get localIcon() {
         switch (this.file.fileExtension) {
             case EFileExtension.PDF:
-                return CamIconType.Pdf;
+                return TaIconType.Pdf;
             case EFileExtension.Word:
-                return CamIconType.Doc;
+                return TaIconType.Doc;
             case EFileExtension.Excel:
-                return CamIconType.Excel;
+                return TaIconType.Excel;
             case EFileExtension.Image:
-                return CamIconType.Image;
+                return TaIconType.Image;
             default:
-                return CamIconType.UnknownFile;
+                return TaIconType.UnknownFile;
         }
     }
     get fileType() {
@@ -53,7 +53,19 @@ class FileCardComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FileCardComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-file-card', standalone: true, imports: [BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, FontIconComponent, LocalIconComponent, TitleComponent, TrigramComponent], template: "<ta-card>\n  <ta-card-header>\n    <ta-card-tag class=\"space-between\">\n      <ta-trigram [value]=\"this.userTrigram\"> </ta-trigram>\n      <div (click)=\"this.onHeaderClicked()\">\n        <ta-font-icon name=\"more\" size=\"xs\"></ta-font-icon>\n      </div>\n    </ta-card-tag>\n    <ta-card-title>\n      <ta-title [level]=\"4\">{{ this.fileName }}</ta-title>\n    </ta-card-title>\n  </ta-card-header>\n  <ta-card-content>\n    <div (click)=\"this.onBodyClicked()\">\n      <ta-local-icon [type]=\"this.localIcon\" size=\"md\"></ta-local-icon>\n    </div>\n  </ta-card-content>\n  <ta-card-cta>\n    <ta-badge [value]=\"this.fileType ?? ''\"> </ta-badge>\n  </ta-card-cta>\n</ta-card>\n", styles: [".title{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
+            args: [{ selector: 'ta-file-card', standalone: true, imports: [
+                        BadgeComponent,
+                        CardComponent,
+                        CardContentComponent,
+                        CardCtaComponent,
+                        CardHeaderComponent,
+                        CardTagComponent,
+                        CardTitleComponent,
+                        FontIconComponent,
+                        LocalIconComponent,
+                        TitleComponent,
+                        TrigramComponent,
+                    ], template: "<ta-card>\n  <ta-card-header>\n    <ta-card-tag class=\"space-between\">\n      <ta-trigram [value]=\"this.userTrigram\"> </ta-trigram>\n      <div (click)=\"this.onHeaderClicked()\">\n        <ta-font-icon name=\"more\" size=\"xs\"></ta-font-icon>\n      </div>\n    </ta-card-tag>\n    <ta-card-title>\n      <ta-title [level]=\"4\">{{ this.fileName }}</ta-title>\n    </ta-card-title>\n  </ta-card-header>\n  <ta-card-content>\n    <div (click)=\"this.onBodyClicked()\">\n      <ta-local-icon [type]=\"this.localIcon\" size=\"md\"></ta-local-icon>\n    </div>\n  </ta-card-content>\n  <ta-card-cta>\n    <ta-badge [value]=\"this.fileType ?? ''\"> </ta-badge>\n  </ta-card-cta>\n</ta-card>\n", styles: [".title{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
         }], propDecorators: { file: [{
                 type: Input
             }], fileSelected: [{
@@ -339,7 +351,7 @@ class DocumentsListComponent extends TaBaseComponent {
         this.readonly = false;
         this.remove = new EventEmitter();
         this.checkedFilesChanged = new EventEmitter();
-        this._documentsService = inject(CamDocumentsService);
+        this._documentsService = inject(TaDocumentsService);
         this._checkedFiles = [];
         this.FileType = FileType;
     }
@@ -387,7 +399,21 @@ class DocumentsListComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: DocumentsListComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-documents-list', standalone: true, imports: [NgIf, NgFor, AsyncPipe, ButtonToolComponent, EmptyComponent, ErrorComponent, FontIconComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent, TimeAgoComponent, TranslateModule], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.documents$ | async as documents\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty\n      [isEmpty]=\"!documents || documents.length === 0\"\n      [text]=\"this.emptyMessage\"\n      [showMessage]=\"!!this.emptyMessage\"\n    >\n      <div class=\"list flex-column g-space-sm\">\n        @for (doc of documents; track doc) {\n          <div>\n            <ng-container\n              *ngTemplateOutlet=\"this.actions !== 'select' ? defaultTemplate : selectTemplate; context: { doc: doc }\"\n            ></ng-container>\n          </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n\n<ng-template #defaultTemplate let-doc=\"doc\">\n  <div class=\"flex-row g-space-xs justify-content-between\">\n    <div class=\"align-center\">\n      <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n      <div>\n        <ta-link [underline]=\"false\" (action)=\"this.openDocument(doc)\">{{ doc.name }}</ta-link>\n        <div class=\"extra flex-row g-space-md\">\n          <ta-time-ago [date]=\"doc.uploadedDate\"></ta-time-ago>\n          <ta-megaoctet [octet]=\"doc.size\"></ta-megaoctet>\n        </div>\n      </div>\n    </div>\n    <div class=\"cta align-content-center\">\n      @if (this.actions === 'select') {\n        <input [disabled]=\"this.readonly\" type=\"checkbox\" [checked]=\"this.isChecked(doc)\" (click)=\"this.check(doc)\" />\n      } @else if (this.actions === 'delete') {\n        <ta-button-tool\n          (action)=\"this.removeDocument(doc)\"\n          icon=\"delete\"\n          [size]=\"'sm'\"\n          [readonly]=\"this.readonly\"\n        ></ta-button-tool>\n      }\n    </div>\n  </div>\n</ng-template>\n\n<ng-template #selectTemplate let-doc=\"doc\">\n  <div\n    class=\"card-document-upload flex-row g-space-xs justify-content-between\"\n    [class.selected]=\"this.isChecked(doc)\"\n    (click)=\"this.check(doc)\"\n  >\n    <div class=\"display flex-column align-items-start\">\n      <ta-link [bold]=\"true\" [underline]=\"false\" (click)=\"$event.stopPropagation()\" (action)=\"this.openDocument(doc)\">\n        {{ doc.name }}\n      </ta-link>\n      <div class=\"flex-row g-space-md\">\n        <div class=\"flex-row align-items-center\">\n          <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n          <ta-text>\n            {{ 'communication.documents.file-type.' + this.FileType[doc.fileType].toLocaleLowerCase() | translate }}\n          </ta-text>\n        </div>\n        <ta-megaoctet [icon]=\"true\" [octet]=\"doc.size\"></ta-megaoctet>\n      </div>\n    </div>\n    <div class=\"button align-content-center\">\n      @if (this.actions === 'select') {\n        <input type=\"checkbox\" [checked]=\"this.isChecked(doc)\" />\n      } @else if (this.actions === 'delete') {\n        <ta-button-tool (action)=\"this.removeDocument(doc)\" icon=\"delete\" [size]=\"'sm'\"></ta-button-tool>\n      }\n    </div>\n  </div>\n</ng-template>\n", styles: ["ta-font-icon{color:var(--ta-icon-brand-primary)}.extra{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-tertiary)}input{width:20px;height:20px}.button{padding:var(--ta-space-sm)}.card-document-upload{padding:var(--ta-space-md);margin-right:var(--ta-space-sm)}.card-document-upload.selected{border:1px solid var(--ta-border-brand);border-radius:var(--ta-radius-rounded);background-color:var(--ta-surface-brand-tertiary)}.card-document-upload .display{gap:var(--ta-space-sm)}\n"] }]
+            args: [{ selector: 'ta-documents-list', standalone: true, imports: [
+                        NgIf,
+                        NgFor,
+                        AsyncPipe,
+                        ButtonToolComponent,
+                        EmptyComponent,
+                        ErrorComponent,
+                        FontIconComponent,
+                        LinkComponent,
+                        LoaderComponent,
+                        MegaoctetComponent,
+                        TextComponent,
+                        TimeAgoComponent,
+                        TranslateModule,
+                    ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.documents$ | async as documents\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty\n      [isEmpty]=\"!documents || documents.length === 0\"\n      [text]=\"this.emptyMessage\"\n      [showMessage]=\"!!this.emptyMessage\"\n    >\n      <div class=\"list flex-column g-space-sm\">\n        @for (doc of documents; track doc) {\n          <div>\n            <ng-container\n              *ngTemplateOutlet=\"this.actions !== 'select' ? defaultTemplate : selectTemplate; context: { doc: doc }\"\n            ></ng-container>\n          </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n\n<ng-template #defaultTemplate let-doc=\"doc\">\n  <div class=\"flex-row g-space-xs justify-content-between\">\n    <div class=\"align-center\">\n      <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n      <div>\n        <ta-link [underline]=\"false\" (action)=\"this.openDocument(doc)\">{{ doc.name }}</ta-link>\n        <div class=\"extra flex-row g-space-md\">\n          <ta-time-ago [date]=\"doc.uploadedDate\"></ta-time-ago>\n          <ta-megaoctet [octet]=\"doc.size\"></ta-megaoctet>\n        </div>\n      </div>\n    </div>\n    <div class=\"cta align-content-center\">\n      @if (this.actions === 'select') {\n        <input [disabled]=\"this.readonly\" type=\"checkbox\" [checked]=\"this.isChecked(doc)\" (click)=\"this.check(doc)\" />\n      } @else if (this.actions === 'delete') {\n        <ta-button-tool\n          (action)=\"this.removeDocument(doc)\"\n          icon=\"delete\"\n          [size]=\"'sm'\"\n          [readonly]=\"this.readonly\"\n        ></ta-button-tool>\n      }\n    </div>\n  </div>\n</ng-template>\n\n<ng-template #selectTemplate let-doc=\"doc\">\n  <div\n    class=\"card-document-upload flex-row g-space-xs justify-content-between\"\n    [class.selected]=\"this.isChecked(doc)\"\n    (click)=\"this.check(doc)\"\n  >\n    <div class=\"display flex-column align-items-start\">\n      <ta-link [bold]=\"true\" [underline]=\"false\" (click)=\"$event.stopPropagation()\" (action)=\"this.openDocument(doc)\">\n        {{ doc.name }}\n      </ta-link>\n      <div class=\"flex-row g-space-md\">\n        <div class=\"flex-row align-items-center\">\n          <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n          <ta-text>\n            {{ 'communication.documents.file-type.' + this.FileType[doc.fileType].toLocaleLowerCase() | translate }}\n          </ta-text>\n        </div>\n        <ta-megaoctet [icon]=\"true\" [octet]=\"doc.size\"></ta-megaoctet>\n      </div>\n    </div>\n    <div class=\"button align-content-center\">\n      @if (this.actions === 'select') {\n        <input type=\"checkbox\" [checked]=\"this.isChecked(doc)\" />\n      } @else if (this.actions === 'delete') {\n        <ta-button-tool (action)=\"this.removeDocument(doc)\" icon=\"delete\" [size]=\"'sm'\"></ta-button-tool>\n      }\n    </div>\n  </div>\n</ng-template>\n", styles: ["ta-font-icon{color:var(--ta-icon-brand-primary)}.extra{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-tertiary)}input{width:20px;height:20px}.button{padding:var(--ta-space-sm)}.card-document-upload{padding:var(--ta-space-md);margin-right:var(--ta-space-sm)}.card-document-upload.selected{border:1px solid var(--ta-border-brand);border-radius:var(--ta-radius-rounded);background-color:var(--ta-surface-brand-tertiary)}.card-document-upload .display{gap:var(--ta-space-sm)}\n"] }]
         }], propDecorators: { documentsIds: [{
                 type: Input
             }], emptyMessage: [{
@@ -410,21 +436,54 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFilesBasicModule } from '@ta/library-name';
+ * // import { TaFilesBasicModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FileListComponent, FileEditComponent, DocumentsListComponent } from '@ta/library-name';
  */
-class CamFilesBasicModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFilesBasicModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamFilesBasicModule, imports: [CommonModule, CamDirectivePipeModule, CamUiModule, CamCardModule, CamContainerModule, CamIconsModule, TranslatePipe, SafePipe, FileListComponent, FileCardComponent, FileEditComponent, DocumentsListComponent], exports: [FileListComponent, FileEditComponent, DocumentsListComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFilesBasicModule, imports: [CommonModule, CamDirectivePipeModule, CamUiModule, CamCardModule, CamContainerModule, CamIconsModule, FileListComponent, FileCardComponent, FileEditComponent, DocumentsListComponent] }); }
+class TaFilesBasicModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
+            TaDirectivePipeModule,
+            TaUiModule,
+            TaCardModule,
+            TaContainerModule,
+            TaIconsModule,
+            TranslatePipe,
+            SafePipe,
+            FileListComponent,
+            FileCardComponent,
+            FileEditComponent,
+            DocumentsListComponent], exports: [FileListComponent, FileEditComponent, DocumentsListComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
+            TaDirectivePipeModule,
+            TaUiModule,
+            TaCardModule,
+            TaContainerModule,
+            TaIconsModule,
+            FileListComponent,
+            FileCardComponent,
+            FileEditComponent,
+            DocumentsListComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFilesBasicModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, CamDirectivePipeModule, CamUiModule, CamCardModule, CamContainerModule, CamIconsModule, TranslatePipe, SafePipe, FileListComponent, FileCardComponent, FileEditComponent, DocumentsListComponent],
+                    imports: [
+                        CommonModule,
+                        TaDirectivePipeModule,
+                        TaUiModule,
+                        TaCardModule,
+                        TaContainerModule,
+                        TaIconsModule,
+                        TranslatePipe,
+                        SafePipe,
+                        FileListComponent,
+                        FileCardComponent,
+                        FileEditComponent,
+                        DocumentsListComponent,
+                    ],
                     exports: [FileListComponent, FileEditComponent, DocumentsListComponent],
                 }]
         }] });
@@ -437,5 +496,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamFilesBasicModule, DocumentsListComponent, FileEditComponent, FileListComponent };
+export { DocumentsListComponent, FileEditComponent, FileListComponent, TaFilesBasicModule };
 //# sourceMappingURL=ta-files-basic.mjs.map

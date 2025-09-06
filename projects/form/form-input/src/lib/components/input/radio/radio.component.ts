@@ -1,22 +1,22 @@
-import { NgIf, NgFor, NgClass, AsyncPipe } from '@angular/common';
-import { LocalIconComponent } from '@ta/icons';
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { InputRadio } from '@ta/form-model';
+import { LocalIconComponent } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
 import { TranslatePipe } from '@ta/translation';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import { FormLabelComponent } from '../../label/label.component';
 
 @Component({
-selector: 'ta-input-radio',
+  selector: 'ta-input-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
   standalone: true,
   imports: [NgIf, NgFor, NgClass, AsyncPipe, LocalIconComponent, FormLabelComponent, TranslatePipe],
 })
-export class RadioComponent extends CamAbstractInputComponent<InputRadio<any>> {
+export class RadioComponent extends TaAbstractInputComponent<InputRadio<any>> {
   constructor() {
     super();
   }

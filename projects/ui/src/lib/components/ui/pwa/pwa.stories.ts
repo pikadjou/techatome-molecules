@@ -14,7 +14,7 @@ export default {
       providers: [
         // Mock PWA service for Storybook
         {
-          provide: 'CamPwaService',
+          provide: 'TaPwaService',
           useValue: {
             isPWaCapability$: { subscribe: () => {} },
             launchInstall: () => {},

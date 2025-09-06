@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 import { TaMainRoute, TaRoutes } from '@ta/menu';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent } from '@ta/ui';
@@ -29,7 +29,7 @@ export class GuardComponent extends TaAbstractComponent {
 
   private readonly _permissionsService = inject(TaPermissionsService);
   get noAccessIcon() {
-    return CamIconType.NoAccess;
+    return TaIconType.NoAccess;
   }
 
   constructor() {

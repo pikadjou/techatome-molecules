@@ -17,7 +17,7 @@ export { gql as Apollo_gql } from 'apollo-angular';
  *
  * @example
  * // Instead of importing the module:
- * // import { CamServerModule } from '@ta/library-name';
+ * // import { TaServerModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ApolloModule } from '@ta/library-name';
@@ -35,10 +35,10 @@ export { gql as Apollo_gql } from 'apollo-angular';
     },
   ],
 })
-export class CamServerModule {
-  static forRoot(graphQlConfig: IGraphConfig): ModuleWithProviders<CamServerModule> {
+export class TaServerModule {
+  static forRoot(graphQlConfig: IGraphConfig): ModuleWithProviders<TaServerModule> {
     return {
-      ngModule: CamServerModule,
+      ngModule: TaServerModule,
       providers: [
         {
           provide: GRAPHQL_SERVER_CONFIG,

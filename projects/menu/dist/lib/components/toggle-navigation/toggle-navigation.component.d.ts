@@ -17,7 +17,7 @@ export declare class ToggleNavigationComponent implements OnInit {
     ngOnInit(): void;
     hasFontIcon(item: MenuIcon | MenuAction | MenuBase): boolean;
     hasIconImage(item: MenuIcon | MenuAction | MenuBase): boolean;
-    getIcon(item: MenuIcon | MenuAction | MenuBase): string | import("@ta/icons").CamIconType;
+    getIcon(item: MenuIcon | MenuAction | MenuBase): string | import("@ta/icons").TaIconType;
     getFontIcon(item: MenuIcon | MenuAction | MenuBase): string;
     getLink(item: MenuIcon | MenuAction | MenuBase): string;
     callback(item: MenuBase): void;

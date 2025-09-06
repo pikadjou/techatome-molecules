@@ -1,19 +1,19 @@
-import { NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, NgIf, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { EventEmitter, Output, Input, Component, Injectable, NgModule } from '@angular/core';
-import { FileListComponent, CamFilesBasicModule } from '@ta/files-basic';
-import { ToggleNavigationComponent, CamMenuModule } from '@ta/menu';
-import { ActionButtonComponent, ButtonComponent, LoaderComponent, ErrorComponent, CamContainerModule, CamUiModule, CamCardModule } from '@ta/ui';
-import { pathToFile, pickImages, TaBaseComponent, CamDirectivePipeModule } from '@ta/utils';
+import { FileListComponent, TaFilesBasicModule } from '@ta/files-basic';
+import { ToggleNavigationComponent, TaMenuModule } from '@ta/menu';
+import { ActionButtonComponent, ButtonComponent, LoaderComponent, ErrorComponent, TaContainerModule, TaUiModule, TaCardModule } from '@ta/ui';
+import { pathToFile, pickImages, TaBaseComponent, TaDirectivePipeModule } from '@ta/utils';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { map } from 'rxjs/operators';
 import { InputPanel, InputDropdown, InputTextarea } from '@ta/form-model';
 import { of } from 'rxjs';
-import { CamFormModule } from '@ta/form-basic';
-import { CamFormInputsModule } from '@ta/form-input';
-import { CamIconsModule } from '@ta/icons';
-import { CamEnumerationService } from '@ta/services';
+import { TaFormModule } from '@ta/form-basic';
+import { TaFormInputsModule } from '@ta/form-input';
+import { TaIconsModule } from '@ta/icons';
+import { TaEnumerationService } from '@ta/services';
 
 class UploadComponent {
     constructor() {
@@ -105,7 +105,7 @@ class UploadComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-files-upload', standalone: true, imports: [NgIf, NgFor, ActionButtonComponent, ButtonComponent], template: "@if (this.showInActionButton) {\n  <ta-action-button [actions]=\"this.addActions\"> </ta-action-button>\n} @else {\n  @for (action of this.addActions; track action) {\n    <ta-button (action)=\"action.callback()\">\n      {{ action.label }}\n    </ta-button>\n  }\n}\n" }]
+            args: [{ selector: 'ta-files-upload', standalone: true, imports: [ActionButtonComponent, ButtonComponent], template: "@if (this.showInActionButton) {\n  <ta-action-button [actions]=\"this.addActions\"> </ta-action-button>\n} @else {\n  @for (action of this.addActions; track action) {\n    <ta-button (action)=\"action.callback()\">\n      {{ action.label }}\n    </ta-button>\n  }\n}\n" }]
         }], propDecorators: { features: [{
                 type: Input
             }], canSelectMultipleFiles: [{
@@ -227,23 +227,58 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFilesExtendedModule } from '@ta/library-name';
+ * // import { TaFilesExtendedModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
- * import { FilesDisplayComponent, UploadComponent, CamFilesBasicModule } from '@ta/library-name';
+ * import { FilesDisplayComponent, UploadComponent, TaFilesBasicModule } from '@ta/library-name';
  */
-class CamFilesExtendedModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamFilesExtendedModule, imports: [CamContainerModule, CamDirectivePipeModule, CamFormModule, CamUiModule, CamCardModule, CommonModule, CamFormInputsModule, CamFilesBasicModule, CamIconsModule, CamMenuModule, FilesDisplayComponent, UploadComponent], exports: [FilesDisplayComponent, UploadComponent, CamFilesBasicModule] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFilesExtendedModule, providers: [CamEnumerationService, UploadDocumentFormService], imports: [CamContainerModule, CamDirectivePipeModule, CamFormModule, CamUiModule, CamCardModule, CommonModule, CamFormInputsModule, CamFilesBasicModule, CamIconsModule, CamMenuModule, FilesDisplayComponent, UploadComponent, CamFilesBasicModule] }); }
+class TaFilesExtendedModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, imports: [TaContainerModule,
+            TaDirectivePipeModule,
+            TaFormModule,
+            TaUiModule,
+            TaCardModule,
+            CommonModule,
+            TaFormInputsModule,
+            TaFilesBasicModule,
+            TaIconsModule,
+            TaMenuModule,
+            FilesDisplayComponent,
+            UploadComponent], exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, providers: [TaEnumerationService, UploadDocumentFormService], imports: [TaContainerModule,
+            TaDirectivePipeModule,
+            TaFormModule,
+            TaUiModule,
+            TaCardModule,
+            CommonModule,
+            TaFormInputsModule,
+            TaFilesBasicModule,
+            TaIconsModule,
+            TaMenuModule,
+            FilesDisplayComponent,
+            UploadComponent, TaFilesBasicModule] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFilesExtendedModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CamContainerModule, CamDirectivePipeModule, CamFormModule, CamUiModule, CamCardModule, CommonModule, CamFormInputsModule, CamFilesBasicModule, CamIconsModule, CamMenuModule, FilesDisplayComponent, UploadComponent],
-                    exports: [FilesDisplayComponent, UploadComponent, CamFilesBasicModule],
-                    providers: [CamEnumerationService, UploadDocumentFormService],
+                    imports: [
+                        TaContainerModule,
+                        TaDirectivePipeModule,
+                        TaFormModule,
+                        TaUiModule,
+                        TaCardModule,
+                        CommonModule,
+                        TaFormInputsModule,
+                        TaFilesBasicModule,
+                        TaIconsModule,
+                        TaMenuModule,
+                        FilesDisplayComponent,
+                        UploadComponent,
+                    ],
+                    exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule],
+                    providers: [TaEnumerationService, UploadDocumentFormService],
                 }]
         }] });
 
@@ -255,5 +290,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamFilesExtendedModule, FilesDisplayComponent, UploadComponent, UploadDocumentFormService };
+export { FilesDisplayComponent, TaFilesExtendedModule, UploadComponent, UploadDocumentFormService };
 //# sourceMappingURL=ta-files-extended.mjs.map

@@ -1,22 +1,22 @@
 import { Meta, StoryObj } from '@storybook/angular';
 
-import { CamIconType } from '../../services/icons.service';
+import { TaIconType } from '../../services/icons.service';
 import { LocalIconComponent } from './local-icon.component';
 
 export default {
   title: 'ICONS/Local Icon',
   component: LocalIconComponent,
   tags: ['autodocs'],
-  render: (args) => ({ props: args }),
+  render: args => ({ props: args }),
   argTypes: {
     type: {
-      options: Object.values(CamIconType).filter((x) => typeof x === 'string'),
-      mapping: CamIconType,
+      options: Object.values(TaIconType).filter(x => typeof x === 'string'),
+      mapping: TaIconType,
       control: { type: 'select' },
     },
   },
   args: {
-    type: CamIconType.Comment,
+    type: TaIconType.Comment,
     size: 'md',
   },
 } as Meta<LocalIconComponent>;
@@ -31,7 +31,7 @@ export const Small: StoryObj<LocalIconComponent> = {
 
 export const Rotation: StoryObj<LocalIconComponent> = {
   args: {
-    type: CamIconType.Loader,
+    type: TaIconType.Loader,
     rotation: true,
   },
 };

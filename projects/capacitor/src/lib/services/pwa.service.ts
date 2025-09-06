@@ -11,7 +11,7 @@ export interface IPwaConfig {
 @Injectable({
   providedIn: 'root',
 })
-export class CamPwaService {
+export class TaPwaService {
   public isPWaCapability$ = new BehaviorSubject<boolean>(false);
 
   private _promptEvent!: any;
@@ -21,7 +21,7 @@ export class CamPwaService {
     private _config: IPwaConfig
   ) {
     if (this._config.active) {
-      window.addEventListener('beforeinstallprompt', (event) => {
+      window.addEventListener('beforeinstallprompt', event => {
         this._promptEvent = event;
         this.isPWaCapability$.next(true);
       });

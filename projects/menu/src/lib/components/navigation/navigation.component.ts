@@ -13,7 +13,7 @@ import { getFontIcon, hasFontIcon } from '../../helpers/icon-manager';
 import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { Menu, MenuIcon } from '../../models/public-api';
-import { CamTranslationMenu } from '../../translation.service';
+import { TaTranslationMenu } from '../../translation.service';
 
 // Type défini localement pour éviter la dépendance vers @ta/styles
 type TaSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big';
@@ -62,7 +62,7 @@ export class NavigationComponent extends TaAbstractComponent implements OnInit {
 
   constructor() {
     super();
-    CamTranslationMenu.getInstance();
+    TaTranslationMenu.getInstance();
   }
 
   ngOnInit() {

@@ -4,7 +4,7 @@ import { GraphEndpoint, GraphOptions, TaGraphService } from '../graphql/public-a
 import { MappingApiType } from './api/requestMap';
 import { TaServerSevice } from './api/server.service';
 import * as i0 from "@angular/core";
-export declare abstract class CamBaseService implements OnDestroy {
+export declare abstract class TaBaseService implements OnDestroy {
     protected _subscriptionList: Subscription[];
     protected _serverService: TaServerSevice;
     protected _graphService: TaGraphService;
@@ -15,6 +15,6 @@ export declare abstract class CamBaseService implements OnDestroy {
     }, options?: GraphOptions): void;
     ngOnDestroy(): void;
     protected _registerSubscription(subscription: Subscription): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamBaseService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamBaseService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaBaseService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaBaseService>;
 }

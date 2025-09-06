@@ -3,10 +3,10 @@ import { Component, Input, ViewChild } from '@angular/core';
 
 import { InputDropdown } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
-import { CamOverlayPanelComponent, LabelComponent } from '@ta/ui';
 import { TranslatePipe } from '@ta/translation';
+import { LabelComponent, TaOverlayPanelComponent } from '@ta/ui';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
@@ -14,12 +14,20 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, FontIconComponent, CamOverlayPanelComponent, LabelComponent, TranslatePipe, InputLayoutComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    FontIconComponent,
+    TaOverlayPanelComponent,
+    LabelComponent,
+    TranslatePipe,
+    InputLayoutComponent,
+  ],
 })
-export class DropdownComponent extends CamAbstractInputComponent<InputDropdown<any>, any> {
+export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
   @Input() space = true;
 
-  @ViewChild(CamOverlayPanelComponent) overlayPanelRef!: CamOverlayPanelComponent;
+  @ViewChild(TaOverlayPanelComponent) overlayPanelRef!: TaOverlayPanelComponent;
 
   public optionsList: { id: string; name: string; disabled?: boolean }[] = [];
   public filteredOptions: { id: string; name: string; disabled?: boolean }[] = [];

@@ -3,10 +3,10 @@ import { EventEmitter, ElementRef, ViewChild, Output, Input, Component, Inject, 
 import * as i1 from '@angular/forms';
 import { Validators, FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { TaBaseComponent, CamBaseModal, TemporaryFile, pickImages, removeElement, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, downloadFile, isNonNullable, CamDirectivePipeModule } from '@ta/utils';
 import { delay, map, Subject, BehaviorSubject, of, take, combineLatest, startWith, debounceTime, tap, concatMap } from 'rxjs';
+import { TaBaseComponent, TaBaseModal, TemporaryFile, pickImages, removeElement, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, downloadFile, isNonNullable, TaDirectivePipeModule } from '@ta/utils';
 import { NgFor, NgClass, NgStyle, NgIf, AsyncPipe, NgTemplateOutlet, CommonModule } from '@angular/common';
-import { TranslatePipe, CamLazyTranslationService } from '@ta/translation';
+import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
 import * as i2 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import * as i3 from '@angular/material/form-field';
@@ -15,25 +15,25 @@ import * as i4 from '@angular/material/input';
 import { MatInputModule } from '@angular/material/input';
 import { isEqual } from 'date-fns';
 import * as i2$3 from '@ta/icons';
-import { FontIconComponent, LocalIconComponent, CamIconsModule } from '@ta/icons';
+import { FontIconComponent, LocalIconComponent, TaIconsModule } from '@ta/icons';
 import * as i3$2 from '@ta/ui';
-import { CamOverlayPanelComponent, LabelComponent as LabelComponent$1, DualButtonComponent, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, CamLayoutModule, CamUiModule, CamListModule, CamContainerModule, CamCardModule } from '@ta/ui';
+import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, DualButtonComponent, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, TaLayoutModule, TaUiModule, TaListModule, TaContainerModule, TaCardModule } from '@ta/ui';
 import * as i3$1 from 'ngx-material-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { FileListComponent, FileEditComponent, CamFilesBasicModule } from '@ta/files-basic';
+import { FileListComponent, FileEditComponent, TaFilesBasicModule } from '@ta/files-basic';
 import * as i1$1 from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as i1$2 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputTextBox, InputCheckBox } from '@ta/form-model';
-import { EditorInputComponent, CamWysiswygModule } from '@ta/wysiswyg';
+import { EditorInputComponent, TaWysiswygModule } from '@ta/wysiswyg';
 import intlTelInput from 'intl-tel-input';
 import * as i2$1 from '@angular-material-extensions/google-maps-autocomplete';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import * as i2$2 from '@angular/material/progress-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
-import { CamDocumentsService } from '@ta/services';
+import { TaDocumentsService } from '@ta/services';
 import { CdkMenuModule, PARENT_OR_NEW_MENU_STACK_PROVIDER } from '@angular/cdk/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -43,9 +43,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-import { CamMenuModule } from '@ta/menu';
+import { TaMenuModule } from '@ta/menu';
 
-class CamAbstractInputComponent extends TaBaseComponent {
+class TaAbstractInputComponent extends TaBaseComponent {
     constructor() {
         super();
         this.standalone = false;
@@ -84,10 +84,10 @@ class CamAbstractInputComponent extends TaBaseComponent {
     onChange(value) {
         this.valueChanged.emit(value);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamAbstractInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamAbstractInputComponent, selector: "ng-component", inputs: { input: "input", matcher: "matcher", standalone: "standalone", onFocus: "onFocus" }, outputs: { valueChanged: "valueChanged" }, viewQueries: [{ propertyName: "focusedElement", first: true, predicate: ["focusedElement"], descendants: true, read: ElementRef }], usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaAbstractInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaAbstractInputComponent, selector: "ng-component", inputs: { input: "input", matcher: "matcher", standalone: "standalone", onFocus: "onFocus" }, outputs: { valueChanged: "valueChanged" }, viewQueries: [{ propertyName: "focusedElement", first: true, predicate: ["focusedElement"], descendants: true, read: ElementRef }], usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamAbstractInputComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaAbstractInputComponent, decorators: [{
             type: Component,
             args: [{ template: '' }]
         }], ctorParameters: () => [], propDecorators: { input: [{
@@ -122,7 +122,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class CheckboxComponent extends CamAbstractInputComponent {
+class CheckboxComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -134,7 +134,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-checkbox', standalone: true, imports: [FormLabelComponent], template: "<div class=\"custom-checkbox align-center g-space-xs\">\n  <input\n    type=\"checkbox\"\n    #focusedElement\n    (click)=\"this.input.value = !this.input.value\"\n    [checked]=\"this.input.value\"\n    [attr.aria-invalid]=\"this.input.formControl?.invalid\"\n    [disabled]=\"this.input.disabled\"\n  />\n  <ta-form-label [input]=\"this.input\" [withMarginBottom]=\"false\"></ta-form-label>\n</div>\n", styles: [".custom-checkbox{border-color:var(--ta-border-brand)}.custom-checkbox:hover{border-color:var(--ta-neutral-500)}.input:checked{background-color:var(--ta-border-brand);border-color:var(--ta-border-brand)}.input:not(:disabled){border-color:var(--ta-neutral-500)}\n"] }]
         }], ctorParameters: () => [] });
 
-class ColorPickerComponent extends CamAbstractInputComponent {
+class ColorPickerComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -185,7 +185,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class DatePickerComponent extends CamAbstractInputComponent {
+class DatePickerComponent extends TaAbstractInputComponent {
     constructor() {
         super();
         this.range = new FormGroup({
@@ -222,7 +222,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['picker']
             }] } });
 
-class DropdownComponent extends CamAbstractInputComponent {
+class DropdownComponent extends TaAbstractInputComponent {
     constructor() {
         super(...arguments);
         this.space = true;
@@ -277,19 +277,27 @@ class DropdownComponent extends CamAbstractInputComponent {
                 : this.optionsList;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: DropdownComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: DropdownComponent, isStandalone: true, selector: "ta-input-dropdown", inputs: { space: "space" }, viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: CamOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: true }\" (closed)=\"this.onOverlayClosed()\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div #focusedElement class=\"custom-dropdown-button form-control\" [class.disabled]=\"this.input.disabled\">\n          <span class=\"selected-value align-center g-space-xs\">\n            @if (!this.input.multiple) {\n              @if (this.input.value) {\n                <span>\n                  {{ this.getOptionName(this.input.value) | translate }}\n                </span>\n              } @else {\n                {{ 'form.input.dropdown.novalue' | translate }}\n              }\n            } @else if (this.input.multiple) {\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ this.getOptionName(value) | translate }}\n                </ta-label>\n              }\n            }\n          </span>\n          <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n\n    <ng-template #panelContent>\n      <div class=\"custom-menu\">\n        @if (this.input.withSearch) {\n          <input class=\"input-search\" type=\"search\" placeholder=\"Rechercher...\" (input)=\"this.onSearchChange($event)\" />\n        }\n\n        @for (opt of this.filteredOptions; track opt.id) {\n          <button\n            [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n            (click)=\"this.selectOption(opt.id, $event)\"\n            [class.selected]=\"this.isSelected(opt.id)\"\n            [class.disabled]=\"opt.disabled\"\n            class=\"dropdown-option space-between\"\n          >\n            {{ opt.name | translate }}\n            @if (this.isSelected(opt.id)) {\n              <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n            }\n          </button>\n        }\n      </div>\n    </ng-template>\n  </ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: CamOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig"], outputs: ["closed"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: DropdownComponent, isStandalone: true, selector: "ta-input-dropdown", inputs: { space: "space" }, viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: TaOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: true }\" (closed)=\"this.onOverlayClosed()\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div #focusedElement class=\"custom-dropdown-button form-control\" [class.disabled]=\"this.input.disabled\">\n          <span class=\"selected-value align-center g-space-xs\">\n            @if (!this.input.multiple) {\n              @if (this.input.value) {\n                <span>\n                  {{ this.getOptionName(this.input.value) | translate }}\n                </span>\n              } @else {\n                {{ 'form.input.dropdown.novalue' | translate }}\n              }\n            } @else if (this.input.multiple) {\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ this.getOptionName(value) | translate }}\n                </ta-label>\n              }\n            }\n          </span>\n          <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n\n    <ng-template #panelContent>\n      <div class=\"custom-menu\">\n        @if (this.input.withSearch) {\n          <input class=\"input-search\" type=\"search\" placeholder=\"Rechercher...\" (input)=\"this.onSearchChange($event)\" />\n        }\n\n        @for (opt of this.filteredOptions; track opt.id) {\n          <button\n            [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n            (click)=\"this.selectOption(opt.id, $event)\"\n            [class.selected]=\"this.isSelected(opt.id)\"\n            [class.disabled]=\"opt.disabled\"\n            class=\"dropdown-option space-between\"\n          >\n            {{ opt.name | translate }}\n            @if (this.isSelected(opt.id)) {\n              <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n            }\n          </button>\n        }\n      </div>\n    </ng-template>\n  </ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig"], outputs: ["closed"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: DropdownComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-dropdown', standalone: true, imports: [NgIf, NgFor, FontIconComponent, CamOverlayPanelComponent, LabelComponent$1, TranslatePipe, InputLayoutComponent], template: "@if (this.input) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: true }\" (closed)=\"this.onOverlayClosed()\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div #focusedElement class=\"custom-dropdown-button form-control\" [class.disabled]=\"this.input.disabled\">\n          <span class=\"selected-value align-center g-space-xs\">\n            @if (!this.input.multiple) {\n              @if (this.input.value) {\n                <span>\n                  {{ this.getOptionName(this.input.value) | translate }}\n                </span>\n              } @else {\n                {{ 'form.input.dropdown.novalue' | translate }}\n              }\n            } @else if (this.input.multiple) {\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ this.getOptionName(value) | translate }}\n                </ta-label>\n              }\n            }\n          </span>\n          <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n\n    <ng-template #panelContent>\n      <div class=\"custom-menu\">\n        @if (this.input.withSearch) {\n          <input class=\"input-search\" type=\"search\" placeholder=\"Rechercher...\" (input)=\"this.onSearchChange($event)\" />\n        }\n\n        @for (opt of this.filteredOptions; track opt.id) {\n          <button\n            [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n            (click)=\"this.selectOption(opt.id, $event)\"\n            [class.selected]=\"this.isSelected(opt.id)\"\n            [class.disabled]=\"opt.disabled\"\n            class=\"dropdown-option space-between\"\n          >\n            {{ opt.name | translate }}\n            @if (this.isSelected(opt.id)) {\n              <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n            }\n          </button>\n        }\n      </div>\n    </ng-template>\n  </ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"] }]
+            args: [{ selector: 'ta-input-dropdown', standalone: true, imports: [
+                        NgIf,
+                        NgFor,
+                        FontIconComponent,
+                        TaOverlayPanelComponent,
+                        LabelComponent$1,
+                        TranslatePipe,
+                        InputLayoutComponent,
+                    ], template: "@if (this.input) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: true }\" (closed)=\"this.onOverlayClosed()\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div #focusedElement class=\"custom-dropdown-button form-control\" [class.disabled]=\"this.input.disabled\">\n          <span class=\"selected-value align-center g-space-xs\">\n            @if (!this.input.multiple) {\n              @if (this.input.value) {\n                <span>\n                  {{ this.getOptionName(this.input.value) | translate }}\n                </span>\n              } @else {\n                {{ 'form.input.dropdown.novalue' | translate }}\n              }\n            } @else if (this.input.multiple) {\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ this.getOptionName(value) | translate }}\n                </ta-label>\n              }\n            }\n          </span>\n          <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n\n    <ng-template #panelContent>\n      <div class=\"custom-menu\">\n        @if (this.input.withSearch) {\n          <input class=\"input-search\" type=\"search\" placeholder=\"Rechercher...\" (input)=\"this.onSearchChange($event)\" />\n        }\n\n        @for (opt of this.filteredOptions; track opt.id) {\n          <button\n            [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n            (click)=\"this.selectOption(opt.id, $event)\"\n            [class.selected]=\"this.isSelected(opt.id)\"\n            [class.disabled]=\"opt.disabled\"\n            class=\"dropdown-option space-between\"\n          >\n            {{ opt.name | translate }}\n            @if (this.isSelected(opt.id)) {\n              <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n            }\n          </button>\n        }\n      </div>\n    </ng-template>\n  </ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"] }]
         }], propDecorators: { space: [{
                 type: Input
             }], overlayPanelRef: [{
                 type: ViewChild,
-                args: [CamOverlayPanelComponent]
+                args: [TaOverlayPanelComponent]
             }] } });
 
-class LabelComponent extends CamAbstractInputComponent {
+class LabelComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -301,7 +309,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-label', standalone: true, imports: [TranslatePipe], template: "<span>{{ input.label | translate }}</span>\n" }]
         }], ctorParameters: () => [] });
 
-class RadioComponent extends CamAbstractInputComponent {
+class RadioComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -329,7 +337,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-radio', standalone: true, imports: [NgIf, NgFor, NgClass, AsyncPipe, LocalIconComponent, FormLabelComponent, TranslatePipe], template: "<div class=\"radio-label\">\n  <ta-form-label [input]=\"this.input\"></ta-form-label>\n</div>\n\n<div class=\"radio-container\">\n  @for (option of this.input.options | async; track option.id) {\n    <div\n      class=\"radio-element\"\n      [ngClass]=\"{\n        validated: this.input.value === option.id,\n        disabled: this.input.disabled,\n      }\"\n      (click)=\"this.onOptionClicked(option.id)\"\n    >\n      <div\n        [ngClass]=\"{\n          'button-with-icon': this.hasLabel(option),\n          'only-icon': !this.hasLabel(option),\n        }\"\n      >\n        @if (option.icon) {\n          <ta-local-icon [type]=\"option.icon\" [size]=\"this.iconSize(option)\"> </ta-local-icon>\n        }\n        @if (option.name) {\n          <span>\n            {{ option.name | translate }}\n          </span>\n        }\n      </div>\n    </div>\n  }\n</div>\n", styles: [".radio-label{display:block;padding-bottom:.5em}.button-with-icon{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;column-gap:8px}.only-icon{margin-left:auto;margin-right:auto}.radio-container{display:flex!important;flex-direction:row;justify-content:space-between}.radio-container .radio-element{display:flex;height:50px;width:45%;border:2px solid var(--ta-neutral-400);border-radius:20px;box-sizing:border-box;align-items:center;gap:8px;justify-content:center;color:var(--ta-neutral-600);font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);line-height:28px;font-weight:500}.radio-container .radio-element app-local-icon{opacity:.4}.radio-container .radio-element.validated{border:2px solid var(--ta-surface-brand-primary)}.radio-container .radio-element.validated app-local-icon{opacity:1}.radio-container .radio-element.validated span{color:var(--ta-neutral-900)}.radio-container .radio-element.disabled{opacity:.4}\n"] }]
         }], ctorParameters: () => [] });
 
-class SliderComponent extends CamAbstractInputComponent {
+class SliderComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -341,7 +349,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-slider', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"slider-container\">\n    <input\n      type=\"range\"\n      [min]=\"this.input.min\"\n      [max]=\"this.input.max\"\n      [formControl]=\"$any(this.input.formControl)\"\n      class=\"slider-input\"\n      [attr.aria-invalid]=\"this.input.formControl?.invalid\"\n    />\n  </div>\n</ta-input-layout>\n", styles: [".slider-container{width:100%;position:relative}.slider-input{width:100%;margin:0}\n"] }]
         }], ctorParameters: () => [] });
 
-class TextareaComponent extends CamAbstractInputComponent {
+class TextareaComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -353,7 +361,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-textarea', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule], template: "<ta-input-layout [input]=\"input\">\n  <textarea\n    #focusedElement\n    cdkTextareaAutosize\n    class=\"form-control\"\n    [value]=\"this.input.value\"\n    [formControl]=\"$any(this.input.formControl)\"\n    [attr.aria-invalid]=\"this.input.formControl?.invalid\"\n    [attr.aria-describedby]=\"\n      this.input.formControl?.invalid && this.input.formControl?.touched ? 'error-message' : null\n    \"\n  ></textarea>\n</ta-input-layout>\n", styles: [".textarea-container{width:100%}.form-control{height:auto;font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
         }], ctorParameters: () => [] });
 
-class TextBoxComponent extends CamAbstractInputComponent {
+class TextBoxComponent extends TaAbstractInputComponent {
     get isPassword() {
         return this.input.type === 'password';
     }
@@ -382,7 +390,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class SwitchComponent extends CamAbstractInputComponent {
+class SwitchComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -394,7 +402,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-switch', standalone: true, imports: [TextBoxComponent, CheckboxComponent, DatePickerComponent, DropdownComponent], template: "<div>\n  @switch (input.matchtype()) {\n    @case ('textbox') {\n      <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n    }\n    @case ('number') {\n      <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n    }\n    @case ('checkbox') {\n      <ta-input-checkbox [input]=\"$any(input)\"></ta-input-checkbox>\n    }\n    @case ('datePicker') {\n      <ta-input-date-picker [input]=\"$any(input)\"></ta-input-date-picker>\n    }\n    @case ('dropdown') {\n      <ta-input-dropdown [input]=\"$any(input)\"></ta-input-dropdown>\n    }\n    @default {\n      <span>Aucune valeur selectionn\u00E9e</span>\n    }\n  }\n</div>\n", styles: [".mat-form-field{display:block}.form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:.875rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }]
         }], ctorParameters: () => [] });
 
-class TimePickerComponent extends CamAbstractInputComponent {
+class TimePickerComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -406,7 +414,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-time-picker', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, MatInputModule, NgxMaterialTimepickerModule], template: "<ta-input-layout [input]=\"this.input\">\n  <input\n    matInput\n    #focusedElement\n    class=\"form-control\"\n    [ngxTimepicker]=\"picker\"\n    [formControl]=\"$any(this.input.formControl)\"\n    [value]=\"this.input.value\"\n    [format]=\"24\"\n    readonly\n  />\n  <ngx-material-timepicker #picker [timepickerClass]=\"'time-picker-container-class'\"></ngx-material-timepicker>\n</ta-input-layout>\n", styles: [".mat-form-field{display:block}.time-picker-container{width:100%}\n"] }]
         }], ctorParameters: () => [] });
 
-class ToggleComponent extends CamAbstractInputComponent {
+class ToggleComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -419,7 +427,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
         }], ctorParameters: () => [] });
 
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-class InputImageModal extends CamBaseModal {
+class InputImageModal extends TaBaseModal {
     constructor(dialogRef, data) {
         super();
         this.dialogRef = dialogRef;
@@ -468,7 +476,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                     args: [MAT_DIALOG_DATA]
                 }] }] });
 
-class InputImagesComponent extends CamAbstractInputComponent {
+class InputImagesComponent extends TaAbstractInputComponent {
     get selection() {
         return this.input.value;
     }
@@ -523,7 +531,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-images', standalone: true, imports: [NgIf, NgClass, LocalIconComponent, FormLabelComponent, ButtonComponent, FileListComponent], template: "<div class=\"row g-0 align-items-center mb-space-2\">\n  <div class=\"col\">\n    <ta-form-label [input]=\"this.input\"></ta-form-label>\n  </div>\n  <div [ngClass]=\"this.selection.length === 0 ? 'col-12 my-space-2' : 'col-auto'\">\n    <ta-button\n      type=\"secondary\"\n      #focusedElement\n      (action)=\"this.openDialog()\"\n      [options]=\"{ circular: this.isCircularButton }\"\n    >\n      <ta-local-icon [type]=\"this.icon.Gallery\"></ta-local-icon>\n    </ta-button>\n  </div>\n</div>\n\n@if (this.selection.length > 0) {\n  <ta-files-list\n    [files]=\"this.fileDataSelection\"\n    [canDeleteFile]=\"!!this.input.fileDeleted\"\n    (fileDeleted)=\"this.onFileDeleted($event)\"\n  ></ta-files-list>\n}\n" }]
         }], ctorParameters: () => [{ type: i1$1.MatDialog }] });
 
-class InputImageComponent extends CamAbstractInputComponent {
+class InputImageComponent extends TaAbstractInputComponent {
     get selection() {
         return this.input.value;
     }
@@ -542,7 +550,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-image', standalone: true, imports: [NgIf, UserLogoComponent], template: "@if (this.userInfo) {\n  <ta-user-logo [user]=\"this.userInfo\" size=\"xl\"></ta-user-logo>\n}\n" }]
         }] });
 
-class InputSchemaModal extends CamBaseModal {
+class InputSchemaModal extends TaBaseModal {
     constructor(dialogRef) {
         super();
         this.dialogRef = dialogRef;
@@ -568,7 +576,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: '', standalone: true, imports: [FileEditComponent], template: "<div class=\"edit-schema-container\">\n  <ta-files-edit\n    [imagePath]=\"this.imagePath\"\n    [saveImage$]=\"this.askImage$\"\n    (savedImage)=\"this.savedImage($event)\"\n  ></ta-files-edit>\n</div>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"] }]
         }], ctorParameters: () => [{ type: i1$1.MatDialogRef }] });
 
-class InputSchemaComponent extends CamAbstractInputComponent {
+class InputSchemaComponent extends TaAbstractInputComponent {
     get pics() {
         if (!this.input.value) {
             return null;
@@ -615,7 +623,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-schema', standalone: true, imports: [NgIf, LocalIconComponent, ButtonComponent, FileListComponent, InputLayoutComponent], template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n    <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n" }]
         }], ctorParameters: () => [{ type: i1$1.MatDialog }] });
 
-class SearchFieldComponent extends CamAbstractInputComponent {
+class SearchFieldComponent extends TaAbstractInputComponent {
     constructor() {
         super();
         this.isOpen = false;
@@ -686,7 +694,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['window:keyup', ['$event']]
             }] } });
 
-class InputChoicesComponent extends CamAbstractInputComponent {
+class InputChoicesComponent extends TaAbstractInputComponent {
     constructor() {
         super();
         this.inputSearch = new InputTextBox();
@@ -773,17 +781,38 @@ class InputChoicesComponent extends CamAbstractInputComponent {
         this.overlayPanelRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputChoicesComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InputChoicesComponent, isStandalone: true, selector: "ta-input-choices", viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: CamOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input.onlyTemplate !== true) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div class=\"form-control\" #focusedElement>\n          <div class=\"input-group d-flex full-width\">\n            <input type=\"hidden\" [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n            <div class=\"flex-start g-space-xs\">\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ (getName$(value) | async) ?? '' | translate }}\n                </ta-label>\n              }\n            </div>\n            @if (this.input.message) {\n              <div class=\"message\">\n                <small class=\"form-text text-muted\">\n                  <span>{{ this.input.message }}</span>\n                </small>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n    <ng-template #panelContent>\n      <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n    </ng-template>\n  </ta-overlay-panel>\n} @else {\n  <div class=\"only-template\">\n    <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n  </div>\n}\n\n<ng-template #choicesTemplate>\n  <div appStopPropagation class=\"flex-column g-space-sm\">\n    @if (!this.input.choiceTemplate) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          [standalone]=\"true\"\n          class=\"m-space-sm\"\n        ></ta-search-field>\n      }\n\n      <ta-layout-side class=\"d-flex full-width choices-wrapper\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n              @if (this.input.showNullableFields) {\n                <div class=\"p-space-sm\">\n                  <ta-input-checkbox\n                    [input]=\"this.inputNullable\"\n                    [standalone]=\"true\"\n                    (valueChanged)=\"this.selectNullable($event)\"\n                  ></ta-input-checkbox>\n                </div>\n              }\n              @for (option of this.filteredOptions$ | async; track option) {\n                <div\n                  class=\"flex-row pointer m-space-sm p-space-sm\"\n                  [class.is-selected]=\"this.isSelected(option)\"\n                  (click)=\"this.select(option)\"\n                >\n                  <ta-text>{{ option.name }}</ta-text>\n                </div>\n              }\n            </ta-empty>\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    } @else if (this.input.choiceTemplate && this.filteredOptions$) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          class=\"m-space-sm\"\n          [standalone]=\"true\"\n        ></ta-search-field>\n      }\n      <ta-layout-side class=\"d-flex full-width\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            @if (this.input.choiceTemplate.one) {\n              <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n                @for (option of this.filteredOptions$ | async; track option) {\n                  <div\n                    class=\"flex-row pointer m-space-sm p-space-sm\"\n                    [class.is-selected]=\"this.isSelected(option)\"\n                    (click)=\"this.select(option)\"\n                  >\n                    <ng-template\n                      [ngTemplateOutlet]=\"this.input.choiceTemplate.one\"\n                      [ngTemplateOutletContext]=\"{ item: option.data }\"\n                    ></ng-template>\n                  </div>\n                }\n              </ta-empty>\n            } @else if (this.input.choiceTemplate.list) {\n              <ng-template\n                [ngTemplateOutlet]=\"this.input.choiceTemplate.list\"\n                [ngTemplateOutletContext]=\"{\n                  data: {\n                    items: this.filteredOptions$ | async,\n                    isselected: this.isSelected,\n                    select: this.select,\n                    search: this.inputSearch.value,\n                    refresh: this.refresh,\n                  },\n                }\"\n              ></ng-template>\n            }\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    }\n  </div>\n</ng-template>\n", styles: [".textbox-container{width:100%}.input-group{position:relative}.input-group .action{position:absolute;right:8px;top:16px;bottom:0}.is-selected{border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-full)}.menu-panel{background-color:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);border:1px solid;border-color:var(--ta-neutral-300);overflow:hidden}.choices-wrapper{overflow:visible;max-height:none}.only-template{background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: CamOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig"], outputs: ["closed"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: LayoutSideCtaComponent, selector: "ta-layout-side-cta", inputs: ["background"] }, { kind: "component", type: LayoutSideContentComponent, selector: "ta-layout-side-content" }, { kind: "component", type: LayoutSideComponent, selector: "ta-layout-side" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InputChoicesComponent, isStandalone: true, selector: "ta-input-choices", viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: TaOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input.onlyTemplate !== true) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div class=\"form-control\" #focusedElement>\n          <div class=\"input-group d-flex full-width\">\n            <input type=\"hidden\" [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n            <div class=\"flex-start g-space-xs\">\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ (getName$(value) | async) ?? '' | translate }}\n                </ta-label>\n              }\n            </div>\n            @if (this.input.message) {\n              <div class=\"message\">\n                <small class=\"form-text text-muted\">\n                  <span>{{ this.input.message }}</span>\n                </small>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n    <ng-template #panelContent>\n      <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n    </ng-template>\n  </ta-overlay-panel>\n} @else {\n  <div class=\"only-template\">\n    <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n  </div>\n}\n\n<ng-template #choicesTemplate>\n  <div appStopPropagation class=\"flex-column g-space-sm\">\n    @if (!this.input.choiceTemplate) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          [standalone]=\"true\"\n          class=\"m-space-sm\"\n        ></ta-search-field>\n      }\n\n      <ta-layout-side class=\"d-flex full-width choices-wrapper\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n              @if (this.input.showNullableFields) {\n                <div class=\"p-space-sm\">\n                  <ta-input-checkbox\n                    [input]=\"this.inputNullable\"\n                    [standalone]=\"true\"\n                    (valueChanged)=\"this.selectNullable($event)\"\n                  ></ta-input-checkbox>\n                </div>\n              }\n              @for (option of this.filteredOptions$ | async; track option) {\n                <div\n                  class=\"flex-row pointer m-space-sm p-space-sm\"\n                  [class.is-selected]=\"this.isSelected(option)\"\n                  (click)=\"this.select(option)\"\n                >\n                  <ta-text>{{ option.name }}</ta-text>\n                </div>\n              }\n            </ta-empty>\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    } @else if (this.input.choiceTemplate && this.filteredOptions$) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          class=\"m-space-sm\"\n          [standalone]=\"true\"\n        ></ta-search-field>\n      }\n      <ta-layout-side class=\"d-flex full-width\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            @if (this.input.choiceTemplate.one) {\n              <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n                @for (option of this.filteredOptions$ | async; track option) {\n                  <div\n                    class=\"flex-row pointer m-space-sm p-space-sm\"\n                    [class.is-selected]=\"this.isSelected(option)\"\n                    (click)=\"this.select(option)\"\n                  >\n                    <ng-template\n                      [ngTemplateOutlet]=\"this.input.choiceTemplate.one\"\n                      [ngTemplateOutletContext]=\"{ item: option.data }\"\n                    ></ng-template>\n                  </div>\n                }\n              </ta-empty>\n            } @else if (this.input.choiceTemplate.list) {\n              <ng-template\n                [ngTemplateOutlet]=\"this.input.choiceTemplate.list\"\n                [ngTemplateOutletContext]=\"{\n                  data: {\n                    items: this.filteredOptions$ | async,\n                    isselected: this.isSelected,\n                    select: this.select,\n                    search: this.inputSearch.value,\n                    refresh: this.refresh,\n                  },\n                }\"\n              ></ng-template>\n            }\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    }\n  </div>\n</ng-template>\n", styles: [".textbox-container{width:100%}.input-group{position:relative}.input-group .action{position:absolute;right:8px;top:16px;bottom:0}.is-selected{border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-full)}.menu-panel{background-color:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);border:1px solid;border-color:var(--ta-neutral-300);overflow:hidden}.choices-wrapper{overflow:visible;max-height:none}.only-template{background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig"], outputs: ["closed"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: LayoutSideCtaComponent, selector: "ta-layout-side-cta", inputs: ["background"] }, { kind: "component", type: LayoutSideContentComponent, selector: "ta-layout-side-content" }, { kind: "component", type: LayoutSideComponent, selector: "ta-layout-side" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputChoicesComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-choices', standalone: true, imports: [NgIf, NgFor, AsyncPipe, FontIconComponent, StopPropagationDirective, TranslateModule, ButtonComponent, LinkComponent, CamOverlayPanelComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, SearchFieldComponent, LabelComponent$1, TextComponent, CheckboxComponent, ReactiveFormsModule, InputLayoutComponent], template: "@if (this.input.onlyTemplate !== true) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div class=\"form-control\" #focusedElement>\n          <div class=\"input-group d-flex full-width\">\n            <input type=\"hidden\" [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n            <div class=\"flex-start g-space-xs\">\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ (getName$(value) | async) ?? '' | translate }}\n                </ta-label>\n              }\n            </div>\n            @if (this.input.message) {\n              <div class=\"message\">\n                <small class=\"form-text text-muted\">\n                  <span>{{ this.input.message }}</span>\n                </small>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n    <ng-template #panelContent>\n      <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n    </ng-template>\n  </ta-overlay-panel>\n} @else {\n  <div class=\"only-template\">\n    <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n  </div>\n}\n\n<ng-template #choicesTemplate>\n  <div appStopPropagation class=\"flex-column g-space-sm\">\n    @if (!this.input.choiceTemplate) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          [standalone]=\"true\"\n          class=\"m-space-sm\"\n        ></ta-search-field>\n      }\n\n      <ta-layout-side class=\"d-flex full-width choices-wrapper\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n              @if (this.input.showNullableFields) {\n                <div class=\"p-space-sm\">\n                  <ta-input-checkbox\n                    [input]=\"this.inputNullable\"\n                    [standalone]=\"true\"\n                    (valueChanged)=\"this.selectNullable($event)\"\n                  ></ta-input-checkbox>\n                </div>\n              }\n              @for (option of this.filteredOptions$ | async; track option) {\n                <div\n                  class=\"flex-row pointer m-space-sm p-space-sm\"\n                  [class.is-selected]=\"this.isSelected(option)\"\n                  (click)=\"this.select(option)\"\n                >\n                  <ta-text>{{ option.name }}</ta-text>\n                </div>\n              }\n            </ta-empty>\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    } @else if (this.input.choiceTemplate && this.filteredOptions$) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          class=\"m-space-sm\"\n          [standalone]=\"true\"\n        ></ta-search-field>\n      }\n      <ta-layout-side class=\"d-flex full-width\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            @if (this.input.choiceTemplate.one) {\n              <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n                @for (option of this.filteredOptions$ | async; track option) {\n                  <div\n                    class=\"flex-row pointer m-space-sm p-space-sm\"\n                    [class.is-selected]=\"this.isSelected(option)\"\n                    (click)=\"this.select(option)\"\n                  >\n                    <ng-template\n                      [ngTemplateOutlet]=\"this.input.choiceTemplate.one\"\n                      [ngTemplateOutletContext]=\"{ item: option.data }\"\n                    ></ng-template>\n                  </div>\n                }\n              </ta-empty>\n            } @else if (this.input.choiceTemplate.list) {\n              <ng-template\n                [ngTemplateOutlet]=\"this.input.choiceTemplate.list\"\n                [ngTemplateOutletContext]=\"{\n                  data: {\n                    items: this.filteredOptions$ | async,\n                    isselected: this.isSelected,\n                    select: this.select,\n                    search: this.inputSearch.value,\n                    refresh: this.refresh,\n                  },\n                }\"\n              ></ng-template>\n            }\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    }\n  </div>\n</ng-template>\n", styles: [".textbox-container{width:100%}.input-group{position:relative}.input-group .action{position:absolute;right:8px;top:16px;bottom:0}.is-selected{border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-full)}.menu-panel{background-color:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);border:1px solid;border-color:var(--ta-neutral-300);overflow:hidden}.choices-wrapper{overflow:visible;max-height:none}.only-template{background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded)}\n"] }]
+            args: [{ selector: 'ta-input-choices', standalone: true, imports: [
+                        NgIf,
+                        NgFor,
+                        AsyncPipe,
+                        FontIconComponent,
+                        StopPropagationDirective,
+                        TranslateModule,
+                        ButtonComponent,
+                        LinkComponent,
+                        TaOverlayPanelComponent,
+                        EmptyComponent,
+                        LoaderComponent,
+                        LayoutSideCtaComponent,
+                        LayoutSideContentComponent,
+                        LayoutSideComponent,
+                        SearchFieldComponent,
+                        LabelComponent$1,
+                        TextComponent,
+                        CheckboxComponent,
+                        ReactiveFormsModule,
+                        InputLayoutComponent,
+                    ], template: "@if (this.input.onlyTemplate !== true) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div class=\"form-control\" #focusedElement>\n          <div class=\"input-group d-flex full-width\">\n            <input type=\"hidden\" [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n            <div class=\"flex-start g-space-xs\">\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ (getName$(value) | async) ?? '' | translate }}\n                </ta-label>\n              }\n            </div>\n            @if (this.input.message) {\n              <div class=\"message\">\n                <small class=\"form-text text-muted\">\n                  <span>{{ this.input.message }}</span>\n                </small>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n    <ng-template #panelContent>\n      <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n    </ng-template>\n  </ta-overlay-panel>\n} @else {\n  <div class=\"only-template\">\n    <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n  </div>\n}\n\n<ng-template #choicesTemplate>\n  <div appStopPropagation class=\"flex-column g-space-sm\">\n    @if (!this.input.choiceTemplate) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          [standalone]=\"true\"\n          class=\"m-space-sm\"\n        ></ta-search-field>\n      }\n\n      <ta-layout-side class=\"d-flex full-width choices-wrapper\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n              @if (this.input.showNullableFields) {\n                <div class=\"p-space-sm\">\n                  <ta-input-checkbox\n                    [input]=\"this.inputNullable\"\n                    [standalone]=\"true\"\n                    (valueChanged)=\"this.selectNullable($event)\"\n                  ></ta-input-checkbox>\n                </div>\n              }\n              @for (option of this.filteredOptions$ | async; track option) {\n                <div\n                  class=\"flex-row pointer m-space-sm p-space-sm\"\n                  [class.is-selected]=\"this.isSelected(option)\"\n                  (click)=\"this.select(option)\"\n                >\n                  <ta-text>{{ option.name }}</ta-text>\n                </div>\n              }\n            </ta-empty>\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    } @else if (this.input.choiceTemplate && this.filteredOptions$) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          class=\"m-space-sm\"\n          [standalone]=\"true\"\n        ></ta-search-field>\n      }\n      <ta-layout-side class=\"d-flex full-width\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            @if (this.input.choiceTemplate.one) {\n              <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n                @for (option of this.filteredOptions$ | async; track option) {\n                  <div\n                    class=\"flex-row pointer m-space-sm p-space-sm\"\n                    [class.is-selected]=\"this.isSelected(option)\"\n                    (click)=\"this.select(option)\"\n                  >\n                    <ng-template\n                      [ngTemplateOutlet]=\"this.input.choiceTemplate.one\"\n                      [ngTemplateOutletContext]=\"{ item: option.data }\"\n                    ></ng-template>\n                  </div>\n                }\n              </ta-empty>\n            } @else if (this.input.choiceTemplate.list) {\n              <ng-template\n                [ngTemplateOutlet]=\"this.input.choiceTemplate.list\"\n                [ngTemplateOutletContext]=\"{\n                  data: {\n                    items: this.filteredOptions$ | async,\n                    isselected: this.isSelected,\n                    select: this.select,\n                    search: this.inputSearch.value,\n                    refresh: this.refresh,\n                  },\n                }\"\n              ></ng-template>\n            }\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'core.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'form.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    }\n  </div>\n</ng-template>\n", styles: [".textbox-container{width:100%}.input-group{position:relative}.input-group .action{position:absolute;right:8px;top:16px;bottom:0}.is-selected{border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-full)}.menu-panel{background-color:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);border:1px solid;border-color:var(--ta-neutral-300);overflow:hidden}.choices-wrapper{overflow:visible;max-height:none}.only-template{background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { overlayPanelRef: [{
                 type: ViewChild,
-                args: [CamOverlayPanelComponent]
+                args: [TaOverlayPanelComponent]
             }] } });
 
-class WysiswygComponent extends CamAbstractInputComponent {
+class WysiswygComponent extends TaAbstractInputComponent {
     set(value) {
         this.input.value = value.blocks;
     }
@@ -798,7 +827,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-wysiswyg', standalone: true, imports: [EditorInputComponent, InputLayoutComponent, ReactiveFormsModule], template: "<ta-input-layout [input]=\"this.input\">\n  <input type=\"hidden\" #focusedElement [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n  <ta-cms-editor-input\n    class=\"form-control\"\n    [initValue]=\"this.input.value\"\n    (saved)=\"this.set($event)\"\n    [saveOnChange]=\"true\"\n  >\n  </ta-cms-editor-input>\n</ta-input-layout>\n", styles: [".textbox-container{width:100%}.form-control{width:auto}\n"] }]
         }] });
 
-class InputPhoneComponent extends CamAbstractInputComponent {
+class InputPhoneComponent extends TaAbstractInputComponent {
     constructor(renderer) {
         super();
         this.renderer = renderer;
@@ -830,7 +859,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['phoneInput', { static: false }]
             }] } });
 
-class InputAddressComponent extends CamAbstractInputComponent {
+class InputAddressComponent extends TaAbstractInputComponent {
     constructor() {
         super();
         this.addressDetails = {
@@ -871,11 +900,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['addresstext']
             }] } });
 
-class UploadComponent extends CamAbstractInputComponent {
+class UploadComponent extends TaAbstractInputComponent {
     constructor() {
         super();
         this.uploadStatusChanged = new EventEmitter();
-        this._documentsService = inject(CamDocumentsService);
+        this._documentsService = inject(TaDocumentsService);
         this.inProgressFiles = [];
         this._invervalId = window.setInterval(() => {
             if (!this.inProgressFiles || this.inProgressFiles.length === 0) {
@@ -1010,7 +1039,18 @@ class UploadComponent extends CamAbstractInputComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-upload', standalone: true, imports: [NgIf, NgFor, FontIconComponent, ButtonComponent, TranslateModule, TextComponent, MegaoctetComponent, LinkComponent, LoaderComponent, MatProgressBarModule], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text>\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"] }]
+            args: [{ selector: 'ta-input-upload', standalone: true, imports: [
+                        NgIf,
+                        NgFor,
+                        FontIconComponent,
+                        ButtonComponent,
+                        TranslateModule,
+                        TextComponent,
+                        MegaoctetComponent,
+                        LinkComponent,
+                        LoaderComponent,
+                        MatProgressBarModule,
+                    ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text>\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"] }]
         }], ctorParameters: () => [], propDecorators: { uploadStatusChanged: [{
                 type: Output
             }], fileDropEl: [{
@@ -1018,7 +1058,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['fileDropRef', { static: false }]
             }] } });
 
-class CultureComponent extends CamAbstractInputComponent {
+class CultureComponent extends TaAbstractInputComponent {
     constructor() {
         super();
     }
@@ -1030,7 +1070,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-input-culture', standalone: true, imports: [DropdownComponent], template: "<ta-input-dropdown [input]=\"this.input\"></ta-input-dropdown>\n" }]
         }], ctorParameters: () => [] });
 
-class ComponentInputComponent extends CamAbstractInputComponent {
+class ComponentInputComponent extends TaAbstractInputComponent {
     constructor() {
         super(...arguments);
         this.dialog = inject(MatDialog);
@@ -1043,13 +1083,13 @@ class ComponentInputComponent extends CamAbstractInputComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ComponentInputComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\r\n  <div class=\"component-container\">\r\n    <input\r\n      #box\r\n      #focusedElement\r\n      class=\"form-control\"\r\n      [value]=\"this.input.value\"\r\n      [formControl]=\"$any(this.input.formControl)\"\r\n      [readonly]=\"this.input.disabled\"\r\n      type=\"text\"\r\n    />\r\n    <div class=\"cta\" (click)=\"this.open()\">\r\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\r\n    </div>\r\n  </div>\r\n</ta-input-layout>\r\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: CamIconsModule }, { kind: "component", type: i2$3.FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\r\n  <div class=\"component-container\">\r\n    <input\r\n      #box\r\n      #focusedElement\r\n      class=\"form-control\"\r\n      [value]=\"this.input.value\"\r\n      [formControl]=\"$any(this.input.formControl)\"\r\n      [readonly]=\"this.input.disabled\"\r\n      type=\"text\"\r\n    />\r\n    <div class=\"cta\" (click)=\"this.open()\">\r\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\r\n    </div>\r\n  </div>\r\n</ta-input-layout>\r\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: TaIconsModule }, { kind: "component", type: i2$3.FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ComponentInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, CamIconsModule], template: "<ta-input-layout [input]=\"this.input\">\r\n  <div class=\"component-container\">\r\n    <input\r\n      #box\r\n      #focusedElement\r\n      class=\"form-control\"\r\n      [value]=\"this.input.value\"\r\n      [formControl]=\"$any(this.input.formControl)\"\r\n      [readonly]=\"this.input.disabled\"\r\n      type=\"text\"\r\n    />\r\n    <div class=\"cta\" (click)=\"this.open()\">\r\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\r\n    </div>\r\n  </div>\r\n</ta-input-layout>\r\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
+            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule], template: "<ta-input-layout [input]=\"this.input\">\r\n  <div class=\"component-container\">\r\n    <input\r\n      #box\r\n      #focusedElement\r\n      class=\"form-control\"\r\n      [value]=\"this.input.value\"\r\n      [formControl]=\"$any(this.input.formControl)\"\r\n      [readonly]=\"this.input.disabled\"\r\n      type=\"text\"\r\n    />\r\n    <div class=\"cta\" (click)=\"this.open()\">\r\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\r\n    </div>\r\n  </div>\r\n</ta-input-layout>\r\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
         }] });
-class TemplateModal extends CamBaseModal {
+class TemplateModal extends TaBaseModal {
     constructor() {
         super();
         this.dialogRef = inject((MatDialogRef));
@@ -1065,11 +1105,11 @@ class TemplateModal extends CamBaseModal {
         this.dialogRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TemplateModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TemplateModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\r\n  @if(this.data.input.template) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"this.data.input.template\"\r\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\r\n  ></ng-template>\r\n  }\r\n</ta-layout-modal>\r\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "ngmodule", type: CamLayoutModule }, { kind: "component", type: i3$2.LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }, { kind: "ngmodule", type: CamUiModule }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TemplateModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\r\n  @if(this.data.input.template) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"this.data.input.template\"\r\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\r\n  ></ng-template>\r\n  }\r\n</ta-layout-modal>\r\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "ngmodule", type: TaLayoutModule }, { kind: "component", type: i3$2.LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }, { kind: "ngmodule", type: TaUiModule }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TemplateModal, decorators: [{
             type: Component,
-            args: [{ selector: '', standalone: true, imports: [NgTemplateOutlet, CamLayoutModule, CamUiModule], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\r\n  @if(this.data.input.template) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"this.data.input.template\"\r\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\r\n  ></ng-template>\r\n  }\r\n</ta-layout-modal>\r\n" }]
+            args: [{ selector: '', standalone: true, imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\r\n  @if(this.data.input.template) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"this.data.input.template\"\r\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\r\n  ></ng-template>\r\n  }\r\n</ta-layout-modal>\r\n" }]
         }], ctorParameters: () => [] });
 
 class InputContainerComponent {
@@ -1083,14 +1123,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class CamTranslationInput extends CamLazyTranslationService {
+class TaTranslationInput extends TaLazyTranslationService {
     constructor() {
         super('input');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationInput, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationInput, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationInput, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationInput, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationInput, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationInput, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -1103,17 +1143,74 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFormInputsModule } from '@ta/library-name';
+ * // import { TaFormInputsModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { CheckboxComponent, ColorPickerComponent, DatePickerComponent } from '@ta/library-name';
  */
-class CamFormInputsModule {
+class TaFormInputsModule {
     constructor() {
-        CamTranslationInput.getInstance();
+        TaTranslationInput.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFormInputsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamFormInputsModule, imports: [FormLabelComponent, InputLayoutComponent, InputErrorComponent, CamDirectivePipeModule, CamUiModule, CamLayoutModule, CommonModule, FormsModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, ReactiveFormsModule, NgxMaterialTimepickerModule, CamFilesBasicModule, CamIconsModule, CamListModule, CamContainerModule, CamMenuModule, MatMenuModule, CamWysiswygModule, CamCardModule, MatProgressBarModule, i2$1.MatGoogleMapsAutocompleteModule, CdkMenuModule, TranslatePipe, ComponentInputComponent, CamOverlayPanelComponent, CheckboxComponent, ColorPickerComponent, DatePickerComponent, DropdownComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, InputImagesComponent, InputImageModal, InputSchemaComponent, InputSchemaModal, InputImageComponent, InputChoicesComponent, WysiswygComponent, UploadComponent, InputPhoneComponent, InputAddressComponent, CultureComponent, InputContainerComponent], exports: [CheckboxComponent,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, imports: [FormLabelComponent,
+            InputLayoutComponent,
+            InputErrorComponent,
+            TaDirectivePipeModule,
+            TaUiModule,
+            TaLayoutModule,
+            CommonModule,
+            FormsModule,
+            MatAutocompleteModule,
+            MatCheckboxModule,
+            MatDatepickerModule,
+            MatFormFieldModule,
+            MatInputModule,
+            MatNativeDateModule,
+            MatProgressSpinnerModule,
+            MatRadioModule,
+            MatSelectModule,
+            MatSliderModule,
+            MatSlideToggleModule,
+            ReactiveFormsModule,
+            NgxMaterialTimepickerModule,
+            TaFilesBasicModule,
+            TaIconsModule,
+            TaListModule,
+            TaContainerModule,
+            TaMenuModule,
+            MatMenuModule,
+            TaWysiswygModule,
+            TaCardModule,
+            MatProgressBarModule, i2$1.MatGoogleMapsAutocompleteModule, CdkMenuModule,
+            TranslatePipe,
+            ComponentInputComponent,
+            TaOverlayPanelComponent,
+            CheckboxComponent,
+            ColorPickerComponent,
+            DatePickerComponent,
+            DropdownComponent,
+            LabelComponent,
+            RadioComponent,
+            SearchFieldComponent,
+            SliderComponent,
+            SwitchComponent,
+            TextareaComponent,
+            TextBoxComponent,
+            TimePickerComponent,
+            ToggleComponent,
+            InputImagesComponent,
+            InputImageModal,
+            InputSchemaComponent,
+            InputSchemaModal,
+            InputImageComponent,
+            InputChoicesComponent,
+            WysiswygComponent,
+            UploadComponent,
+            InputPhoneComponent,
+            InputAddressComponent,
+            CultureComponent,
+            InputContainerComponent], exports: [CheckboxComponent,
             ColorPickerComponent,
             DatePickerComponent,
             DropdownComponent,
@@ -1136,16 +1233,128 @@ class CamFormInputsModule {
             InputPhoneComponent,
             InputAddressComponent,
             ComponentInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFormInputsModule, providers: [
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, providers: [
             { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
             PARENT_OR_NEW_MENU_STACK_PROVIDER,
-        ], imports: [CamDirectivePipeModule, CamUiModule, CamLayoutModule, CommonModule, FormsModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, ReactiveFormsModule, NgxMaterialTimepickerModule, CamFilesBasicModule, CamIconsModule, CamListModule, CamContainerModule, CamMenuModule, MatMenuModule, CamWysiswygModule, CamCardModule, MatProgressBarModule, MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'), CdkMenuModule, ComponentInputComponent, CamOverlayPanelComponent, DatePickerComponent, DropdownComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, InputImagesComponent, InputImageModal, InputSchemaComponent, InputSchemaModal, InputImageComponent, InputChoicesComponent, WysiswygComponent, UploadComponent, InputPhoneComponent, InputAddressComponent, CultureComponent] }); }
+        ], imports: [TaDirectivePipeModule,
+            TaUiModule,
+            TaLayoutModule,
+            CommonModule,
+            FormsModule,
+            MatAutocompleteModule,
+            MatCheckboxModule,
+            MatDatepickerModule,
+            MatFormFieldModule,
+            MatInputModule,
+            MatNativeDateModule,
+            MatProgressSpinnerModule,
+            MatRadioModule,
+            MatSelectModule,
+            MatSliderModule,
+            MatSlideToggleModule,
+            ReactiveFormsModule,
+            NgxMaterialTimepickerModule,
+            TaFilesBasicModule,
+            TaIconsModule,
+            TaListModule,
+            TaContainerModule,
+            TaMenuModule,
+            MatMenuModule,
+            TaWysiswygModule,
+            TaCardModule,
+            MatProgressBarModule,
+            MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
+            CdkMenuModule,
+            ComponentInputComponent,
+            TaOverlayPanelComponent,
+            DatePickerComponent,
+            DropdownComponent,
+            RadioComponent,
+            SearchFieldComponent,
+            SliderComponent,
+            SwitchComponent,
+            TextareaComponent,
+            TextBoxComponent,
+            TimePickerComponent,
+            ToggleComponent,
+            InputImagesComponent,
+            InputImageModal,
+            InputSchemaComponent,
+            InputSchemaModal,
+            InputImageComponent,
+            InputChoicesComponent,
+            WysiswygComponent,
+            UploadComponent,
+            InputPhoneComponent,
+            InputAddressComponent,
+            CultureComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFormInputsModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [FormLabelComponent, InputLayoutComponent, InputErrorComponent, CamDirectivePipeModule, CamUiModule, CamLayoutModule, CommonModule, FormsModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, ReactiveFormsModule, NgxMaterialTimepickerModule, CamFilesBasicModule, CamIconsModule, CamListModule, CamContainerModule, CamMenuModule, MatMenuModule, CamWysiswygModule, CamCardModule, MatProgressBarModule, MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'), CdkMenuModule, TranslatePipe, ComponentInputComponent, CamOverlayPanelComponent, CheckboxComponent, ColorPickerComponent, DatePickerComponent, DropdownComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, InputImagesComponent, InputImageModal, InputSchemaComponent, InputSchemaModal, InputImageComponent, InputChoicesComponent, WysiswygComponent, UploadComponent, InputPhoneComponent, InputAddressComponent, CultureComponent, InputContainerComponent],
+                    imports: [
+                        FormLabelComponent,
+                        InputLayoutComponent,
+                        InputErrorComponent,
+                        TaDirectivePipeModule,
+                        TaUiModule,
+                        TaLayoutModule,
+                        CommonModule,
+                        FormsModule,
+                        MatAutocompleteModule,
+                        MatCheckboxModule,
+                        MatDatepickerModule,
+                        MatFormFieldModule,
+                        MatInputModule,
+                        MatNativeDateModule,
+                        MatProgressSpinnerModule,
+                        MatRadioModule,
+                        MatSelectModule,
+                        MatSliderModule,
+                        MatSlideToggleModule,
+                        ReactiveFormsModule,
+                        NgxMaterialTimepickerModule,
+                        TaFilesBasicModule,
+                        TaIconsModule,
+                        TaListModule,
+                        TaContainerModule,
+                        TaMenuModule,
+                        MatMenuModule,
+                        TaWysiswygModule,
+                        TaCardModule,
+                        MatProgressBarModule,
+                        MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
+                        CdkMenuModule,
+                        TranslatePipe,
+                        ComponentInputComponent,
+                        TaOverlayPanelComponent,
+                        CheckboxComponent,
+                        ColorPickerComponent,
+                        DatePickerComponent,
+                        DropdownComponent,
+                        LabelComponent,
+                        RadioComponent,
+                        SearchFieldComponent,
+                        SliderComponent,
+                        SwitchComponent,
+                        TextareaComponent,
+                        TextBoxComponent,
+                        TimePickerComponent,
+                        ToggleComponent,
+                        InputImagesComponent,
+                        InputImageModal,
+                        InputSchemaComponent,
+                        InputSchemaModal,
+                        InputImageComponent,
+                        InputChoicesComponent,
+                        WysiswygComponent,
+                        UploadComponent,
+                        InputPhoneComponent,
+                        InputAddressComponent,
+                        CultureComponent,
+                        InputContainerComponent,
+                    ],
                     exports: [
                         CheckboxComponent,
                         ColorPickerComponent,
@@ -1186,5 +1395,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamFormInputsModule, CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, InputAddressComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent };
+export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, InputAddressComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaFormInputsModule, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent };
 //# sourceMappingURL=ta-form-input.mjs.map

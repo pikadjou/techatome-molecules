@@ -13,7 +13,7 @@ import { MENU_MAX_HEIGHT, MENU_TEMPLATE } from '../overlay.service';
   },
   imports: [CommonModule],
 })
-export class CamDefaultPanelComponent {
+export class TaDefaultPanelComponent {
   @Input() template?: TemplateRef<any>;
 
   constructor(

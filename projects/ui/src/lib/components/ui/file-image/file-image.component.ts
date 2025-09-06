@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { LocalIconComponent } from '@ta/icons';
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
 import { extractExtension } from '@ta/utils';
 
@@ -19,18 +19,18 @@ export class FileImageComponent {
   @Input()
   size: TaSizes = 'sm';
 
-  get extIcon(): CamIconType {
+  get extIcon(): TaIconType {
     const ext = extractExtension(this.fileName);
 
     switch (ext) {
       case 'docx':
-        return CamIconType.Doc;
+        return TaIconType.Doc;
       case 'pdf':
-        return CamIconType.Pdf;
+        return TaIconType.Pdf;
       case 'xlsx':
-        return CamIconType.Xls;
+        return TaIconType.Xls;
       default:
-        return CamIconType.FileEmpty;
+        return TaIconType.FileEmpty;
     }
   }
 }

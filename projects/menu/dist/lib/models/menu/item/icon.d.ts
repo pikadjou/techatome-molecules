@@ -1,9 +1,9 @@
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 import { IMenuBaseOption, MenuBase } from './base';
 export declare class MenuIcon extends MenuBase {
-    icon: string | CamIconType;
+    icon: string | TaIconType;
     constructor(options: IMenuIconOption);
 }
 export interface IMenuIconOption extends IMenuBaseOption {
-    icon?: string | CamIconType;
+    icon?: string | TaIconType;
 }

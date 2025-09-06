@@ -1,10 +1,10 @@
 import { BehaviorSubject } from 'rxjs';
-import { CamTranslationRegistryService, ITranslation } from '../services/translation-registry.service';
+import { ITranslation, TaTranslationRegistryService } from '../services/translation-registry.service';
 /**
  * @deprecated
  */
-export declare abstract class CamAbstractTranslationModule implements ITranslation {
-    protected _registry: CamTranslationRegistryService;
+export declare abstract class TaAbstractTranslationModule implements ITranslation {
+    protected _registry: TaTranslationRegistryService;
     id: string;
     protected translation: BehaviorSubject<{
         [index: string]: any;

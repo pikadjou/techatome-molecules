@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { UploadDocumentFormService } from '@ta/files-extended';
 import { FormComponent } from '@ta/form-basic';
 import { IInputsError, InputBase } from '@ta/form-model';
-import { CamEnumerationService, TranslatedEnumeration } from '@ta/services';
+import { TaEnumerationService, TranslatedEnumeration } from '@ta/services';
 import { LayoutModalComponent } from '@ta/ui';
 
 export interface UploadDocumentResult {
@@ -33,7 +33,7 @@ export class UploadDocumentModal implements OnInit {
   }
 
   constructor(
-    private _enumTypeService: CamEnumerationService,
+    private _enumTypeService: TaEnumerationService,
     public dialogRef: MatDialogRef<UploadDocumentModal, UploadDocumentResult | null>,
     private _form: UploadDocumentFormService
   ) {}

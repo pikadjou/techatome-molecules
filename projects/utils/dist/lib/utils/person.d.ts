@@ -1,6 +1,6 @@
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 import { Civility } from '../types/public-api';
-export declare const getCivilityIcon: (civility: Civility | null) => CamIconType | null;
+export declare const getCivilityIcon: (civility: Civility | null) => TaIconType | null;
 export declare const getCivility: (person: {
     naming: any;
 }) => Civility | null;

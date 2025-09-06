@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 
-import { CamIconsModule } from '@ta/icons';
+import { TaIconsModule } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { CamContainerModule, CamLayoutModule, CamListModule, CamSwiperModule, CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { TaContainerModule, TaLayoutModule, TaListModule, TaSwiperModule, TaUiModule } from '@ta/ui';
+import { TaDirectivePipeModule } from '@ta/utils';
 
 import { BottomSheetTemplateBasicComponent } from './components/bottom-sheet/templates/basic/bottom-sheet-template-basic.component';
 import { BottomSheetTemplateGenericComponent } from './components/bottom-sheet/templates/generic/bottom-sheet-template-generic.component';
@@ -23,18 +23,40 @@ import { ToggleNavigationComponent } from './components/toggle-navigation/toggle
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
- * // import { CamMenuModule } from '@ta/library-name';
- * 
+ * // import { TaMenuModule } from '@ta/library-name';
+ *
  * // Import the standalone components directly:
  * import { MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent } from '@ta/library-name';
  */
 @NgModule({
-
   declarations: [],
-  imports: [CamUiModule, CamSwiperModule, CamContainerModule, CamDirectivePipeModule, CamLayoutModule, CamListModule, CommonModule, RouterModule, CamIconsModule, MatMenuModule, TranslatePipe, MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent, QuickActionsComponent, QuickActionsCustomComponent, ToggleNavigationComponent, ContextMenuComponent, BottomSheetTemplateGenericComponent, MainMenuComponent, ListComponent, NavigationComponent],
+  imports: [
+    TaUiModule,
+    TaSwiperModule,
+    TaContainerModule,
+    TaDirectivePipeModule,
+    TaLayoutModule,
+    TaListModule,
+    CommonModule,
+    RouterModule,
+    TaIconsModule,
+    MatMenuModule,
+    TranslatePipe,
+    MenuComponent,
+    MenuItemComponent,
+    BottomSheetTemplateBasicComponent,
+    QuickActionsComponent,
+    QuickActionsCustomComponent,
+    ToggleNavigationComponent,
+    ContextMenuComponent,
+    BottomSheetTemplateGenericComponent,
+    MainMenuComponent,
+    ListComponent,
+    NavigationComponent,
+  ],
   exports: [
     MenuComponent,
     MenuItemComponent,
@@ -47,6 +69,5 @@ import { ToggleNavigationComponent } from './components/toggle-navigation/toggle
     MainMenuComponent,
     NavigationComponent,
   ],
-
 })
-export class CamMenuModule {}
+export class TaMenuModule {}

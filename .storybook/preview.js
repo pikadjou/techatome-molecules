@@ -9,7 +9,7 @@ import { LAZY_SERVICE_TOKEN } from '../projects/notification/src/lib/services/no
 import { provideServer } from '../projects/server/src/lib/provider';
 import { provideTranslation } from '../projects/translation/src/lib/provider';
 // Import des services nécessaires pour les mocks spécifiques
-import { CamTranslationUI } from '../projects/ui/src/lib/components/ui/translation.service';
+import { TaTranslationUI } from '../projects/ui/src/lib/components/ui/translation.service';
 import { APPLICATION_CONFIG, LOCAL } from '../projects/utils/src/lib/const/environment';
 
 /** @type { import('@storybook/angular').Preview } */

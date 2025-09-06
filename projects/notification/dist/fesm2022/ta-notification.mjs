@@ -1,16 +1,16 @@
 import { JsonPipe, NgClass, NgFor, NgTemplateOutlet, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Injectable, InjectionToken, inject, Component, EventEmitter, Output, Input, NgModule } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { ButtonComponent, ExpandableTextComponent, LayoutModalComponent, TextComponent, TitleComponent, LinkComponent, ToastComponent, TimeAgoComponent, EmptyComponent, ErrorComponent, LoaderComponent, BulletComponent as BulletComponent$1, TaUiModule, TaContainerModule } from '@ta/ui';
+import { TaBaseModal, copyTextToClipboard, TaBaseComponent, isNonNullable, getUniqueArray, TaDirectivePipeModule } from '@ta/utils';
 import { MatDialog } from '@angular/material/dialog';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FontIconComponent, CamIconsModule } from '@ta/icons';
-import { ButtonComponent, ExpandableTextComponent, LayoutModalComponent, TextComponent, TitleComponent, LinkComponent, ToastComponent, TimeAgoComponent, EmptyComponent, ErrorComponent, LoaderComponent, BulletComponent as BulletComponent$1, CamUiModule, CamContainerModule } from '@ta/ui';
-import { CamBaseModal, copyTextToClipboard, TaBaseComponent, isNonNullable, getUniqueArray, CamDirectivePipeModule } from '@ta/utils';
-import { CamLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { FontIconComponent, TaIconsModule } from '@ta/icons';
+import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { TaServerErrorService, GraphSchema, Apollo_gql, graphQlTake, keyValueProps, graphQlPaginationFields, TaBaseService, HandleComplexRequest } from '@ta/server';
 import { Subject, map, switchMap, of, tap as tap$1 } from 'rxjs';
-import { CamServerErrorService, GraphSchema, Apollo_gql, graphQlTake, keyValueProps, graphQlPaginationFields, CamBaseService, HandleComplexRequest } from '@ta/server';
-import { tap } from 'rxjs/operators';
 
 var ENotificationCode;
 (function (ENotificationCode) {
@@ -21,22 +21,22 @@ var ENotificationCode;
     ENotificationCode[ENotificationCode["success"] = 4] = "success";
 })(ENotificationCode || (ENotificationCode = {}));
 
-class CamTranslationNotification extends CamLazyTranslationService {
+class TaTranslationNotification extends TaLazyTranslationService {
     constructor() {
         super('notification');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationNotification, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationNotification, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationNotification, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationNotification, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationNotification, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationNotification, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
                 }]
         }], ctorParameters: () => [] });
 
-const LAZY_SERVICE_TOKEN = new InjectionToken('CamNotificationService');
-class CamNotificationService {
+const LAZY_SERVICE_TOKEN = new InjectionToken('TaNotificationService');
+class TaNotificationService {
     constructor() {
         this.id = Math.random();
         this.newNotification$ = new Subject();
@@ -44,21 +44,21 @@ class CamNotificationService {
     addNotification(message, code) {
         this.newNotification$.next({ message, code });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
                 }]
         }], ctorParameters: () => [] });
 
-class ErrorBoxModal extends CamBaseModal {
+class ErrorBoxModal extends TaBaseModal {
     constructor() {
         super(...arguments);
         this._notificationService = inject(LAZY_SERVICE_TOKEN);
-        this._errorService = inject(CamServerErrorService);
+        this._errorService = inject(TaServerErrorService);
         this.errorList = this._errorService.notifications;
         this.copyContent = async (entity) => {
             const successNotification = (message) => {
@@ -97,19 +97,12 @@ class ErrorBoxModal extends CamBaseModal {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ErrorBoxModal, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-error-box', standalone: true, imports: [
-                        ButtonComponent,
-                        ExpandableTextComponent,
-                        JsonPipe,
-                        LayoutModalComponent,
-                        TextComponent,
-                        TitleComponent
-                    ], template: "<ta-layout-modal>\r\n  <div class=\"flex-column\">\r\n    @for (entity of this.errorList(); track entity; let i = $index) {\r\n      <ta-title [level]=\"3\">{{ entity.error.name }}</ta-title>\r\n      <div class=\"row\">\r\n        <div class=\"col-6\">\r\n          @for (message of entity.errorsMessage; track message) {\r\n            <ta-text>{{ message.message }}</ta-text>\r\n          }\r\n        </div>\r\n        <div class=\"col-6\">\r\n          <ta-text size=\"sm\">{{ entity.query }}</ta-text>\r\n          <ta-text size=\"sm\">{{ entity.variables | json }}</ta-text>\r\n        </div>\r\n      </div>\r\n      <div class=\"extra\">\r\n        <ta-text size=\"sm\" [isBold]=\"true\"> {{ entity.error.message }}</ta-text>\r\n        <ta-expandable-text size=\"sm\" [height]=\"20\">{{ entity.error.stack }}</ta-expandable-text>\r\n      </div>\r\n      <ta-button class=\"ml-a\" (action)=\"this.copyContent(entity)\">copy</ta-button>\r\n      <div class=\"sep\"></div>\r\n    }\r\n  </div>\r\n</ta-layout-modal>\r\n", styles: [".sep{height:1px;border-bottom:1px solid var(--ta-border-secondary);margin:var(--ta-space-xl) 0}\n"] }]
+            args: [{ selector: 'ta-error-box', standalone: true, imports: [ButtonComponent, ExpandableTextComponent, JsonPipe, LayoutModalComponent, TextComponent, TitleComponent], template: "<ta-layout-modal>\r\n  <div class=\"flex-column\">\r\n    @for (entity of this.errorList(); track entity; let i = $index) {\r\n      <ta-title [level]=\"3\">{{ entity.error.name }}</ta-title>\r\n      <div class=\"row\">\r\n        <div class=\"col-6\">\r\n          @for (message of entity.errorsMessage; track message) {\r\n            <ta-text>{{ message.message }}</ta-text>\r\n          }\r\n        </div>\r\n        <div class=\"col-6\">\r\n          <ta-text size=\"sm\">{{ entity.query }}</ta-text>\r\n          <ta-text size=\"sm\">{{ entity.variables | json }}</ta-text>\r\n        </div>\r\n      </div>\r\n      <div class=\"extra\">\r\n        <ta-text size=\"sm\" [isBold]=\"true\"> {{ entity.error.message }}</ta-text>\r\n        <ta-expandable-text size=\"sm\" [height]=\"20\">{{ entity.error.stack }}</ta-expandable-text>\r\n      </div>\r\n      <ta-button class=\"ml-a\" (action)=\"this.copyContent(entity)\">copy</ta-button>\r\n      <div class=\"sep\"></div>\r\n    }\r\n  </div>\r\n</ta-layout-modal>\r\n", styles: [".sep{height:1px;border-bottom:1px solid var(--ta-border-secondary);margin:var(--ta-space-xl) 0}\n"] }]
         }] });
 function openErrorModal(dialog) {
     return dialog.open(ErrorBoxModal, {
         width: '600px',
-        maxHeight: '80vh'
+        maxHeight: '80vh',
     });
 }
 
@@ -143,7 +136,7 @@ class NotificationInlineComponent extends TaBaseComponent {
         this.close = () => {
             this.askClose.emit();
         };
-        CamTranslationNotification.getInstance();
+        TaTranslationNotification.getInstance();
     }
     getIcon() {
         if (this.isError) {
@@ -208,17 +201,13 @@ class NotificationBoxComponent extends TaBaseComponent {
         }))
             .subscribe());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: NotificationBoxComponent, deps: [{ token: CamNotificationService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: NotificationBoxComponent, deps: [{ token: TaNotificationService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: NotificationBoxComponent, isStandalone: true, selector: "ta-notification-box", usesInheritance: true, ngImport: i0, template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item) {\n    <div>\n      <ta-toast [code]=\"item.code\">\n        <ta-notification-inline [message]=\"item.message\" [code]=\"item.code\" [showClose]=\"false\"></ta-notification-inline>\n      </ta-toast>\n    </div>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media (min-width: 768px){.notification-box_container{width:auto;min-width:200px;max-width:500px}}\n"], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: NotificationBoxComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-notification-box', standalone: true, imports: [
-                        NgFor,
-                        NotificationInlineComponent,
-                        ToastComponent
-                    ], template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item) {\n    <div>\n      <ta-toast [code]=\"item.code\">\n        <ta-notification-inline [message]=\"item.message\" [code]=\"item.code\" [showClose]=\"false\"></ta-notification-inline>\n      </ta-toast>\n    </div>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media (min-width: 768px){.notification-box_container{width:auto;min-width:200px;max-width:500px}}\n"] }]
-        }], ctorParameters: () => [{ type: CamNotificationService }] });
+            args: [{ selector: 'ta-notification-box', standalone: true, imports: [NgFor, NotificationInlineComponent, ToastComponent], template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item) {\n    <div>\n      <ta-toast [code]=\"item.code\">\n        <ta-notification-inline [message]=\"item.message\" [code]=\"item.code\" [showClose]=\"false\"></ta-notification-inline>\n      </ta-toast>\n    </div>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media (min-width: 768px){.notification-box_container{width:auto;min-width:200px;max-width:500px}}\n"] }]
+        }], ctorParameters: () => [{ type: TaNotificationService }] });
 
 const notificationProps = new GraphSchema([
     'id',
@@ -304,17 +293,17 @@ function computeFilters(filters) {
     return `where: { ${clause.join(',')} }`;
 }
 
-class CamNotificationSharedService {
+class TaNotificationSharedService {
     constructor() {
         this.paymentStatusTemplate = null;
         this.projectStatusTemplate = null;
         this.getProjects$ = null;
         this.routing = null;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationSharedService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationSharedService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationSharedService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationSharedService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationSharedService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationSharedService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -325,7 +314,7 @@ const graphEndpoint = {
     clientName: 'notificationService',
     endpoint: 'notification',
 };
-class CamNotificationDataService extends CamBaseService {
+class TaNotificationDataService extends TaBaseService {
     constructor(_sharedService) {
         super();
         this._sharedService = _sharedService;
@@ -362,20 +351,20 @@ class CamNotificationDataService extends CamBaseService {
         }
         return `${filters.projectId}-${filters.isNew}-${filters.take}`;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationDataService, deps: [{ token: CamNotificationSharedService }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationDataService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationDataService, deps: [{ token: TaNotificationSharedService }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationDataService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationDataService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationDataService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
                 }]
-        }], ctorParameters: () => [{ type: CamNotificationSharedService }] });
+        }], ctorParameters: () => [{ type: TaNotificationSharedService }] });
 
 class AbstractNotificationTemplateComponent {
     constructor() {
-        this.sharedService = inject(CamNotificationSharedService);
-        this.dataService = inject(CamNotificationDataService);
+        this.sharedService = inject(TaNotificationSharedService);
+        this.dataService = inject(TaNotificationDataService);
     }
     goTo() {
         this.dataService.isRead$(this.notification.id).subscribe();
@@ -726,7 +715,7 @@ class ContainerComponent extends TaBaseComponent {
             this._sharedService.routing = this.routing;
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContainerComponent, deps: [{ token: CamNotificationDataService }, { token: CamNotificationSharedService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContainerComponent, deps: [{ token: TaNotificationDataService }, { token: TaNotificationSharedService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ContainerComponent, isStandalone: true, selector: "ta-notification-container", inputs: { filters: "filters", templates: "templates", services: "services", routing: "routing" }, outputs: { nbChanged: "nbChanged" }, usesInheritance: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.notifications$ | async as notifications\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty\n      [isEmpty]=\"!notifications || notifications.length === 0\"\n      icon=\"ghost\"\n      [isLight]=\"false\"\n      text=\"notification.empty\"\n    >\n      <div class=\"notification-container\">\n        @for (notif of this.notifications; track notif) {\n          <div class=\"item-container c-pointer\">\n            @switch (notif.type) {\n              @case ('ProjectStatusChanged') {\n                <ta-notification-project-status-changed [notification]=\"notif\"></ta-notification-project-status-changed>\n              }\n              @case ('NewQuotationVersion') {\n                <ta-new-quotation-version [notification]=\"notif\"></ta-new-quotation-version>\n              }\n              @case ('NewInvoice') {\n                <ta-new-invoice [notification]=\"notif\"></ta-new-invoice>\n              }\n              @case ('InvoicePaymentStatusChanged') {\n                <ta-invoice-payment-status-changed [notification]=\"notif\"></ta-invoice-payment-status-changed>\n              }\n              @case ('TaskAssigned') {\n                <ta-task-assigned [notification]=\"notif\"></ta-task-assigned>\n              }\n              @case ('ToDoAssigned') {\n                <ta-to-do-assigned [notification]=\"notif\"></ta-to-do-assigned>\n              }\n              @case ('TaskDueToday') {\n                <ta-task-due-today [notification]=\"notif\"></ta-task-due-today>\n              }\n              @case ('ToDoDueToday') {\n                <ta-to-do-due-today [notification]=\"notif\"></ta-to-do-due-today>\n              }\n              @case ('TaskNewActivity') {\n                <ta-task-new-activity [notification]=\"notif\"></ta-task-new-activity>\n              }\n              @case ('UserTaggedInConversation') {\n                <ta-user-tagged-in-conversation [notification]=\"notif\"></ta-user-tagged-in-conversation>\n              }\n            }\n          </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".item-container{border-bottom:1px solid var(--ta-border-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: InvoicePaymentStatusChangedComponent, selector: "ta-invoice-payment-status-changed" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: NewInvoiceComponent, selector: "ta-new-invoice" }, { kind: "component", type: NewQuotationVersionComponent, selector: "ta-new-quotation-version" }, { kind: "component", type: ProjectStatusChangedComponent, selector: "ta-notification-project-status-changed" }, { kind: "component", type: TaskAssignedComponent, selector: "ta-task-assigned" }, { kind: "component", type: TaskDueTodayComponent, selector: "ta-task-due-today" }, { kind: "component", type: TaskNewActivityComponent, selector: "ta-task-new-activity" }, { kind: "component", type: ToDoAssignedComponent, selector: "ta-to-do-assigned" }, { kind: "component", type: ToDoDueTodayComponent, selector: "ta-to-do-due-today" }, { kind: "component", type: UserTaggedInConversationComponent, selector: "ta-user-tagged-in-conversation" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContainerComponent, decorators: [{
@@ -746,9 +735,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         TaskNewActivityComponent,
                         ToDoAssignedComponent,
                         ToDoDueTodayComponent,
-                        UserTaggedInConversationComponent
+                        UserTaggedInConversationComponent,
                     ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\" *ngLet=\"this.notifications$ | async as notifications\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <ta-empty\n      [isEmpty]=\"!notifications || notifications.length === 0\"\n      icon=\"ghost\"\n      [isLight]=\"false\"\n      text=\"notification.empty\"\n    >\n      <div class=\"notification-container\">\n        @for (notif of this.notifications; track notif) {\n          <div class=\"item-container c-pointer\">\n            @switch (notif.type) {\n              @case ('ProjectStatusChanged') {\n                <ta-notification-project-status-changed [notification]=\"notif\"></ta-notification-project-status-changed>\n              }\n              @case ('NewQuotationVersion') {\n                <ta-new-quotation-version [notification]=\"notif\"></ta-new-quotation-version>\n              }\n              @case ('NewInvoice') {\n                <ta-new-invoice [notification]=\"notif\"></ta-new-invoice>\n              }\n              @case ('InvoicePaymentStatusChanged') {\n                <ta-invoice-payment-status-changed [notification]=\"notif\"></ta-invoice-payment-status-changed>\n              }\n              @case ('TaskAssigned') {\n                <ta-task-assigned [notification]=\"notif\"></ta-task-assigned>\n              }\n              @case ('ToDoAssigned') {\n                <ta-to-do-assigned [notification]=\"notif\"></ta-to-do-assigned>\n              }\n              @case ('TaskDueToday') {\n                <ta-task-due-today [notification]=\"notif\"></ta-task-due-today>\n              }\n              @case ('ToDoDueToday') {\n                <ta-to-do-due-today [notification]=\"notif\"></ta-to-do-due-today>\n              }\n              @case ('TaskNewActivity') {\n                <ta-task-new-activity [notification]=\"notif\"></ta-task-new-activity>\n              }\n              @case ('UserTaggedInConversation') {\n                <ta-user-tagged-in-conversation [notification]=\"notif\"></ta-user-tagged-in-conversation>\n              }\n            }\n          </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".item-container{border-bottom:1px solid var(--ta-border-primary)}\n"] }]
-        }], ctorParameters: () => [{ type: CamNotificationDataService }, { type: CamNotificationSharedService }], propDecorators: { filters: [{
+        }], ctorParameters: () => [{ type: TaNotificationDataService }, { type: TaNotificationSharedService }], propDecorators: { filters: [{
                 type: Input
             }], templates: [{
                 type: Input
@@ -778,16 +767,13 @@ class BulletComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BulletComponent, deps: [{ token: CamNotificationDataService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BulletComponent, deps: [{ token: TaNotificationDataService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: BulletComponent, isStandalone: true, selector: "ta-notification-bullet", inputs: { filters: "filters" }, usesInheritance: true, ngImport: i0, template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: BulletComponent$1, selector: "ta-bullet", inputs: ["size", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BulletComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-notification-bullet', standalone: true, imports: [
-                        AsyncPipe,
-                        BulletComponent$1
-                    ], template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n" }]
-        }], ctorParameters: () => [{ type: CamNotificationDataService }], propDecorators: { filters: [{
+            args: [{ selector: 'ta-notification-bullet', standalone: true, imports: [AsyncPipe, BulletComponent$1], template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n" }]
+        }], ctorParameters: () => [{ type: TaNotificationDataService }], propDecorators: { filters: [{
                 type: Input
             }] } });
 
@@ -806,53 +792,121 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamNotificationModule } from '@ta/library-name';
+ * // import { TaNotificationModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { NotificationInlineComponent, ContainerComponent, BulletComponent } from '@ta/library-name';
  */
-class CamNotificationModule {
+class TaNotificationModule {
     static forRoot() {
         return {
-            ngModule: CamNotificationModule,
+            ngModule: TaNotificationModule,
             providers: [
-                { provide: LAZY_SERVICE_TOKEN, useExisting: CamNotificationService },
-                CamNotificationDataService,
-                CamNotificationSharedService,
+                { provide: LAZY_SERVICE_TOKEN, useExisting: TaNotificationService },
+                TaNotificationDataService,
+                TaNotificationSharedService,
             ],
         };
     }
     constructor() {
-        CamTranslationNotification.getInstance();
+        TaTranslationNotification.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationModule, imports: [CommonModule, CamDirectivePipeModule, CamIconsModule, CamUiModule, CamContainerModule, TranslatePipe, NotificationBoxComponent, NotificationInlineComponent, ContainerComponent, ItemComponent, IconComponent, ItemInfoComponent, ProjectStatusChangedComponent, NewQuotationVersionComponent, NewInvoiceComponent, InvoicePaymentStatusChangedComponent, NotificationTitleComponent, TaskAssignedComponent, ToDoAssignedComponent, TaskDueTodayComponent, ToDoDueTodayComponent, TaskNewActivityComponent, UserTaggedInConversationComponent, BulletComponent], exports: [NotificationInlineComponent, ContainerComponent, BulletComponent, NotificationBoxComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationModule, imports: [CommonModule, CamDirectivePipeModule, CamIconsModule, CamUiModule, CamContainerModule, NotificationBoxComponent, NotificationInlineComponent, ContainerComponent, ItemComponent, IconComponent, ProjectStatusChangedComponent, NewQuotationVersionComponent, NewInvoiceComponent, InvoicePaymentStatusChangedComponent, TaskAssignedComponent, ToDoAssignedComponent, TaskDueTodayComponent, ToDoDueTodayComponent, TaskNewActivityComponent, UserTaggedInConversationComponent, BulletComponent] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationModule, imports: [CommonModule,
+            TaDirectivePipeModule,
+            TaIconsModule,
+            TaUiModule,
+            TaContainerModule,
+            TranslatePipe,
+            NotificationBoxComponent,
+            NotificationInlineComponent,
+            ContainerComponent,
+            ItemComponent,
+            IconComponent,
+            ItemInfoComponent,
+            ProjectStatusChangedComponent,
+            NewQuotationVersionComponent,
+            NewInvoiceComponent,
+            InvoicePaymentStatusChangedComponent,
+            NotificationTitleComponent,
+            TaskAssignedComponent,
+            ToDoAssignedComponent,
+            TaskDueTodayComponent,
+            ToDoDueTodayComponent,
+            TaskNewActivityComponent,
+            UserTaggedInConversationComponent,
+            BulletComponent], exports: [NotificationInlineComponent, ContainerComponent, BulletComponent, NotificationBoxComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationModule, imports: [CommonModule,
+            TaDirectivePipeModule,
+            TaIconsModule,
+            TaUiModule,
+            TaContainerModule,
+            NotificationBoxComponent,
+            NotificationInlineComponent,
+            ContainerComponent,
+            ItemComponent,
+            IconComponent,
+            ProjectStatusChangedComponent,
+            NewQuotationVersionComponent,
+            NewInvoiceComponent,
+            InvoicePaymentStatusChangedComponent,
+            TaskAssignedComponent,
+            ToDoAssignedComponent,
+            TaskDueTodayComponent,
+            ToDoDueTodayComponent,
+            TaskNewActivityComponent,
+            UserTaggedInConversationComponent,
+            BulletComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationModule, decorators: [{
             type: NgModule,
             args: [{
-                    imports: [CommonModule, CamDirectivePipeModule, CamIconsModule, CamUiModule, CamContainerModule, TranslatePipe, NotificationBoxComponent, NotificationInlineComponent, ContainerComponent, ItemComponent, IconComponent, ItemInfoComponent, ProjectStatusChangedComponent, NewQuotationVersionComponent, NewInvoiceComponent, InvoicePaymentStatusChangedComponent, NotificationTitleComponent, TaskAssignedComponent, ToDoAssignedComponent, TaskDueTodayComponent, ToDoDueTodayComponent, TaskNewActivityComponent, UserTaggedInConversationComponent, BulletComponent],
+                    imports: [
+                        CommonModule,
+                        TaDirectivePipeModule,
+                        TaIconsModule,
+                        TaUiModule,
+                        TaContainerModule,
+                        TranslatePipe,
+                        NotificationBoxComponent,
+                        NotificationInlineComponent,
+                        ContainerComponent,
+                        ItemComponent,
+                        IconComponent,
+                        ItemInfoComponent,
+                        ProjectStatusChangedComponent,
+                        NewQuotationVersionComponent,
+                        NewInvoiceComponent,
+                        InvoicePaymentStatusChangedComponent,
+                        NotificationTitleComponent,
+                        TaskAssignedComponent,
+                        ToDoAssignedComponent,
+                        TaskDueTodayComponent,
+                        ToDoDueTodayComponent,
+                        TaskNewActivityComponent,
+                        UserTaggedInConversationComponent,
+                        BulletComponent,
+                    ],
                     declarations: [],
                     exports: [NotificationInlineComponent, ContainerComponent, BulletComponent, NotificationBoxComponent],
                 }]
         }], ctorParameters: () => [] });
-class CamNotificationProvider {
+class TaNotificationProvider {
     static forRoot() {
         return {
-            ngModule: CamNotificationProvider,
+            ngModule: TaNotificationProvider,
             providers: [
-                { provide: LAZY_SERVICE_TOKEN, useExisting: CamNotificationService },
-                CamNotificationDataService,
-                CamNotificationSharedService,
+                { provide: LAZY_SERVICE_TOKEN, useExisting: TaNotificationService },
+                TaNotificationDataService,
+                TaNotificationSharedService,
             ],
         };
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationProvider, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationProvider }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationProvider }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationProvider, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationProvider }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationProvider }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamNotificationProvider, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaNotificationProvider, decorators: [{
             type: NgModule,
             args: [{
                     imports: [],
@@ -869,5 +923,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { BulletComponent, CamNotificationModule, CamNotificationProvider, CamNotificationService, ContainerComponent, ENotificationCode, LAZY_SERVICE_TOKEN, NotificationBoxComponent, NotificationInlineComponent };
+export { BulletComponent, ContainerComponent, ENotificationCode, LAZY_SERVICE_TOKEN, NotificationBoxComponent, NotificationInlineComponent, TaNotificationModule, TaNotificationProvider, TaNotificationService };
 //# sourceMappingURL=ta-notification.mjs.map

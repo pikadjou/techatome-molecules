@@ -23,13 +23,13 @@ import * as i18 from "./components/navigation/navigation.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamMenuModule } from '@ta/library-name';
+ * // import { TaMenuModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent } from '@ta/library-name';
  */
-export declare class CamMenuModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamMenuModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamMenuModule, never, [typeof i1.CamUiModule, typeof i1.CamSwiperModule, typeof i1.CamContainerModule, typeof i2.CamDirectivePipeModule, typeof i1.CamLayoutModule, typeof i1.CamListModule, typeof i3.CommonModule, typeof i4.RouterModule, typeof i5.CamIconsModule, typeof i6.MatMenuModule, typeof i7.TranslatePipe, typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.QuickActionsComponent, typeof i12.QuickActionsCustomComponent, typeof i13.ToggleNavigationComponent, typeof i14.ContextMenuComponent, typeof i15.BottomSheetTemplateGenericComponent, typeof i16.MainMenuComponent, typeof i17.ListComponent, typeof i18.NavigationComponent], [typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.QuickActionsComponent, typeof i12.QuickActionsCustomComponent, typeof i13.ToggleNavigationComponent, typeof i14.ContextMenuComponent, typeof i15.BottomSheetTemplateGenericComponent, typeof i16.MainMenuComponent, typeof i18.NavigationComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamMenuModule>;
+export declare class TaMenuModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaMenuModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaMenuModule, never, [typeof i1.TaUiModule, typeof i1.TaSwiperModule, typeof i1.TaContainerModule, typeof i2.TaDirectivePipeModule, typeof i1.TaLayoutModule, typeof i1.TaListModule, typeof i3.CommonModule, typeof i4.RouterModule, typeof i5.TaIconsModule, typeof i6.MatMenuModule, typeof i7.TranslatePipe, typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.QuickActionsComponent, typeof i12.QuickActionsCustomComponent, typeof i13.ToggleNavigationComponent, typeof i14.ContextMenuComponent, typeof i15.BottomSheetTemplateGenericComponent, typeof i16.MainMenuComponent, typeof i17.ListComponent, typeof i18.NavigationComponent], [typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.QuickActionsComponent, typeof i12.QuickActionsCustomComponent, typeof i13.ToggleNavigationComponent, typeof i14.ContextMenuComponent, typeof i15.BottomSheetTemplateGenericComponent, typeof i16.MainMenuComponent, typeof i18.NavigationComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaMenuModule>;
 }

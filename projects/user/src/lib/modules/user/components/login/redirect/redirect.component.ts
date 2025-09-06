@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { CAM_AUTH_TOKEN } from '../../../services/auth.service';
+import { TA_AUTH_TOKEN } from '../../../services/auth.service';
 
 @Component({
   selector: '',
@@ -8,7 +8,7 @@ import { CAM_AUTH_TOKEN } from '../../../services/auth.service';
   standalone: true,
 })
 export class LoginRedirectComponent {
-  private _authService = inject(CAM_AUTH_TOKEN);
+  private _authService = inject(TA_AUTH_TOKEN);
 
   constructor() {
     this._authService.login();

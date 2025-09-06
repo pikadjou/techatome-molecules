@@ -4,11 +4,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { CamIconsModule } from '@ta/icons';
+import { TaIconsModule } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { TaDirectivePipeModule } from '@ta/utils';
 
-import { CamUiModule } from '../../components/ui/ui.module';
+import { TaUiModule } from '../../components/ui/ui.module';
 import { LayoutContentComponent } from './layout-content/layout-content.component';
 import { LayoutNotFoundComponent } from './layout-error/not-found/not-found.component';
 import { LayoutFlexComponent } from './layout-flex/layout-flex.component';
@@ -25,25 +25,51 @@ import { LayoutSideContentComponent } from './layout-side/layout-side-content/la
 import { LayoutSideCtaComponent } from './layout-side/layout-side-cta/layout-side-cta.component';
 import { LayoutSideComponent } from './layout-side/layout-side.component';
 import { LayoutTitleComponent } from './layout-title/layout-title.component';
-import { CamTranslationLayout } from './translation.service';
+import { TaTranslationLayout } from './translation.service';
 import { LayoutWithBottomNavComponent } from './with-bottom-nav/layout-with-bottom-nav.component';
 import { LayoutWithPanelComponent } from './with-panel/layout-with-panel.component';
 
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
- * // import { CamLayoutModule } from '@ta/library-name';
- * 
+ * // import { TaLayoutModule } from '@ta/library-name';
+ *
  * // Import the standalone components directly:
  * import { LayoutFlexComponent, LayoutContentComponent, LayoutHeaderComponent } from '@ta/library-name';
  */
 @NgModule({
-
   declarations: [],
-  imports: [CommonModule, MatSidenavModule, CamUiModule, CamIconsModule, MatMenuModule, CamDirectivePipeModule, MatDialogModule, TranslatePipe, LayoutContentComponent, LayoutHeaderComponent, LayoutNavComponent, LayoutPanelComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LayoutPageComponent, LayoutTitleComponent, LayoutHeaderDefaultComponent, LayoutModalComponent, LayoutHeaderLogoComponent, LayoutFullPanelComponent, LayoutSideCtaComponent, LayoutSideComponent, LayoutSideContentComponent, TemplateModalContainer, LayoutNotFoundComponent, LayoutFlexComponent],
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    TaUiModule,
+    TaIconsModule,
+    MatMenuModule,
+    TaDirectivePipeModule,
+    MatDialogModule,
+    TranslatePipe,
+    LayoutContentComponent,
+    LayoutHeaderComponent,
+    LayoutNavComponent,
+    LayoutPanelComponent,
+    LayoutWithBottomNavComponent,
+    LayoutWithPanelComponent,
+    LayoutPageComponent,
+    LayoutTitleComponent,
+    LayoutHeaderDefaultComponent,
+    LayoutModalComponent,
+    LayoutHeaderLogoComponent,
+    LayoutFullPanelComponent,
+    LayoutSideCtaComponent,
+    LayoutSideComponent,
+    LayoutSideContentComponent,
+    TemplateModalContainer,
+    LayoutNotFoundComponent,
+    LayoutFlexComponent,
+  ],
   exports: [
     LayoutFlexComponent,
     LayoutContentComponent,
@@ -64,10 +90,9 @@ import { LayoutWithPanelComponent } from './with-panel/layout-with-panel.compone
     LayoutSideComponent,
     LayoutSideContentComponent,
   ],
-
 })
-export class CamLayoutModule {
+export class TaLayoutModule {
   constructor() {
-    CamTranslationLayout.getInstance();
+    TaTranslationLayout.getInstance();
   }
 }

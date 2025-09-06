@@ -2,7 +2,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
-import { CamTranslationService, TranslatePipe } from '@ta/translation';
+import { TaTranslationService, TranslatePipe } from '@ta/translation';
 import {
   ListContainerComponent,
   ListElementComponent,
@@ -29,7 +29,7 @@ import {
   ],
 })
 export class SwitchLanguageComponent {
-  readonly translateService = inject(CamTranslationService);
+  readonly translateService = inject(TaTranslationService);
   readonly languages = [
     { id: 'fr', name: 'Français' },
     { id: 'nl', name: 'Nederlands' },

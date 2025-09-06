@@ -2,7 +2,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, TemplateRef, inject } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-import { CamSharedMenuService } from '@ta/services';
+import { TaSharedMenuService } from '@ta/services';
 import { LogoComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
@@ -29,7 +29,7 @@ export class MainMenuComponent extends TaBaseComponent {
   @Input()
   direction: 'horizontal' | 'vertical' = 'vertical';
 
-  public sharedMenu = inject(CamSharedMenuService);
+  public sharedMenu = inject(TaSharedMenuService);
 
   public toggleView() {
     this.sharedMenu.isMinimized$.next(!this.sharedMenu.isMinimized$.getValue());

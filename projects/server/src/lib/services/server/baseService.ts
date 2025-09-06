@@ -9,7 +9,7 @@ import { TaServerSevice } from './api/server.service';
 @Injectable({
   providedIn: 'root',
 })
-export abstract class CamBaseService implements OnDestroy {
+export abstract class TaBaseService implements OnDestroy {
   protected _subscriptionList: Subscription[] = [];
   protected _serverService = inject(TaServerSevice);
   protected _graphService = inject(TaGraphService);

@@ -1,19 +1,20 @@
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Inject, OnInit, Optional, Output } from '@angular/core';
+
+import { of } from 'rxjs';
 
 import { ToggleComponent } from '@ta/form-input';
 import { InputCheckBox } from '@ta/form-model';
 import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
-import { LoaderComponent, ErrorComponent, EmptyComponent } from '@ta/ui';
+import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
-import { of } from 'rxjs';
 
-import { CamSaleService } from '../../services/sale.service';
+import { TaSaleService } from '../../services/sale.service';
 import { RichTextComponent } from '../types/rich-text/rich-text.component';
 
 @Component({
-selector: 'ta-sale',
+  selector: 'ta-sale',
   templateUrl: './sale.component.html',
   styleUrls: ['./sale.component.scss'],
   standalone: true,
@@ -34,7 +35,7 @@ export class SaleComponent extends TaBaseComponent implements OnInit {
     return this.saleService.saleContents.get$(this.tenantConfig.tenantId?.toString());
   }
   constructor(
-    public saleService: CamSaleService,
+    public saleService: TaSaleService,
     @Optional() @Inject(TENANT_CONFIG_TOKEN) private tenantConfig: TenantConfig
   ) {
     super();

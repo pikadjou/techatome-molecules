@@ -1,9 +1,9 @@
 import { OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CamBaseModal, FileData, TemporaryFile } from '@ta/utils';
+import { FileData, TaBaseModal, TemporaryFile } from '@ta/utils';
 import { DialogData } from '../input-images.component';
 import * as i0 from "@angular/core";
-export declare class InputImageModal extends CamBaseModal implements OnInit {
+export declare class InputImageModal extends TaBaseModal implements OnInit {
     dialogRef: MatDialogRef<InputImageModal>;
     data: DialogData;
     selection: string[];

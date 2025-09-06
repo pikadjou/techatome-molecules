@@ -1,8 +1,8 @@
 import { OnInit } from '@angular/core';
 import { InputTextBox } from '@ta/form-model';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class TextBoxComponent extends CamAbstractInputComponent<InputTextBox> implements OnInit {
+export declare class TextBoxComponent extends TaAbstractInputComponent<InputTextBox> implements OnInit {
     space: boolean;
     hide: boolean;
     get isPassword(): boolean;

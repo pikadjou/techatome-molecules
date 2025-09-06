@@ -1,0 +1,12 @@
+/*
+ * Public API Surface of users
+ */
+export * from './lib/modules/user/guards/public-api';
+export * from './lib/modules/user/services/user.service';
+export * from './lib/modules/user/services/auth.service';
+export * from './lib/modules/user/services/permissions.service';
+export * from './lib/modules/user/services/dto/user-profile';
+export * from './lib/modules/user/components/public-api';
+export * from './lib/modules/user/provide';
+export * from './lib/modules/auth0/provide';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyxzQ0FBc0MsQ0FBQztBQUVyRCxjQUFjLDBDQUEwQyxDQUFDO0FBQ3pELGNBQWMsMENBQTBDLENBQUM7QUFDekQsY0FBYyxpREFBaUQsQ0FBQztBQUNoRSxjQUFjLDhDQUE4QyxDQUFDO0FBRTdELGNBQWMsMENBQTBDLENBQUM7QUFDekQsY0FBYyw0QkFBNEIsQ0FBQztBQUUzQyxjQUFjLDZCQUE2QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiB1c2Vyc1xuICovXG5leHBvcnQgKiBmcm9tICcuL2xpYi9tb2R1bGVzL3VzZXIvZ3VhcmRzL3B1YmxpYy1hcGknO1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9tb2R1bGVzL3VzZXIvc2VydmljZXMvdXNlci5zZXJ2aWNlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL21vZHVsZXMvdXNlci9zZXJ2aWNlcy9hdXRoLnNlcnZpY2UnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvbW9kdWxlcy91c2VyL3NlcnZpY2VzL3Blcm1pc3Npb25zLnNlcnZpY2UnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvbW9kdWxlcy91c2VyL3NlcnZpY2VzL2R0by91c2VyLXByb2ZpbGUnO1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9tb2R1bGVzL3VzZXIvY29tcG9uZW50cy9wdWJsaWMtYXBpJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL21vZHVsZXMvdXNlci9wcm92aWRlJztcblxuZXhwb3J0ICogZnJvbSAnLi9saWIvbW9kdWxlcy9hdXRoMC9wcm92aWRlJztcbiJdfQ==

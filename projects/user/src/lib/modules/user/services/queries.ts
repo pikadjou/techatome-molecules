@@ -1,17 +1,11 @@
-import { Apollo_gql, GraphQueryPayload } from 'projects/server/dist';
+import { Apollo_gql, GraphQueryInput, GraphQueryPayload } from '@ta/server';
 
-import { UserProfileProps } from './dto/user-profile';
-
-export function userInfo(): GraphQueryPayload {
+export function userInfo({ props }: GraphQueryInput): GraphQueryPayload {
   return {
     query: Apollo_gql`
         query UserInfo {
           userInfo {
-            ${UserProfileProps.get('id')}
-            ${UserProfileProps.get('firstname')}
-            ${UserProfileProps.get('lastname')}
-            ${UserProfileProps.get('email')}
-            ${UserProfileProps.get('picture')}
+            ${props}
           }
         }
       `,

@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 
-import { CamBaseService } from '../server/baseService';
-import { CamStrapiService } from './strapi.service';
+import { TaBaseService } from '../server/baseService';
+import { TaStrapiService } from './strapi.service';
 
-export abstract class CamBaseStrapiService extends CamBaseService {
-  protected _strapiService = inject(CamStrapiService);
+export abstract class TaBaseStrapiService extends TaBaseService {
+  protected _strapiService = inject(TaStrapiService);
 }

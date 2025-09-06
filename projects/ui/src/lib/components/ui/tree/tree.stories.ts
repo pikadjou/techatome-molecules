@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/angular';
 
-import { CamTreeContainerComponent } from './tree-container/tree-container.component';
+import { TaTreeContainerComponent } from './tree-container/tree-container.component';
 
-export type StoryType = CamTreeContainerComponent;
+export type StoryType = TaTreeContainerComponent;
 
 export default {
   title: 'UI/Tree',
-  component: CamTreeContainerComponent,
+  component: TaTreeContainerComponent,
   tags: ['autodocs'],
   render: args => ({
     props: args,

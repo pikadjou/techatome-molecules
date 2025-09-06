@@ -1,10 +1,10 @@
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { InputComponent } from '@ta/form-model';
-import { CamBaseModal } from '@ta/utils';
 import { Subject } from 'rxjs';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputComponent } from '@ta/form-model';
+import { TaBaseModal } from '@ta/utils';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class ComponentInputComponent extends CamAbstractInputComponent<InputComponent> {
+export declare class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
     readonly dialog: MatDialog;
     open(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ComponentInputComponent, never>;
@@ -13,7 +13,7 @@ export declare class ComponentInputComponent extends CamAbstractInputComponent<I
 type TemplateModalData = {
     input: InputComponent;
 };
-export declare class TemplateModal extends CamBaseModal {
+export declare class TemplateModal extends TaBaseModal {
     readonly dialogRef: MatDialogRef<any, any>;
     readonly data: TemplateModalData;
     readonly selectedValue$: Subject<string>;

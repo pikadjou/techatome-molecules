@@ -1,14 +1,15 @@
 import { NgIf } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
+import { FontIconComponent } from '@ta/icons';
 import { octetsToMo, roundToDecimal } from '@ta/utils';
 
-import { CamTranslationUI } from '../translation.service';
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
-selector: 'ta-megaoctet',
+  selector: 'ta-megaoctet',
   templateUrl: './megaoctet.component.html',
   styleUrls: ['./megaoctet.component.scss'],
   standalone: true,
@@ -22,7 +23,7 @@ export class MegaoctetComponent {
   icon: boolean = false;
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 
   get megaoctet() {

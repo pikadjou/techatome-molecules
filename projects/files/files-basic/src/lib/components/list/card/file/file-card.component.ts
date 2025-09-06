@@ -1,16 +1,38 @@
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CamIconType } from '@ta/icons';
-import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent } from '@ta/ui';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
+import {
+  BadgeComponent,
+  CardComponent,
+  CardContentComponent,
+  CardCtaComponent,
+  CardHeaderComponent,
+  CardTagComponent,
+  CardTitleComponent,
+  TitleComponent,
+  TrigramComponent,
+} from '@ta/ui';
 import { EFileExtension, FileData } from '@ta/utils';
 
 @Component({
-selector: 'ta-file-card',
+  selector: 'ta-file-card',
   templateUrl: './file-card.component.html',
   styleUrls: ['./file-card.component.scss'],
   standalone: true,
-  imports: [BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, FontIconComponent, LocalIconComponent, TitleComponent, TrigramComponent],
+  imports: [
+    BadgeComponent,
+    CardComponent,
+    CardContentComponent,
+    CardCtaComponent,
+    CardHeaderComponent,
+    CardTagComponent,
+    CardTitleComponent,
+    FontIconComponent,
+    LocalIconComponent,
+    TitleComponent,
+    TrigramComponent,
+  ],
 })
 export class FileCardComponent {
   @Input() file!: FileData;
@@ -24,15 +46,15 @@ export class FileCardComponent {
   get localIcon() {
     switch (this.file.fileExtension) {
       case EFileExtension.PDF:
-        return CamIconType.Pdf;
+        return TaIconType.Pdf;
       case EFileExtension.Word:
-        return CamIconType.Doc;
+        return TaIconType.Doc;
       case EFileExtension.Excel:
-        return CamIconType.Excel;
+        return TaIconType.Excel;
       case EFileExtension.Image:
-        return CamIconType.Image;
+        return TaIconType.Image;
       default:
-        return CamIconType.UnknownFile;
+        return TaIconType.UnknownFile;
     }
   }
 

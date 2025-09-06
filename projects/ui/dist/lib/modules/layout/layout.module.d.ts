@@ -31,14 +31,14 @@ import * as i26 from "./layout-flex/layout-flex.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamLayoutModule } from '@ta/library-name';
+ * // import { TaLayoutModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { LayoutFlexComponent, LayoutContentComponent, LayoutHeaderComponent } from '@ta/library-name';
  */
-export declare class CamLayoutModule {
+export declare class TaLayoutModule {
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamLayoutModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamLayoutModule, never, [typeof i1.CommonModule, typeof i2.MatSidenavModule, typeof i3.CamUiModule, typeof i4.CamIconsModule, typeof i5.MatMenuModule, typeof i6.CamDirectivePipeModule, typeof i7.MatDialogModule, typeof i8.TranslatePipe, typeof i9.LayoutContentComponent, typeof i10.LayoutHeaderComponent, typeof i11.LayoutNavComponent, typeof i12.LayoutPanelComponent, typeof i13.LayoutWithBottomNavComponent, typeof i14.LayoutWithPanelComponent, typeof i15.LayoutPageComponent, typeof i16.LayoutTitleComponent, typeof i17.LayoutHeaderDefaultComponent, typeof i18.LayoutModalComponent, typeof i19.LayoutHeaderLogoComponent, typeof i20.LayoutFullPanelComponent, typeof i21.LayoutSideCtaComponent, typeof i22.LayoutSideComponent, typeof i23.LayoutSideContentComponent, typeof i24.TemplateModalContainer, typeof i25.LayoutNotFoundComponent, typeof i26.LayoutFlexComponent], [typeof i26.LayoutFlexComponent, typeof i9.LayoutContentComponent, typeof i10.LayoutHeaderComponent, typeof i11.LayoutNavComponent, typeof i12.LayoutPanelComponent, typeof i13.LayoutWithBottomNavComponent, typeof i14.LayoutWithPanelComponent, typeof i15.LayoutPageComponent, typeof i16.LayoutTitleComponent, typeof i17.LayoutHeaderDefaultComponent, typeof i18.LayoutModalComponent, typeof i19.LayoutHeaderLogoComponent, typeof i25.LayoutNotFoundComponent, typeof i24.TemplateModalContainer, typeof i20.LayoutFullPanelComponent, typeof i21.LayoutSideCtaComponent, typeof i22.LayoutSideComponent, typeof i23.LayoutSideContentComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamLayoutModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaLayoutModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaLayoutModule, never, [typeof i1.CommonModule, typeof i2.MatSidenavModule, typeof i3.TaUiModule, typeof i4.TaIconsModule, typeof i5.MatMenuModule, typeof i6.TaDirectivePipeModule, typeof i7.MatDialogModule, typeof i8.TranslatePipe, typeof i9.LayoutContentComponent, typeof i10.LayoutHeaderComponent, typeof i11.LayoutNavComponent, typeof i12.LayoutPanelComponent, typeof i13.LayoutWithBottomNavComponent, typeof i14.LayoutWithPanelComponent, typeof i15.LayoutPageComponent, typeof i16.LayoutTitleComponent, typeof i17.LayoutHeaderDefaultComponent, typeof i18.LayoutModalComponent, typeof i19.LayoutHeaderLogoComponent, typeof i20.LayoutFullPanelComponent, typeof i21.LayoutSideCtaComponent, typeof i22.LayoutSideComponent, typeof i23.LayoutSideContentComponent, typeof i24.TemplateModalContainer, typeof i25.LayoutNotFoundComponent, typeof i26.LayoutFlexComponent], [typeof i26.LayoutFlexComponent, typeof i9.LayoutContentComponent, typeof i10.LayoutHeaderComponent, typeof i11.LayoutNavComponent, typeof i12.LayoutPanelComponent, typeof i13.LayoutWithBottomNavComponent, typeof i14.LayoutWithPanelComponent, typeof i15.LayoutPageComponent, typeof i16.LayoutTitleComponent, typeof i17.LayoutHeaderDefaultComponent, typeof i18.LayoutModalComponent, typeof i19.LayoutHeaderLogoComponent, typeof i25.LayoutNotFoundComponent, typeof i24.TemplateModalContainer, typeof i20.LayoutFullPanelComponent, typeof i21.LayoutSideCtaComponent, typeof i22.LayoutSideComponent, typeof i23.LayoutSideContentComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaLayoutModule>;
 }

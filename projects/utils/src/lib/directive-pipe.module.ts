@@ -16,7 +16,7 @@ import { SafePipe } from './pipe/safe.pipe';
  *
  * @example
  * // Instead of importing the module:
- * // import { CamDirectivePipeModule } from '@ta/library-name';
+ * // import { TaDirectivePipeModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FileSizePipe, JoinPipe, LetDirective } from '@ta/library-name';
@@ -26,6 +26,6 @@ import { SafePipe } from './pipe/safe.pipe';
   imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective],
   exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective],
 })
-export class CamDirectivePipeModule {
+export class TaDirectivePipeModule {
   constructor() {}
 }

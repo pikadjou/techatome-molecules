@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CamTranslationUI } from '../translation.service';
 import { BadgeComponent } from '../badge/badge.component';
+import { TaTranslationUI } from '../translation.service';
 
 export enum CriticityStatus {
   Unknown = 0,
@@ -13,7 +14,7 @@ export enum CriticityStatus {
 export const criticityLabel = (criticity: CriticityStatus) => `ui.criticity.${criticity}`;
 
 @Component({
-selector: 'ta-criticity',
+  selector: 'ta-criticity',
   templateUrl: './criticity.component.html',
   styleUrls: ['./criticity.component.scss'],
   standalone: true,
@@ -24,7 +25,7 @@ export class CriticityComponent {
   criticity!: number | CriticityStatus;
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
   public label() {
     return criticityLabel(this.criticity);

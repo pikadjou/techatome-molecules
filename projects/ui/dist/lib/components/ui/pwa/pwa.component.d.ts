@@ -1,5 +1,5 @@
 import { EventEmitter, OnInit } from '@angular/core';
-import { CamPwaService } from '@ta/capacitor';
+import { TaPwaService } from '@ta/capacitor';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class PwaComponent extends TaBaseComponent implements OnInit {
@@ -7,7 +7,7 @@ export declare class PwaComponent extends TaBaseComponent implements OnInit {
     askClose: EventEmitter<null>;
     isShowed: boolean;
     pictureWidth: number;
-    constructor(_pwa: CamPwaService);
+    constructor(_pwa: TaPwaService);
     ngOnInit(): void;
     onNoClick(): void;
     onYesClick(): void;

@@ -1,25 +1,25 @@
-import { NgIf, NgClass } from '@angular/common';
-import { LocalIconComponent } from '@ta/icons';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { InputImages } from '@ta/form-model';
 import { FileListComponent } from '@ta/files-basic';
+import { InputImages } from '@ta/form-model';
+import { LocalIconComponent } from '@ta/icons';
 import { ButtonComponent } from '@ta/ui';
 import { FileData, pickImages, removeElement } from '@ta/utils';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import { FormLabelComponent } from '../../label/label.component';
 import { InputImageModal } from './modal/input-images-modal.component';
 
 @Component({
-selector: 'ta-input-images',
+  selector: 'ta-input-images',
   templateUrl: './input-images.component.html',
   styleUrls: ['./input-images.component.scss'],
   standalone: true,
   imports: [NgIf, NgClass, LocalIconComponent, FormLabelComponent, ButtonComponent, FileListComponent],
 })
-export class InputImagesComponent extends CamAbstractInputComponent<InputImages> implements OnInit {
+export class InputImagesComponent extends TaAbstractInputComponent<InputImages> implements OnInit {
   get selection(): string[] {
     return this.input.value;
   }

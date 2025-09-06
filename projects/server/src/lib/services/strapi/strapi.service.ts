@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs';
 import { isNonNullable } from '@ta/utils';
 
 import { GraphQueryPayload } from '../graphql/models/graphPayload';
-import { CamBaseService } from '../server/baseService';
+import { TaBaseService } from '../server/baseService';
 import { IStrapiConfig, STRAPI_SERVER_CONFIG } from './config';
 
 export interface GraphStrapiResponse<T> {
@@ -26,7 +26,7 @@ export interface GraphStrapiListResponse<T> {
 @Injectable({
   providedIn: 'root',
 })
-export class CamStrapiService extends CamBaseService {
+export class TaStrapiService extends TaBaseService {
   constructor(@Inject(STRAPI_SERVER_CONFIG) private _strapiConfig: IStrapiConfig) {
     super();
 

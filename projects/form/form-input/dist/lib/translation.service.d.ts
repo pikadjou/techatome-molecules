@@ -1,7 +1,7 @@
-import { CamLazyTranslationService } from '@ta/translation';
+import { TaLazyTranslationService } from '@ta/translation';
 import * as i0 from "@angular/core";
-export declare class CamTranslationInput extends CamLazyTranslationService {
+export declare class TaTranslationInput extends TaLazyTranslationService {
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamTranslationInput, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamTranslationInput>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaTranslationInput, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaTranslationInput>;
 }

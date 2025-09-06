@@ -5,5 +5,5 @@ export declare class OnRenderDirective {
     rendered: EventEmitter<any>;
     ngOnChanges(changes: SimpleChanges): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<OnRenderDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<OnRenderDirective, "[camOnRender]", never, { "onRender": { "alias": "onRender"; "required": false; }; }, { "rendered": "rendered"; }, never, never, false, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<OnRenderDirective, "[TaOnRender]", never, { "onRender": { "alias": "onRender"; "required": false; }; }, { "rendered": "rendered"; }, never, never, false, never>;
 }

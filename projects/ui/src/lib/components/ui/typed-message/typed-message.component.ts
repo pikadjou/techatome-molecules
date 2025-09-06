@@ -1,13 +1,14 @@
-import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
+import { FontIconComponent } from '@ta/icons';
 import { MessageLevel } from '@ta/utils';
 
-import { CamTranslationUI } from '../translation.service';
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
-selector: 'ta-typed-message',
+  selector: 'ta-typed-message',
   templateUrl: './typed-message.component.html',
   styleUrls: ['./typed-message.component.scss'],
   standalone: true,
@@ -33,6 +34,6 @@ export class TypedMessageComponent {
   }
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

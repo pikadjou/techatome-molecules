@@ -1,12 +1,13 @@
 import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { PictureInfoMessageComponent } from '../../../components/ui/picture-info-message/picture-info-message.component';
 
-import { CamTranslationContainer } from '../translation.service';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { PictureInfoMessageComponent } from '../../../components/ui/picture-info-message/picture-info-message.component';
+import { TaTranslationContainer } from '../translation.service';
 
 @Component({
-selector: 'ta-error',
+  selector: 'ta-error',
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss'],
   standalone: true,
@@ -20,6 +21,6 @@ export class ErrorComponent {
   code = 200;
 
   constructor() {
-    CamTranslationContainer.getInstance();
+    TaTranslationContainer.getInstance();
   }
 }

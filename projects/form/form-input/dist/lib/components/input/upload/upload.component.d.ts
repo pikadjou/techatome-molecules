@@ -1,14 +1,14 @@
 import { ElementRef, EventEmitter, OnInit } from '@angular/core';
 import { InputUpload } from '@ta/form-model';
 import { DocumentDto } from '@ta/services';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 type InProgressFile = {
     name: string;
     progress: number;
     completed: DocumentDto | null;
 };
-export declare class UploadComponent extends CamAbstractInputComponent<InputUpload> implements OnInit {
+export declare class UploadComponent extends TaAbstractInputComponent<InputUpload> implements OnInit {
     uploadStatusChanged: EventEmitter<boolean>;
     fileDropEl: ElementRef;
     private readonly _documentsService;

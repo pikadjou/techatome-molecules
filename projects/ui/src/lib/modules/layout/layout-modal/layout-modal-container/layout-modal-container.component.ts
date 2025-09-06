@@ -1,11 +1,12 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, Inject, TemplateRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NgTemplateOutlet } from '@angular/common';
 
-import { CamBaseModal } from '@ta/utils';
 import { Observable } from 'rxjs';
 
-import { ModalStyle, LayoutModalComponent } from '../layout-modal.component';
+import { TaBaseModal } from '@ta/utils';
+
+import { LayoutModalComponent, ModalStyle } from '../layout-modal.component';
 
 export interface TemplateModalContainerData {
   template: TemplateRef<any>;
@@ -13,13 +14,13 @@ export interface TemplateModalContainerData {
   style?: ModalStyle;
 }
 @Component({
-selector: '',
+  selector: '',
   template:
     '<ta-layout-modal [style]="this.style"><ng-template [ngTemplateOutlet]="this.data.template"></ng-template></ta-layout-modal>',
   standalone: true,
   imports: [LayoutModalComponent, NgTemplateOutlet],
 })
-export class TemplateModalContainer extends CamBaseModal {
+export class TemplateModalContainer extends TaBaseModal {
   get style(): ModalStyle {
     return this.data.style ?? 'full';
   }

@@ -1,0 +1,39 @@
+import { AsyncPipe } from '@angular/common';
+import { Component, Input, inject } from '@angular/core';
+import { FontIconComponent } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
+import { TaMainRoute, TaRoutes } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
+import { TaAbstractComponent } from '@ta/utils';
+import { TaPermissionsService } from '../../services/permissions.service';
+import * as i0 from "@angular/core";
+export class GuardComponent extends TaAbstractComponent {
+    get noAccessIcon() {
+        return TaIconType.NoAccess;
+    }
+    constructor() {
+        super();
+        this.canDisplayErrorMessage = true;
+        this._permissionsService = inject(TaPermissionsService);
+    }
+    isGuardValid$() {
+        return this._permissionsService.canAccess$(this.feature, this.level);
+    }
+    goToLogin() {
+        this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: "level", feature: "feature", canDisplayErrorMessage: "canDisplayErrorMessage" }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-guard', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe], template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n" }]
+        }], ctorParameters: () => [], propDecorators: { level: [{
+                type: Input
+            }], feature: [{
+                type: Input
+            }], canDisplayErrorMessage: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ3VhcmQuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9tb2R1bGVzL3VzZXIvY29tcG9uZW50cy9ndWFyZC9ndWFyZC5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZHVsZXMvdXNlci9jb21wb25lbnRzL2d1YXJkL2d1YXJkLmNvbXBvbmVudC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUM1QyxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxNQUFNLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFFekQsT0FBTyxFQUFFLGlCQUFpQixFQUFFLE1BQU0sV0FBVyxDQUFDO0FBQzlDLE9BQU8sRUFBRSxVQUFVLEVBQUUsTUFBTSxXQUFXLENBQUM7QUFDdkMsT0FBTyxFQUFFLFdBQVcsRUFBRSxRQUFRLEVBQUUsTUFBTSxVQUFVLENBQUM7QUFDakQsT0FBTyxFQUFFLGFBQWEsRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQ2hELE9BQU8sRUFBRSxlQUFlLEVBQUUsTUFBTSxRQUFRLENBQUM7QUFDekMsT0FBTyxFQUFFLG1CQUFtQixFQUFFLE1BQU0sV0FBVyxDQUFDO0FBRWhELE9BQU8sRUFBb0Msb0JBQW9CLEVBQUUsTUFBTSxvQ0FBb0MsQ0FBQzs7QUFTNUcsTUFBTSxPQUFPLGNBQWUsU0FBUSxtQkFBbUI7SUFXckQsSUFBSSxZQUFZO1FBQ2QsT0FBTyxVQUFVLENBQUMsUUFBUSxDQUFDO0lBQzdCLENBQUM7SUFFRDtRQUNFLEtBQUssRUFBRSxDQUFDO1FBUlYsMkJBQXNCLEdBQVksSUFBSSxDQUFDO1FBRXRCLHdCQUFtQixHQUFHLE1BQU0sQ0FBQyxvQkFBb0IsQ0FBQyxDQUFDO0lBT3BFLENBQUM7SUFFTSxhQUFhO1FBQ2xCLE9BQU8sSUFBSSxDQUFDLG1CQUFtQixDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsT0FBTyxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUN2RSxDQUFDO0lBRU0sU0FBUztRQUNkLElBQUksQ0FBQyxPQUFPLENBQUMsYUFBYSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsQ0FBQyxXQUFXLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQyxDQUFDO0lBQ3ZFLENBQUM7K0dBekJVLGNBQWM7bUdBQWQsY0FBYyw2TENuQjNCLGtpQkFtQkEscURERlksU0FBUyw4Q0FBRSxpQkFBaUIsbUZBQUUsZUFBZSx5SkFBRSxhQUFhOzs0RkFFM0QsY0FBYztrQkFQMUIsU0FBUzsrQkFDRSxVQUFVLGNBR1IsSUFBSSxXQUNQLENBQUMsU0FBUyxFQUFFLGlCQUFpQixFQUFFLGVBQWUsRUFBRSxhQUFhLENBQUM7d0RBSXZFLEtBQUs7c0JBREosS0FBSztnQkFJTixPQUFPO3NCQUROLEtBQUs7Z0JBSU4sc0JBQXNCO3NCQURyQixLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQXN5bmNQaXBlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQsIGluamVjdCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5pbXBvcnQgeyBGb250SWNvbkNvbXBvbmVudCB9IGZyb20gJ0B0YS9pY29ucyc7XG5pbXBvcnQgeyBUYUljb25UeXBlIH0gZnJvbSAnQHRhL2ljb25zJztcbmltcG9ydCB7IFRhTWFpblJvdXRlLCBUYVJvdXRlcyB9IGZyb20gJ0B0YS9tZW51JztcbmltcG9ydCB7IFRyYW5zbGF0ZVBpcGUgfSBmcm9tICdAdGEvdHJhbnNsYXRpb24nO1xuaW1wb3J0IHsgQnV0dG9uQ29tcG9uZW50IH0gZnJvbSAnQHRhL3VpJztcbmltcG9ydCB7IFRhQWJzdHJhY3RDb21wb25lbnQgfSBmcm9tICdAdGEvdXRpbHMnO1xuXG5pbXBvcnQgeyBEb21haW4sIExldmVsLCBQZXJtaXNzaW9uRmVhdHVyZSwgVGFQZXJtaXNzaW9uc1NlcnZpY2UgfSBmcm9tICcuLi8uLi9zZXJ2aWNlcy9wZXJtaXNzaW9ucy5zZXJ2aWNlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAndGEtZ3VhcmQnLFxuICB0ZW1wbGF0ZVVybDogJy4vZ3VhcmQuY29tcG9uZW50Lmh0bWwnLFxuICBzdHlsZVVybHM6IFsnLi9ndWFyZC5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxuICBpbXBvcnRzOiBbQXN5bmNQaXBlLCBGb250SWNvbkNvbXBvbmVudCwgQnV0dG9uQ29tcG9uZW50LCBUcmFuc2xhdGVQaXBlXSxcbn0pXG5leHBvcnQgY2xhc3MgR3VhcmRDb21wb25lbnQgZXh0ZW5kcyBUYUFic3RyYWN0Q29tcG9uZW50IHtcbiAgQElucHV0KClcbiAgbGV2ZWwhOiBMZXZlbCB8IHN0cmluZztcblxuICBASW5wdXQoKVxuICBmZWF0dXJlITogUGVybWlzc2lvbkZlYXR1cmUgfCBEb21haW4gfCBzdHJpbmc7XG5cbiAgQElucHV0KClcbiAgY2FuRGlzcGxheUVycm9yTWVzc2FnZTogYm9vbGVhbiA9IHRydWU7XG5cbiAgcHJpdmF0ZSByZWFkb25seSBfcGVybWlzc2lvbnNTZXJ2aWNlID0gaW5qZWN0KFRhUGVybWlzc2lvbnNTZXJ2aWNlKTtcbiAgZ2V0IG5vQWNjZXNzSWNvbigpIHtcbiAgICByZXR1cm4gVGFJY29uVHlwZS5Ob0FjY2VzcztcbiAgfVxuXG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHN1cGVyKCk7XG4gIH1cblxuICBwdWJsaWMgaXNHdWFyZFZhbGlkJCgpIHtcbiAgICByZXR1cm4gdGhpcy5fcGVybWlzc2lvbnNTZXJ2aWNlLmNhbkFjY2VzcyQodGhpcy5mZWF0dXJlLCB0aGlzLmxldmVsKTtcbiAgfVxuXG4gIHB1YmxpYyBnb1RvTG9naW4oKSB7XG4gICAgdGhpcy5fcm91dGVyLm5hdmlnYXRlQnlVcmwoVGFSb3V0ZXMuZ2V0VXJsKFtUYU1haW5Sb3V0ZS5VU0VSTE9HSU5dKSk7XG4gIH1cbn1cbiIsIkBsZXQgaXNWYWxpZCA9IHRoaXMuaXNHdWFyZFZhbGlkJCgpIHwgYXN5bmM7XG5cbjxkaXYgY2xhc3M9XCJndWFyZFwiPlxuICBAaWYgKGlzVmFsaWQpIHtcbiAgICA8ZGl2IGNsYXNzPVwiZ3VhcmQtdmFsaWRcIj5cbiAgICAgIDxuZy1jb250ZW50PjwvbmctY29udGVudD5cbiAgICA8L2Rpdj5cbiAgfVxuICBAaWYgKCFpc1ZhbGlkICYmIHRoaXMuY2FuRGlzcGxheUVycm9yTWVzc2FnZSkge1xuICAgIDxkaXYgY2xhc3M9XCJndWFyZC1uby12YWxpZCB0YS1jXCI+XG4gICAgICA8dGEtZm9udC1pY29uIG5hbWU9XCJjbG9zZS10b29sXCIgc2l6ZT1cIm1kXCI+PC90YS1mb250LWljb24+XG4gICAgICB7eyAnY29udGFpbmVyLmd1YXJkLmNvbnRlbnQnIHwgdHJhbnNsYXRlIH19XG5cbiAgICAgIEBpZiAodGhpcy5sZXZlbCA9PT0gJ2F1dGhlbnRpY2F0ZWQnKSB7XG4gICAgICAgIDx0YS1idXR0b24gKGFjdGlvbik9XCJ0aGlzLmdvVG9Mb2dpbigpXCI+IE1lIGNvbm5lY3RlciA8L3RhLWJ1dHRvbj5cbiAgICAgIH1cbiAgICA8L2Rpdj5cbiAgfVxuPC9kaXY+XG4iXX0=

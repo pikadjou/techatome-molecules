@@ -1,6 +1,15 @@
-import { CamNotificationDataService } from '../../services/data.service';
+import { AsyncPipe, NgFor } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+
+import { Observable, tap } from 'rxjs';
+
+import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
+
+import { TaNotificationDataService } from '../../services/data.service';
 import { NotificationFilter } from '../../services/queries';
-import { CamNotificationSharedService, RoutingType } from '../../services/shared.service';
+import { RoutingType, TaNotificationSharedService } from '../../services/shared.service';
 import { InvoicePaymentStatusChangedComponent } from '../items/item/template/invoice-payment-status-changed/invoice-payment-status-changed.component';
 import { NewInvoiceComponent } from '../items/item/template/new-invoice/new-invoice.component';
 import { NewQuotationVersionComponent } from '../items/item/template/new-quotation-version/new-quotation-version.component';
@@ -11,12 +20,6 @@ import { TaskNewActivityComponent } from '../items/item/template/task-new-activi
 import { ToDoAssignedComponent } from '../items/item/template/to-do-assigned/to-do-assigned.component';
 import { ToDoDueTodayComponent } from '../items/item/template/to-do-due-today/to-do-due-today.component';
 import { UserTaggedInConversationComponent } from '../items/item/template/user-tagged-in-conversation/user-tagged-in-conversation.component';
-import { AsyncPipe, NgFor } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
-import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'ta-notification-container',
@@ -38,7 +41,7 @@ import { Observable, tap } from 'rxjs';
     TaskNewActivityComponent,
     ToDoAssignedComponent,
     ToDoDueTodayComponent,
-    UserTaggedInConversationComponent
+    UserTaggedInConversationComponent,
   ],
 })
 export class ContainerComponent extends TaBaseComponent implements OnInit {
@@ -68,8 +71,8 @@ export class ContainerComponent extends TaBaseComponent implements OnInit {
       .pipe(tap(list => this.nbChanged.emit(list.length)));
   }
   constructor(
-    private _notificationDataService: CamNotificationDataService,
-    private _sharedService: CamNotificationSharedService
+    private _notificationDataService: TaNotificationDataService,
+    private _sharedService: TaNotificationSharedService
   ) {
     super();
   }

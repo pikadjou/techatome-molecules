@@ -11,7 +11,7 @@ export type ServerError = { query: string; variables: any; error: ApolloError; e
 @Injectable({
   providedIn: 'root',
 })
-export class CamServerErrorService {
+export class TaServerErrorService {
   public notifications = signal<ServerError[]>([]);
 
   constructor() {}

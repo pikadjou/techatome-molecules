@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { CamIconType } from '@ta/icons';
+
+import { TaIconType } from '@ta/icons';
+
 import { EmptyComponent } from './empty.component';
 
 type StoryType = EmptyComponent;
@@ -26,7 +28,7 @@ export default {
     };
   },
   args: {
-    icon: CamIconType.Edit,
+    icon: TaIconType.Edit,
     iconSize: 'sm',
     text: 'Je suis tout vide :(',
     type: 'info',
@@ -39,7 +41,7 @@ export const Basic: StoryObj<StoryType> = {};
 
 export const Light: StoryObj<StoryType> = {
   args: {
-    icon: CamIconType.Edit,
+    icon: TaIconType.Edit,
     iconSize: 'sm',
     text: 'Je suis tout vide :(',
     type: 'info',

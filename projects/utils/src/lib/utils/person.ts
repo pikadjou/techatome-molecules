@@ -1,18 +1,18 @@
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 
 import { Civility } from '../types/public-api';
 
-export const getCivilityIcon = (civility: Civility | null): CamIconType | null => {
+export const getCivilityIcon = (civility: Civility | null): TaIconType | null => {
   if (!civility) {
     return null;
   }
   switch (civility) {
     case Civility.Dear:
-      return CamIconType.Profile;
+      return TaIconType.Profile;
     case Civility.Madame:
-      return CamIconType.Women;
+      return TaIconType.Women;
     case Civility.Sir:
-      return CamIconType.Men;
+      return TaIconType.Men;
     default:
       return null;
   }

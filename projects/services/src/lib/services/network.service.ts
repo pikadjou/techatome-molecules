@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { CamDeviceNetworkService } from '@ta/capacitor';
-import { CamNotificationService, ENotificationCode } from '@ta/notification';
+import { TaDeviceNetworkService } from '@ta/capacitor';
+import { ENotificationCode, TaNotificationService } from '@ta/notification';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NetworkService {
   constructor(
-    private _notificationService: CamNotificationService,
-    private _deviceNetworkService: CamDeviceNetworkService
+    private _notificationService: TaNotificationService,
+    private _deviceNetworkService: TaDeviceNetworkService
   ) {
     this._deviceNetworkService.isConnected$.subscribe(isConnected => this._displayNotification(isConnected));
   }

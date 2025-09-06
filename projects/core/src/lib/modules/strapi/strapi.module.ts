@@ -8,9 +8,7 @@ import { StrapiComponent } from './components/strapi/strapi.component';
  * This module will be removed in a future version.
  */
 @NgModule({
-
   declarations: [],
   imports: [CommonModule, StrapiComponent],
-
 })
-export class CamStrapiModule {}
+export class TaStrapiModule {}

@@ -3,10 +3,11 @@ import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/co
 import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
-import { CamTranslationLayout } from '../../translation.service';
+import { TaTranslationLayout } from '../../translation.service';
 
 @Component({
   selector: 'ta-layout-header-default',
@@ -30,7 +31,7 @@ export class LayoutHeaderDefaultComponent extends TaBaseComponent {
 
   constructor() {
     super();
-    CamTranslationLayout.getInstance();
+    TaTranslationLayout.getInstance();
   }
 
   public showBackAction() {

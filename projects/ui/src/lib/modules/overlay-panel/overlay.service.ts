@@ -2,8 +2,9 @@ import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, InjectionToken, Injector, TemplateRef, Type } from '@angular/core';
 
-import { CamBaseService } from '@ta/server';
 import { Subject } from 'rxjs';
+
+import { TaBaseService } from '@ta/server';
 
 export const MENU_TEMPLATE = new InjectionToken<TemplateRef<any>>('MENU_TEMPLATE');
 export const MENU_MAX_HEIGHT = new InjectionToken<number>('MENU_MAX_HEIGHT');
@@ -23,7 +24,7 @@ export interface OverlayMenuConfig<T = any> {
 @Injectable({
   providedIn: 'root',
 })
-export class OverlayService extends CamBaseService {
+export class OverlayService extends TaBaseService {
   private _overlayRef?: OverlayRef;
   private _onCloseCallback?: () => void;
   private readonly _onCloseSubject = new Subject<void>();

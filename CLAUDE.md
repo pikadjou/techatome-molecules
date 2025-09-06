@@ -4,19 +4,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **Techatome Molecules** (internally called "Camelot"), an Angular monorepo that follows a micro-library architecture pattern. The project is managed using Lerna and Angular CLI, containing 20+ specialized Angular libraries that can be used independently or together to build applications.
+This is **Techatome Molecules** (internally called "Taelot"), an Angular monorepo that follows a micro-library architecture pattern. The project is managed using Lerna and Angular CLI, containing 20+ specialized Angular libraries that can be used independently or together to build applications.
 
 The repository uses the `@ta/` namespace for all published packages and follows a structured approach to component library development with Storybook for documentation and testing.
 
 ## Common Development Commands
 
 ### Dependencies & Setup
+
 ```bash
 yarn install                    # Install all dependencies
 yarn checkfiles                 # Verify installed dependencies
 ```
 
 ### Development & Building
+
 ```bash
 yarn start                      # Start main application dev server
 yarn start-local                # Start with local environment config
@@ -25,12 +27,14 @@ yarn watch                     # Watch for changes and rebuild + start dev serve
 ```
 
 ### Library Development
+
 ```bash
 lerna run build --include-dependencies    # Build all libraries with their dependencies
 ng build @ta/[LibName]                    # Build specific library
 ```
 
 ### Quality Assurance
+
 ```bash
 yarn lint                       # Run ESLint with auto-fix
 yarn prettier                   # Format all files with Prettier
@@ -39,18 +43,21 @@ ng test @ta/[LibName]          # Run tests for specific library
 ```
 
 ### Documentation & Stories
+
 ```bash
 yarn storybook                  # Start Storybook dev server on port 6006
 yarn build-storybook           # Build Storybook for production
 ```
 
 ### Publishing (Lerna-managed)
+
 ```bash
 yarn version                    # Bump versions for all packages
 yarn publish                    # Publish packages to npm registry
 ```
 
 ### Cleanup
+
 ```bash
 yarn clean                      # Remove all dist folders, node_modules, and lock files
 ```
@@ -58,6 +65,7 @@ yarn clean                      # Remove all dist folders, node_modules, and loc
 ## Architecture Overview
 
 ### Multi-Library Structure
+
 The project is organized into specialized libraries under the `projects/` directory:
 
 - **Core Libraries**: `@ta/core`, `@ta/server`, `@ta/services`, `@ta/utils`
@@ -69,13 +77,15 @@ The project is organized into specialized libraries under the `projects/` direct
 - **Integration**: `@ta/capacitor`, `@ta/cms`, `@ta/user`
 
 ### Package Management
+
 - Uses **Lerna** for monorepo management with Yarn workspaces
 - All packages follow the `@ta/` namespace convention
 - Each library has its own `package.json`, `ng-package.json`, and TypeScript configurations
 - Dependencies are managed at both root and individual library levels
 
 ### Angular Configuration
-- **Main Application**: "Camelot" - serves as the demo/development application
+
+- **Main Application**: "Taelot" - serves as the demo/development application
 - **Library Prefix**: All components use `ta-` prefix
 - **Build System**: Angular CLI with ng-packagr for library building
 - **Testing**: Karma + Jasmine for unit tests
@@ -92,7 +102,9 @@ The project is organized into specialized libraries under the `projects/` direct
 ## Development Workflow
 
 ### Creating New Libraries
+
 Follow the documented process in README.md:
+
 1. Generate library: `ng g lib [LibName]`
 2. Update `ng-package.json` dest to `'dist'`
 3. Update `package.json` name to `'@ta/[LibName]'`
@@ -101,11 +113,13 @@ Follow the documented process in README.md:
 6. Update tsconfig path mappings
 
 ### Building and Testing
+
 - Always build with dependencies: `lerna run build --include-dependencies`
 - Test individual libraries: `ng test @ta/[LibName]`
 - Use Storybook for component development and documentation
 
 ### Code Organization
+
 - Each library follows Angular library structure with `src/lib/` containing main code
 - Public APIs are defined in `public-api.ts` files
 - Components, services, and models are organized in dedicated folders
@@ -114,11 +128,13 @@ Follow the documented process in README.md:
 ## Environment & Configuration
 
 ### Build Configurations
+
 - **Production**: Optimized builds with budgets (500kb warning, 1mb error)
 - **Development**: Unoptimized with source maps
 - **Local**: Development mode with environment file replacement
 
 ### Style System
+
 - SCSS-based styling with shared style library (`@ta/styles`)
 - Angular Material integration
 - Custom component styling following BEM-like conventions

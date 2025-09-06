@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { CamFilesExtendedModule } from '@ta/files-extended';
-import { CamFormModule } from '@ta/form-basic';
-import { CamFormInputsModule } from '@ta/form-input';
-import { CamIconsModule } from '@ta/icons';
+import { TaFilesExtendedModule } from '@ta/files-extended';
+import { TaFormModule } from '@ta/form-basic';
+import { TaFormInputsModule } from '@ta/form-input';
+import { TaIconsModule } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { CamCardModule, CamContainerModule, CamLayoutModule, CamListModule, CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { TaCardModule, TaContainerModule, TaLayoutModule, TaListModule, TaUiModule } from '@ta/ui';
+import { TaDirectivePipeModule } from '@ta/utils';
 
 import { DocumentsComponent } from './components/documents/documents.component';
 import { UploadDocumentModal } from './components/documents/upload/upload-visit-document/upload-document.component';
@@ -22,7 +22,7 @@ import { FiltersTagComponent } from './components/filters/tag/filters-tag.compon
 import { SearchDisplayerComponent } from './components/historical-research/search-displayer.component';
 import { SearchHistoryDisplayerComponent } from './components/historical-research/search-history-displayer/search-history-displayer.component';
 import { TextToClipboardComponent } from './components/text-to-clipboard/text-to-clipboard.component';
-import { CamTranslationCore } from './translation.service';
+import { TaTranslationCore } from './translation.service';
 
 /**
  * @deprecated Use standalone components instead.
@@ -30,7 +30,7 @@ import { CamTranslationCore } from './translation.service';
  *
  * @example
  * // Instead of importing the module:
- * // import { CamCoreModule } from '@ta/library-name';
+ * // import { TaCoreModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FiltersContainerComponent, DocumentsComponent, CallTemplateComponent } from '@ta/library-name';
@@ -39,16 +39,16 @@ import { CamTranslationCore } from './translation.service';
   declarations: [],
   imports: [
     CommonModule,
-    CamLayoutModule,
-    CamUiModule,
-    CamFormModule,
-    CamIconsModule,
-    CamDirectivePipeModule,
-    CamCardModule,
-    CamFilesExtendedModule,
-    CamFormInputsModule,
-    CamContainerModule,
-    CamListModule,
+    TaLayoutModule,
+    TaUiModule,
+    TaFormModule,
+    TaIconsModule,
+    TaDirectivePipeModule,
+    TaCardModule,
+    TaFilesExtendedModule,
+    TaFormInputsModule,
+    TaContainerModule,
+    TaListModule,
     MatMenuModule,
     MatDialogModule,
     TranslatePipe,
@@ -75,8 +75,8 @@ import { CamTranslationCore } from './translation.service';
     TextToClipboardComponent,
   ],
 })
-export class CamCoreModule {
+export class TaCoreModule {
   constructor() {
-    CamTranslationCore.getInstance();
+    TaTranslationCore.getInstance();
   }
 }

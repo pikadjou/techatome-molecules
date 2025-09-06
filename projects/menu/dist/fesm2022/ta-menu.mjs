@@ -1,19 +1,19 @@
 import { NgClass, NgTemplateOutlet, AsyncPipe, NgIf, NgFor, NgStyle, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Injectable, ViewChild, Input, Component, inject, Inject, EventEmitter, Output, NgModule } from '@angular/core';
-import { TaBaseComponent, TypedTemplateDirective, TaAbstractComponent, isNonNullable, CamDirectivePipeModule } from '@ta/utils';
+import { TaBaseComponent, TypedTemplateDirective, TaAbstractComponent, isNonNullable, TaDirectivePipeModule } from '@ta/utils';
 import * as i3 from '@angular/material/menu';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import * as i1$1 from '@angular/router';
 import { RouterModule } from '@angular/router';
 import * as i2 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FontIconComponent, LocalIconComponent, CamIconsModule } from '@ta/icons';
-import { TemplateModalContainer, NotificationBadgeComponent, LogoComponent, ContainerValidationComponent, SwiperComponent, SwiperLightComponent, NotificationBadgeContainerComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, CamUiModule, CamSwiperModule, CamContainerModule, CamLayoutModule, CamListModule } from '@ta/ui';
-import { CamLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { FontIconComponent, LocalIconComponent, TaIconsModule } from '@ta/icons';
+import { TemplateModalContainer, NotificationBadgeComponent, LogoComponent, ContainerValidationComponent, SwiperComponent, SwiperLightComponent, NotificationBadgeContainerComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, TaUiModule, TaSwiperModule, TaContainerModule, TaLayoutModule, TaListModule } from '@ta/ui';
+import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
 import * as i1 from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CamSharedMenuService } from '@ta/services';
+import { TaSharedMenuService } from '@ta/services';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { of, BehaviorSubject } from 'rxjs';
 
@@ -42,14 +42,14 @@ const getFontIcon = (item) => {
     return '';
 };
 
-class CamTranslationMenu extends CamLazyTranslationService {
+class TaTranslationMenu extends TaLazyTranslationService {
     constructor() {
         super('menu');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationMenu, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationMenu, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationMenu, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationMenu, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationMenu, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationMenu, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -62,7 +62,7 @@ class MenuItemComponent extends TaBaseComponent {
         this.modal = modal;
         this.styleType = 'bloc';
         this.isOpen = false;
-        CamTranslationMenu.getInstance();
+        TaTranslationMenu.getInstance();
     }
     ngOnInit() {
         this.isOpen = this.item.defaultOpen;
@@ -176,7 +176,7 @@ class MainMenuComponent extends TaBaseComponent {
     constructor() {
         super(...arguments);
         this.direction = 'vertical';
-        this.sharedMenu = inject(CamSharedMenuService);
+        this.sharedMenu = inject(TaSharedMenuService);
     }
     toggleView() {
         this.sharedMenu.isMinimized$.next(!this.sharedMenu.isMinimized$.getValue());
@@ -200,14 +200,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class BottomSheetTemplateBasicComponent {
     constructor(data) {
         this.data = data;
-        CamTranslationMenu.getInstance();
+        TaTranslationMenu.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BottomSheetTemplateBasicComponent, deps: [{ token: MAT_BOTTOM_SHEET_DATA }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: BottomSheetTemplateBasicComponent, isStandalone: true, selector: "ta-bottom-sheet-template-basic", ngImport: i0, template: "<div class=\"handler\">\n  <span></span>\n</div>\n\n<div class=\"row bottom-sheet-template-basic\">\n  @for (item of this.data.menu$ | async; track item) {\n    <div\n      class=\"ta-c\"\n      [ngClass]=\"this.data.orientation === 'horizontal' ? 'col-12' : 'col'\"\n    >\n      @if (!item.secure) {\n        <div (click)=\"item.action()\">\n          <ng-template\n            [ngTemplateOutlet]=\"Item\"\n            [ngTemplateOutletContext]=\"{\n              item: item,\n            }\"\n          >\n          </ng-template>\n        </div>\n      } @else {\n        <ta-container-validation (validated)=\"item.action()\">\n          <ng-template\n            [ngTemplateOutlet]=\"Item\"\n            [ngTemplateOutletContext]=\"{\n              item: item,\n            }\"\n          >\n          </ng-template>\n        </ta-container-validation>\n      }\n    </div>\n  }\n</div>\n\n<ng-template #Item let-item=\"item\" [typedTemplate]=\"this.typeItem\">\n  <div class=\"item\" [ngClass]=\"this.data.orientation\">\n    @if (item.icon) {\n      <ta-font-icon [name]=\"item.icon\" class=\"icon\"></ta-font-icon>\n    }\n\n    <div class=\"title-container\">\n      <div class=\"label\">{{ item.label | translate }}</div>\n\n      @if (item.subtitle) {\n        <div>\n          {{ item.subtitle | translate }}\n        </div>\n      }\n    </div>\n  </div>\n</ng-template>\n", styles: [".bottom-sheet-template-basic{padding-bottom:env(safe-area-inset-bottom)}.handler{text-align:center;padding-top:var(--ta-space-xs);padding-bottom:var(--ta-space-sm)}.handler span{display:block;height:4px;width:40px;background-color:#0000004d;border-radius:10px;margin:auto}.item{text-align:center;padding:var(--ta-space-sm) 0}.item.horizontal{display:flex;justify-content:flex-start;align-items:center;gap:var(--ta-space-xs)}.item .title-container{margin:auto 0}.item .title-container .label{font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i2.TranslatePipe, name: "translate" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ContainerValidationComponent, selector: "ta-container-validation", inputs: ["disabled"], outputs: ["validated"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BottomSheetTemplateBasicComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-bottom-sheet-template-basic', standalone: true, imports: [NgIf, NgFor, NgClass, AsyncPipe, NgTemplateOutlet, TranslateModule, FontIconComponent, ContainerValidationComponent], template: "<div class=\"handler\">\n  <span></span>\n</div>\n\n<div class=\"row bottom-sheet-template-basic\">\n  @for (item of this.data.menu$ | async; track item) {\n    <div\n      class=\"ta-c\"\n      [ngClass]=\"this.data.orientation === 'horizontal' ? 'col-12' : 'col'\"\n    >\n      @if (!item.secure) {\n        <div (click)=\"item.action()\">\n          <ng-template\n            [ngTemplateOutlet]=\"Item\"\n            [ngTemplateOutletContext]=\"{\n              item: item,\n            }\"\n          >\n          </ng-template>\n        </div>\n      } @else {\n        <ta-container-validation (validated)=\"item.action()\">\n          <ng-template\n            [ngTemplateOutlet]=\"Item\"\n            [ngTemplateOutletContext]=\"{\n              item: item,\n            }\"\n          >\n          </ng-template>\n        </ta-container-validation>\n      }\n    </div>\n  }\n</div>\n\n<ng-template #Item let-item=\"item\" [typedTemplate]=\"this.typeItem\">\n  <div class=\"item\" [ngClass]=\"this.data.orientation\">\n    @if (item.icon) {\n      <ta-font-icon [name]=\"item.icon\" class=\"icon\"></ta-font-icon>\n    }\n\n    <div class=\"title-container\">\n      <div class=\"label\">{{ item.label | translate }}</div>\n\n      @if (item.subtitle) {\n        <div>\n          {{ item.subtitle | translate }}\n        </div>\n      }\n    </div>\n  </div>\n</ng-template>\n", styles: [".bottom-sheet-template-basic{padding-bottom:env(safe-area-inset-bottom)}.handler{text-align:center;padding-top:var(--ta-space-xs);padding-bottom:var(--ta-space-sm)}.handler span{display:block;height:4px;width:40px;background-color:#0000004d;border-radius:10px;margin:auto}.item{text-align:center;padding:var(--ta-space-sm) 0}.item.horizontal{display:flex;justify-content:flex-start;align-items:center;gap:var(--ta-space-xs)}.item .title-container{margin:auto 0}.item .title-container .label{font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight)}\n"] }]
+            args: [{ selector: 'ta-bottom-sheet-template-basic', standalone: true, imports: [
+                        NgIf,
+                        NgFor,
+                        NgClass,
+                        AsyncPipe,
+                        NgTemplateOutlet,
+                        TranslateModule,
+                        FontIconComponent,
+                        ContainerValidationComponent,
+                    ], template: "<div class=\"handler\">\n  <span></span>\n</div>\n\n<div class=\"row bottom-sheet-template-basic\">\n  @for (item of this.data.menu$ | async; track item) {\n    <div\n      class=\"ta-c\"\n      [ngClass]=\"this.data.orientation === 'horizontal' ? 'col-12' : 'col'\"\n    >\n      @if (!item.secure) {\n        <div (click)=\"item.action()\">\n          <ng-template\n            [ngTemplateOutlet]=\"Item\"\n            [ngTemplateOutletContext]=\"{\n              item: item,\n            }\"\n          >\n          </ng-template>\n        </div>\n      } @else {\n        <ta-container-validation (validated)=\"item.action()\">\n          <ng-template\n            [ngTemplateOutlet]=\"Item\"\n            [ngTemplateOutletContext]=\"{\n              item: item,\n            }\"\n          >\n          </ng-template>\n        </ta-container-validation>\n      }\n    </div>\n  }\n</div>\n\n<ng-template #Item let-item=\"item\" [typedTemplate]=\"this.typeItem\">\n  <div class=\"item\" [ngClass]=\"this.data.orientation\">\n    @if (item.icon) {\n      <ta-font-icon [name]=\"item.icon\" class=\"icon\"></ta-font-icon>\n    }\n\n    <div class=\"title-container\">\n      <div class=\"label\">{{ item.label | translate }}</div>\n\n      @if (item.subtitle) {\n        <div>\n          {{ item.subtitle | translate }}\n        </div>\n      }\n    </div>\n  </div>\n</ng-template>\n", styles: [".bottom-sheet-template-basic{padding-bottom:env(safe-area-inset-bottom)}.handler{text-align:center;padding-top:var(--ta-space-xs);padding-bottom:var(--ta-space-sm)}.handler span{display:block;height:4px;width:40px;background-color:#0000004d;border-radius:10px;margin:auto}.item{text-align:center;padding:var(--ta-space-sm) 0}.item.horizontal{display:flex;justify-content:flex-start;align-items:center;gap:var(--ta-space-xs)}.item .title-container{margin:auto 0}.item .title-container .label{font-size:var(--ta-font-body-xs-default-size);line-height:var(--ta-font-body-xs-default-line);font-weight:var(--ta-font-body-xs-default-weight)}\n"] }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Inject,
                     args: [MAT_BOTTOM_SHEET_DATA]
@@ -234,7 +243,7 @@ class QuickActionsComponent {
         this.elementPerPage = 3.5;
         this.canDeselect = false;
         this.tabSelected = new EventEmitter();
-        CamTranslationMenu.getInstance();
+        TaTranslationMenu.getInstance();
     }
     onQuickActionSelected(menuIcon) {
         if (menuIcon.disabled) {
@@ -299,7 +308,7 @@ class ToggleNavigationComponent {
     constructor() {
         this.activeKey = '';
         this.notifEnabled = false;
-        CamTranslationMenu.getInstance();
+        TaTranslationMenu.getInstance();
     }
     get containerCss() {
         return this.container ?? '';
@@ -347,7 +356,16 @@ class ToggleNavigationComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ToggleNavigationComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-toggle-navigation', standalone: true, imports: [NgIf, NgClass, NgTemplateOutlet, RouterModule, TranslateModule, FontIconComponent, LocalIconComponent, SwiperLightComponent], template: "<div class=\"toggle-container\" [ngClass]=\"this.containerCss\" [class.switch-container]=\"this.container === 'switch'\">\n  <ta-swiper-light\n    [items]=\"this.menu.elements\"\n    [template]=\"template\"\n    [forced]=\"true\"\n    swiperClasses=\"g-space-lg pt-space-md\"\n  ></ta-swiper-light>\n</div>\n\n<ng-template #template let-element=\"element\">\n  @if (element.callback || element.disabled) {\n    <div\n      (click)=\"this.callback(element)\"\n      class=\"toggle-element\"\n      [class.active]=\"this.isActive(element)\"\n      [class.disabled]=\"element.disabled\"\n    >\n      <ng-template\n        [ngTemplateOutlet]=\"Item\"\n        [ngTemplateOutletContext]=\"{\n          item: element,\n        }\"\n      >\n      </ng-template>\n    </div>\n  } @else {\n    <div\n      class=\"toggle-element\"\n      routerLinkActive=\"active\"\n      [routerLinkActiveOptions]=\"{ exact: element.exact }\"\n      [routerLink]=\"[this.getLink(element)]\"\n      [queryParamsHandling]=\"element.queryParamsHandling\"\n      [replaceUrl]=\"element.replaceUrl\"\n      [ngClass]=\"{ disabled: element.disabled }\"\n    >\n      <ng-template\n        [ngTemplateOutlet]=\"Item\"\n        [ngTemplateOutletContext]=\"{\n          item: element,\n        }\"\n      >\n      </ng-template>\n    </div>\n  }\n</ng-template>\n\n<ng-template #Item let-item=\"item\" [typedTemplate]=\"this.typeItem\">\n  <div class=\"label flex-row align-center mb-space-xs\">\n    @if (this.hasFontIcon(item) || this.hasIconImage(item)) {\n      <div class=\"icon\">\n        @if (this.hasFontIcon(item)) {\n          <span class=\"icon-material\">\n            <ta-font-icon [name]=\"this.getFontIcon(item)\"></ta-font-icon>\n          </span>\n        } @else if (this.hasIconImage(item)) {\n          <span class=\"icon-image\">\n            <ta-local-icon [type]=\"this.getIcon(item)\" size=\"xs\"></ta-local-icon>\n          </span>\n        }\n      </div>\n    }\n    @if (item.label) {\n      <div class=\"text-truncate\">\n        {{ item.label | translate }}\n      </div>\n    }\n    @if (item.options?.notificationBadge !== null) {\n      <div class=\"badge ml-space-xs\">\n        {{ item.options?.notificationBadge?.label }}\n      </div>\n    }\n    @if (item.translationData?.length) {\n      <div>({{ item.translationData?.length }})</div>\n    }\n  </div>\n</ng-template>\n", styles: [".toggle-container{border-bottom:1px solid var(--ta-neutral-300)}.toggle-container.switch-container{overflow:hidden}.toggle-container .badge{width:20px;height:20px;background-color:var(--ta-brand-700);color:var(--ta-brand-50);border-radius:50%;display:flex;justify-content:center;align-items:center}.toggle-container .toggle-element{color:var(--ta-neutral-800);font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);cursor:pointer}.toggle-container .toggle-element .icon{margin:auto;color:var(--ta-brand-700)}.toggle-container .toggle-element.active .icon{color:var(--ta-icon-brand-primary)}.toggle-container.switch{border-radius:var(--ta-space-xs)}.toggle-container.switch .toggle-element{background:var(--ta-surface-secondary)}.toggle-container.switch .toggle-element.disabled{opacity:.5}.toggle-container.switch .toggle-element.active{background:var(--ta-brand-700);color:var(--ta-neutral-50)}.toggle-container.tab .toggle-element.disabled{opacity:.5}.toggle-container.tab .toggle-element.active{color:var(--ta-text-brand-primary);border-bottom:2px solid var(--ta-border-brand)}.label{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
+            args: [{ selector: 'ta-toggle-navigation', standalone: true, imports: [
+                        NgIf,
+                        NgClass,
+                        NgTemplateOutlet,
+                        RouterModule,
+                        TranslateModule,
+                        FontIconComponent,
+                        LocalIconComponent,
+                        SwiperLightComponent,
+                    ], template: "<div class=\"toggle-container\" [ngClass]=\"this.containerCss\" [class.switch-container]=\"this.container === 'switch'\">\n  <ta-swiper-light\n    [items]=\"this.menu.elements\"\n    [template]=\"template\"\n    [forced]=\"true\"\n    swiperClasses=\"g-space-lg pt-space-md\"\n  ></ta-swiper-light>\n</div>\n\n<ng-template #template let-element=\"element\">\n  @if (element.callback || element.disabled) {\n    <div\n      (click)=\"this.callback(element)\"\n      class=\"toggle-element\"\n      [class.active]=\"this.isActive(element)\"\n      [class.disabled]=\"element.disabled\"\n    >\n      <ng-template\n        [ngTemplateOutlet]=\"Item\"\n        [ngTemplateOutletContext]=\"{\n          item: element,\n        }\"\n      >\n      </ng-template>\n    </div>\n  } @else {\n    <div\n      class=\"toggle-element\"\n      routerLinkActive=\"active\"\n      [routerLinkActiveOptions]=\"{ exact: element.exact }\"\n      [routerLink]=\"[this.getLink(element)]\"\n      [queryParamsHandling]=\"element.queryParamsHandling\"\n      [replaceUrl]=\"element.replaceUrl\"\n      [ngClass]=\"{ disabled: element.disabled }\"\n    >\n      <ng-template\n        [ngTemplateOutlet]=\"Item\"\n        [ngTemplateOutletContext]=\"{\n          item: element,\n        }\"\n      >\n      </ng-template>\n    </div>\n  }\n</ng-template>\n\n<ng-template #Item let-item=\"item\" [typedTemplate]=\"this.typeItem\">\n  <div class=\"label flex-row align-center mb-space-xs\">\n    @if (this.hasFontIcon(item) || this.hasIconImage(item)) {\n      <div class=\"icon\">\n        @if (this.hasFontIcon(item)) {\n          <span class=\"icon-material\">\n            <ta-font-icon [name]=\"this.getFontIcon(item)\"></ta-font-icon>\n          </span>\n        } @else if (this.hasIconImage(item)) {\n          <span class=\"icon-image\">\n            <ta-local-icon [type]=\"this.getIcon(item)\" size=\"xs\"></ta-local-icon>\n          </span>\n        }\n      </div>\n    }\n    @if (item.label) {\n      <div class=\"text-truncate\">\n        {{ item.label | translate }}\n      </div>\n    }\n    @if (item.options?.notificationBadge !== null) {\n      <div class=\"badge ml-space-xs\">\n        {{ item.options?.notificationBadge?.label }}\n      </div>\n    }\n    @if (item.translationData?.length) {\n      <div>({{ item.translationData?.length }})</div>\n    }\n  </div>\n</ng-template>\n", styles: [".toggle-container{border-bottom:1px solid var(--ta-neutral-300)}.toggle-container.switch-container{overflow:hidden}.toggle-container .badge{width:20px;height:20px;background-color:var(--ta-brand-700);color:var(--ta-brand-50);border-radius:50%;display:flex;justify-content:center;align-items:center}.toggle-container .toggle-element{color:var(--ta-neutral-800);font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);cursor:pointer}.toggle-container .toggle-element .icon{margin:auto;color:var(--ta-brand-700)}.toggle-container .toggle-element.active .icon{color:var(--ta-icon-brand-primary)}.toggle-container.switch{border-radius:var(--ta-space-xs)}.toggle-container.switch .toggle-element{background:var(--ta-surface-secondary)}.toggle-container.switch .toggle-element.disabled{opacity:.5}.toggle-container.switch .toggle-element.active{background:var(--ta-brand-700);color:var(--ta-neutral-50)}.toggle-container.tab .toggle-element.disabled{opacity:.5}.toggle-container.tab .toggle-element.active{color:var(--ta-text-brand-primary);border-bottom:2px solid var(--ta-border-brand)}.label{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { menu: [{
                 type: Input
             }], container: [{
@@ -357,7 +375,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class ContextMenuComponent extends TaBaseComponent {
     constructor() {
         super();
-        CamTranslationMenu.getInstance();
+        TaTranslationMenu.getInstance();
     }
     hasFontIcon(item) {
         return hasFontIcon(item);
@@ -397,7 +415,7 @@ class NavigationComponent extends TaAbstractComponent {
         this.hasFontIcon = hasFontIcon;
         this.getFontIcon = getFontIcon;
         this.activeKey = '';
-        CamTranslationMenu.getInstance();
+        TaTranslationMenu.getInstance();
     }
     ngOnInit() {
         const defaultOpen = this.menu.elements.find(e => e.defaultOpen);
@@ -711,14 +729,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamMenuModule } from '@ta/library-name';
+ * // import { TaMenuModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent } from '@ta/library-name';
  */
-class CamMenuModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamMenuModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamMenuModule, imports: [CamUiModule, CamSwiperModule, CamContainerModule, CamDirectivePipeModule, CamLayoutModule, CamListModule, CommonModule, RouterModule, CamIconsModule, MatMenuModule, TranslatePipe, MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent, QuickActionsComponent, QuickActionsCustomComponent, ToggleNavigationComponent, ContextMenuComponent, BottomSheetTemplateGenericComponent, MainMenuComponent, ListComponent, NavigationComponent], exports: [MenuComponent,
+class TaMenuModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
+            TaSwiperModule,
+            TaContainerModule,
+            TaDirectivePipeModule,
+            TaLayoutModule,
+            TaListModule,
+            CommonModule,
+            RouterModule,
+            TaIconsModule,
+            MatMenuModule,
+            TranslatePipe,
+            MenuComponent,
+            MenuItemComponent,
+            BottomSheetTemplateBasicComponent,
+            QuickActionsComponent,
+            QuickActionsCustomComponent,
+            ToggleNavigationComponent,
+            ContextMenuComponent,
+            BottomSheetTemplateGenericComponent,
+            MainMenuComponent,
+            ListComponent,
+            NavigationComponent], exports: [MenuComponent,
             MenuItemComponent,
             BottomSheetTemplateBasicComponent,
             QuickActionsComponent,
@@ -728,13 +767,55 @@ class CamMenuModule {
             BottomSheetTemplateGenericComponent,
             MainMenuComponent,
             NavigationComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamMenuModule, imports: [CamUiModule, CamSwiperModule, CamContainerModule, CamDirectivePipeModule, CamLayoutModule, CamListModule, CommonModule, RouterModule, CamIconsModule, MatMenuModule, MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent, QuickActionsComponent, QuickActionsCustomComponent, ToggleNavigationComponent, ContextMenuComponent, MainMenuComponent, ListComponent, NavigationComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
+            TaSwiperModule,
+            TaContainerModule,
+            TaDirectivePipeModule,
+            TaLayoutModule,
+            TaListModule,
+            CommonModule,
+            RouterModule,
+            TaIconsModule,
+            MatMenuModule,
+            MenuComponent,
+            MenuItemComponent,
+            BottomSheetTemplateBasicComponent,
+            QuickActionsComponent,
+            QuickActionsCustomComponent,
+            ToggleNavigationComponent,
+            ContextMenuComponent,
+            MainMenuComponent,
+            ListComponent,
+            NavigationComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamMenuModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CamUiModule, CamSwiperModule, CamContainerModule, CamDirectivePipeModule, CamLayoutModule, CamListModule, CommonModule, RouterModule, CamIconsModule, MatMenuModule, TranslatePipe, MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent, QuickActionsComponent, QuickActionsCustomComponent, ToggleNavigationComponent, ContextMenuComponent, BottomSheetTemplateGenericComponent, MainMenuComponent, ListComponent, NavigationComponent],
+                    imports: [
+                        TaUiModule,
+                        TaSwiperModule,
+                        TaContainerModule,
+                        TaDirectivePipeModule,
+                        TaLayoutModule,
+                        TaListModule,
+                        CommonModule,
+                        RouterModule,
+                        TaIconsModule,
+                        MatMenuModule,
+                        TranslatePipe,
+                        MenuComponent,
+                        MenuItemComponent,
+                        BottomSheetTemplateBasicComponent,
+                        QuickActionsComponent,
+                        QuickActionsCustomComponent,
+                        ToggleNavigationComponent,
+                        ContextMenuComponent,
+                        BottomSheetTemplateGenericComponent,
+                        MainMenuComponent,
+                        ListComponent,
+                        NavigationComponent,
+                    ],
                     exports: [
                         MenuComponent,
                         MenuItemComponent,
@@ -758,5 +839,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { BottomSheetTemplateBasicComponent, BottomSheetTemplateGenericComponent, CamMenuModule, ContextMenuComponent, FilterHelper, MainMenuComponent, Menu, MenuBase, MenuComponent, MenuIcon, MenuItemComponent, MenuPanel, NavigationComponent, QuickActionsComponent, QuickActionsCustomComponent, TaMainRoute, TaRoutes, TaRoutesCore, ToggleNavigationComponent };
+export { BottomSheetTemplateBasicComponent, BottomSheetTemplateGenericComponent, ContextMenuComponent, FilterHelper, MainMenuComponent, Menu, MenuBase, MenuComponent, MenuIcon, MenuItemComponent, MenuPanel, NavigationComponent, QuickActionsComponent, QuickActionsCustomComponent, TaMainRoute, TaMenuModule, TaRoutes, TaRoutesCore, ToggleNavigationComponent };
 //# sourceMappingURL=ta-menu.mjs.map

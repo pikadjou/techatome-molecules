@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
@@ -11,7 +12,7 @@ import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
-import { CamTranslationMenu } from '../../translation.service';
+import { TaTranslationMenu } from '../../translation.service';
 
 @Component({
   selector: 'ta-context-menu',
@@ -26,7 +27,7 @@ export class ContextMenuComponent extends TaBaseComponent {
 
   constructor() {
     super();
-    CamTranslationMenu.getInstance();
+    TaTranslationMenu.getInstance();
   }
 
   public hasFontIcon(item: MenuIcon | MenuAction | MenuBase): boolean {

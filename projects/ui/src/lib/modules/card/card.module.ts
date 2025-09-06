@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamIconsModule } from '@ta/icons';
+import { TaIconsModule } from '@ta/icons';
 
-import { CamUiModule } from '../../components/ui/ui.module';
+import { TaUiModule } from '../../components/ui/ui.module';
 import { CardImageComponent } from './card-image/card-image.component';
 import { CardComponent } from './card.component';
 import { CardContentComponent } from './content/card-content.component';
@@ -34,7 +34,7 @@ const declarations: any[] = [];
  */
 @NgModule({
   declarations: declarations,
-  imports: [CommonModule, CamUiModule, CamIconsModule, ...exports],
+  imports: [CommonModule, TaUiModule, TaIconsModule, ...exports],
   exports: exports,
 })
-export class CamCardModule {}
+export class TaCardModule {}

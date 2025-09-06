@@ -1,9 +1,10 @@
 import { AsyncPipe } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 
-import { CamSharedMenuService } from '@ta/services';
-import { TaBaseComponent } from '@ta/utils';
 import { combineLatest, map, startWith } from 'rxjs';
+
+import { TaSharedMenuService } from '@ta/services';
+import { TaBaseComponent } from '@ta/utils';
 
 @Component({
   selector: 'ta-layout-with-bottom-nav',
@@ -22,7 +23,7 @@ export class LayoutWithBottomNavComponent extends TaBaseComponent implements Aft
   @ViewChild('bottomLayoutContainer')
   private _layoutContent!: ElementRef<HTMLDivElement>;
 
-  public sharedMenu = inject(CamSharedMenuService);
+  public sharedMenu = inject(TaSharedMenuService);
 
   public isMinimized$ = combineLatest([
     this.sharedMenu.isMinimized$.pipe(startWith(false)),

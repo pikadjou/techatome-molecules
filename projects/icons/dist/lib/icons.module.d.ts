@@ -9,13 +9,13 @@ import * as i4 from "./components/font-icon/font-icon.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamIconsModule } from '@ta/icons';
+ * // import { TaIconsModule } from '@ta/icons';
  *
  * // Import the standalone components directly:
  * import { FontIconComponent, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
  */
-export declare class CamIconsModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamIconsModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamIconsModule, never, [typeof i1.CommonModule, typeof i2.LocalIconComponent, typeof i3.MaterialIconComponent, typeof i4.FontIconComponent], [typeof i2.LocalIconComponent, typeof i3.MaterialIconComponent, typeof i4.FontIconComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamIconsModule>;
+export declare class TaIconsModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaIconsModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaIconsModule, never, [typeof i1.CommonModule, typeof i2.LocalIconComponent, typeof i3.MaterialIconComponent, typeof i4.FontIconComponent], [typeof i2.LocalIconComponent, typeof i3.MaterialIconComponent, typeof i4.FontIconComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaIconsModule>;
 }

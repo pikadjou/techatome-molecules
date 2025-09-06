@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as i0 from "@angular/core";
 const isMinimizedKey = 'isMinimizedMenu';
-export class CamSharedMenuService {
+export class TaSharedMenuService {
     constructor() {
         this.isMinimized$ = new BehaviorSubject(localStorage.getItem(isMinimizedKey) === '1' ? true : false);
-        this.isMinimized$.subscribe((isMinimized) => localStorage.setItem(isMinimizedKey, isMinimized ? '1' : '0'));
+        this.isMinimized$.subscribe(isMinimized => localStorage.setItem(isMinimizedKey, isMinimized ? '1' : '0'));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSharedMenuService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSharedMenuService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSharedMenuService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSharedMenuService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSharedMenuService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSharedMenuService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
                 }]
         }], ctorParameters: () => [] });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVudS5zZXJ2aWNlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9zZXJ2aWNlcy9tZW51L21lbnUuc2VydmljZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsVUFBVSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRTNDLE9BQU8sRUFBRSxlQUFlLEVBQUUsTUFBTSxNQUFNLENBQUM7O0FBRXZDLE1BQU0sY0FBYyxHQUFHLGlCQUFpQixDQUFDO0FBSXpDLE1BQU0sT0FBTyxvQkFBb0I7SUFLL0I7UUFKTyxpQkFBWSxHQUFHLElBQUksZUFBZSxDQUN2QyxZQUFZLENBQUMsT0FBTyxDQUFDLGNBQWMsQ0FBQyxLQUFLLEdBQUcsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxLQUFLLENBQzVELENBQUM7UUFHQSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxDQUFDLFdBQVcsRUFBRSxFQUFFLENBQzFDLFlBQVksQ0FBQyxPQUFPLENBQUMsY0FBYyxFQUFFLFdBQVcsQ0FBQyxDQUFDLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FDOUQsQ0FBQztJQUNKLENBQUM7K0dBVFUsb0JBQW9CO21IQUFwQixvQkFBb0IsY0FGbkIsTUFBTTs7NEZBRVAsb0JBQW9CO2tCQUhoQyxVQUFVO21CQUFDO29CQUNWLFVBQVUsRUFBRSxNQUFNO2lCQUNuQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEluamVjdGFibGUgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuaW1wb3J0IHsgQmVoYXZpb3JTdWJqZWN0IH0gZnJvbSAncnhqcyc7XG5cbmNvbnN0IGlzTWluaW1pemVkS2V5ID0gJ2lzTWluaW1pemVkTWVudSc7XG5ASW5qZWN0YWJsZSh7XG4gIHByb3ZpZGVkSW46ICdyb290Jyxcbn0pXG5leHBvcnQgY2xhc3MgQ2FtU2hhcmVkTWVudVNlcnZpY2Uge1xuICBwdWJsaWMgaXNNaW5pbWl6ZWQkID0gbmV3IEJlaGF2aW9yU3ViamVjdDxib29sZWFuPihcbiAgICBsb2NhbFN0b3JhZ2UuZ2V0SXRlbShpc01pbmltaXplZEtleSkgPT09ICcxJyA/IHRydWUgOiBmYWxzZVxuICApO1xuXG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHRoaXMuaXNNaW5pbWl6ZWQkLnN1YnNjcmliZSgoaXNNaW5pbWl6ZWQpID0+XG4gICAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShpc01pbmltaXplZEtleSwgaXNNaW5pbWl6ZWQgPyAnMScgOiAnMCcpXG4gICAgKTtcbiAgfVxufVxuIl19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVudS5zZXJ2aWNlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vc3JjL2xpYi9zZXJ2aWNlcy9tZW51L21lbnUuc2VydmljZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsVUFBVSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRTNDLE9BQU8sRUFBRSxlQUFlLEVBQUUsTUFBTSxNQUFNLENBQUM7O0FBRXZDLE1BQU0sY0FBYyxHQUFHLGlCQUFpQixDQUFDO0FBSXpDLE1BQU0sT0FBTyxtQkFBbUI7SUFHOUI7UUFGTyxpQkFBWSxHQUFHLElBQUksZUFBZSxDQUFVLFlBQVksQ0FBQyxPQUFPLENBQUMsY0FBYyxDQUFDLEtBQUssR0FBRyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBRzlHLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFdBQVcsQ0FBQyxFQUFFLENBQUMsWUFBWSxDQUFDLE9BQU8sQ0FBQyxjQUFjLEVBQUUsV0FBVyxDQUFDLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUM7SUFDNUcsQ0FBQzsrR0FMVSxtQkFBbUI7bUhBQW5CLG1CQUFtQixjQUZsQixNQUFNOzs0RkFFUCxtQkFBbUI7a0JBSC9CLFVBQVU7bUJBQUM7b0JBQ1YsVUFBVSxFQUFFLE1BQU07aUJBQ25CIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0YWJsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5pbXBvcnQgeyBCZWhhdmlvclN1YmplY3QgfSBmcm9tICdyeGpzJztcblxuY29uc3QgaXNNaW5pbWl6ZWRLZXkgPSAnaXNNaW5pbWl6ZWRNZW51JztcbkBJbmplY3RhYmxlKHtcbiAgcHJvdmlkZWRJbjogJ3Jvb3QnLFxufSlcbmV4cG9ydCBjbGFzcyBUYVNoYXJlZE1lbnVTZXJ2aWNlIHtcbiAgcHVibGljIGlzTWluaW1pemVkJCA9IG5ldyBCZWhhdmlvclN1YmplY3Q8Ym9vbGVhbj4obG9jYWxTdG9yYWdlLmdldEl0ZW0oaXNNaW5pbWl6ZWRLZXkpID09PSAnMScgPyB0cnVlIDogZmFsc2UpO1xuXG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHRoaXMuaXNNaW5pbWl6ZWQkLnN1YnNjcmliZShpc01pbmltaXplZCA9PiBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShpc01pbmltaXplZEtleSwgaXNNaW5pbWl6ZWQgPyAnMScgOiAnMCcpKTtcbiAgfVxufVxuIl19

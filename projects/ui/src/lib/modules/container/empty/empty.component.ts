@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
 import { MessageLevel } from '@ta/utils';
 
@@ -22,6 +22,6 @@ export class EmptyComponent {
   @Input() text?: string = 'container.empty.light-message';
   @Input() type?: MessageLevel = 'info';
 
-  @Input() icon?: CamIconType | string = 'ghost';
+  @Input() icon?: TaIconType | string = 'ghost';
   @Input() iconSize?: TaSizes | 'xl' = 'lg';
 }

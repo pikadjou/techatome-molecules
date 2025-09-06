@@ -3,15 +3,15 @@ import * as i0 from '@angular/core';
 import { Input, Component, EventEmitter, Output, signal, HostListener, Injectable, NgModule } from '@angular/core';
 import * as i1$1 from '@angular/forms';
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ENotificationCode, NotificationInlineComponent, CamNotificationModule } from '@ta/notification';
-import { TranslatePipe, CamLazyTranslationService } from '@ta/translation';
-import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent, CamContainerModule, CamUiModule } from '@ta/ui';
-import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective, CamDirectivePipeModule } from '@ta/utils';
-import { InputAddressComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, WysiswygComponent, CamFormInputsModule } from '@ta/form-input';
-import { LocalIconComponent, FontIconComponent, CamIconsModule } from '@ta/icons';
+import { ENotificationCode, NotificationInlineComponent, TaNotificationModule } from '@ta/notification';
+import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
+import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent, TaContainerModule, TaUiModule } from '@ta/ui';
+import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective, TaDirectivePipeModule } from '@ta/utils';
+import { InputAddressComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, WysiswygComponent, TaFormInputsModule } from '@ta/form-input';
+import { LocalIconComponent, FontIconComponent, TaIconsModule } from '@ta/icons';
 import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
-import { Menu, MenuBase, ToggleNavigationComponent, CamMenuModule } from '@ta/menu';
+import { Menu, MenuBase, ToggleNavigationComponent, TaMenuModule } from '@ta/menu';
 import deepEqual from 'fast-deep-equal';
 import { distinctUntilChanged, BehaviorSubject } from 'rxjs';
 import { MatNativeDateModule, ShowOnDirtyErrorStateMatcher, ErrorStateMatcher } from '@angular/material/core';
@@ -352,14 +352,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['document:click', ['$event.target']]
             }] } });
 
-class CamTranslationForm extends CamLazyTranslationService {
+class TaTranslationForm extends TaLazyTranslationService {
     constructor() {
         super('form');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationForm, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationForm, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationForm, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationForm, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationForm, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationForm, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -372,23 +372,74 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFormModule } from '@ta/library-name';
+ * // import { TaFormModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FormComponent, MatNativeDateModule, EditFieldComponent } from '@ta/library-name';
  */
-class CamFormModule {
+class TaFormModule {
     constructor() {
-        CamTranslationForm.getInstance();
+        TaTranslationForm.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFormModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamFormModule, imports: [CamContainerModule, CamDirectivePipeModule, CamNotificationModule, CamFormInputsModule, CamUiModule, CommonModule, FormsModule, ReactiveFormsModule, CamIconsModule, CamMenuModule, MatMenuModule, TranslatePipe, FormComponent, InputsComponent, PanelComponent, DynamicComponent, EditFieldComponent, InputTranslationComponent], exports: [FormComponent, MatNativeDateModule, EditFieldComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFormModule, providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }], imports: [CamContainerModule, CamDirectivePipeModule, CamNotificationModule, CamFormInputsModule, CamUiModule, CommonModule, FormsModule, ReactiveFormsModule, CamIconsModule, CamMenuModule, MatMenuModule, FormComponent, InputsComponent, DynamicComponent, EditFieldComponent, InputTranslationComponent, MatNativeDateModule] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, imports: [TaContainerModule,
+            TaDirectivePipeModule,
+            TaNotificationModule,
+            TaFormInputsModule,
+            TaUiModule,
+            CommonModule,
+            FormsModule,
+            ReactiveFormsModule,
+            TaIconsModule,
+            TaMenuModule,
+            MatMenuModule,
+            TranslatePipe,
+            FormComponent,
+            InputsComponent,
+            PanelComponent,
+            DynamicComponent,
+            EditFieldComponent,
+            InputTranslationComponent], exports: [FormComponent, MatNativeDateModule, EditFieldComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }], imports: [TaContainerModule,
+            TaDirectivePipeModule,
+            TaNotificationModule,
+            TaFormInputsModule,
+            TaUiModule,
+            CommonModule,
+            FormsModule,
+            ReactiveFormsModule,
+            TaIconsModule,
+            TaMenuModule,
+            MatMenuModule,
+            FormComponent,
+            InputsComponent,
+            DynamicComponent,
+            EditFieldComponent,
+            InputTranslationComponent, MatNativeDateModule] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamFormModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, decorators: [{
             type: NgModule,
             args: [{
-                    imports: [CamContainerModule, CamDirectivePipeModule, CamNotificationModule, CamFormInputsModule, CamUiModule, CommonModule, FormsModule, ReactiveFormsModule, CamIconsModule, CamMenuModule, MatMenuModule, TranslatePipe, FormComponent, InputsComponent, PanelComponent, DynamicComponent, EditFieldComponent, InputTranslationComponent],
+                    imports: [
+                        TaContainerModule,
+                        TaDirectivePipeModule,
+                        TaNotificationModule,
+                        TaFormInputsModule,
+                        TaUiModule,
+                        CommonModule,
+                        FormsModule,
+                        ReactiveFormsModule,
+                        TaIconsModule,
+                        TaMenuModule,
+                        MatMenuModule,
+                        TranslatePipe,
+                        FormComponent,
+                        InputsComponent,
+                        PanelComponent,
+                        DynamicComponent,
+                        EditFieldComponent,
+                        InputTranslationComponent,
+                    ],
                     providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
                     declarations: [],
                     exports: [FormComponent, MatNativeDateModule, EditFieldComponent],
@@ -403,5 +454,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamFormModule, EditFieldComponent, FormComponent, InputsComponent, MyErrorStateMatcher };
+export { EditFieldComponent, FormComponent, InputsComponent, MyErrorStateMatcher, TaFormModule };
 //# sourceMappingURL=ta-form-basic.mjs.map

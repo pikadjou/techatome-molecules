@@ -1,12 +1,12 @@
 import { EventEmitter } from '@angular/core';
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 import { FileData } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class FileCardComponent {
     file: FileData;
     fileSelected: EventEmitter<FileData>;
     moreInformationSelected: EventEmitter<FileData>;
-    get localIcon(): CamIconType.Doc | CamIconType.Excel | CamIconType.Image | CamIconType.Pdf | CamIconType.UnknownFile;
+    get localIcon(): TaIconType.Doc | TaIconType.Excel | TaIconType.Image | TaIconType.Pdf | TaIconType.UnknownFile;
     get fileType(): string | null;
     get userTrigram(): string | null;
     get fileSize(): number | null;

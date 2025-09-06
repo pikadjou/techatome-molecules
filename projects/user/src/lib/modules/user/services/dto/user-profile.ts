@@ -8,4 +8,6 @@ export interface UserProfile {
   picture: string;
 }
 
-export const UserProfileProps = new GraphSchema<UserProfile>(['id', 'firstname', 'lastname', 'email', 'picture']);
+export const userProfileBrutProps: (keyof UserProfile)[] = ['id', 'firstname', 'lastname', 'email', 'picture'];
+
+export const userProfileProps = new GraphSchema<UserProfile>(userProfileBrutProps);

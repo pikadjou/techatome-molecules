@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { CamFilesBasicModule } from '@ta/files-basic';
-import { CamFormModule } from '@ta/form-basic';
-import { CamFormInputsModule } from '@ta/form-input';
-import { CamIconsModule } from '@ta/icons';
-import { CamMenuModule } from '@ta/menu';
-import { CamEnumerationService } from '@ta/services';
-import { CamCardModule, CamContainerModule, CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { TaFilesBasicModule } from '@ta/files-basic';
+import { TaFormModule } from '@ta/form-basic';
+import { TaFormInputsModule } from '@ta/form-input';
+import { TaIconsModule } from '@ta/icons';
+import { TaMenuModule } from '@ta/menu';
+import { TaEnumerationService } from '@ta/services';
+import { TaCardModule, TaContainerModule, TaUiModule } from '@ta/ui';
+import { TaDirectivePipeModule } from '@ta/utils';
 
 import { FilesDisplayComponent } from './components/display/files-display.component';
 import { UploadComponent } from './components/upload/files-upload.component';
@@ -17,20 +17,31 @@ import { UploadDocumentFormService } from './services/document/upload-document-f
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
- * // import { CamFilesExtendedModule } from '@ta/library-name';
- * 
+ * // import { TaFilesExtendedModule } from '@ta/library-name';
+ *
  * // Import the standalone components directly:
- * import { FilesDisplayComponent, UploadComponent, CamFilesBasicModule } from '@ta/library-name';
+ * import { FilesDisplayComponent, UploadComponent, TaFilesBasicModule } from '@ta/library-name';
  */
 @NgModule({
-
   declarations: [],
-  imports: [CamContainerModule, CamDirectivePipeModule, CamFormModule, CamUiModule, CamCardModule, CommonModule, CamFormInputsModule, CamFilesBasicModule, CamIconsModule, CamMenuModule, FilesDisplayComponent, UploadComponent],
-  exports: [FilesDisplayComponent, UploadComponent, CamFilesBasicModule],
-  providers: [CamEnumerationService, UploadDocumentFormService],
-
+  imports: [
+    TaContainerModule,
+    TaDirectivePipeModule,
+    TaFormModule,
+    TaUiModule,
+    TaCardModule,
+    CommonModule,
+    TaFormInputsModule,
+    TaFilesBasicModule,
+    TaIconsModule,
+    TaMenuModule,
+    FilesDisplayComponent,
+    UploadComponent,
+  ],
+  exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule],
+  providers: [TaEnumerationService, UploadDocumentFormService],
 })
-export class CamFilesExtendedModule {}
+export class TaFilesExtendedModule {}

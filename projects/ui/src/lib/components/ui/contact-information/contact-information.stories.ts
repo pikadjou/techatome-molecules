@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { CamIconType } from '@ta/icons';
+
+import { TaIconType } from '@ta/icons';
 
 import { ContactInformationComponent } from './contact-information.component';
 
@@ -28,8 +29,8 @@ export default {
       control: 'text',
     },
     localIcon: {
-      options: Object.values(CamIconType).filter(x => typeof x === 'string'),
-      mapping: CamIconType,
+      options: Object.values(TaIconType).filter(x => typeof x === 'string'),
+      mapping: TaIconType,
       control: { type: 'select' },
     },
   },

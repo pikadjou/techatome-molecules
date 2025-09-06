@@ -1,8 +1,8 @@
 import { ElementRef, Renderer2 } from '@angular/core';
 import { InputPhone } from '@ta/form-model';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class InputPhoneComponent extends CamAbstractInputComponent<InputPhone> {
+export declare class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
     private renderer;
     phoneInput: ElementRef;
     constructor(renderer: Renderer2);

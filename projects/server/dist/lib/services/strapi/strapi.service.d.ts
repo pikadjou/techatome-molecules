@@ -1,5 +1,5 @@
 import { GraphQueryPayload } from '../graphql/models/graphPayload';
-import { CamBaseService } from '../server/baseService';
+import { TaBaseService } from '../server/baseService';
 import { IStrapiConfig } from './config';
 import * as i0 from "@angular/core";
 export interface GraphStrapiResponse<T> {
@@ -14,11 +14,11 @@ export interface GraphStrapiListResponse<T> {
         attributes: T;
     }[];
 }
-export declare class CamStrapiService extends CamBaseService {
+export declare class TaStrapiService extends TaBaseService {
     private _strapiConfig;
     constructor(_strapiConfig: IStrapiConfig);
     fetchQuery$<T>(payload: GraphQueryPayload, node: string): import("rxjs").Observable<T>;
     fetchQueryList$<T>(payload: GraphQueryPayload, node: string): import("rxjs").Observable<T[]>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamStrapiService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamStrapiService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaStrapiService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaStrapiService>;
 }

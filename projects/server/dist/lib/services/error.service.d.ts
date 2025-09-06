@@ -8,10 +8,10 @@ export type ServerError = {
     error: ApolloError;
     errorsMessage: GraphQLFormattedError[];
 };
-export declare class CamServerErrorService {
+export declare class TaServerErrorService {
     notifications: import("@angular/core").WritableSignal<ServerError[]>;
     constructor();
     addError(query: GraphQueryPayload | GraphMutationPayload, error: ApolloError): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamServerErrorService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamServerErrorService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaServerErrorService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaServerErrorService>;
 }

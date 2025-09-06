@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { CamLazyTranslationService } from '@ta/translation';
+import { TaLazyTranslationService } from '@ta/translation';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CamTranslationUser extends CamLazyTranslationService {
+export class TaTranslationUser extends TaLazyTranslationService {
   constructor() {
     super('user');
   }

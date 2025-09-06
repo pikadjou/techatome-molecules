@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { AuthService } from '@auth0/auth0-angular';
 import { distinct, filter, tap } from 'rxjs';
@@ -6,21 +6,21 @@ import { distinct, filter, tap } from 'rxjs';
 import { Logger } from '@ta/server';
 import { isNonNullable } from '@ta/utils';
 
-import { CamAuthService } from '../../user/services/auth.service';
-import { TaUserService } from '../../user/services/user.service';
+import { TaAuthService } from '../../user/services/auth.service';
+import { TA_USER_SERVICE } from '../../user/services/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CamAuth0Service extends CamAuthService {
+export class TaAuth0Service extends TaAuthService {
   get userProfile$() {
     return this.userService.userProfile.get$();
   }
 
-  constructor(
-    @Inject(AuthService) public auth: AuthService,
-    @Inject(TaUserService) public userService: TaUserService
-  ) {
+  public auth = inject(AuthService);
+  public userService = inject(TA_USER_SERVICE);
+
+  constructor() {
     super();
 
     this.auth.user$

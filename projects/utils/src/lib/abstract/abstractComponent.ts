@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 
 import { BreakpointDetection } from '../helpers/breakpoints/detection';
 import { RequestState } from '../helpers/request/state';
@@ -15,7 +15,7 @@ export abstract class TaAbstractComponent implements OnDestroy {
   public breakpoints = new BreakpointDetection();
   public requestState = new RequestState();
 
-  public icon: typeof CamIconType = CamIconType;
+  public icon: typeof TaIconType = TaIconType;
 
   get isMobile() {
     return this.breakpoints.isMobile;

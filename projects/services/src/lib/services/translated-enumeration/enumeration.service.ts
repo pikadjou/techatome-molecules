@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { filter, map, tap } from 'rxjs/operators';
 
-import { CamBaseService, MappingApiType, Request } from '@ta/server';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { MappingApiType, Request, TaBaseService } from '@ta/server';
 
 import { TranslatedEnumeration } from '../common/dto/translated-enumeration';
 import { sortByTranslatedValue } from './translated-enumeration-helpers';
@@ -34,7 +35,7 @@ const apiRoutes: MappingApiType = {
 @Injectable({
   providedIn: 'root',
 })
-export class CamEnumerationService extends CamBaseService {
+export class TaEnumerationService extends TaBaseService {
   public getAbandonReasons$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
   public wontDoReasons$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
   public incidentTypes$ = new BehaviorSubject<TranslatedEnumeration[]>([]);

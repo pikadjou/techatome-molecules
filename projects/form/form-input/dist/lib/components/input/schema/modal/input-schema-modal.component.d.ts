@@ -1,8 +1,8 @@
 import { MatDialogRef } from '@angular/material/dialog';
-import { CamBaseModal, FileStructure } from '@ta/utils';
 import { Subject } from 'rxjs';
+import { FileStructure, TaBaseModal } from '@ta/utils';
 import * as i0 from "@angular/core";
-export declare class InputSchemaModal extends CamBaseModal {
+export declare class InputSchemaModal extends TaBaseModal {
     dialogRef: MatDialogRef<InputSchemaModal, {
         file: FileStructure;
     }>;

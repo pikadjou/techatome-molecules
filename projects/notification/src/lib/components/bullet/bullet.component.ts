@@ -1,20 +1,19 @@
-import { CamNotificationDataService } from '../../services/data.service';
-import { NotificationFilter } from '../../services/queries';
 import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+
 import { BulletComponent as TaBulletComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
+
+import { TaNotificationDataService } from '../../services/data.service';
+import { NotificationFilter } from '../../services/queries';
 
 @Component({
   selector: 'ta-notification-bullet',
   templateUrl: './bullet.component.html',
   styleUrls: ['./bullet.component.scss'],
   standalone: true,
-  imports: [
-    AsyncPipe,
-    TaBulletComponent
-  ],
+  imports: [AsyncPipe, TaBulletComponent],
 })
 export class BulletComponent extends TaBaseComponent implements OnInit {
   @Input()
@@ -24,7 +23,7 @@ export class BulletComponent extends TaBaseComponent implements OnInit {
     return this._notificationDataService.count.get$(this._notificationDataService.computeKey(this.filters));
   }
 
-  constructor(private _notificationDataService: CamNotificationDataService) {
+  constructor(private _notificationDataService: TaNotificationDataService) {
     super();
   }
 

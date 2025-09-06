@@ -11,14 +11,14 @@ export { gql as Apollo_gql } from 'apollo-angular';
  *
  * @example
  * // Instead of importing the module:
- * // import { CamServerModule } from '@ta/library-name';
+ * // import { TaServerModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ApolloModule } from '@ta/library-name';
  */
-export declare class CamServerModule {
-    static forRoot(graphQlConfig: IGraphConfig): ModuleWithProviders<CamServerModule>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamServerModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamServerModule, never, [typeof i1.CommonModule, typeof i2.HttpClientModule, typeof i3.ApolloModule], [typeof i3.ApolloModule]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamServerModule>;
+export declare class TaServerModule {
+    static forRoot(graphQlConfig: IGraphConfig): ModuleWithProviders<TaServerModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaServerModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaServerModule, never, [typeof i1.CommonModule, typeof i2.HttpClientModule, typeof i3.ApolloModule], [typeof i3.ApolloModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaServerModule>;
 }

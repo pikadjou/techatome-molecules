@@ -1,13 +1,13 @@
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
+import { TranslateModule } from '@ngx-translate/core';
 import { differenceInCalendarDays } from 'date-fns';
 
-import { CamTranslationUI } from '../translation.service';
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
-selector: 'ta-time-ago',
+  selector: 'ta-time-ago',
   templateUrl: './time-ago.component.html',
   styleUrls: ['./time-ago.component.scss'],
   standalone: true,
@@ -52,6 +52,6 @@ export class TimeAgoComponent {
   }
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

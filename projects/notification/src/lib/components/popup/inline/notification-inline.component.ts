@@ -3,12 +3,13 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { FontIconComponent } from '@ta/icons';
 import { LinkComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
 import { ENotificationCode } from '../../../enum';
-import { CamTranslationNotification } from '../../../translation.service';
+import { TaTranslationNotification } from '../../../translation.service';
 import { openErrorModal } from '../../error-box/error-box.component';
 
 @Component({
@@ -57,7 +58,7 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   constructor() {
     super();
-    CamTranslationNotification.getInstance();
+    TaTranslationNotification.getInstance();
   }
 
   public close = () => {

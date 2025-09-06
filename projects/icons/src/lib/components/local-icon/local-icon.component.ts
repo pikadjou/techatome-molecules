@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { TaSizes } from '@ta/styles';
 
-import { CamIconType, CamIconsService } from '../../services/icons.service';
+import { TaIconType, TaIconsService } from '../../services/icons.service';
 
 /**
  * @deprecated
@@ -21,7 +21,7 @@ export class LocalIconComponent {
    * Icon to display
    */
   @Input()
-  public type!: CamIconType | string | null;
+  public type!: TaIconType | string | null;
 
   /**
    * Size of the icon
@@ -36,12 +36,12 @@ export class LocalIconComponent {
   public rotation = false;
 
   constructor(
-    private _iconService: CamIconsService,
+    private _iconService: TaIconsService,
     private _sanitizer: DomSanitizer
   ) {}
 
   public getSvgIcon() {
-    return this._sanitizer.bypassSecurityTrustHtml(this._iconService.getIcon(this.type as CamIconType));
+    return this._sanitizer.bypassSecurityTrustHtml(this._iconService.getIcon(this.type as TaIconType));
   }
   public getSize(): string {
     if (this.size === 'xs') {

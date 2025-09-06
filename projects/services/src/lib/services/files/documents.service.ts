@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { CamBaseService, GraphEndpoint, HandleSimpleRequest, MappingApiType, Request } from '@ta/server';
-import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 import { filter, map } from 'rxjs';
+
+import { GraphEndpoint, HandleSimpleRequest, MappingApiType, Request, TaBaseService } from '@ta/server';
+import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 
 import { DocumentDto } from './dto/document';
 import { UploadFilePayloadInput } from './dto/post/UploadFilePayloadInput';
@@ -23,7 +24,7 @@ const apiRoutes: MappingApiType = {
 @Injectable({
   providedIn: 'root',
 })
-export class CamDocumentsService extends CamBaseService {
+export class TaDocumentsService extends TaBaseService {
   public documents = new HandleSimpleRequest<DocumentDto[]>();
 
   constructor() {

@@ -1,13 +1,14 @@
 import { NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Culture } from '@ta/utils';
 
-import { CamTranslationUI } from '../translation.service';
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
-selector: 'ta-culture',
+  selector: 'ta-culture',
   templateUrl: './culture.component.html',
   styleUrls: ['./culture.component.scss'],
   standalone: true,
@@ -18,6 +19,6 @@ export class CultureComponent {
   cultures!: Culture[];
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

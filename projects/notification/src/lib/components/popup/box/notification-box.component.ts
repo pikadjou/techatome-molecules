@@ -1,27 +1,26 @@
-import { ENotificationCode } from '../../../enum';
-import { CamNotificationService } from '../../../services/notification.service';
-import { NotificationInlineComponent } from '../inline/notification-inline.component';
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+
+import { tap } from 'rxjs/operators';
+
 import { ToastComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
-import { tap } from 'rxjs/operators';
+
+import { ENotificationCode } from '../../../enum';
+import { TaNotificationService } from '../../../services/notification.service';
+import { NotificationInlineComponent } from '../inline/notification-inline.component';
 
 @Component({
   selector: 'ta-notification-box',
   templateUrl: './notification-box.component.html',
   styleUrls: ['./notification-box.component.scss'],
   standalone: true,
-  imports: [
-    NgFor,
-    NotificationInlineComponent,
-    ToastComponent
-  ],
+  imports: [NgFor, NotificationInlineComponent, ToastComponent],
 })
 export class NotificationBoxComponent extends TaBaseComponent {
   public list: { message: string; code: ENotificationCode }[] = [];
 
-  constructor(private _notificationService: CamNotificationService) {
+  constructor(private _notificationService: TaNotificationService) {
     super();
 
     this._registerSubscription(

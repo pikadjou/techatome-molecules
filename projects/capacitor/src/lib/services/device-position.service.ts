@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CamDevicePositionService {
+export class TaDevicePositionService {
   private _currentPosition$ = new BehaviorSubject<Position | null>(null);
   private _canAccessPosition$ = new BehaviorSubject<boolean>(false);
 
@@ -21,13 +21,13 @@ export class CamDevicePositionService {
   constructor() {}
 
   public fetchCanAccessPosition() {
-    Geolocation.checkPermissions().then((permissionStatus) =>
+    Geolocation.checkPermissions().then(permissionStatus =>
       this._canAccessPosition$.next(permissionStatus.location !== 'denied')
     );
   }
 
   public fetchCurrentPosition() {
-    Geolocation.getCurrentPosition().then((position) => {
+    Geolocation.getCurrentPosition().then(position => {
       this._currentPosition$.next(position);
     });
   }

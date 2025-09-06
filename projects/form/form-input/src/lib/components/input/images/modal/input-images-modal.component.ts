@@ -1,23 +1,24 @@
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+import { map } from 'rxjs';
+
 import { FileListComponent } from '@ta/files-basic';
 import { DualButtonComponent } from '@ta/ui';
-import { CamBaseModal, FileData, TemporaryFile, pickImages } from '@ta/utils';
-import { map } from 'rxjs';
+import { FileData, TaBaseModal, TemporaryFile, pickImages } from '@ta/utils';
 
 import { DialogData } from '../input-images.component';
 
 @Component({
-selector: '',
+  selector: '',
   styleUrls: ['./input-images-modal.component.scss'],
   templateUrl: './input-images-modal.component.html',
   standalone: true,
   imports: [NgIf, AsyncPipe, FileListComponent, DualButtonComponent],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-export class InputImageModal extends CamBaseModal implements OnInit {
+export class InputImageModal extends TaBaseModal implements OnInit {
   public selection: string[] = [];
 
   public tempFiles = new TemporaryFile();

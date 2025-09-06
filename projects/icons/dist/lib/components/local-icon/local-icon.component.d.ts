@@ -1,6 +1,6 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { TaSizes } from '@ta/styles';
-import { CamIconType, CamIconsService } from '../../services/icons.service';
+import { TaIconType, TaIconsService } from '../../services/icons.service';
 import * as i0 from "@angular/core";
 /**
  * @deprecated
@@ -11,7 +11,7 @@ export declare class LocalIconComponent {
     /**
      * Icon to display
      */
-    type: CamIconType | string | null;
+    type: TaIconType | string | null;
     /**
      * Size of the icon
      */
@@ -20,7 +20,7 @@ export declare class LocalIconComponent {
      * If set to true, icon will have a rotation animation
      */
     rotation: boolean;
-    constructor(_iconService: CamIconsService, _sanitizer: DomSanitizer);
+    constructor(_iconService: TaIconsService, _sanitizer: DomSanitizer);
     getSvgIcon(): import("@angular/platform-browser").SafeHtml;
     getSize(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<LocalIconComponent, never>;

@@ -1,11 +1,12 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { CamExpansionPanelComponent } from './expansion-panel.component';
 
-type StoryType = CamExpansionPanelComponent;
+import { TaExpansionPanelComponent } from './expansion-panel.component';
+
+type StoryType = TaExpansionPanelComponent;
 
 export default {
   title: 'UI/Expansion panel',
-  component: CamExpansionPanelComponent,
+  component: TaExpansionPanelComponent,
   tags: ['autodocs'],
   render: args => {
     const { ...props } = args;

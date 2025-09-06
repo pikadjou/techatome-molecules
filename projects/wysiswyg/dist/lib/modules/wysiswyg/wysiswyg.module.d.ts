@@ -11,13 +11,13 @@ import * as i6 from "./components/input/input.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamWysiswygModule } from '@ta/library-name';
+ * // import { TaWysiswygModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { BlockTextComponent, EditorInputComponent } from '@ta/library-name';
  */
-export declare class CamWysiswygModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamWysiswygModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamWysiswygModule, never, [typeof i1.CommonModule, typeof i2.CamUiModule, typeof i3.CamNotificationModule, typeof i4.SafePipe, typeof i5.BlockTextComponent, typeof i6.EditorInputComponent], [typeof i5.BlockTextComponent, typeof i6.EditorInputComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamWysiswygModule>;
+export declare class TaWysiswygModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaWysiswygModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaWysiswygModule, never, [typeof i1.CommonModule, typeof i2.TaUiModule, typeof i3.TaNotificationModule, typeof i4.SafePipe, typeof i5.BlockTextComponent, typeof i6.EditorInputComponent], [typeof i5.BlockTextComponent, typeof i6.EditorInputComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaWysiswygModule>;
 }

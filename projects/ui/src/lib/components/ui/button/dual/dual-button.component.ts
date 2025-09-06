@@ -1,9 +1,11 @@
 import { NgClass } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CamTranslationUI } from '../../translation.service';
+import { FontIconComponent } from '@ta/icons';
+
+import { TaTranslationUI } from '../../translation.service';
 
 export interface DualButtonInput {
   icon: string;
@@ -12,7 +14,7 @@ export interface DualButtonInput {
 }
 
 @Component({
-selector: 'ta-dual-button',
+  selector: 'ta-dual-button',
   templateUrl: './dual-button.component.html',
   styleUrls: ['./dual-button.component.scss'],
   standalone: true,
@@ -32,7 +34,7 @@ export class DualButtonComponent {
   type: 'primary' | 'secondary' = 'primary';
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 
   public getClass() {

@@ -9,7 +9,7 @@ import { BaseChartComponent } from './base-chart/base-chart.component';
   standalone: true,
   imports: [],
 })
-export class CamChartDoughnutComponent extends BaseChartComponent<'doughnut'> {
+export class TaChartDoughnutComponent extends BaseChartComponent<'doughnut'> {
   constructor() {
     super();
 

@@ -8,34 +8,32 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CamDeviceInfoService {
+export class TaDeviceInfoService {
   public deviceClasses$: Observable<string[]>;
   public os$: Observable<OperatingSystem>;
 
   private _getInfo$ = new BehaviorSubject<DeviceInfo | null>(null);
 
   constructor() {
-    Device.getInfo().then((deviceInformation) =>
-      this._getInfo$.next(deviceInformation)
-    );
+    Device.getInfo().then(deviceInformation => this._getInfo$.next(deviceInformation));
 
     this.os$ = this._getInfo$.pipe(
-      filter((deviceInfo) => !!deviceInfo),
-      map((deviceInfo) => deviceInfo?.operatingSystem ?? 'unknown')
+      filter(deviceInfo => !!deviceInfo),
+      map(deviceInfo => deviceInfo?.operatingSystem ?? 'unknown')
     );
 
     this.deviceClasses$ = this.os$.pipe(
-      map((os) => {
+      map(os => {
         return [os, this._getMobileClass(os)];
       })
     );
   }
 
   public isMobileOs$() {
-    return this.os$.pipe(map((value) => this.isMobileOs(value)));
+    return this.os$.pipe(map(value => this.isMobileOs(value)));
   }
   public isWeb$() {
-    return this.os$.pipe(map((value) => !this.isMobileOs(value)));
+    return this.os$.pipe(map(value => !this.isMobileOs(value)));
   }
 
   public isMobileOs(os: OperatingSystem) {

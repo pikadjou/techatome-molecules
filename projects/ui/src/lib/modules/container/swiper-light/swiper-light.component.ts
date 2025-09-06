@@ -1,7 +1,7 @@
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 
-import { CamDeviceInfoService } from '@ta/capacitor';
+import { TaDeviceInfoService } from '@ta/capacitor';
 import { TaBaseComponent } from '@ta/utils';
 
 @Component({
@@ -29,7 +29,7 @@ export class SwiperLightComponent extends TaBaseComponent implements OnInit {
 
   public classes: string = '';
 
-  constructor(private _deviceInfoService: CamDeviceInfoService) {
+  constructor(private _deviceInfoService: TaDeviceInfoService) {
     super();
   }
 

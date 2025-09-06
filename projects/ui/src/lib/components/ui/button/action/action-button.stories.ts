@@ -1,5 +1,6 @@
 import { Meta, StoryObj, componentWrapperDecorator } from '@storybook/angular';
-import { CamIconType } from '@ta/icons';
+
+import { TaIconType } from '@ta/icons';
 
 import { ActionButtonComponent } from './action-button.component';
 
@@ -7,20 +8,18 @@ export default {
   title: 'UI/Button/Action',
   component: ActionButtonComponent,
   tags: ['autodocs'],
-  decorators: [
-    componentWrapperDecorator(story => `<div style="height: 50px; padding-top: 50px">${story}</div>`),
-  ],
+  decorators: [componentWrapperDecorator(story => `<div style="height: 50px; padding-top: 50px">${story}</div>`)],
 
   render: args => ({ props: args }),
   args: {
     actions: [
       {
         callback: _ => console.log('test'),
-        icon: CamIconType.Play,
+        icon: TaIconType.Play,
       },
       {
         callback: _ => console.log('test'),
-        icon: CamIconType.Stop,
+        icon: TaIconType.Stop,
       },
     ],
   },

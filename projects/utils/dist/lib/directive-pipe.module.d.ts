@@ -14,14 +14,14 @@ import * as i9 from "./directive/type-template-directive";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamDirectivePipeModule } from '@ta/library-name';
+ * // import { TaDirectivePipeModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FileSizePipe, JoinPipe, LetDirective } from '@ta/library-name';
  */
-export declare class CamDirectivePipeModule {
+export declare class TaDirectivePipeModule {
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamDirectivePipeModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamDirectivePipeModule, [typeof i1.FileSizePipe, typeof i2.LetDirective, typeof i3.OnRenderDirective], [typeof i4.CommonModule, typeof i5.SafePipe, typeof i6.PluralTranslatePipe, typeof i7.StopPropagationDirective, typeof i8.JoinPipe, typeof i9.TypedTemplateDirective], [typeof i1.FileSizePipe, typeof i2.LetDirective, typeof i6.PluralTranslatePipe, typeof i7.StopPropagationDirective, typeof i3.OnRenderDirective]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamDirectivePipeModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaDirectivePipeModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaDirectivePipeModule, [typeof i1.FileSizePipe, typeof i2.LetDirective, typeof i3.OnRenderDirective], [typeof i4.CommonModule, typeof i5.SafePipe, typeof i6.PluralTranslatePipe, typeof i7.StopPropagationDirective, typeof i8.JoinPipe, typeof i9.TypedTemplateDirective], [typeof i1.FileSizePipe, typeof i2.LetDirective, typeof i6.PluralTranslatePipe, typeof i7.StopPropagationDirective, typeof i3.OnRenderDirective]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaDirectivePipeModule>;
 }

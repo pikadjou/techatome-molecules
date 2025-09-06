@@ -14,13 +14,13 @@ import * as i9 from "./components/documents/list/list.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFilesBasicModule } from '@ta/library-name';
+ * // import { TaFilesBasicModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FileListComponent, FileEditComponent, DocumentsListComponent } from '@ta/library-name';
  */
-export declare class CamFilesBasicModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamFilesBasicModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamFilesBasicModule, never, [typeof i1.CommonModule, typeof i2.CamDirectivePipeModule, typeof i3.CamUiModule, typeof i3.CamCardModule, typeof i3.CamContainerModule, typeof i4.CamIconsModule, typeof i5.TranslatePipe, typeof i2.SafePipe, typeof i6.FileListComponent, typeof i7.FileCardComponent, typeof i8.FileEditComponent, typeof i9.DocumentsListComponent], [typeof i6.FileListComponent, typeof i8.FileEditComponent, typeof i9.DocumentsListComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamFilesBasicModule>;
+export declare class TaFilesBasicModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaFilesBasicModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaFilesBasicModule, never, [typeof i1.CommonModule, typeof i2.TaDirectivePipeModule, typeof i3.TaUiModule, typeof i3.TaCardModule, typeof i3.TaContainerModule, typeof i4.TaIconsModule, typeof i5.TranslatePipe, typeof i2.SafePipe, typeof i6.FileListComponent, typeof i7.FileCardComponent, typeof i8.FileEditComponent, typeof i9.DocumentsListComponent], [typeof i6.FileListComponent, typeof i8.FileEditComponent, typeof i9.DocumentsListComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaFilesBasicModule>;
 }

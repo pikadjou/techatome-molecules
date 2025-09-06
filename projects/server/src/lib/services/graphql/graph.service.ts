@@ -7,7 +7,7 @@ import { BehaviorSubject, catchError, filter, map, switchMap, take, tap, throwEr
 
 import { isURL } from '@ta/utils';
 
-import { CamServerErrorService } from '../error.service';
+import { TaServerErrorService } from '../error.service';
 import { Logger } from '../logger';
 import { GraphMutationPayload, GraphQueryPayload } from './models/graphPayload';
 import { GraphReponseData } from './models/graphResponseData';
@@ -27,7 +27,7 @@ type WrapperData = {
 export class TaGraphService {
   public isReady$ = new BehaviorSubject<boolean>(true);
 
-  private _errorServices = inject(CamServerErrorService);
+  private _errorServices = inject(TaServerErrorService);
 
   private _defaultEndpoint;
   private _cache;

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { CamBaseService, GraphEndpoint, HandleComplexRequest } from '@ta/server';
 import { of } from 'rxjs';
+
+import { GraphEndpoint, HandleComplexRequest, TaBaseService } from '@ta/server';
 
 import { Picture } from './dto/picture';
 
@@ -13,7 +14,7 @@ const graphEndpoint: GraphEndpoint = {
 @Injectable({
   providedIn: 'root',
 })
-export class AppPicturesService extends CamBaseService {
+export class AppPicturesService extends TaBaseService {
   public dashboardByProject = new HandleComplexRequest<Picture[]>();
 
   constructor() {

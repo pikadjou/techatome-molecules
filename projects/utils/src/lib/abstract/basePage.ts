@@ -9,7 +9,7 @@ import { getPropertyTypes } from '../utils/object';
 import { TaAbstractComponent } from './abstractComponent';
 
 @Component({ template: '' })
-export abstract class CamBasePage extends TaAbstractComponent {
+export abstract class TaBasePage extends TaAbstractComponent {
   constructor() {
     super();
   }

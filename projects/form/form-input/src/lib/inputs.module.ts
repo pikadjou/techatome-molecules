@@ -17,15 +17,16 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import { CamFilesBasicModule } from '@ta/files-basic';
-import { CamIconsModule } from '@ta/icons';
-import { CamMenuModule } from '@ta/menu';
-import { TranslatePipe } from '@ta/translation';
-import { CamCardModule, CamContainerModule, CamLayoutModule, CamListModule, CamUiModule } from '@ta/ui';
-import { CamOverlayPanelComponent } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
-import { CamWysiswygModule } from '@ta/wysiswyg';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
+import { TaFilesBasicModule } from '@ta/files-basic';
+import { TaIconsModule } from '@ta/icons';
+import { TaMenuModule } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { TaCardModule, TaContainerModule, TaLayoutModule, TaListModule, TaUiModule } from '@ta/ui';
+import { TaOverlayPanelComponent } from '@ta/ui';
+import { TaDirectivePipeModule } from '@ta/utils';
+import { TaWysiswygModule } from '@ta/wysiswyg';
 
 import { InputContainerComponent } from './components/input-layout/input-container/input-container.component';
 import { InputErrorComponent } from './components/input-layout/input-error/input-error.component';
@@ -56,23 +57,83 @@ import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { UploadComponent } from './components/input/upload/upload.component';
 import { WysiswygComponent } from './components/input/wysiswyg/wysiswyg.component';
 import { FormLabelComponent } from './components/label/label.component';
-import { CamTranslationInput } from './translation.service';
+import { TaTranslationInput } from './translation.service';
 
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
- * // import { CamFormInputsModule } from '@ta/library-name';
- * 
+ * // import { TaFormInputsModule } from '@ta/library-name';
+ *
  * // Import the standalone components directly:
  * import { CheckboxComponent, ColorPickerComponent, DatePickerComponent } from '@ta/library-name';
  */
 @NgModule({
-
   declarations: [],
-  imports: [FormLabelComponent, InputLayoutComponent, InputErrorComponent, CamDirectivePipeModule, CamUiModule, CamLayoutModule, CommonModule, FormsModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, ReactiveFormsModule, NgxMaterialTimepickerModule, CamFilesBasicModule, CamIconsModule, CamListModule, CamContainerModule, CamMenuModule, MatMenuModule, CamWysiswygModule, CamCardModule, MatProgressBarModule, MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'), CdkMenuModule, TranslatePipe, ComponentInputComponent, CamOverlayPanelComponent, CheckboxComponent, ColorPickerComponent, DatePickerComponent, DropdownComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TextareaComponent, TextBoxComponent, TimePickerComponent, ToggleComponent, InputImagesComponent, InputImageModal, InputSchemaComponent, InputSchemaModal, InputImageComponent, InputChoicesComponent, WysiswygComponent, UploadComponent, InputPhoneComponent, InputAddressComponent, CultureComponent, InputContainerComponent],
+  imports: [
+    FormLabelComponent,
+    InputLayoutComponent,
+    InputErrorComponent,
+    TaDirectivePipeModule,
+    TaUiModule,
+    TaLayoutModule,
+    CommonModule,
+    FormsModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+    NgxMaterialTimepickerModule,
+    TaFilesBasicModule,
+    TaIconsModule,
+    TaListModule,
+    TaContainerModule,
+    TaMenuModule,
+    MatMenuModule,
+    TaWysiswygModule,
+    TaCardModule,
+    MatProgressBarModule,
+    MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
+    CdkMenuModule,
+    TranslatePipe,
+    ComponentInputComponent,
+    TaOverlayPanelComponent,
+    CheckboxComponent,
+    ColorPickerComponent,
+    DatePickerComponent,
+    DropdownComponent,
+    LabelComponent,
+    RadioComponent,
+    SearchFieldComponent,
+    SliderComponent,
+    SwitchComponent,
+    TextareaComponent,
+    TextBoxComponent,
+    TimePickerComponent,
+    ToggleComponent,
+    InputImagesComponent,
+    InputImageModal,
+    InputSchemaComponent,
+    InputSchemaModal,
+    InputImageComponent,
+    InputChoicesComponent,
+    WysiswygComponent,
+    UploadComponent,
+    InputPhoneComponent,
+    InputAddressComponent,
+    CultureComponent,
+    InputContainerComponent,
+  ],
   exports: [
     CheckboxComponent,
     ColorPickerComponent,
@@ -102,10 +163,9 @@ import { CamTranslationInput } from './translation.service';
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     PARENT_OR_NEW_MENU_STACK_PROVIDER,
   ],
-
 })
-export class CamFormInputsModule {
+export class TaFormInputsModule {
   constructor() {
-    CamTranslationInput.getInstance();
+    TaTranslationInput.getInstance();
   }
 }

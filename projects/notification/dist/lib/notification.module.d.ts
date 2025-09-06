@@ -29,21 +29,21 @@ import * as i23 from "./components/bullet/bullet.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamNotificationModule } from '@ta/library-name';
+ * // import { TaNotificationModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { NotificationInlineComponent, ContainerComponent, BulletComponent } from '@ta/library-name';
  */
-export declare class CamNotificationModule {
-    static forRoot(): ModuleWithProviders<CamNotificationModule>;
+export declare class TaNotificationModule {
+    static forRoot(): ModuleWithProviders<TaNotificationModule>;
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamNotificationModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamNotificationModule, never, [typeof i1.CommonModule, typeof i2.CamDirectivePipeModule, typeof i3.CamIconsModule, typeof i4.CamUiModule, typeof i4.CamContainerModule, typeof i5.TranslatePipe, typeof i6.NotificationBoxComponent, typeof i7.NotificationInlineComponent, typeof i8.ContainerComponent, typeof i9.ItemComponent, typeof i10.IconComponent, typeof i11.ItemInfoComponent, typeof i12.ProjectStatusChangedComponent, typeof i13.NewQuotationVersionComponent, typeof i14.NewInvoiceComponent, typeof i15.InvoicePaymentStatusChangedComponent, typeof i16.NotificationTitleComponent, typeof i17.TaskAssignedComponent, typeof i18.ToDoAssignedComponent, typeof i19.TaskDueTodayComponent, typeof i20.ToDoDueTodayComponent, typeof i21.TaskNewActivityComponent, typeof i22.UserTaggedInConversationComponent, typeof i23.BulletComponent], [typeof i7.NotificationInlineComponent, typeof i8.ContainerComponent, typeof i23.BulletComponent, typeof i6.NotificationBoxComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamNotificationModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaNotificationModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaNotificationModule, never, [typeof i1.CommonModule, typeof i2.TaDirectivePipeModule, typeof i3.TaIconsModule, typeof i4.TaUiModule, typeof i4.TaContainerModule, typeof i5.TranslatePipe, typeof i6.NotificationBoxComponent, typeof i7.NotificationInlineComponent, typeof i8.ContainerComponent, typeof i9.ItemComponent, typeof i10.IconComponent, typeof i11.ItemInfoComponent, typeof i12.ProjectStatusChangedComponent, typeof i13.NewQuotationVersionComponent, typeof i14.NewInvoiceComponent, typeof i15.InvoicePaymentStatusChangedComponent, typeof i16.NotificationTitleComponent, typeof i17.TaskAssignedComponent, typeof i18.ToDoAssignedComponent, typeof i19.TaskDueTodayComponent, typeof i20.ToDoDueTodayComponent, typeof i21.TaskNewActivityComponent, typeof i22.UserTaggedInConversationComponent, typeof i23.BulletComponent], [typeof i7.NotificationInlineComponent, typeof i8.ContainerComponent, typeof i23.BulletComponent, typeof i6.NotificationBoxComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaNotificationModule>;
 }
-export declare class CamNotificationProvider {
-    static forRoot(): ModuleWithProviders<CamNotificationProvider>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamNotificationProvider, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamNotificationProvider, never, never, never>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamNotificationProvider>;
+export declare class TaNotificationProvider {
+    static forRoot(): ModuleWithProviders<TaNotificationProvider>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaNotificationProvider, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaNotificationProvider, never, never, never>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaNotificationProvider>;
 }

@@ -1,7 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { Civility } from '@ta/utils';
 
-import { CamUiModule } from '../ui.module';
+import { TaUiModule } from '../ui.module';
 import { CivilityComponent } from './civility.component';
 
 export default {
@@ -10,7 +10,7 @@ export default {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [CamUiModule],
+      imports: [TaUiModule],
     }),
   ],
   render: args => ({ props: args }),

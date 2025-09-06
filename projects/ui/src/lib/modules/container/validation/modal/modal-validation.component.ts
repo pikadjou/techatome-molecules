@@ -1,15 +1,15 @@
 import { Component, Inject } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { ModalParameter } from '../common-modal';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { CamTranslationContainer } from '../../translation.service';
 import { ButtonComponent } from '../../../../components/ui/button/button.component';
 import { LayoutModalComponent } from '../../../layout/layout-modal/layout-modal.component';
+import { TaTranslationContainer } from '../../translation.service';
+import { ModalParameter } from '../common-modal';
 
 @Component({
-selector: '',
+  selector: '',
   templateUrl: './modal-validation.component.html',
   styleUrls: ['./modal-validation.component.scss'],
   standalone: true,
@@ -28,7 +28,7 @@ export class ValidationModal {
     public dialogRef: MatDialogRef<ValidationModal>,
     @Inject(MAT_DIALOG_DATA) public data?: ModalParameter
   ) {
-    CamTranslationContainer.getInstance();
+    TaTranslationContainer.getInstance();
   }
 
   public onNoClick(): void {

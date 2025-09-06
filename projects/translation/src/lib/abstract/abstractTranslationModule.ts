@@ -2,13 +2,13 @@ import { inject } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
-import { CamTranslationRegistryService, ITranslation } from '../services/translation-registry.service';
+import { ITranslation, TaTranslationRegistryService } from '../services/translation-registry.service';
 
 /**
  * @deprecated
  */
-export abstract class CamAbstractTranslationModule implements ITranslation {
-  protected _registry = inject(CamTranslationRegistryService);
+export abstract class TaAbstractTranslationModule implements ITranslation {
+  protected _registry = inject(TaTranslationRegistryService);
 
   public id: string;
   protected translation: BehaviorSubject<{ [index: string]: any }> = new BehaviorSubject({});

@@ -1,9 +1,9 @@
 import { EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { InputNumber, InputTextBox } from '@ta/form-model';
 import { TaSizes } from '@ta/styles';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class SearchFieldComponent extends CamAbstractInputComponent<InputTextBox | InputNumber> implements OnInit, OnDestroy {
+export declare class SearchFieldComponent extends TaAbstractInputComponent<InputTextBox | InputNumber> implements OnInit, OnDestroy {
     isOpen: boolean;
     placeholder: string;
     space: boolean;

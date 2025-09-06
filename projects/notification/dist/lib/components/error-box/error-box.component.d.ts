@@ -1,9 +1,9 @@
 import { MatDialog } from '@angular/material/dialog';
 import { ServerError } from '@ta/server';
-import { CamBaseModal } from '@ta/utils';
+import { TaBaseModal } from '@ta/utils';
 import * as i0 from "@angular/core";
-export declare class ErrorBoxModal extends CamBaseModal {
-    protected _notificationService: import("../../services/notification.service").CamNotificationService;
+export declare class ErrorBoxModal extends TaBaseModal {
+    protected _notificationService: import("../../services/notification.service").TaNotificationService;
     private readonly _errorService;
     readonly errorList: import("@angular/core").WritableSignal<ServerError[]>;
     copyContent: (entity: ServerError) => Promise<void>;

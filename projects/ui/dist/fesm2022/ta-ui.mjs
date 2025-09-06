@@ -8,10 +8,10 @@ import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as i1$1 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { FontIconComponent, isFontIcon, getFontIcon, isLocalIcon, LocalIconComponent, MaterialIconComponent, CamIconType, CamIconsModule, CamIconsService } from '@ta/icons';
-import { CamLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, CamDirectivePipeModule, CamBaseModal, createRange } from '@ta/utils';
 import { register } from 'swiper/element/bundle';
+import { FontIconComponent, isFontIcon, getFontIcon, isLocalIcon, LocalIconComponent, MaterialIconComponent, TaIconType, TaIconsModule, TaIconsService } from '@ta/icons';
+import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, TaDirectivePipeModule, TaBaseModal, createRange } from '@ta/utils';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { intervalToDuration, differenceInCalendarDays } from 'date-fns';
@@ -19,24 +19,24 @@ import { LocalStorage } from 'storage-manager-js';
 import * as i1$2 from '@ta/capacitor';
 import * as i2 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
-import { CamSharedMenuService } from '@ta/services';
 import { combineLatest, startWith, map, Subject } from 'rxjs';
+import { TaSharedMenuService } from '@ta/services';
 import { MatDrawer, MatDrawerContainer, MatSidenavModule } from '@angular/material/sidenav';
 import * as i1$5 from '@angular/material/progress-spinner';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import * as i1$6 from '@angular/cdk/overlay';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { CamBaseService } from '@ta/server';
+import { TaBaseService } from '@ta/server';
 
-class CamTranslationUI extends CamLazyTranslationService {
+class TaTranslationUI extends TaLazyTranslationService {
     constructor() {
         super('ui');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationUI, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationUI, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationUI, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationUI, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationUI, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationUI, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -55,7 +55,7 @@ class BadgeComponent {
          */
         this.showClickOption = false;
         this.clickAction = new EventEmitter();
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     getClass() {
         return `badge-${this.type}`;
@@ -214,7 +214,7 @@ class DualButtonComponent {
     constructor() {
         this.isFull = false;
         this.type = 'primary';
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     getClass() {
         const css = {};
@@ -312,7 +312,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 
 class ContactInformationComponent {
     constructor() {
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ContactInformationComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ContactInformationComponent, isStandalone: true, selector: "ta-contact-information", inputs: { value: "value", icon: "icon", localIcon: "localIcon" }, ngImport: i0, template: "@if (this.value) {\n  <div class=\"header\">\n    <div class=\"icon\">\n      @if (this.localIcon) {\n        <ta-local-icon class=\"local-icon\" [type]=\"this.localIcon\"></ta-local-icon>\n      } @else if (this.icon) {\n        <ta-font-icon [name]=\"this.icon\" type=\"sm\"></ta-font-icon>\n      }\n    </div>\n\n    <div class=\"value\">\n      <div class=\"text\">{{ this.value | translate }}</div>\n    </div>\n  </div>\n}\n<div class=\"content\">\n  <ng-content></ng-content>\n</div>\n", styles: [".header{gap:var(--ta-space-md);flex-direction:row;display:flex;align-items:center}.icon{color:var(--ta-surface-brand-primary);margin-right:var(--ta-space-xs)}.local-icon{max-width:20px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight)}.value{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.content{margin-top:var(--ta-space-md);color:var(--ta-neutral-500)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
@@ -338,7 +338,7 @@ var CriticityStatus;
 const criticityLabel = (criticity) => `ui.criticity.${criticity}`;
 class CriticityComponent {
     constructor() {
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     label() {
         return criticityLabel(this.criticity);
@@ -367,7 +367,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 
 class CultureComponent {
     constructor() {
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CultureComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CultureComponent, isStandalone: true, selector: "ta-culture", inputs: { cultures: "cultures" }, ngImport: i0, template: "<div class=\"flex-start g-space-xs\">\n  @for (culture of this.cultures; track culture; let isLast = $last) {\n    <div>\n      {{ 'ui.culture.short.' + culture | translate }}{{ !isLast ? ',' : '' }}\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
@@ -440,7 +440,7 @@ class DurationComponent {
         this.startDate = Date.now();
         this.endDate = Date.now();
         this.interval = null;
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     ngOnInit() {
         if (this.startDate && this.endDate) {
@@ -475,7 +475,7 @@ class ExpandableTextComponent {
         this.height = 100;
         this.showFullText = false;
         this.showButton = true;
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     get textHeight() {
         if (this._myText) {
@@ -518,15 +518,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 args: ['myText']
             }] } });
 
-class CamExpansionPanelComponent extends TaBaseComponent {
+class TaExpansionPanelComponent extends TaBaseComponent {
     constructor() {
         super();
         this.templates = [];
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamExpansionPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CamExpansionPanelComponent, isStandalone: true, selector: "ta-expansion-panel", inputs: { templates: "templates" }, usesInheritance: true, ngImport: i0, template: "<mat-accordion>\n  @for (template of this.templates; track template) {\n    <mat-expansion-panel>\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ng-template\n            [ngTemplateOutlet]=\"template.title\"\n            [ngTemplateOutletContext]=\"template.context ?? {}\"\n          ></ng-template>\n        </mat-panel-title>\n      </mat-expansion-panel-header>\n      <ng-template\n        [ngTemplateOutlet]=\"template.content\"\n        [ngTemplateOutletContext]=\"template.context ?? {}\"\n      ></ng-template>\n    </mat-expansion-panel>\n  }\n</mat-accordion>\n", styles: [":host .mat-content,::ng-deep .mat-content{overflow:visible!important}:host .mat-expansion-panel,::ng-deep .mat-expansion-panel{box-shadow:none;border-radius:0!important;border-bottom:1px solid var(--ta-neutral-400);padding:var(--ta-space-sm) 0;background-color:var(--ta-surface-primary)}:host .mat-expansion-panel.mat-expanded,::ng-deep .mat-expansion-panel.mat-expanded{box-shadow:0 4px 8px #0000001a;border-radius:var(--ta-space-xs)!important}:host .mat-expansion-panel-header,:host .mat-expansion-panel-body,::ng-deep .mat-expansion-panel-header,::ng-deep .mat-expansion-panel-body{padding:var(--ta-space-xs)!important}\n"], dependencies: [{ kind: "ngmodule", type: MatExpansionModule }, { kind: "directive", type: i1$1.MatAccordion, selector: "mat-accordion", inputs: ["hideToggle", "displayMode", "togglePosition"], exportAs: ["matAccordion"] }, { kind: "component", type: i1$1.MatExpansionPanel, selector: "mat-expansion-panel", inputs: ["hideToggle", "togglePosition"], outputs: ["afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { kind: "component", type: i1$1.MatExpansionPanelHeader, selector: "mat-expansion-panel-header", inputs: ["expandedHeight", "collapsedHeight", "tabIndex"] }, { kind: "directive", type: i1$1.MatExpansionPanelTitle, selector: "mat-panel-title" }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaExpansionPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TaExpansionPanelComponent, isStandalone: true, selector: "ta-expansion-panel", inputs: { templates: "templates" }, usesInheritance: true, ngImport: i0, template: "<mat-accordion>\n  @for (template of this.templates; track template) {\n    <mat-expansion-panel>\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ng-template\n            [ngTemplateOutlet]=\"template.title\"\n            [ngTemplateOutletContext]=\"template.context ?? {}\"\n          ></ng-template>\n        </mat-panel-title>\n      </mat-expansion-panel-header>\n      <ng-template\n        [ngTemplateOutlet]=\"template.content\"\n        [ngTemplateOutletContext]=\"template.context ?? {}\"\n      ></ng-template>\n    </mat-expansion-panel>\n  }\n</mat-accordion>\n", styles: [":host .mat-content,::ng-deep .mat-content{overflow:visible!important}:host .mat-expansion-panel,::ng-deep .mat-expansion-panel{box-shadow:none;border-radius:0!important;border-bottom:1px solid var(--ta-neutral-400);padding:var(--ta-space-sm) 0;background-color:var(--ta-surface-primary)}:host .mat-expansion-panel.mat-expanded,::ng-deep .mat-expansion-panel.mat-expanded{box-shadow:0 4px 8px #0000001a;border-radius:var(--ta-space-xs)!important}:host .mat-expansion-panel-header,:host .mat-expansion-panel-body,::ng-deep .mat-expansion-panel-header,::ng-deep .mat-expansion-panel-body{padding:var(--ta-space-xs)!important}\n"], dependencies: [{ kind: "ngmodule", type: MatExpansionModule }, { kind: "directive", type: i1$1.MatAccordion, selector: "mat-accordion", inputs: ["hideToggle", "displayMode", "togglePosition"], exportAs: ["matAccordion"] }, { kind: "component", type: i1$1.MatExpansionPanel, selector: "mat-expansion-panel", inputs: ["hideToggle", "togglePosition"], outputs: ["afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { kind: "component", type: i1$1.MatExpansionPanelHeader, selector: "mat-expansion-panel-header", inputs: ["expandedHeight", "collapsedHeight", "tabIndex"] }, { kind: "directive", type: i1$1.MatExpansionPanelTitle, selector: "mat-panel-title" }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamExpansionPanelComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaExpansionPanelComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-expansion-panel', standalone: true, imports: [NgFor, MatExpansionModule], template: "<mat-accordion>\n  @for (template of this.templates; track template) {\n    <mat-expansion-panel>\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ng-template\n            [ngTemplateOutlet]=\"template.title\"\n            [ngTemplateOutletContext]=\"template.context ?? {}\"\n          ></ng-template>\n        </mat-panel-title>\n      </mat-expansion-panel-header>\n      <ng-template\n        [ngTemplateOutlet]=\"template.content\"\n        [ngTemplateOutletContext]=\"template.context ?? {}\"\n      ></ng-template>\n    </mat-expansion-panel>\n  }\n</mat-accordion>\n", styles: [":host .mat-content,::ng-deep .mat-content{overflow:visible!important}:host .mat-expansion-panel,::ng-deep .mat-expansion-panel{box-shadow:none;border-radius:0!important;border-bottom:1px solid var(--ta-neutral-400);padding:var(--ta-space-sm) 0;background-color:var(--ta-surface-primary)}:host .mat-expansion-panel.mat-expanded,::ng-deep .mat-expansion-panel.mat-expanded{box-shadow:0 4px 8px #0000001a;border-radius:var(--ta-space-xs)!important}:host .mat-expansion-panel-header,:host .mat-expansion-panel-body,::ng-deep .mat-expansion-panel-header,::ng-deep .mat-expansion-panel-body{padding:var(--ta-space-xs)!important}\n"] }]
         }], ctorParameters: () => [], propDecorators: { templates: [{
@@ -541,13 +541,13 @@ class FileImageComponent {
         const ext = extractExtension(this.fileName);
         switch (ext) {
             case 'docx':
-                return CamIconType.Doc;
+                return TaIconType.Doc;
             case 'pdf':
-                return CamIconType.Pdf;
+                return TaIconType.Pdf;
             case 'xlsx':
-                return CamIconType.Xls;
+                return TaIconType.Xls;
             default:
-                return CamIconType.FileEmpty;
+                return TaIconType.FileEmpty;
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FileImageComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
@@ -665,7 +665,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class MegaoctetComponent {
     constructor() {
         this.icon = false;
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     get megaoctet() {
         return roundToDecimal(octetsToMo(this.octet), 2);
@@ -756,7 +756,7 @@ class TypedMessageComponent {
         }
     }
     constructor() {
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TypedMessageComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TypedMessageComponent, isStandalone: true, selector: "ta-typed-message", inputs: { text: "text", type: "type" }, ngImport: i0, template: "<div class=\"alert alert-{{ this.type }}\" role=\"alert\">\n  <ta-font-icon [type]=\"'md'\">{{ this.icon }}</ta-font-icon>\n  <span class=\"text\">{{ this.text | translate }}</span>\n</div>\n", styles: [".alert{border-radius:8px;display:inline-flex;gap:var(--ta-space-xs);border:none;padding:var(--ta-space-xs)}.text{margin:auto}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
@@ -785,7 +785,7 @@ class PictureInfoMessageComponent {
     }
     constructor() {
         this.type = 'info';
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: PictureInfoMessageComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: PictureInfoMessageComponent, isStandalone: true, selector: "ta-picture-info-message", inputs: { icon: "icon", iconSize: "iconSize", text: "text", type: "type" }, ngImport: i0, template: "@if (this.icon) {\n  <div class=\"card\">\n    @if (this.isLocalIcon(this.icon)) {\n      <ta-local-icon\n        [type]=\"this.icon\"\n        [size]=\"this.iconSize ?? 'md'\"\n      ></ta-local-icon>\n    } @else if (this.isFontIcon(this.icon)) {\n      <ta-font-icon\n        class=\"font-icon\"\n        [name]=\"this.getFontIcon(this.icon)\"\n        [type]=\"this.iconSize ?? 'md'\"\n      ></ta-font-icon>\n    }\n\n    <div class=\"pt-space-xs\">{{ this.displayedText | translate }}</div>\n  </div>\n} @else {\n  <ta-typed-message [text]=\"this.displayedText\" [type]=\"this.type ?? 'info'\"></ta-typed-message>\n}\n", styles: [".card{padding:var(--ta-space-sm);text-align:center}p{padding-top:var(--ta-space-sm)}ta-font-icon{color:var(--ta-brand-400)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: TypedMessageComponent, selector: "ta-typed-message", inputs: ["text", "type"] }] }); }
@@ -828,7 +828,7 @@ class ProgressCircleComponent {
          * Progress in percentage
          */
         this.progress = 50;
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressCircleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ProgressCircleComponent, isStandalone: true, selector: "ta-progress-circle", inputs: { progress: "progress", upTitle: "upTitle", downTitle: "downTitle" }, ngImport: i0, template: "<div class=\"circle-progress-bar\">\n  @if (this.upTitle) {\n    <div class=\"title\">\n      {{ this.upTitle | translate }}\n    </div>\n  }\n\n  <svg viewBox=\"0 0 100 100\">\n    <circle class=\"circle-progress-bar-bg\" cx=\"50\" cy=\"50\" r=\"45\"></circle>\n\n    <circle\n      class=\"circle-progress-bar-progress\"\n      cx=\"50\"\n      cy=\"50\"\n      r=\"45\"\n      [attr.stroke-dasharray]=\"this.circumference\"\n      [attr.stroke-dashoffset]=\"this.circumference * (1 - this.progress / 100)\"\n    ></circle>\n\n    @if (this.canDisplayText) {\n      <text\n        class=\"circle-progress-bar-text\"\n        x=\"50\"\n        y=\"50\"\n        dominant-baseline=\"middle\"\n        text-anchor=\"middle\"\n      >\n        {{ this.progress | number : \"1.0-0\" }}%\n      </text>\n    }\n  </svg>\n\n  @if (this.downTitle) {\n    <div class=\"title\">\n      {{ this.downTitle | translate }}\n    </div>\n  }\n</div>\n", styles: [".circle-progress-bar .circle-progress-bar-bg{fill:none;stroke:var(--ta-neutral-300);stroke-width:10}.circle-progress-bar .circle-progress-bar-progress{fill:none;stroke:var(--ta-surface-brand-primary);stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .5s ease-out}.circle-progress-bar .circle-progress-bar-text{font-size:24px}.title{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);text-align:center;padding:5px}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "pipe", type: DecimalPipe, name: "number" }] }); }
@@ -879,7 +879,7 @@ class ProgressBarDataComponent {
         return (this.current ?? this.max)?.toString() ?? '';
     }
     constructor() {
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressBarDataComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ProgressBarDataComponent, isStandalone: true, selector: "ta-progress-bar-data", inputs: { current: "current", max: "max", title: "title", titleIcon: "titleIcon", description: "description", rightText: "rightText" }, ngImport: i0, template: "<div class=\"progress-container\">\n  <div class=\"title\">\n    <ta-title [level]=\"3\">{{ this.title | translate }}</ta-title>\n    @if (this.titleIcon) {\n      <ta-material-icon [type]=\"'sm'\">{{ this.titleIcon }}</ta-material-icon>\n    }\n  </div>\n\n  <div class=\"right-side\">\n    <span class=\"progress-value\">{{ this.progressValue }}</span>\n    @if (this.description) {\n      <span class=\"description color-grey-600\">{{ this.description | translate }}</span>\n    }\n    @if (this.rightText?.text) {\n      <span class=\"description\" [ngClass]=\"this.rightText?.colorClass ?? ''\">{{\n        this.rightText?.text ?? '' | translate\n      }}</span>\n    }\n  </div>\n</div>\n\n<ta-progress-bar [current]=\"this.current ?? 0\" [max]=\"this.max ?? 0\"></ta-progress-bar>\n", styles: [".progress-container{display:flex;flex-direction:row;justify-content:space-between}.progress-container .title{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:var(--ta-space-xs);color:var(--ta-neutral-900)}.progress-container .right-side{display:flex;gap:var(--ta-space-xs)}.progress-container .right-side .progress-value{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);line-height:calc(var(--ta-font-sm-default-size) * 2);letter-spacing:.05em;text-align:left;color:var(--ta-neutral-900);text-transform:uppercase}.progress-container .right-side .description{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight);line-height:calc(var(--ta-font-sm-default-size) * 2);letter-spacing:.05em;text-align:left;text-transform:uppercase}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: MaterialIconComponent, selector: "ta-material-icon", inputs: ["outline", "sharp", "round", "dualTone", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: ProgressBarComponent, selector: "ta-progress-bar", inputs: ["current", "max"] }] }); }
@@ -949,7 +949,7 @@ class PwaComponent extends TaBaseComponent {
         this.askClose = new EventEmitter();
         this.isShowed = false;
         this.pictureWidth = 29;
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
         this._pwa.isPWaCapability$.subscribe(capability => (this.isShowed = capability && !LocalStorage.get('askForPwaAbility')));
     }
     ngOnInit() {
@@ -968,7 +968,7 @@ class PwaComponent extends TaBaseComponent {
         LocalStorage.set('askForPwaAbility', 'false');
         this.isShowed = false;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: PwaComponent, deps: [{ token: i1$2.CamPwaService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: PwaComponent, deps: [{ token: i1$2.TaPwaService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: PwaComponent, isStandalone: true, selector: "ta-pwa", outputs: { askClose: "askClose" }, usesInheritance: true, ngImport: i0, template: "@if (this.isShowed) {\n  <div class=\"pwa-layout\">\n    <ta-toast>\n      <div class=\"pwa-container\">\n        <div class=\"title-container\">\n          <div class=\"mb-space-lg\">\n            <ta-logo [widthPercentage]=\"this.pictureWidth\" [type]=\"'oneline'\" color=\"black\"></ta-logo>\n          </div>\n          <ta-title [level]=\"3\" class=\"mb-space-xs title\">{{ 'ui.pwa.title' | translate }}</ta-title>\n          {{ 'ui.pwa.description' | translate }}\n        </div>\n        <div class=\"cta col-auto flex-column g-space-md\">\n          <div class=\"cta-button flex-column g-space-md\">\n            <ta-button (action)=\"this.onYesClick()\">\n              <div class=\"button-content\">\n                <ta-font-icon name=\"download\" class=\"mr-space-xs\"></ta-font-icon>\n                {{ 'ui.pwa.install' | translate }}\n              </div>\n            </ta-button>\n            <ta-button [style]=\"'secondary'\" (action)=\"this.onNoClick()\">\n              {{ 'ui.pwa.cancel' | translate }}\n            </ta-button>\n          </div>\n          <div class=\"link-container flex-row g-space-sm\">\n            <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n            <ta-link (action)=\"this.dontAsk()\">\n              {{ 'ui.pwa.no-more' | translate }}\n            </ta-link>\n          </div>\n        </div>\n      </div>\n    </ta-toast>\n  </div>\n}\n", styles: [".pwa-layout{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media screen and (min-width: 768px){.pwa-layout{bottom:calc(50px + env(safe-area-inset-bottom));right:50px;width:800px}}.pwa-container{display:flex;flex-direction:column;gap:var(--ta-space-lg)}@media screen and (min-width: 768px){.pwa-container{display:flex;flex-direction:row;justify-content:space-between}}.pwa-container .title{color:var(--ta-brand-700);font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight)}.cta{margin:0}@media screen and (min-width: 768px){.cta{margin:auto}}.cta .cta-button{display:flex;flex-direction:row;justify-content:space-evenly}@media screen and (min-width: 768px){.cta .cta-button{display:flex;flex-direction:column}}.cta .cta-button .button-content{display:flex;align-items:center;margin:auto}.link-container ta-font-icon{color:var(--ta-surface-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: LogoComponent, selector: "ta-logo", inputs: ["color", "type", "widthPercentage"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: PwaComponent, decorators: [{
@@ -983,7 +983,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         LogoComponent,
                         ToastComponent,
                     ], template: "@if (this.isShowed) {\n  <div class=\"pwa-layout\">\n    <ta-toast>\n      <div class=\"pwa-container\">\n        <div class=\"title-container\">\n          <div class=\"mb-space-lg\">\n            <ta-logo [widthPercentage]=\"this.pictureWidth\" [type]=\"'oneline'\" color=\"black\"></ta-logo>\n          </div>\n          <ta-title [level]=\"3\" class=\"mb-space-xs title\">{{ 'ui.pwa.title' | translate }}</ta-title>\n          {{ 'ui.pwa.description' | translate }}\n        </div>\n        <div class=\"cta col-auto flex-column g-space-md\">\n          <div class=\"cta-button flex-column g-space-md\">\n            <ta-button (action)=\"this.onYesClick()\">\n              <div class=\"button-content\">\n                <ta-font-icon name=\"download\" class=\"mr-space-xs\"></ta-font-icon>\n                {{ 'ui.pwa.install' | translate }}\n              </div>\n            </ta-button>\n            <ta-button [style]=\"'secondary'\" (action)=\"this.onNoClick()\">\n              {{ 'ui.pwa.cancel' | translate }}\n            </ta-button>\n          </div>\n          <div class=\"link-container flex-row g-space-sm\">\n            <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n            <ta-link (action)=\"this.dontAsk()\">\n              {{ 'ui.pwa.no-more' | translate }}\n            </ta-link>\n          </div>\n        </div>\n      </div>\n    </ta-toast>\n  </div>\n}\n", styles: [".pwa-layout{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media screen and (min-width: 768px){.pwa-layout{bottom:calc(50px + env(safe-area-inset-bottom));right:50px;width:800px}}.pwa-container{display:flex;flex-direction:column;gap:var(--ta-space-lg)}@media screen and (min-width: 768px){.pwa-container{display:flex;flex-direction:row;justify-content:space-between}}.pwa-container .title{color:var(--ta-brand-700);font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-bold-weight)}.cta{margin:0}@media screen and (min-width: 768px){.cta{margin:auto}}.cta .cta-button{display:flex;flex-direction:row;justify-content:space-evenly}@media screen and (min-width: 768px){.cta .cta-button{display:flex;flex-direction:column}}.cta .cta-button .button-content{display:flex;align-items:center;margin:auto}.link-container ta-font-icon{color:var(--ta-surface-brand-primary)}\n"] }]
-        }], ctorParameters: () => [{ type: i1$2.CamPwaService }], propDecorators: { askClose: [{
+        }], ctorParameters: () => [{ type: i1$2.TaPwaService }], propDecorators: { askClose: [{
                 type: Output
             }] } });
 
@@ -1053,7 +1053,7 @@ class TimeAgoComponent {
     }
     constructor() {
         this.withHours = false;
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TimeAgoComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TimeAgoComponent, isStandalone: true, selector: "ta-time-ago", inputs: { date: "date", withHours: "withHours" }, ngImport: i0, template: "<div class=\"flex-start g-space-sm\">\n  {{\n    this.key()\n      | translate : { date: this.date | date : \"shortDate\", days: this.absDays }\n  }}\n  @if(this.withHours) {\n  {{ this.date | date : \"shortTime\" }}\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "pipe", type: DatePipe, name: "date" }] }); }
@@ -1158,17 +1158,62 @@ register();
  *
  * @example
  * // Instead of importing the module:
- * // import { CamUiModule } from '@ta/library-name';
+ * // import { TaUiModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ActionButtonComponent, BadgeComponent, ButtonComponent } from '@ta/library-name';
  */
-class CamUiModule {
+class TaUiModule {
     constructor() {
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent], exports: [ActionButtonComponent,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, imports: [CommonModule,
+            MatBottomSheetModule,
+            MatIconModule,
+            TaDirectivePipeModule,
+            TranslatePipe,
+            TaIconsModule,
+            MatExpansionModule,
+            MatDialogModule,
+            ActionButtonComponent,
+            BadgeComponent,
+            ButtonComponent,
+            CivilityComponent,
+            ContactInformationComponent,
+            DepartmentIconListComponent,
+            DepartmentProfessionsComponent,
+            DepartmentsComponent,
+            HourDateLineComponent,
+            LinkComponent,
+            LogoComponent,
+            ProgressCircleComponent,
+            TitleComponent,
+            TrigramComponent,
+            UserLogoComponent,
+            TextComponent,
+            ProgressBarDataComponent,
+            ProgressBarComponent,
+            PictureInfoMessageComponent,
+            TypedMessageComponent,
+            TaExpansionPanelComponent,
+            DualButtonComponent,
+            NotificationBadgeContainerComponent,
+            NotificationBadgeComponent,
+            PwaComponent,
+            ExpandableTextComponent,
+            ToastComponent,
+            LabelComponent,
+            NewComponent,
+            BulletComponent,
+            MegaoctetComponent,
+            FileImageComponent,
+            TimeAgoComponent,
+            DurationComponent,
+            UsersListComponent,
+            ButtonToolComponent,
+            CultureComponent,
+            CriticityComponent], exports: [ActionButtonComponent,
             BadgeComponent,
             ButtonComponent,
             CivilityComponent,
@@ -1187,7 +1232,7 @@ class CamUiModule {
             ProgressBarComponent,
             PictureInfoMessageComponent,
             DualButtonComponent,
-            CamExpansionPanelComponent,
+            TaExpansionPanelComponent,
             NotificationBadgeContainerComponent,
             NotificationBadgeComponent,
             PwaComponent,
@@ -1205,13 +1250,91 @@ class CamUiModule {
             UsersListComponent,
             ButtonToolComponent,
             CultureComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, providers: [CamIconsService], imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentProfessionsComponent, DepartmentsComponent, LinkComponent, ProgressCircleComponent, UserLogoComponent, ProgressBarDataComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, PwaComponent, ExpandableTextComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, providers: [TaIconsService], imports: [CommonModule,
+            MatBottomSheetModule,
+            MatIconModule,
+            TaDirectivePipeModule,
+            TaIconsModule,
+            MatExpansionModule,
+            MatDialogModule,
+            ActionButtonComponent,
+            BadgeComponent,
+            ButtonComponent,
+            CivilityComponent,
+            ContactInformationComponent,
+            DepartmentProfessionsComponent,
+            DepartmentsComponent,
+            LinkComponent,
+            ProgressCircleComponent,
+            UserLogoComponent,
+            ProgressBarDataComponent,
+            PictureInfoMessageComponent,
+            TypedMessageComponent,
+            TaExpansionPanelComponent,
+            DualButtonComponent,
+            PwaComponent,
+            ExpandableTextComponent,
+            MegaoctetComponent,
+            FileImageComponent,
+            TimeAgoComponent,
+            DurationComponent,
+            UsersListComponent,
+            ButtonToolComponent,
+            CultureComponent,
+            CriticityComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamUiModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
+                    imports: [
+                        CommonModule,
+                        MatBottomSheetModule,
+                        MatIconModule,
+                        TaDirectivePipeModule,
+                        TranslatePipe,
+                        TaIconsModule,
+                        MatExpansionModule,
+                        MatDialogModule,
+                        ActionButtonComponent,
+                        BadgeComponent,
+                        ButtonComponent,
+                        CivilityComponent,
+                        ContactInformationComponent,
+                        DepartmentIconListComponent,
+                        DepartmentProfessionsComponent,
+                        DepartmentsComponent,
+                        HourDateLineComponent,
+                        LinkComponent,
+                        LogoComponent,
+                        ProgressCircleComponent,
+                        TitleComponent,
+                        TrigramComponent,
+                        UserLogoComponent,
+                        TextComponent,
+                        ProgressBarDataComponent,
+                        ProgressBarComponent,
+                        PictureInfoMessageComponent,
+                        TypedMessageComponent,
+                        TaExpansionPanelComponent,
+                        DualButtonComponent,
+                        NotificationBadgeContainerComponent,
+                        NotificationBadgeComponent,
+                        PwaComponent,
+                        ExpandableTextComponent,
+                        ToastComponent,
+                        LabelComponent,
+                        NewComponent,
+                        BulletComponent,
+                        MegaoctetComponent,
+                        FileImageComponent,
+                        TimeAgoComponent,
+                        DurationComponent,
+                        UsersListComponent,
+                        ButtonToolComponent,
+                        CultureComponent,
+                        CriticityComponent,
+                    ],
                     exports: [
                         ActionButtonComponent,
                         BadgeComponent,
@@ -1232,7 +1355,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         ProgressBarComponent,
                         PictureInfoMessageComponent,
                         DualButtonComponent,
-                        CamExpansionPanelComponent,
+                        TaExpansionPanelComponent,
                         NotificationBadgeContainerComponent,
                         NotificationBadgeComponent,
                         PwaComponent,
@@ -1251,33 +1374,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         ButtonToolComponent,
                         CultureComponent,
                     ],
-                    providers: [CamIconsService],
+                    providers: [TaIconsService],
                 }]
         }], ctorParameters: () => [] });
 
-class CamTreeChildrenComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeChildrenComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamTreeChildrenComponent, isStandalone: true, selector: "ta-tree-children", ngImport: i0, template: "<div class=\"children\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".children{position:relative;margin-left:var(--ta-space-xl)}.children:before{content:\"\";background-color:var(--ta-surface-brand-primary);width:2px;position:absolute;top:0;left:calc(var(--ta-space-xl) * -.5);bottom:18px}\n"] }); }
+class TaTreeChildrenComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeChildrenComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaTreeChildrenComponent, isStandalone: true, selector: "ta-tree-children", ngImport: i0, template: "<div class=\"children\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".children{position:relative;margin-left:var(--ta-space-xl)}.children:before{content:\"\";background-color:var(--ta-surface-brand-primary);width:2px;position:absolute;top:0;left:calc(var(--ta-space-xl) * -.5);bottom:18px}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeChildrenComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeChildrenComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-tree-children', standalone: true, imports: [], template: "<div class=\"children\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".children{position:relative;margin-left:var(--ta-space-xl)}.children:before{content:\"\";background-color:var(--ta-surface-brand-primary);width:2px;position:absolute;top:0;left:calc(var(--ta-space-xl) * -.5);bottom:18px}\n"] }]
         }] });
 
-class CamTreeContainerComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamTreeContainerComponent, isStandalone: true, selector: "ta-tree-container", ngImport: i0, template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [""] }); }
+class TaTreeContainerComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaTreeContainerComponent, isStandalone: true, selector: "ta-tree-container", ngImport: i0, template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [""] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeContainerComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeContainerComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-tree-container', standalone: true, imports: [], template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n" }]
         }] });
 
-class CamTreeItemComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamTreeItemComponent, isStandalone: true, selector: "ta-tree-item", ngImport: i0, template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }); }
+class TaTreeItemComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaTreeItemComponent, isStandalone: true, selector: "ta-tree-item", ngImport: i0, template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTreeItemComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeItemComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-tree-item', standalone: true, imports: [], template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }]
         }] });
@@ -1285,7 +1408,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class BannerComponent extends TaBaseComponent {
     constructor() {
         super();
-        CamTranslationUI.getInstance();
+        TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BannerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: BannerComponent, isStandalone: true, selector: "ta-banner", inputs: { message: "message" }, usesInheritance: true, ngImport: i0, template: "<div class=\"banner\">\n  {{ this.message | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-semantic-yellow-light);color:var(--ta-semantic-yellow-dark);padding:var(--ta-space-xs) var(--ta-space-md);text-align:center;box-shadow:var(--ta-shadow-black-sm)}\n"], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "ngmodule", type: TranslateModule }] }); }
@@ -1337,20 +1460,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-layout-title', standalone: true, template: "<div class=\"title\">\n  <ng-content></ng-content>\n</div>\n", styles: [".title{padding:0 var(--ta-space-sm)}\n"] }]
         }] });
 
-class CamTranslationLayout extends CamLazyTranslationService {
-    constructor() {
-        super('layout');
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationLayout, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationLayout, providedIn: 'root' }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationLayout, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root',
-                }]
-        }], ctorParameters: () => [] });
-
 class LayoutHeaderComponent {
     constructor() { }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
@@ -1361,13 +1470,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-layout-header', standalone: true, template: "<div class=\"header\">\n  <ng-content></ng-content>\n</div>\n", styles: ["@media screen and (max-width: 767px){.header{color:var(--ta-text-primary);padding:var(--ta-space-sm)}}\n"] }]
         }], ctorParameters: () => [] });
 
+class TaTranslationLayout extends TaLazyTranslationService {
+    constructor() {
+        super('layout');
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationLayout, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationLayout, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationLayout, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }], ctorParameters: () => [] });
+
 class LayoutFullPanelComponent extends TaBaseComponent {
     constructor() {
         super();
         this.width = '400px';
         this.title = '';
         this.closeEvent = new EventEmitter();
-        CamTranslationLayout.getInstance();
+        TaTranslationLayout.getInstance();
     }
     askClose() {
         this.closeEvent.emit();
@@ -1436,7 +1559,7 @@ class LayoutHeaderDefaultComponent extends TaBaseComponent {
         super();
         this.showBack = true;
         this.backEvent = new EventEmitter();
-        CamTranslationLayout.getInstance();
+        TaTranslationLayout.getInstance();
     }
     showBackAction() {
         this._location.back();
@@ -1464,7 +1587,7 @@ class LayoutModalComponent extends TaBaseComponent {
         this.dialogRef = dialogRef;
         this.style = 'classic';
         this.title = '';
-        CamTranslationLayout.getInstance();
+        TaTranslationLayout.getInstance();
     }
     ngOnInit() {
         this.dialogRef.addPanelClass(this.style + '-modal');
@@ -1491,7 +1614,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class TemplateModalContainer extends CamBaseModal {
+class TemplateModalContainer extends TaBaseModal {
     get style() {
         return this.data.style ?? 'full';
     }
@@ -1632,7 +1755,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class LayoutWithBottomNavComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.sharedMenu = inject(CamSharedMenuService);
+        this.sharedMenu = inject(TaSharedMenuService);
         this.isMinimized$ = combineLatest([
             this.sharedMenu.isMinimized$.pipe(startWith(false)),
             this.breakpoints.isDesktop$,
@@ -1706,7 +1829,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 class LayoutNotFoundComponent extends TaBaseComponent {
     constructor() {
         super();
-        CamTranslationLayout.getInstance();
+        TaTranslationLayout.getInstance();
     }
     goToHome() {
         this._router.navigateByUrl('/');
@@ -1725,17 +1848,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamLayoutModule } from '@ta/library-name';
+ * // import { TaLayoutModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { LayoutFlexComponent, LayoutContentComponent, LayoutHeaderComponent } from '@ta/library-name';
  */
-class CamLayoutModule {
+class TaLayoutModule {
     constructor() {
-        CamTranslationLayout.getInstance();
+        TaTranslationLayout.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamLayoutModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamLayoutModule, imports: [CommonModule, MatSidenavModule, CamUiModule, CamIconsModule, MatMenuModule, CamDirectivePipeModule, MatDialogModule, TranslatePipe, LayoutContentComponent, LayoutHeaderComponent, LayoutNavComponent, LayoutPanelComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LayoutPageComponent, LayoutTitleComponent, LayoutHeaderDefaultComponent, LayoutModalComponent, LayoutHeaderLogoComponent, LayoutFullPanelComponent, LayoutSideCtaComponent, LayoutSideComponent, LayoutSideContentComponent, TemplateModalContainer, LayoutNotFoundComponent, LayoutFlexComponent], exports: [LayoutFlexComponent,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, imports: [CommonModule,
+            MatSidenavModule,
+            TaUiModule,
+            TaIconsModule,
+            MatMenuModule,
+            TaDirectivePipeModule,
+            MatDialogModule,
+            TranslatePipe,
+            LayoutContentComponent,
+            LayoutHeaderComponent,
+            LayoutNavComponent,
+            LayoutPanelComponent,
+            LayoutWithBottomNavComponent,
+            LayoutWithPanelComponent,
+            LayoutPageComponent,
+            LayoutTitleComponent,
+            LayoutHeaderDefaultComponent,
+            LayoutModalComponent,
+            LayoutHeaderLogoComponent,
+            LayoutFullPanelComponent,
+            LayoutSideCtaComponent,
+            LayoutSideComponent,
+            LayoutSideContentComponent,
+            TemplateModalContainer,
+            LayoutNotFoundComponent,
+            LayoutFlexComponent], exports: [LayoutFlexComponent,
             LayoutContentComponent,
             LayoutHeaderComponent,
             LayoutNavComponent,
@@ -1753,13 +1901,54 @@ class CamLayoutModule {
             LayoutSideCtaComponent,
             LayoutSideComponent,
             LayoutSideContentComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamLayoutModule, imports: [CommonModule, MatSidenavModule, CamUiModule, CamIconsModule, MatMenuModule, CamDirectivePipeModule, MatDialogModule, LayoutWithPanelComponent, LayoutHeaderDefaultComponent, LayoutModalComponent, LayoutHeaderLogoComponent, LayoutFullPanelComponent, TemplateModalContainer, LayoutNotFoundComponent, LayoutFlexComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, imports: [CommonModule,
+            MatSidenavModule,
+            TaUiModule,
+            TaIconsModule,
+            MatMenuModule,
+            TaDirectivePipeModule,
+            MatDialogModule,
+            LayoutWithPanelComponent,
+            LayoutHeaderDefaultComponent,
+            LayoutModalComponent,
+            LayoutHeaderLogoComponent,
+            LayoutFullPanelComponent,
+            TemplateModalContainer,
+            LayoutNotFoundComponent,
+            LayoutFlexComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamLayoutModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, MatSidenavModule, CamUiModule, CamIconsModule, MatMenuModule, CamDirectivePipeModule, MatDialogModule, TranslatePipe, LayoutContentComponent, LayoutHeaderComponent, LayoutNavComponent, LayoutPanelComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LayoutPageComponent, LayoutTitleComponent, LayoutHeaderDefaultComponent, LayoutModalComponent, LayoutHeaderLogoComponent, LayoutFullPanelComponent, LayoutSideCtaComponent, LayoutSideComponent, LayoutSideContentComponent, TemplateModalContainer, LayoutNotFoundComponent, LayoutFlexComponent],
+                    imports: [
+                        CommonModule,
+                        MatSidenavModule,
+                        TaUiModule,
+                        TaIconsModule,
+                        MatMenuModule,
+                        TaDirectivePipeModule,
+                        MatDialogModule,
+                        TranslatePipe,
+                        LayoutContentComponent,
+                        LayoutHeaderComponent,
+                        LayoutNavComponent,
+                        LayoutPanelComponent,
+                        LayoutWithBottomNavComponent,
+                        LayoutWithPanelComponent,
+                        LayoutPageComponent,
+                        LayoutTitleComponent,
+                        LayoutHeaderDefaultComponent,
+                        LayoutModalComponent,
+                        LayoutHeaderLogoComponent,
+                        LayoutFullPanelComponent,
+                        LayoutSideCtaComponent,
+                        LayoutSideComponent,
+                        LayoutSideContentComponent,
+                        TemplateModalContainer,
+                        LayoutNotFoundComponent,
+                        LayoutFlexComponent,
+                    ],
                     exports: [
                         LayoutFlexComponent,
                         LayoutContentComponent,
@@ -1920,9 +2109,9 @@ const declarations = [];
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
  */
-class CamCardModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCardModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamCardModule, imports: [CommonModule, CamUiModule, CamIconsModule, CardComponent,
+class TaCardModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, imports: [CommonModule, TaUiModule, TaIconsModule, CardComponent,
             CardHeaderComponent,
             CardTitleComponent,
             CardSubtitleComponent,
@@ -1939,13 +2128,13 @@ class CamCardModule {
             CardContentComponent,
             DashboardCardComponent,
             CardImageComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCardModule, imports: [CommonModule, CamUiModule, CamIconsModule, DashboardCardComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, imports: [CommonModule, TaUiModule, TaIconsModule, DashboardCardComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCardModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: declarations,
-                    imports: [CommonModule, CamUiModule, CamIconsModule, ...exports],
+                    imports: [CommonModule, TaUiModule, TaIconsModule, ...exports],
                     exports: exports,
                 }]
         }] });
@@ -2001,17 +2190,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamSwiperModule } from '@ta/library-name';
+ * // import { TaSwiperModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { SwiperComponent } from '@ta/library-name';
  */
-class CamSwiperModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSwiperModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamSwiperModule, imports: [SwiperComponent], exports: [SwiperComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSwiperModule, imports: [SwiperComponent] }); }
+class TaSwiperModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSwiperModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaSwiperModule, imports: [SwiperComponent], exports: [SwiperComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSwiperModule, imports: [SwiperComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSwiperModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSwiperModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
@@ -2021,14 +2210,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }]
         }] });
 
-class CamTranslationContainer extends CamLazyTranslationService {
+class TaTranslationContainer extends TaLazyTranslationService {
     constructor() {
         super('container');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationContainer, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationContainer, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationContainer, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationContainer, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationContainer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationContainer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -2045,7 +2234,7 @@ class ValidationModal {
     constructor(dialogRef, data) {
         this.dialogRef = dialogRef;
         this.data = data;
-        CamTranslationContainer.getInstance();
+        TaTranslationContainer.getInstance();
     }
     onNoClick() {
         this.dialogRef.close(false);
@@ -2136,7 +2325,7 @@ class ErrorComponent {
     constructor() {
         this.message = '';
         this.code = 200;
-        CamTranslationContainer.getInstance();
+        TaTranslationContainer.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ErrorComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ErrorComponent, isStandalone: true, selector: "ta-error", inputs: { message: "message", code: "code" }, ngImport: i0, template: "@if (this.message === '') {\n  <ng-content></ng-content>\n} @else {\n  <ta-picture-info-message icon=\"sad\" iconSize=\"lg\" type=\"danger\" text=\"container.error.title\">\n  </ta-picture-info-message>\n  <p>{{ this.message | translate }}</p>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: PictureInfoMessageComponent, selector: "ta-picture-info-message", inputs: ["icon", "iconSize", "text", "type"] }] }); }
@@ -2434,13 +2623,13 @@ class SwiperLightComponent extends TaBaseComponent {
             }));
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SwiperLightComponent, deps: [{ token: i1$2.CamDeviceInfoService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SwiperLightComponent, deps: [{ token: i1$2.TaDeviceInfoService }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: SwiperLightComponent, isStandalone: true, selector: "ta-swiper-light", inputs: { items: "items", template: "template", swiperClasses: "swiperClasses", containerClasses: "containerClasses", forced: "forced" }, usesInheritance: true, ngImport: i0, template: "<div class=\"swiper-container\" [ngClass]=\"this.classes\">\n  @for (item of this.items; track this.track($index, item)) {\n    @if ((item.visible$ | async) !== false) {\n      <ng-container *ngTemplateOutlet=\"this.template; context: { element: item }\"></ng-container>\n    }\n  }\n</div>\n", styles: [".items{display:flex;justify-content:flex-start;align-items:flex-start;position:relative;width:100%;-webkit-user-select:none;user-select:none;cursor:pointer;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap}@media screen and (max-width: 767px){.items::-webkit-scrollbar{display:none}}@media screen and (min-width: 768px){.items::-webkit-scrollbar{height:var(--ta-space-xs)}}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SwiperLightComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-swiper-light', standalone: true, imports: [NgIf, NgFor, NgClass, AsyncPipe], template: "<div class=\"swiper-container\" [ngClass]=\"this.classes\">\n  @for (item of this.items; track this.track($index, item)) {\n    @if ((item.visible$ | async) !== false) {\n      <ng-container *ngTemplateOutlet=\"this.template; context: { element: item }\"></ng-container>\n    }\n  }\n</div>\n", styles: [".items{display:flex;justify-content:flex-start;align-items:flex-start;position:relative;width:100%;-webkit-user-select:none;user-select:none;cursor:pointer;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap}@media screen and (max-width: 767px){.items::-webkit-scrollbar{display:none}}@media screen and (min-width: 768px){.items::-webkit-scrollbar{height:var(--ta-space-xs)}}\n"] }]
-        }], ctorParameters: () => [{ type: i1$2.CamDeviceInfoService }], propDecorators: { items: [{
+        }], ctorParameters: () => [{ type: i1$2.TaDeviceInfoService }], propDecorators: { items: [{
                 type: Input
             }], template: [{
                 type: Input
@@ -2458,23 +2647,63 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamContainerModule } from '@ta/library-name';
+ * // import { TaContainerModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ContainerValidationComponent, EmptyComponent, ErrorComponent } from '@ta/library-name';
  */
-class CamContainerModule {
+class TaContainerModule {
     constructor() {
-        CamTranslationContainer.getInstance();
+        TaTranslationContainer.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamContainerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamContainerModule, imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, CamDirectivePipeModule, CamUiModule, CamIconsModule, TranslatePipe, CamLayoutModule, ContainerValidationComponent, ValidationModal, EmptyComponent, ErrorComponent, LoaderComponent, PlaceholderComponent, SwiperLightComponent], exports: [ContainerValidationComponent, EmptyComponent, ErrorComponent, LoaderComponent, SwiperLightComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamContainerModule, imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, CamDirectivePipeModule, CamUiModule, CamIconsModule, CamLayoutModule, ValidationModal, EmptyComponent, ErrorComponent, LoaderComponent] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, imports: [CommonModule,
+            MatIconModule,
+            MatProgressSpinnerModule,
+            TaDirectivePipeModule,
+            TaUiModule,
+            TaIconsModule,
+            TranslatePipe,
+            TaLayoutModule,
+            ContainerValidationComponent,
+            ValidationModal,
+            EmptyComponent,
+            ErrorComponent,
+            LoaderComponent,
+            PlaceholderComponent,
+            SwiperLightComponent], exports: [ContainerValidationComponent, EmptyComponent, ErrorComponent, LoaderComponent, SwiperLightComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, imports: [CommonModule,
+            MatIconModule,
+            MatProgressSpinnerModule,
+            TaDirectivePipeModule,
+            TaUiModule,
+            TaIconsModule,
+            TaLayoutModule,
+            ValidationModal,
+            EmptyComponent,
+            ErrorComponent,
+            LoaderComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamContainerModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, decorators: [{
             type: NgModule,
             args: [{
-                    imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, CamDirectivePipeModule, CamUiModule, CamIconsModule, TranslatePipe, CamLayoutModule, ContainerValidationComponent, ValidationModal, EmptyComponent, ErrorComponent, LoaderComponent, PlaceholderComponent, SwiperLightComponent],
+                    imports: [
+                        CommonModule,
+                        MatIconModule,
+                        MatProgressSpinnerModule,
+                        TaDirectivePipeModule,
+                        TaUiModule,
+                        TaIconsModule,
+                        TranslatePipe,
+                        TaLayoutModule,
+                        ContainerValidationComponent,
+                        ValidationModal,
+                        EmptyComponent,
+                        ErrorComponent,
+                        LoaderComponent,
+                        PlaceholderComponent,
+                        SwiperLightComponent,
+                    ],
                     declarations: [],
                     exports: [ContainerValidationComponent, EmptyComponent, ErrorComponent, LoaderComponent, SwiperLightComponent],
                 }]
@@ -2551,26 +2780,38 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamListModule } from '@ta/library-name';
+ * // import { TaListModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ListTitleComponent, ListElementComponent, ListContainerComponent } from '@ta/library-name';
  */
-class CamListModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamListModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamListModule, imports: [ListTitleComponent, ListElementComponent, ListContainerComponent, ListSubTitleComponent, ListTagComponent, ListExtraInformationComponent], exports: [ListTitleComponent,
+class TaListModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaListModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaListModule, imports: [ListTitleComponent,
+            ListElementComponent,
+            ListContainerComponent,
+            ListSubTitleComponent,
+            ListTagComponent,
+            ListExtraInformationComponent], exports: [ListTitleComponent,
             ListElementComponent,
             ListContainerComponent,
             ListSubTitleComponent,
             ListTagComponent,
             ListExtraInformationComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamListModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaListModule }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamListModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaListModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [ListTitleComponent, ListElementComponent, ListContainerComponent, ListSubTitleComponent, ListTagComponent, ListExtraInformationComponent],
+                    imports: [
+                        ListTitleComponent,
+                        ListElementComponent,
+                        ListContainerComponent,
+                        ListSubTitleComponent,
+                        ListTagComponent,
+                        ListExtraInformationComponent,
+                    ],
                     exports: [
                         ListTitleComponent,
                         ListElementComponent,
@@ -2585,7 +2826,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
 
 const MENU_TEMPLATE = new InjectionToken('MENU_TEMPLATE');
 const MENU_MAX_HEIGHT = new InjectionToken('MENU_MAX_HEIGHT');
-class OverlayService extends CamBaseService {
+class OverlayService extends TaBaseService {
     constructor(overlay, injector) {
         super();
         this.overlay = overlay;
@@ -2679,15 +2920,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }]
         }], ctorParameters: () => [{ type: i1$6.Overlay }, { type: i0.Injector }] });
 
-class CamDefaultPanelComponent {
+class TaDefaultPanelComponent {
     constructor(templateRef, maxHeight) {
         this.templateRef = templateRef;
         this.maxHeight = maxHeight;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDefaultPanelComponent, deps: [{ token: MENU_TEMPLATE, optional: true }, { token: MENU_MAX_HEIGHT, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CamDefaultPanelComponent, isStandalone: true, selector: "ta-default-panel", inputs: { template: "template" }, host: { styleAttribute: "display: block; width: 100%;" }, ngImport: i0, template: "<div class=\"menu-panel\" [style.max-height.px]=\"this.maxHeight\">\n  @if (this.templateRef) {\n    <ng-container *ngTemplateOutlet=\"this.templateRef\"></ng-container>\n  } @else {\n    <ng-template> Ceci est le template par defaut. Il faut renseigner un template. </ng-template>\n  }\n</div>\n", styles: [".menu-panel{width:100%;box-sizing:border-box;background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-md);overflow-y:auto}.custom-panel-header{flex:0 0 auto;padding:var(--ta-space-md);border-bottom:1px solid var(--ta-neutral-200)}.custom-panel-content{flex:1 1 auto;overflow-y:auto;padding:var(--ta-space-md)}.custom-panel-cta{flex:0 0 auto;padding:var(--ta-space-md);border-top:1px solid var(--ta-neutral-200);background:var(--ta-neutral-white)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDefaultPanelComponent, deps: [{ token: MENU_TEMPLATE, optional: true }, { token: MENU_MAX_HEIGHT, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: TaDefaultPanelComponent, isStandalone: true, selector: "ta-default-panel", inputs: { template: "template" }, host: { styleAttribute: "display: block; width: 100%;" }, ngImport: i0, template: "<div class=\"menu-panel\" [style.max-height.px]=\"this.maxHeight\">\n  @if (this.templateRef) {\n    <ng-container *ngTemplateOutlet=\"this.templateRef\"></ng-container>\n  } @else {\n    <ng-template> Ceci est le template par defaut. Il faut renseigner un template. </ng-template>\n  }\n</div>\n", styles: [".menu-panel{width:100%;box-sizing:border-box;background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-md);overflow-y:auto}.custom-panel-header{flex:0 0 auto;padding:var(--ta-space-md);border-bottom:1px solid var(--ta-neutral-200)}.custom-panel-content{flex:1 1 auto;overflow-y:auto;padding:var(--ta-space-md)}.custom-panel-cta{flex:0 0 auto;padding:var(--ta-space-md);border-top:1px solid var(--ta-neutral-200);background:var(--ta-neutral-white)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDefaultPanelComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDefaultPanelComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-default-panel', standalone: true, host: {
                         style: 'display: block; width: 100%;',
@@ -2706,7 +2947,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class CamOverlayPanelComponent extends TaBaseComponent {
+class TaOverlayPanelComponent extends TaBaseComponent {
     constructor(overlayService) {
         super();
         this.overlayService = overlayService;
@@ -2727,7 +2968,7 @@ class CamOverlayPanelComponent extends TaBaseComponent {
         }
         const configWithDefaults = {
             ...this.panelConfig,
-            menuComponent: this.panelConfig.menuComponent ?? CamDefaultPanelComponent,
+            menuComponent: this.panelConfig.menuComponent ?? TaDefaultPanelComponent,
             triggerElement: this.triggerHostRef?.nativeElement,
             template: this.contentTpl,
         };
@@ -2745,10 +2986,10 @@ class CamOverlayPanelComponent extends TaBaseComponent {
     close() {
         this.overlayService.closeMenu();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamOverlayPanelComponent, deps: [{ token: OverlayService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CamOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: "panelConfig" }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div #triggerHost>\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaOverlayPanelComponent, deps: [{ token: OverlayService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: "panelConfig" }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div #triggerHost>\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamOverlayPanelComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaOverlayPanelComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-overlay-panel', standalone: true, imports: [CommonModule], encapsulation: ViewEncapsulation.None, template: "<div #triggerHost>\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n" }]
         }], ctorParameters: () => [{ type: OverlayService }], propDecorators: { triggerTpl: [{
@@ -2774,5 +3015,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, BadgeComponent, BannerComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CamCardModule, CamContainerModule, CamDefaultPanelComponent, CamExpansionPanelComponent, CamLayoutModule, CamListModule, CamOverlayPanelComponent, CamSwiperModule, CamTreeChildrenComponent, CamTreeContainerComponent, CamTreeItemComponent, CamUiModule, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
+export { ActionButtonComponent, BadgeComponent, BannerComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

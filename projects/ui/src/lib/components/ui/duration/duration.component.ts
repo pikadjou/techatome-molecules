@@ -1,14 +1,15 @@
 import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { PluralTranslatePipe } from '@ta/utils';
 
+import { TranslateModule } from '@ngx-translate/core';
 import { Duration, intervalToDuration } from 'date-fns';
 
-import { CamTranslationUI } from '../translation.service';
+import { PluralTranslatePipe } from '@ta/utils';
+
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
-selector: 'ta-duration',
+  selector: 'ta-duration',
   templateUrl: './duration.component.html',
   styleUrls: ['./duration.component.scss'],
   standalone: true,
@@ -24,7 +25,7 @@ export class DurationComponent implements OnInit {
   public interval: Duration | null = null;
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 
   ngOnInit() {

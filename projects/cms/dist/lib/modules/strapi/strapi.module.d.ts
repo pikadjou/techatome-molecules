@@ -14,14 +14,14 @@ import * as i9 from "./components/sale/sale.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamStrapiModule } from '@ta/library-name';
+ * // import { TaStrapiModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { CmsComponent, SaleComponent } from '@ta/library-name';
  */
-export declare class CamStrapiModule {
+export declare class TaStrapiModule {
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamStrapiModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamStrapiModule, never, [typeof i1.CommonModule, typeof i2.CamUiModule, typeof i3.CamDirectivePipeModule, typeof i2.CamContainerModule, typeof i4.CamFormInputsModule, typeof i5.CmsComponent, typeof i6.RichTextComponent, typeof i7.LinkComponent, typeof i8.TextComponent, typeof i9.SaleComponent], [typeof i5.CmsComponent, typeof i9.SaleComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamStrapiModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaStrapiModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaStrapiModule, never, [typeof i1.CommonModule, typeof i2.TaUiModule, typeof i3.TaDirectivePipeModule, typeof i2.TaContainerModule, typeof i4.TaFormInputsModule, typeof i5.CmsComponent, typeof i6.RichTextComponent, typeof i7.LinkComponent, typeof i8.TextComponent, typeof i9.SaleComponent], [typeof i5.CmsComponent, typeof i9.SaleComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaStrapiModule>;
 }

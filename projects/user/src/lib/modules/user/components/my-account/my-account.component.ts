@@ -22,8 +22,8 @@ import { InlineProfileDataComponent } from '@ta/ui';
 import { StopPropagationDirective } from '@ta/utils';
 import { TaBaseComponent } from '@ta/utils';
 
-import { CAM_AUTH_TOKEN } from '../../services/auth.service';
-import { TaUserService } from '../../services/user.service';
+import { TA_AUTH_TOKEN } from '../../services/auth.service';
+import { TA_USER_SERVICE } from '../../services/user.service';
 import { SwitchLanguageComponent } from '../switch-language/switch-language.component';
 
 @Component({
@@ -68,17 +68,37 @@ export class MyAccountComponent extends TaBaseComponent implements AfterViewInit
   @ViewChild('infosTemplate', { static: true })
   infosTemplate!: TemplateRef<any>;
 
-  private _authService = inject(CAM_AUTH_TOKEN);
+  private _userService = inject(TA_USER_SERVICE);
+  private _authService = inject(TA_AUTH_TOKEN);
 
   public profileMenu = signal<Menu | null>(null);
   public disconnectionMenu = signal<Menu | null>(null);
+  public userLogo$ = signal<Observable<{
+    user: UserLogoData;
+    size?: TaSizes;
+  } | null>>(this._userService.userProfile.get$().pipe(
+      map(up => {
+        if (!up) {
+          return null;
+        }
 
-  constructor(private _usersService: TaUserService) {
+        return {
+          user: {
+            picture: up.picture,
+            lastname: up.lastname ?? '',
+            firstname: up.firstname ?? '',
+          },
+          size: 'lg',
+        };
+      })
+    )
+  )
+  constructor() {
     super();
   }
 
   get profile$() {
-    return this._usersService.userProfile.get$().pipe(
+    return this._userService.userProfile.get$().pipe(
       map(data => {
         return {
           title: {
@@ -90,27 +110,7 @@ export class MyAccountComponent extends TaBaseComponent implements AfterViewInit
     );
   }
 
-  get userLogo$(): Observable<{
-    user: UserLogoData;
-    size?: TaSizes;
-  } | null> {
-    return this._usersService.userProfile.get$().pipe(
-      map(x => {
-        if (!x) {
-          return null;
-        }
 
-        return {
-          user: {
-            picture: x.picture,
-            lastname: x.lastname || '',
-            firstname: x.firstname || '',
-          },
-          size: 'lg',
-        };
-      })
-    );
-  }
 
   ngAfterViewInit() {
     this.profileMenu.set(this.getProfileMenu(this.languageTemplate, this.infosTemplate));

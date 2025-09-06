@@ -1,7 +1,7 @@
 import { InputAddress } from '@ta/form-model';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class InputAddressComponent extends CamAbstractInputComponent<InputAddress> {
+export declare class InputAddressComponent extends TaAbstractInputComponent<InputAddress> {
     addresstext: any;
     addressDetails: {
         street: null;

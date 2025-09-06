@@ -11,13 +11,13 @@ import * as i6 from "./extra-information/list-extra-information.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamListModule } from '@ta/library-name';
+ * // import { TaListModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ListTitleComponent, ListElementComponent, ListContainerComponent } from '@ta/library-name';
  */
-export declare class CamListModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamListModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamListModule, never, [typeof i1.ListTitleComponent, typeof i2.ListElementComponent, typeof i3.ListContainerComponent, typeof i4.ListSubTitleComponent, typeof i5.ListTagComponent, typeof i6.ListExtraInformationComponent], [typeof i1.ListTitleComponent, typeof i2.ListElementComponent, typeof i3.ListContainerComponent, typeof i4.ListSubTitleComponent, typeof i5.ListTagComponent, typeof i6.ListExtraInformationComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamListModule>;
+export declare class TaListModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaListModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaListModule, never, [typeof i1.ListTitleComponent, typeof i2.ListElementComponent, typeof i3.ListContainerComponent, typeof i4.ListSubTitleComponent, typeof i5.ListTagComponent, typeof i6.ListExtraInformationComponent], [typeof i1.ListTitleComponent, typeof i2.ListElementComponent, typeof i3.ListContainerComponent, typeof i4.ListSubTitleComponent, typeof i5.ListTagComponent, typeof i6.ListExtraInformationComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaListModule>;
 }

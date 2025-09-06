@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
-import { CamTranslationLayout } from '../../translation.service';
-
 import { ButtonComponent } from '../../../../components/ui/button/button.component';
+import { TaTranslationLayout } from '../../translation.service';
 
 @Component({
   selector: 'ta-layout-not-found',
@@ -18,7 +18,7 @@ import { ButtonComponent } from '../../../../components/ui/button/button.compone
 export class LayoutNotFoundComponent extends TaBaseComponent {
   constructor() {
     super();
-    CamTranslationLayout.getInstance();
+    TaTranslationLayout.getInstance();
   }
 
   public goToHome() {

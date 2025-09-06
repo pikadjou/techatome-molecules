@@ -1,6 +1,7 @@
-import { NgIf, NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
@@ -11,17 +12,26 @@ import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { MenuIcon } from '../../models/menu/item/icon';
 import { Menu } from '../../models/menu/menu';
-import { CamTranslationMenu } from '../../translation.service';
+import { TaTranslationMenu } from '../../translation.service';
 
 /*
  ** @deprecated
  */
 @Component({
-selector: 'ta-toggle-navigation',
+  selector: 'ta-toggle-navigation',
   templateUrl: './toggle-navigation.component.html',
   styleUrls: ['./toggle-navigation.component.scss'],
   standalone: true,
-  imports: [NgIf, NgClass, NgTemplateOutlet, RouterModule, TranslateModule, FontIconComponent, LocalIconComponent, SwiperLightComponent],
+  imports: [
+    NgIf,
+    NgClass,
+    NgTemplateOutlet,
+    RouterModule,
+    TranslateModule,
+    FontIconComponent,
+    LocalIconComponent,
+    SwiperLightComponent,
+  ],
 })
 export class ToggleNavigationComponent implements OnInit {
   @Input()
@@ -35,7 +45,7 @@ export class ToggleNavigationComponent implements OnInit {
   public notifEnabled: boolean = false;
 
   constructor() {
-    CamTranslationMenu.getInstance();
+    TaTranslationMenu.getInstance();
   }
 
   get containerCss() {

@@ -1,13 +1,13 @@
 import { NgFor, NgTemplateOutlet, AsyncPipe, NgIf, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Input, Component, inject, LOCALE_ID, Injectable, Optional, Inject, EventEmitter, Output, NgModule } from '@angular/core';
-import { GraphSchema, baseStrapiProps, Apollo_gql, CamBaseStrapiService, HandleComplexRequest, TENANT_CONFIG_TOKEN } from '@ta/server';
-import { LinkComponent as LinkComponent$1, TitleComponent, LoaderComponent, ErrorComponent, EmptyComponent, CamUiModule, CamContainerModule } from '@ta/ui';
-import { TaBaseComponent, CamDirectivePipeModule } from '@ta/utils';
+import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService, HandleComplexRequest, TENANT_CONFIG_TOKEN } from '@ta/server';
+import { LinkComponent as LinkComponent$1, TitleComponent, LoaderComponent, ErrorComponent, EmptyComponent, TaUiModule, TaContainerModule } from '@ta/ui';
+import { TaBaseComponent, TaDirectivePipeModule } from '@ta/utils';
 import { map, of } from 'rxjs';
-import { ToggleComponent, CamFormInputsModule } from '@ta/form-input';
+import { ToggleComponent, TaFormInputsModule } from '@ta/form-input';
 import { InputCheckBox } from '@ta/form-model';
-import { CamLazyTranslationService } from '@ta/translation';
+import { TaLazyTranslationService } from '@ta/translation';
 
 class TextComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
@@ -98,7 +98,7 @@ function GET_SALE_CONTENT(uid, locale) {
     };
 }
 
-class CamCmsService extends CamBaseStrapiService {
+class TaCmsService extends TaBaseStrapiService {
     constructor() {
         super();
         this.local = inject(LOCALE_ID);
@@ -109,10 +109,10 @@ class CamCmsService extends CamBaseStrapiService {
             .fetchQueryList$(GET_CMS_CONTENT(type, this.local, tenantId), 'contents')
             .pipe(map(list => list[0])));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCmsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCmsService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCmsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCmsService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamCmsService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCmsService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -138,13 +138,13 @@ class CmsComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CmsComponent, deps: [{ token: CamCmsService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CmsComponent, deps: [{ token: TaCmsService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CmsComponent, isStandalone: true, selector: "ta-cms", inputs: { contentType: "contentType" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-title>\n            {{ content.Title }}\n          </ta-title>\n\n          <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CmsComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-cms', standalone: true, imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, TitleComponent, RichTextComponent], template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-title>\n            {{ content.Title }}\n          </ta-title>\n\n          <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n" }]
-        }], ctorParameters: () => [{ type: CamCmsService }, { type: undefined, decorators: [{
+        }], ctorParameters: () => [{ type: TaCmsService }, { type: undefined, decorators: [{
                     type: Optional
                 }, {
                     type: Inject,
@@ -153,7 +153,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
-class CamSaleService extends CamBaseStrapiService {
+class TaSaleService extends TaBaseStrapiService {
     constructor() {
         super();
         this.local = inject(LOCALE_ID);
@@ -164,10 +164,10 @@ class CamSaleService extends CamBaseStrapiService {
             .fetchQueryList$(GET_SALE_CONTENT(tenantId, this.local), 'sales')
             .pipe(map(list => list[0])));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSaleService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSaleService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSaleService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSaleService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSaleService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSaleService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -205,13 +205,13 @@ class SaleComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SaleComponent, deps: [{ token: CamSaleService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SaleComponent, deps: [{ token: TaSaleService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: SaleComponent, isStandalone: true, selector: "ta-sale", outputs: { acceptation: "acceptation" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-rich-text [richText]=\"content.Content\"></ta-rich-text>\n\n          <div class=\"checkbox ta-r\">\n            <ta-input-toggle [input]=\"this.checkbox\"></ta-input-toggle>\n          </div>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }, { kind: "component", type: ToggleComponent, selector: "ta-input-toggle" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SaleComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-sale', standalone: true, imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, RichTextComponent, ToggleComponent], template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-rich-text [richText]=\"content.Content\"></ta-rich-text>\n\n          <div class=\"checkbox ta-r\">\n            <ta-input-toggle [input]=\"this.checkbox\"></ta-input-toggle>\n          </div>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n" }]
-        }], ctorParameters: () => [{ type: CamSaleService }, { type: undefined, decorators: [{
+        }], ctorParameters: () => [{ type: TaSaleService }, { type: undefined, decorators: [{
                     type: Optional
                 }, {
                     type: Inject,
@@ -220,14 +220,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Output
             }] } });
 
-class CamTranslationStrapi extends CamLazyTranslationService {
+class TaTranslationStrapi extends TaLazyTranslationService {
     constructor() {
         super('strapi');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationStrapi, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationStrapi, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationStrapi, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationStrapi, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamTranslationStrapi, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationStrapi, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -240,24 +240,52 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  *
  * @example
  * // Instead of importing the module:
- * // import { CamStrapiModule } from '@ta/library-name';
+ * // import { TaStrapiModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { CmsComponent, SaleComponent } from '@ta/library-name';
  */
-class CamStrapiModule {
+class TaStrapiModule {
     constructor() {
-        CamTranslationStrapi.getInstance();
+        TaTranslationStrapi.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiModule, imports: [CommonModule, CamUiModule, CamDirectivePipeModule, CamContainerModule, CamFormInputsModule, CmsComponent, RichTextComponent, LinkComponent, TextComponent, SaleComponent], exports: [CmsComponent, SaleComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiModule, imports: [CommonModule, CamUiModule, CamDirectivePipeModule, CamContainerModule, CamFormInputsModule, CmsComponent, RichTextComponent, LinkComponent, SaleComponent] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
+            TaUiModule,
+            TaDirectivePipeModule,
+            TaContainerModule,
+            TaFormInputsModule,
+            CmsComponent,
+            RichTextComponent,
+            LinkComponent,
+            TextComponent,
+            SaleComponent], exports: [CmsComponent, SaleComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
+            TaUiModule,
+            TaDirectivePipeModule,
+            TaContainerModule,
+            TaFormInputsModule,
+            CmsComponent,
+            RichTextComponent,
+            LinkComponent,
+            SaleComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, CamUiModule, CamDirectivePipeModule, CamContainerModule, CamFormInputsModule, CmsComponent, RichTextComponent, LinkComponent, TextComponent, SaleComponent],
+                    imports: [
+                        CommonModule,
+                        TaUiModule,
+                        TaDirectivePipeModule,
+                        TaContainerModule,
+                        TaFormInputsModule,
+                        CmsComponent,
+                        RichTextComponent,
+                        LinkComponent,
+                        TextComponent,
+                        SaleComponent,
+                    ],
                     exports: [CmsComponent, SaleComponent],
                 }]
         }], ctorParameters: () => [] });
@@ -274,5 +302,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamCmsService, CamStrapiModule, CmsComponent, SaleComponent };
+export { CmsComponent, SaleComponent, TaCmsService, TaStrapiModule };
 //# sourceMappingURL=ta-cms.mjs.map

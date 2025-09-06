@@ -22,14 +22,14 @@ import * as i17 from "@angular/material/core";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFormModule } from '@ta/library-name';
+ * // import { TaFormModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { FormComponent, MatNativeDateModule, EditFieldComponent } from '@ta/library-name';
  */
-export declare class CamFormModule {
+export declare class TaFormModule {
     constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamFormModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamFormModule, never, [typeof i1.CamContainerModule, typeof i2.CamDirectivePipeModule, typeof i3.CamNotificationModule, typeof i4.CamFormInputsModule, typeof i1.CamUiModule, typeof i5.CommonModule, typeof i6.FormsModule, typeof i6.ReactiveFormsModule, typeof i7.CamIconsModule, typeof i8.CamMenuModule, typeof i9.MatMenuModule, typeof i10.TranslatePipe, typeof i11.FormComponent, typeof i12.InputsComponent, typeof i13.PanelComponent, typeof i14.DynamicComponent, typeof i15.EditFieldComponent, typeof i16.InputTranslationComponent], [typeof i11.FormComponent, typeof i17.MatNativeDateModule, typeof i15.EditFieldComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamFormModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaFormModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaFormModule, never, [typeof i1.TaContainerModule, typeof i2.TaDirectivePipeModule, typeof i3.TaNotificationModule, typeof i4.TaFormInputsModule, typeof i1.TaUiModule, typeof i5.CommonModule, typeof i6.FormsModule, typeof i6.ReactiveFormsModule, typeof i7.TaIconsModule, typeof i8.TaMenuModule, typeof i9.MatMenuModule, typeof i10.TranslatePipe, typeof i11.FormComponent, typeof i12.InputsComponent, typeof i13.PanelComponent, typeof i14.DynamicComponent, typeof i15.EditFieldComponent, typeof i16.InputTranslationComponent], [typeof i11.FormComponent, typeof i17.MatNativeDateModule, typeof i15.EditFieldComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaFormModule>;
 }

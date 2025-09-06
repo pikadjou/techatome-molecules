@@ -2,13 +2,13 @@ import { APP_INITIALIZER, LOCALE_ID, Provider } from '@angular/core';
 
 import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 
-import { CamTranslationLoader } from './services/translation.loader';
-import { CamTranslationService, TRANSLATION_CONFIG } from './services/translation.service';
+import { TaTranslationLoader } from './services/translation.loader';
+import { TRANSLATION_CONFIG, TaTranslationService } from './services/translation.service';
 
 export function HttpLoaderFactory() {
-  return new CamTranslationLoader();
+  return new TaTranslationLoader();
 }
-export function initTranslation(service: CamTranslationService) {
+export function initTranslation(service: TaTranslationService) {
   const fn = () => service.init();
   return fn;
 }
@@ -17,18 +17,18 @@ export const provideTranslation = (data: { default: string; supportedLanguages: 
   provideTranslateService({
     loader: {
       provide: TranslateLoader,
-      useClass: CamTranslationLoader,
+      useClass: TaTranslationLoader,
     },
   }),
   {
     provide: LOCALE_ID,
-    deps: [CamTranslationService],
-    useFactory: (TranslationService: CamTranslationService) => TranslationService.getLanguage(),
+    deps: [TaTranslationService],
+    useFactory: (TranslationService: TaTranslationService) => TranslationService.getLanguage(),
   },
   {
     provide: APP_INITIALIZER,
     useFactory: initTranslation,
-    deps: [CamTranslationService],
+    deps: [TaTranslationService],
     multi: true,
   },
   {

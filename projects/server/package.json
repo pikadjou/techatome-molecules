@@ -4,7 +4,6 @@
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/server",
-    "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
   "dependencies": {

@@ -9,5 +9,6 @@ export * from './lib/modules/user/services/permissions.service';
 export * from './lib/modules/user/services/dto/user-profile';
 
 export * from './lib/modules/user/components/public-api';
+export * from './lib/modules/user/provide';
 
 export * from './lib/modules/auth0/provide';

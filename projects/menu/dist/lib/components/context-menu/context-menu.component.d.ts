@@ -9,7 +9,7 @@ export declare class ContextMenuComponent extends TaBaseComponent {
     constructor();
     hasFontIcon(item: MenuIcon | MenuAction | MenuBase): boolean;
     hasIconImage(item: MenuIcon | MenuAction | MenuBase): boolean;
-    getIcon(item: MenuIcon | MenuAction | MenuBase): string | import("@ta/icons").CamIconType;
+    getIcon(item: MenuIcon | MenuAction | MenuBase): string | import("@ta/icons").TaIconType;
     getFontIcon(item: Menu | MenuIcon | MenuBase): string;
     getLink(item: MenuIcon | MenuAction | MenuBase): string;
     getRoute(item: MenuIcon | MenuAction | MenuBase): string[];

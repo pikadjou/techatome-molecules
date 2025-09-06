@@ -1,4 +1,7 @@
 import { TypedDocumentNode } from 'apollo-angular';
+export interface GraphQueryInput {
+    props: string;
+}
 export interface GraphQueryPayload {
     query: any;
     variables: any;

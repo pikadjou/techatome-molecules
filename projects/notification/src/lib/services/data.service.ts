@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { CamBaseService, GraphEndpoint, HandleComplexRequest } from '@ta/server';
-import { getUniqueArray } from '@ta/utils';
 import { map, of, switchMap } from 'rxjs';
+
+import { GraphEndpoint, HandleComplexRequest, TaBaseService } from '@ta/server';
+import { getUniqueArray } from '@ta/utils';
 
 import { NotificationDto } from './dto/notification';
 import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_COUNT, NotificationFilter, READ_NOTIFICATION } from './queries';
-import { CamNotificationSharedService } from './shared.service';
+import { TaNotificationSharedService } from './shared.service';
 
 const graphEndpoint: GraphEndpoint = {
   clientName: 'notificationService',
@@ -16,12 +17,12 @@ const graphEndpoint: GraphEndpoint = {
 @Injectable({
   providedIn: 'root',
 })
-export class CamNotificationDataService extends CamBaseService {
+export class TaNotificationDataService extends TaBaseService {
   public list = new HandleComplexRequest<NotificationDto[]>();
 
   public count = new HandleComplexRequest<number>();
 
-  constructor(private _sharedService: CamNotificationSharedService) {
+  constructor(private _sharedService: TaNotificationSharedService) {
     super();
 
     this._graphService.registerGraphEndpoint(graphEndpoint);

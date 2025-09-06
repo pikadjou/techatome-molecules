@@ -10,7 +10,6 @@
     "access": "public"
   },
   "scripts": {
-    "postbuild": "rm -f dist/.npmignore",
     "postpublish": "rm -rf dist/"
   },
   "dependencies": {

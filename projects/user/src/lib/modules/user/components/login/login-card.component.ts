@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent, CardComponent, CardContentComponent } from '@ta/ui';
 
-import { CAM_AUTH_TOKEN } from '../../services/auth.service';
+import { TA_AUTH_TOKEN } from '../../services/auth.service';
 
 @Component({
   selector: 'ta-login-card',
@@ -13,7 +13,7 @@ import { CAM_AUTH_TOKEN } from '../../services/auth.service';
   imports: [CardComponent, CardContentComponent, ButtonComponent, TranslatePipe],
 })
 export class LoginCardComponent {
-  private _authService = inject(CAM_AUTH_TOKEN);
+  private _authService = inject(TA_AUTH_TOKEN);
 
   constructor() {}
 

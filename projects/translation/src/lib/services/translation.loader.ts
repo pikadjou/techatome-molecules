@@ -3,10 +3,10 @@ import { inject } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, map } from 'rxjs';
 
-import { CamTranslationRegistryService } from './translation-registry.service';
+import { TaTranslationRegistryService } from './translation-registry.service';
 
-export class CamTranslationLoader implements TranslateLoader {
-  private registry = inject(CamTranslationRegistryService);
+export class TaTranslationLoader implements TranslateLoader {
+  private registry = inject(TaTranslationRegistryService);
   constructor() {}
 
   getTranslation(lang: string): Observable<object> {

@@ -3,17 +3,17 @@ import { InjectionToken } from '@angular/core';
 
 import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 
-import { CamBaseService, MappingApiType } from '@ta/server';
+import { MappingApiType, TaBaseService } from '@ta/server';
 
 import { UserProfile } from './dto/user-profile';
 import { TaPermissionsService } from './permissions.service';
 
-export const CAM_AUTH_TOKEN = new InjectionToken<CamAuthService>('CamAuthService');
+export const TA_AUTH_TOKEN = new InjectionToken<TaAuthService>('TaAuthService');
 
 @Injectable({
   providedIn: 'root',
 })
-export abstract class CamAuthService extends CamBaseService {
+export abstract class TaAuthService extends TaBaseService {
   public readonly _permissionsService = inject(TaPermissionsService);
   public isAuthenticated$ = this._permissionsService.canAccess$('', 'authenticated');
 

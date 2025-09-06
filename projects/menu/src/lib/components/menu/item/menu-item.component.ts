@@ -16,7 +16,7 @@ import { MenuAction } from '../../../models/menu/item/action';
 import { MenuBase } from '../../../models/menu/item/base';
 import { MenuIcon } from '../../../models/menu/item/icon';
 import { MenuPanel } from '../../../models/menu/item/panel';
-import { CamTranslationMenu } from '../../../translation.service';
+import { TaTranslationMenu } from '../../../translation.service';
 
 @Component({
   selector: 'ta-menu-item',
@@ -48,7 +48,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
 
   constructor(public modal: MatDialog) {
     super();
-    CamTranslationMenu.getInstance();
+    TaTranslationMenu.getInstance();
   }
 
   ngOnInit() {

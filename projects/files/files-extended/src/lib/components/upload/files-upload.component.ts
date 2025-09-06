@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Camera, CameraResultType } from '@capacitor/camera';
@@ -14,7 +13,7 @@ export type Feature = 'take-pic' | 'upload-pic' | 'upload-file';
   templateUrl: './files-upload.component.html',
   styleUrls: ['./files-upload.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, ActionButtonComponent, ButtonComponent],
+  imports: [ActionButtonComponent, ButtonComponent],
 })
 export class UploadComponent {
   @Input()

@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { TranslatePipe } from '@ta/translation';
 import { TaBaseComponent } from '@ta/utils';
 
-import { CamTranslationUI } from '../translation.service';
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
   selector: 'ta-banner',
@@ -19,6 +20,6 @@ export class BannerComponent extends TaBaseComponent {
 
   constructor() {
     super();
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

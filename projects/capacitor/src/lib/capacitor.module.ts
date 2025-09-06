@@ -9,4 +9,4 @@ import { NgModule } from '@angular/core';
   imports: [],
   exports: [],
 })
-export class CamCapacitorModule {}
+export class TaCapacitorModule {}

@@ -1,8 +1,8 @@
-import { CamBaseService } from '@ta/server';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TaBaseService } from '@ta/server';
 import { TranslatedEnumeration } from '../common/dto/translated-enumeration';
 import * as i0 from "@angular/core";
-export declare class CamEnumerationService extends CamBaseService {
+export declare class TaEnumerationService extends TaBaseService {
     getAbandonReasons$: BehaviorSubject<TranslatedEnumeration[]>;
     wontDoReasons$: BehaviorSubject<TranslatedEnumeration[]>;
     incidentTypes$: BehaviorSubject<TranslatedEnumeration[]>;
@@ -16,6 +16,6 @@ export declare class CamEnumerationService extends CamBaseService {
     getFileTypes: (id: number) => (fileTypeId: number) => TranslatedEnumeration | undefined;
     getFileTypes$: (id: number) => Observable<TranslatedEnumeration[]>;
     fetchFileTypes(): Observable<TranslatedEnumeration[]>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamEnumerationService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamEnumerationService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaEnumerationService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaEnumerationService>;
 }

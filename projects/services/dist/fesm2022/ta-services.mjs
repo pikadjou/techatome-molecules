@@ -2,8 +2,8 @@ import { compare, isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 import * as i0 from '@angular/core';
 import { Injectable } from '@angular/core';
 import { map, filter, tap } from 'rxjs/operators';
-import { CamBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, HandleSimpleRequest, HandleComplexRequest } from '@ta/server';
 import { BehaviorSubject, map as map$1, filter as filter$1 } from 'rxjs';
+import { TaBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, HandleSimpleRequest, HandleComplexRequest } from '@ta/server';
 
 const sortByTranslatedValue = (translated) => {
     return translated.sort((a, b) => compare(a.translatedValue || '', b.translatedValue || '', true));
@@ -31,7 +31,7 @@ const apiRoutes$1 = {
         url: '{ApiUrl}/FileTypes',
     },
 };
-class CamEnumerationService extends CamBaseService {
+class TaEnumerationService extends TaBaseService {
     constructor() {
         super(apiRoutes$1);
         this.getAbandonReasons$ = new BehaviorSubject([]);
@@ -79,10 +79,10 @@ class CamEnumerationService extends CamBaseService {
             .request(new Request({ type: 'GetFileTypes', cacheTime: -1 }))
             .pipe(filter(myData => !!myData), map(fileTypes => sortByTranslatedValue(fileTypes)));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamEnumerationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamEnumerationService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaEnumerationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaEnumerationService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamEnumerationService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaEnumerationService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -90,15 +90,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
         }], ctorParameters: () => [] });
 
 const isMinimizedKey = 'isMinimizedMenu';
-class CamSharedMenuService {
+class TaSharedMenuService {
     constructor() {
         this.isMinimized$ = new BehaviorSubject(localStorage.getItem(isMinimizedKey) === '1' ? true : false);
-        this.isMinimized$.subscribe((isMinimized) => localStorage.setItem(isMinimizedKey, isMinimized ? '1' : '0'));
+        this.isMinimized$.subscribe(isMinimized => localStorage.setItem(isMinimizedKey, isMinimized ? '1' : '0'));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSharedMenuService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSharedMenuService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSharedMenuService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSharedMenuService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamSharedMenuService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSharedMenuService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -219,7 +219,7 @@ const graphEndpoint$1 = {
     clientName: 'projectService',
     endpoint: 'project',
 };
-class CamProjectsService extends CamBaseService {
+class TaProjectsService extends TaBaseService {
     constructor() {
         super();
         this._graphEndpoint = graphEndpoint$1;
@@ -249,10 +249,10 @@ class CamProjectsService extends CamBaseService {
     fetchProject$(id) {
         return this.project.fetch(id, this._graphService.fetchQuery(GET_PROJECT_BY_ID(id), 'projectById', graphEndpoint$1.clientName));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamProjectsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamProjectsService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaProjectsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaProjectsService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamProjectsService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaProjectsService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -322,7 +322,7 @@ const apiRoutes = {
         url: '{ApiUrl}/document-rest/upload',
     },
 };
-class CamDocumentsService extends CamBaseService {
+class TaDocumentsService extends TaBaseService {
     constructor() {
         super();
         this.documents = new HandleSimpleRequest();
@@ -352,10 +352,10 @@ class CamDocumentsService extends CamBaseService {
             },
         }));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDocumentsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDocumentsService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDocumentsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDocumentsService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamDocumentsService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaDocumentsService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -370,5 +370,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CamDocumentsService, CamEnumerationService, CamProjectsService, CamSharedMenuService, FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, documentProps, projectProps, sortByTranslatedValue };
+export { FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, TaDocumentsService, TaEnumerationService, TaProjectsService, TaSharedMenuService, documentProps, projectProps, sortByTranslatedValue };
 //# sourceMappingURL=ta-services.mjs.map

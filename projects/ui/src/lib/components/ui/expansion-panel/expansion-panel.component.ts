@@ -16,7 +16,7 @@ export interface ExpansionPanelInput {
   standalone: true,
   imports: [NgFor, MatExpansionModule],
 })
-export class CamExpansionPanelComponent extends TaBaseComponent {
+export class TaExpansionPanelComponent extends TaBaseComponent {
   @Input()
   templates: ExpansionPanelInput[] = [];
 

@@ -4,14 +4,12 @@ import { Subject } from 'rxjs';
 
 import { ENotificationCode } from '../enum';
 
-export const LAZY_SERVICE_TOKEN = new InjectionToken<CamNotificationService>(
-  'CamNotificationService'
-);
+export const LAZY_SERVICE_TOKEN = new InjectionToken<TaNotificationService>('TaNotificationService');
 
 @Injectable({
   providedIn: 'root',
 })
-export class CamNotificationService {
+export class TaNotificationService {
   public id = Math.random();
 
   public newNotification$ = new Subject<{

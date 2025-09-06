@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
-
-import { CamTranslationLayout } from '../translation.service';
 
 import { TitleComponent } from '../../../components/ui/title/title.component';
 import { LayoutHeaderComponent } from '../layout-header/layout-header.component';
 import { LayoutTitleComponent } from '../layout-title/layout-title.component';
+import { TaTranslationLayout } from '../translation.service';
 
 @Component({
   selector: 'ta-layout-full-panel',
@@ -29,7 +29,7 @@ export class LayoutFullPanelComponent extends TaBaseComponent {
 
   constructor() {
     super();
-    CamTranslationLayout.getInstance();
+    TaTranslationLayout.getInstance();
   }
 
   public askClose() {

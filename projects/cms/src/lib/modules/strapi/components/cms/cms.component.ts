@@ -1,16 +1,16 @@
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 
 import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
-import { LoaderComponent, ErrorComponent, EmptyComponent, TitleComponent } from '@ta/ui';
+import { EmptyComponent, ErrorComponent, LoaderComponent, TitleComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
 
-import { CamCmsService } from '../../services/cms.service';
+import { TaCmsService } from '../../services/cms.service';
 import { RichTextComponent } from '../types/rich-text/rich-text.component';
 
 @Component({
-selector: 'ta-cms',
+  selector: 'ta-cms',
   templateUrl: './cms.component.html',
   styleUrls: ['./cms.component.scss'],
   standalone: true,
@@ -24,7 +24,7 @@ export class CmsComponent extends TaBaseComponent implements OnInit {
     return this.cmsService.cmsContents.get$(this.contentType);
   }
   constructor(
-    public cmsService: CamCmsService,
+    public cmsService: TaCmsService,
     @Optional() @Inject(TENANT_CONFIG_TOKEN) private tenantConfig: TenantConfig
   ) {
     super();

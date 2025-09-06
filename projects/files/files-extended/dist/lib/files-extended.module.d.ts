@@ -15,13 +15,13 @@ import * as i10 from "./components/upload/files-upload.component";
  *
  * @example
  * // Instead of importing the module:
- * // import { CamFilesExtendedModule } from '@ta/library-name';
+ * // import { TaFilesExtendedModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
- * import { FilesDisplayComponent, UploadComponent, CamFilesBasicModule } from '@ta/library-name';
+ * import { FilesDisplayComponent, UploadComponent, TaFilesBasicModule } from '@ta/library-name';
  */
-export declare class CamFilesExtendedModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamFilesExtendedModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamFilesExtendedModule, never, [typeof i1.CamContainerModule, typeof i2.CamDirectivePipeModule, typeof i3.CamFormModule, typeof i1.CamUiModule, typeof i1.CamCardModule, typeof i4.CommonModule, typeof i5.CamFormInputsModule, typeof i6.CamFilesBasicModule, typeof i7.CamIconsModule, typeof i8.CamMenuModule, typeof i9.FilesDisplayComponent, typeof i10.UploadComponent], [typeof i9.FilesDisplayComponent, typeof i10.UploadComponent, typeof i6.CamFilesBasicModule]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamFilesExtendedModule>;
+export declare class TaFilesExtendedModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaFilesExtendedModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaFilesExtendedModule, never, [typeof i1.TaContainerModule, typeof i2.TaDirectivePipeModule, typeof i3.TaFormModule, typeof i1.TaUiModule, typeof i1.TaCardModule, typeof i4.CommonModule, typeof i5.TaFormInputsModule, typeof i6.TaFilesBasicModule, typeof i7.TaIconsModule, typeof i8.TaMenuModule, typeof i9.FilesDisplayComponent, typeof i10.UploadComponent], [typeof i9.FilesDisplayComponent, typeof i10.UploadComponent, typeof i6.TaFilesBasicModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaFilesExtendedModule>;
 }

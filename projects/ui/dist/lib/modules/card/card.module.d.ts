@@ -15,8 +15,8 @@ import * as i12 from "./card-image/card-image.component";
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
  */
-export declare class CamCardModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamCardModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<CamCardModule, never, [typeof i1.CommonModule, typeof i2.CamUiModule, typeof i3.CamIconsModule, typeof i4.CardComponent, typeof i5.CardHeaderComponent, typeof i6.CardTitleComponent, typeof i7.CardSubtitleComponent, typeof i8.CardCtaComponent, typeof i9.CardTagComponent, typeof i10.CardContentComponent, typeof i11.DashboardCardComponent, typeof i12.CardImageComponent], [typeof i4.CardComponent, typeof i5.CardHeaderComponent, typeof i6.CardTitleComponent, typeof i7.CardSubtitleComponent, typeof i8.CardCtaComponent, typeof i9.CardTagComponent, typeof i10.CardContentComponent, typeof i11.DashboardCardComponent, typeof i12.CardImageComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<CamCardModule>;
+export declare class TaCardModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaCardModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaCardModule, never, [typeof i1.CommonModule, typeof i2.TaUiModule, typeof i3.TaIconsModule, typeof i4.CardComponent, typeof i5.CardHeaderComponent, typeof i6.CardTitleComponent, typeof i7.CardSubtitleComponent, typeof i8.CardCtaComponent, typeof i9.CardTagComponent, typeof i10.CardContentComponent, typeof i11.DashboardCardComponent, typeof i12.CardImageComponent], [typeof i4.CardComponent, typeof i5.CardHeaderComponent, typeof i6.CardTitleComponent, typeof i7.CardSubtitleComponent, typeof i8.CardCtaComponent, typeof i9.CardTagComponent, typeof i10.CardContentComponent, typeof i11.DashboardCardComponent, typeof i12.CardImageComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<TaCardModule>;
 }

@@ -1,6 +1,6 @@
-import { CamIconType } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 export interface ActionButtonData {
     callback: (data?: any) => void;
-    icon: CamIconType | string;
+    icon: TaIconType | string;
     label?: string;
 }

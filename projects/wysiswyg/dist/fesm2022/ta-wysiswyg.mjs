@@ -1,8 +1,8 @@
 import { NgIf, NgFor, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Input, Component, EventEmitter, inject, ViewChild, Output, NgModule } from '@angular/core';
-import { ENotificationCode, NotificationInlineComponent, CamNotificationModule } from '@ta/notification';
-import { TitleComponent, TextComponent, ToastComponent, CamUiModule } from '@ta/ui';
+import { ENotificationCode, NotificationInlineComponent, TaNotificationModule } from '@ta/notification';
+import { TitleComponent, TextComponent, ToastComponent, TaUiModule } from '@ta/ui';
 import { TaBaseComponent, SafePipe, isNotEmptyObject, isNonNullable } from '@ta/utils';
 import Delimiter from '@editorjs/delimiter';
 import EditorJS from '@editorjs/editorjs';
@@ -11,10 +11,10 @@ import ImageTool from '@editorjs/image';
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Warning from '@editorjs/warning';
-import { CamDocumentsService } from '@ta/services';
-import { CamTranslationService } from '@ta/translation';
 import { ColorTool } from 'editorjs-color';
 import { firstValueFrom } from 'rxjs';
+import { TaDocumentsService } from '@ta/services';
+import { TaTranslationService } from '@ta/translation';
 import edjsHTML from 'editorjs-html';
 
 class BlockTextComponent extends TaBaseComponent {
@@ -535,14 +535,14 @@ class EditorInputComponent extends TaBaseComponent {
         this.maxHeight = false;
         this.changed = new EventEmitter();
         this.saved = new EventEmitter();
-        this.translationService = inject(CamTranslationService);
+        this.translationService = inject(TaTranslationService);
         this.languages = {
             en: en$1,
             es: es$1,
             fr: fr$1,
             nl: nl$1,
         };
-        this._documentsService = inject(CamDocumentsService);
+        this._documentsService = inject(TaDocumentsService);
         this._saveAfter = false;
         this.editorInstance = null;
         this.uploadByFile = async (file) => {
@@ -742,21 +742,21 @@ const convertBlocksToHtml = (blocks) => {
  *
  * @example
  * // Instead of importing the module:
- * // import { CamWysiswygModule } from '@ta/library-name';
+ * // import { TaWysiswygModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { BlockTextComponent, EditorInputComponent } from '@ta/library-name';
  */
-class CamWysiswygModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamWysiswygModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamWysiswygModule, imports: [CommonModule, CamUiModule, CamNotificationModule, SafePipe, BlockTextComponent, EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamWysiswygModule, imports: [CommonModule, CamUiModule, CamNotificationModule, BlockTextComponent] }); }
+class TaWysiswygModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaWysiswygModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, TaNotificationModule, SafePipe, BlockTextComponent, EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, TaNotificationModule, BlockTextComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamWysiswygModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaWysiswygModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, CamUiModule, CamNotificationModule, SafePipe, BlockTextComponent, EditorInputComponent],
+                    imports: [CommonModule, TaUiModule, TaNotificationModule, SafePipe, BlockTextComponent, EditorInputComponent],
                     exports: [BlockTextComponent, EditorInputComponent],
                 }]
         }] });
@@ -773,5 +773,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { BlockTextComponent, CamWysiswygModule, EditorInputComponent, convertBlocksToHtml };
+export { BlockTextComponent, EditorInputComponent, TaWysiswygModule, convertBlocksToHtml };
 //# sourceMappingURL=ta-wysiswyg.mjs.map

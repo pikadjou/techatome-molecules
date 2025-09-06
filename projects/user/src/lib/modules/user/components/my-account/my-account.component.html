@@ -6,7 +6,7 @@
           <div class="p-space-sm bdp-b color-border-primary">
             <ta-inline-profile-data
               [profile]="profile ?? {}"
-              [userLogo]="this.userLogo$ | async"
+              [userLogo]="this.userLogo$() | async"
               (click)="this.navigateToProfile()"
             ></ta-inline-profile-data>
             @if (this.isEditable) {
@@ -25,16 +25,16 @@
       </ta-empty>
     </ta-error>
   </ta-loader>
-
-  @if (this.profileMenu) {
+@let profileMenu = this.profileMenu();
+  @if (profileMenu) {
     <div class="bdp-b color-border-primary pt-space-xs">
-      <ta-menu [menu]="this.profileMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
+      <ta-menu [menu]="profileMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
     </div>
   }
-
-  @if (this.disconnectionMenu) {
+@let disconnectionMenu = this.disconnectionMenu();
+  @if (disconnectionMenu) {
     <div class="bdp-b pt-space-xs">
-      <ta-menu [menu]="this.disconnectionMenu" [style]="'dark'"></ta-menu>
+      <ta-menu [menu]="disconnectionMenu" [style]="'dark'"></ta-menu>
     </div>
   }
   <div class="ta-c">

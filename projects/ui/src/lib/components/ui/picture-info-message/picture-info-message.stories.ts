@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { CamIconType } from '@ta/icons';
+
+import { TaIconType } from '@ta/icons';
+
 import { PictureInfoMessageComponent } from './picture-info-message.component';
 
 type StoryType = PictureInfoMessageComponent;
@@ -11,7 +13,7 @@ export default {
   render: args => ({ props: args }),
   args: {
     text: "It's meee, Marioooo",
-    icon: CamIconType.Checked,
+    icon: TaIconType.Checked,
     iconSize: 'md',
     type: 'warning',
   },

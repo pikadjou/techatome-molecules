@@ -19,7 +19,7 @@ export declare class MenuItemComponent extends TaBaseComponent implements OnInit
     getStyleType(): string;
     hasFontIcon(): boolean;
     hasIconImage(): boolean;
-    getIcon(): string | import("@ta/icons").CamIconType;
+    getIcon(): string | import("@ta/icons").TaIconType;
     getFontIcon(): string;
     hasChild(): boolean;
     toggle(): void;

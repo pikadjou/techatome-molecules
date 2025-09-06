@@ -9,7 +9,7 @@ import { BaseChartComponent } from './base-chart/base-chart.component';
   standalone: true,
   imports: [],
 })
-export class CamChartLineComponent extends BaseChartComponent<'line'> {
+export class TaChartLineComponent extends BaseChartComponent<'line'> {
   constructor() {
     super();
 

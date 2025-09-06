@@ -1,13 +1,15 @@
-import { NgIf, NgClass } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CamTranslationUI } from '../translation.service';
+import { FontIconComponent } from '@ta/icons';
+
+import { TaTranslationUI } from '../translation.service';
 
 export type BadgeType = 'danger' | 'warning' | 'success' | 'primary' | 'secondary' | 'info' | 'purple' | 'orange';
 @Component({
-selector: 'ta-badge',
+  selector: 'ta-badge',
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.scss'],
   standalone: true,
@@ -40,7 +42,7 @@ export class BadgeComponent {
   clickAction = new EventEmitter();
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 
   public getClass(): string {

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { Network } from '@capacitor/network';
-import { Logger } from '@ta/server';
 import { BehaviorSubject } from 'rxjs';
+
+import { Logger } from '@ta/server';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CamDeviceNetworkService {
+export class TaDeviceNetworkService {
   public isConnected$ = new BehaviorSubject<boolean>(false);
 
   private _delayToDisplayNewNotification: number = 10 * 1000; // in ms

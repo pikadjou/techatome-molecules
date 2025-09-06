@@ -453,7 +453,7 @@ const graphQlUpdateFields = (object) => {
     return { updatedFields: ObjectKeys(object) };
 };
 
-class CamServerErrorService {
+class TaServerErrorService {
     constructor() {
         this.notifications = signal([]);
     }
@@ -465,10 +465,10 @@ class CamServerErrorService {
             errorsMessage: error.networkError.error.errors,
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerErrorService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerErrorService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerErrorService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerErrorService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerErrorService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerErrorService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -481,7 +481,7 @@ class TaGraphService {
         this.httpLink = httpLink;
         this.apollo = apollo;
         this.isReady$ = new BehaviorSubject(true);
-        this._errorServices = inject(CamServerErrorService);
+        this._errorServices = inject(TaServerErrorService);
         this._defaultEndpoint = new ApolloLink((operation, forward) => {
             return forward(operation);
         });
@@ -614,7 +614,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                     args: [GRAPHQL_SERVER_CONFIG]
                 }] }, { type: i1$1.HttpLink }, { type: i2.Apollo }] });
 
-class CamBaseService {
+class TaBaseService {
     constructor(apiRoutes) {
         this._subscriptionList = [];
         this._serverService = inject(TaServerSevice);
@@ -633,10 +633,10 @@ class CamBaseService {
     _registerSubscription(subscription) {
         this._subscriptionList.push(subscription);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamBaseService, deps: "invalid", target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamBaseService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaBaseService, deps: "invalid", target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaBaseService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamBaseService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaBaseService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -708,7 +708,7 @@ class Request {
 
 const STRAPI_SERVER_CONFIG = 'config_strapi_server';
 
-class CamStrapiService extends CamBaseService {
+class TaStrapiService extends TaBaseService {
     constructor(_strapiConfig) {
         super();
         this._strapiConfig = _strapiConfig;
@@ -729,10 +729,10 @@ class CamStrapiService extends CamBaseService {
     fetchQueryList$(payload, node) {
         return this._graphService.fetchQuery(payload, node, 'strapi').pipe(filter(isNonNullable), map(data => data.data.map(data => data.attributes)));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiService, deps: [{ token: STRAPI_SERVER_CONFIG }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiService, deps: [{ token: STRAPI_SERVER_CONFIG }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamStrapiService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -742,10 +742,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                     args: [STRAPI_SERVER_CONFIG]
                 }] }] });
 
-class CamBaseStrapiService extends CamBaseService {
+class TaBaseStrapiService extends TaBaseService {
     constructor() {
         super(...arguments);
-        this._strapiService = inject(CamStrapiService);
+        this._strapiService = inject(TaStrapiService);
     }
 }
 
@@ -814,15 +814,15 @@ const provideStrapi = (data) => [
  *
  * @example
  * // Instead of importing the module:
- * // import { CamServerModule } from '@ta/library-name';
+ * // import { TaServerModule } from '@ta/library-name';
  *
  * // Import the standalone components directly:
  * import { ApolloModule } from '@ta/library-name';
  */
-class CamServerModule {
+class TaServerModule {
     static forRoot(graphQlConfig) {
         return {
-            ngModule: CamServerModule,
+            ngModule: TaServerModule,
             providers: [
                 {
                     provide: GRAPHQL_SERVER_CONFIG,
@@ -836,9 +836,9 @@ class CamServerModule {
             ],
         };
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, imports: [CommonModule, HttpClientModule, ApolloModule], exports: [ApolloModule] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, providers: [
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaServerModule, imports: [CommonModule, HttpClientModule, ApolloModule], exports: [ApolloModule] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerModule, providers: [
             TaGraphService,
             {
                 provide: HTTP_INTERCEPTORS,
@@ -847,7 +847,7 @@ class CamServerModule {
             },
         ], imports: [CommonModule, HttpClientModule, ApolloModule, ApolloModule] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CamServerModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaServerModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
@@ -872,5 +872,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, CamBaseService, CamBaseStrapiService, CamServerErrorService, CamServerModule, CamStrapiService, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaGraphService, TaServerSevice, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerModule, TaServerSevice, TaStrapiService, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map

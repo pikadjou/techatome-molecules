@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { debounceTime, mergeMap } from 'rxjs';
 import { SessionStorage } from 'storage-manager-js';
 
-import { CamTranslationRegistryService } from './translation-registry.service';
+import { TaTranslationRegistryService } from './translation-registry.service';
 
 export const TRANSLATION_CONFIG = 'config_translation';
 export interface ITranslationConfig {
@@ -15,9 +15,9 @@ export interface ITranslationConfig {
 @Injectable({
   providedIn: 'root',
 })
-export class CamTranslationService {
+export class TaTranslationService {
   public translateService = inject(TranslateService);
-  private _registry = inject(CamTranslationRegistryService);
+  private _registry = inject(TaTranslationRegistryService);
 
   constructor(
     @Optional()

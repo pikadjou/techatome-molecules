@@ -1,7 +1,8 @@
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
 
-import { CamBaseStrapiService, HandleComplexRequest } from '@ta/server';
 import { map } from 'rxjs';
+
+import { HandleComplexRequest, TaBaseStrapiService } from '@ta/server';
 
 import { Sale } from './dto/sale';
 import { GET_SALE_CONTENT } from './strapiQueries';
@@ -9,7 +10,7 @@ import { GET_SALE_CONTENT } from './strapiQueries';
 @Injectable({
   providedIn: 'root',
 })
-export class CamSaleService extends CamBaseStrapiService {
+export class TaSaleService extends TaBaseStrapiService {
   readonly local = inject(LOCALE_ID);
 
   readonly saleContents = new HandleComplexRequest<Sale>();

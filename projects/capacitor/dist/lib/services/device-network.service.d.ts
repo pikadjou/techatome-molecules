@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import * as i0 from "@angular/core";
-export declare class CamDeviceNetworkService {
+export declare class TaDeviceNetworkService {
     isConnected$: BehaviorSubject<boolean>;
     private _delayToDisplayNewNotification;
     private _state;
@@ -9,6 +9,6 @@ export declare class CamDeviceNetworkService {
     observeNetworkStateChanges(): Promise<void>;
     private _getCurrentNetworkState;
     private _logNetworkStateChanged;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamDeviceNetworkService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamDeviceNetworkService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaDeviceNetworkService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaDeviceNetworkService>;
 }

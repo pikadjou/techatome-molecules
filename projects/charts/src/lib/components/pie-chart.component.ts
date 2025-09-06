@@ -9,7 +9,7 @@ import { BaseChartComponent } from './base-chart/base-chart.component';
   standalone: true,
   imports: [],
 })
-export class CamChartPieComponent extends BaseChartComponent<'pie'> {
+export class TaChartPieComponent extends BaseChartComponent<'pie'> {
   @Input()
   radius?: number;
 

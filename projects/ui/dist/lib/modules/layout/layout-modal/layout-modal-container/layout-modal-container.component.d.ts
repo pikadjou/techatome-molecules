@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CamBaseModal } from '@ta/utils';
 import { Observable } from 'rxjs';
+import { TaBaseModal } from '@ta/utils';
 import { ModalStyle } from '../layout-modal.component';
 import * as i0 from "@angular/core";
 export interface TemplateModalContainerData {
@@ -9,7 +9,7 @@ export interface TemplateModalContainerData {
     askClosing$?: Observable<null>;
     style?: ModalStyle;
 }
-export declare class TemplateModalContainer extends CamBaseModal {
+export declare class TemplateModalContainer extends TaBaseModal {
     data: TemplateModalContainerData;
     dialogRef: MatDialogRef<any>;
     get style(): ModalStyle;

@@ -1,18 +1,8 @@
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { FontIconComponent } from '@ta/icons';
-import { ButtonComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, LabelComponent, TextComponent } from '@ta/ui';
-import { SearchFieldComponent } from '../search-field/search-field.component';
-import { CheckboxComponent } from '../checkbox/checkbox.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StopPropagationDirective } from '@ta/utils';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { InputLayoutComponent } from '../../input-layout/input-layout.component';
-
-import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
-import { CamOverlayPanelComponent } from '@ta/ui';
-import { getUniqueArray, toArray } from '@ta/utils';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,
   Observable,
@@ -26,17 +16,58 @@ import {
   tap,
 } from 'rxjs';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
+import { FontIconComponent } from '@ta/icons';
+import {
+  ButtonComponent,
+  EmptyComponent,
+  LabelComponent,
+  LayoutSideComponent,
+  LayoutSideContentComponent,
+  LayoutSideCtaComponent,
+  LinkComponent,
+  LoaderComponent,
+  TextComponent,
+} from '@ta/ui';
+import { TaOverlayPanelComponent } from '@ta/ui';
+import { StopPropagationDirective } from '@ta/utils';
+import { getUniqueArray, toArray } from '@ta/utils';
+
+import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
+import { CheckboxComponent } from '../checkbox/checkbox.component';
+import { SearchFieldComponent } from '../search-field/search-field.component';
 
 @Component({
-selector: 'ta-input-choices',
+  selector: 'ta-input-choices',
   templateUrl: './choices.component.html',
   styleUrls: ['./choices.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, FontIconComponent, StopPropagationDirective, TranslateModule, ButtonComponent, LinkComponent, CamOverlayPanelComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, SearchFieldComponent, LabelComponent, TextComponent, CheckboxComponent, ReactiveFormsModule, InputLayoutComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    FontIconComponent,
+    StopPropagationDirective,
+    TranslateModule,
+    ButtonComponent,
+    LinkComponent,
+    TaOverlayPanelComponent,
+    EmptyComponent,
+    LoaderComponent,
+    LayoutSideCtaComponent,
+    LayoutSideContentComponent,
+    LayoutSideComponent,
+    SearchFieldComponent,
+    LabelComponent,
+    TextComponent,
+    CheckboxComponent,
+    ReactiveFormsModule,
+    InputLayoutComponent,
+  ],
 })
-export class InputChoicesComponent extends CamAbstractInputComponent<InputChoices> {
-  @ViewChild(CamOverlayPanelComponent) overlayPanelRef!: CamOverlayPanelComponent;
+export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices> {
+  @ViewChild(TaOverlayPanelComponent) overlayPanelRef!: TaOverlayPanelComponent;
 
   public inputSearch = new InputTextBox();
   public inputNullable = new InputCheckBox({

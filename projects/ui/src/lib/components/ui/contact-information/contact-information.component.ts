@@ -1,14 +1,15 @@
 import { NgIf } from '@angular/common';
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { Component, Input } from '@angular/core';
+
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CamIconType } from '@ta/icons';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+import { TaIconType } from '@ta/icons';
 
-import { CamTranslationUI } from '../translation.service';
+import { TaTranslationUI } from '../translation.service';
 
 @Component({
-selector: 'ta-contact-information',
+  selector: 'ta-contact-information',
   templateUrl: './contact-information.component.html',
   styleUrls: ['./contact-information.component.scss'],
   standalone: true,
@@ -31,9 +32,9 @@ export class ContactInformationComponent {
    * Local icon to display
    */
   @Input()
-  localIcon!: CamIconType;
+  localIcon!: TaIconType;
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

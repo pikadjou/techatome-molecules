@@ -1,16 +1,16 @@
-import { CamIconType } from './services/icons.service';
+import { TaIconType } from './services/icons.service';
 
-export const isFontIcon = (icon: string | CamIconType): boolean => {
+export const isFontIcon = (icon: string | TaIconType): boolean => {
   return typeof icon === 'string';
 };
 
-export const getFontIcon = (icon: string | CamIconType): string => {
+export const getFontIcon = (icon: string | TaIconType): string => {
   if (isFontIcon(icon)) {
     return icon.toString();
   }
   return '';
 };
 
-export const isLocalIcon = (icon: string | CamIconType): boolean => {
-  return Object.values(CamIconType).includes(icon as CamIconType);
+export const isLocalIcon = (icon: string | TaIconType): boolean => {
+  return Object.values(TaIconType).includes(icon as TaIconType);
 };

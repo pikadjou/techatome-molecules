@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { UploadDocumentFormService } from '@ta/files-extended';
 import { IInputsError, InputBase } from '@ta/form-model';
-import { CamEnumerationService, TranslatedEnumeration } from '@ta/services';
+import { TaEnumerationService, TranslatedEnumeration } from '@ta/services';
 import * as i0 from "@angular/core";
 export interface UploadDocumentResult {
     description?: string;
@@ -17,7 +17,7 @@ export declare class UploadDocumentModal implements OnInit {
     error: IInputsError;
     loader: boolean;
     get fileTypes$(): Observable<TranslatedEnumeration[]>;
-    constructor(_enumTypeService: CamEnumerationService, dialogRef: MatDialogRef<UploadDocumentModal, UploadDocumentResult | null>, _form: UploadDocumentFormService);
+    constructor(_enumTypeService: TaEnumerationService, dialogRef: MatDialogRef<UploadDocumentModal, UploadDocumentResult | null>, _form: UploadDocumentFormService);
     ngOnInit(): void;
     onSaveClick: (values: {
         description: string;

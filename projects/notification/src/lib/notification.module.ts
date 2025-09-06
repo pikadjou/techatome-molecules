@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { CamIconsModule } from '@ta/icons';
+import { TaIconsModule } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { CamContainerModule, CamUiModule } from '@ta/ui';
-import { CamDirectivePipeModule } from '@ta/utils';
+import { TaContainerModule, TaUiModule } from '@ta/ui';
+import { TaDirectivePipeModule } from '@ta/utils';
 
 import { BulletComponent } from './components/bullet/bullet.component';
 import { ContainerComponent } from './components/container/container.component';
@@ -24,42 +24,65 @@ import { UserTaggedInConversationComponent } from './components/items/item/templ
 import { NotificationTitleComponent } from './components/items/item/title/title.component';
 import { NotificationBoxComponent } from './components/popup/box/notification-box.component';
 import { NotificationInlineComponent } from './components/popup/inline/notification-inline.component';
-import { CamNotificationDataService } from './services/data.service';
-import { CamNotificationService, LAZY_SERVICE_TOKEN } from './services/notification.service';
-import { CamNotificationSharedService } from './services/shared.service';
-import { CamTranslationNotification } from './translation.service';
+import { TaNotificationDataService } from './services/data.service';
+import { LAZY_SERVICE_TOKEN, TaNotificationService } from './services/notification.service';
+import { TaNotificationSharedService } from './services/shared.service';
+import { TaTranslationNotification } from './translation.service';
 
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
- * // import { CamNotificationModule } from '@ta/library-name';
- * 
+ * // import { TaNotificationModule } from '@ta/library-name';
+ *
  * // Import the standalone components directly:
  * import { NotificationInlineComponent, ContainerComponent, BulletComponent } from '@ta/library-name';
  */
 @NgModule({
-
-  imports: [CommonModule, CamDirectivePipeModule, CamIconsModule, CamUiModule, CamContainerModule, TranslatePipe, NotificationBoxComponent, NotificationInlineComponent, ContainerComponent, ItemComponent, IconComponent, ItemInfoComponent, ProjectStatusChangedComponent, NewQuotationVersionComponent, NewInvoiceComponent, InvoicePaymentStatusChangedComponent, NotificationTitleComponent, TaskAssignedComponent, ToDoAssignedComponent, TaskDueTodayComponent, ToDoDueTodayComponent, TaskNewActivityComponent, UserTaggedInConversationComponent, BulletComponent],
+  imports: [
+    CommonModule,
+    TaDirectivePipeModule,
+    TaIconsModule,
+    TaUiModule,
+    TaContainerModule,
+    TranslatePipe,
+    NotificationBoxComponent,
+    NotificationInlineComponent,
+    ContainerComponent,
+    ItemComponent,
+    IconComponent,
+    ItemInfoComponent,
+    ProjectStatusChangedComponent,
+    NewQuotationVersionComponent,
+    NewInvoiceComponent,
+    InvoicePaymentStatusChangedComponent,
+    NotificationTitleComponent,
+    TaskAssignedComponent,
+    ToDoAssignedComponent,
+    TaskDueTodayComponent,
+    ToDoDueTodayComponent,
+    TaskNewActivityComponent,
+    UserTaggedInConversationComponent,
+    BulletComponent,
+  ],
   declarations: [],
   exports: [NotificationInlineComponent, ContainerComponent, BulletComponent, NotificationBoxComponent],
-
 })
-export class CamNotificationModule {
-  static forRoot(): ModuleWithProviders<CamNotificationModule> {
+export class TaNotificationModule {
+  static forRoot(): ModuleWithProviders<TaNotificationModule> {
     return {
-      ngModule: CamNotificationModule,
+      ngModule: TaNotificationModule,
       providers: [
-        { provide: LAZY_SERVICE_TOKEN, useExisting: CamNotificationService },
-        CamNotificationDataService,
-        CamNotificationSharedService,
+        { provide: LAZY_SERVICE_TOKEN, useExisting: TaNotificationService },
+        TaNotificationDataService,
+        TaNotificationSharedService,
       ],
     };
   }
   constructor() {
-    CamTranslationNotification.getInstance();
+    TaTranslationNotification.getInstance();
   }
 }
 
@@ -68,14 +91,14 @@ export class CamNotificationModule {
   declarations: [],
   exports: [],
 })
-export class CamNotificationProvider {
-  static forRoot(): ModuleWithProviders<CamNotificationProvider> {
+export class TaNotificationProvider {
+  static forRoot(): ModuleWithProviders<TaNotificationProvider> {
     return {
-      ngModule: CamNotificationProvider,
+      ngModule: TaNotificationProvider,
       providers: [
-        { provide: LAZY_SERVICE_TOKEN, useExisting: CamNotificationService },
-        CamNotificationDataService,
-        CamNotificationSharedService,
+        { provide: LAZY_SERVICE_TOKEN, useExisting: TaNotificationService },
+        TaNotificationDataService,
+        TaNotificationSharedService,
       ],
     };
   }

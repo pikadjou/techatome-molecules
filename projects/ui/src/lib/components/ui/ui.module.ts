@@ -5,10 +5,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
-import { CamIconsModule, CamIconsService } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { CamDirectivePipeModule } from '@ta/utils';
 import { register } from 'swiper/element/bundle';
+
+import { TaIconsModule, TaIconsService } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { TaDirectivePipeModule } from '@ta/utils';
 
 import { BadgeComponent } from './badge/badge.component';
 import { BulletComponent } from './bullet/bullet.component';
@@ -25,7 +26,7 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentProfessionsComponent } from './departments/professions/professions.component';
 import { DurationComponent } from './duration/duration.component';
 import { ExpandableTextComponent } from './expandable-text/expandable-text.component';
-import { CamExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
+import { TaExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { FileImageComponent } from './file-image/file-image.component';
 import { HourDateLineComponent } from './hour-date-line/hour-date-line.component';
 import { LabelComponent } from './label/label.component';
@@ -44,7 +45,7 @@ import { TextComponent } from './text/text.component';
 import { TimeAgoComponent } from './time-ago/time-ago.component';
 import { TitleComponent } from './title/title.component';
 import { ToastComponent } from './toast/toast.component';
-import { CamTranslationUI } from './translation.service';
+import { TaTranslationUI } from './translation.service';
 import { TrigramComponent } from './trigram/trigram.component';
 import { TypedMessageComponent } from './typed-message/typed-message.component';
 import { UserLogoComponent } from './user-logo/user-logo.component';
@@ -55,18 +56,64 @@ register();
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
- * 
+ *
  * @example
  * // Instead of importing the module:
- * // import { CamUiModule } from '@ta/library-name';
- * 
+ * // import { TaUiModule } from '@ta/library-name';
+ *
  * // Import the standalone components directly:
  * import { ActionButtonComponent, BadgeComponent, ButtonComponent } from '@ta/library-name';
  */
 @NgModule({
-
   declarations: [],
-  imports: [CommonModule, MatBottomSheetModule, MatIconModule, CamDirectivePipeModule, TranslatePipe, CamIconsModule, MatExpansionModule, MatDialogModule, ActionButtonComponent, BadgeComponent, ButtonComponent, CivilityComponent, ContactInformationComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, HourDateLineComponent, LinkComponent, LogoComponent, ProgressCircleComponent, TitleComponent, TrigramComponent, UserLogoComponent, TextComponent, ProgressBarDataComponent, ProgressBarComponent, PictureInfoMessageComponent, TypedMessageComponent, CamExpansionPanelComponent, DualButtonComponent, NotificationBadgeContainerComponent, NotificationBadgeComponent, PwaComponent, ExpandableTextComponent, ToastComponent, LabelComponent, NewComponent, BulletComponent, MegaoctetComponent, FileImageComponent, TimeAgoComponent, DurationComponent, UsersListComponent, ButtonToolComponent, CultureComponent, CriticityComponent],
+  imports: [
+    CommonModule,
+    MatBottomSheetModule,
+    MatIconModule,
+    TaDirectivePipeModule,
+    TranslatePipe,
+    TaIconsModule,
+    MatExpansionModule,
+    MatDialogModule,
+    ActionButtonComponent,
+    BadgeComponent,
+    ButtonComponent,
+    CivilityComponent,
+    ContactInformationComponent,
+    DepartmentIconListComponent,
+    DepartmentProfessionsComponent,
+    DepartmentsComponent,
+    HourDateLineComponent,
+    LinkComponent,
+    LogoComponent,
+    ProgressCircleComponent,
+    TitleComponent,
+    TrigramComponent,
+    UserLogoComponent,
+    TextComponent,
+    ProgressBarDataComponent,
+    ProgressBarComponent,
+    PictureInfoMessageComponent,
+    TypedMessageComponent,
+    TaExpansionPanelComponent,
+    DualButtonComponent,
+    NotificationBadgeContainerComponent,
+    NotificationBadgeComponent,
+    PwaComponent,
+    ExpandableTextComponent,
+    ToastComponent,
+    LabelComponent,
+    NewComponent,
+    BulletComponent,
+    MegaoctetComponent,
+    FileImageComponent,
+    TimeAgoComponent,
+    DurationComponent,
+    UsersListComponent,
+    ButtonToolComponent,
+    CultureComponent,
+    CriticityComponent,
+  ],
   exports: [
     ActionButtonComponent,
     BadgeComponent,
@@ -87,7 +134,7 @@ register();
     ProgressBarComponent,
     PictureInfoMessageComponent,
     DualButtonComponent,
-    CamExpansionPanelComponent,
+    TaExpansionPanelComponent,
     NotificationBadgeContainerComponent,
     NotificationBadgeComponent,
     PwaComponent,
@@ -106,11 +153,10 @@ register();
     ButtonToolComponent,
     CultureComponent,
   ],
-  providers: [CamIconsService],
-
+  providers: [TaIconsService],
 })
-export class CamUiModule {
+export class TaUiModule {
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

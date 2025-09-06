@@ -2,17 +2,17 @@ import { inject } from '@angular/core';
 
 import { Observable, map, of } from 'rxjs';
 
-import { CamBaseStrapiService } from '@ta/server';
+import { TaBaseStrapiService } from '@ta/server';
 
 import { Translation } from './dto/translation';
 // import { GET_TRANSLATIONS } from './queries';
-import { CamTranslationRegistryService, ITranslation } from './translation-registry.service';
+import { ITranslation, TaTranslationRegistryService } from './translation-registry.service';
 
-export abstract class CamLazyTranslationService extends CamBaseStrapiService implements ITranslation {
+export abstract class TaLazyTranslationService extends TaBaseStrapiService implements ITranslation {
   get id() {
     return this._id;
   }
-  private readonly _registry = inject(CamTranslationRegistryService);
+  private readonly _registry = inject(TaTranslationRegistryService);
 
   private _id = '';
   private _isApp = false;

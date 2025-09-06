@@ -1,10 +1,10 @@
 import { InputDropdown } from '@ta/form-model';
-import { CamOverlayPanelComponent } from '@ta/ui';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaOverlayPanelComponent } from '@ta/ui';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class DropdownComponent extends CamAbstractInputComponent<InputDropdown<any>, any> {
+export declare class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
     space: boolean;
-    overlayPanelRef: CamOverlayPanelComponent;
+    overlayPanelRef: TaOverlayPanelComponent;
     optionsList: {
         id: string;
         name: string;

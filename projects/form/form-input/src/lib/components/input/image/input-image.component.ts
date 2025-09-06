@@ -4,16 +4,16 @@ import { Component } from '@angular/core';
 import { InputImages } from '@ta/form-model';
 import { UserLogoComponent } from '@ta/ui';
 
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from '../../abstract.component';
 
 @Component({
-selector: 'ta-input-image',
+  selector: 'ta-input-image',
   templateUrl: './input-image.component.html',
   styleUrls: ['./input-image.component.scss'],
   standalone: true,
   imports: [NgIf, UserLogoComponent],
 })
-export class InputImageComponent extends CamAbstractInputComponent<InputImages> {
+export class InputImageComponent extends TaAbstractInputComponent<InputImages> {
   get selection(): string[] {
     return this.input.value;
   }
@@ -22,7 +22,7 @@ export class InputImageComponent extends CamAbstractInputComponent<InputImages> 
     return this.selection.map(selection => ({
       picture: selection,
       firstname: '',
-      lastname: '',      
+      lastname: '',
     }))[0];
   }
 }

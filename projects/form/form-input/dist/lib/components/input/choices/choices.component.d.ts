@@ -1,10 +1,10 @@
-import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
-import { CamOverlayPanelComponent } from '@ta/ui';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CamAbstractInputComponent } from '../../abstract.component';
+import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
+import { TaOverlayPanelComponent } from '@ta/ui';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
-export declare class InputChoicesComponent extends CamAbstractInputComponent<InputChoices> {
-    overlayPanelRef: CamOverlayPanelComponent;
+export declare class InputChoicesComponent extends TaAbstractInputComponent<InputChoices> {
+    overlayPanelRef: TaOverlayPanelComponent;
     inputSearch: InputTextBox<string>;
     inputNullable: InputCheckBox;
     filteredOptions$: Observable<{

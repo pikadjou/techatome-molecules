@@ -1,11 +1,11 @@
 import * as i0 from "@angular/core";
-export declare class CamIconsService {
+export declare class TaIconsService {
     constructor();
-    getIcon(icon: CamIconType): string;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CamIconsService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<CamIconsService>;
+    getIcon(icon: TaIconType): string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaIconsService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaIconsService>;
 }
-export declare enum CamIconType {
+export declare enum TaIconType {
     Unknown = 0,
     Add = 1,
     Advisor = 2,
