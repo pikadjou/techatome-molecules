@@ -173,7 +173,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Public API Surface of users
  */
 
-const userProfileBrutProps = ['id', 'firstname', 'lastname', 'email', 'picture'];
+const userProfileBrutProps = [
+    'id',
+    'firstname',
+    'lastname',
+    'email',
+    'picture',
+    'dateOfBirth',
+];
 const userProfileProps = new GraphSchema(userProfileBrutProps);
 
 function userInfo({ props }) {
@@ -198,7 +205,6 @@ class TaUserService extends TaBaseService {
     constructor() {
         super();
         this.userProfile = new HandleSimpleRequest();
-        this.userDetail = new HandleSimpleRequest();
         super.registerRoutes({ graphEndpoint: graphEndpoint });
     }
     fetchUserProfile$(props = '') {
@@ -210,6 +216,7 @@ class TaUserService extends TaBaseService {
               ${userProfileProps.get('lastname')}
               ${userProfileProps.get('email')}
               ${userProfileProps.get('picture')}
+              ${userProfileProps.get('dateOfBirth')}
               ${props}
             `,
         }), 'userInfo', graphEndpoint.clientName)
@@ -583,5 +590,5 @@ const provideAuth0 = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { AuthGuard, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MyAccountComponent, SwitchLanguageCtaComponent, TA_AUTH_TOKEN, TA_USER_SERVICE, TaAuthService, TaPermissionsService, TaUserService, provideAuth0, provideUser, userProfileBrutProps, userProfileProps };
+export { AuthGuard, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MyAccountComponent, SwitchLanguageCtaComponent, TA_AUTH_TOKEN, TA_USER_SERVICE, TaAuthService, TaPermissionsService, TaUserService, provideAuth0, provideUser, userInfo, userProfileBrutProps, userProfileProps };
 //# sourceMappingURL=ta-user.mjs.map

@@ -14,8 +14,8 @@ export declare class NavigationComponent extends TaAbstractComponent implements 
         spaceElement?: TaSizes | null;
     };
     manuallyChanged$?: Observable<string>;
-    readonly hasFontIcon: (item: MenuIcon | MenuBase | Menu<MenuBase>) => boolean;
-    readonly getFontIcon: (item: MenuIcon | MenuBase | Menu<MenuBase>) => string;
+    readonly hasFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => boolean;
+    readonly getFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => string;
     readonly typeItem: {
         item: MenuBase | MenuAction | MenuIcon;
     };

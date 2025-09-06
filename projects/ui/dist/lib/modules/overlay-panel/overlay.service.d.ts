@@ -14,6 +14,7 @@ export interface OverlayMenuConfig<T = any> {
     offsetX?: number;
     offsetY?: number;
     maxHeight?: number;
+    manualTrigger?: boolean;
 }
 export declare class OverlayService extends TaBaseService {
     private overlay;

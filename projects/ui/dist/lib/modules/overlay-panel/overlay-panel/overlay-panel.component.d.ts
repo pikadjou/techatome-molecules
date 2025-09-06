@@ -8,10 +8,13 @@ export declare class TaOverlayPanelComponent extends TaBaseComponent implements 
     contentTpl: TemplateRef<any>;
     triggerHostRef: ElementRef<HTMLElement>;
     panelConfig: OverlayMenuConfig;
+    position: 'default' | 'right';
     closed: EventEmitter<void>;
+    private _configWithDefaults;
     constructor(overlayService: OverlayService);
     ngAfterViewInit(): void;
+    open(manual?: boolean): void;
     close(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaOverlayPanelComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaOverlayPanelComponent, "ta-overlay-panel", never, { "panelConfig": { "alias": "panelConfig"; "required": false; }; }, { "closed": "closed"; }, ["triggerTpl", "contentTpl"], never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaOverlayPanelComponent, "ta-overlay-panel", never, { "panelConfig": { "alias": "panelConfig"; "required": false; }; "position": { "alias": "position"; "required": false; }; }, { "closed": "closed"; }, ["triggerTpl", "contentTpl"], never, true, never>;
 }

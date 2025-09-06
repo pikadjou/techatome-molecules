@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, Input, ViewChild } from '@angular/core';
 
 import { InputDropdown } from '@ta/form-model';
@@ -14,15 +13,7 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    FontIconComponent,
-    TaOverlayPanelComponent,
-    LabelComponent,
-    TranslatePipe,
-    InputLayoutComponent,
-  ],
+  imports: [FontIconComponent, TaOverlayPanelComponent, LabelComponent, TranslatePipe, InputLayoutComponent],
 })
 export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
   @Input() space = true;

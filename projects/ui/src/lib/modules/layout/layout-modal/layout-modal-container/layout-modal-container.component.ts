@@ -29,6 +29,7 @@ export class TemplateModalContainer extends TaBaseModal {
     public dialogRef: MatDialogRef<any>
   ) {
     super();
+
     if (this.data.askClosing$) {
       this._registerSubscription(this.data.askClosing$.subscribe(_ => this.dialogRef.close()));
     }

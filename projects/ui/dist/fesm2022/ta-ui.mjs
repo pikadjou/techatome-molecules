@@ -1433,6 +1433,70 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: Input
             }] } });
 
+class BenefitItemComponent {
+    constructor() {
+        this.type = 'success';
+        this.text = '';
+        this.state = 'classic';
+        this.isInitialized = false;
+    }
+    ngOnInit() {
+        this.initializeConfig();
+        this.isInitialized = true;
+    }
+    initializeConfig() {
+        this.config = {
+            icon: this.getIcon(),
+            backgroundColor: this.getBackgroundColor(),
+            borderColor: this.getBorderColor(),
+            iconColor: this.getIconColor()
+        };
+    }
+    get cssClasses() {
+        const classes = [`benefit-item--${this.type}`];
+        if (this.state !== 'classic') {
+            classes.push(`benefit-item--${this.state}`);
+        }
+        return classes;
+    }
+    getIcon() {
+        switch (this.type) {
+            case 'success':
+                return 'check';
+            case 'warning':
+                return 'warning';
+            case 'error':
+                return 'error';
+            default:
+                return 'check';
+        }
+    }
+    getBackgroundColor() {
+        return `var(--surface-${this.type})`;
+    }
+    getBorderColor() {
+        return `var(--border-${this.type})`;
+    }
+    getIconColor() {
+        return `var(--text-${this.type})`;
+    }
+    get icon() {
+        return this.isInitialized ? this.config.icon : this.getIcon();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BenefitItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: BenefitItemComponent, isStandalone: true, selector: "ta-benefit-item", inputs: { type: "type", text: "text", state: "state" }, ngImport: i0, template: "<div \r\n  class=\"benefit-item\"\r\n  [ngClass]=\"this.cssClasses\">\r\n  <ta-font-icon \r\n    [name]=\"this.icon\"\r\n    class=\"benefit-icon\">\r\n  </ta-font-icon>\r\n  <ta-text \r\n    class=\"benefit-text\">\r\n    {{ text }}\r\n  </ta-text>\r\n</div>", styles: [".benefit-item{display:flex;align-items:center;gap:var(--ta-space-sm);margin-bottom:var(--ta-space-sm);padding:var(--ta-space-xs) var(--ta-space-md);background-color:var(--ta-neutral-100);border-radius:var(--ta-radius-rounded);transition:all var(--ta-transition-fast)}.benefit-item.success{border-left:4px solid var(--ta-semantic-green)}.benefit-item.success .benefit-icon{color:var(--ta-semantic-green)}.benefit-item.success:hover{background-color:var(--ta-neutral-200)}.benefit-item.warning{border-left:4px solid var(--ta-semantic-orange)}.benefit-item.warning .benefit-icon{color:var(--ta-semantic-orange)}.benefit-item.warning:hover{background-color:var(--ta-neutral-200)}.benefit-item.error{border-left:4px solid var(--ta-semantic-red)}.benefit-item.error .benefit-icon{color:var(--ta-semantic-red)}.benefit-item.error:hover{background-color:var(--ta-neutral-200)}.benefit-item .benefit-icon{flex-shrink:0}.benefit-item .benefit-text{color:var(--ta-text-primary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);flex:1}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BenefitItemComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-benefit-item', standalone: true, imports: [NgClass, FontIconComponent, TextComponent], template: "<div \r\n  class=\"benefit-item\"\r\n  [ngClass]=\"this.cssClasses\">\r\n  <ta-font-icon \r\n    [name]=\"this.icon\"\r\n    class=\"benefit-icon\">\r\n  </ta-font-icon>\r\n  <ta-text \r\n    class=\"benefit-text\">\r\n    {{ text }}\r\n  </ta-text>\r\n</div>", styles: [".benefit-item{display:flex;align-items:center;gap:var(--ta-space-sm);margin-bottom:var(--ta-space-sm);padding:var(--ta-space-xs) var(--ta-space-md);background-color:var(--ta-neutral-100);border-radius:var(--ta-radius-rounded);transition:all var(--ta-transition-fast)}.benefit-item.success{border-left:4px solid var(--ta-semantic-green)}.benefit-item.success .benefit-icon{color:var(--ta-semantic-green)}.benefit-item.success:hover{background-color:var(--ta-neutral-200)}.benefit-item.warning{border-left:4px solid var(--ta-semantic-orange)}.benefit-item.warning .benefit-icon{color:var(--ta-semantic-orange)}.benefit-item.warning:hover{background-color:var(--ta-neutral-200)}.benefit-item.error{border-left:4px solid var(--ta-semantic-red)}.benefit-item.error .benefit-icon{color:var(--ta-semantic-red)}.benefit-item.error:hover{background-color:var(--ta-neutral-200)}.benefit-item .benefit-icon{flex-shrink:0}.benefit-item .benefit-text{color:var(--ta-text-primary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);flex:1}\n"] }]
+        }], propDecorators: { type: [{
+                type: Input
+            }], text: [{
+                type: Input
+            }], state: [{
+                type: Input
+            }] } });
+
 /**
  * Common component
  */
@@ -1596,7 +1660,7 @@ class LayoutModalComponent extends TaBaseComponent {
         this.dialogRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutModalComponent, deps: [{ token: i1$3.MatDialogRef }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutModalComponent, isStandalone: true, selector: "ta-layout-modal", inputs: { style: "style", title: "title" }, usesInheritance: true, ngImport: i0, template: "<div class=\"modal-container\">\n  <ta-layout-header>\n    <div class=\"header flex-row justify-content-between\">\n      <ta-title [level]=\"3\" [isBold]=\"true\">{{ this.title | translate }}</ta-title>\n      <div (click)=\"this.close()\">\n        <ta-font-icon name=\"close\" type=\"md\"></ta-font-icon>\n      </div>\n    </div>\n  </ta-layout-header>\n  <ta-layout-content [autoHeight]=\"true\">\n    <ng-content></ng-content>\n  </ta-layout-content>\n</div>\n", styles: [".modal-container{padding:var(--ta-space-md);background-color:var(--ta-surface-primary)}.modal-container .header{padding-bottom:var(--ta-space-sm)}.modal-container ta-font-icon{cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: LayoutHeaderComponent, selector: "ta-layout-header" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: LayoutModalComponent, isStandalone: true, selector: "ta-layout-modal", inputs: { style: "style", title: "title" }, usesInheritance: true, ngImport: i0, template: "<div class=\"modal-container\">\n  <ta-layout-header>\n    <div class=\"header flex-row justify-content-between\">\n      <ta-title [level]=\"3\" [isBold]=\"true\">{{ this.title | translate }}</ta-title>\n      @if(!this.dialogRef.disableClose) {\n        <div (click)=\"this.close()\">\n          <ta-font-icon name=\"close\" type=\"md\"></ta-font-icon>\n        </div>\n      }\n\n    </div>\n  </ta-layout-header>\n  <ta-layout-content [autoHeight]=\"true\">\n    <ng-content></ng-content>\n  </ta-layout-content>\n</div>\n", styles: [".modal-container{padding:var(--ta-space-md);background-color:var(--ta-surface-primary)}.modal-container .header{padding-bottom:var(--ta-space-sm)}.modal-container ta-font-icon{cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: LayoutHeaderComponent, selector: "ta-layout-header" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutModalComponent, decorators: [{
             type: Component,
@@ -1607,7 +1671,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         LayoutHeaderComponent,
                         TitleComponent,
                         LayoutContentComponent,
-                    ], template: "<div class=\"modal-container\">\n  <ta-layout-header>\n    <div class=\"header flex-row justify-content-between\">\n      <ta-title [level]=\"3\" [isBold]=\"true\">{{ this.title | translate }}</ta-title>\n      <div (click)=\"this.close()\">\n        <ta-font-icon name=\"close\" type=\"md\"></ta-font-icon>\n      </div>\n    </div>\n  </ta-layout-header>\n  <ta-layout-content [autoHeight]=\"true\">\n    <ng-content></ng-content>\n  </ta-layout-content>\n</div>\n", styles: [".modal-container{padding:var(--ta-space-md);background-color:var(--ta-surface-primary)}.modal-container .header{padding-bottom:var(--ta-space-sm)}.modal-container ta-font-icon{cursor:pointer}\n"] }]
+                    ], template: "<div class=\"modal-container\">\n  <ta-layout-header>\n    <div class=\"header flex-row justify-content-between\">\n      <ta-title [level]=\"3\" [isBold]=\"true\">{{ this.title | translate }}</ta-title>\n      @if(!this.dialogRef.disableClose) {\n        <div (click)=\"this.close()\">\n          <ta-font-icon name=\"close\" type=\"md\"></ta-font-icon>\n        </div>\n      }\n\n    </div>\n  </ta-layout-header>\n  <ta-layout-content [autoHeight]=\"true\">\n    <ng-content></ng-content>\n  </ta-layout-content>\n</div>\n", styles: [".modal-container{padding:var(--ta-space-md);background-color:var(--ta-surface-primary)}.modal-container .header{padding-bottom:var(--ta-space-sm)}.modal-container ta-font-icon{cursor:pointer}\n"] }]
         }], ctorParameters: () => [{ type: i1$3.MatDialogRef }], propDecorators: { style: [{
                 type: Input
             }], title: [{
@@ -2951,7 +3015,9 @@ class TaOverlayPanelComponent extends TaBaseComponent {
     constructor(overlayService) {
         super();
         this.overlayService = overlayService;
+        this.position = 'default';
         this.closed = new EventEmitter();
+        this._configWithDefaults = null;
     }
     ngAfterViewInit() {
         if (!this.panelConfig) {
@@ -2966,32 +3032,53 @@ class TaOverlayPanelComponent extends TaBaseComponent {
             console.log('Missing panelTrigger');
             return;
         }
-        const configWithDefaults = {
+        if (this.position === 'right') {
+            this.panelConfig.positions = [
+                {
+                    // Position à droite du déclencheur
+                    originX: 'end',
+                    originY: 'center',
+                    overlayX: 'start',
+                    overlayY: 'center',
+                },
+                {
+                    // Position à gauche du déclencheur (fallback)
+                    originX: 'start',
+                    originY: 'center',
+                    overlayX: 'end',
+                    overlayY: 'center',
+                },
+            ];
+        }
+        this._configWithDefaults = {
             ...this.panelConfig,
             menuComponent: this.panelConfig.menuComponent ?? TaDefaultPanelComponent,
             triggerElement: this.triggerHostRef?.nativeElement,
             template: this.contentTpl,
         };
-        if (!configWithDefaults.triggerElement) {
-            console.log('OverlayPanel: no trigger element resolved');
-            return;
-        }
-        this.triggerHostRef.nativeElement.addEventListener('click', () => {
-            this.overlayService.openMenu(configWithDefaults);
-        });
         this._registerSubscription(this.overlayService.onClose$.subscribe(() => {
             this.closed.emit();
         }));
+    }
+    open(manual = false) {
+        if (!manual && this._configWithDefaults && this._configWithDefaults.manualTrigger === true) {
+            return;
+        }
+        if (!this._configWithDefaults?.triggerElement) {
+            console.log('OverlayPanel: no trigger element resolved');
+            return;
+        }
+        this.overlayService.openMenu(this._configWithDefaults);
     }
     close() {
         this.overlayService.closeMenu();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaOverlayPanelComponent, deps: [{ token: OverlayService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: "panelConfig" }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div #triggerHost>\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: "panelConfig", position: "position" }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-fill\" #triggerHost (click)=\"this.open()\">\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaOverlayPanelComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-overlay-panel', standalone: true, imports: [CommonModule], encapsulation: ViewEncapsulation.None, template: "<div #triggerHost>\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n" }]
+            args: [{ selector: 'ta-overlay-panel', standalone: true, imports: [CommonModule], encapsulation: ViewEncapsulation.None, template: "<div class=\"flex-fill\" #triggerHost (click)=\"this.open()\">\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n" }]
         }], ctorParameters: () => [{ type: OverlayService }], propDecorators: { triggerTpl: [{
                 type: ContentChild,
                 args: ['panelTrigger']
@@ -3002,6 +3089,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 type: ViewChild,
                 args: ['triggerHost', { static: true }]
             }], panelConfig: [{
+                type: Input
+            }], position: [{
                 type: Input
             }], closed: [{
                 type: Output
@@ -3015,5 +3104,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, BadgeComponent, BannerComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
+export { ActionButtonComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

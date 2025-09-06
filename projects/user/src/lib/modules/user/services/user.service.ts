@@ -21,7 +21,6 @@ const graphEndpoint: GraphEndpoint = {
 })
 export class TaUserService extends TaBaseService {
   public userProfile = new HandleSimpleRequest<UserProfile>();
-  public userDetail = new HandleSimpleRequest<UserProfile>();
 
   constructor() {
     super();
@@ -39,6 +38,7 @@ export class TaUserService extends TaBaseService {
               ${userProfileProps.get('lastname')}
               ${userProfileProps.get('email')}
               ${userProfileProps.get('picture')}
+              ${userProfileProps.get('dateOfBirth')}
               ${props}
             `,
           }),

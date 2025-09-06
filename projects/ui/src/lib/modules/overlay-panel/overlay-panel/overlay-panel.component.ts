@@ -33,7 +33,11 @@ export class TaOverlayPanelComponent extends TaBaseComponent implements AfterVie
 
   @Input() panelConfig!: OverlayMenuConfig;
 
+  @Input() position: 'default' | 'right' = 'default';
+
   @Output() closed = new EventEmitter<void>();
+
+  private _configWithDefaults: OverlayMenuConfig<unknown> | null = null;
 
   constructor(private overlayService: OverlayService) {
     super();
@@ -53,21 +57,31 @@ export class TaOverlayPanelComponent extends TaBaseComponent implements AfterVie
       return;
     }
 
-    const configWithDefaults = {
+    if (this.position === 'right') {
+      this.panelConfig.positions = [
+        {
+          // Position à droite du déclencheur
+          originX: 'end',
+          originY: 'center',
+          overlayX: 'start',
+          overlayY: 'center',
+        },
+        {
+          // Position à gauche du déclencheur (fallback)
+          originX: 'start',
+          originY: 'center',
+          overlayX: 'end',
+          overlayY: 'center',
+        },
+      ];
+    }
+
+    this._configWithDefaults = {
       ...this.panelConfig,
       menuComponent: this.panelConfig.menuComponent ?? TaDefaultPanelComponent,
       triggerElement: this.triggerHostRef?.nativeElement,
       template: this.contentTpl,
     };
-
-    if (!configWithDefaults.triggerElement) {
-      console.log('OverlayPanel: no trigger element resolved');
-      return;
-    }
-
-    this.triggerHostRef.nativeElement.addEventListener('click', () => {
-      this.overlayService.openMenu(configWithDefaults);
-    });
 
     this._registerSubscription(
       this.overlayService.onClose$.subscribe(() => {
@@ -76,7 +90,17 @@ export class TaOverlayPanelComponent extends TaBaseComponent implements AfterVie
     );
   }
 
-  public close(): void {
+  public open(manual = false) {
+    if (!manual && this._configWithDefaults && this._configWithDefaults.manualTrigger === true) {
+      return;
+    }
+    if (!this._configWithDefaults?.triggerElement) {
+      console.log('OverlayPanel: no trigger element resolved');
+      return;
+    }
+    this.overlayService.openMenu(this._configWithDefaults);
+  }
+  public close() {
     this.overlayService.closeMenu();
   }
 }
