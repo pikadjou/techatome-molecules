@@ -39,6 +39,7 @@ export * from './text/text.component';
 export * from './time-ago/time-ago.component';
 export * from './title/title.component';
 export * from './toast/toast.component';
+export * from './toggle-card/toggle-card.component';
 export * from './trigram/trigram.component';
 export * from './typed-message/typed-message.component';
 export * from './user-logo/user-logo.component';

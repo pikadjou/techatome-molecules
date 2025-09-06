@@ -1,8 +1,8 @@
 <div 
   class="benefit-item"
-  [ngClass]="this.cssClasses">
+  [ngClass]="this.cssClasses()">
   <ta-font-icon 
-    [name]="this.icon"
+    [name]="this.icon()"
     class="benefit-icon">
   </ta-font-icon>
   <ta-text 

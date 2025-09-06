@@ -1,0 +1,99 @@
+@use "ta/utils/mixins/common";
+
+.toggle-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: common.get-var(space, lg);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid common.get-var(color-surface-secondary);
+  border-radius: common.get-var(border-radius, md);
+  background-color: common.get-var(color-surface-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover:not(&--disabled) {
+    border-color: common.get-var(brand, 600);
+    background-color: common.get-var(color-surface-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &--active {
+    border-color: common.get-var(brand, 700);
+    background-color: common.get-var(color-surface-secondary);
+
+    &:hover {
+      border-color: common.get-var(brand, 600);
+      background-color: common.get-var(color-surface-tertiary);
+    }
+  }
+
+  &--disabled {
+    background-color: common.get-var(color-surface-tertiary);
+    border-color: common.get-var(color-surface-secondary);
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    .toggle-card__title,
+    .toggle-card__description {
+      color: common.get-var(text, secondary);
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  &__icon {
+    margin-right: common.get-var(space, md);
+    color: common.get-var(text, secondary);
+    font-size: common.get-var(font-size, lg);
+
+    .toggle-card--active & {
+      color: common.get-var(brand, 700);
+    }
+  }
+
+  &__text {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: common.get-var(font-size, md);
+    font-weight: common.get-var(font-weight-semibold);
+    color: common.get-var(text, primary);
+    margin: 0 0 common.get-var(space, xs) 0;
+  }
+
+  &__description {
+    font-size: common.get-var(font-size, sm);
+    color: common.get-var(text, secondary);
+    margin: 0;
+  }
+
+  &__indicator {
+    margin-left: common.get-var(space, md);
+  }
+
+  &__check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid common.get-var(color-surface-secondary);
+    background-color: common.get-var(color-surface-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    font-size: common.get-var(font-size, sm);
+    font-weight: common.get-var(font-weight-semibold);
+
+    &--active {
+      background-color: common.get-var(brand, 700);
+      border-color: common.get-var(brand, 700);
+      color: common.get-var(text, tertiary);
+    }
+  }
+}

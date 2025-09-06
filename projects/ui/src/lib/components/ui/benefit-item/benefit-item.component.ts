@@ -1,8 +1,8 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
-import { TaState } from '@ta/styles';
+import { ColorType } from '@ta/styles';
 
 import { TextComponent } from '../text/text.component';
 
@@ -22,62 +22,27 @@ export interface BenefitConfig {
   standalone: true,
   imports: [NgClass, FontIconComponent, TextComponent],
 })
-export class BenefitItemComponent implements OnInit {
-  @Input() type: BenefitType = 'success';
+export class BenefitItemComponent {
+  @Input() type: ColorType = 'success';
   @Input() text: string = '';
-  @Input() state: TaState = 'classic';
 
   protected config!: BenefitConfig;
   protected isInitialized = false;
 
-  ngOnInit(): void {
-    this.initializeConfig();
-    this.isInitialized = true;
+  public cssClasses() {
+    return [this.type];
   }
 
-  private initializeConfig(): void {
-    this.config = {
-      icon: this.getIcon(),
-      backgroundColor: this.getBackgroundColor(),
-      borderColor: this.getBorderColor(),
-      iconColor: this.getIconColor()
-    };
-  }
-
-  get cssClasses(): string[] {
-    const classes = [`benefit-item--${this.type}`];
-    if (this.state !== 'classic') {
-      classes.push(`benefit-item--${this.state}`);
-    }
-    return classes;
-  }
-
-  private getIcon(): string {
+  public icon() {
     switch (this.type) {
       case 'success':
         return 'check';
       case 'warning':
         return 'warning';
-      case 'error':
+      case 'alert':
         return 'error';
       default:
         return 'check';
     }
-  }
-
-  private getBackgroundColor(): string {
-    return `var(--surface-${this.type})`;
-  }
-
-  private getBorderColor(): string {
-    return `var(--border-${this.type})`;
-  }
-
-  private getIconColor(): string {
-    return `var(--text-${this.type})`;
-  }
-
-  get icon(): string {
-    return this.isInitialized ? this.config.icon : this.getIcon();
   }
 }

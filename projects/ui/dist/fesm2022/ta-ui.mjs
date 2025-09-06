@@ -1405,6 +1405,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-tree-item', standalone: true, imports: [], template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }]
         }] });
 
+class ToggleCardComponent {
+    constructor() {
+        this.title = '';
+        this.isActive = false;
+        this.disabled = false;
+        this.toggle = new EventEmitter();
+    }
+    onToggle() {
+        if (!this.disabled) {
+            this.isActive = !this.isActive;
+            this.toggle.emit(this.isActive);
+        }
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ToggleCardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ToggleCardComponent, isStandalone: true, selector: "ta-toggle-card", inputs: { title: "title", description: "description", icon: "icon", isActive: "isActive", disabled: "disabled" }, outputs: { toggle: "toggle" }, ngImport: i0, template: "<div\r\n  class=\"toggle-card\"\r\n  [ngClass]=\"{\r\n    'toggle-card--active': isActive,\r\n    'toggle-card--disabled': disabled\r\n  }\"\r\n  (click)=\"onToggle()\"\r\n>\r\n  <div class=\"toggle-card__content\">\r\n    @if (icon) {\r\n      <div class=\"toggle-card__icon\">\r\n        <i [class]=\"'icon-' + icon\"></i>\r\n      </div>\r\n    }\r\n    <div class=\"toggle-card__text\">\r\n      <div class=\"toggle-card__title\">{{ title }}</div>\r\n      @if (description) {\r\n        <div class=\"toggle-card__description\">{{ description }}</div>\r\n      }\r\n    </div>\r\n  </div>\r\n  <div class=\"toggle-card__indicator\">\r\n    <div class=\"toggle-card__check\" [ngClass]=\"{ 'toggle-card__check--active': isActive }\">\r\n      @if (isActive) {\r\n        <span>\u2713</span>\r\n      }\r\n    </div>\r\n  </div>\r\n</div>", styles: [".toggle-card{display:flex;align-items:center;justify-content:space-between;padding:var(--ta-space-lg);cursor:pointer;transition:all .2s ease-in-out;border:2px solid var(--ta-color-surface-secondary);border-radius:var(--ta-border-radius-md);background-color:var(--ta-color-surface-primary);box-shadow:0 2px 4px #0000001a}.toggle-card:hover:not(.toggle-card--disabled){border-color:var(--ta-brand-600);background-color:var(--ta-color-surface-secondary);box-shadow:0 4px 12px #00000026}.toggle-card--active{border-color:var(--ta-brand-700);background-color:var(--ta-color-surface-secondary)}.toggle-card--active:hover{border-color:var(--ta-brand-600);background-color:var(--ta-color-surface-tertiary)}.toggle-card--disabled{background-color:var(--ta-color-surface-tertiary);border-color:var(--ta-color-surface-secondary);cursor:not-allowed;opacity:.6}.toggle-card--disabled .toggle-card__title,.toggle-card--disabled .toggle-card__description{color:var(--ta-text-secondary)}.toggle-card__content{display:flex;align-items:center;flex:1}.toggle-card__icon{margin-right:var(--ta-space-md);color:var(--ta-text-secondary);font-size:var(--ta-font-size-lg)}.toggle-card--active .toggle-card__icon{color:var(--ta-brand-700)}.toggle-card__text{flex:1}.toggle-card__title{font-size:var(--ta-font-size-md);font-weight:var(--ta-font-weight-semibold);color:var(--ta-text-primary);margin:0 0 var(--ta-space-xs) 0}.toggle-card__description{font-size:var(--ta-font-size-sm);color:var(--ta-text-secondary);margin:0}.toggle-card__indicator{margin-left:var(--ta-space-md)}.toggle-card__check{width:24px;height:24px;border-radius:50%;border:2px solid var(--ta-color-surface-secondary);background-color:var(--ta-color-surface-primary);display:flex;align-items:center;justify-content:center;transition:all .2s ease-in-out;font-size:var(--ta-font-size-sm);font-weight:var(--ta-font-weight-semibold)}.toggle-card__check--active{background-color:var(--ta-brand-700);border-color:var(--ta-brand-700);color:var(--ta-text-tertiary)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ToggleCardComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-toggle-card', standalone: true, imports: [NgClass], template: "<div\r\n  class=\"toggle-card\"\r\n  [ngClass]=\"{\r\n    'toggle-card--active': isActive,\r\n    'toggle-card--disabled': disabled\r\n  }\"\r\n  (click)=\"onToggle()\"\r\n>\r\n  <div class=\"toggle-card__content\">\r\n    @if (icon) {\r\n      <div class=\"toggle-card__icon\">\r\n        <i [class]=\"'icon-' + icon\"></i>\r\n      </div>\r\n    }\r\n    <div class=\"toggle-card__text\">\r\n      <div class=\"toggle-card__title\">{{ title }}</div>\r\n      @if (description) {\r\n        <div class=\"toggle-card__description\">{{ description }}</div>\r\n      }\r\n    </div>\r\n  </div>\r\n  <div class=\"toggle-card__indicator\">\r\n    <div class=\"toggle-card__check\" [ngClass]=\"{ 'toggle-card__check--active': isActive }\">\r\n      @if (isActive) {\r\n        <span>\u2713</span>\r\n      }\r\n    </div>\r\n  </div>\r\n</div>", styles: [".toggle-card{display:flex;align-items:center;justify-content:space-between;padding:var(--ta-space-lg);cursor:pointer;transition:all .2s ease-in-out;border:2px solid var(--ta-color-surface-secondary);border-radius:var(--ta-border-radius-md);background-color:var(--ta-color-surface-primary);box-shadow:0 2px 4px #0000001a}.toggle-card:hover:not(.toggle-card--disabled){border-color:var(--ta-brand-600);background-color:var(--ta-color-surface-secondary);box-shadow:0 4px 12px #00000026}.toggle-card--active{border-color:var(--ta-brand-700);background-color:var(--ta-color-surface-secondary)}.toggle-card--active:hover{border-color:var(--ta-brand-600);background-color:var(--ta-color-surface-tertiary)}.toggle-card--disabled{background-color:var(--ta-color-surface-tertiary);border-color:var(--ta-color-surface-secondary);cursor:not-allowed;opacity:.6}.toggle-card--disabled .toggle-card__title,.toggle-card--disabled .toggle-card__description{color:var(--ta-text-secondary)}.toggle-card__content{display:flex;align-items:center;flex:1}.toggle-card__icon{margin-right:var(--ta-space-md);color:var(--ta-text-secondary);font-size:var(--ta-font-size-lg)}.toggle-card--active .toggle-card__icon{color:var(--ta-brand-700)}.toggle-card__text{flex:1}.toggle-card__title{font-size:var(--ta-font-size-md);font-weight:var(--ta-font-weight-semibold);color:var(--ta-text-primary);margin:0 0 var(--ta-space-xs) 0}.toggle-card__description{font-size:var(--ta-font-size-sm);color:var(--ta-text-secondary);margin:0}.toggle-card__indicator{margin-left:var(--ta-space-md)}.toggle-card__check{width:24px;height:24px;border-radius:50%;border:2px solid var(--ta-color-surface-secondary);background-color:var(--ta-color-surface-primary);display:flex;align-items:center;justify-content:center;transition:all .2s ease-in-out;font-size:var(--ta-font-size-sm);font-weight:var(--ta-font-weight-semibold)}.toggle-card__check--active{background-color:var(--ta-brand-700);border-color:var(--ta-brand-700);color:var(--ta-text-tertiary)}\n"] }]
+        }], propDecorators: { title: [{
+                type: Input
+            }], description: [{
+                type: Input
+            }], icon: [{
+                type: Input
+            }], isActive: [{
+                type: Input
+            }], disabled: [{
+                type: Input
+            }], toggle: [{
+                type: Output
+            }] } });
+
 class BannerComponent extends TaBaseComponent {
     constructor() {
         super();
@@ -1437,63 +1470,32 @@ class BenefitItemComponent {
     constructor() {
         this.type = 'success';
         this.text = '';
-        this.state = 'classic';
         this.isInitialized = false;
     }
-    ngOnInit() {
-        this.initializeConfig();
-        this.isInitialized = true;
+    cssClasses() {
+        return [this.type];
     }
-    initializeConfig() {
-        this.config = {
-            icon: this.getIcon(),
-            backgroundColor: this.getBackgroundColor(),
-            borderColor: this.getBorderColor(),
-            iconColor: this.getIconColor()
-        };
-    }
-    get cssClasses() {
-        const classes = [`benefit-item--${this.type}`];
-        if (this.state !== 'classic') {
-            classes.push(`benefit-item--${this.state}`);
-        }
-        return classes;
-    }
-    getIcon() {
+    icon() {
         switch (this.type) {
             case 'success':
                 return 'check';
             case 'warning':
                 return 'warning';
-            case 'error':
+            case 'alert':
                 return 'error';
             default:
                 return 'check';
         }
     }
-    getBackgroundColor() {
-        return `var(--surface-${this.type})`;
-    }
-    getBorderColor() {
-        return `var(--border-${this.type})`;
-    }
-    getIconColor() {
-        return `var(--text-${this.type})`;
-    }
-    get icon() {
-        return this.isInitialized ? this.config.icon : this.getIcon();
-    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BenefitItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: BenefitItemComponent, isStandalone: true, selector: "ta-benefit-item", inputs: { type: "type", text: "text", state: "state" }, ngImport: i0, template: "<div \r\n  class=\"benefit-item\"\r\n  [ngClass]=\"this.cssClasses\">\r\n  <ta-font-icon \r\n    [name]=\"this.icon\"\r\n    class=\"benefit-icon\">\r\n  </ta-font-icon>\r\n  <ta-text \r\n    class=\"benefit-text\">\r\n    {{ text }}\r\n  </ta-text>\r\n</div>", styles: [".benefit-item{display:flex;align-items:center;gap:var(--ta-space-sm);margin-bottom:var(--ta-space-sm);padding:var(--ta-space-xs) var(--ta-space-md);background-color:var(--ta-neutral-100);border-radius:var(--ta-radius-rounded);transition:all var(--ta-transition-fast)}.benefit-item.success{border-left:4px solid var(--ta-semantic-green)}.benefit-item.success .benefit-icon{color:var(--ta-semantic-green)}.benefit-item.success:hover{background-color:var(--ta-neutral-200)}.benefit-item.warning{border-left:4px solid var(--ta-semantic-orange)}.benefit-item.warning .benefit-icon{color:var(--ta-semantic-orange)}.benefit-item.warning:hover{background-color:var(--ta-neutral-200)}.benefit-item.error{border-left:4px solid var(--ta-semantic-red)}.benefit-item.error .benefit-icon{color:var(--ta-semantic-red)}.benefit-item.error:hover{background-color:var(--ta-neutral-200)}.benefit-item .benefit-icon{flex-shrink:0}.benefit-item .benefit-text{color:var(--ta-text-primary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);flex:1}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: BenefitItemComponent, isStandalone: true, selector: "ta-benefit-item", inputs: { type: "type", text: "text" }, ngImport: i0, template: "<div \r\n  class=\"benefit-item\"\r\n  [ngClass]=\"this.cssClasses()\">\r\n  <ta-font-icon \r\n    [name]=\"this.icon()\"\r\n    class=\"benefit-icon\">\r\n  </ta-font-icon>\r\n  <ta-text \r\n    class=\"benefit-text\">\r\n    {{ text }}\r\n  </ta-text>\r\n</div>", styles: [".benefit-item{display:flex;align-items:center;gap:var(--ta-space-sm);margin-bottom:var(--ta-space-sm);padding:var(--ta-space-xs) var(--ta-space-md);background-color:var(--ta-neutral-100);border-radius:var(--ta-radius-rounded);transition:all var(--ta-transition-fast)}.benefit-item.success{border-left:4px solid var(--ta-semantic-green)}.benefit-item.success .benefit-icon{color:var(--ta-semantic-green)}.benefit-item.success:hover{background-color:var(--ta-neutral-200)}.benefit-item.warning{border-left:4px solid var(--ta-semantic-orange)}.benefit-item.warning .benefit-icon{color:var(--ta-semantic-orange)}.benefit-item.warning:hover{background-color:var(--ta-neutral-200)}.benefit-item.error{border-left:4px solid var(--ta-semantic-red)}.benefit-item.error .benefit-icon{color:var(--ta-semantic-red)}.benefit-item.error:hover{background-color:var(--ta-neutral-200)}.benefit-item .benefit-icon{flex-shrink:0}.benefit-item .benefit-text{color:var(--ta-text-primary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);flex:1}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BenefitItemComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-benefit-item', standalone: true, imports: [NgClass, FontIconComponent, TextComponent], template: "<div \r\n  class=\"benefit-item\"\r\n  [ngClass]=\"this.cssClasses\">\r\n  <ta-font-icon \r\n    [name]=\"this.icon\"\r\n    class=\"benefit-icon\">\r\n  </ta-font-icon>\r\n  <ta-text \r\n    class=\"benefit-text\">\r\n    {{ text }}\r\n  </ta-text>\r\n</div>", styles: [".benefit-item{display:flex;align-items:center;gap:var(--ta-space-sm);margin-bottom:var(--ta-space-sm);padding:var(--ta-space-xs) var(--ta-space-md);background-color:var(--ta-neutral-100);border-radius:var(--ta-radius-rounded);transition:all var(--ta-transition-fast)}.benefit-item.success{border-left:4px solid var(--ta-semantic-green)}.benefit-item.success .benefit-icon{color:var(--ta-semantic-green)}.benefit-item.success:hover{background-color:var(--ta-neutral-200)}.benefit-item.warning{border-left:4px solid var(--ta-semantic-orange)}.benefit-item.warning .benefit-icon{color:var(--ta-semantic-orange)}.benefit-item.warning:hover{background-color:var(--ta-neutral-200)}.benefit-item.error{border-left:4px solid var(--ta-semantic-red)}.benefit-item.error .benefit-icon{color:var(--ta-semantic-red)}.benefit-item.error:hover{background-color:var(--ta-neutral-200)}.benefit-item .benefit-icon{flex-shrink:0}.benefit-item .benefit-text{color:var(--ta-text-primary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);flex:1}\n"] }]
+            args: [{ selector: 'ta-benefit-item', standalone: true, imports: [NgClass, FontIconComponent, TextComponent], template: "<div \r\n  class=\"benefit-item\"\r\n  [ngClass]=\"this.cssClasses()\">\r\n  <ta-font-icon \r\n    [name]=\"this.icon()\"\r\n    class=\"benefit-icon\">\r\n  </ta-font-icon>\r\n  <ta-text \r\n    class=\"benefit-text\">\r\n    {{ text }}\r\n  </ta-text>\r\n</div>", styles: [".benefit-item{display:flex;align-items:center;gap:var(--ta-space-sm);margin-bottom:var(--ta-space-sm);padding:var(--ta-space-xs) var(--ta-space-md);background-color:var(--ta-neutral-100);border-radius:var(--ta-radius-rounded);transition:all var(--ta-transition-fast)}.benefit-item.success{border-left:4px solid var(--ta-semantic-green)}.benefit-item.success .benefit-icon{color:var(--ta-semantic-green)}.benefit-item.success:hover{background-color:var(--ta-neutral-200)}.benefit-item.warning{border-left:4px solid var(--ta-semantic-orange)}.benefit-item.warning .benefit-icon{color:var(--ta-semantic-orange)}.benefit-item.warning:hover{background-color:var(--ta-neutral-200)}.benefit-item.error{border-left:4px solid var(--ta-semantic-red)}.benefit-item.error .benefit-icon{color:var(--ta-semantic-red)}.benefit-item.error:hover{background-color:var(--ta-neutral-200)}.benefit-item .benefit-icon{flex-shrink:0}.benefit-item .benefit-text{color:var(--ta-text-primary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight);flex:1}\n"] }]
         }], propDecorators: { type: [{
                 type: Input
             }], text: [{
-                type: Input
-            }], state: [{
                 type: Input
             }] } });
 
@@ -3104,5 +3106,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
+export { ActionButtonComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map
