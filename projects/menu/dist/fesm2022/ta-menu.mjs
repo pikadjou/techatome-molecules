@@ -150,7 +150,7 @@ class MenuComponent extends TaBaseComponent {
             case 'overflow':
                 return 'overflow vertical';
             case 'second':
-                return 'second';
+                return 'second ' + this.menu.direction;
             case 'main':
                 return 'main-nav ' + this.menu.direction;
             default:

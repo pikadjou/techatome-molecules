@@ -1,6 +1,6 @@
 <div [ngClass]="this.panel.containerClass">
   @if (this.panel.label) {
-    <h2 class="panel-title">{{ this.panel.label | translate }}</h2>
+    <ta-title [level]="2" class="panel-title">{{ this.panel.label | translate }}</ta-title>
   }
 
   <div [ngClass]="this.panel.contentClass">
