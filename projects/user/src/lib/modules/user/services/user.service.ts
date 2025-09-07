@@ -19,8 +19,8 @@ const graphEndpoint: GraphEndpoint = {
 @Injectable({
   providedIn: 'root',
 })
-export class TaUserService extends TaBaseService {
-  public userProfile = new HandleSimpleRequest<UserProfile>();
+export class TaUserService<T = UserProfile> extends TaBaseService {
+  public userProfile = new HandleSimpleRequest<T>();
 
   constructor() {
     super();
@@ -30,7 +30,7 @@ export class TaUserService extends TaBaseService {
   public fetchUserProfile$(props: string = '') {
     return this.userProfile.fetch(
       this._graphService
-        .fetchQuery<UserProfile>(
+        .fetchQuery<T>(
           userInfo({
             props: `
               ${userProfileProps.get('id')}

@@ -10,7 +10,7 @@ export declare class CriticityComponent {
     criticity: number | CriticityStatus;
     constructor();
     label(): string;
-    type(): "success" | "warning" | "danger" | "primary";
+    type(): "danger" | "warning" | "success" | "primary";
     static ɵfac: i0.ɵɵFactoryDeclaration<CriticityComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<CriticityComponent, "ta-criticity", never, { "criticity": { "alias": "criticity"; "required": false; }; }, {}, never, never, true, never>;
 }

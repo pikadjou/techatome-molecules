@@ -73,10 +73,13 @@ export class MyAccountComponent extends TaBaseComponent implements AfterViewInit
 
   public profileMenu = signal<Menu | null>(null);
   public disconnectionMenu = signal<Menu | null>(null);
-  public userLogo$ = signal<Observable<{
-    user: UserLogoData;
-    size?: TaSizes;
-  } | null>>(this._userService.userProfile.get$().pipe(
+  public userLogo$ = signal<
+    Observable<{
+      user: UserLogoData;
+      size?: TaSizes;
+    } | null>
+  >(
+    this._userService.userProfile.get$().pipe(
       map(up => {
         if (!up) {
           return null;
@@ -92,7 +95,7 @@ export class MyAccountComponent extends TaBaseComponent implements AfterViewInit
         };
       })
     )
-  )
+  );
   constructor() {
     super();
   }
@@ -109,8 +112,6 @@ export class MyAccountComponent extends TaBaseComponent implements AfterViewInit
       })
     );
   }
-
-
 
   ngAfterViewInit() {
     this.profileMenu.set(this.getProfileMenu(this.languageTemplate, this.infosTemplate));
