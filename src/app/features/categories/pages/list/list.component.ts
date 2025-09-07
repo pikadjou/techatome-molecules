@@ -1,13 +1,15 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ListComponent } from '../../components/list/list.component';
+
+import { TaRoutes } from '@ta/menu';
+import { ButtonComponent } from '@ta/ui';
+import { TaBasePage } from '@ta/utils';
+
+import { LayoutContentComponent } from '../../../core/layout/layout-content/layout-content.component';
 import { LayoutFirstLevelComponent } from '../../../core/layout/layout-first-level/layout-first-level.component';
 import { LayoutTitleComponent } from '../../../core/layout/layout-title/layout-title.component';
-import { LayoutContentComponent } from '../../../core/layout/layout-content/layout-content.component';
-import { TaBasePage } from '@ta/utils';
-import { SubComponent } from '../../components/sub/sub.component';
-import { TaButtonComponent } from '../../../../../../projects/ui/src/lib/components/button/button.component';
-import { TaRoutes } from '@ta/menu';
 import { ECategoriesRoute, FormKey } from '../../categories.routes';
+import { ListComponent } from '../../components/list/list.component';
+import { SubComponent } from '../../components/sub/sub.component';
 
 @Component({
   standalone: true,
@@ -18,7 +20,7 @@ import { ECategoriesRoute, FormKey } from '../../categories.routes';
     LayoutTitleComponent,
     LayoutContentComponent,
     SubComponent,
-    TaButtonComponent,
+    ButtonComponent,
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -28,9 +30,9 @@ export class ListPage extends TaBasePage implements OnInit {
 
   ngOnInit() {
     this._registerSubscription(
-      this._getPathParams<{ id: string }>({ id: '' }).subscribe((params) => {
+      this._getPathParams<{ id: string }>({ id: '' }).subscribe(params => {
         this.id.set(params.id === 'all' ? null : params.id);
-      }),
+      })
     );
   }
 
@@ -38,7 +40,7 @@ export class ListPage extends TaBasePage implements OnInit {
     this._router.navigateByUrl(
       TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>([ECategoriesRoute.categories, ECategoriesRoute.form], {
         id: id ?? 'new',
-      }),
+      })
     );
   }
 }
