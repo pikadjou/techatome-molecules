@@ -44,45 +44,49 @@ $components: () !default;
 /** Foundation **/
 $brand: map.merge(
   (
-    900: #235590,
-    800: #2b75b3,
-    700: #2f85c7,
-    600: #3498db,
-    500: #38a6ea,
-    400: #45b3ee,
-    300: #5dc0f0,
-    200: #87d2f6,
-    100: #b6e4fa,
-    50: #e2f5fd,
+    900: #204D74,   // Bleu marine (nav, fond header, fiabilité)
+    800: #2C81C0,   // Bleu moyen (boutons principaux, CTA)
+    700: #3498db,
+    600: #38a6ea,
+    500: #45b3ee,
+    400: #5dc0f0,
+    300: #87d2f6,
+    200: #b6e4fa,
+    100: #e2f5fd,
+    50:  #f8fbfd,   // Bleu quasi blanc, très doux
   ),
   $brand
 );
 
 $second: map.merge(
   (
-    900: #006e1e,
-    800: #008e32,
-    700: #009f3e,
-    600: #00b24b,
-    500: #00c255,
-    400: #2ecc70,
-    300: #62d68a,
-    200: #95e1ad,
-    100: #c0edcd,
-    50: #e5f8eb,
+    900: #257E5C,   // Vert foncé, validité et sécurité
+    800: #38A172,   // Vert doux, validation
+    700: #5BC18F,
+    600: #95e1ad,
+    500: #c0edcd,
+    400: #e5f8eb,   // Vert très clair pour fonds secondaires
   ),
   $second
 );
 
+$accent: map.merge(
+  (
+    900: #FFD166,   // Jaune doré (accent/CTA seulement)
+    800: #FFEDCC,
+  ),
+  ()
+);
+
 $neutral: map.merge(
   (
-    black: #1f2245,
+    black: #1F2245,   // Gris/blanc pour fond et contrastes
     700: #262626,
     600: #3c3c3c,
     500: #7d7d7d,
     400: #a9a9a9,
     300: #dddddd,
-    200: #efefef,
+    200: #f4f7f9,     // Gris très clair, recommandé
     100: #f8f8f8,
     white: #ffffff,
   ),
@@ -93,8 +97,8 @@ $semantic: map.merge(
   (
     red: #E74C3C,
     orange: #F39C12,
-    yellow: #F1C40F,
-    green: #15ce1e,
+    yellow: #FFD166, // Jaune doré accent
+    green: #38A172,  // Vert validation
   ),
   $semantic
 );
@@ -106,16 +110,17 @@ $icon: map.merge(
     secondary: map.get($neutral, 500),
     tertiary: map.get($neutral, 400),
     brand: (
-      primary: map.get($brand, 700),
+      primary: map.get($brand, 800),
       secondary: map.get($brand, 600),
     ),
+    accent: map.get($accent, 900),
     invert: (
       primary: map.get($neutral, white),
       secondary: map.get($brand, 600),
     ),
     disabled: map.get($neutral, 300),
-    success: map.get($semantic, green-dark),
-    alert: map.get($semantic, red-dark),
+    success: map.get($semantic, green),
+    alert: map.get($semantic, red),
   ),
   $icon
 );
@@ -126,51 +131,54 @@ $text: map.merge(
     secondary: map.get($neutral, 500),
     tertiary: map.get($neutral, 400),
     brand: (
-      primary: map.get($brand, 700),
-      secondary: map.get($brand, 600),
+      primary: map.get($brand, 900),
+      secondary: map.get($brand, 800),
     ),
+    accent: map.get($accent, 900),
     invert: (
       primary: map.get($neutral, white),
       secondary: map.get($brand, 400),
     ),
     body: map.get($neutral, 600),
-    success: map.get($semantic, green-dark),
-    warning: map.get($semantic, orange-dark),
-    alert: map.get($semantic, red-dark),
-    link: map.get($brand, 700),
+    success: map.get($semantic, green),
+    warning: map.get($semantic, orange),
+    alert: map.get($semantic, red),
+    link: map.get($brand, 800),
   ),
   $text
 );
 
 $surface: map.merge(
   (
-    default: map.get($brand, 200),
+    default: map.get($neutral, 200), // blanc/gris clair, reposant
     primary: map.get($neutral, white),
-    secondary: map.get($neutral, 200),
-    tertiary: map.get($neutral, 100),
+    secondary: map.get($neutral, 100),
+    tertiary: map.get($brand, 50),
     brand: (
-      primary: map.get($brand, 700),
+      primary: map.get($brand, 900),
       secondary: map.get($brand, 400),
       tertiary: map.get($brand, 100),
     ),
+    accent: map.get($accent, 900),
     hover: (
       primary: map.get($brand, 800),
       secondary: map.get($brand, 300),
     ),
     invert: map.get($brand, 900),
-    success: map.get($semantic, green-light),
-    warning: map.get($semantic, orange-light),
-    alert: map.get($semantic, red-light),
+    success: map.get($semantic, green),
+    warning: map.get($semantic, orange),
+    alert: map.get($semantic, red),
   ),
   $surface
 );
 
 $semantic-token: map.merge(
   (
-    success: map.get($semantic, green-dark),
-    alert: map.get($semantic, red-dark),
-    warning: map.get($semantic, orange-dark),
-    link: map.get($brand, 700),
+    success: map.get($semantic, green),
+    alert: map.get($semantic, red),
+    warning: map.get($semantic, orange),
+    link: map.get($brand, 800),
+    accent: map.get($accent, 900),
   ),
   $semantic-token
 );
@@ -179,13 +187,14 @@ $border: map.merge(
   (
     primary: map.get($neutral, 300),
     secondary: map.get($brand, 400),
-    brand: map.get($brand, 700),
+    brand: map.get($brand, 800),
+    accent: map.get($accent, 900),
     hover: map.get($neutral, 500),
     invert: map.get($brand, 600),
     disabled: map.get($brand, 300),
-    success: map.get($semantic, green-dark),
-    warning: map.get($semantic, orange-dark),
-    alert: map.get($semantic, red-dark),
+    success: map.get($semantic, green),
+    warning: map.get($semantic, orange),
+    alert: map.get($semantic, red),
   ),
   $border
 );
