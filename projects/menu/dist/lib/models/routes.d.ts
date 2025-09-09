@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 export declare enum TaMainRoute {
     HOME = "HOME",
     USERLOGIN = "USERLOGIN",
+    SINGIN = "SINGIN",
     USERLOGOUT = "USERLOGOUT",
     NOTIFICATIONS = "NOTIFICATIONS",
     REDIRECT = "REDIRECT"
@@ -19,6 +20,7 @@ export declare class TaRoutesCore {
     addRoutes(routes: IRoute[]): void;
     getHome(): string;
     getLogin(): string;
+    getSign(): string;
     getLogout(): string;
     getUrl(eNums: string[], params?: {}, strict?: boolean): string;
     getAbsoluteUrl(eNums: string[], params?: {}, strict?: boolean): string;

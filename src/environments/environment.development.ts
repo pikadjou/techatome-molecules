@@ -1,8 +1,8 @@
-import { IGraphConfig, IServerConfig, IStrapiConfig } from '@ta/server';
+import { IGraphConfig, IRestConfig, IStrapiConfig } from '@ta/server';
 
 export const environment: {
   GRAPHQL_SERVER_CONFIG: IGraphConfig;
-  HTTP_SERVER_CONFIG: IServerConfig;
+  HTTP_SERVER_CONFIG: IRestConfig;
   STRAPI_CONFIG: IStrapiConfig;
 } = {
   HTTP_SERVER_CONFIG: {

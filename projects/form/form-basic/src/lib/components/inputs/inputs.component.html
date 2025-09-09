@@ -99,6 +99,14 @@
         [standalone]="this.standalone"
       ></ta-input-images>
     }
+    @case ('logo') {
+      <ta-input-logo
+        [input]="input"
+        [matcher]="matcher"
+        [onFocus]="this.onFocus"
+        [standalone]="this.standalone"
+      ></ta-input-logo>
+    }
     @case ('image') {
       <ta-input-image
         [input]="input"

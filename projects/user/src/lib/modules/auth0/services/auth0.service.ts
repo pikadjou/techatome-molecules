@@ -82,6 +82,13 @@ export class TaAuth0Service extends TaAuthService {
   public login() {
     this.auth.loginWithRedirect();
   }
+  public signin() {
+    this.auth.loginWithRedirect({
+      authorizationParams: {
+        screen_hint: 'signup',
+      },
+    });
+  }
   public logout() {
     return new Promise<null>(resolve => {
       this.auth.logout();

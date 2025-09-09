@@ -541,6 +541,7 @@ var TaMainRoute;
 (function (TaMainRoute) {
     TaMainRoute["HOME"] = "HOME";
     TaMainRoute["USERLOGIN"] = "USERLOGIN";
+    TaMainRoute["SINGIN"] = "SINGIN";
     TaMainRoute["USERLOGOUT"] = "USERLOGOUT";
     TaMainRoute["NOTIFICATIONS"] = "NOTIFICATIONS";
     TaMainRoute["REDIRECT"] = "REDIRECT";
@@ -555,6 +556,10 @@ class TaRoutesCore {
             {
                 key: TaMainRoute.USERLOGIN,
                 url: 'login',
+            },
+            {
+                key: TaMainRoute.SINGIN,
+                url: 'signin',
             },
             {
                 key: TaMainRoute.USERLOGOUT,
@@ -581,6 +586,9 @@ class TaRoutesCore {
     }
     getLogin() {
         return this.getAbsoluteUrl([TaMainRoute.USERLOGIN]);
+    }
+    getSign() {
+        return this.getAbsoluteUrl([TaMainRoute.SINGIN]);
     }
     getLogout() {
         return this.getAbsoluteUrl([TaMainRoute.USERLOGOUT]);

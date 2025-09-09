@@ -17,7 +17,7 @@ const graphEndpoint: GraphEndpoint = {
 const apiRoutes: MappingApiType = {
   UploadDocument: {
     type: 'FILES',
-    url: '{ApiUrl}/document-rest/upload',
+    url: '{ApiUrl}/Media/upload',
   },
 };
 

@@ -9,6 +9,7 @@ export declare class TaAuth0Service extends TaAuthService {
     fetchUserProfile$(): import("rxjs").Observable<import("@ta/user").UserProfile>;
     load(): void;
     login(): void;
+    signin(): void;
     logout(): Promise<null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaAuth0Service, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<TaAuth0Service>;

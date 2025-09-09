@@ -1,0 +1,78 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+.logo-preview-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: common.get-var(radius, rounded);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px dashed common.get-var(border, secondary);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: common.get-var(brand, 500);
+    
+    .logo-overlay {
+      opacity: 1;
+    }
+    
+    .logo-placeholder {
+      background-color: common.get-var(surface, secondary);
+      border-color: common.get-var(brand, 500);
+    }
+  }
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.logo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  @include flex.flex-column();
+  @include flex.align-center();
+  @include flex.justify-center();
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: common.get-var(text, inverse);
+  gap: common.get-var(space, xs);
+  
+  ta-font-icon {
+    font-size: common.get-var(font, h3, default, size);
+  }
+  
+  span {
+    @include fonts.fontSizeBody(sm, true);
+  }
+}
+
+.logo-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: common.get-var(surface, tertiary);
+  border: 2px dashed common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  transition: all 0.3s ease;
+  color: common.get-var(text, secondary);
+  gap: common.get-var(space, sm);
+  
+  ta-font-icon {
+    font-size: common.get-var(font, h1, default, size);
+  }
+  
+  span {
+    @include fonts.fontSizeBody(sm, true);
+    text-align: center;
+  }
+}

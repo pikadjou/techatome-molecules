@@ -5,23 +5,12 @@ import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 import { Logger } from '@ta/server';
 import { isNonNullable } from '@ta/utils';
 
-export type Level = 'authenticated' | 'authorize' | 'reader' | 'contributor' | 'administrator' | 'read';
+export type Level = 'authenticated' | 'unauthenticated' | 'authorize' | 'administrator';
 
-export type PermissionFeature = 'chift' | 'ticketing';
-export type Domain =
-  | 'automation'
-  | 'invoice'
-  | 'contact'
-  | 'task'
-  | 'project'
-  | 'quotation'
-  | 'maintenance'
-  | 'conversation'
-  | 'user'
-  | 'document'
-  | 'organization';
+export type PermissionFeature = 'tenant' | 'onwer' | 'premium';
+export type Domain = 'tenant' | 'onwer';
 
-const accessLevels = ['reader', 'contributor', 'administrator'];
+const accessLevels = [''];
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +19,7 @@ export class TaPermissionsService {
   private _updated$ = new BehaviorSubject<number | null>(null);
   private _isFill = { permissions: false, isAuthenticated: false };
 
-  public features: (string | PermissionFeature)[] = [];
+  public features: (PermissionFeature | string)[] = [];
   public guards: { [index: string]: Level } = {};
   public roles: string[] = [];
   public isAuthenticated: boolean = false;
@@ -117,7 +106,7 @@ export class TaPermissionsService {
     return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);
   }
 
-  public canAccess$(feature: string | PermissionFeature, level: Level | string): Observable<boolean> {
+  public canAccess$(feature: PermissionFeature | string, level: Level | string): Observable<boolean> {
     return this._updated$.pipe(map(() => this.canDirectAccess(feature, level)));
   }
 

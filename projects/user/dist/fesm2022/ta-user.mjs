@@ -14,7 +14,7 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService, provideAuth0 as provideAuth0$1, AuthHttpInterceptor } from '@auth0/auth0-angular';
 
-const accessLevels = ['reader', 'contributor', 'administrator'];
+const accessLevels = [''];
 class TaPermissionsService {
     get received() {
         return this._updated$.value !== null;
@@ -277,6 +277,23 @@ class LoginRedirectComponent {
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LoginRedirectComponent, isStandalone: true, selector: "ng-component", ngImport: i0, template: '', isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LoginRedirectComponent, decorators: [{
+            type: Component,
+            args: [{
+                    selector: '',
+                    template: '',
+                    standalone: true,
+                }]
+        }], ctorParameters: () => [] });
+
+class SignRedirectComponent {
+    constructor() {
+        this._authService = inject(TA_AUTH_TOKEN);
+        this._authService.signin();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SignRedirectComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: SignRedirectComponent, isStandalone: true, selector: "ng-component", ngImport: i0, template: '', isInline: true }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SignRedirectComponent, decorators: [{
             type: Component,
             args: [{
                     selector: '',
@@ -557,6 +574,13 @@ class TaAuth0Service extends TaAuthService {
     login() {
         this.auth.loginWithRedirect();
     }
+    signin() {
+        this.auth.loginWithRedirect({
+            authorizationParams: {
+                screen_hint: 'signup',
+            },
+        });
+    }
     logout() {
         return new Promise(resolve => {
             this.auth.logout();
@@ -590,5 +614,5 @@ const provideAuth0 = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { AuthGuard, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MyAccountComponent, SwitchLanguageCtaComponent, TA_AUTH_TOKEN, TA_USER_SERVICE, TaAuthService, TaPermissionsService, TaUserService, provideAuth0, provideUser, userInfo, userProfileBrutProps, userProfileProps };
+export { AuthGuard, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MyAccountComponent, SignRedirectComponent, SwitchLanguageCtaComponent, TA_AUTH_TOKEN, TA_USER_SERVICE, TaAuthService, TaPermissionsService, TaUserService, provideAuth0, provideUser, userInfo, userProfileBrutProps, userProfileProps };
 //# sourceMappingURL=ta-user.mjs.map

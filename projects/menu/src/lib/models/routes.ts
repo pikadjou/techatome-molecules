@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 export enum TaMainRoute {
   HOME = 'HOME',
   USERLOGIN = 'USERLOGIN',
+  SINGIN = 'SINGIN',
   USERLOGOUT = 'USERLOGOUT',
   NOTIFICATIONS = 'NOTIFICATIONS',
   REDIRECT = 'REDIRECT',
@@ -23,6 +24,10 @@ export class TaRoutesCore {
     {
       key: TaMainRoute.USERLOGIN,
       url: 'login',
+    },
+    {
+      key: TaMainRoute.SINGIN,
+      url: 'signin',
     },
     {
       key: TaMainRoute.USERLOGOUT,
@@ -51,6 +56,9 @@ export class TaRoutesCore {
   }
   public getLogin() {
     return this.getAbsoluteUrl([TaMainRoute.USERLOGIN]);
+  }
+  public getSign() {
+    return this.getAbsoluteUrl([TaMainRoute.SINGIN]);
   }
   public getLogout() {
     return this.getAbsoluteUrl([TaMainRoute.USERLOGOUT]);

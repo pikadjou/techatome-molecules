@@ -12,6 +12,7 @@ export * from './time-picker/time-picker.component';
 export * from './toggle/toggle.component';
 export * from './images/input-images.component';
 export * from './image/input-image.component';
+export * from './logo/input-logo.component';
 export * from './schema/input-schema.component';
 export * from './search-field/search-field.component';
 export * from './choices/choices.component';

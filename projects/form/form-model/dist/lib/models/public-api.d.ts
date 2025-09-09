@@ -9,6 +9,7 @@ export * from './input/dynamic';
 export * from './input/email';
 export * from './input/images';
 export * from './input/label';
+export * from './input/logo';
 export * from './input/number';
 export * from './input/panel';
 export * from './input/panel';

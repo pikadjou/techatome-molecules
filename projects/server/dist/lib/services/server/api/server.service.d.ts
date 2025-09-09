@@ -5,8 +5,8 @@ import { TempRequest } from '../interface';
 import { Request } from '../request';
 import { MappingApiType } from './requestMap';
 import * as i0 from "@angular/core";
-export declare const SERVER_CONFIG_KEY: InjectionToken<IServerConfig>;
-export interface IServerConfig {
+export declare const SERVER_CONFIG_KEY: InjectionToken<IRestConfig>;
+export interface IRestConfig {
     pendindRequestId: number;
     serverUrl: string;
     apiExt?: string;
@@ -21,7 +21,7 @@ export declare class TaServerSevice {
     private _isAuthenticated;
     get isAuthenticated(): boolean;
     set isAuthenticated(value: boolean);
-    constructor($http: HttpClient, _config?: IServerConfig | undefined);
+    constructor($http: HttpClient, _config?: IRestConfig | undefined);
     registerRoutes(routes: MappingApiType): void;
     request<T>(request: Request): Subject<T>;
     retryRequest(list?: TempRequest[]): void;

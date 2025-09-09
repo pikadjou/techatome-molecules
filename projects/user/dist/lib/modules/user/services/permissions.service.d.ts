@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs';
 import * as i0 from "@angular/core";
-export type Level = 'authenticated' | 'authorize' | 'reader' | 'contributor' | 'administrator' | 'read';
-export type PermissionFeature = 'chift' | 'ticketing';
-export type Domain = 'automation' | 'invoice' | 'contact' | 'task' | 'project' | 'quotation' | 'maintenance' | 'conversation' | 'user' | 'document' | 'organization';
+export type Level = 'authenticated' | 'unauthenticated' | 'authorize' | 'administrator';
+export type PermissionFeature = 'tenant' | 'onwer' | 'premium';
+export type Domain = 'tenant' | 'onwer';
 export declare class TaPermissionsService {
     private _updated$;
     private _isFill;
-    features: (string | PermissionFeature)[];
+    features: (PermissionFeature | string)[];
     guards: {
         [index: string]: Level;
     };
@@ -24,7 +24,7 @@ export declare class TaPermissionsService {
     setAuthenticated(isAuthenticated: boolean): void;
     hasRole(role: string): boolean;
     canDirectAccess(feature: PermissionFeature | Domain | string, level: Level | string): boolean;
-    canAccess$(feature: string | PermissionFeature, level: Level | string): Observable<boolean>;
+    canAccess$(feature: PermissionFeature | string, level: Level | string): Observable<boolean>;
     private _canYouUpdate;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaPermissionsService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<TaPermissionsService>;

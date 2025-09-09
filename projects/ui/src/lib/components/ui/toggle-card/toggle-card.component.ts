@@ -29,8 +29,7 @@ export class ToggleCardComponent {
 
   public onToggle() {
     if (!this.disabled) {
-      this.isActive = !this.isActive;
-      this.toggle.emit(this.isActive);
+      this.toggle.emit(!this.isActive);
     }
   }
 }

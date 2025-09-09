@@ -5,6 +5,7 @@ import { InputDropdown } from './input/dropdown';
 import { IInputChildrenDynamic } from './input/dynamic';
 import { InputImages } from './input/images';
 import { InputLabel } from './input/label';
+import { InputLogo } from './input/logo';
 import { InputNumber } from './input/number';
 import { InputPanel } from './input/panel';
 import { InputRadio } from './input/radio';
@@ -21,6 +22,7 @@ export type FactoryInputType =
   | 'InputDropdown'
   | 'InputImages'
   | 'InputLabel'
+  | 'InputLogo'
   | 'InputNumber'
   | 'InputPanel'
   | 'InputSchema'
@@ -50,6 +52,8 @@ export class InputFactory {
         return new InputImages(options);
       case 'InputLabel':
         return new InputLabel(options);
+      case 'InputLogo':
+        return new InputLogo(options);
       case 'InputNumber':
         return new InputNumber(options);
       case 'InputPanel':

@@ -188,6 +188,23 @@ class InputLabel extends InputBase {
     createFormControl(group) { }
 }
 
+class InputLogo extends InputBase {
+    constructor(options = {}) {
+        super(options);
+        this.update = null;
+        if (!this.controlType) {
+            this.controlType = 'logo';
+        }
+        this.availableFile$ = options.availableFile$ || null;
+        if (options.update) {
+            this.update = options.update;
+        }
+        if (options.onFileDeleted)
+            this.fileDeleted = options.onFileDeleted;
+        this.removeFile$ = options.removeFile$ || null;
+    }
+}
+
 class InputNumber extends InputTextBox {
     get value() {
         return Number(super.value);
@@ -274,6 +291,8 @@ class InputFactory {
                 return new InputImages(options);
             case 'InputLabel':
                 return new InputLabel(options);
+            case 'InputLogo':
+                return new InputLogo(options);
             case 'InputNumber':
                 return new InputNumber(options);
             case 'InputPanel':
@@ -547,5 +566,5 @@ class InputComponent extends InputBase {
  * Generated bundle index. Do not edit.
  */
 
-export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, phoneValidator, slugValidator };
+export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, phoneValidator, slugValidator };
 //# sourceMappingURL=ta-form-model.mjs.map

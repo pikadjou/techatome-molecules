@@ -1414,8 +1414,7 @@ class ToggleCardComponent {
     }
     onToggle() {
         if (!this.disabled) {
-            this.isActive = !this.isActive;
-            this.toggle.emit(this.isActive);
+            this.toggle.emit(!this.isActive);
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ToggleCardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }

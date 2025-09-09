@@ -24,6 +24,7 @@ export abstract class TaAuthService extends TaBaseService {
   abstract fetchUserProfile$(): Observable<UserProfile>;
   abstract load(): void;
   abstract login(): void;
+  abstract signin(): void;
   abstract logout(): Promise<null>;
 
   constructor(apiRoutes?: MappingApiType) {

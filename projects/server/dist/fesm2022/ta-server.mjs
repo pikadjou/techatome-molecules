@@ -795,6 +795,10 @@ const provideServer = (data) => [
         useValue: data.graphQlConfig,
     },
     {
+        provide: SERVER_CONFIG_KEY,
+        useValue: data.restConfig,
+    },
+    {
         provide: HTTP_INTERCEPTORS,
         useClass: TenantInterceptor,
         multi: true,

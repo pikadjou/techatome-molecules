@@ -9,8 +9,8 @@ import { Request } from '../request';
 import { IBackResponse, IBaseResponse, IResponse, StatusReponse } from '../response';
 import { MappingApiType, RequestMap } from './requestMap';
 
-export const SERVER_CONFIG_KEY = new InjectionToken<IServerConfig>('config_server');
-export interface IServerConfig {
+export const SERVER_CONFIG_KEY = new InjectionToken<IRestConfig>('config_server');
+export interface IRestConfig {
   pendindRequestId: number;
   serverUrl: string;
   apiExt?: string;
@@ -41,7 +41,7 @@ export class TaServerSevice {
 
   constructor(
     @Inject(HttpClient) public $http: HttpClient,
-    @Optional() @Inject(SERVER_CONFIG_KEY) private _config?: IServerConfig
+    @Optional() @Inject(SERVER_CONFIG_KEY) private _config?: IRestConfig
   ) {}
 
   public registerRoutes(routes: MappingApiType) {

@@ -17,7 +17,7 @@ import { isEqual } from 'date-fns';
 import * as i2$3 from '@ta/icons';
 import { FontIconComponent, LocalIconComponent, TaIconsModule } from '@ta/icons';
 import * as i3$2 from '@ta/ui';
-import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, DualButtonComponent, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, TaLayoutModule, TaUiModule, TaListModule, TaContainerModule, TaCardModule } from '@ta/ui';
+import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, DualButtonComponent, ButtonComponent, UserLogoComponent, TitleComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, TaLayoutModule, TaUiModule, TaListModule, TaContainerModule, TaCardModule } from '@ta/ui';
 import * as i3$1 from 'ngx-material-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { FileListComponent, FileEditComponent, TaFilesBasicModule } from '@ta/files-basic';
@@ -541,6 +541,130 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             type: Component,
             args: [{ selector: 'ta-input-image', standalone: true, imports: [NgIf, UserLogoComponent], template: "@if (this.userInfo) {\n  <ta-user-logo [user]=\"this.userInfo\" size=\"xl\"></ta-user-logo>\n}\n" }]
         }] });
+
+// eslint-disable-next-line @angular-eslint/component-class-suffix
+class InputLogoModal extends TaBaseModal {
+    constructor(dialogRef, data) {
+        super();
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.selection = null;
+        this.tempFiles = new TemporaryFile();
+        this.uploadPics = async () => {
+            const pics = await pickImages();
+            if (pics.length > 0) {
+                if (this.data.input.update) {
+                    this.tempFiles.addFiles(pics);
+                    // For logo, pass only the first image (not an array)
+                    this.data.input.update(pics[0]);
+                }
+                // For logo, automatically select the first uploaded image
+                this.selection = pics[0].localUrl;
+            }
+        };
+        this.selected = () => {
+            this.dialogRef.close(this.selection);
+        };
+        this.cancel = () => {
+            this.dialogRef.close(undefined);
+        };
+        this.clearSelection = () => {
+            this.selection = null;
+        };
+        this.dialogRef.addPanelClass(['full-screen-modal', 'forced']);
+        this.selection = this.data.selection;
+    }
+    ngOnInit() {
+        if (this.data.input.availableFile$) {
+            this._registerSubscription(this.data.input.availableFile$.subscribe(() => this.tempFiles.removeAll()));
+        }
+    }
+    getPics$() {
+        return this.data.input.availableFile$?.pipe(map(file => ({
+            ...file,
+            isSelected: this.selection === file.url,
+        })));
+    }
+    onFileSelected(file) {
+        // For logo, only one selection is allowed
+        this.selection = this.selection === file.url ? null : file.url;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputLogoModal, deps: [{ token: i1$1.MatDialogRef }, { token: MAT_DIALOG_DATA }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InputLogoModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<div class=\"p-space-xl flex-column\">\r\n  <div class=\"flex-column align-center\">\r\n    <ta-title [level]=\"3\">{{ 'input.logo.modal.title' | translate }}</ta-title>\r\n    \r\n    @if (this.selection) {\r\n      <div class=\"flex-column align-center mt-space-lg mb-space-lg\">\r\n        <img [src]=\"this.selection\" alt=\"{{ 'input.logo.modal.current-alt' | translate }}\" class=\"selected-logo bdr-radius-rounded\" />\r\n        <p class=\"mt-space-sm\">{{ 'input.logo.modal.current-description' | translate }}</p>\r\n      </div>\r\n    }\r\n\r\n    <div class=\"flex-column g-space-md full-width\" style=\"max-width: 300px;\">\r\n      <ta-button \r\n        type=\"primary\" \r\n        (action)=\"this.uploadPics()\"\r\n        [options]=\"{ class: 'full-width' }\"\r\n        icon=\"add\"\r\n      >\r\n        {{ 'input.logo.modal.choose' | translate }}\r\n      </ta-button>\r\n      \r\n      @if (this.selection) {\r\n        <ta-button \r\n          type=\"secondary\" \r\n          (action)=\"this.clearSelection()\"\r\n          [options]=\"{ class: 'full-width' }\"\r\n        >\r\n          {{ 'input.logo.modal.clear' | translate }}\r\n        </ta-button>\r\n      }\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"mt-space-xl pt-space-lg\" style=\"border-top: 1px solid var(--ta-border-secondary);\">\r\n    <ta-dual-button\r\n      [isFull]=\"true\"\r\n      [first]=\"{\r\n        icon: 'close',\r\n        label: 'input.logo.modal.cancel',\r\n        callback: this.cancel,\r\n      }\"\r\n      [second]=\"{\r\n        icon: 'check-line',\r\n        label: 'input.logo.modal.confirm',\r\n        callback: this.selected,\r\n      }\"\r\n    ></ta-dual-button>\r\n  </div>\r\n</div>", styles: [".selected-logo{width:150px;height:150px;object-fit:cover;border:2px solid var(--ta-border-secondary)}p{margin:0;color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight)}\n"], dependencies: [{ kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold"] }, { kind: "component", type: DualButtonComponent, selector: "ta-dual-button", inputs: ["isFull", "first", "second", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputLogoModal, decorators: [{
+            type: Component,
+            args: [{ selector: '', standalone: true, imports: [ButtonComponent, FontIconComponent, TitleComponent, DualButtonComponent, TranslatePipe], template: "<div class=\"p-space-xl flex-column\">\r\n  <div class=\"flex-column align-center\">\r\n    <ta-title [level]=\"3\">{{ 'input.logo.modal.title' | translate }}</ta-title>\r\n    \r\n    @if (this.selection) {\r\n      <div class=\"flex-column align-center mt-space-lg mb-space-lg\">\r\n        <img [src]=\"this.selection\" alt=\"{{ 'input.logo.modal.current-alt' | translate }}\" class=\"selected-logo bdr-radius-rounded\" />\r\n        <p class=\"mt-space-sm\">{{ 'input.logo.modal.current-description' | translate }}</p>\r\n      </div>\r\n    }\r\n\r\n    <div class=\"flex-column g-space-md full-width\" style=\"max-width: 300px;\">\r\n      <ta-button \r\n        type=\"primary\" \r\n        (action)=\"this.uploadPics()\"\r\n        [options]=\"{ class: 'full-width' }\"\r\n        icon=\"add\"\r\n      >\r\n        {{ 'input.logo.modal.choose' | translate }}\r\n      </ta-button>\r\n      \r\n      @if (this.selection) {\r\n        <ta-button \r\n          type=\"secondary\" \r\n          (action)=\"this.clearSelection()\"\r\n          [options]=\"{ class: 'full-width' }\"\r\n        >\r\n          {{ 'input.logo.modal.clear' | translate }}\r\n        </ta-button>\r\n      }\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"mt-space-xl pt-space-lg\" style=\"border-top: 1px solid var(--ta-border-secondary);\">\r\n    <ta-dual-button\r\n      [isFull]=\"true\"\r\n      [first]=\"{\r\n        icon: 'close',\r\n        label: 'input.logo.modal.cancel',\r\n        callback: this.cancel,\r\n      }\"\r\n      [second]=\"{\r\n        icon: 'check-line',\r\n        label: 'input.logo.modal.confirm',\r\n        callback: this.selected,\r\n      }\"\r\n    ></ta-dual-button>\r\n  </div>\r\n</div>", styles: [".selected-logo{width:150px;height:150px;object-fit:cover;border:2px solid var(--ta-border-secondary)}p{margin:0;color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-default-weight)}\n"] }]
+        }], ctorParameters: () => [{ type: i1$1.MatDialogRef }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [MAT_DIALOG_DATA]
+                }] }] });
+
+class InputLogoComponent extends TaAbstractInputComponent {
+    get selection() {
+        return this.input.value;
+    }
+    get fileDataSelection() {
+        if (!this.selection)
+            return null;
+        return {
+            id: 0,
+            type: 'Image',
+            url: this.selection,
+        };
+    }
+    get hasLogo() {
+        return !!this.selection;
+    }
+    set selection(value) {
+        this.input.formControl?.setValue(value);
+    }
+    constructor(dialog) {
+        super();
+        this.dialog = dialog;
+    }
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.input.removeFile$) {
+            this._registerSubscription(this.input.removeFile$.subscribe(fileData => {
+                if (this.selection === fileData.url) {
+                    this.selection = null;
+                }
+            }));
+        }
+    }
+    async openDialog() {
+        if (!this.input.availableFile$) {
+            const images = await pickImages();
+            if (images.length > 0) {
+                this.selection = images[0].localUrl;
+            }
+            return;
+        }
+        const dialogRef = this.dialog.open(InputLogoModal, {
+            data: { input: this.input, selection: this.selection },
+        });
+        this._registerSubscription(dialogRef.afterClosed().subscribe(selection => {
+            if (selection !== undefined) {
+                this.selection = selection;
+            }
+        }));
+    }
+    onFileDeleted(fileData) {
+        if (this.selection === fileData.url) {
+            this.selection = null;
+        }
+    }
+    removeLogo() {
+        this.selection = null;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputLogoComponent, deps: [{ token: i1$1.MatDialog }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: InputLogoComponent, isStandalone: true, selector: "ta-input-logo", usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\r\n\r\n<div class=\"flex-column align-center g-space-md\">\r\n  <div class=\"logo-preview-wrapper\" (click)=\"this.openDialog()\">\r\n    @if (this.hasLogo && this.selection) {\r\n      <img [src]=\"this.selection\" alt=\"{{ 'input.logo.alt' | translate }}\" class=\"logo-image\" />\r\n      <div class=\"logo-overlay\">\r\n        <ta-font-icon name=\"edit\" type=\"lg\"></ta-font-icon>\r\n        <span>{{ 'input.logo.modify' | translate }}</span>\r\n      </div>\r\n    } @else {\r\n      <div class=\"logo-placeholder flex-column align-center justify-center\">\r\n        <ta-font-icon name=\"image\" type=\"xl\"></ta-font-icon>\r\n        <span>{{ 'input.logo.add' | translate }}</span>\r\n      </div>\r\n    }\r\n  </div>\r\n  \r\n  @if (this.hasLogo) {\r\n    <ta-button \r\n      type=\"secondary\" \r\n      size=\"small\" \r\n      (action)=\"this.removeLogo()\"\r\n    >\r\n      {{ 'input.logo.remove' | translate }}\r\n    </ta-button>\r\n  }\r\n</div>", styles: [".logo-preview-wrapper{position:relative;width:120px;height:120px;border-radius:var(--ta-radius-rounded);overflow:hidden;cursor:pointer;border:2px dashed var(--ta-border-secondary);transition:all .3s ease}.logo-preview-wrapper:hover{border-color:var(--ta-brand-500)}.logo-preview-wrapper:hover .logo-overlay{opacity:1}.logo-preview-wrapper:hover .logo-placeholder{background-color:var(--ta-surface-secondary);border-color:var(--ta-brand-500)}.logo-image{width:100%;height:100%;object-fit:cover;display:block}.logo-overlay{position:absolute;inset:0;background-color:#000000b3;flex-direction:column;align-items:center;display:flex;justify-content:center;margin:auto;opacity:0;transition:opacity .3s ease;color:var(--ta-text-inverse);gap:var(--ta-space-xs)}.logo-overlay ta-font-icon{font-size:var(--ta-font-h3-default-size)}.logo-overlay span{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-bold-weight)}.logo-placeholder{width:100%;height:100%;background-color:var(--ta-surface-tertiary);border:2px dashed var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);transition:all .3s ease;color:var(--ta-text-secondary);gap:var(--ta-space-sm)}.logo-placeholder ta-font-icon{font-size:var(--ta-font-h1-default-size)}.logo-placeholder span{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-bold-weight);text-align:center}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputLogoComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-input-logo', standalone: true, imports: [FontIconComponent, FormLabelComponent, ButtonComponent, TranslatePipe], template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\r\n\r\n<div class=\"flex-column align-center g-space-md\">\r\n  <div class=\"logo-preview-wrapper\" (click)=\"this.openDialog()\">\r\n    @if (this.hasLogo && this.selection) {\r\n      <img [src]=\"this.selection\" alt=\"{{ 'input.logo.alt' | translate }}\" class=\"logo-image\" />\r\n      <div class=\"logo-overlay\">\r\n        <ta-font-icon name=\"edit\" type=\"lg\"></ta-font-icon>\r\n        <span>{{ 'input.logo.modify' | translate }}</span>\r\n      </div>\r\n    } @else {\r\n      <div class=\"logo-placeholder flex-column align-center justify-center\">\r\n        <ta-font-icon name=\"image\" type=\"xl\"></ta-font-icon>\r\n        <span>{{ 'input.logo.add' | translate }}</span>\r\n      </div>\r\n    }\r\n  </div>\r\n  \r\n  @if (this.hasLogo) {\r\n    <ta-button \r\n      type=\"secondary\" \r\n      size=\"small\" \r\n      (action)=\"this.removeLogo()\"\r\n    >\r\n      {{ 'input.logo.remove' | translate }}\r\n    </ta-button>\r\n  }\r\n</div>", styles: [".logo-preview-wrapper{position:relative;width:120px;height:120px;border-radius:var(--ta-radius-rounded);overflow:hidden;cursor:pointer;border:2px dashed var(--ta-border-secondary);transition:all .3s ease}.logo-preview-wrapper:hover{border-color:var(--ta-brand-500)}.logo-preview-wrapper:hover .logo-overlay{opacity:1}.logo-preview-wrapper:hover .logo-placeholder{background-color:var(--ta-surface-secondary);border-color:var(--ta-brand-500)}.logo-image{width:100%;height:100%;object-fit:cover;display:block}.logo-overlay{position:absolute;inset:0;background-color:#000000b3;flex-direction:column;align-items:center;display:flex;justify-content:center;margin:auto;opacity:0;transition:opacity .3s ease;color:var(--ta-text-inverse);gap:var(--ta-space-xs)}.logo-overlay ta-font-icon{font-size:var(--ta-font-h3-default-size)}.logo-overlay span{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-bold-weight)}.logo-placeholder{width:100%;height:100%;background-color:var(--ta-surface-tertiary);border:2px dashed var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);transition:all .3s ease;color:var(--ta-text-secondary);gap:var(--ta-space-sm)}.logo-placeholder ta-font-icon{font-size:var(--ta-font-h1-default-size)}.logo-placeholder span{font-size:var(--ta-font-body-sm-default-size);line-height:var(--ta-font-body-sm-default-line);font-weight:var(--ta-font-body-sm-bold-weight);text-align:center}\n"] }]
+        }], ctorParameters: () => [{ type: i1$1.MatDialog }] });
 
 class InputSchemaModal extends TaBaseModal {
     constructor(dialogRef) {
@@ -1387,5 +1511,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, InputAddressComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaFormInputsModule, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent };
+export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, InputAddressComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaFormInputsModule, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent };
 //# sourceMappingURL=ta-form-input.mjs.map

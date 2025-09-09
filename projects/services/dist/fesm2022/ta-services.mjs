@@ -319,7 +319,7 @@ const graphEndpoint = {
 const apiRoutes = {
     UploadDocument: {
         type: 'FILES',
-        url: '{ApiUrl}/document-rest/upload',
+        url: '{ApiUrl}/Media/upload',
     },
 };
 class TaDocumentsService extends TaBaseService {

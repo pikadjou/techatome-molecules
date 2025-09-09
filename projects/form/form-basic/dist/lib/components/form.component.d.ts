@@ -1,8 +1,8 @@
 import { EventEmitter, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { IInputsError, InputBase } from '@ta/form-model';
 import { TaBaseComponent } from '@ta/utils';
-import { Observable } from 'rxjs';
 import * as i0 from "@angular/core";
 export declare class FormComponent extends TaBaseComponent implements OnInit, OnChanges, OnDestroy {
     inputs: InputBase<any>[];

@@ -24,6 +24,7 @@ import {
   UploadComponent,
   InputImageComponent,
   InputImagesComponent,
+  InputLogoComponent,
   WysiswygComponent
 } from '@ta/form-input';
 import { InputBase } from '@ta/form-model';
@@ -67,6 +68,7 @@ selector: 'ta-inputs',
     UploadComponent,
     InputImageComponent,
     InputImagesComponent,
+    InputLogoComponent,
     WysiswygComponent,
     DynamicComponent,
     PanelComponent,
