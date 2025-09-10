@@ -4,13 +4,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: common.get-var(space, lg);
+  padding: common.get-var(components, toggle-card, padding);
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  border: 2px solid common.get-var(color-surface-secondary);
-  border-radius: common.get-var(border-radius, md);
-  background-color: common.get-var(color-surface-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: common.get-var(components, toggle-card, transition);
+  border: 2px solid common.get-var(components, toggle-card, border);
+  border-radius: common.get-var(components, toggle-card, border-radius);
+  background-color: common.get-var(components, toggle-card, background);
+  box-shadow: common.get-var(components, toggle-card, box-shadow);
 
   &:hover:not(&--disabled) {
     border-color: common.get-var(brand, 600);

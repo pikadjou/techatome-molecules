@@ -2,35 +2,35 @@
 @use "ta/utils/mixins/fonts";
 @use "ta/utils/mixins/common";
 
-$spacing: common.get-var(space, md);
+$spacing: common.get-var(components, card, padding);
 
 .card {
   &.hover {
     cursor: pointer;
     &:hover {
-      background-color: common.get-var(surface, hover, primary);
+      background-color: common.get-var(components, card, hover, background);
     }
   }
-  border-radius: common.get-var(space, md);
+  border-radius: common.get-var(components, card, border-radius);
 
   position: relative;
 
   padding: $spacing;
 
-  background-color: common.get-var(surface, primary);
-  color: common.get-var(text, primary);
+  background-color: common.get-var(components, card, background);
+  color: common.get-var(components, card, color);
 
   @include fonts.fontSizeBody(md);
 
   &.full-height {
-    height: calc(100% - $spacing * 2);
+    height: calc(100% - common.get-var(components, card, full-height, spacing-offset) * 2);
   }
   &.highlight {
-    background-color: common.get-var(surface, hover, secondary);
-    border-color: 1px solid common.get-var(border, secondary);
+    background-color: common.get-var(components, card, highlight, background);
+    border: 1px solid common.get-var(components, card, highlight, border);
   }
   &.card-shadow {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: common.get-var(components, card, card-shadow, box-shadow);
   }
 
   .responsive-content {

@@ -1,9 +1,9 @@
 @use "ta/utils/mixins/common";
 
 .img-container {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: common.get-var(components, card-image, aspect-ratio);
   overflow: hidden;
-  border-radius: common.get-var(radius, rounded);
+  border-radius: common.get-var(components, card-image, border-radius);
 
   .img {
     width: 100%;
