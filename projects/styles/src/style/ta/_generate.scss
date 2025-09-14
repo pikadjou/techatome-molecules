@@ -7,7 +7,7 @@
 @use 'ta/settings/spaces';
 @use 'ta/settings/components';
 @use 'ta/settings/flex';
-@use 'ta/settings/animations';
+@use 'ta/settings/grids';
 @use 'ta/settings/transitions';
 
 
@@ -29,7 +29,7 @@
 
   @include flex.generateFlex();
 
-  @include animations.generateAnimations();
+  @include grids.generateGrids();
 }
 
 

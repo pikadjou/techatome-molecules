@@ -6,12 +6,6 @@ import { TaSizes } from '@ta/styles';
 
 import { TrigramComponent } from '../trigram/trigram.component';
 
-export interface UserLogoNaming {
-  name: string;
-  firstName: string | null;
-  trigram: string;
-}
-
 export interface UserLogoData {
   firstname: string;
   lastname: string;

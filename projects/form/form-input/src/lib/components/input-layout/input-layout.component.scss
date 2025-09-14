@@ -28,7 +28,7 @@
     min-height: 40px;
 
     &:hover:not(:disabled) {
-      border-color: common.get-var(neutral, 500);
+      border-color: common.get-var(border, brand, primary);
     }
 
     &:focus:not(:disabled) {

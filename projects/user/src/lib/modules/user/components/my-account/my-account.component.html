@@ -25,10 +25,9 @@
       </ta-empty>
     </ta-error>
   </ta-loader>
-@let profileMenu = this.profileMenu();
-  @if (profileMenu) {
+  @if (this.profileMenu) {
     <div class="bdp-b color-border-primary pt-space-xs">
-      <ta-menu [menu]="profileMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
+      <ta-menu [menu]="this.profileMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
     </div>
   }
 @let disconnectionMenu = this.disconnectionMenu();
@@ -42,14 +41,3 @@
   </div>
 </div>
 
-<ng-template #languageTemplate>
-  <ta-switch-language></ta-switch-language>
-</ng-template>
-
-<ng-template #infosTemplate>
-  @if (this.infosMenu) {
-    <div class="m-space-sm info-panel">
-      <ta-menu [menu]="this.infosMenu" [style]="'dark'"></ta-menu>
-    </div>
-  }
-</ng-template>

@@ -1,8 +1,7 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/common";
 
-.main-nav {
-  @include flex.space-between();
+.main-nav-container {
   padding: common.get-var(space, sm);
 
   border-radius: 3px 3px 0px 0px;
@@ -10,24 +9,9 @@
   background-color: common.get-var(neutral, white);
 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-  @media screen and (max-width: 575px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow-x: auto;
-  }
-
-  @media screen and (min-width: 576px) {
-    border-radius: 0px 3px 3px 0px;
-    padding: common.get-var(space, sm);
-
-    align-content: space-between;
-  }
-
-  @media screen and (min-width: 992px) {
-    padding: common.get-var(space, md);
-  }
+}
+.main-nav {
+  @include flex.space-between();
 
   &.vertical {
     flex-direction: row;

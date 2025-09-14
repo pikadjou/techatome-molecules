@@ -71,6 +71,27 @@
       color: common.get-var(components, button, secondary, icon, color);
     }
   }
+  &.tertiary {
+    color: common.get-var(components, button, tertiary, color);
+    background-color: common.get-var(components, button, tertiary, background);
+    border: 1px solid common.get-var(components, button, tertiary, border);
+    &:hover {
+      color: common.get-var(components, button, tertiary, hover, color);
+      background-color: common.get-var(components, button, tertiary, hover, border);
+      border-color: common.get-var(components, button, tertiary, hover, border);
+    }
+    &.disabled {
+      color: common.get-var(components, button, tertiary, disabled, color);
+      border-color: common.get-var(components, button, tertiary, disabled, border);
+    }
+    &.inactive {
+      border-color: common.get-var(components, button, tertiary, inactive, border);
+    }
+
+    ta-font-icon {
+      color: common.get-var(components, button, tertiary, icon, color);
+    }
+  }
 }
 
 .circular {

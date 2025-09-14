@@ -1,4 +1,4 @@
-<div [ngClass]="this.panel.containerClass">
+<div class="flex-column g-space-md" [ngClass]="this.panel.containerClass">
   @if (this.panel.label) {
     <ta-title [level]="2" class="panel-title">{{ this.panel.label | translate }}</ta-title>
   }

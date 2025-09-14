@@ -9,7 +9,7 @@ export declare class ButtonComponent {
     /**
      * Indicate the button type
      */
-    type: 'primary' | 'secondary' | 'danger';
+    type: 'primary' | 'secondary' | 'tertiary' | 'danger';
     size: 'small' | 'medium' | 'large';
     icon: string | null;
     /**

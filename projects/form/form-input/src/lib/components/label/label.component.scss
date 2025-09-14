@@ -3,6 +3,6 @@
 
 .form-label {
   display: block;
-  @include fonts.fontSizeBody(sm);
-  color: common.get-var(brand, 700);
+  @include fonts.fontSizeBody(md);
+  color: common.get-var(text, brand, primary);
 }

@@ -1,4 +1,6 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
 
 .with-separator {
   border-bottom: 1px solid #a9a9a9;
@@ -8,14 +10,14 @@
 .highlight-title {
   .panel-title {
     color: common.get-var(surface, brand, primary);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 24px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding-top: 2em;
+    @include fonts.fontSizeBody(lg, true);
   }
+}
+
+.card {
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, secondary);
+  padding: common.get-var(space, lg);
 }
 
 .no-title-space {

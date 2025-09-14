@@ -11,7 +11,7 @@ $container-max-widths: (
   xxl: 1900px,
 );
 $grid-breakpoints: (
-  xs: 0,
+  xs: 0px,
   sm: 576px,
   mobile: 577px,
   md: 768px,
@@ -144,7 +144,7 @@ $text: map.merge(
 
 $surface: map.merge(
   (
-    default: map.get($neutral, 200), // blanc/gris clair, reposant
+    default: map.get($neutral, 200),
     primary: map.get($neutral, white),
     secondary: map.get($neutral, 100),
     tertiary: map.get($brand, 50),
@@ -154,8 +154,8 @@ $surface: map.merge(
       tertiary: map.get($brand, 100),
     ),
     hover: (
-      primary: map.get($brand, 800),
-      secondary: map.get($brand, 300),
+      primary: map.get($brand, 300),
+      secondary: map.get($second, 300),
     ),
     invert: map.get($brand, 900),
     success: map.get($semantic, green),
@@ -184,9 +184,13 @@ $border: map.merge(
       primary: map.get($brand, 900),
       secondary: map.get($second, 600),
     ),
+    hover: (
+      primary: map.get($brand, 800),
+      secondary: map.get($brand, 300),
+    ),
     invert: (
       primary: map.get($neutral, white),
-      secondary: map.get($brand, 600),
+      secondary: map.get($second, 900),
     ),
     disabled: map.get($neutral, 300),
     success: map.get($semantic, green),
@@ -425,34 +429,72 @@ $font: map.merge(
 
 $components: map.merge(
   (
+    max-width: 1200px,
     header: (
       top: $space-base * 5,
     ),
     button: (
-      // Styles de base .button
+
       radius: map.get($radius, rounded),
       gap: map.get($space, md),
       padding-vertical: map.get($space, sm),
       padding-horizontal: map.get($space, md),
       
-      // Scope .small
       small: (
         padding-vertical: map.get($space, xs),
         padding-horizontal: map.get($space, sm),
       ),
       
-      // Scope .large  
       large: (
         padding-vertical: map.get($space, md),
         padding-horizontal: map.get($space, lg),
       ),
       
-      // Scope .primary
       primary: (
-        color: map.get($text, invert, primary),
+        color: map.get($text, primary),
         background: map.get($surface, brand, primary),
+        border: map.get($border, brand, primary),
         hover: (
+          border: map.get($border, invert, primary),
+        ),
+        disabled: (
+          color: map.get($text, tertiary),
+          border: map.get($border, disabled),
+        ),
+        inactive: (
+          border: map.get($border, primary),
+        ),
+        icon: (
+          color: map.get($icon, brand, primary),
+        ),
+      ),
+
+      secondary: (
+        color: map.get($text, brand, primary),
+        background: map.get($surface, brand, secondary),
+        border: map.get($border, brand, secondary),
+        hover: (
+          border: map.get($border, invert, secondary),
+        ),
+        disabled: (
+          color: map.get($text, tertiary),
+          border: map.get($border, disabled),
+        ),
+        inactive: (
+          border: map.get($border, primary),
+        ),
+        icon: (
+          color: map.get($icon, brand, primary),
+        ),
+      ),
+      tertiary: (
+        color: map.get($text, brand, primary),
+        background: map.get($surface, primary),
+        border: map.get($border, brand, primary),
+        hover: (
+          color: map.get($text, invert, primary),
           background: map.get($surface, hover, primary),
+          border: map.get($border, hover, primary),
         ),
         disabled: (
           color: map.get($text, brand, secondary),
@@ -467,25 +509,6 @@ $components: map.merge(
         ),
       ),
       
-      // Scope .secondary
-      secondary: (
-        color: map.get($text, primary),
-        background: map.get($surface, primary),
-        border: map.get($border, secondary),
-        hover: (
-          border: map.get($border, invert),
-        ),
-        disabled: (
-          color: map.get($text, tertiary),
-          border: map.get($border, disabled),
-        ),
-        inactive: (
-          border: map.get($border, primary),
-        ),
-        icon: (
-          color: map.get($icon, brand, primary),
-        ),
-      ),
       
       // Scope .circular
       circular: (
@@ -509,6 +532,8 @@ $components: map.merge(
       padding: map.get($space, md),
       background: map.get($surface, primary),
       color: map.get($text, primary),
+      border: map.get($border, brand, primary),
+
       
       // Scope .hover
       hover: (
@@ -528,7 +553,7 @@ $components: map.merge(
       
       // Scope .card-shadow
       card-shadow: (
-        box-shadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        box-shadow:  map.get($shadow, brand, sm),
       ),
     ),
     card-image: (

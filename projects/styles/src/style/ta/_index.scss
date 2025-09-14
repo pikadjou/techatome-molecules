@@ -29,6 +29,10 @@ hr {
 .align-items-center {
   margin: auto;
 }
+.max-container {
+  max-width: common.get-var(components, max-width);
+  margin: auto;
+}
 
 [hidden] {
   display: none !important;

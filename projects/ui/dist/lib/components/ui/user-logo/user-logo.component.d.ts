@@ -1,10 +1,5 @@
 import { TaSizes } from '@ta/styles';
 import * as i0 from "@angular/core";
-export interface UserLogoNaming {
-    name: string;
-    firstName: string | null;
-    trigram: string;
-}
 export interface UserLogoData {
     firstname: string;
     lastname: string;

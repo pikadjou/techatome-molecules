@@ -23,7 +23,7 @@ export class ButtonComponent {
    * Indicate the button type
    */
   @Input()
-  type: 'primary' | 'secondary' | 'danger' = 'primary';
+  type: 'primary' | 'secondary' | 'tertiary' | 'danger' = 'primary';
 
   @Input()
   size: 'small' | 'medium' | 'large' = 'medium';

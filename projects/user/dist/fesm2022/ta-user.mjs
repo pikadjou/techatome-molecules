@@ -1,14 +1,14 @@
 import * as i0 from '@angular/core';
-import { Injectable, inject, InjectionToken, Component, EventEmitter, signal, ViewChild, Output, Input } from '@angular/core';
+import { Injectable, inject, InjectionToken, Component, EventEmitter, signal, Output, Input } from '@angular/core';
 import { map as map$1 } from 'rxjs/operators';
-import { TaRoutes, MenuPanel, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
+import { TaRoutes, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
 import { BehaviorSubject, filter, map, switchMap, distinct, tap } from 'rxjs';
 import { Logger, GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest } from '@ta/server';
 import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
 import * as i1 from '@angular/router';
 import { TranslatePipe, TaTranslationService } from '@ta/translation';
-import { CardComponent, CardContentComponent, ButtonComponent, ListTagComponent, LoaderComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ErrorComponent, EmptyComponent, InlineProfileDataComponent } from '@ta/ui';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { CardComponent, CardContentComponent, ButtonComponent, LoaderComponent, ErrorComponent, EmptyComponent, InlineProfileDataComponent, ListTagComponent, ListContainerComponent, ListElementComponent, ListTitleComponent } from '@ta/ui';
+import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { FontIconComponent, TaIconType } from '@ta/icons';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -302,6 +302,129 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
+class MyAccountComponent extends TaBaseComponent {
+    constructor() {
+        super();
+        this.profileMenu = null;
+        this.appVersion = null;
+        this.isEditable = false;
+        this.navigateEvent = new EventEmitter();
+        this.navigateEditEvent = new EventEmitter();
+        this._userService = inject(TA_USER_SERVICE);
+        this._authService = inject(TA_AUTH_TOKEN);
+        this.disconnectionMenu = signal(null);
+        this.userLogo$ = signal(this._userService.userProfile.get$().pipe(map(up => {
+            if (!up) {
+                return null;
+            }
+            return {
+                user: {
+                    picture: up.picture,
+                    lastname: up.lastname ?? '',
+                    firstname: up.firstname ?? '',
+                },
+                size: 'lg',
+            };
+        })));
+    }
+    get profile$() {
+        return this._userService.userProfile.get$().pipe(map(data => {
+            return {
+                title: {
+                    second: data?.firstname || data?.lastname,
+                },
+                email: data?.email || '',
+            };
+        }));
+    }
+    ngOnInit() {
+        this.disconnectionMenu.set(this.getDisconnectionMenu());
+    }
+    navigateToProfile() {
+        this.navigateEvent.emit();
+    }
+    disconnect() {
+        this._authService.logout().then(() => location.reload());
+    }
+    getDisconnectionMenu() {
+        const menu = [
+            new MenuIcon({
+                key: 'logout',
+                label: 'user.logout',
+                order: 4,
+                style: 'dark',
+                icon: 'log-out',
+                iconsColor: 'icon-color-icon-tertiary',
+                callback: () => this.disconnect(),
+            }),
+        ];
+        return new Menu({
+            elements: menu.sort((a, b) => a.order - b.order),
+            direction: 'vertical',
+        });
+    }
+    navigateToEditProfile() {
+        this.navigateEditEvent.emit();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: MyAccountComponent, isStandalone: true, selector: "ta-my-account", inputs: { profileMenu: "profileMenu", appVersion: "appVersion", isEditable: "isEditable" }, outputs: { navigateEvent: "navigateEvent", navigateEditEvent: "navigateEditEvent" }, usesInheritance: true, ngImport: i0, template: "@let profile = this.profile$ | async;\n<div class=\"mx-space-sm\" appStopPropagation>\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!profile\">\n          <div class=\"p-space-sm bdp-b color-border-primary\">\n            <ta-inline-profile-data\n              [profile]=\"profile ?? {}\"\n              [userLogo]=\"this.userLogo$() | async\"\n              (click)=\"this.navigateToProfile()\"\n            ></ta-inline-profile-data>\n            @if (this.isEditable) {\n              <div class=\"my-space-md\">\n                <ta-button (action)=\"this.navigateToEditProfile()\" [style]=\"'secondary'\">\n                  <div class=\"align-center button-content\">\n                    <ta-font-icon name=\"modify\" class=\"mr-space-xs modify-icon\"></ta-font-icon>\n                    <div class=\"text\">\n                      {{ 'user.modify' | translate }}\n                    </div>\n                  </div>\n                </ta-button>\n              </div>\n            }\n          </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n  @if (this.profileMenu) {\n    <div class=\"bdp-b color-border-primary pt-space-xs\">\n      <ta-menu [menu]=\"this.profileMenu\" [style]=\"'dark'\" [container]=\"'overflow'\"></ta-menu>\n    </div>\n  }\n@let disconnectionMenu = this.disconnectionMenu();\n  @if (disconnectionMenu) {\n    <div class=\"bdp-b pt-space-xs\">\n      <ta-menu [menu]=\"disconnectionMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n  <div class=\"ta-c\">\n    <small>{{ this.appVersion }}</small>\n  </div>\n</div>\n\n", styles: [".modify-icon{color:var(--ta-brand-700)}.language-panel{min-width:240px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.button-content{justify-content:center}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: MenuComponent, selector: "ta-menu", inputs: ["menu", "container"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InlineProfileDataComponent, selector: "ta-inline-profile-data", inputs: ["profile", "userLogo"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-my-account', standalone: true, imports: [
+                        AsyncPipe,
+                        FontIconComponent,
+                        StopPropagationDirective,
+                        LoaderComponent,
+                        ErrorComponent,
+                        EmptyComponent,
+                        ButtonComponent,
+                        MenuComponent,
+                        TranslatePipe,
+                        InlineProfileDataComponent,
+                        StopPropagationDirective,
+                    ], template: "@let profile = this.profile$ | async;\n<div class=\"mx-space-sm\" appStopPropagation>\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!profile\">\n          <div class=\"p-space-sm bdp-b color-border-primary\">\n            <ta-inline-profile-data\n              [profile]=\"profile ?? {}\"\n              [userLogo]=\"this.userLogo$() | async\"\n              (click)=\"this.navigateToProfile()\"\n            ></ta-inline-profile-data>\n            @if (this.isEditable) {\n              <div class=\"my-space-md\">\n                <ta-button (action)=\"this.navigateToEditProfile()\" [style]=\"'secondary'\">\n                  <div class=\"align-center button-content\">\n                    <ta-font-icon name=\"modify\" class=\"mr-space-xs modify-icon\"></ta-font-icon>\n                    <div class=\"text\">\n                      {{ 'user.modify' | translate }}\n                    </div>\n                  </div>\n                </ta-button>\n              </div>\n            }\n          </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n  @if (this.profileMenu) {\n    <div class=\"bdp-b color-border-primary pt-space-xs\">\n      <ta-menu [menu]=\"this.profileMenu\" [style]=\"'dark'\" [container]=\"'overflow'\"></ta-menu>\n    </div>\n  }\n@let disconnectionMenu = this.disconnectionMenu();\n  @if (disconnectionMenu) {\n    <div class=\"bdp-b pt-space-xs\">\n      <ta-menu [menu]=\"disconnectionMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n  <div class=\"ta-c\">\n    <small>{{ this.appVersion }}</small>\n  </div>\n</div>\n\n", styles: [".modify-icon{color:var(--ta-brand-700)}.language-panel{min-width:240px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.button-content{justify-content:center}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { profileMenu: [{
+                type: Input
+            }], appVersion: [{
+                type: Input
+            }], isEditable: [{
+                type: Input
+            }], navigateEvent: [{
+                type: Output
+            }], navigateEditEvent: [{
+                type: Output
+            }] } });
+
+class GuardComponent extends TaAbstractComponent {
+    get noAccessIcon() {
+        return TaIconType.NoAccess;
+    }
+    constructor() {
+        super();
+        this.canDisplayErrorMessage = true;
+        this._permissionsService = inject(TaPermissionsService);
+    }
+    isGuardValid$() {
+        return this._permissionsService.canAccess$(this.feature, this.level);
+    }
+    goToLogin() {
+        this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: "level", feature: "feature", canDisplayErrorMessage: "canDisplayErrorMessage" }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-guard', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe], template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n" }]
+        }], ctorParameters: () => [], propDecorators: { level: [{
+                type: Input
+            }], feature: [{
+                type: Input
+            }], canDisplayErrorMessage: [{
+                type: Input
+            }] } });
+
 class SwitchLanguageComponent {
     constructor() {
         this.translateService = inject(TaTranslationService);
@@ -338,175 +461,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                         TranslatePipe,
                     ], template: "<ta-loader [isLoading]=\"this.changeLanguageAsked\">\n  <div class=\"mx-space-sm language-panel\">\n    <ta-list-container>\n      @for (language of this.languages; track language.id) {\n        <ta-list-element [withSeparator]=\"false\" (click)=\"this.changeLanguage(language.id)\">\n          <ta-list-title class=\"d-flex p-space-xs\">\n            {{ language.name | translate }}\n          </ta-list-title>\n          @if (language.id === this.activeLanguage) {\n            <ta-list-tag>\n              <ta-font-icon name=\"check-line\" class=\"color-semantic-token-success\"></ta-font-icon>\n            </ta-list-tag>\n          }\n        </ta-list-element>\n      }\n    </ta-list-container>\n  </div>\n</ta-loader>\n" }]
         }] });
-
-class MyAccountComponent extends TaBaseComponent {
-    constructor() {
-        super();
-        this.infosMenu = null;
-        this.appVersion = null;
-        this.isEditable = false;
-        this.navigateEvent = new EventEmitter();
-        this.navigateEditEvent = new EventEmitter();
-        this._userService = inject(TA_USER_SERVICE);
-        this._authService = inject(TA_AUTH_TOKEN);
-        this.profileMenu = signal(null);
-        this.disconnectionMenu = signal(null);
-        this.userLogo$ = signal(this._userService.userProfile.get$().pipe(map(up => {
-            if (!up) {
-                return null;
-            }
-            return {
-                user: {
-                    picture: up.picture,
-                    lastname: up.lastname ?? '',
-                    firstname: up.firstname ?? '',
-                },
-                size: 'lg',
-            };
-        })));
-    }
-    get profile$() {
-        return this._userService.userProfile.get$().pipe(map(data => {
-            return {
-                title: {
-                    second: data?.firstname || data?.lastname,
-                },
-                email: data?.email || '',
-            };
-        }));
-    }
-    ngAfterViewInit() {
-        this.profileMenu.set(this.getProfileMenu(this.languageTemplate, this.infosTemplate));
-        this.disconnectionMenu.set(this.getDisconnectionMenu());
-    }
-    navigateToProfile() {
-        this.navigateEvent.emit();
-    }
-    disconnect() {
-        this._authService.logout().then(() => location.reload());
-    }
-    getProfileMenu(languageTemplate, infosTemplate) {
-        const menu = [
-            new MenuPanel({
-                key: 'language',
-                label: 'user.language',
-                order: 2,
-                template: languageTemplate,
-                style: 'dark',
-                icon: 'language',
-                iconsColor: 'icon-color-icon-tertiary',
-                endingIcon: 'arrow-big-right',
-            }),
-            new MenuPanel({
-                key: 'infos',
-                label: 'user.infos',
-                order: 3,
-                template: infosTemplate,
-                style: 'dark',
-                icon: 'infos',
-                iconsColor: 'icon-color-icon-tertiary',
-                endingIcon: 'arrow-big-right',
-            }),
-            new MenuIcon({
-                key: 'params',
-                label: 'user.params',
-                order: 4,
-                disabled: true,
-                style: 'dark',
-                icon: 'label',
-                iconsColor: 'icon-color-icon-tertiary',
-            }),
-        ];
-        return new Menu({
-            elements: menu.sort((a, b) => a.order - b.order),
-            direction: 'vertical',
-        });
-    }
-    getDisconnectionMenu() {
-        const menu = [
-            new MenuIcon({
-                key: 'logout',
-                label: 'user.logout',
-                order: 4,
-                style: 'dark',
-                icon: 'log-out',
-                iconsColor: 'icon-color-icon-tertiary',
-                callback: () => this.disconnect(),
-            }),
-        ];
-        return new Menu({
-            elements: menu.sort((a, b) => a.order - b.order),
-            direction: 'vertical',
-        });
-    }
-    navigateToEditProfile() {
-        this.navigateEditEvent.emit();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: MyAccountComponent, isStandalone: true, selector: "ta-my-account", inputs: { infosMenu: "infosMenu", appVersion: "appVersion", isEditable: "isEditable" }, outputs: { navigateEvent: "navigateEvent", navigateEditEvent: "navigateEditEvent" }, viewQueries: [{ propertyName: "languageTemplate", first: true, predicate: ["languageTemplate"], descendants: true, static: true }, { propertyName: "infosTemplate", first: true, predicate: ["infosTemplate"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "@let profile = this.profile$ | async;\n<div class=\"mx-space-sm\" appStopPropagation>\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!profile\">\n          <div class=\"p-space-sm bdp-b color-border-primary\">\n            <ta-inline-profile-data\n              [profile]=\"profile ?? {}\"\n              [userLogo]=\"this.userLogo$() | async\"\n              (click)=\"this.navigateToProfile()\"\n            ></ta-inline-profile-data>\n            @if (this.isEditable) {\n              <div class=\"my-space-md\">\n                <ta-button (action)=\"this.navigateToEditProfile()\" [style]=\"'secondary'\">\n                  <div class=\"align-center button-content\">\n                    <ta-font-icon name=\"modify\" class=\"mr-space-xs modify-icon\"></ta-font-icon>\n                    <div class=\"text\">\n                      {{ 'user.modify' | translate }}\n                    </div>\n                  </div>\n                </ta-button>\n              </div>\n            }\n          </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n@let profileMenu = this.profileMenu();\n  @if (profileMenu) {\n    <div class=\"bdp-b color-border-primary pt-space-xs\">\n      <ta-menu [menu]=\"profileMenu\" [style]=\"'dark'\" [container]=\"'overflow'\"></ta-menu>\n    </div>\n  }\n@let disconnectionMenu = this.disconnectionMenu();\n  @if (disconnectionMenu) {\n    <div class=\"bdp-b pt-space-xs\">\n      <ta-menu [menu]=\"disconnectionMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n  <div class=\"ta-c\">\n    <small>{{ this.appVersion }}</small>\n  </div>\n</div>\n\n<ng-template #languageTemplate>\n  <ta-switch-language></ta-switch-language>\n</ng-template>\n\n<ng-template #infosTemplate>\n  @if (this.infosMenu) {\n    <div class=\"m-space-sm info-panel\">\n      <ta-menu [menu]=\"this.infosMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n</ng-template>\n", styles: [".modify-icon{color:var(--ta-brand-700)}.language-panel{min-width:240px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.button-content{justify-content:center}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: MenuComponent, selector: "ta-menu", inputs: ["menu", "container"] }, { kind: "component", type: SwitchLanguageComponent, selector: "ta-switch-language" }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InlineProfileDataComponent, selector: "ta-inline-profile-data", inputs: ["profile", "userLogo"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: MyAccountComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-my-account', standalone: true, imports: [
-                        AsyncPipe,
-                        FontIconComponent,
-                        StopPropagationDirective,
-                        LoaderComponent,
-                        ErrorComponent,
-                        EmptyComponent,
-                        ButtonComponent,
-                        MenuComponent,
-                        SwitchLanguageComponent,
-                        TranslatePipe,
-                        InlineProfileDataComponent,
-                        StopPropagationDirective,
-                    ], template: "@let profile = this.profile$ | async;\n<div class=\"mx-space-sm\" appStopPropagation>\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!profile\">\n          <div class=\"p-space-sm bdp-b color-border-primary\">\n            <ta-inline-profile-data\n              [profile]=\"profile ?? {}\"\n              [userLogo]=\"this.userLogo$() | async\"\n              (click)=\"this.navigateToProfile()\"\n            ></ta-inline-profile-data>\n            @if (this.isEditable) {\n              <div class=\"my-space-md\">\n                <ta-button (action)=\"this.navigateToEditProfile()\" [style]=\"'secondary'\">\n                  <div class=\"align-center button-content\">\n                    <ta-font-icon name=\"modify\" class=\"mr-space-xs modify-icon\"></ta-font-icon>\n                    <div class=\"text\">\n                      {{ 'user.modify' | translate }}\n                    </div>\n                  </div>\n                </ta-button>\n              </div>\n            }\n          </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n@let profileMenu = this.profileMenu();\n  @if (profileMenu) {\n    <div class=\"bdp-b color-border-primary pt-space-xs\">\n      <ta-menu [menu]=\"profileMenu\" [style]=\"'dark'\" [container]=\"'overflow'\"></ta-menu>\n    </div>\n  }\n@let disconnectionMenu = this.disconnectionMenu();\n  @if (disconnectionMenu) {\n    <div class=\"bdp-b pt-space-xs\">\n      <ta-menu [menu]=\"disconnectionMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n  <div class=\"ta-c\">\n    <small>{{ this.appVersion }}</small>\n  </div>\n</div>\n\n<ng-template #languageTemplate>\n  <ta-switch-language></ta-switch-language>\n</ng-template>\n\n<ng-template #infosTemplate>\n  @if (this.infosMenu) {\n    <div class=\"m-space-sm info-panel\">\n      <ta-menu [menu]=\"this.infosMenu\" [style]=\"'dark'\"></ta-menu>\n    </div>\n  }\n</ng-template>\n", styles: [".modify-icon{color:var(--ta-brand-700)}.language-panel{min-width:240px}.text{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}.button-content{justify-content:center}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { infosMenu: [{
-                type: Input
-            }], appVersion: [{
-                type: Input
-            }], isEditable: [{
-                type: Input
-            }], navigateEvent: [{
-                type: Output
-            }], navigateEditEvent: [{
-                type: Output
-            }], languageTemplate: [{
-                type: ViewChild,
-                args: ['languageTemplate', { static: true }]
-            }], infosTemplate: [{
-                type: ViewChild,
-                args: ['infosTemplate', { static: true }]
-            }] } });
-
-class GuardComponent extends TaAbstractComponent {
-    get noAccessIcon() {
-        return TaIconType.NoAccess;
-    }
-    constructor() {
-        super();
-        this.canDisplayErrorMessage = true;
-        this._permissionsService = inject(TaPermissionsService);
-    }
-    isGuardValid$() {
-        return this._permissionsService.canAccess$(this.feature, this.level);
-    }
-    goToLogin() {
-        this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: "level", feature: "feature", canDisplayErrorMessage: "canDisplayErrorMessage" }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-guard', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe], template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n" }]
-        }], ctorParameters: () => [], propDecorators: { level: [{
-                type: Input
-            }], feature: [{
-                type: Input
-            }], canDisplayErrorMessage: [{
-                type: Input
-            }] } });
 
 class SwitchLanguageCtaComponent {
     constructor() {
