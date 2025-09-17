@@ -22,9 +22,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { combineLatest, startWith, map, Subject } from 'rxjs';
 import { TaSharedMenuService } from '@ta/services';
 import { MatDrawer, MatDrawerContainer, MatSidenavModule } from '@angular/material/sidenav';
-import * as i1$5 from '@angular/material/progress-spinner';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import * as i1$6 from '@angular/cdk/overlay';
+import * as i1$5 from '@angular/cdk/overlay';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TaBaseService } from '@ta/server';
@@ -2671,20 +2670,26 @@ class LoaderComponent {
     constructor() {
         this.isLoading = false;
         this.skeleton = null;
+        this.size = 'md';
+        this.text = 'container.loading.light-message';
         this.isLoading = true;
     }
     getPlaceholder() {
         return getPlaceholderConfig(this.skeleton || 'default');
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LoaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: LoaderComponent, isStandalone: true, selector: "ta-loader", inputs: { isLoading: "isLoading", skeleton: "skeleton" }, ngImport: i0, template: "@if (this.isLoading) {\n  @if (!this.skeleton) {\n    <div class=\"pt-space-15\">\n      <mat-spinner style=\"margin: 0 auto\" [diameter]=\"20\"></mat-spinner>\n    </div>\n  } @else {\n    <ta-placeholder [placeholder]=\"this.getPlaceholder()\"></ta-placeholder>\n  }\n} @else {\n  <ng-content></ng-content>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: MatProgressSpinnerModule }, { kind: "component", type: i1$5.MatProgressSpinner, selector: "mat-progress-spinner, mat-spinner", inputs: ["color", "mode", "value", "diameter", "strokeWidth"], exportAs: ["matProgressSpinner"] }, { kind: "component", type: PlaceholderComponent, selector: "ta-placeholder", inputs: ["placeholder"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: LoaderComponent, isStandalone: true, selector: "ta-loader", inputs: { isLoading: "isLoading", skeleton: "skeleton", size: "size", text: "text" }, ngImport: i0, template: "@if (this.isLoading) {\n  @if (!this.skeleton) {\n    <div class=\"loader\">\n      <div class=\"content\">\n        <div [ngClass]=\"'spinner ' + this.size\">\n          <svg class=\"svg\">\n            <circle \n              class=\"bg\" \n              cx=\"12\" \n              cy=\"12\" \n              r=\"10\" \n              stroke=\"currentColor\" \n              stroke-width=\"4\"/>\n            <path \n              class=\"fill\" \n              fill=\"currentColor\" \n              d=\"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z\"/>\n          </svg>\n        </div>\n        @if (this.text) {\n          <p class=\"text\">{{ this.text }}</p>\n        }\n      </div>\n    </div>\n  } @else {\n    <ta-placeholder [placeholder]=\"this.getPlaceholder()\"></ta-placeholder>\n  }\n} @else {\n  <ng-content></ng-content>\n}\n", styles: [".loader,.loader .content{flex-direction:column;display:flex;align-items:center;gap:var(--ta-space-sm)}.loader .spinner{color:var(--ta-brand-600)}.loader .spinner.sm{height:16px;width:16px}.loader .spinner.md{height:24px;width:24px}.loader .spinner.lg{height:32px;width:32px}.loader .spinner .svg{height:100%;width:100%;animation:spin 1s linear infinite}.loader .spinner .svg .bg{opacity:.25}.loader .spinner .svg .fill{opacity:.75}.loader .text{font-size:var(--ta-font-body-sm-default-size);color:var(--ta-text-secondary);animation:pulse 1.5s ease-in-out infinite;margin:0}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}@keyframes pulse{0%,to{opacity:1}50%{opacity:.5}}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "ngmodule", type: MatProgressSpinnerModule }, { kind: "component", type: PlaceholderComponent, selector: "ta-placeholder", inputs: ["placeholder"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LoaderComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-loader', standalone: true, imports: [NgIf, MatProgressSpinnerModule, PlaceholderComponent], template: "@if (this.isLoading) {\n  @if (!this.skeleton) {\n    <div class=\"pt-space-15\">\n      <mat-spinner style=\"margin: 0 auto\" [diameter]=\"20\"></mat-spinner>\n    </div>\n  } @else {\n    <ta-placeholder [placeholder]=\"this.getPlaceholder()\"></ta-placeholder>\n  }\n} @else {\n  <ng-content></ng-content>\n}\n" }]
+            args: [{ selector: 'ta-loader', standalone: true, imports: [NgClass, MatProgressSpinnerModule, PlaceholderComponent], template: "@if (this.isLoading) {\n  @if (!this.skeleton) {\n    <div class=\"loader\">\n      <div class=\"content\">\n        <div [ngClass]=\"'spinner ' + this.size\">\n          <svg class=\"svg\">\n            <circle \n              class=\"bg\" \n              cx=\"12\" \n              cy=\"12\" \n              r=\"10\" \n              stroke=\"currentColor\" \n              stroke-width=\"4\"/>\n            <path \n              class=\"fill\" \n              fill=\"currentColor\" \n              d=\"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z\"/>\n          </svg>\n        </div>\n        @if (this.text) {\n          <p class=\"text\">{{ this.text }}</p>\n        }\n      </div>\n    </div>\n  } @else {\n    <ta-placeholder [placeholder]=\"this.getPlaceholder()\"></ta-placeholder>\n  }\n} @else {\n  <ng-content></ng-content>\n}\n", styles: [".loader,.loader .content{flex-direction:column;display:flex;align-items:center;gap:var(--ta-space-sm)}.loader .spinner{color:var(--ta-brand-600)}.loader .spinner.sm{height:16px;width:16px}.loader .spinner.md{height:24px;width:24px}.loader .spinner.lg{height:32px;width:32px}.loader .spinner .svg{height:100%;width:100%;animation:spin 1s linear infinite}.loader .spinner .svg .bg{opacity:.25}.loader .spinner .svg .fill{opacity:.75}.loader .text{font-size:var(--ta-font-body-sm-default-size);color:var(--ta-text-secondary);animation:pulse 1.5s ease-in-out infinite;margin:0}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}@keyframes pulse{0%,to{opacity:1}50%{opacity:.5}}\n"] }]
         }], ctorParameters: () => [], propDecorators: { isLoading: [{
                 type: Input
             }], skeleton: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }], text: [{
                 type: Input
             }] } });
 
@@ -3004,7 +3009,7 @@ class OverlayService extends TaBaseService {
             this._onCloseCallback = undefined;
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: OverlayService, deps: [{ token: i1$6.Overlay }, { token: i0.Injector }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: OverlayService, deps: [{ token: i1$5.Overlay }, { token: i0.Injector }], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: OverlayService, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: OverlayService, decorators: [{
@@ -3012,7 +3017,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{
                     providedIn: 'root',
                 }]
-        }], ctorParameters: () => [{ type: i1$6.Overlay }, { type: i0.Injector }] });
+        }], ctorParameters: () => [{ type: i1$5.Overlay }, { type: i0.Injector }] });
 
 class TaDefaultPanelComponent {
     constructor(templateRef, maxHeight) {
