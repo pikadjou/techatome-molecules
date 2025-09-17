@@ -26,7 +26,7 @@ export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<an
   override ngOnInit() {
     super.ngOnInit();
     this._registerSubscription(
-      this.input.options.subscribe(options => {
+      this.input.options$.subscribe(options => {
         this.optionsList = options;
         this.filteredOptions = this.optionsList;
       })

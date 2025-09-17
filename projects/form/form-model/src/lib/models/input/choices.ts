@@ -13,7 +13,7 @@ export type InputChoicesOption = {
 
 export interface IInputChoices extends IInputDropdown<string[]> {
   onlyTemplate?: boolean;
-  options?: Observable<InputChoicesOption[]>;
+  options$?: Observable<InputChoicesOption[]>;
   advancedSearch$?: (search?: string) => Observable<InputChoicesOption[]>;
   choiceTemplate?: {
     one?: TemplateRef<any>;
@@ -23,7 +23,7 @@ export interface IInputChoices extends IInputDropdown<string[]> {
 }
 export class InputChoices extends InputDropdown<string[]> {
   override controlType = 'choices';
-  override options!: Observable<InputChoicesOption[]>;
+  override options$!: Observable<InputChoicesOption[]>;
 
   public onlyTemplate?: boolean;
   public advancedSearch$: ((search?: string) => Observable<InputChoicesOption[]>) | null;

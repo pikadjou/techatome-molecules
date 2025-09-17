@@ -1,5 +1,6 @@
-import { Culture, extractEnum } from '@ta/utils';
 import { of } from 'rxjs';
+
+import { Culture, extractEnum } from '@ta/utils';
 
 import { IInputDropdown, InputDropdown } from './dropdown';
 
@@ -11,7 +12,7 @@ export class InputCulture extends InputDropdown<string> {
   constructor(options: IInputCulture = {}) {
     super({
       ...options,
-      options: of(
+      options$: of(
         extractEnum(Culture, true).map(item => ({
           id: item.value.toString(),
           name: 'ui.culture.long.' + item.value,

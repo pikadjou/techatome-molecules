@@ -532,7 +532,7 @@ $components: map.merge(
       padding: map.get($space, md),
       background: map.get($surface, primary),
       color: map.get($text, primary),
-      border: map.get($border, brand, primary),
+      border: map.get($border, tertiary),
 
       
       // Scope .hover

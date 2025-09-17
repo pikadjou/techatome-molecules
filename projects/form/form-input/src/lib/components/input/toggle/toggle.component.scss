@@ -10,7 +10,7 @@
   display: none;
 
   &:checked + .slider {
-    background-color: common.get-var(border, brand);
+    background-color: common.get-var(surface, brand, primary);
   }
 
   &:checked + .slider:before {

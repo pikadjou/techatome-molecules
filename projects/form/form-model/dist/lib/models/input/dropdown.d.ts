@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { IInputBase, InputBase } from './base';
 export interface IInputDropdown<T> extends IInputBase<T> {
-    options?: Observable<{
+    options$?: Observable<{
         id: string;
         name: string;
     }[]>;
@@ -13,7 +13,7 @@ export interface IInputDropdown<T> extends IInputBase<T> {
 }
 export declare class InputDropdown<T = string | string[]> extends InputBase<T> {
     controlType: string;
-    options: Observable<{
+    options$: Observable<{
         id: string;
         name: string;
         disabled?: boolean;

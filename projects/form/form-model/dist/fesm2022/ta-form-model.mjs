@@ -150,11 +150,9 @@ class InputDropdown extends InputBase {
         this.controlType = 'dropdown';
         this.showNothingOption = false;
         this.withSearch = false;
-        this.options = options['options'] || of([]);
+        this.options$ = options['options$'] || of([]);
         this.multiple = options['multiple'] || false;
-        this.showNothingOption = !this.multiple
-            ? !!options.showNothingOption
-            : false;
+        this.showNothingOption = !this.multiple ? !!options.showNothingOption : false;
         this.width = options.width || '100%';
         this.withSearch = options.withSearch || false;
     }
@@ -533,7 +531,7 @@ class InputCulture extends InputDropdown {
     constructor(options = {}) {
         super({
             ...options,
-            options: of(extractEnum(Culture, true).map(item => ({
+            options$: of(extractEnum(Culture, true).map(item => ({
                 id: item.value.toString(),
                 name: 'ui.culture.long.' + item.value,
             }))),

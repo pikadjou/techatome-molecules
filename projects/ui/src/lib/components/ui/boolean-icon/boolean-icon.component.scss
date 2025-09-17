@@ -1,0 +1,19 @@
+@use "ta/utils/mixins/common";
+
+.boolean-icon-container {
+  display: inline-flex;
+  align-items: center;
+  gap: common.get-var(space, xs);
+}
+
+.boolean-icon-success {
+  color: common.get-var(semantic-token, success);
+}
+
+.boolean-icon-error {
+  color: common.get-var(semantic-token, alert);
+}
+
+.null-text {
+  font-size: common.get-var(font-size, md);
+}

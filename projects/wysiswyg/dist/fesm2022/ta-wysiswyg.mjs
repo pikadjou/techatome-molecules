@@ -1,4 +1,3 @@
-import { NgIf, NgFor, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Input, Component, EventEmitter, inject, ViewChild, Output, NgModule } from '@angular/core';
 import { ENotificationCode, NotificationInlineComponent, TaNotificationModule } from '@ta/notification';
@@ -16,6 +15,7 @@ import { firstValueFrom } from 'rxjs';
 import { TaDocumentsService } from '@ta/services';
 import { TaTranslationService } from '@ta/translation';
 import edjsHTML from 'editorjs-html';
+import { CommonModule } from '@angular/common';
 
 class BlockTextComponent extends TaBaseComponent {
     constructor() {
@@ -27,7 +27,7 @@ class BlockTextComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BlockTextComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-cms-editor-blocks', standalone: true, imports: [NgIf, NgFor, NotificationInlineComponent, SafePipe, TitleComponent, TextComponent, ToastComponent], template: "@for (block of this.blocks; track block.id) {\n  @switch (block.type) {\n    @case ('header') {\n      <ta-title [level]=\"block.data.level\">\n        {{ block.data.text }}\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <ta-text>\n        <div [innerHTML]=\"block.data.text | safe: 'html'\"></div>\n      </ta-text>\n    }\n    @case ('list') {\n      @if (block.data.style === 'ordered') {\n        <ol>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ol>\n      } @else if (block.data.style === 'unordered') {\n        <ul>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ul>\n      }\n    }\n    @case ('delimiter') {\n      <hr />\n    }\n    @case ('image') {\n      <img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n    }\n    @case ('quote') {\n      <div class=\"flex-start g-space-xs\">\n        @if (block.data.caption) {\n          <div>{{ block.data.caption }}:</div>\n        }\n        <q [innerHTML]=\"block.data.text | safe: 'html'\"></q>\n      </div>\n    }\n    @case ('warning') {\n      <ta-toast>\n        <ta-notification-inline\n          [message]=\"block.data.message\"\n          [code]=\"this.ENotificationCode.warning\"\n          [showClose]=\"false\"\n        ></ta-notification-inline>\n      </ta-toast>\n    }\n  }\n}\n" }]
+            args: [{ selector: 'ta-cms-editor-blocks', standalone: true, imports: [NotificationInlineComponent, SafePipe, TitleComponent, TextComponent, ToastComponent], template: "@for (block of this.blocks; track block.id) {\n  @switch (block.type) {\n    @case ('header') {\n      <ta-title [level]=\"block.data.level\">\n        {{ block.data.text }}\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <ta-text>\n        <div [innerHTML]=\"block.data.text | safe: 'html'\"></div>\n      </ta-text>\n    }\n    @case ('list') {\n      @if (block.data.style === 'ordered') {\n        <ol>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ol>\n      } @else if (block.data.style === 'unordered') {\n        <ul>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ul>\n      }\n    }\n    @case ('delimiter') {\n      <hr />\n    }\n    @case ('image') {\n      <img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n    }\n    @case ('quote') {\n      <div class=\"flex-start g-space-xs\">\n        @if (block.data.caption) {\n          <div>{{ block.data.caption }}:</div>\n        }\n        <q [innerHTML]=\"block.data.text | safe: 'html'\"></q>\n      </div>\n    }\n    @case ('warning') {\n      <ta-toast>\n        <ta-notification-inline\n          [message]=\"block.data.message\"\n          [code]=\"this.ENotificationCode.warning\"\n          [showClose]=\"false\"\n        ></ta-notification-inline>\n      </ta-toast>\n    }\n  }\n}\n" }]
         }], propDecorators: { blocks: [{
                 type: Input
             }] } });

@@ -8,8 +8,8 @@ import { pathToFile, pickImages, TaBaseComponent, TaDirectivePipeModule } from '
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { map } from 'rxjs/operators';
-import { InputPanel, InputDropdown, InputTextarea } from '@ta/form-model';
 import { of } from 'rxjs';
+import { InputPanel, InputDropdown, InputTextarea } from '@ta/form-model';
 import { TaFormModule } from '@ta/form-basic';
 import { TaFormInputsModule } from '@ta/form-input';
 import { TaIconsModule } from '@ta/icons';
@@ -191,7 +191,7 @@ class UploadDocumentFormService {
                     new InputDropdown({
                         key: 'documentType',
                         label: 'documents.upload.dialog.document-type',
-                        options: data.documentTypes$.pipe(map((fileTypes) => {
+                        options$: data.documentTypes$.pipe(map((fileTypes) => {
                             return fileTypes.map(fileType => {
                                 return {
                                     id: fileType.id.toString(),

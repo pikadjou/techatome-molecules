@@ -1405,6 +1405,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             args: [{ selector: 'ta-tree-item', standalone: true, imports: [], template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }]
         }] });
 
+class BooleanIconComponent {
+    constructor() {
+        /**
+         * Size of the icon
+         */
+        this.size = 'md';
+        TaTranslationUI.getInstance();
+    }
+    getIconName() {
+        return this.value ? 'task_alt' : 'cancel';
+    }
+    getClass() {
+        return `boolean-icon-${this.value ? 'success' : 'error'} ${this.size}`;
+    }
+    isNullValue() {
+        return this.value === null || this.value === undefined;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BooleanIconComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: BooleanIconComponent, isStandalone: true, selector: "ta-boolean-icon", inputs: { value: "value", size: "size" }, ngImport: i0, template: "<div class=\"boolean-icon-container\" [ngClass]=\"this.getClass()\">\r\n  @if (this.isNullValue()) {\r\n    <span class=\"null-text\">{{ 'ui.boolean-icon.not-communicated' | translate }}</span>\r\n  } @else {\r\n    <ta-font-icon \r\n      [name]=\"this.getIconName()\" \r\n      [type]=\"this.size\">\r\n    </ta-font-icon>\r\n  }\r\n</div>", styles: [".boolean-icon-container{display:inline-flex;align-items:center;gap:var(--ta-space-xs)}.boolean-icon-success{color:var(--ta-semantic-token-success)}.boolean-icon-error{color:var(--ta-semantic-token-alert)}.null-text{font-size:var(--ta-font-size-md)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BooleanIconComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-boolean-icon', standalone: true, imports: [NgClass, FontIconComponent, TranslateModule], template: "<div class=\"boolean-icon-container\" [ngClass]=\"this.getClass()\">\r\n  @if (this.isNullValue()) {\r\n    <span class=\"null-text\">{{ 'ui.boolean-icon.not-communicated' | translate }}</span>\r\n  } @else {\r\n    <ta-font-icon \r\n      [name]=\"this.getIconName()\" \r\n      [type]=\"this.size\">\r\n    </ta-font-icon>\r\n  }\r\n</div>", styles: [".boolean-icon-container{display:inline-flex;align-items:center;gap:var(--ta-space-xs)}.boolean-icon-success{color:var(--ta-semantic-token-success)}.boolean-icon-error{color:var(--ta-semantic-token-alert)}.null-text{font-size:var(--ta-font-size-md)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { value: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }] } });
+
 class ToggleCardComponent {
     constructor() {
         this.title = '';
@@ -3105,5 +3134,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
+export { ActionButtonComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

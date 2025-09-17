@@ -4,6 +4,7 @@
 export * from './ui.module';
 export * from './tree/public-api';
 export * from './badge/badge.component';
+export * from './boolean-icon/boolean-icon.component';
 export * from './bullet/bullet.component';
 export * from './button/action/action-button-data';
 export * from './button/action/action-button.component';

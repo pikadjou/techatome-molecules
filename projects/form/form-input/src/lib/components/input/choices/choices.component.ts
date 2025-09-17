@@ -96,7 +96,7 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
     if (!this.input.advancedSearch$) {
       this.requestState.asked();
       this._registerSubscription(
-        this.input.options.subscribe({
+        this.input.options$.subscribe({
           next: data => {
             this.bOptions$.next(data);
             this.requestState.completed();

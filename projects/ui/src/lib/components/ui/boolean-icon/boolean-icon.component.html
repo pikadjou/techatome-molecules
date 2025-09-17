@@ -1,0 +1,10 @@
+<div class="boolean-icon-container" [ngClass]="this.getClass()">
+  @if (this.isNullValue()) {
+    <span class="null-text">{{ 'ui.boolean-icon.not-communicated' | translate }}</span>
+  } @else {
+    <ta-font-icon 
+      [name]="this.getIconName()" 
+      [type]="this.size">
+    </ta-font-icon>
+  }
+</div>
