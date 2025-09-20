@@ -24,7 +24,7 @@ export class LoaderComponent {
   skeleton: PlaceholderConfig | null = null;
 
   @Input()
-  size: TaSizes = 'md';
+  size: TaSizes = 'lg';
 
   @Input()
   text: string = 'container.loading.light-message';

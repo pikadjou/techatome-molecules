@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
@@ -10,7 +10,7 @@ import { StopPropagationDirective } from '@ta/utils';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   standalone: true,
-  imports: [NgClass, NgIf, FontIconComponent, StopPropagationDirective],
+  imports: [NgClass, FontIconComponent, StopPropagationDirective],
 })
 export class ButtonComponent {
   /**

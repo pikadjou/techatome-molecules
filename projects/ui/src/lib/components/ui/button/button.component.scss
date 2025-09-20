@@ -36,7 +36,10 @@
     background-color: common.get-var(components, button, primary, background);
 
     &:hover {
+      color: common.get-var(components, button, primary, hover, color);
       background-color: common.get-var(components, button, primary, hover, background);
+      border: 1px solid common.get-var(components, button, primary, hover, border);
+
     }
 
     &.disabled {
@@ -48,9 +51,6 @@
       background-color: common.get-var(components, button,  primary, inactive, background);
     }
 
-    ta-font-icon {
-      color: common.get-var(components, button, primary, icon, color);
-    }
   }
   &.secondary {
     color: common.get-var(components, button, secondary, color);

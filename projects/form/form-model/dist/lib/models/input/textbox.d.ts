@@ -9,5 +9,5 @@ export declare class InputTextBox<T = string> extends InputBase<T> {
     controlType: string;
     icon?: TaIconType | null;
     iconClicked?: () => void;
-    constructor(options?: IInputTextBox<string>);
+    constructor(options?: IInputTextBox<T>);
 }

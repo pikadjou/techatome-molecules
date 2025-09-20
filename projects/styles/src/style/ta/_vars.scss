@@ -451,11 +451,13 @@ $components: map.merge(
       ),
       
       primary: (
-        color: map.get($text, primary),
+        color: map.get($text, invert, primary),
         background: map.get($surface, brand, primary),
         border: map.get($border, brand, primary),
         hover: (
-          border: map.get($border, invert, primary),
+          color: map.get($text, primary),
+          background: map.get($surface, primary),
+          border: map.get($border, primary),
         ),
         disabled: (
           color: map.get($text, tertiary),
@@ -465,7 +467,7 @@ $components: map.merge(
           border: map.get($border, primary),
         ),
         icon: (
-          color: map.get($icon, brand, primary),
+          color: map.get($icon, invert, primary),
         ),
       ),
 

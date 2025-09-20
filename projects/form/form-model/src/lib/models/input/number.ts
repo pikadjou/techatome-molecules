@@ -7,7 +7,7 @@ export class InputNumber extends InputTextBox<number> {
   override set value(value: number) {
     super.value = Number(value);
   }
-  constructor(options: IInputTextBox<string> = {}) {
+  constructor(options: IInputTextBox<number> = {}) {
     super(options);
     this.type = 'number';
   }

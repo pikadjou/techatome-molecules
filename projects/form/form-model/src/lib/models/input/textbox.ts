@@ -13,7 +13,7 @@ export class InputTextBox<T = string> extends InputBase<T> {
   icon?: TaIconType | null;
   iconClicked?: () => void;
 
-  constructor(options: IInputTextBox<string> = {}) {
+  constructor(options: IInputTextBox<T> = {}) {
     super(options);
     this.type = options.type || 'text';
     this.icon = options.icon || null;
