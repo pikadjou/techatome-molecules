@@ -11,7 +11,8 @@ export declare class TitleComponent {
      */
     isTheme: boolean;
     isBold: boolean;
+    icon: import("@angular/core").InputSignal<string | undefined>;
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<TitleComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TitleComponent, "ta-title", never, { "level": { "alias": "level"; "required": false; }; "isTheme": { "alias": "isTheme"; "required": false; }; "isBold": { "alias": "isBold"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TitleComponent, "ta-title", never, { "level": { "alias": "level"; "required": false; }; "isTheme": { "alias": "isTheme"; "required": false; }; "isBold": { "alias": "isBold"; "required": false; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
 }

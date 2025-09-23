@@ -505,10 +505,7 @@ $components: map.merge(
         inactive: (
           color: map.get($text, primary),
           background: map.get($surface, tertiary),
-        ),
-        icon: (
-          color: map.get($icon, invert, primary),
-        ),
+        )
       ),
       
       

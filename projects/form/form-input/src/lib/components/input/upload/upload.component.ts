@@ -76,7 +76,7 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
           const documents = this._documentsService.getDocuments(ids);
           for (let doc of documents ?? []) {
             this.inProgressFiles.push({
-              name: doc.name ?? '',
+              name: doc.description ?? '',
               completed: doc,
               progress: 100,
             });
@@ -113,7 +113,7 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
         file.completed
           ? {
               id: file.completed.id,
-              name: file.completed.name ?? '',
+              name: file.completed.description ?? '',
               url: file.completed.url,
             }
           : null

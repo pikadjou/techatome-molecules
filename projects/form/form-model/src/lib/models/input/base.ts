@@ -1,8 +1,10 @@
+import { signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+
+import { Observable, Subject, distinctUntilChanged, of } from 'rxjs';
 
 import { ENotificationCode } from '@ta/notification';
 import { SubscriberHandler } from '@ta/utils';
-import { Observable, Subject, distinctUntilChanged, of } from 'rxjs';
 
 import { InputLabel } from './label';
 
@@ -13,7 +15,7 @@ export interface IInputsError {
 
 export interface IInputBase<T> {
   value$?: Observable<T>;
-  value?: T;
+  value?: T | null;
   key?: string;
   label?: string;
   type?: string;
@@ -39,18 +41,18 @@ export class InputBase<T> implements IInputBase<T> {
   children: (InputBase<any> | InputLabel)[];
   disabled: boolean;
   visible$: Observable<boolean>;
-  changeValue$ = new Subject<T>();
+  changeValue$ = new Subject<T | null>();
 
-  private _value: T;
+  private _value = signal<T | null>(null);
   private _isVisible!: boolean;
 
   protected _subscriberHandler = new SubscriberHandler();
 
   get value() {
-    return this._value;
+    return this._value();
   }
-  set value(value: T) {
-    this._value = value;
+  set value(value: T | null) {
+    this._value.set(value);
     this.formControl?.setValue(value);
   }
   constructor(options: IInputBase<any> = {}) {
@@ -67,7 +69,7 @@ export class InputBase<T> implements IInputBase<T> {
       );
     }
 
-    this._value = options.value === undefined ? null : options.value;
+    this._value.set(options.value === undefined ? null : options.value);
     this.key = options.key || Math.random().toString();
     this.label = options.label || '';
     this.type = options.type || '';
@@ -109,7 +111,7 @@ export class InputBase<T> implements IInputBase<T> {
         }
       }
     } else {
-      this.formControl = new FormControl<T>(this.value, this.validators);
+      this.formControl = new FormControl<T | null>(this.value, this.validators);
       if (this.disabled) {
         this.formControl.disable();
       }

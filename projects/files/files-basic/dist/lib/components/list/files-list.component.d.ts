@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import { TaBaseComponent, FileData, FileType } from '@ta/utils';
+import { FileData, FileType, TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class FileListComponent extends TaBaseComponent {
     files: FileData[];

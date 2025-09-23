@@ -1,7 +1,7 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SubscriberHandler, Culture, extractEnum } from '@ta/utils';
-import { Subject, of, distinctUntilChanged } from 'rxjs';
 import { signal } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, of, distinctUntilChanged } from 'rxjs';
+import { SubscriberHandler, Culture, extractEnum } from '@ta/utils';
 import { tap } from 'rxjs/operators';
 import { Logger } from '@ta/server';
 
@@ -25,14 +25,15 @@ function phoneValidator() {
 
 class InputBase {
     get value() {
-        return this._value;
+        return this._value();
     }
     set value(value) {
-        this._value = value;
+        this._value.set(value);
         this.formControl?.setValue(value);
     }
     constructor(options = {}) {
         this.changeValue$ = new Subject();
+        this._value = signal(null);
         this._subscriberHandler = new SubscriberHandler();
         if (options.value$) {
             this._subscriberHandler.registerSubscription(options.value$.subscribe({
@@ -44,7 +45,7 @@ class InputBase {
                 },
             }));
         }
-        this._value = options.value === undefined ? null : options.value;
+        this._value.set(options.value === undefined ? null : options.value);
         this.key = options.key || Math.random().toString();
         this.label = options.label || '';
         this.type = options.type || '';
@@ -164,9 +165,6 @@ class InputImages extends InputBase {
         this.update = null;
         if (!this.controlType) {
             this.controlType = 'images';
-        }
-        if (this.value === null) {
-            this.value = [];
         }
         this.files$ = options.files$ || null;
         if (options.update) {
@@ -520,6 +518,9 @@ class InputTranslation extends InputDynamic {
     _fill() {
         if (this.mainCulture) {
             this.add(Culture[this.mainCulture]);
+        }
+        if (!this.value) {
+            return;
         }
         for (const key of Object.keys(this.value)) {
             this.add(key);

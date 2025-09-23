@@ -13,12 +13,9 @@ export function GET_DOCUMENTS(filters: { ids?: string[]; take?: number }): Graph
           documents(${graphQlTake(filters.take)}, order: { isNew: DESC, uploadedDate: DESC }, ${where}) {
             items {
               ${documentProps.get('id')}
-              ${documentProps.get('name')}
               ${documentProps.get('url')}
-              ${documentProps.get('projectId')}
-              ${documentProps.get('fileType')}
-              ${documentProps.get('size')}
-              ${documentProps.get('uploadedDate')}
+              ${documentProps.get('description')}
+              
             }
           }
         }

@@ -1,87 +1,52 @@
-import { NgClass, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { NgClass } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 
-import { FileListComponent } from '@ta/files-basic';
+import { combineLatest } from 'rxjs';
+
 import { InputImages } from '@ta/form-model';
-import { LocalIconComponent } from '@ta/icons';
+import { FontIconComponent } from '@ta/icons';
+import { DocumentDto, TaDocumentsService } from '@ta/services';
 import { ButtonComponent } from '@ta/ui';
-import { FileData, pickImages, removeElement } from '@ta/utils';
+import { isNonNullable, pickImages } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
 import { FormLabelComponent } from '../../label/label.component';
-import { InputImageModal } from './modal/input-images-modal.component';
 
 @Component({
   selector: 'ta-input-images',
   templateUrl: './input-images.component.html',
   styleUrls: ['./input-images.component.scss'],
   standalone: true,
-  imports: [NgIf, NgClass, LocalIconComponent, FormLabelComponent, ButtonComponent, FileListComponent],
+  imports: [NgClass, FormLabelComponent, ButtonComponent, FontIconComponent],
 })
 export class InputImagesComponent extends TaAbstractInputComponent<InputImages> implements OnInit {
-  get selection(): string[] {
-    return this.input.value;
-  }
+  private _documentsService = inject(TaDocumentsService);
 
-  get fileDataSelection(): FileData[] {
-    return this.selection.map(selection => ({
-      id: 0,
-      type: 'Image',
-      url: selection,
-    }));
-  }
-
-  get isCircularButton(): boolean {
-    if (!this.selection) return false;
-
-    return this.selection.length > 0;
-  }
-
-  set selection(value: string[]) {
-    this.input.formControl?.setValue(value);
-  }
-
-  constructor(public dialog: MatDialog) {
+  constructor() {
     super();
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-    if (this.input.removeFile$) {
-      this._registerSubscription(
-        this.input.removeFile$.subscribe(fileData => removeElement(this.selection, fileData.url))
-      );
+  public async openDialog() {
+    const images = await pickImages();
+
+    if (images.length > 0) {
+      combineLatest(
+        images
+          .map(image => image.file)
+          .filter(isNonNullable)
+          .map(file => this._documentsService.addDocument$({ file: file }))
+      ).subscribe({
+        next: documents => {
+          this.input.value = [...(this.input.value || []), ...documents];
+        },
+      });
     }
   }
 
-  public async openDialog() {
-    if (!this.input.files$) {
-      this.selection.push(...(await pickImages()).map(image => image.localUrl!));
-
+  public onFileDeleted(fileData: DocumentDto) {
+    if (!this.input.value) {
       return;
     }
-
-    const dialogRef = this.dialog.open(InputImageModal, {
-      data: { input: this.input, selection: this.selection },
-    });
-
-    this._registerSubscription(
-      dialogRef.afterClosed().subscribe(selection => {
-        if (!selection) {
-          return;
-        }
-        this.selection = selection;
-      })
-    );
+    this.input.value = this.input.value.filter(doc => doc.url !== fileData.url);
   }
-
-  public onFileDeleted(fileData: FileData) {
-    this.selection = this.selection.filter(url => url !== fileData.url);
-  }
-}
-
-export interface DialogData {
-  input: InputImages;
-  selection: string[];
 }

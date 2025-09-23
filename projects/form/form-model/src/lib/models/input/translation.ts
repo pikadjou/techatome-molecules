@@ -34,6 +34,9 @@ export class InputTranslation extends InputDynamic {
       this.add(Culture[this.mainCulture]);
     }
 
+    if (!this.value) {
+      return;
+    }
     for (const key of Object.keys(this.value)) {
       this.add(key);
     }

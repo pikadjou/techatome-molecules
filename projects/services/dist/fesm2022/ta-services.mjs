@@ -259,19 +259,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
-const documentProps = new GraphSchema([
-    'id',
-    'name',
-    'url',
-    'fileType',
-    'size',
-    'description',
-    'uploadedDate',
-    'tenantId',
-    'tenantName',
-    'tenantDocumentId',
-    'projectId',
-]);
+const documentProps = new GraphSchema(['id', 'url', 'description', 'mediaType', 'createdDate']);
 
 var FileType;
 (function (FileType) {
@@ -298,12 +286,9 @@ function GET_DOCUMENTS(filters) {
           documents(${graphQlTake(filters.take)}, order: { isNew: DESC, uploadedDate: DESC }, ${where}) {
             items {
               ${documentProps.get('id')}
-              ${documentProps.get('name')}
               ${documentProps.get('url')}
-              ${documentProps.get('projectId')}
-              ${documentProps.get('fileType')}
-              ${documentProps.get('size')}
-              ${documentProps.get('uploadedDate')}
+              ${documentProps.get('description')}
+              
             }
           }
         }

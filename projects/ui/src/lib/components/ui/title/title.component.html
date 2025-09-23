@@ -32,5 +32,11 @@
 }
 
 <ng-template #contentTemplate>
-  <ng-content></ng-content>
+  <div class="align-center g-space-sm">
+    @if(this.icon(); as i) {
+      <ta-font-icon [name]="i" size="md"></ta-font-icon>
+    }
+    <ng-content></ng-content>
+  </div>
+
 </ng-template>

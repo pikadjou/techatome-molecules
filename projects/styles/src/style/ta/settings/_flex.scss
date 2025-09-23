@@ -1,6 +1,9 @@
 @use "ta/utils/mixins/flex";
 
 @mixin generateFlex() {
+  .flex {
+    @include flex.flex();
+  }
   .space-between {
     @include flex.space-between();
   }

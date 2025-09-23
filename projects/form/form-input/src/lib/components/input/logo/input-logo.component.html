@@ -2,8 +2,8 @@
 
 <div class="flex-column align-center g-space-md">
   <div class="logo-preview-wrapper" (click)="this.openDialog()">
-    @if (this.hasLogo && this.selection) {
-      <img [src]="this.selection" alt="{{ 'input.logo.alt' | translate }}" class="logo-image" />
+    @if (this.input.value) {
+      <img [src]="this.input.value" class="logo-image" />
       <div class="logo-overlay">
         <ta-font-icon name="edit" type="lg"></ta-font-icon>
         <span>{{ 'input.logo.modify' | translate }}</span>
@@ -16,7 +16,7 @@
     }
   </div>
   
-  @if (this.hasLogo) {
+  @if (this.input.value) {
     <ta-button 
       type="secondary" 
       size="small" 

@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { InputLogo } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
+import { TaDocumentsService } from '@ta/services';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent } from '@ta/ui';
-import { FileData, pickImages } from '@ta/utils';
+import { pickImages } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
 import { FormLabelComponent } from '../../label/label.component';
-import { InputLogoModal } from './modal/input-logo-modal.component';
 
 @Component({
   selector: 'ta-input-logo',
@@ -19,79 +18,26 @@ import { InputLogoModal } from './modal/input-logo-modal.component';
   imports: [FontIconComponent, FormLabelComponent, ButtonComponent, TranslatePipe],
 })
 export class InputLogoComponent extends TaAbstractInputComponent<InputLogo> implements OnInit {
-  get selection(): string | null {
-    return this.input.value;
-  }
+  private _documentsService = inject(TaDocumentsService);
 
-  get fileDataSelection(): FileData | null {
-    if (!this.selection) return null;
-
-    return {
-      id: 0,
-      type: 'Image',
-      url: this.selection,
-    };
-  }
-
-  get hasLogo(): boolean {
-    return !!this.selection;
-  }
-
-  set selection(value: string | null) {
-    this.input.formControl?.setValue(value);
-  }
-
-  constructor(public dialog: MatDialog) {
+  constructor() {
     super();
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-    if (this.input.removeFile$) {
-      this._registerSubscription(
-        this.input.removeFile$.subscribe(fileData => {
-          if (this.selection === fileData.url) {
-            this.selection = null;
-          }
-        })
-      );
-    }
-  }
-
   public async openDialog() {
-    if (!this.input.availableFile$) {
-      const images = await pickImages();
-      if (images.length > 0) {
-        this.selection = images[0].localUrl!;
-      }
-      return;
-    }
+    const images = await pickImages();
 
-    const dialogRef = this.dialog.open(InputLogoModal, {
-      data: { input: this.input, selection: this.selection },
-    });
-
-    this._registerSubscription(
-      dialogRef.afterClosed().subscribe(selection => {
-        if (selection !== undefined) {
-          this.selection = selection;
-        }
-      })
-    );
-  }
-
-  public onFileDeleted(fileData: FileData) {
-    if (this.selection === fileData.url) {
-      this.selection = null;
+    const logoFile = images.length > 0 ? images[0].file : null;
+    if (logoFile) {
+      this._documentsService.addDocument$({ file: logoFile, description: 'logo' }).subscribe({
+        next: document => {
+          this.input.value = document.url;
+        },
+      });
     }
   }
 
   public removeLogo() {
-    this.selection = null;
+    this.input.value = '';
   }
-}
-
-export interface LogoDialogData {
-  input: InputLogo;
-  selection: string | null;
 }

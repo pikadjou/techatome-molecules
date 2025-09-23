@@ -1,3 +1,7 @@
+@mixin flex() {
+  display: flex;
+}
+
 @mixin space-between() {
   display: flex;
   flex-direction: row;

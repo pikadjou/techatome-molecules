@@ -2,22 +2,34 @@
   <div class="col">
     <ta-form-label [input]="this.input"></ta-form-label>
   </div>
-  <div [ngClass]="this.selection.length === 0 ? 'col-12 my-space-2' : 'col-auto'">
-    <ta-button
-      type="secondary"
-      #focusedElement
-      (action)="this.openDialog()"
-      [options]="{ circular: this.isCircularButton }"
-    >
-      <ta-local-icon [type]="this.icon.Gallery"></ta-local-icon>
-    </ta-button>
+</div>
+
+<div class="flex-column g-space-xs">
+  @if (this.input.value?.length ?? 0 > 0) {
+    <div class="grid g-space-md">
+      @for(value of this.input.value; track value.id) {
+        <div class="image-preview-wrapper one-fourth">
+          <img [src]="value.url" class="image-preview" />
+          <div class="image-remove">
+            <ta-button
+              type="danger"
+              (action)="this.onFileDeleted(value)"
+              icon="delete"
+            >
+            </ta-button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+  <div class="flex-start">
+      <ta-button
+        type="tertiary"
+        (action)="this.openDialog()"
+        icon="add_a_photo"
+      >
+        Ajouter
+      </ta-button>
   </div>
 </div>
 
-@if (this.selection.length > 0) {
-  <ta-files-list
-    [files]="this.fileDataSelection"
-    [canDeleteFile]="!!this.input.fileDeleted"
-    (fileDeleted)="this.onFileDeleted($event)"
-  ></ta-files-list>
-}

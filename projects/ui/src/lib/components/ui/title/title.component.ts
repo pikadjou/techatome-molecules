@@ -1,12 +1,14 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
+
+import { FontIconComponent } from 'projects/icons/dist';
 
 @Component({
-selector: 'ta-title',
+  selector: 'ta-title',
   templateUrl: './title.component.html',
   styleUrls: ['./title.component.scss'],
   standalone: true,
-  imports: [NgClass, NgTemplateOutlet],
+  imports: [NgClass, NgTemplateOutlet, FontIconComponent],
 })
 export class TitleComponent {
   /**
@@ -23,6 +25,8 @@ export class TitleComponent {
   @Input() isTheme: boolean = false;
 
   @Input() isBold: boolean = false;
+
+  icon = input<string>();
 
   constructor() {}
 }

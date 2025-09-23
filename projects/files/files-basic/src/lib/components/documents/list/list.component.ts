@@ -95,7 +95,7 @@ export class DocumentsListComponent extends TaBaseComponent implements OnInit, O
     if (this.isChecked(doc)) {
       this._checkedFiles = this._checkedFiles.filter(x => x.id !== doc.id);
     } else {
-      this._checkedFiles.push({ id: doc.id, name: doc.name, url: doc.url });
+      this._checkedFiles.push({ id: doc.id, name: doc.description, url: doc.url });
     }
     this.checkedFilesChanged.emit(this._checkedFiles);
   }

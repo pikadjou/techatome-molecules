@@ -2,13 +2,13 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Inject, OnInit, Optional, Output } from '@angular/core';
 
-import { of } from 'rxjs';
+import { filter, of } from 'rxjs';
 
 import { ToggleComponent } from '@ta/form-input';
 import { InputCheckBox } from '@ta/form-model';
 import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
 import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { TaBaseComponent, isNonNullable } from '@ta/utils';
 
 import { TaSaleService } from '../../services/sale.service';
 import { RichTextComponent } from '../types/rich-text/rich-text.component';
@@ -42,7 +42,7 @@ export class SaleComponent extends TaBaseComponent implements OnInit {
 
     this.checkbox.createFormControl();
     this._registerSubscription(
-      this.checkbox.changeValue$.subscribe({
+      this.checkbox.changeValue$.pipe(filter(isNonNullable)).subscribe({
         next: value => this.acceptation.emit(value),
       })
     );

@@ -87,10 +87,6 @@
     &.inactive {
       border-color: common.get-var(components, button, tertiary, inactive, border);
     }
-
-    ta-font-icon {
-      color: common.get-var(components, button, tertiary, icon, color);
-    }
   }
 }
 

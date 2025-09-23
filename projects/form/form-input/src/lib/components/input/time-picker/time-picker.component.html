@@ -5,7 +5,7 @@
     class="form-control"
     [ngxTimepicker]="picker"
     [formControl]="$any(this.input.formControl)"
-    [value]="this.input.value"
+    [value]="this.input.value ?? ''"
     [format]="24"
     readonly
   />

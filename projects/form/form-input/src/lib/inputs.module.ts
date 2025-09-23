@@ -41,7 +41,6 @@ import { DatePickerComponent } from './components/input/date-picker/date-picker.
 import { DropdownComponent } from './components/input/dropdown/dropdown.component';
 import { InputImageComponent } from './components/input/image/input-image.component';
 import { InputImagesComponent } from './components/input/images/input-images.component';
-import { InputImageModal } from './components/input/images/modal/input-images-modal.component';
 import { LabelComponent } from './components/input/label/label.component';
 import { InputPhoneComponent } from './components/input/phone/input-phone.component';
 import { RadioComponent } from './components/input/radio/radio.component';
@@ -122,7 +121,6 @@ import { TaTranslationInput } from './translation.service';
     TimePickerComponent,
     ToggleComponent,
     InputImagesComponent,
-    InputImageModal,
     InputSchemaComponent,
     InputSchemaModal,
     InputImageComponent,

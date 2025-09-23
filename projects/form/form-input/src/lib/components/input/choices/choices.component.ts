@@ -9,6 +9,7 @@ import {
   combineLatest,
   concatMap,
   debounceTime,
+  filter,
   map,
   of,
   startWith,
@@ -30,7 +31,7 @@ import {
   TextComponent,
 } from '@ta/ui';
 import { TaOverlayPanelComponent } from '@ta/ui';
-import { StopPropagationDirective } from '@ta/utils';
+import { StopPropagationDirective, isNonNullable } from '@ta/utils';
 import { getUniqueArray, toArray } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
@@ -104,7 +105,10 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
         })
       );
 
-      this.filteredOptions$ = combineLatest([this.inputSearch.changeValue$.pipe(startWith('')), this.bOptions$]).pipe(
+      this.filteredOptions$ = combineLatest([
+        this.inputSearch.changeValue$.pipe(startWith(''), filter(isNonNullable)),
+        this.bOptions$,
+      ]).pipe(
         map(data => ({
           search: data[0],
           list: data[1],
@@ -121,6 +125,7 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
         this.inputSearch.changeValue$
           .pipe(
             debounceTime(500),
+            filter(isNonNullable),
             tap(() => this.requestState.asked()),
             concatMap(search => (this.input.advancedSearch$ ? this.input.advancedSearch$(search) : of()))
           )

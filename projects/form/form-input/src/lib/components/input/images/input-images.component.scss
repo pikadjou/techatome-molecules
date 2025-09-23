@@ -1,0 +1,17 @@
+@use "ta/utils/mixins/common";
+
+.image-preview-wrapper {
+    position: relative;
+    border-radius: common.get-var(radius, rounded);
+    background-color: common.get-var(surface, secondary);
+    img {
+        aspect-ratio: 3/4;
+    }
+}
+
+.image-remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: common.get-var(spacing, sm);
+}

@@ -88,7 +88,7 @@ export const pathToFile = async (pic: { webPath?: string; format: string }): Pro
   const response = await fetch(pic.webPath);
 
   const blob = await compressImage(await response.blob());
-  return new File([blob], newGuid(), { type: pic.format });
+  return new File([blob], newGuid(), { type: blob.type });
 };
 
 /**
