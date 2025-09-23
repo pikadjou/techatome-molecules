@@ -1,7 +1,7 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, input } from '@angular/core';
 
-import { FontIconComponent } from 'projects/icons/dist';
+import { FontIconComponent } from '@ta/icons';
 
 @Component({
   selector: 'ta-title',
