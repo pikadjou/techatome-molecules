@@ -7,30 +7,28 @@ import { Observable } from 'rxjs';
 
 import { TaRoutes } from '@ta/menu';
 
-import { Level, TaPermissionsService } from '../services/permissions.service';
+import { TaPermissionsService } from '../services/permissions.service';
 
-export interface FeatureRouteData {
-  feature: string;
-  level: Level;
+export interface RoleRouteData {
+  role: string;
 }
 @Injectable({
   providedIn: 'root',
 })
-export class FeatureGuard {
+export class RoleGuard {
   public readonly _permissionsService = inject(TaPermissionsService);
 
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
-    const level = route.data['level'];
-    const feature = route.data['feature'];
+    const role = route.data['role'];
 
     if (this._permissionsService.received === true) {
-      return this._isValidPermission(feature, level);
+      return this._isValidPermission(role);
     }
     return this._permissionsService.updated$.pipe(
       map(() => {
-        return this._isValidPermission(feature, level);
+        return this._isValidPermission(role);
       })
     );
   }
@@ -39,8 +37,8 @@ export class FeatureGuard {
     this.router.navigateByUrl(TaRoutes.getHome());
   }
 
-  private _isValidPermission(feature: string, level: Level) {
-    if (this._permissionsService.canDirectAccess(feature, level)) {
+  private _isValidPermission(role: string) {
+    if (this._permissionsService.hasRole(role)) {
       return true;
     }
     this.setRedirect();

@@ -2,10 +2,10 @@ import * as i0 from '@angular/core';
 import { Injectable, inject, InjectionToken, Component, EventEmitter, signal, Output, Input } from '@angular/core';
 import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
-import { BehaviorSubject, filter, map, switchMap, distinct, tap } from 'rxjs';
-import { Logger, GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest } from '@ta/server';
+import { BehaviorSubject, filter, map, switchMap, of, distinct, tap } from 'rxjs';
 import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
 import * as i1 from '@angular/router';
+import { GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest, Logger } from '@ta/server';
 import { TranslatePipe, TaTranslationService } from '@ta/translation';
 import { CardComponent, CardContentComponent, ButtonComponent, LoaderComponent, ErrorComponent, EmptyComponent, InlineProfileDataComponent, ListTagComponent, ListContainerComponent, ListElementComponent, ListTitleComponent } from '@ta/ui';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
@@ -14,7 +14,6 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService, provideAuth0 as provideAuth0$1, AuthHttpInterceptor } from '@auth0/auth0-angular';
 
-const accessLevels = [''];
 class TaPermissionsService {
     get received() {
         return this._updated$.value !== null;
@@ -23,29 +22,21 @@ class TaPermissionsService {
         this._updated$ = new BehaviorSubject(null);
         this._isFill = { permissions: false, isAuthenticated: false };
         this.features = [];
-        this.guards = {};
+        this.guards = [];
         this.roles = [];
         this.isAuthenticated = false;
         this.updated$ = this._updated$.pipe(filter(isNonNullable));
     }
     set(info, isAuthenticated) {
-        Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
-        this.features = info.features ?? [];
-        this.roles = info.roles ?? [];
-        this.guards = this.roles.reduce((acc, role) => {
-            if (!role.includes('-')) {
-                return acc;
-            }
-            const [domain, access] = role.split('-');
-            const lastAccess = accessLevels.indexOf(access) > accessLevels.indexOf(acc[domain] || '') ? access : acc[domain];
-            return {
-                ...acc,
-                [domain]: lastAccess,
-            };
-        }, {});
-        Logger.LogInfo('[PERMISSIONS] Guard', this.guards);
-        this._isFill.permissions = true;
+        this.setGuard(info);
         this.setSilentAuthenticated(isAuthenticated);
+        this._canYouUpdate();
+    }
+    setGuard(info) {
+        this.features = info?.features ?? [];
+        this.roles = info?.roles ?? [];
+        this.guards = info?.guards ?? [];
+        this._isFill.permissions = true;
         this._canYouUpdate();
     }
     setSilentAuthenticated(isAuthenticated) {
@@ -56,6 +47,9 @@ class TaPermissionsService {
     setAuthenticated(isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
         this._updated$.next(Date.now());
+    }
+    hasRole$(role) {
+        return this._updated$.pipe(map(() => this.hasRole(role)));
     }
     hasRole(role) {
         return this.roles.some(x => x === role);
@@ -73,11 +67,12 @@ class TaPermissionsService {
         if (!feature) {
             return true;
         }
-        const featureGuard = this.guards[feature];
-        if (!featureGuard) {
-            return true;
-        }
-        return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);
+        return false;
+        // const featureGuard = this.guards[feature];
+        // if (!featureGuard) {
+        //   return true;
+        // }
+        // return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);
     }
     canAccess$(feature, level) {
         return this._updated$.pipe(map(() => this.canDirectAccess(feature, level)));
@@ -163,6 +158,40 @@ class FeatureGuard {
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FeatureGuard, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FeatureGuard, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }], ctorParameters: () => [{ type: i1.Router }] });
+
+class RoleGuard {
+    constructor(router) {
+        this.router = router;
+        this._permissionsService = inject(TaPermissionsService);
+    }
+    canActivate(route) {
+        const role = route.data['role'];
+        if (this._permissionsService.received === true) {
+            return this._isValidPermission(role);
+        }
+        return this._permissionsService.updated$.pipe(map$1(() => {
+            return this._isValidPermission(role);
+        }));
+    }
+    setRedirect() {
+        this.router.navigateByUrl(TaRoutes.getHome());
+    }
+    _isValidPermission(role) {
+        if (this._permissionsService.hasRole(role)) {
+            return true;
+        }
+        this.setRedirect();
+        return false;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: RoleGuard, deps: [{ token: i1.Router }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: RoleGuard, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: RoleGuard, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -406,13 +435,19 @@ class GuardComponent extends TaAbstractComponent {
         this._permissionsService = inject(TaPermissionsService);
     }
     isGuardValid$() {
-        return this._permissionsService.canAccess$(this.feature, this.level);
+        if (this.role) {
+            return this._permissionsService.hasRole$(this.role);
+        }
+        else if (this.feature && this.level) {
+            return this._permissionsService.canAccess$(this.feature, this.level);
+        }
+        return of(false);
     }
     goToLogin() {
         this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: "level", feature: "feature", canDisplayErrorMessage: "canDisplayErrorMessage" }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: "level", feature: "feature", role: "role", canDisplayErrorMessage: "canDisplayErrorMessage" }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid) {\n    <div class=\"guard-valid\">\n      <ng-content></ng-content>\n    </div>\n  }\n  @if (!isValid && this.canDisplayErrorMessage) {\n    <div class=\"guard-no-valid ta-c\">\n      <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n      {{ 'container.guard.content' | translate }}\n\n      @if (this.level === 'authenticated') {\n        <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n      }\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: GuardComponent, decorators: [{
             type: Component,
@@ -420,6 +455,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
         }], ctorParameters: () => [], propDecorators: { level: [{
                 type: Input
             }], feature: [{
+                type: Input
+            }], role: [{
                 type: Input
             }], canDisplayErrorMessage: [{
                 type: Input
@@ -492,7 +529,6 @@ class TaAuth0Service extends TaAuthService {
             Logger.LogInfo('user info', user);
             if (user) {
                 this._permissionsService.set({
-                    permissions: [],
                     roles: [],
                     features: [],
                 }, true);
@@ -568,5 +604,5 @@ const provideAuth0 = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { AuthGuard, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MyAccountComponent, SignRedirectComponent, SwitchLanguageCtaComponent, TA_AUTH_TOKEN, TA_USER_SERVICE, TaAuthService, TaPermissionsService, TaUserService, provideAuth0, provideUser, userInfo, userProfileBrutProps, userProfileProps };
+export { AuthGuard, FeatureGuard, GuardComponent, LoginCardComponent, LoginRedirectComponent, MyAccountComponent, RoleGuard, SignRedirectComponent, SwitchLanguageCtaComponent, TA_AUTH_TOKEN, TA_USER_SERVICE, TaAuthService, TaPermissionsService, TaUserService, provideAuth0, provideUser, userInfo, userProfileBrutProps, userProfileProps };
 //# sourceMappingURL=ta-user.mjs.map

@@ -33,7 +33,6 @@ export class TaAuth0Service extends TaAuthService {
           if (user) {
             this._permissionsService.set(
               {
-                permissions: [],
                 roles: [],
                 features: [],
               },

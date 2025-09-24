@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 
-import { Logger } from '@ta/server';
 import { isNonNullable } from '@ta/utils';
 
 export type Level = 'authenticated' | 'unauthenticated' | 'authorize' | 'administrator';
 
-export type PermissionFeature = 'tenant' | 'onwer' | 'premium';
-export type Domain = 'tenant' | 'onwer';
-
-const accessLevels = [''];
+export type GuardInfo = {
+  guards?: string[];
+  roles?: string[];
+  features?: string[];
+};
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +19,8 @@ export class TaPermissionsService {
   private _updated$ = new BehaviorSubject<number | null>(null);
   private _isFill = { permissions: false, isAuthenticated: false };
 
-  public features: (PermissionFeature | string)[] = [];
-  public guards: { [index: string]: Level } = {};
+  public features: string[] = [];
+  public guards: string[] = [];
   public roles: string[] = [];
   public isAuthenticated: boolean = false;
 
@@ -32,36 +32,21 @@ export class TaPermissionsService {
 
   constructor() {}
 
-  public set(
-    info: {
-      permissions: string[];
-      roles: string[];
-      features: PermissionFeature[];
-    },
-    isAuthenticated: boolean
-  ) {
-    Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
-
-    this.features = info.features ?? [];
-    this.roles = info.roles ?? [];
-
-    this.guards = this.roles.reduce<typeof this.guards>((acc, role) => {
-      if (!role.includes('-')) {
-        return acc;
-      }
-      const [domain, access] = role.split('-');
-
-      const lastAccess = accessLevels.indexOf(access) > accessLevels.indexOf(acc[domain] || '') ? access : acc[domain];
-      return {
-        ...acc,
-        [domain]: <Level>lastAccess,
-      };
-    }, {});
-    Logger.LogInfo('[PERMISSIONS] Guard', this.guards);
-
-    this._isFill.permissions = true;
+  public set(info: GuardInfo | null, isAuthenticated: boolean) {
+    this.setGuard(info);
 
     this.setSilentAuthenticated(isAuthenticated);
+
+    this._canYouUpdate();
+  }
+
+  public setGuard(info: GuardInfo | null) {
+    this.features = info?.features ?? [];
+    this.roles = info?.roles ?? [];
+
+    this.guards = info?.guards ?? [];
+
+    this._isFill.permissions = true;
 
     this._canYouUpdate();
   }
@@ -78,11 +63,14 @@ export class TaPermissionsService {
     this._updated$.next(Date.now());
   }
 
-  public hasRole(role: string): boolean {
+  public hasRole$(role: string) {
+    return this._updated$.pipe(map(() => this.hasRole(role)));
+  }
+  public hasRole(role: string) {
     return this.roles.some(x => x === role);
   }
 
-  public canDirectAccess(feature: PermissionFeature | Domain | string, level: Level | string) {
+  public canDirectAccess(feature: string, level: Level) {
     if (level === 'authenticated') {
       return this.isAuthenticated;
     }
@@ -98,15 +86,16 @@ export class TaPermissionsService {
       return true;
     }
 
-    const featureGuard = this.guards[feature];
-    if (!featureGuard) {
-      return true;
-    }
+    return false;
+    // const featureGuard = this.guards[feature];
+    // if (!featureGuard) {
+    //   return true;
+    // }
 
-    return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);
+    // return accessLevels.indexOf(featureGuard) >= accessLevels.indexOf(level);
   }
 
-  public canAccess$(feature: PermissionFeature | string, level: Level | string): Observable<boolean> {
+  public canAccess$(feature: string, level: Level): Observable<boolean> {
     return this._updated$.pipe(map(() => this.canDirectAccess(feature, level)));
   }
 
