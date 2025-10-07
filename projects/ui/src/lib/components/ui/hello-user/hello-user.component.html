@@ -1,0 +1,27 @@
+<div class="hello-user-container">
+  @if (this.title) {
+    <div class="title">{{ this.title | translate }}</div>
+  }
+
+  @if (this.userInfo) {
+    <div class="trigram">
+      <ta-user-logo [userInfo]="this.userInfo" [size]="this.bulletSize"></ta-user-logo>
+    </div>
+  }
+
+  <div class="footer">
+    @if (this.userInfo?.naming?.firstName) {
+      <div>
+        {{ this.userInfo?.naming?.firstName }}
+      </div>
+    }
+    @if (this.userInfo?.naming?.name) {
+      <div>
+        {{ this.userInfo?.naming?.name }}
+      </div>
+    }
+    @if (this.footer) {
+      <div>{{ this.footer | translate }}</div>
+    }
+  </div>
+</div>

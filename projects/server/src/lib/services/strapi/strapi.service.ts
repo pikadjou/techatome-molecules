@@ -9,20 +9,6 @@ import { GraphQueryPayload } from '../graphql/models/graphPayload';
 import { TaBaseService } from '../server/baseService';
 import { IStrapiConfig, STRAPI_SERVER_CONFIG } from './config';
 
-export interface GraphStrapiResponse<T> {
-  data: {
-    id: string;
-    attributes: T;
-  };
-}
-
-export interface GraphStrapiListResponse<T> {
-  data: {
-    id: string;
-    attributes: T;
-  }[];
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -44,16 +30,16 @@ export class TaStrapiService extends TaBaseService {
   }
 
   public fetchQuery$<T>(payload: GraphQueryPayload, node: string) {
-    return this._graphService.fetchQuery<GraphStrapiResponse<T>>(payload, node, 'strapi').pipe(
+    return this._graphService.fetchQuery<T>(payload, node, 'strapi').pipe(
       filter(isNonNullable),
-      map(data => data.data.attributes)
+      map(data => data)
     );
   }
 
   public fetchQueryList$<T>(payload: GraphQueryPayload, node: string) {
-    return this._graphService.fetchQuery<GraphStrapiListResponse<T>>(payload, node, 'strapi').pipe(
+    return this._graphService.fetchQuery<T[]>(payload, node, 'strapi').pipe(
       filter(isNonNullable),
-      map(data => data.data.map(data => data.attributes))
+      map(data => data)
     );
   }
 }

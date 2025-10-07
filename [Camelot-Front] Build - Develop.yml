@@ -1,0 +1,70 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  - develop
+
+pool:
+  name: 'Default'
+
+stages:
+  - stage: Package
+    displayName: Build Camelot
+    dependsOn: []
+    jobs:
+      - job: BuildForPublish
+        displayName: Build & Publish
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            fetchDepth: 0
+            displayName: Checkout
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js 20.x'
+          - task: npmAuthenticate@0
+            inputs:
+              workingFile: '.npmrc'
+            displayName: 'NPM Auth.'
+          - script: |
+              git fetch --all
+              source=$(Build.SourceBranch)
+              git checkout ${source#"refs/heads/"}
+              yarn install
+              yarn run build
+            displayName: 'Build Lerna'
+            workingDirectory: '$(Build.SourcesDirectory)'
+          - script: |
+              git config --global user.email pipeline@merlinsoftware.be
+              git config --global user.name "Pipeline"
+              git update-index --assume-unchanged .npmrc
+              git update-index --assume-unchanged yarn.lock
+            displayName: Ref Git Head
+            workingDirectory: '$(Build.SourcesDirectory)'
+          - script: |
+              yarn run version --conventional-prerelease --preid beta --yes --message "[skip ci] Lerna Version"
+            displayName: Publish Package from Develop
+            workingDirectory: '$(Build.SourcesDirectory)'
+          - script: |
+              yarn run publish --yes --force-publish=*
+            displayName: Lerna Push
+          - script: |
+              git fetch origin $(Build.SourceBranchName)
+              REMOTE_HEAD=$(git rev-parse origin/$(Build.SourceBranchName))
+              LOCAL_HEAD=$(git rev-parse HEAD)
+              echo "Remote HEAD: $REMOTE_HEAD"
+              echo "Local HEAD: $LOCAL_HEAD"
+
+              if git merge-base --is-ancestor $REMOTE_HEAD $LOCAL_HEAD; then
+                echo "Local branch is ahead of remote. Pushing changes..."
+                git push --no-verify --follow-tags
+              else
+                echo "Local branch is behind remote. Pulling changes before pushing..."
+                git pull --rebase origin $(Build.SourceBranchName)
+                git push --no-verify --follow-tags
+              fi
+            displayName: 'Conditional Git Pull & Push'

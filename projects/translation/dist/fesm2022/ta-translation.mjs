@@ -2,9 +2,9 @@ import { TranslateService, provideTranslateService, TranslateLoader } from '@ngx
 export { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import * as i0 from '@angular/core';
 import { Injectable, inject, Optional, Inject, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
-import { Subject, BehaviorSubject, debounceTime, mergeMap, of, map, forkJoin } from 'rxjs';
+import { Subject, BehaviorSubject, debounceTime, mergeMap, map, forkJoin } from 'rxjs';
 import { SessionStorage } from 'storage-manager-js';
-import { TaBaseStrapiService } from '@ta/server';
+import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService } from '@ta/server';
 
 class TaTranslationRegistryService {
     constructor() {
@@ -114,6 +114,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
                     args: [TRANSLATION_CONFIG]
                 }] }] });
 
+const props$1 = ['key'];
+const featureProps = new GraphSchema(props$1.concat(baseStrapiProps));
+
+const props = ['key', 'feature', 'value'];
+const translationProps = new GraphSchema(props.concat(baseStrapiProps));
+
+function GET_TRANSLATIONS(locale, feature) {
+    const filters = { feature: { key: { eq: feature } } };
+    return {
+        query: Apollo_gql `
+      query Translations($locale: I18NLocaleCode!, $filters: TranslationFiltersInput!) {
+        translations(locale: $locale, filters: $filters, pagination: { pageSize: 50000 }) {
+          ${translationProps.get('key')}
+          ${translationProps.get('value')}
+          ${translationProps.get('feature')} {
+            ${featureProps.get('key')}
+          }
+        }
+      }
+    `,
+        variables: {
+            locale: locale,
+            filters: filters,
+        },
+    };
+}
+
 class TaLazyTranslationService extends TaBaseStrapiService {
     get id() {
         return this._id;
@@ -131,8 +158,7 @@ class TaLazyTranslationService extends TaBaseStrapiService {
         return inject(this);
     }
     getTranslation(lang) {
-        // this._strapiService.fetchQueryList$<Translation>(GET_TRANSLATIONS(lang, this._id), 'translations')
-        return of([]).pipe(map(translations => translations.reduce((acc, translation) => {
+        return this._strapiService.fetchQueryList$(GET_TRANSLATIONS(lang, this._id), 'translations').pipe(map(translations => translations.reduce((acc, translation) => {
             acc[(this._isApp ? '' : this._id + '.') + translation.key.trim()] = translation.value;
             return acc;
         }, {})), map(translations => Object.entries(translations).reduce((acc, [key, value]) => {

@@ -1,0 +1,26 @@
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div
+    class="cell cal-cell-top"
+    [ngClass]="{ 'current-date': this.isCurrentDate(day) }"
+  >
+    <div class="cal-day-number">
+      {{ day.date | calendarDate : "monthViewDayNumber" : locale }}
+    </div>
+
+    <div class="visits-type">
+      <span
+        *ngFor="let event of day.events"
+        class="visit-type vt-{{ event.meta.type }} vt-color"
+      ></span>
+    </div>
+  </div>
+</ng-template>
+
+<mwl-calendar-month-view
+  [viewDate]="this.viewDate"
+  [events]="this.events"
+  [weekStartsOn]="1"
+  [cellTemplate]="this.customCellTemplate"
+  (dayClicked)="this.daySelected($event)"
+>
+</mwl-calendar-month-view>

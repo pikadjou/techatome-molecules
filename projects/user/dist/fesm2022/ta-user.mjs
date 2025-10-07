@@ -2,7 +2,7 @@ import * as i0 from '@angular/core';
 import { Injectable, inject, InjectionToken, Component, EventEmitter, signal, Output, Input } from '@angular/core';
 import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
-import { BehaviorSubject, filter, map, switchMap, of, distinct, tap } from 'rxjs';
+import { BehaviorSubject, filter, map, switchMap, distinct, tap } from 'rxjs';
 import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
 import * as i1 from '@angular/router';
 import { GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest, Logger } from '@ta/server';
@@ -33,11 +33,13 @@ class TaPermissionsService {
         this._canYouUpdate();
     }
     setGuard(info) {
-        this.features = info?.features ?? [];
-        this.roles = info?.roles ?? [];
-        this.guards = info?.guards ?? [];
-        this._isFill.permissions = true;
-        this._canYouUpdate();
+        if (info) {
+            this.features = info.features ?? [];
+            this.roles = info.roles ?? [];
+            this.guards = info.guards ?? [];
+            this._isFill.permissions = true;
+            this._canYouUpdate();
+        }
     }
     setSilentAuthenticated(isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
@@ -438,10 +440,7 @@ class GuardComponent extends TaAbstractComponent {
         if (this.role) {
             return this._permissionsService.hasRole$(this.role);
         }
-        else if (this.feature && this.level) {
-            return this._permissionsService.canAccess$(this.feature, this.level);
-        }
-        return of(false);
+        return this._permissionsService.canAccess$(this.feature ?? '', this.level ?? 'authorize');
     }
     goToLogin() {
         this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.USERLOGIN]));
@@ -528,10 +527,7 @@ class TaAuth0Service extends TaAuthService {
             .pipe(filter(isNonNullable), distinct(user => user?.sub), tap(user => this.user$.next(user || null)), tap(user => {
             Logger.LogInfo('user info', user);
             if (user) {
-                this._permissionsService.set({
-                    roles: [],
-                    features: [],
-                }, true);
+                this._permissionsService.set(null, true);
             }
         }))
             .subscribe();

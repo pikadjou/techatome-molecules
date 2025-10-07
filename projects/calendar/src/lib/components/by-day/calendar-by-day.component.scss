@@ -1,0 +1,10 @@
+@use "ta/utils/mixins/common";
+
+:host ::ng-deep {
+  .cal-hour-segment {
+    background-color: common.get-var(neutral, 100);
+  }
+  .cal-time {
+    color: common.get-var(neutral, 600);
+  }
+}

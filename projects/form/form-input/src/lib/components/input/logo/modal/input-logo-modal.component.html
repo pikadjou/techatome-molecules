@@ -1,0 +1,49 @@
+<div class="p-space-xl flex-column">
+  <div class="flex-column align-center">
+    <ta-title [level]="3">{{ 'input.logo.modal.title' | translate }}</ta-title>
+    
+    @if (this.selection) {
+      <div class="flex-column align-center mt-space-lg mb-space-lg">
+        <img [src]="this.selection" alt="{{ 'input.logo.modal.current-alt' | translate }}" class="selected-logo bdr-radius-rounded" />
+        <p class="mt-space-sm">{{ 'input.logo.modal.current-description' | translate }}</p>
+      </div>
+    }
+
+    <div class="flex-column g-space-md full-width" style="max-width: 300px;">
+      <ta-button 
+        type="primary" 
+        (action)="this.uploadPics()"
+        [options]="{ class: 'full-width' }"
+        icon="add"
+      >
+        {{ 'input.logo.modal.choose' | translate }}
+      </ta-button>
+      
+      @if (this.selection) {
+        <ta-button 
+          type="secondary" 
+          (action)="this.clearSelection()"
+          [options]="{ class: 'full-width' }"
+        >
+          {{ 'input.logo.modal.clear' | translate }}
+        </ta-button>
+      }
+    </div>
+  </div>
+
+  <div class="mt-space-xl pt-space-lg" style="border-top: 1px solid var(--ta-border-secondary);">
+    <ta-dual-button
+      [isFull]="true"
+      [first]="{
+        icon: 'close',
+        label: 'input.logo.modal.cancel',
+        callback: this.cancel,
+      }"
+      [second]="{
+        icon: 'check-line',
+        label: 'input.logo.modal.confirm',
+        callback: this.selected,
+      }"
+    ></ta-dual-button>
+  </div>
+</div>

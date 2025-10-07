@@ -3,6 +3,10 @@
 
 @mixin generateColors() {
   /** Foundation **/
+  
+  @debug "generateColors";
+  @debug vars.$brand;
+
   @include common.generateMap(
     'brand',
     vars.$brand,

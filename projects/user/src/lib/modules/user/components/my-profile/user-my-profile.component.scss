@@ -1,0 +1,17 @@
+@use "ta/utils/mixins/fonts";
+
+.text {
+  @include fonts.fontSizeKey(key);
+  display: flex;
+  justify-content: center;
+  line-height: 32px;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+
+  .tenant-list {
+    min-width: 240px;
+  }
+}

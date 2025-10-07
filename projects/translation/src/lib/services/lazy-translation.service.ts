@@ -1,11 +1,11 @@
 import { inject } from '@angular/core';
 
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { TaBaseStrapiService } from '@ta/server';
 
 import { Translation } from './dto/translation';
-// import { GET_TRANSLATIONS } from './queries';
+import { GET_TRANSLATIONS } from './queries';
 import { ITranslation, TaTranslationRegistryService } from './translation-registry.service';
 
 export abstract class TaLazyTranslationService extends TaBaseStrapiService implements ITranslation {
@@ -30,8 +30,7 @@ export abstract class TaLazyTranslationService extends TaBaseStrapiService imple
   }
 
   public getTranslation(lang: string): Observable<object | null> {
-    // this._strapiService.fetchQueryList$<Translation>(GET_TRANSLATIONS(lang, this._id), 'translations')
-    return of<Translation[]>([]).pipe(
+    return this._strapiService.fetchQueryList$<Translation>(GET_TRANSLATIONS(lang, this._id), 'translations').pipe(
       map(translations =>
         translations.reduce<{ [index: string]: string }>((acc, translation) => {
           acc[(this._isApp ? '' : this._id + '.') + translation.key.trim()] = translation.value;

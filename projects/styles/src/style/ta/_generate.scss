@@ -10,7 +10,6 @@
 @use 'ta/settings/grids';
 @use 'ta/settings/transitions';
 
-
 @mixin generate() {
   @include colors.generateColors();
 

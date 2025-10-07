@@ -1,8 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 
-import { of } from 'rxjs';
-
 import { FontIconComponent } from '@ta/icons';
 import { TaIconType } from '@ta/icons';
 import { TaMainRoute, TaRoutes } from '@ta/menu';
@@ -44,10 +42,9 @@ export class GuardComponent extends TaAbstractComponent {
   public isGuardValid$() {
     if (this.role) {
       return this._permissionsService.hasRole$(this.role);
-    } else if (this.feature && this.level) {
-      return this._permissionsService.canAccess$(this.feature, this.level);
     }
-    return of(false);
+
+    return this._permissionsService.canAccess$(this.feature ?? '', this.level ?? 'authorize');
   }
 
   public goToLogin() {

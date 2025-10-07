@@ -2,16 +2,15 @@
 
 .image-preview-wrapper {
     position: relative;
-    border-radius: common.get-var(radius, rounded);
+
     background-color: common.get-var(surface, secondary);
     img {
+        border-radius: common.get-var(radius, rounded);
         aspect-ratio: 3/4;
+        overflow: hidden;
     }
 }
 
 .image-remove {
-    position: absolute;
-    top: 0;
-    right: 0;
     padding: common.get-var(spacing, sm);
 }

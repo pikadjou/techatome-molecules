@@ -31,13 +31,7 @@ export class TaAuth0Service extends TaAuthService {
         tap(user => {
           Logger.LogInfo('user info', user);
           if (user) {
-            this._permissionsService.set(
-              {
-                roles: [],
-                features: [],
-              },
-              true
-            );
+            this._permissionsService.set(null, true);
           }
         })
       )

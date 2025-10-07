@@ -41,14 +41,14 @@ export class TaPermissionsService {
   }
 
   public setGuard(info: GuardInfo | null) {
-    this.features = info?.features ?? [];
-    this.roles = info?.roles ?? [];
+    if (info) {
+      this.features = info.features ?? [];
+      this.roles = info.roles ?? [];
+      this.guards = info.guards ?? [];
 
-    this.guards = info?.guards ?? [];
-
-    this._isFill.permissions = true;
-
-    this._canYouUpdate();
+      this._isFill.permissions = true;
+      this._canYouUpdate();
+    }
   }
 
   public setSilentAuthenticated(isAuthenticated: boolean) {
