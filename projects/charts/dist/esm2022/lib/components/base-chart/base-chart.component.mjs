@@ -39,10 +39,10 @@ export class BaseChartComponent {
         this.chart.data.datasets = this.datasets;
         this.chart?.update();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BaseChartComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: BaseChartComponent, selector: "ng-component", inputs: { labels: "labels", datasets: "datasets", chartOptions: "chartOptions", chartHeight: "chartHeight" }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: BaseChartComponent, selector: "ng-component", inputs: { labels: "labels", datasets: "datasets", chartOptions: "chartOptions", chartHeight: "chartHeight" }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: '', isInline: true }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: BaseChartComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, decorators: [{
             type: Component,
             args: [{ template: '' }]
         }], ctorParameters: () => [], propDecorators: { labels: [{

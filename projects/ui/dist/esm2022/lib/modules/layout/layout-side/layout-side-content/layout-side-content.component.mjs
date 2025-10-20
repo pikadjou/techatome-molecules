@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class LayoutSideContentComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideContentComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutSideContentComponent, isStandalone: true, selector: "ta-layout-side-content", ngImport: i0, template: "<div class=\"form-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [""] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutSideContentComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: LayoutSideContentComponent, isStandalone: true, selector: "ta-layout-side-content", ngImport: i0, template: "<div class=\"form-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [""] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideContentComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutSideContentComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-layout-side-content', standalone: true, template: "<div class=\"form-container\">\n  <ng-content></ng-content>\n</div>\n" }]
         }] });

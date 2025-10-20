@@ -11,10 +11,10 @@ export class ErrorComponent {
         this.code = 200;
         TaTranslationContainer.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ErrorComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: ErrorComponent, isStandalone: true, selector: "ta-error", inputs: { message: "message", code: "code" }, ngImport: i0, template: "@if (this.message === '') {\n  <ng-content></ng-content>\n} @else {\n  <ta-picture-info-message icon=\"sad\" iconSize=\"lg\" type=\"danger\" text=\"container.error.title\">\n  </ta-picture-info-message>\n  <p>{{ this.message | translate }}</p>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: PictureInfoMessageComponent, selector: "ta-picture-info-message", inputs: ["icon", "iconSize", "text", "type"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ErrorComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ErrorComponent, isStandalone: true, selector: "ta-error", inputs: { message: "message", code: "code" }, ngImport: i0, template: "@if (this.message === '') {\n  <ng-content></ng-content>\n} @else {\n  <ta-picture-info-message icon=\"sad\" iconSize=\"lg\" type=\"danger\" text=\"container.error.title\">\n  </ta-picture-info-message>\n  <p>{{ this.message | translate }}</p>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: PictureInfoMessageComponent, selector: "ta-picture-info-message", inputs: ["icon", "iconSize", "text", "type"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ErrorComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ErrorComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-error', standalone: true, imports: [NgIf, TranslateModule, PictureInfoMessageComponent], template: "@if (this.message === '') {\n  <ng-content></ng-content>\n} @else {\n  <ta-picture-info-message icon=\"sad\" iconSize=\"lg\" type=\"danger\" text=\"container.error.title\">\n  </ta-picture-info-message>\n  <p>{{ this.message | translate }}</p>\n}\n" }]
         }], ctorParameters: () => [], propDecorators: { message: [{

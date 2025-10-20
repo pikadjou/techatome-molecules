@@ -22,10 +22,10 @@ export class InputSchemaModal extends TaBaseModal {
         const file = new File([blob], newGuid(), { type: blob.type });
         this.dialogRef.close({ file: { file, localUrl: this.imagePath } });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputSchemaModal, deps: [{ token: i1.MatDialogRef }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: InputSchemaModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<div class=\"edit-schema-container\">\n  <ta-files-edit\n    [imagePath]=\"this.imagePath\"\n    [saveImage$]=\"this.askImage$\"\n    (savedImage)=\"this.savedImage($event)\"\n  ></ta-files-edit>\n</div>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"], dependencies: [{ kind: "component", type: FileEditComponent, selector: "ta-files-edit", inputs: ["imagePath", "saveImage$"], outputs: ["savedImage"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaModal, deps: [{ token: i1.MatDialogRef }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputSchemaModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<div class=\"edit-schema-container\">\n  <ta-files-edit\n    [imagePath]=\"this.imagePath\"\n    [saveImage$]=\"this.askImage$\"\n    (savedImage)=\"this.savedImage($event)\"\n  ></ta-files-edit>\n</div>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"], dependencies: [{ kind: "component", type: FileEditComponent, selector: "ta-files-edit", inputs: ["imagePath", "saveImage$"], outputs: ["savedImage"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: InputSchemaModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaModal, decorators: [{
             type: Component,
             args: [{ selector: '', standalone: true, imports: [FileEditComponent], template: "<div class=\"edit-schema-container\">\n  <ta-files-edit\n    [imagePath]=\"this.imagePath\"\n    [saveImage$]=\"this.askImage$\"\n    (savedImage)=\"this.savedImage($event)\"\n  ></ta-files-edit>\n</div>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"] }]
         }], ctorParameters: () => [{ type: i1.MatDialogRef }] });

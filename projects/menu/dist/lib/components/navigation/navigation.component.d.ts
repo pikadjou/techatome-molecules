@@ -4,8 +4,8 @@ import { TaAbstractComponent } from '@ta/utils';
 import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { Menu, MenuIcon } from '../../models/public-api';
+import { TaSizes } from '@ta/styles';
 import * as i0 from "@angular/core";
-type TaSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big';
 export declare class NavigationComponent extends TaAbstractComponent implements OnInit {
     menu: Menu;
     container: 'tags' | 'tab';
@@ -14,8 +14,8 @@ export declare class NavigationComponent extends TaAbstractComponent implements 
         spaceElement?: TaSizes | null;
     };
     manuallyChanged$?: Observable<string>;
-    readonly hasFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => boolean;
-    readonly getFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => string;
+    readonly hasFontIcon: (item: MenuBase | Menu<MenuBase> | MenuIcon) => boolean;
+    readonly getFontIcon: (item: MenuBase | Menu<MenuBase> | MenuIcon) => string;
     readonly typeItem: {
         item: MenuBase | MenuAction | MenuIcon;
     };
@@ -29,4 +29,3 @@ export declare class NavigationComponent extends TaAbstractComponent implements 
     static ɵfac: i0.ɵɵFactoryDeclaration<NavigationComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<NavigationComponent, "ta-menu-navigation", never, { "menu": { "alias": "menu"; "required": false; }; "container": { "alias": "container"; "required": false; }; "swiper": { "alias": "swiper"; "required": false; }; "options": { "alias": "options"; "required": false; }; "manuallyChanged$": { "alias": "manuallyChanged$"; "required": false; }; }, {}, never, never, true, never>;
 }
-export {};

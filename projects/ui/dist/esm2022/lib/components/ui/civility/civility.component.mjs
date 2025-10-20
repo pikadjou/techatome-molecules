@@ -19,10 +19,10 @@ export class CivilityComponent {
                 return '';
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CivilityComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CivilityComponent, isStandalone: true, selector: "ta-civility", inputs: { civility: "civility" }, ngImport: i0, template: "@if (this.civility) {\n  <ta-material-icon>\n    {{ this.getIcon() }}\n  </ta-material-icon>\n}\n", styles: [""], dependencies: [{ kind: "component", type: MaterialIconComponent, selector: "ta-material-icon", inputs: ["outline", "sharp", "round", "dualTone", "type"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CivilityComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: CivilityComponent, isStandalone: true, selector: "ta-civility", inputs: { civility: "civility" }, ngImport: i0, template: "@if (this.civility) {\n  <ta-material-icon>\n    {{ this.getIcon() }}\n  </ta-material-icon>\n}\n", styles: [""], dependencies: [{ kind: "component", type: MaterialIconComponent, selector: "ta-material-icon", inputs: ["outline", "sharp", "round", "dualTone", "type"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CivilityComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CivilityComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-civility', standalone: true, imports: [NgIf, MaterialIconComponent], template: "@if (this.civility) {\n  <ta-material-icon>\n    {{ this.getIcon() }}\n  </ta-material-icon>\n}\n" }]
         }], ctorParameters: () => [], propDecorators: { civility: [{

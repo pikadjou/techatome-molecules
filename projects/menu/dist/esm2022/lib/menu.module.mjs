@@ -30,8 +30,8 @@ import * as i0 from "@angular/core";
  * import { MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent } from '@ta/library-name';
  */
 export class TaMenuModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
             TaSwiperModule,
             TaContainerModule,
             TaDirectivePipeModule,
@@ -62,7 +62,7 @@ export class TaMenuModule {
             BottomSheetTemplateGenericComponent,
             MainMenuComponent,
             NavigationComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
             TaSwiperModule,
             TaContainerModule,
             TaDirectivePipeModule,
@@ -83,7 +83,7 @@ export class TaMenuModule {
             ListComponent,
             NavigationComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaMenuModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

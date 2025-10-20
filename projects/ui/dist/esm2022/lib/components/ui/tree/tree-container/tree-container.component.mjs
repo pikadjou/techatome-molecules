@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class TaTreeContainerComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaTreeContainerComponent, isStandalone: true, selector: "ta-tree-container", ngImport: i0, template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [""] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTreeContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaTreeContainerComponent, isStandalone: true, selector: "ta-tree-container", ngImport: i0, template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [""] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeContainerComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTreeContainerComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-tree-container', standalone: true, imports: [], template: "<div>\r\n  <ng-content></ng-content>\r\n</div>\r\n" }]
         }] });

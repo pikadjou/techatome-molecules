@@ -22,9 +22,6 @@ export const getCivility = (person: { naming: any }): Civility | null => {
   return person.naming && person.naming.hasOwnProperty('civility') ? (person.naming as any).civility : null;
 };
 
-export const fullName = (
-  naming: { firstName: string | null; name: string } | { firstName: string | null; lastName: string }
-) => {
-  const name = 'name' in naming ? naming.name : naming.lastName;
-  return `${naming.firstName || ''} ${name}`;
+export const fullName = (naming?: { firstname: string | null; lastname: string }) => {
+  return `${naming?.firstname} ${naming?.lastname}`;
 };

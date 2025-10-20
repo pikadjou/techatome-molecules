@@ -32,8 +32,8 @@ export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
     super.ngAfterViewInit();
     // Initialiser intl-tel-input une fois que le DOM est prêt
     intlTelInput(this.phoneInput.nativeElement, {
-      initialCountry: 'fr',
-      countryOrder: this.input.preferredCountries,
+      initialCountry: 'be',
+      countryOrder: this.input.preferredCountries as any,
       separateDialCode: true,
     });
   }

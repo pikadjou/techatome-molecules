@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class LayoutSideComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutSideComponent, isStandalone: true, selector: "ta-layout-side", ngImport: i0, template: "<div class=\"side-container\">\n  <div class=\"side-content\">\n    <ng-content select=\"ta-layout-side-content\"></ng-content>\n  </div>\n  <div class=\"side-cta\">\n    <ng-content select=\"ta-layout-side-cta\"></ng-content>\n  </div>\n</div>\n", styles: [".side-container{display:flex;flex-flow:column;flex:1}.side-container .side-content{flex:1;overflow-y:auto}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutSideComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: LayoutSideComponent, isStandalone: true, selector: "ta-layout-side", ngImport: i0, template: "<div class=\"side-container\">\n  <div class=\"side-content\">\n    <ng-content select=\"ta-layout-side-content\"></ng-content>\n  </div>\n  <div class=\"side-cta\">\n    <ng-content select=\"ta-layout-side-cta\"></ng-content>\n  </div>\n</div>\n", styles: [".side-container{display:flex;flex-flow:column;flex:1}.side-container .side-content{flex:1;overflow-y:auto}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutSideComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-layout-side', standalone: true, template: "<div class=\"side-container\">\n  <div class=\"side-content\">\n    <ng-content select=\"ta-layout-side-content\"></ng-content>\n  </div>\n  <div class=\"side-cta\">\n    <ng-content select=\"ta-layout-side-cta\"></ng-content>\n  </div>\n</div>\n", styles: [".side-container{display:flex;flex-flow:column;flex:1}.side-container .side-content{flex:1;overflow-y:auto}\n"] }]
         }] });

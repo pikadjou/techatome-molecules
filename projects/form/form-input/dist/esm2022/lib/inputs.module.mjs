@@ -71,8 +71,8 @@ export class TaFormInputsModule {
     constructor() {
         TaTranslationInput.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, imports: [FormLabelComponent,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, imports: [FormLabelComponent,
             InputLayoutComponent,
             InputErrorComponent,
             TaDirectivePipeModule,
@@ -151,7 +151,7 @@ export class TaFormInputsModule {
             InputPhoneComponent,
             InputAddressComponent,
             ComponentInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, providers: [
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, providers: [
             { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
             PARENT_OR_NEW_MENU_STACK_PROVIDER,
         ], imports: [TaDirectivePipeModule,
@@ -206,7 +206,7 @@ export class TaFormInputsModule {
             InputAddressComponent,
             CultureComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormInputsModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

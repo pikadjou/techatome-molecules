@@ -42,8 +42,8 @@ export class TaLayoutModule {
     constructor() {
         TaTranslationLayout.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaLayoutModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaLayoutModule, imports: [CommonModule,
             MatSidenavModule,
             TaUiModule,
             TaIconsModule,
@@ -86,7 +86,7 @@ export class TaLayoutModule {
             LayoutSideCtaComponent,
             LayoutSideComponent,
             LayoutSideContentComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaLayoutModule, imports: [CommonModule,
             MatSidenavModule,
             TaUiModule,
             TaIconsModule,
@@ -102,7 +102,7 @@ export class TaLayoutModule {
             LayoutNotFoundComponent,
             LayoutFlexComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaLayoutModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaLayoutModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

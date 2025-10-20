@@ -21,8 +21,8 @@ import * as i0 from "@angular/core";
  * import { FileListComponent, FileEditComponent, DocumentsListComponent } from '@ta/library-name';
  */
 export class TaFilesBasicModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
             TaDirectivePipeModule,
             TaUiModule,
             TaCardModule,
@@ -34,7 +34,7 @@ export class TaFilesBasicModule {
             FileCardComponent,
             FileEditComponent,
             DocumentsListComponent], exports: [FileListComponent, FileEditComponent, DocumentsListComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
             TaDirectivePipeModule,
             TaUiModule,
             TaCardModule,
@@ -45,7 +45,7 @@ export class TaFilesBasicModule {
             FileEditComponent,
             DocumentsListComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesBasicModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

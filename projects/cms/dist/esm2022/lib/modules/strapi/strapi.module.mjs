@@ -25,8 +25,8 @@ export class TaStrapiModule {
     constructor() {
         TaTranslationStrapi.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
             TaUiModule,
             TaDirectivePipeModule,
             TaContainerModule,
@@ -36,7 +36,7 @@ export class TaStrapiModule {
             LinkComponent,
             TextComponent,
             SaleComponent], exports: [CmsComponent, SaleComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
             TaUiModule,
             TaDirectivePipeModule,
             TaContainerModule,
@@ -46,7 +46,7 @@ export class TaStrapiModule {
             LinkComponent,
             SaleComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

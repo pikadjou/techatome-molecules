@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class TaTreeChildrenComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeChildrenComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaTreeChildrenComponent, isStandalone: true, selector: "ta-tree-children", ngImport: i0, template: "<div class=\"children\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".children{position:relative;margin-left:var(--ta-space-xl)}.children:before{content:\"\";background-color:var(--ta-surface-brand-primary);width:2px;position:absolute;top:0;left:calc(var(--ta-space-xl) * -.5);bottom:18px}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTreeChildrenComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaTreeChildrenComponent, isStandalone: true, selector: "ta-tree-children", ngImport: i0, template: "<div class=\"children\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".children{position:relative;margin-left:var(--ta-space-xl)}.children:before{content:\"\";background-color:var(--ta-surface-brand-primary);width:2px;position:absolute;top:0;left:calc(var(--ta-space-xl) * -.5);bottom:18px}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeChildrenComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTreeChildrenComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-tree-children', standalone: true, imports: [], template: "<div class=\"children\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".children{position:relative;margin-left:var(--ta-space-xl)}.children:before{content:\"\";background-color:var(--ta-surface-brand-primary);width:2px;position:absolute;top:0;left:calc(var(--ta-space-xl) * -.5);bottom:18px}\n"] }]
         }] });

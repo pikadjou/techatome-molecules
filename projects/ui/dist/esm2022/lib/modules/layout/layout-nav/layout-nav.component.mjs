@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class LayoutNavComponent {
     constructor() { }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutNavComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutNavComponent, isStandalone: true, selector: "ta-layout-nav", ngImport: i0, template: "<ng-content></ng-content>\n", styles: [""] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutNavComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: LayoutNavComponent, isStandalone: true, selector: "ta-layout-nav", ngImport: i0, template: "<ng-content></ng-content>\n", styles: [""] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutNavComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutNavComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-layout-nav', standalone: true, template: "<ng-content></ng-content>\n" }]
         }], ctorParameters: () => [] });

@@ -37,8 +37,8 @@ export class TaCoreModule {
     constructor() {
         TaTranslationCore.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
             TaLayoutModule,
             TaUiModule,
             TaFormModule,
@@ -70,7 +70,7 @@ export class TaCoreModule {
             FilterDisplayerComponent,
             FiltersTagComponent,
             TextToClipboardComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
             TaLayoutModule,
             TaUiModule,
             TaFormModule,
@@ -95,7 +95,7 @@ export class TaCoreModule {
             FilterDisplayerComponent,
             TextToClipboardComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCoreModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

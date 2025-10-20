@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { FontIconComponent } from '@ta/icons';
 import * as i0 from "@angular/core";
 export class IconComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: IconComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: IconComponent, isStandalone: true, selector: "ta-notification-item-icon", inputs: { level: "level", icon: "icon" }, ngImport: i0, template: "<div class=\"icon-container\">\n  <ta-font-icon [name]=\"this.icon\"></ta-font-icon>\n</div>\n", styles: [".icon-container{padding:var(--ta-space-md);border-radius:var(--ta-radius-full);background-color:var(--ta-surface-hover-secondary);color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: IconComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: IconComponent, isStandalone: true, selector: "ta-notification-item-icon", inputs: { level: "level", icon: "icon" }, ngImport: i0, template: "<div class=\"icon-container\">\n  <ta-font-icon [name]=\"this.icon\"></ta-font-icon>\n</div>\n", styles: [".icon-container{padding:var(--ta-space-md);border-radius:var(--ta-radius-full);background-color:var(--ta-surface-hover-secondary);color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: IconComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: IconComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-notification-item-icon', standalone: true, imports: [
                         FontIconComponent

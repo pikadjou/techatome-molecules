@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class CardCtaComponent {
     constructor() { }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardCtaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CardCtaComponent, isStandalone: true, selector: "ta-card-cta", ngImport: i0, template: "<div class=\"cta\">\n  <ng-content></ng-content>\n</div>\n", styles: [".cta{border-top:1px solid var(--ta-neutral-main);padding-top:var(--ta-space-md)}.no-card-border .cta{border-width:0px}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardCtaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: CardCtaComponent, isStandalone: true, selector: "ta-card-cta", ngImport: i0, template: "<div class=\"cta\">\n  <ng-content></ng-content>\n</div>\n", styles: [".cta{border-top:1px solid var(--ta-neutral-main);padding-top:var(--ta-space-md)}.no-card-border .cta{border-width:0px}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardCtaComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardCtaComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-card-cta', standalone: true, template: "<div class=\"cta\">\n  <ng-content></ng-content>\n</div>\n", styles: [".cta{border-top:1px solid var(--ta-neutral-main);padding-top:var(--ta-space-md)}.no-card-border .cta{border-width:0px}\n"] }]
         }], ctorParameters: () => [] });

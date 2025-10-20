@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class CardContentComponent {
     constructor() { }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardContentComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CardContentComponent, isStandalone: true, selector: "ta-card-content", ngImport: i0, template: "<div class=\"card-content flex-full\">\n  <ng-content></ng-content>\n</div>\n", styles: [".card-content{padding:var(--ta-space-xs) 0}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardContentComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: CardContentComponent, isStandalone: true, selector: "ta-card-content", ngImport: i0, template: "<div class=\"card-content flex-full\">\n  <ng-content></ng-content>\n</div>\n", styles: [".card-content{padding:var(--ta-space-xs) 0}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardContentComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardContentComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-card-content', standalone: true, template: "<div class=\"card-content flex-full\">\n  <ng-content></ng-content>\n</div>\n", styles: [".card-content{padding:var(--ta-space-xs) 0}\n"] }]
         }], ctorParameters: () => [] });

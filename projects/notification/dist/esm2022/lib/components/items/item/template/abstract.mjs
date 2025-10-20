@@ -22,10 +22,10 @@ export class AbstractNotificationTemplateComponent {
     extractredirectContext(key) {
         return this.notification.redirectContext.find(item => item.key === key)?.value ?? '';
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: AbstractNotificationTemplateComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: AbstractNotificationTemplateComponent, selector: "ng-component", inputs: { notification: "notification" }, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AbstractNotificationTemplateComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: AbstractNotificationTemplateComponent, selector: "ng-component", inputs: { notification: "notification" }, ngImport: i0, template: '', isInline: true }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: AbstractNotificationTemplateComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AbstractNotificationTemplateComponent, decorators: [{
             type: Component,
             args: [{ template: '' }]
         }], propDecorators: { notification: [{

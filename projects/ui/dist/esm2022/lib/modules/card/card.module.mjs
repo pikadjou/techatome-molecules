@@ -29,8 +29,8 @@ const declarations = [];
  * This module will be removed in a future version.
  */
 export class TaCardModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, imports: [CommonModule, TaUiModule, TaIconsModule, CardComponent,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCardModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaCardModule, imports: [CommonModule, TaUiModule, TaIconsModule, CardComponent,
             CardHeaderComponent,
             CardTitleComponent,
             CardSubtitleComponent,
@@ -47,9 +47,9 @@ export class TaCardModule {
             CardContentComponent,
             DashboardCardComponent,
             CardImageComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, imports: [CommonModule, TaUiModule, TaIconsModule, DashboardCardComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCardModule, imports: [CommonModule, TaUiModule, TaIconsModule, DashboardCardComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCardModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCardModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: declarations,

@@ -10,10 +10,10 @@ import { InputCheckBox } from '@ta/form-model';
 import { TaLazyTranslationService } from '@ta/translation';
 
 class TextComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TextComponent, isStandalone: true, selector: "ta-rich-paragraph-text", inputs: { text: "text" }, ngImport: i0, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TextComponent, isStandalone: true, selector: "ta-rich-paragraph-text", inputs: { text: "text" }, ngImport: i0, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-rich-paragraph-text', standalone: true, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }]
         }], propDecorators: { text: [{
@@ -24,10 +24,10 @@ class LinkComponent {
     goTo() {
         window.open(this.link.url);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LinkComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: LinkComponent, isStandalone: true, selector: "ta-rich-paragraph-link", inputs: { link: "link" }, ngImport: i0, template: "@for (entity of this.link.children; track entity) {\n  <ta-link (action)=\"this.goTo()\">\n    @switch (entity.type) {\n      @case ('text') {\n        <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n      }\n    }\n  </ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"], dependencies: [{ kind: "component", type: LinkComponent$1, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LinkComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: LinkComponent, isStandalone: true, selector: "ta-rich-paragraph-link", inputs: { link: "link" }, ngImport: i0, template: "@for (entity of this.link.children; track entity) {\n  <ta-link (action)=\"this.goTo()\">\n    @switch (entity.type) {\n      @case ('text') {\n        <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n      }\n    }\n  </ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"], dependencies: [{ kind: "component", type: LinkComponent$1, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LinkComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LinkComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-rich-paragraph-link', standalone: true, imports: [NgFor, LinkComponent$1, TextComponent], template: "@for (entity of this.link.children; track entity) {\n  <ta-link (action)=\"this.goTo()\">\n    @switch (entity.type) {\n      @case ('text') {\n        <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n      }\n    }\n  </ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"] }]
         }], propDecorators: { link: [{
@@ -35,10 +35,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
             }] } });
 
 class RichTextComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: RichTextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: RichTextComponent, isStandalone: true, selector: "ta-rich-text", inputs: { richText: "richText" }, ngImport: i0, template: "@for (rich of this.richText; track rich) {\n  @switch (rich.type) {\n    @case ('heading') {\n      <ta-title [level]=\"rich.level\">\n        <ng-container *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"></ng-container>\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <div class=\"paragraph\">\n        <ng-container *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"></ng-container>\n      </div>\n    }\n  }\n}\n\n<ng-template #textTemplate let-childrenText=\"childrenText\" [typedTemplate]=\"this.typeToken\">\n  @for (entity of childrenText; track entity) {\n    @switch (entity.type) {\n      @case ('text') {\n        <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n      }\n      @case ('link') {\n        <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n      }\n    }\n  }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"], dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }, { kind: "component", type: LinkComponent, selector: "ta-rich-paragraph-link", inputs: ["link"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RichTextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: RichTextComponent, isStandalone: true, selector: "ta-rich-text", inputs: { richText: "richText" }, ngImport: i0, template: "@for (rich of this.richText; track rich) {\n  @switch (rich.type) {\n    @case ('heading') {\n      <ta-title [level]=\"rich.level\">\n        <ng-container *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"></ng-container>\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <div class=\"paragraph\">\n        <ng-container *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"></ng-container>\n      </div>\n    }\n  }\n}\n\n<ng-template #textTemplate let-childrenText=\"childrenText\" [typedTemplate]=\"this.typeToken\">\n  @for (entity of childrenText; track entity) {\n    @switch (entity.type) {\n      @case ('text') {\n        <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n      }\n      @case ('link') {\n        <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n      }\n    }\n  }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"], dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }, { kind: "component", type: LinkComponent, selector: "ta-rich-paragraph-link", inputs: ["link"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: RichTextComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RichTextComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-rich-text', standalone: true, imports: [NgFor, NgTemplateOutlet, TitleComponent, TextComponent, LinkComponent], template: "@for (rich of this.richText; track rich) {\n  @switch (rich.type) {\n    @case ('heading') {\n      <ta-title [level]=\"rich.level\">\n        <ng-container *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"></ng-container>\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <div class=\"paragraph\">\n        <ng-container *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"></ng-container>\n      </div>\n    }\n  }\n}\n\n<ng-template #textTemplate let-childrenText=\"childrenText\" [typedTemplate]=\"this.typeToken\">\n  @for (entity of childrenText; track entity) {\n    @switch (entity.type) {\n      @case ('text') {\n        <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n      }\n      @case ('link') {\n        <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n      }\n    }\n  }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"] }]
         }], propDecorators: { richText: [{
@@ -109,10 +109,10 @@ class TaCmsService extends TaBaseStrapiService {
             .fetchQueryList$(GET_CMS_CONTENT(type, this.local, tenantId), 'contents')
             .pipe(map(list => list[0])));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCmsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCmsService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCmsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCmsService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaCmsService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCmsService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -138,10 +138,10 @@ class CmsComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CmsComponent, deps: [{ token: TaCmsService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CmsComponent, isStandalone: true, selector: "ta-cms", inputs: { contentType: "contentType" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-title>\n            {{ content.Title }}\n          </ta-title>\n\n          <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CmsComponent, deps: [{ token: TaCmsService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: CmsComponent, isStandalone: true, selector: "ta-cms", inputs: { contentType: "contentType" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-title>\n            {{ content.Title }}\n          </ta-title>\n\n          <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CmsComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CmsComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-cms', standalone: true, imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, TitleComponent, RichTextComponent], template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-title>\n            {{ content.Title }}\n          </ta-title>\n\n          <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n" }]
         }], ctorParameters: () => [{ type: TaCmsService }, { type: undefined, decorators: [{
@@ -164,10 +164,10 @@ class TaSaleService extends TaBaseStrapiService {
             .fetchQueryList$(GET_SALE_CONTENT(tenantId, this.local), 'sales')
             .pipe(map(list => list[0])));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSaleService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSaleService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSaleService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSaleService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaSaleService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSaleService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -205,10 +205,10 @@ class SaleComponent extends TaBaseComponent {
             },
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SaleComponent, deps: [{ token: TaSaleService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: SaleComponent, isStandalone: true, selector: "ta-sale", outputs: { acceptation: "acceptation" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-rich-text [richText]=\"content.Content\"></ta-rich-text>\n\n          <div class=\"checkbox ta-r\">\n            <ta-input-toggle [input]=\"this.checkbox\"></ta-input-toggle>\n          </div>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }, { kind: "component", type: ToggleComponent, selector: "ta-input-toggle" }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SaleComponent, deps: [{ token: TaSaleService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SaleComponent, isStandalone: true, selector: "ta-sale", outputs: { acceptation: "acceptation" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-rich-text [richText]=\"content.Content\"></ta-rich-text>\n\n          <div class=\"checkbox ta-r\">\n            <ta-input-toggle [input]=\"this.checkbox\"></ta-input-toggle>\n          </div>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }, { kind: "component", type: ToggleComponent, selector: "ta-input-toggle" }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: SaleComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SaleComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-sale', standalone: true, imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, RichTextComponent, ToggleComponent], template: "@if (this.content$ | async; as content) {\n  <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n    <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n      <ta-empty [isEmpty]=\"!content\">\n        @if (content) {\n          <ta-rich-text [richText]=\"content.Content\"></ta-rich-text>\n\n          <div class=\"checkbox ta-r\">\n            <ta-input-toggle [input]=\"this.checkbox\"></ta-input-toggle>\n          </div>\n        }\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n" }]
         }], ctorParameters: () => [{ type: TaSaleService }, { type: undefined, decorators: [{
@@ -224,10 +224,10 @@ class TaTranslationStrapi extends TaLazyTranslationService {
     constructor() {
         super('strapi');
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationStrapi, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationStrapi, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationStrapi, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationStrapi, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTranslationStrapi, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationStrapi, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -249,8 +249,8 @@ class TaStrapiModule {
     constructor() {
         TaTranslationStrapi.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
             TaUiModule,
             TaDirectivePipeModule,
             TaContainerModule,
@@ -260,7 +260,7 @@ class TaStrapiModule {
             LinkComponent,
             TextComponent,
             SaleComponent], exports: [CmsComponent, SaleComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
             TaUiModule,
             TaDirectivePipeModule,
             TaContainerModule,
@@ -270,7 +270,7 @@ class TaStrapiModule {
             LinkComponent,
             SaleComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaStrapiModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

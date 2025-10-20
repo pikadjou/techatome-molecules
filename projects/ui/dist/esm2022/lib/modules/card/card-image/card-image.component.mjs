@@ -4,10 +4,10 @@ export class CardImageComponent {
     constructor() {
         this.src = '';
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardImageComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CardImageComponent, isStandalone: true, selector: "ta-card-image", inputs: { src: "src" }, ngImport: i0, template: "<div class=\"img-container\">\n  <img [src]=\"this.src\" class=\"img\" />\n</div>\n", styles: [".img-container{aspect-ratio:var(--ta-components-card-image-aspect-ratio);overflow:hidden;border-radius:var(--ta-components-card-image-border-radius)}.img-container .img{width:100%}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardImageComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: CardImageComponent, isStandalone: true, selector: "ta-card-image", inputs: { src: "src" }, ngImport: i0, template: "<div class=\"img-container\">\n  <img [src]=\"this.src\" class=\"img\" />\n</div>\n", styles: [".img-container{aspect-ratio:var(--ta-components-card-image-aspect-ratio);overflow:hidden;border-radius:var(--ta-components-card-image-border-radius)}.img-container .img{width:100%}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardImageComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardImageComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-card-image', standalone: true, template: "<div class=\"img-container\">\n  <img [src]=\"this.src\" class=\"img\" />\n</div>\n", styles: [".img-container{aspect-ratio:var(--ta-components-card-image-aspect-ratio);overflow:hidden;border-radius:var(--ta-components-card-image-border-radius)}.img-container .img{width:100%}\n"] }]
         }], ctorParameters: () => [], propDecorators: { src: [{

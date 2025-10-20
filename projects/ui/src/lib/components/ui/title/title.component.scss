@@ -10,7 +10,7 @@ h1 {
 h2 {
   @include fonts.fontSizeHeader(h2);
   margin: 0;
-  .bold & {
+  &.bold {
     @include fonts.fontSizeHeader(h2, true);
   }
 }
@@ -18,7 +18,7 @@ h2 {
 h3 {
   @include fonts.fontSizeHeader(h3);
   margin: 0;
-  .bold & {
+  &.bold {
     @include fonts.fontSizeHeader(h3, true);
   }
 }
@@ -26,21 +26,11 @@ h3 {
 h4 {
   @include fonts.fontSizeHeader(h4);
   margin: 0;
-  .bold & {
+  &.bold {
     @include fonts.fontSizeHeader(h4, true);
   }
 }
 
 .theme-title {
   color: common.get-var(surface, brand, primary);
-}
-
-.bold {
-  h3 {
-    @include fonts.fontSizeHeader(h3, true);
-  }
-
-  h4 {
-    @include fonts.fontSizeHeader(h4, true);
-  }
 }

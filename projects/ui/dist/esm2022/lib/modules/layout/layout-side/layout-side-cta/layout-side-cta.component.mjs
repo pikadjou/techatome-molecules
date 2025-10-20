@@ -4,10 +4,10 @@ export class LayoutSideCtaComponent {
     constructor() {
         this.background = true;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideCtaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: LayoutSideCtaComponent, isStandalone: true, selector: "ta-layout-side-cta", inputs: { background: "background" }, ngImport: i0, template: "<div class=\"side-cta-container\" [class.background]=\"this.background\">\n  <ng-content></ng-content>\n</div>\n", styles: [".side-cta-container{padding:var(--ta-space-md);padding-bottom:calc(var(--ta-space-md) + env(safe-area-inset-bottom))}.side-cta-container.background{background-color:var(--ta-surface-brand-tertiary)}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutSideCtaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: LayoutSideCtaComponent, isStandalone: true, selector: "ta-layout-side-cta", inputs: { background: "background" }, ngImport: i0, template: "<div class=\"side-cta-container\" [class.background]=\"this.background\">\n  <ng-content></ng-content>\n</div>\n", styles: [".side-cta-container{padding:var(--ta-space-md);padding-bottom:calc(var(--ta-space-md) + env(safe-area-inset-bottom))}.side-cta-container.background{background-color:var(--ta-surface-brand-tertiary)}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: LayoutSideCtaComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LayoutSideCtaComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-layout-side-cta', standalone: true, template: "<div class=\"side-cta-container\" [class.background]=\"this.background\">\n  <ng-content></ng-content>\n</div>\n", styles: [".side-cta-container{padding:var(--ta-space-md);padding-bottom:calc(var(--ta-space-md) + env(safe-area-inset-bottom))}.side-cta-container.background{background-color:var(--ta-surface-brand-tertiary)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { background: [{

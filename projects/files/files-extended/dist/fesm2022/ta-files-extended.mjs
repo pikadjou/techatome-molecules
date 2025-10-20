@@ -100,10 +100,10 @@ class UploadComponent {
             type: file.mimeType,
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: UploadComponent, isStandalone: true, selector: "ta-files-upload", inputs: { features: "features", canSelectMultipleFiles: "canSelectMultipleFiles", showInActionButton: "showInActionButton" }, outputs: { filesPicked: "filesPicked" }, ngImport: i0, template: "@if (this.showInActionButton) {\n  <ta-action-button [actions]=\"this.addActions\"> </ta-action-button>\n} @else {\n  @for (action of this.addActions; track action) {\n    <ta-button (action)=\"action.callback()\">\n      {{ action.label }}\n    </ta-button>\n  }\n}\n", styles: [""], dependencies: [{ kind: "component", type: ActionButtonComponent, selector: "ta-action-button", inputs: ["actions"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: UploadComponent, isStandalone: true, selector: "ta-files-upload", inputs: { features: "features", canSelectMultipleFiles: "canSelectMultipleFiles", showInActionButton: "showInActionButton" }, outputs: { filesPicked: "filesPicked" }, ngImport: i0, template: "@if (this.showInActionButton) {\n  <ta-action-button [actions]=\"this.addActions\"> </ta-action-button>\n} @else {\n  @for (action of this.addActions; track action) {\n    <ta-button (action)=\"action.callback()\">\n      {{ action.label }}\n    </ta-button>\n  }\n}\n", styles: [""], dependencies: [{ kind: "component", type: ActionButtonComponent, selector: "ta-action-button", inputs: ["actions"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-files-upload', standalone: true, imports: [ActionButtonComponent, ButtonComponent], template: "@if (this.showInActionButton) {\n  <ta-action-button [actions]=\"this.addActions\"> </ta-action-button>\n} @else {\n  @for (action of this.addActions; track action) {\n    <ta-button (action)=\"action.callback()\">\n      {{ action.label }}\n    </ta-button>\n  }\n}\n" }]
         }], propDecorators: { features: [{
@@ -147,10 +147,10 @@ class FilesDisplayComponent extends TaBaseComponent {
                 return [];
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FilesDisplayComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FilesDisplayComponent, isStandalone: true, selector: "ta-files-display", inputs: { files$: "files$", menu: "menu", canAddFile: "canAddFile", tempFiles: "tempFiles", fileType: "fileType" }, outputs: { fileSelected: "fileSelected", moreInformationSelected: "moreInformationSelected", fileUploading: "fileUploading" }, usesInheritance: true, ngImport: i0, template: "<div class=\"toggle-navigation\">\n  <ta-toggle-navigation [menu]=\"this.menu\" [container]=\"'tab'\"></ta-toggle-navigation>\n</div>\n\n@if (this.canDisplayTempsFiles) {\n  <div>\n    <ta-files-list [files]=\"this.tempFiles\"></ta-files-list>\n    <hr />\n  </div>\n}\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" skeleton=\"fileList\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <div class=\"list\">\n      <ta-files-list\n        [files]=\"(this.files$ | async) || []\"\n        (fileSelected)=\"this.fileSelected.emit($event)\"\n        (moreInformationSelected)=\"this.moreInformationSelected.emit($event)\"\n      >\n      </ta-files-list>\n    </div>\n  </ta-error>\n</ta-loader>\n\n@if (this.canAddFile === true) {\n  <div class=\"floating-add\">\n    <ta-files-upload\n      [features]=\"this.getFeature()\"\n      [canSelectMultipleFiles]=\"this.canSelectMultipleFiles\"\n      (filesPicked)=\"this.fileUploading.emit($event)\"\n    >\n    </ta-files-upload>\n  </div>\n}\n", styles: [".toggle-navigation{margin-bottom:var(--ta-space-sm)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: UploadComponent, selector: "ta-files-upload", inputs: ["features", "canSelectMultipleFiles", "showInActionButton"], outputs: ["filesPicked"] }, { kind: "component", type: ToggleNavigationComponent, selector: "ta-toggle-navigation", inputs: ["menu", "container"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilesDisplayComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilesDisplayComponent, isStandalone: true, selector: "ta-files-display", inputs: { files$: "files$", menu: "menu", canAddFile: "canAddFile", tempFiles: "tempFiles", fileType: "fileType" }, outputs: { fileSelected: "fileSelected", moreInformationSelected: "moreInformationSelected", fileUploading: "fileUploading" }, usesInheritance: true, ngImport: i0, template: "<div class=\"toggle-navigation\">\n  <ta-toggle-navigation [menu]=\"this.menu\" [container]=\"'tab'\"></ta-toggle-navigation>\n</div>\n\n@if (this.canDisplayTempsFiles) {\n  <div>\n    <ta-files-list [files]=\"this.tempFiles\"></ta-files-list>\n    <hr />\n  </div>\n}\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" skeleton=\"fileList\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <div class=\"list\">\n      <ta-files-list\n        [files]=\"(this.files$ | async) || []\"\n        (fileSelected)=\"this.fileSelected.emit($event)\"\n        (moreInformationSelected)=\"this.moreInformationSelected.emit($event)\"\n      >\n      </ta-files-list>\n    </div>\n  </ta-error>\n</ta-loader>\n\n@if (this.canAddFile === true) {\n  <div class=\"floating-add\">\n    <ta-files-upload\n      [features]=\"this.getFeature()\"\n      [canSelectMultipleFiles]=\"this.canSelectMultipleFiles\"\n      (filesPicked)=\"this.fileUploading.emit($event)\"\n    >\n    </ta-files-upload>\n  </div>\n}\n", styles: [".toggle-navigation{margin-bottom:var(--ta-space-sm)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: UploadComponent, selector: "ta-files-upload", inputs: ["features", "canSelectMultipleFiles", "showInActionButton"], outputs: ["filesPicked"] }, { kind: "component", type: ToggleNavigationComponent, selector: "ta-toggle-navigation", inputs: ["menu", "container"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FilesDisplayComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilesDisplayComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-files-display', standalone: true, imports: [
                         NgIf,
@@ -211,10 +211,10 @@ class UploadDocumentFormService {
             }),
         ];
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadDocumentFormService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadDocumentFormService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentFormService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentFormService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: UploadDocumentFormService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentFormService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -233,8 +233,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImpo
  * import { FilesDisplayComponent, UploadComponent, TaFilesBasicModule } from '@ta/library-name';
  */
 class TaFilesExtendedModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, imports: [TaContainerModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, imports: [TaContainerModule,
             TaDirectivePipeModule,
             TaFormModule,
             TaUiModule,
@@ -246,7 +246,7 @@ class TaFilesExtendedModule {
             TaMenuModule,
             FilesDisplayComponent,
             UploadComponent], exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, providers: [TaEnumerationService, UploadDocumentFormService], imports: [TaContainerModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, providers: [TaEnumerationService, UploadDocumentFormService], imports: [TaContainerModule,
             TaDirectivePipeModule,
             TaFormModule,
             TaUiModule,
@@ -259,7 +259,7 @@ class TaFilesExtendedModule {
             FilesDisplayComponent,
             UploadComponent, TaFilesBasicModule] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

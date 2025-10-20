@@ -8,10 +8,10 @@ export class CultureComponent {
     constructor() {
         TaTranslationUI.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CultureComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: CultureComponent, isStandalone: true, selector: "ta-culture", inputs: { cultures: "cultures" }, ngImport: i0, template: "<div class=\"flex-start g-space-xs\">\n  @for (culture of this.cultures; track culture; let isLast = $last) {\n    <div>\n      {{ 'ui.culture.short.' + culture | translate }}{{ !isLast ? ',' : '' }}\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CultureComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: CultureComponent, isStandalone: true, selector: "ta-culture", inputs: { cultures: "cultures" }, ngImport: i0, template: "<div class=\"flex-start g-space-xs\">\n  @for (culture of this.cultures; track culture; let isLast = $last) {\n    <div>\n      {{ 'ui.culture.short.' + culture | translate }}{{ !isLast ? ',' : '' }}\n    </div>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CultureComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CultureComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-culture', standalone: true, imports: [NgFor, TranslateModule], template: "<div class=\"flex-start g-space-xs\">\n  @for (culture of this.cultures; track culture; let isLast = $last) {\n    <div>\n      {{ 'ui.culture.short.' + culture | translate }}{{ !isLast ? ',' : '' }}\n    </div>\n  }\n</div>\n" }]
         }], ctorParameters: () => [], propDecorators: { cultures: [{

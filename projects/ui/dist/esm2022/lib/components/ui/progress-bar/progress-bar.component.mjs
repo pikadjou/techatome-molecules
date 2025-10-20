@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import * as i0 from "@angular/core";
 export class ProgressBarComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressBarComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: ProgressBarComponent, isStandalone: true, selector: "ta-progress-bar", inputs: { current: "current", max: "max" }, ngImport: i0, template: "<progress\n  class=\"progress-bar\"\n  max=\"{{ this.max }}\"\n  value=\"{{ this.current }}\"\n></progress>\n", styles: [".progress-bar{appearance:none;width:100%;height:2px}progress::-webkit-progress-bar{background-color:var(--ta-neutral-300)}progress::-webkit-progress-value{background-color:var(--ta-surface-brand-primary)}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ProgressBarComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ProgressBarComponent, isStandalone: true, selector: "ta-progress-bar", inputs: { current: "current", max: "max" }, ngImport: i0, template: "<progress\n  class=\"progress-bar\"\n  max=\"{{ this.max }}\"\n  value=\"{{ this.current }}\"\n></progress>\n", styles: [".progress-bar{appearance:none;width:100%;height:2px}progress::-webkit-progress-bar{background-color:var(--ta-neutral-300)}progress::-webkit-progress-value{background-color:var(--ta-surface-brand-primary)}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: ProgressBarComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ProgressBarComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-progress-bar', standalone: true, template: "<progress\n  class=\"progress-bar\"\n  max=\"{{ this.max }}\"\n  value=\"{{ this.current }}\"\n></progress>\n", styles: [".progress-bar{appearance:none;width:100%;height:2px}progress::-webkit-progress-bar{background-color:var(--ta-neutral-300)}progress::-webkit-progress-value{background-color:var(--ta-surface-brand-primary)}\n"] }]
         }], propDecorators: { current: [{

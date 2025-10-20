@@ -17,10 +17,10 @@ export class TextToClipboardComponent extends TaBaseComponent {
             await copyTextToClipboard(this.value, successNotification, errorNotification);
         };
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextToClipboardComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TextToClipboardComponent, isStandalone: true, selector: "ta-text-to-clipboard", inputs: { value: "value" }, usesInheritance: true, ngImport: i0, template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextToClipboardComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TextToClipboardComponent, isStandalone: true, selector: "ta-text-to-clipboard", inputs: { value: "value" }, usesInheritance: true, ngImport: i0, template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextToClipboardComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextToClipboardComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-text-to-clipboard', standalone: true, imports: [FontIconComponent], template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n" }]
         }], propDecorators: { value: [{

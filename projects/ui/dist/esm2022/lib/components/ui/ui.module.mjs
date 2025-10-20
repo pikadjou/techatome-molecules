@@ -64,8 +64,8 @@ export class TaUiModule {
     constructor() {
         TaTranslationUI.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaUiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaUiModule, imports: [CommonModule,
             MatBottomSheetModule,
             MatIconModule,
             TaDirectivePipeModule,
@@ -147,7 +147,7 @@ export class TaUiModule {
             UsersListComponent,
             ButtonToolComponent,
             CultureComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, providers: [TaIconsService], imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaUiModule, providers: [TaIconsService], imports: [CommonModule,
             MatBottomSheetModule,
             MatIconModule,
             TaDirectivePipeModule,
@@ -181,7 +181,7 @@ export class TaUiModule {
             CultureComponent,
             CriticityComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaUiModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaUiModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

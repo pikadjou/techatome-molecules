@@ -4,10 +4,7 @@ export declare const getCivilityIcon: (civility: Civility | null) => TaIconType 
 export declare const getCivility: (person: {
     naming: any;
 }) => Civility | null;
-export declare const fullName: (naming: {
-    firstName: string | null;
-    name: string;
-} | {
-    firstName: string | null;
-    lastName: string;
+export declare const fullName: (naming?: {
+    firstname: string | null;
+    lastname: string;
 }) => string;

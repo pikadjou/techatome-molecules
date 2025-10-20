@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class TaTreeItemComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TaTreeItemComponent, isStandalone: true, selector: "ta-tree-item", ngImport: i0, template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTreeItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaTreeItemComponent, isStandalone: true, selector: "ta-tree-item", ngImport: i0, template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaTreeItemComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTreeItemComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-tree-item', standalone: true, imports: [], template: "<div class=\"item\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", styles: [".item{position:relative}.item:before{content:\"\";position:absolute;top:20px;left:calc(var(--ta-space-xl) * -.5);border-bottom-left-radius:5px;height:5px;width:calc(var(--ta-space-xl) * .5 - 3px);border:2px solid var(--ta-surface-brand-primary);border-top:none;border-right:none}\n"] }]
         }] });

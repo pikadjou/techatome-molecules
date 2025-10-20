@@ -33,8 +33,8 @@ export class TaFormModule {
     constructor() {
         TaTranslationForm.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, imports: [TaContainerModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, imports: [TaContainerModule,
             TaDirectivePipeModule,
             TaNotificationModule,
             TaFormInputsModule,
@@ -52,7 +52,7 @@ export class TaFormModule {
             DynamicComponent,
             EditFieldComponent,
             InputTranslationComponent], exports: [FormComponent, MatNativeDateModule, EditFieldComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }], imports: [TaContainerModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }], imports: [TaContainerModule,
             TaDirectivePipeModule,
             TaNotificationModule,
             TaFormInputsModule,
@@ -70,7 +70,7 @@ export class TaFormModule {
             EditFieldComponent,
             InputTranslationComponent, MatNativeDateModule] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFormModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, decorators: [{
             type: NgModule,
             args: [{
                     imports: [

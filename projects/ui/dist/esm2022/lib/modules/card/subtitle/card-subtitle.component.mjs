@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import * as i0 from "@angular/core";
 export class CardSubtitleComponent {
     constructor() { }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardSubtitleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: CardSubtitleComponent, isStandalone: true, selector: "ta-card-subtitle", ngImport: i0, template: "<ng-content></ng-content>\n", styles: [""] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardSubtitleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: CardSubtitleComponent, isStandalone: true, selector: "ta-card-subtitle", ngImport: i0, template: "<ng-content></ng-content>\n", styles: [""] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: CardSubtitleComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CardSubtitleComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-card-subtitle', standalone: true, template: "<ng-content></ng-content>\n" }]
         }], ctorParameters: () => [] });

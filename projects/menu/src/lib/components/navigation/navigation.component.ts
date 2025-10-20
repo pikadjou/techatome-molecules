@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -14,9 +14,7 @@ import { MenuAction } from '../../models/menu/item/action';
 import { MenuBase } from '../../models/menu/item/base';
 import { Menu, MenuIcon } from '../../models/public-api';
 import { TaTranslationMenu } from '../../translation.service';
-
-// Type défini localement pour éviter la dépendance vers @ta/styles
-type TaSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big';
+import { TaSizes } from '@ta/styles';
 
 @Component({
   selector: 'ta-menu-navigation',
@@ -24,8 +22,6 @@ type TaSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big';
   styleUrls: ['./navigation.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     NgTemplateOutlet,
     RouterModule,
@@ -66,7 +62,7 @@ export class NavigationComponent extends TaAbstractComponent implements OnInit {
   }
 
   ngOnInit() {
-    const defaultOpen = this.menu.elements.find(e => e.defaultOpen);
+    const defaultOpen = this.menu.elements.find((e) => e.defaultOpen);
 
     if (!defaultOpen || !defaultOpen.callback) {
       return;
@@ -77,12 +73,12 @@ export class NavigationComponent extends TaAbstractComponent implements OnInit {
       this._registerSubscription(
         this.manuallyChanged$.subscribe({
           next: (key: string) => {
-            const found = this.menu.elements.find(element => element.key === key);
+            const found = this.menu.elements.find((element) => element.key === key);
             if (found) {
               this.callback(found);
             }
           },
-        })
+        }),
       );
     }
   }

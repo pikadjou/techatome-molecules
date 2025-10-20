@@ -31,8 +31,8 @@ export class TaContainerModule {
     constructor() {
         TaTranslationContainer.getInstance();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, imports: [CommonModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaContainerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaContainerModule, imports: [CommonModule,
             MatIconModule,
             MatProgressSpinnerModule,
             TaDirectivePipeModule,
@@ -47,7 +47,7 @@ export class TaContainerModule {
             LoaderComponent,
             PlaceholderComponent,
             SwiperLightComponent], exports: [ContainerValidationComponent, EmptyComponent, ErrorComponent, LoaderComponent, SwiperLightComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, imports: [CommonModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaContainerModule, imports: [CommonModule,
             MatIconModule,
             MatProgressSpinnerModule,
             TaDirectivePipeModule,
@@ -59,7 +59,7 @@ export class TaContainerModule {
             ErrorComponent,
             LoaderComponent] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaContainerModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaContainerModule, decorators: [{
             type: NgModule,
             args: [{
                     imports: [

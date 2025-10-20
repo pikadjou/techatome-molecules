@@ -24,8 +24,8 @@ import * as i0 from "@angular/core";
  * import { FilesDisplayComponent, UploadComponent, TaFilesBasicModule } from '@ta/library-name';
  */
 export class TaFilesExtendedModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, imports: [TaContainerModule,
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, imports: [TaContainerModule,
             TaDirectivePipeModule,
             TaFormModule,
             TaUiModule,
@@ -37,7 +37,7 @@ export class TaFilesExtendedModule {
             TaMenuModule,
             FilesDisplayComponent,
             UploadComponent], exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, providers: [TaEnumerationService, UploadDocumentFormService], imports: [TaContainerModule,
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, providers: [TaEnumerationService, UploadDocumentFormService], imports: [TaContainerModule,
             TaDirectivePipeModule,
             TaFormModule,
             TaUiModule,
@@ -50,7 +50,7 @@ export class TaFilesExtendedModule {
             FilesDisplayComponent,
             UploadComponent, TaFilesBasicModule] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TaFilesExtendedModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],

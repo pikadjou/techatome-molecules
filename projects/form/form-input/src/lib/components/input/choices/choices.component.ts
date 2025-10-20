@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -45,8 +45,6 @@ import { SearchFieldComponent } from '../search-field/search-field.component';
   styleUrls: ['./choices.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     FontIconComponent,
     StopPropagationDirective,
@@ -65,6 +63,7 @@ import { SearchFieldComponent } from '../search-field/search-field.component';
     CheckboxComponent,
     ReactiveFormsModule,
     InputLayoutComponent,
+    NgTemplateOutlet,
   ],
 })
 export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices> {
@@ -98,24 +97,24 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
       this.requestState.asked();
       this._registerSubscription(
         this.input.options$.subscribe({
-          next: data => {
+          next: (data) => {
             this.bOptions$.next(data);
             this.requestState.completed();
           },
-        })
+        }),
       );
 
       this.filteredOptions$ = combineLatest([
         this.inputSearch.changeValue$.pipe(startWith(''), filter(isNonNullable)),
         this.bOptions$,
       ]).pipe(
-        map(data => ({
+        map((data) => ({
           search: data[0],
           list: data[1],
         })),
         map(({ search, list }) =>
-          list.filter(item => item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
-        )
+          list.filter((item) => item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())),
+        ),
       );
     } else {
       this.filteredOptions$ = this.bOptions$;
@@ -127,17 +126,17 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
             debounceTime(500),
             filter(isNonNullable),
             tap(() => this.requestState.asked()),
-            concatMap(search => (this.input.advancedSearch$ ? this.input.advancedSearch$(search) : of()))
+            concatMap((search) => (this.input.advancedSearch$ ? this.input.advancedSearch$(search) : of())),
           )
           .subscribe({
-            next: data => {
+            next: (data) => {
               const prevData = this.bOptions$.getValue();
               this.bOptions$.next(
-                getUniqueArray([...prevData.filter(item => this.input.value?.includes(item.id)), ...data])
+                getUniqueArray([...prevData.filter((item) => this.input.value?.includes(item.id)), ...data]),
               );
               this.requestState.completed();
             },
-          })
+          }),
       );
     }
   }
@@ -150,14 +149,14 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
 
   public getName$(id: string) {
     return this.bOptions$.pipe(
-      map(values => values.find(value => value.id === id)?.name ?? null),
-      map(name => name ?? id)
+      map((values) => values.find((value) => value.id === id)?.name ?? null),
+      map((name) => name ?? id),
     );
   }
 
   public refresh = () => {
     (this.input.advancedSearch$ ? this.input.advancedSearch$() : of()).pipe(take(1)).subscribe({
-      next: data => {
+      next: (data) => {
         this.bOptions$.next(data);
       },
     });

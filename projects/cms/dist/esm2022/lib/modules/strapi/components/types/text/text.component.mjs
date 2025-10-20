@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import * as i0 from "@angular/core";
 export class TextComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.13", type: TextComponent, isStandalone: true, selector: "ta-rich-paragraph-text", inputs: { text: "text" }, ngImport: i0, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TextComponent, isStandalone: true, selector: "ta-rich-paragraph-text", inputs: { text: "text" }, ngImport: i0, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: TextComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-rich-paragraph-text', standalone: true, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }]
         }], propDecorators: { text: [{
