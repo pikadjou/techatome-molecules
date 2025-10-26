@@ -37,12 +37,6 @@ $spacing: common.get-var(components, card, padding);
 
   .responsive-content {
     @include flex.flex-column();
-    @media screen and (min-width: 768px) {
-      @include flex.flex-row();
-      .img-container {
-        order: 2;
-      }
-    }
   }
 }
 
