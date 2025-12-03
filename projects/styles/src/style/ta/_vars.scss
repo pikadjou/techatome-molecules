@@ -154,7 +154,7 @@ $surface: map.merge(
       tertiary: map.get($brand, 100),
     ),
     hover: (
-      primary: map.get($brand, 300),
+      primary: map.get($brand, 100),
       secondary: map.get($second, 300),
     ),
     invert: map.get($brand, 900),

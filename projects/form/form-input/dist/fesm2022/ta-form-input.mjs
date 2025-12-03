@@ -1,11 +1,11 @@
 import * as i0 from '@angular/core';
-import { EventEmitter, ElementRef, ViewChild, Output, Input, Component, inject, HostListener, Injectable, NgModule } from '@angular/core';
+import { EventEmitter, ElementRef, ViewChild, Output, Input, Component, inject, HostListener, importProvidersFrom, Injectable, NgModule } from '@angular/core';
 import * as i1 from '@angular/forms';
 import { Validators, FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { delay, combineLatest, Subject, BehaviorSubject, of, take, startWith, filter, map, debounceTime, tap, concatMap } from 'rxjs';
 import { TaBaseComponent, pickImages, isNonNullable, TaBaseModal, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, downloadFile, TaDirectivePipeModule } from '@ta/utils';
-import { NgFor, NgClass, NgStyle, NgIf, AsyncPipe, NgTemplateOutlet, CommonModule } from '@angular/common';
+import { NgFor, NgClass, NgStyle, AsyncPipe, NgIf, NgTemplateOutlet, CommonModule } from '@angular/common';
 import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
 import * as i2 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import * as i4 from '@angular/material/input';
 import { MatInputModule } from '@angular/material/input';
 import { isEqual } from 'date-fns';
-import * as i2$3 from '@ta/icons';
+import * as i2$2 from '@ta/icons';
 import { FontIconComponent, LocalIconComponent, TaIconsModule } from '@ta/icons';
 import * as i3$2 from '@ta/ui';
 import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, TaLayoutModule, TaUiModule, TaListModule, TaContainerModule, TaCardModule } from '@ta/ui';
@@ -29,11 +29,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputTextBox, InputCheckBox } from '@ta/form-model';
 import { EditorInputComponent, TaWysiswygModule } from '@ta/wysiswyg';
 import intlTelInput from 'intl-tel-input';
-import * as i2$1 from '@angular-material-extensions/google-maps-autocomplete';
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import * as i2$2 from '@angular/material/progress-bar';
+import * as i2$1 from '@angular/material/progress-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import * as i1$3 from '@angular-material-extensions/google-maps-autocomplete';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { CdkMenuModule, PARENT_OR_NEW_MENU_STACK_PROVIDER } from '@angular/cdk/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -193,7 +193,7 @@ class DatePickerComponent extends TaAbstractInputComponent {
             end: new FormControl(null),
         });
         this._registerSubscription(this.range.valueChanges.subscribe({
-            next: value => {
+            next: (value) => {
                 if (value.start && value.end && isEqual(value.start, value.end)) {
                     this.input.value = value.start;
                     return;
@@ -216,7 +216,7 @@ class DatePickerComponent extends TaAbstractInputComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DatePickerComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-date-picker', standalone: true, imports: [NgIf, ReactiveFormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, InputLayoutComponent], template: "@if (this.input) {\n  <ta-input-layout [input]=\"this.input\">\n    @if (!this.input.rangeEnabled) {\n      <div class=\"align-center\" [class.disabled]=\"this.input.disabled\">\n        <input\n          matInput\n          #focusedElement\n          class=\"form-control\"\n          [matDatepicker]=\"picker\"\n          [value]=\"this.input.value\"\n          (dateInput)=\"this.onDateSelect($event)\"\n          (click)=\"this.picker.open()\"\n          [min]=\"this.input.minDate\"\n          [max]=\"this.input.maxDate\"\n          readonly\n        />\n        <mat-datepicker touchUi #picker></mat-datepicker>\n        <mat-datepicker-toggle matSuffix [for]=\"this.picker\"></mat-datepicker-toggle>\n      </div>\n    } @else {\n      <div class=\"align-center\">\n        <mat-date-range-input [formGroup]=\"this.range\" [rangePicker]=\"this.picker\">\n          <input\n            matStartDate\n            #focusedElement\n            placeholder=\"Start date\"\n            [min]=\"this.input.minDate\"\n            [max]=\"this.input.maxDate\"\n            formControlName=\"start\"\n            readonly\n          />\n          <input\n            matEndDate\n            placeholder=\"End date\"\n            [min]=\"this.input.minDate\"\n            [max]=\"this.input.maxDate\"\n            formControlName=\"end\"\n            readonly\n          />\n        </mat-date-range-input>\n        <mat-date-range-picker touchUi #picker></mat-date-range-picker>\n        <mat-datepicker-toggle matSuffix [for]=\"this.picker\"></mat-datepicker-toggle>\n      </div>\n    }\n  </ta-input-layout>\n}\n", styles: [":host ::ng-deep .form-control{width:100%}.disabled{border-color:var(--ta-neutral-300);pointer-events:none}\n"] }]
+            args: [{ selector: 'ta-input-date-picker', standalone: true, imports: [ReactiveFormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, InputLayoutComponent], template: "@if (this.input) {\n  <ta-input-layout [input]=\"this.input\">\n    @if (!this.input.rangeEnabled) {\n      <div class=\"align-center\" [class.disabled]=\"this.input.disabled\">\n        <input\n          matInput\n          #focusedElement\n          class=\"form-control\"\n          [matDatepicker]=\"picker\"\n          [value]=\"this.input.value\"\n          (dateInput)=\"this.onDateSelect($event)\"\n          (click)=\"this.picker.open()\"\n          [min]=\"this.input.minDate\"\n          [max]=\"this.input.maxDate\"\n          readonly\n        />\n        <mat-datepicker touchUi #picker></mat-datepicker>\n        <mat-datepicker-toggle matSuffix [for]=\"this.picker\"></mat-datepicker-toggle>\n      </div>\n    } @else {\n      <div class=\"align-center\">\n        <mat-date-range-input [formGroup]=\"this.range\" [rangePicker]=\"this.picker\">\n          <input\n            matStartDate\n            #focusedElement\n            placeholder=\"Start date\"\n            [min]=\"this.input.minDate\"\n            [max]=\"this.input.maxDate\"\n            formControlName=\"start\"\n            readonly\n          />\n          <input\n            matEndDate\n            placeholder=\"End date\"\n            [min]=\"this.input.minDate\"\n            [max]=\"this.input.maxDate\"\n            formControlName=\"end\"\n            readonly\n          />\n        </mat-date-range-input>\n        <mat-date-range-picker touchUi #picker></mat-date-range-picker>\n        <mat-datepicker-toggle matSuffix [for]=\"this.picker\"></mat-datepicker-toggle>\n      </div>\n    }\n  </ta-input-layout>\n}\n", styles: [":host ::ng-deep .form-control{width:100%}.disabled{border-color:var(--ta-neutral-300);pointer-events:none}\n"] }]
         }], ctorParameters: () => [], propDecorators: { picker: [{
                 type: ViewChild,
                 args: ['picker']
@@ -427,10 +427,10 @@ class InputImagesComponent extends TaAbstractInputComponent {
         const images = await pickImages();
         if (images.length > 0) {
             combineLatest(images
-                .map(image => image.file)
+                .map((image) => image.file)
                 .filter(isNonNullable)
-                .map(file => this._documentsService.addDocument$({ file: file }))).subscribe({
-                next: documents => {
+                .map((file) => this._documentsService.addDocument$({ file: file }))).subscribe({
+                next: (documents) => {
                     this.input.value = [...(this.input.value || []), ...documents];
                 },
             });
@@ -440,14 +440,14 @@ class InputImagesComponent extends TaAbstractInputComponent {
         if (!this.input.value) {
             return;
         }
-        this.input.value = this.input.value.filter(doc => doc.url !== fileData.url);
+        this.input.value = this.input.value.filter((doc) => doc.url !== fileData.url);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputImagesComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputImagesComponent, isStandalone: true, selector: "ta-input-images", usesInheritance: true, ngImport: i0, template: "<div class=\"row g-0 align-items-center mb-space-2\">\n  <div class=\"col\">\n    <ta-form-label [input]=\"this.input\"></ta-form-label>\n  </div>\n</div>\n\n<div class=\"flex-column g-space-xs\">\n  @if (this.input.value?.length ?? 0 > 0) {\n    <div class=\"grid g-space-md\">\n      @for(value of this.input.value; track value.id) {\n        <div class=\"image-preview-wrapper one-fourth\">\n          <img [src]=\"value.url\" class=\"image-preview\" />\n          <div class=\"image-remove\">\n            <ta-button\n              type=\"danger\"\n              (action)=\"this.onFileDeleted(value)\"\n              icon=\"delete\"\n            >\n            </ta-button>\n          </div>\n        </div>\n      }\n    </div>\n  }\n  <div class=\"flex-start\">\n      <ta-button\n        type=\"tertiary\"\n        (action)=\"this.openDialog()\"\n        icon=\"add_a_photo\"\n      >\n        Ajouter\n      </ta-button>\n  </div>\n</div>\n\n", styles: [".image-preview-wrapper{position:relative;background-color:var(--ta-surface-secondary)}.image-preview-wrapper img{border-radius:var(--ta-radius-rounded);aspect-ratio:3/4;overflow:hidden}.image-remove{padding:var(--ta-spacing-sm)}\n"], dependencies: [{ kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputImagesComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-images', standalone: true, imports: [NgClass, FormLabelComponent, ButtonComponent, FontIconComponent], template: "<div class=\"row g-0 align-items-center mb-space-2\">\n  <div class=\"col\">\n    <ta-form-label [input]=\"this.input\"></ta-form-label>\n  </div>\n</div>\n\n<div class=\"flex-column g-space-xs\">\n  @if (this.input.value?.length ?? 0 > 0) {\n    <div class=\"grid g-space-md\">\n      @for(value of this.input.value; track value.id) {\n        <div class=\"image-preview-wrapper one-fourth\">\n          <img [src]=\"value.url\" class=\"image-preview\" />\n          <div class=\"image-remove\">\n            <ta-button\n              type=\"danger\"\n              (action)=\"this.onFileDeleted(value)\"\n              icon=\"delete\"\n            >\n            </ta-button>\n          </div>\n        </div>\n      }\n    </div>\n  }\n  <div class=\"flex-start\">\n      <ta-button\n        type=\"tertiary\"\n        (action)=\"this.openDialog()\"\n        icon=\"add_a_photo\"\n      >\n        Ajouter\n      </ta-button>\n  </div>\n</div>\n\n", styles: [".image-preview-wrapper{position:relative;background-color:var(--ta-surface-secondary)}.image-preview-wrapper img{border-radius:var(--ta-radius-rounded);aspect-ratio:3/4;overflow:hidden}.image-remove{padding:var(--ta-spacing-sm)}\n"] }]
+            args: [{ selector: 'ta-input-images', standalone: true, imports: [FormLabelComponent, ButtonComponent], template: "<div class=\"row g-0 align-items-center mb-space-2\">\n  <div class=\"col\">\n    <ta-form-label [input]=\"this.input\"></ta-form-label>\n  </div>\n</div>\n\n<div class=\"flex-column g-space-xs\">\n  @if (this.input.value?.length ?? 0 > 0) {\n    <div class=\"grid g-space-md\">\n      @for(value of this.input.value; track value.id) {\n        <div class=\"image-preview-wrapper one-fourth\">\n          <img [src]=\"value.url\" class=\"image-preview\" />\n          <div class=\"image-remove\">\n            <ta-button\n              type=\"danger\"\n              (action)=\"this.onFileDeleted(value)\"\n              icon=\"delete\"\n            >\n            </ta-button>\n          </div>\n        </div>\n      }\n    </div>\n  }\n  <div class=\"flex-start\">\n      <ta-button\n        type=\"tertiary\"\n        (action)=\"this.openDialog()\"\n        icon=\"add_a_photo\"\n      >\n        Ajouter\n      </ta-button>\n  </div>\n</div>\n\n", styles: [".image-preview-wrapper{position:relative;background-color:var(--ta-surface-secondary)}.image-preview-wrapper img{border-radius:var(--ta-radius-rounded);aspect-ratio:3/4;overflow:hidden}.image-remove{padding:var(--ta-spacing-sm)}\n"] }]
         }], ctorParameters: () => [] });
 
 class InputImageComponent extends TaAbstractInputComponent {
@@ -807,47 +807,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 args: ['phoneInput', { static: false }]
             }] } });
 
-class InputAddressComponent extends TaAbstractInputComponent {
-    constructor() {
-        super();
-        this.addressDetails = {
-            street: null,
-            streetNumber: null,
-            locality: null,
-            postalCode: null,
-            country: null,
-            longitude: null,
-            latitude: null,
-        };
-    }
-    parseAddress(place) {
-        const addressComponents = place.address_components;
-        const geometry = place.geometry;
-        const getComponent = (type) => {
-            const component = addressComponents.find((comp) => comp.types.includes(type));
-            return component ? component.long_name : null;
-        };
-        this.input.value = {
-            streetNumber: getComponent('street_number'),
-            street: getComponent('route'),
-            locality: getComponent('locality'),
-            postalCode: getComponent('postal_code'),
-            country: getComponent('country'),
-            longitude: geometry?.location?.lng() || null,
-            latitude: geometry?.location?.lat() || null,
-        };
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", viewQueries: [{ propertyName: "addresstext", first: true, predicate: ["addresstext"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"input\"></ta-form-label>\n<mat-google-maps-autocomplete\n  class=\"form-control\"\n  autocomplete=\"off\"\n  appearance=\"standard\"\n  [addressLabelText]=\"''\"\n  [placeholderText]=\"'form.input.address.placeholder' | translate\"\n  [requiredErrorText]=\"'form.input.address.required' | translate\"\n  [invalidErrorText]=\"'form.input.address.invalid' | translate\"\n  (onAutocompleteSelected)=\"this.parseAddress($event)\"\n  #addresstext\n></mat-google-maps-autocomplete>\n", styles: ["::ng-deep .mat-mdc-form-field-required-marker{display:none}::ng-deep .mat-mdc-form-field-infix{padding-top:var(--ta-space-sm)!important;padding-bottom:var(--ta-space-sm)!important;align-content:center;font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}::ng-deep .mat-mdc-text-field-wrapper{border-radius:var(--ta-radius-rounded)!important}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "ngmodule", type: MatGoogleMapsAutocompleteModule }, { kind: "component", type: i2$1.MatGoogleMapsAutocompleteComponent, selector: "mat-google-maps-autocomplete", inputs: ["addressLabelText", "placeholderText", "requiredErrorText", "invalidErrorText", "appearance", "value", "address", "country", "placeIdOnly", "strictBounds", "types", "type", "autoCompleteOptions"], outputs: ["onChange", "onAutocompleteSelected", "onGermanAddressMapped", "onLocationSelected"], exportAs: ["matGoogleMapsAutocomplete"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-input-address', standalone: true, imports: [TranslateModule, MatGoogleMapsAutocompleteModule, FormLabelComponent], template: "<ta-form-label [input]=\"input\"></ta-form-label>\n<mat-google-maps-autocomplete\n  class=\"form-control\"\n  autocomplete=\"off\"\n  appearance=\"standard\"\n  [addressLabelText]=\"''\"\n  [placeholderText]=\"'form.input.address.placeholder' | translate\"\n  [requiredErrorText]=\"'form.input.address.required' | translate\"\n  [invalidErrorText]=\"'form.input.address.invalid' | translate\"\n  (onAutocompleteSelected)=\"this.parseAddress($event)\"\n  #addresstext\n></mat-google-maps-autocomplete>\n", styles: ["::ng-deep .mat-mdc-form-field-required-marker{display:none}::ng-deep .mat-mdc-form-field-infix{padding-top:var(--ta-space-sm)!important;padding-bottom:var(--ta-space-sm)!important;align-content:center;font-size:var(--ta-font-body-md-default-size);line-height:var(--ta-font-body-md-default-line);font-weight:var(--ta-font-body-md-default-weight)}::ng-deep .mat-mdc-text-field-wrapper{border-radius:var(--ta-radius-rounded)!important}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { addresstext: [{
-                type: ViewChild,
-                args: ['addresstext']
-            }] } });
-
 class UploadComponent extends TaAbstractInputComponent {
     constructor() {
         super();
@@ -872,7 +831,7 @@ class UploadComponent extends TaAbstractInputComponent {
     ngOnInit() {
         super.ngOnInit();
         if (this.input.value && this.input.value.length > 0) {
-            const ids = this.input.value.map(file => file.id);
+            const ids = this.input.value.map((file) => file.id);
             this.requestState.asked();
             this._documentsService.fetchDocuments$(ids).subscribe({
                 next: () => {
@@ -905,11 +864,11 @@ class UploadComponent extends TaAbstractInputComponent {
         if (this.inProgressFiles.length === 0) {
             return false;
         }
-        return !this.inProgressFiles.find(file => file.progress < 100);
+        return !this.inProgressFiles.find((file) => file.progress < 100);
     }
     validation() {
         const values = this.inProgressFiles
-            .map(file => file.completed
+            .map((file) => file.completed
             ? {
                 id: file.completed.id,
                 name: file.completed.description ?? '',
@@ -920,11 +879,11 @@ class UploadComponent extends TaAbstractInputComponent {
         this.input.confirmValue(values);
     }
     deleteInProgressFile(name) {
-        this.inProgressFiles = this.inProgressFiles.filter(file => file.name !== name);
+        this.inProgressFiles = this.inProgressFiles.filter((file) => file.name !== name);
         this._refreshUploadStatus();
     }
     deleteFile(id) {
-        this.inProgressFiles = this.inProgressFiles.filter(file => file.completed?.id !== id);
+        this.inProgressFiles = this.inProgressFiles.filter((file) => file.completed?.id !== id);
         this._refreshUploadStatus();
     }
     prepareFilesList(files) {
@@ -937,7 +896,7 @@ class UploadComponent extends TaAbstractInputComponent {
             this.inProgressFiles.push(inProgressFile);
             this.uploadStatusChanged.emit(false);
             this._documentsService.addDocument$({ file: item }).subscribe({
-                next: data => {
+                next: (data) => {
                     inProgressFile.progress = 100;
                     inProgressFile.completed = data;
                     this._refreshUploadStatus();
@@ -974,7 +933,7 @@ class UploadComponent extends TaAbstractInputComponent {
         this.prepareFilesList(files);
     }
     _refreshUploadStatus() {
-        const allComplete = this.inProgressFiles.every(file => file.progress === 100);
+        const allComplete = this.inProgressFiles.every((file) => file.progress === 100);
         this.uploadStatusChanged.emit(allComplete);
     }
     _localToFile(file) {
@@ -983,13 +942,11 @@ class UploadComponent extends TaAbstractInputComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: UploadComponent, isStandalone: true, selector: "ta-input-upload", outputs: { uploadStatusChanged: "uploadStatusChanged" }, viewQueries: [{ propertyName: "fileDropEl", first: true, predicate: ["fileDropRef"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <!-- <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text> -->\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "ngmodule", type: MatProgressBarModule }, { kind: "component", type: i2$2.MatProgressBar, selector: "mat-progress-bar", inputs: ["color", "value", "bufferValue", "mode"], outputs: ["animationEnd"], exportAs: ["matProgressBar"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: UploadComponent, isStandalone: true, selector: "ta-input-upload", outputs: { uploadStatusChanged: "uploadStatusChanged" }, viewQueries: [{ propertyName: "fileDropEl", first: true, predicate: ["fileDropRef"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text>\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: MegaoctetComponent, selector: "ta-megaoctet", inputs: ["octet", "icon"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "ngmodule", type: MatProgressBarModule }, { kind: "component", type: i2$1.MatProgressBar, selector: "mat-progress-bar", inputs: ["color", "value", "bufferValue", "mode"], outputs: ["animationEnd"], exportAs: ["matProgressBar"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-input-upload', standalone: true, imports: [
-                        NgIf,
-                        NgFor,
                         FontIconComponent,
                         ButtonComponent,
                         TranslateModule,
@@ -998,7 +955,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         LinkComponent,
                         LoaderComponent,
                         MatProgressBarModule,
-                    ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <!-- <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text> -->\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"] }]
+                    ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text>\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"] }]
         }], ctorParameters: () => [], propDecorators: { uploadStatusChanged: [{
                 type: Output
             }], fileDropEl: [{
@@ -1031,7 +988,7 @@ class ComponentInputComponent extends TaAbstractInputComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\r\n  <div class=\"component-container\">\r\n    <input\r\n      #box\r\n      #focusedElement\r\n      class=\"form-control\"\r\n      [value]=\"this.input.value\"\r\n      [formControl]=\"$any(this.input.formControl)\"\r\n      [readonly]=\"this.input.disabled\"\r\n      type=\"text\"\r\n    />\r\n    <div class=\"cta\" (click)=\"this.open()\">\r\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\r\n    </div>\r\n  </div>\r\n</ta-input-layout>\r\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: TaIconsModule }, { kind: "component", type: i2$3.FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\r\n  <div class=\"component-container\">\r\n    <input\r\n      #box\r\n      #focusedElement\r\n      class=\"form-control\"\r\n      [value]=\"this.input.value\"\r\n      [formControl]=\"$any(this.input.formControl)\"\r\n      [readonly]=\"this.input.disabled\"\r\n      type=\"text\"\r\n    />\r\n    <div class=\"cta\" (click)=\"this.open()\">\r\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\r\n    </div>\r\n  </div>\r\n</ta-input-layout>\r\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: TaIconsModule }, { kind: "component", type: i2$2.FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, decorators: [{
             type: Component,
@@ -1059,6 +1016,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             type: Component,
             args: [{ selector: '', standalone: true, imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\r\n  @if(this.data.input.template) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"this.data.input.template\"\r\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\r\n  ></ng-template>\r\n  }\r\n</ta-layout-modal>\r\n" }]
         }], ctorParameters: () => [] });
+
+const provideForm = () => [
+    importProvidersFrom(MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8')),
+];
 
 class InputContainerComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
@@ -1130,7 +1091,7 @@ class TaFormInputsModule {
             MatMenuModule,
             TaWysiswygModule,
             TaCardModule,
-            MatProgressBarModule, i2$1.MatGoogleMapsAutocompleteModule, CdkMenuModule,
+            MatProgressBarModule, i1$3.MatGoogleMapsAutocompleteModule, CdkMenuModule,
             TranslatePipe,
             ComponentInputComponent,
             TaOverlayPanelComponent,
@@ -1155,7 +1116,6 @@ class TaFormInputsModule {
             WysiswygComponent,
             UploadComponent,
             InputPhoneComponent,
-            InputAddressComponent,
             CultureComponent,
             InputContainerComponent], exports: [CheckboxComponent,
             ColorPickerComponent,
@@ -1178,7 +1138,6 @@ class TaFormInputsModule {
             UploadComponent,
             CultureComponent,
             InputPhoneComponent,
-            InputAddressComponent,
             ComponentInputComponent] }); }
     static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, providers: [
             { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
@@ -1210,7 +1169,7 @@ class TaFormInputsModule {
             TaWysiswygModule,
             TaCardModule,
             MatProgressBarModule,
-            MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
+            MatGoogleMapsAutocompleteModule.forRoot(''),
             CdkMenuModule,
             ComponentInputComponent,
             TaOverlayPanelComponent,
@@ -1232,7 +1191,6 @@ class TaFormInputsModule {
             WysiswygComponent,
             UploadComponent,
             InputPhoneComponent,
-            InputAddressComponent,
             CultureComponent] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, decorators: [{
@@ -1270,7 +1228,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         TaWysiswygModule,
                         TaCardModule,
                         MatProgressBarModule,
-                        MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
+                        MatGoogleMapsAutocompleteModule.forRoot(''),
                         CdkMenuModule,
                         TranslatePipe,
                         ComponentInputComponent,
@@ -1296,7 +1254,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         WysiswygComponent,
                         UploadComponent,
                         InputPhoneComponent,
-                        InputAddressComponent,
                         CultureComponent,
                         InputContainerComponent,
                     ],
@@ -1322,7 +1279,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         UploadComponent,
                         CultureComponent,
                         InputPhoneComponent,
-                        InputAddressComponent,
                         ComponentInputComponent,
                     ],
                     providers: [
@@ -1340,5 +1296,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, InputAddressComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaFormInputsModule, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent };
+export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, FormLabelComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaAbstractInputComponent, TaFormInputsModule, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent, provideForm };
 //# sourceMappingURL=ta-form-input.mjs.map

@@ -22,9 +22,9 @@
                     <ta-font-icon name="close" type="sm"></ta-font-icon>
                   </ta-link>
                 } @else if (item.progress === 100 && item.completed) {
-                  <!-- <ta-text size="sm" class="justify-end">
+                  <ta-text size="sm" class="justify-end">
                     <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
-                  </ta-text> -->
+                  </ta-text>
                   @if (item.completed.id) {
                     <ta-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
                       <ta-font-icon name="close" type="sm"></ta-font-icon>

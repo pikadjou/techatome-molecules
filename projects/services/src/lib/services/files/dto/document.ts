@@ -4,8 +4,8 @@ export interface DocumentDto {
   createdDate?: string;
   description: string;
   id: string;
-  mediaType?: any;
   url: string;
+  size: number;
 }
 
-export const documentProps = new GraphSchema<DocumentDto>(['id', 'url', 'description', 'mediaType', 'createdDate']);
+export const documentProps = new GraphSchema<DocumentDto>(['id', 'url', 'description', 'createdDate', 'size']);

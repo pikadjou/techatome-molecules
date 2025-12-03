@@ -8,7 +8,6 @@
       :root {
         @each $key, $value in $flat-map {
           @if $value != null and $value != () {
-            @debug --ta-#{$key} #{$value};
             --ta-#{$key}: #{$value};
           }
         }

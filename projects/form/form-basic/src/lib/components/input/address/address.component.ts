@@ -1,54 +1,54 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { InputAddress } from '@ta/form-model';
-
-import { TaAbstractInputComponent } from '../../abstract.component';
-import { FormLabelComponent } from '../../label/label.component';
+import { TaAbstractInputComponent, TextBoxComponent } from '@ta/form-input';
+import { FormLabelComponent } from '@ta/form-input';
 
 @Component({
   selector: 'ta-input-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss'],
   standalone: true,
-  imports: [TranslateModule, MatGoogleMapsAutocompleteModule, FormLabelComponent],
+  imports: [
+    TranslateModule,
+    MatGoogleMapsAutocompleteModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TextBoxComponent,
+    FormLabelComponent,
+  ],
 })
 export class InputAddressComponent extends TaAbstractInputComponent<InputAddress> {
-  @ViewChild('addresstext') addresstext: any;
-
-  addressDetails = {
-    street: null,
-    streetNumber: null,
-    locality: null,
-    postalCode: null,
-    country: null,
-    longitude: null,
-    latitude: null,
-  };
-
   constructor() {
     super();
   }
 
   public parseAddress(place: any) {
     const addressComponents = place.address_components;
-    const geometry = place.geometry;
 
     const getComponent = (type: string) => {
       const component = addressComponents.find((comp: any) => comp.types.includes(type));
       return component ? component.long_name : null;
     };
 
-    this.input.value = {
+    const addressData = {
       streetNumber: getComponent('street_number'),
       street: getComponent('route'),
       locality: getComponent('locality'),
       postalCode: getComponent('postal_code'),
       country: getComponent('country'),
-      longitude: geometry?.location?.lng() || null,
-      latitude: geometry?.location?.lat() || null,
     };
+    this.input.value = addressData;
+  }
+
+  public dispatchNewValue() {
+    this.input.updateValue();
   }
 }

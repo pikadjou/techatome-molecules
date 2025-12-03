@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -25,8 +24,6 @@ type InProgressFile = {
   styleUrls: ['./upload.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     FontIconComponent,
     ButtonComponent,
     TranslateModule,
@@ -69,7 +66,7 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
   override ngOnInit() {
     super.ngOnInit();
     if (this.input.value && this.input.value.length > 0) {
-      const ids = this.input.value.map(file => file.id);
+      const ids = this.input.value.map((file) => file.id);
       this.requestState.asked();
       this._documentsService.fetchDocuments$(ids).subscribe({
         next: () => {
@@ -105,18 +102,18 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
     if (this.inProgressFiles.length === 0) {
       return false;
     }
-    return !this.inProgressFiles.find(file => file.progress < 100);
+    return !this.inProgressFiles.find((file) => file.progress < 100);
   }
   public validation() {
     const values: InputUploadValue[] = this.inProgressFiles
-      .map(file =>
+      .map((file) =>
         file.completed
           ? {
               id: file.completed.id,
               name: file.completed.description ?? '',
               url: file.completed.url,
             }
-          : null
+          : null,
       )
       .filter(isNonNullable);
 
@@ -124,11 +121,11 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
   }
 
   public deleteInProgressFile(name: string) {
-    this.inProgressFiles = this.inProgressFiles.filter(file => file.name !== name);
+    this.inProgressFiles = this.inProgressFiles.filter((file) => file.name !== name);
     this._refreshUploadStatus();
   }
   public deleteFile(id: string) {
-    this.inProgressFiles = this.inProgressFiles.filter(file => file.completed?.id !== id);
+    this.inProgressFiles = this.inProgressFiles.filter((file) => file.completed?.id !== id);
     this._refreshUploadStatus();
   }
 
@@ -143,7 +140,7 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
       this.uploadStatusChanged.emit(false);
 
       this._documentsService.addDocument$({ file: item }).subscribe({
-        next: data => {
+        next: (data) => {
           inProgressFile.progress = 100;
           inProgressFile.completed = data;
 
@@ -184,7 +181,7 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
   }
 
   private _refreshUploadStatus() {
-    const allComplete = this.inProgressFiles.every(file => file.progress === 100);
+    const allComplete = this.inProgressFiles.every((file) => file.progress === 100);
     this.uploadStatusChanged.emit(allComplete);
   }
 

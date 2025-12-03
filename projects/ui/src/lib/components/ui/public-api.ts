@@ -51,3 +51,4 @@ export * from './users-list/users-list.component';
 export * from './banner/banner.component';
 export * from './profil-data/inline-profile-data/inline-profile-data.component';
 export * from './benefit-item/benefit-item.component';
+export * from './address/address.component';

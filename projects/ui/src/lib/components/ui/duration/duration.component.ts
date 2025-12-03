@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,7 +12,7 @@ import { TaTranslationUI } from '../translation.service';
   templateUrl: './duration.component.html',
   styleUrls: ['./duration.component.scss'],
   standalone: true,
-  imports: [NgIf, TranslateModule, PluralTranslatePipe],
+  imports: [TranslateModule, PluralTranslatePipe],
 })
 export class DurationComponent implements OnInit {
   @Input()

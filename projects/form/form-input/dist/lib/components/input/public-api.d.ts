@@ -18,7 +18,6 @@ export * from './search-field/search-field.component';
 export * from './choices/choices.component';
 export * from './wysiswyg/wysiswyg.component';
 export * from './phone/input-phone.component';
-export * from './address/address.component';
 export * from './upload/upload.component';
 export * from './culture/culture.component';
 export * from './component/component.component';

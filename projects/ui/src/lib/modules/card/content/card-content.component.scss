@@ -1,5 +1,9 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
+:host {
+  @include flex.flex-full();
+}
 .card-content {
   padding: common.get-var(space, xs) 0;
 }

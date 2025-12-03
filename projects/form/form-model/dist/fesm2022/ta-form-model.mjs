@@ -37,7 +37,7 @@ class InputBase {
         this._subscriberHandler = new SubscriberHandler();
         if (options.value$) {
             this._subscriberHandler.registerSubscription(options.value$.subscribe({
-                next: value => {
+                next: (value) => {
                     if (this.value) {
                         return;
                     }
@@ -57,7 +57,7 @@ class InputBase {
         this.disabled = options.disabled === true;
         this.visible$ = options.visible$ || of(true);
         if (options.bindStatusToVisible !== false) {
-            this._subscriberHandler.registerSubscription(this.visible$.subscribe(visible => {
+            this._subscriberHandler.registerSubscription(this.visible$.subscribe((visible) => {
                 this._isVisible = visible;
                 if (options.bindStatusToVisible !== false) {
                     if (!visible) {
@@ -86,7 +86,7 @@ class InputBase {
             if (this.disabled) {
                 this.formControl.disable();
             }
-            this._subscriberHandler.registerSubscription(this.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+            this._subscriberHandler.registerSubscription(this.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe((value) => {
                 this.value = value;
                 this.launchChangeValue();
             }));
@@ -97,17 +97,17 @@ class InputBase {
     }
     launchChangeValue() {
         this.changeValue$.next(this.value);
-        this.children.forEach(child => child.launchChangeValue());
+        this.children.forEach((child) => child.launchChangeValue());
     }
     disable() {
         this.formControl?.disable();
-        this.children.forEach(child => child.disable());
+        this.children.forEach((child) => child.disable());
     }
     enable() {
         if (!this._isVisible)
             return;
         this.formControl?.enable();
-        this.children.forEach(child => child.enable());
+        this.children.forEach((child) => child.enable());
     }
     destroy() {
         this.changeValue$.complete();
@@ -170,8 +170,9 @@ class InputImages extends InputBase {
         if (options.update) {
             this.update = options.update;
         }
-        if (options.onFileDeleted)
+        if (options.onFileDeleted) {
             this.fileDeleted = options.onFileDeleted;
+        }
         this.removeFile$ = options.removeFile$ || null;
     }
 }
@@ -266,6 +267,12 @@ class InputWysiswyg extends InputBase {
     constructor(options = {}) {
         super(options);
         this.controlType = 'wysiswyg';
+        if (options.stringValue) {
+            try {
+                this.value = JSON.parse(options.stringValue);
+            }
+            catch (e) { }
+        }
     }
 }
 
@@ -454,49 +461,59 @@ class InputTimePicker extends InputTextBox {
 var EAddressValues;
 (function (EAddressValues) {
     EAddressValues["street"] = "street";
-    EAddressValues["streetNumber"] = "streetNumber";
-    EAddressValues["locality"] = "locality";
-    EAddressValues["postalCode"] = "postalCode";
+    EAddressValues["number"] = "number";
+    EAddressValues["city"] = "city";
+    EAddressValues["zipCode"] = "zipCode";
     EAddressValues["country"] = "country";
     EAddressValues["longitude"] = "longitude";
     EAddressValues["latitude"] = "latitude";
 })(EAddressValues || (EAddressValues = {}));
-class InputAddress extends InputPanel {
+class InputAddress extends InputBase {
     set value(data) {
-        this.children.find((x) => x.key === EAddressValues.street).value =
-            data.street;
-        this.children.find((x) => x.key === EAddressValues.streetNumber).value =
-            data.streetNumber;
-        this.children.find((x) => x.key === EAddressValues.country).value =
-            data.country;
-        this.children.find((x) => x.key === EAddressValues.locality).value =
-            data.locality;
-        this.children.find((x) => x.key === EAddressValues.postalCode).value =
-            data.postalCode;
-        this.children.find((x) => x.key === EAddressValues.longitude).value =
-            data.longitude;
-        this.children.find((x) => x.key === EAddressValues.latitude).value =
-            data.latitude;
+        super.value = data;
+        this.street.value = data?.street ?? null;
+        this.number.value = data?.number ?? null;
+        this.country.value = data?.country ?? null;
+        this.city.value = data?.city ?? null;
+        this.zipCode.value = data?.zipCode ?? null;
     }
     constructor(options = {}) {
         super(options);
         this.controlType = 'address';
-        this.type = 'address';
-        this.children.push(new InputTextBox({
+        this.street = new InputTextBox({
             key: EAddressValues.street,
-        }), new InputTextBox({
-            key: EAddressValues.streetNumber,
-        }), new InputTextBox({
-            key: EAddressValues.locality,
-        }), new InputTextBox({
+            label: 'street',
+        });
+        this.number = new InputTextBox({
+            key: EAddressValues.number,
+            label: 'number',
+        });
+        this.city = new InputTextBox({
+            key: EAddressValues.city,
+            label: 'city',
+        });
+        this.country = new InputTextBox({
             key: EAddressValues.country,
-        }), new InputTextBox({
-            key: EAddressValues.postalCode,
-        }), new InputTextBox({
-            key: EAddressValues.longitude,
-        }), new InputTextBox({
-            key: EAddressValues.latitude,
-        }));
+            label: 'country',
+        });
+        this.zipCode = new InputTextBox({
+            key: EAddressValues.zipCode,
+            label: 'zipCode',
+        });
+        this.type = 'address';
+        this.value = this._value();
+    }
+    updateValue() {
+        const data = {
+            street: this.street.value,
+            number: this.number.value,
+            city: this.city.value,
+            zipCode: this.zipCode.value,
+            country: this.country.value,
+            longitude: null,
+            latitude: null,
+        };
+        this.value = data;
     }
 }
 

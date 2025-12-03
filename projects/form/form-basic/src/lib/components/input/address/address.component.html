@@ -1,0 +1,51 @@
+<ta-form-label [input]="input"></ta-form-label>
+<!-- <mat-google-maps-autocomplete
+  class="form-control"
+  autocomplete="off"
+  appearance="standard"
+  [addressLabelText]="''"
+  [placeholderText]="'form.input.address.placeholder' | translate"
+  [requiredErrorText]="'form.input.address.required' | translate"
+  [invalidErrorText]="'form.input.address.invalid' | translate"
+  (onAutocompleteSelected)="this.parseAddress($event)"
+  #addresstext
+></mat-google-maps-autocomplete> -->
+
+<div class="grid g-space-sm">
+  <div class="two-thirds">
+    <ta-input-textbox
+      [input]="this.input.street"
+      [standalone]="true"
+      (valueChanged)="this.dispatchNewValue()"
+    ></ta-input-textbox>
+  </div>
+  <div class="one-third">
+    <ta-input-textbox
+      [input]="this.input.number"
+      [standalone]="true"
+      (valueChanged)="this.dispatchNewValue()"
+    ></ta-input-textbox>
+  </div>
+  <div class="one-third">
+    <ta-input-textbox
+      [input]="this.input.zipCode"
+      [standalone]="true"
+      (valueChanged)="this.dispatchNewValue()"
+    ></ta-input-textbox>
+  </div>
+  <div class="two-thirds">
+    <ta-input-textbox
+      [input]="this.input.city"
+      [standalone]="true"
+      (valueChanged)="this.dispatchNewValue()"
+    ></ta-input-textbox>
+  </div>
+  <div class="full">
+    <ta-input-textbox
+      [input]="this.input.country"
+      [standalone]="true"
+      (valueChanged)="this.dispatchNewValue()"
+    ></ta-input-textbox>
+  </div>
+</div>
+

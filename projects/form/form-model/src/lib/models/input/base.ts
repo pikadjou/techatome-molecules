@@ -43,7 +43,7 @@ export class InputBase<T> implements IInputBase<T> {
   visible$: Observable<boolean>;
   changeValue$ = new Subject<T | null>();
 
-  private _value = signal<T | null>(null);
+  protected _value = signal<T | null>(null);
   private _isVisible!: boolean;
 
   protected _subscriberHandler = new SubscriberHandler();
@@ -59,13 +59,13 @@ export class InputBase<T> implements IInputBase<T> {
     if (options.value$) {
       this._subscriberHandler.registerSubscription(
         options.value$.subscribe({
-          next: value => {
+          next: (value) => {
             if (this.value) {
               return;
             }
             this.value = value;
           },
-        })
+        }),
       );
     }
 
@@ -84,7 +84,7 @@ export class InputBase<T> implements IInputBase<T> {
 
     if (options.bindStatusToVisible !== false) {
       this._subscriberHandler.registerSubscription(
-        this.visible$.subscribe(visible => {
+        this.visible$.subscribe((visible) => {
           this._isVisible = visible;
 
           if (options.bindStatusToVisible !== false) {
@@ -98,7 +98,7 @@ export class InputBase<T> implements IInputBase<T> {
           if (!visible) {
             this.formControl?.setValue(null);
           }
-        })
+        }),
       );
     }
   }
@@ -116,10 +116,10 @@ export class InputBase<T> implements IInputBase<T> {
         this.formControl.disable();
       }
       this._subscriberHandler.registerSubscription(
-        this.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        this.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe((value) => {
           this.value = value;
           this.launchChangeValue();
-        })
+        }),
       );
       if (group) {
         group.addControl(this.key, this.formControl);
@@ -129,18 +129,18 @@ export class InputBase<T> implements IInputBase<T> {
 
   public launchChangeValue() {
     this.changeValue$.next(this.value);
-    this.children.forEach(child => child.launchChangeValue());
+    this.children.forEach((child) => child.launchChangeValue());
   }
 
   public disable() {
     this.formControl?.disable();
-    this.children.forEach(child => child.disable());
+    this.children.forEach((child) => child.disable());
   }
 
   public enable() {
     if (!this._isVisible) return;
     this.formControl?.enable();
-    this.children.forEach(child => child.enable());
+    this.children.forEach((child) => child.enable());
   }
 
   public destroy() {

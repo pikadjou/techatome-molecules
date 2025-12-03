@@ -512,7 +512,7 @@ const merge = (override = true) => (init, ...objects) => {
     // RecursivePartial<T>
     const isObject = (obj) => obj && typeof obj === 'object';
     return objects.reduce((prev, obj) => {
-        Object.keys(obj).forEach(key => {
+        Object.keys(obj).forEach((key) => {
             const pVal = prev[key];
             const oVal = obj[key];
             if (Array.isArray(pVal) && Array.isArray(oVal)) {
@@ -555,6 +555,9 @@ const removeObjectKeys = (obj, keysToRemove) => {
         }
         return acc;
     }, {});
+};
+const compareObjectsByKeys = (obj1, obj2, keys) => {
+    return keys.every((key) => obj1[key] === obj2[key]);
 };
 
 class TaBasePage extends TaAbstractComponent {
@@ -1038,5 +1041,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken('default_user_language');
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaBaseComponent, TaBaseModal, TaBasePage, TaDirectivePipeModule, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaBaseComponent, TaBaseModal, TaBasePage, TaDirectivePipeModule, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map

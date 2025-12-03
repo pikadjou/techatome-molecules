@@ -1,5 +1,9 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
+:host {
+  @include flex.flex-full();
+}
 .empty-container {
   margin: common.get-var(space, sm) auto;
   text-align: center;

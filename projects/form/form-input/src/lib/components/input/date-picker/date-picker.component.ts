@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepicker, MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
@@ -17,7 +16,7 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, InputLayoutComponent],
+  imports: [ReactiveFormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, InputLayoutComponent],
 })
 export class DatePickerComponent extends TaAbstractInputComponent<InputDatePicker> {
   @ViewChild('picker') picker!: MatDatepicker<any>;
@@ -32,7 +31,7 @@ export class DatePickerComponent extends TaAbstractInputComponent<InputDatePicke
 
     this._registerSubscription(
       this.range.valueChanges.subscribe({
-        next: value => {
+        next: (value) => {
           if (value.start && value.end && isEqual(value.start, value.end)) {
             this.input.value = value.start;
             return;
@@ -42,7 +41,7 @@ export class DatePickerComponent extends TaAbstractInputComponent<InputDatePicke
             end: value.end,
           };
         },
-      })
+      }),
     );
   }
 

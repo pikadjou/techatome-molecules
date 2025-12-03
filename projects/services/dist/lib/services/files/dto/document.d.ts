@@ -3,7 +3,7 @@ export interface DocumentDto {
     createdDate?: string;
     description: string;
     id: string;
-    mediaType?: any;
     url: string;
+    size: number;
 }
 export declare const documentProps: GraphSchema<DocumentDto>;

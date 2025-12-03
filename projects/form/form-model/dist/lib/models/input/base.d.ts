@@ -35,7 +35,7 @@ export declare class InputBase<T> implements IInputBase<T> {
     disabled: boolean;
     visible$: Observable<boolean>;
     changeValue$: Subject<T | null>;
-    private _value;
+    protected _value: import("@angular/core").WritableSignal<T | null>;
     private _isVisible;
     protected _subscriberHandler: SubscriberHandler;
     get value(): T | null;

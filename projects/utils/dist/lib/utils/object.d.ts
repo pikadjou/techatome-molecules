@@ -12,3 +12,4 @@ export declare const getPropertyTypes: <T extends object>(obj: T) => { [K in key
 export declare const ObjectKeys: <T>(object: T) => (keyof T)[];
 export declare const ObjectKeysReOrder: <T>(base: T, keysOrder: Array<keyof T>) => T;
 export declare const removeObjectKeys: <T extends Record<string, any>>(obj: T, keysToRemove: (keyof T)[]) => Partial<T>;
+export declare const compareObjectsByKeys: <T>(obj1: T, obj2: T, keys: Array<keyof T>) => boolean;

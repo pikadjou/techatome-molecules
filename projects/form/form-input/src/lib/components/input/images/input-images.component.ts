@@ -1,10 +1,8 @@
-import { NgClass } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 
 import { combineLatest } from 'rxjs';
 
 import { InputImages } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
 import { DocumentDto, TaDocumentsService } from '@ta/services';
 import { ButtonComponent } from '@ta/ui';
 import { isNonNullable, pickImages } from '@ta/utils';
@@ -17,7 +15,7 @@ import { FormLabelComponent } from '../../label/label.component';
   templateUrl: './input-images.component.html',
   styleUrls: ['./input-images.component.scss'],
   standalone: true,
-  imports: [NgClass, FormLabelComponent, ButtonComponent, FontIconComponent],
+  imports: [FormLabelComponent, ButtonComponent],
 })
 export class InputImagesComponent extends TaAbstractInputComponent<InputImages> implements OnInit {
   private _documentsService = inject(TaDocumentsService);
@@ -32,11 +30,11 @@ export class InputImagesComponent extends TaAbstractInputComponent<InputImages> 
     if (images.length > 0) {
       combineLatest(
         images
-          .map(image => image.file)
+          .map((image) => image.file)
           .filter(isNonNullable)
-          .map(file => this._documentsService.addDocument$({ file: file }))
+          .map((file) => this._documentsService.addDocument$({ file: file })),
       ).subscribe({
-        next: documents => {
+        next: (documents) => {
           this.input.value = [...(this.input.value || []), ...documents];
         },
       });
@@ -47,6 +45,6 @@ export class InputImagesComponent extends TaAbstractInputComponent<InputImages> 
     if (!this.input.value) {
       return;
     }
-    this.input.value = this.input.value.filter(doc => doc.url !== fileData.url);
+    this.input.value = this.input.value.filter((doc) => doc.url !== fileData.url);
   }
 }

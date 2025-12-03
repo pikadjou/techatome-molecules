@@ -31,7 +31,6 @@ import { TaWysiswygModule } from '@ta/wysiswyg';
 import { InputContainerComponent } from './components/input-layout/input-container/input-container.component';
 import { InputErrorComponent } from './components/input-layout/input-error/input-error.component';
 import { InputLayoutComponent } from './components/input-layout/input-layout.component';
-import { InputAddressComponent } from './components/input/address/address.component';
 import { CheckboxComponent } from './components/input/checkbox/checkbox.component';
 import { InputChoicesComponent } from './components/input/choices/choices.component';
 import { ColorPickerComponent } from './components/input/color-picker/color-picker.component';
@@ -102,7 +101,7 @@ import { TaTranslationInput } from './translation.service';
     TaWysiswygModule,
     TaCardModule,
     MatProgressBarModule,
-    MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8'),
+    MatGoogleMapsAutocompleteModule.forRoot(''),
     CdkMenuModule,
     TranslatePipe,
     ComponentInputComponent,
@@ -128,7 +127,6 @@ import { TaTranslationInput } from './translation.service';
     WysiswygComponent,
     UploadComponent,
     InputPhoneComponent,
-    InputAddressComponent,
     CultureComponent,
     InputContainerComponent,
   ],
@@ -154,7 +152,6 @@ import { TaTranslationInput } from './translation.service';
     UploadComponent,
     CultureComponent,
     InputPhoneComponent,
-    InputAddressComponent,
     ComponentInputComponent,
   ],
   providers: [

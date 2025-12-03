@@ -19,7 +19,7 @@ export const merge =
     const isObject = (obj: any) => obj && typeof obj === 'object';
 
     return objects.reduce<T>((prev, obj) => {
-      (<Array<keyof T>>Object.keys(obj)).forEach(key => {
+      (<Array<keyof T>>Object.keys(obj)).forEach((key) => {
         const pVal = prev[key] as any;
         const oVal = obj[key] as any;
 
@@ -70,4 +70,8 @@ export const removeObjectKeys = <T extends Record<string, any>>(obj: T, keysToRe
     }
     return acc;
   }, {});
+};
+
+export const compareObjectsByKeys = <T>(obj1: T, obj2: T, keys: Array<keyof T>): boolean => {
+  return keys.every((key) => obj1[key] === obj2[key]);
 };

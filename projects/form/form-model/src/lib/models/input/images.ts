@@ -29,7 +29,9 @@ export class InputImages extends InputBase<DocumentDto[]> {
       this.update = options.update;
     }
 
-    if (options.onFileDeleted) this.fileDeleted = options.onFileDeleted;
+    if (options.onFileDeleted) {
+      this.fileDeleted = options.onFileDeleted;
+    }
     this.removeFile$ = options.removeFile$ || null;
   }
 }

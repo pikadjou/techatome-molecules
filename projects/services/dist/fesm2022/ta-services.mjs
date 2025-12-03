@@ -259,7 +259,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
-const documentProps = new GraphSchema(['id', 'url', 'description', 'mediaType', 'createdDate']);
+const documentProps = new GraphSchema(['id', 'url', 'description', 'createdDate', 'size']);
 
 var FileType;
 (function (FileType) {
@@ -278,7 +278,7 @@ var FileType;
 
 function GET_DOCUMENTS(filters) {
     const where = filters.ids && filters.ids.length > 0
-        ? `where: { id: { in: [${filters.ids.map(id => `"${id}"`).join(', ')}] } }`
+        ? `where: { id: { in: [${filters.ids.map((id) => `"${id}"`).join(', ')}] } }`
         : '';
     return {
         query: Apollo_gql `
@@ -287,8 +287,7 @@ function GET_DOCUMENTS(filters) {
             items {
               ${documentProps.get('id')}
               ${documentProps.get('url')}
-              ${documentProps.get('description')}
-              
+              ${documentProps.get('size')}
             }
           }
         }
