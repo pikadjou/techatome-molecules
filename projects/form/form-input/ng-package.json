@@ -17,5 +17,12 @@
     "codex-tooltip",
     "libphonenumber-js",
     "intl-tel-input"
+  ],
+  "assets": [
+    {
+      "glob": "**/*.json",
+      "input": "src/i18n",
+      "output": "i18n"
+    }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "button": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "dialog": {
+    "title": "Dialog",
+    "confirmClose": "Are you sure you want to close?"
+  },
+  "table": {
+    "noData": "No data available",
+    "loading": "Loading..."
+  }
+}

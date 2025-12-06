@@ -11,5 +11,22 @@
     "storage-manager-js",
     "swiper",
     "@angular"
+  ],
+  "assets": [
+    {
+      "glob": "**/*.json",
+      "input": "src/i18n",
+      "output": "i18n"
+    },
+    {
+      "glob": "**/*.json",
+      "input": "src/modules/container/i18n",
+      "output": "i18n/container"
+    },
+    {
+      "glob": "**/*.json",
+      "input": "src/modules/layout/i18n",
+      "output": "i18n/layout"
+    }
   ]
 }

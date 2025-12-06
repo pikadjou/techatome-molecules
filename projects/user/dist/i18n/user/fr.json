@@ -1,0 +1,13 @@
+{
+  "profile": "Profil",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "register": "Inscription",
+  "settings": "Paramètres",
+  "account": "Compte",
+  "password": {
+    "change": "Changer le mot de passe",
+    "forgot": "Mot de passe oublié",
+    "reset": "Réinitialiser le mot de passe"
+  }
+}

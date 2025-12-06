@@ -1,0 +1,18 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer"
+  },
+  "messages": {
+    "success": "Opération réussie",
+    "error": "Une erreur s'est produite",
+    "loading": "Chargement en cours..."
+  }
+}

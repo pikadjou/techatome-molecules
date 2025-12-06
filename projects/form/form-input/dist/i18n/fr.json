@@ -1,0 +1,12 @@
+{
+  "placeholder": {
+    "text": "Saisir du texte...",
+    "number": "Saisir un nombre...",
+    "date": "Sélectionner une date...",
+    "select": "Sélectionner une option..."
+  },
+  "button": {
+    "clear": "Effacer",
+    "select": "Sélectionner"
+  }
+}

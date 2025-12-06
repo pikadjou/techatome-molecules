@@ -1,0 +1,13 @@
+{
+  "profile": "Profile",
+  "login": "Login",
+  "logout": "Logout",
+  "register": "Register",
+  "settings": "Settings",
+  "account": "Account",
+  "password": {
+    "change": "Change password",
+    "forgot": "Forgot password",
+    "reset": "Reset password"
+  }
+}

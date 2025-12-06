@@ -1,0 +1,18 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import"
+  },
+  "messages": {
+    "success": "Operation successful",
+    "error": "An error occurred",
+    "loading": "Loading..."
+  }
+}

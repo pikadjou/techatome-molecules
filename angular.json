@@ -30,7 +30,18 @@
                 "glob": "**/*",
                 "input": "node_modules/@ta/icons/dist/assets/fonts",
                 "output": "assets/fonts/"
-              }
+              },
+              { "glob": "*.json", "input": "projects/menu/src/i18n", "output": "assets/i18n/menu" },
+              { "glob": "*.json", "input": "projects/core/src/i18n", "output": "assets/i18n/core" },
+              { "glob": "*.json", "input": "projects/notification/src/i18n", "output": "assets/i18n/notification" },
+              { "glob": "*.json", "input": "projects/ui/src/i18n", "output": "assets/i18n/ui" },
+              { "glob": "*.json", "input": "projects/form/form-basic/src/i18n", "output": "assets/i18n/form" },
+              { "glob": "*.json", "input": "projects/form/form-input/src/i18n", "output": "assets/i18n/input" },
+              { "glob": "*.json", "input": "projects/core/src/modules/maps/i18n", "output": "assets/i18n/maps" },
+              { "glob": "*.json", "input": "projects/cms/src/modules/strapi/i18n", "output": "assets/i18n/strapi" },
+              { "glob": "*.json", "input": "projects/ui/src/modules/container/i18n", "output": "assets/i18n/container" },
+              { "glob": "*.json", "input": "projects/ui/src/modules/layout/i18n", "output": "assets/i18n/layout" },
+              { "glob": "*.json", "input": "projects/user/src/modules/user/i18n", "output": "assets/i18n/user" }
             ],
             "styles": ["src/styles.scss"],
             "scripts": [],

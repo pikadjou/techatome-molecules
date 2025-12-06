@@ -1,0 +1,13 @@
+{
+  "field": {
+    "required": "Ce champ est requis",
+    "invalid": "Valeur invalide"
+  },
+  "validation": {
+    "email": "Email invalide",
+    "min": "Valeur minimale : {{min}}",
+    "max": "Valeur maximale : {{max}}",
+    "minLength": "Longueur minimale : {{minLength}} caractères",
+    "maxLength": "Longueur maximale : {{maxLength}} caractères"
+  }
+}

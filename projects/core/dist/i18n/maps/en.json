@@ -1,0 +1,9 @@
+{
+  "search": "Search for a place",
+  "noResults": "No results found",
+  "markers": "Markers",
+  "zoom": {
+    "in": "Zoom in",
+    "out": "Zoom out"
+  }
+}

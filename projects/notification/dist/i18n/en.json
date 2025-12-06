@@ -1,0 +1,13 @@
+{
+  "type": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "action": {
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "viewDetails": "View details"
+  }
+}

@@ -6,5 +6,12 @@
     "entryFile": "src/public-api.ts",
     "styleIncludePaths": ["../styles/src/style"]
   },
-  "allowedNonPeerDependencies": ["@angular", "@ta"]
+  "allowedNonPeerDependencies": ["@angular", "@ta"],
+  "assets": [
+    {
+      "glob": "**/*.json",
+      "input": "src/modules/strapi/i18n",
+      "output": "i18n/strapi"
+    }
+  ]
 }

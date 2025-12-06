@@ -1,9 +1,10 @@
 import { TranslateService, provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 export { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import * as i0 from '@angular/core';
-import { Injectable, inject, Optional, Inject, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
+import { Injectable, inject, Optional, Inject, InjectionToken, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { Subject, BehaviorSubject, debounceTime, mergeMap, map, forkJoin } from 'rxjs';
 import { SessionStorage } from 'storage-manager-js';
+import { HttpClient } from '@angular/common/http';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService } from '@ta/server';
 
 class TaTranslationRegistryService {
@@ -141,6 +142,18 @@ function GET_TRANSLATIONS(locale, feature) {
     };
 }
 
+var TranslationSourceType;
+(function (TranslationSourceType) {
+    TranslationSourceType["GRAPHQL"] = "graphql";
+    TranslationSourceType["FILE"] = "file";
+})(TranslationSourceType || (TranslationSourceType = {}));
+const TRANSLATION_SOURCE_CONFIG = new InjectionToken('TRANSLATION_SOURCE_CONFIG', {
+    providedIn: 'root',
+    factory: () => ({
+        type: TranslationSourceType.GRAPHQL,
+    }),
+});
+
 class TaLazyTranslationService extends TaBaseStrapiService {
     get id() {
         return this._id;
@@ -148,6 +161,8 @@ class TaLazyTranslationService extends TaBaseStrapiService {
     constructor(id, isApp = false) {
         super();
         this._registry = inject(TaTranslationRegistryService);
+        this._sourceConfig = inject(TRANSLATION_SOURCE_CONFIG);
+        this._http = inject(HttpClient);
         this._id = '';
         this._isApp = false;
         this._id = id;
@@ -158,10 +173,13 @@ class TaLazyTranslationService extends TaBaseStrapiService {
         return inject(this);
     }
     getTranslation(lang) {
-        return this._strapiService.fetchQueryList$(GET_TRANSLATIONS(lang, this._id), 'translations').pipe(map(translations => translations.reduce((acc, translation) => {
+        const source$ = this._sourceConfig.type === TranslationSourceType.FILE
+            ? this._getTranslationsFromFile(lang)
+            : this._getTranslationsFromGraphQL(lang);
+        return source$.pipe(map((translations) => translations.reduce((acc, translation) => {
             acc[(this._isApp ? '' : this._id + '.') + translation.key.trim()] = translation.value;
             return acc;
-        }, {})), map(translations => Object.entries(translations).reduce((acc, [key, value]) => {
+        }, {})), map((translations) => Object.entries(translations).reduce((acc, [key, value]) => {
             const keys = key.split('.');
             keys.reduce((current, k, index) => {
                 if (index === keys.length - 1) {
@@ -174,6 +192,12 @@ class TaLazyTranslationService extends TaBaseStrapiService {
             }, acc);
             return acc;
         }, {})));
+    }
+    _getTranslationsFromFile(lang) {
+        return this._http.get(`${this._sourceConfig.filePath}${this._id}/${lang}.json`);
+    }
+    _getTranslationsFromGraphQL(lang) {
+        return this._strapiService.fetchQueryList$(GET_TRANSLATIONS(lang, this._id), 'translations');
     }
 }
 
@@ -258,6 +282,12 @@ const provideTranslation = (data) => [
             supportedLanguages: data.supportedLanguages,
         },
     },
+    {
+        provide: TRANSLATION_SOURCE_CONFIG,
+        useValue: data.source ?? {
+            type: TranslationSourceType.GRAPHQL,
+        },
+    },
 ];
 
 /*
@@ -268,5 +298,5 @@ const provideTranslation = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { HttpLoaderFactory, TRANSLATION_CONFIG, TaAbstractTranslationModule, TaLazyTranslationService, TaTranslationRegistryService, TaTranslationService, initTranslation, provideTranslation };
+export { HttpLoaderFactory, TRANSLATION_CONFIG, TRANSLATION_SOURCE_CONFIG, TaAbstractTranslationModule, TaLazyTranslationService, TaTranslationRegistryService, TaTranslationService, TranslationSourceType, initTranslation, provideTranslation };
 //# sourceMappingURL=ta-translation.mjs.map

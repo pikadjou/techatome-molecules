@@ -4,6 +4,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 
 import { provideServer } from '@ta/server';
+import { provideTranslation, TranslationSourceType } from '@ta/translation';
 
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
@@ -17,6 +18,14 @@ export const appConfig: ApplicationConfig = {
     provideServer({
       graphQlConfig: environment.GRAPHQL_SERVER_CONFIG,
       // strapiConfig: environment.STRAPI_CONFIG,
+    }),
+    provideTranslation({
+      default: 'fr',
+      supportedLanguages: ['fr', 'en'],
+      source: {
+        type: TranslationSourceType.FILE,
+        filePath: 'assets/i18n/',
+      },
     }),
   ],
 };
