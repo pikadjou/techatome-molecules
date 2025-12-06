@@ -749,11 +749,7 @@ class TaBaseStrapiService extends TaBaseService {
     }
 }
 
-const baseStrapiProps = [
-    'createdAt',
-    'updatedAt',
-    'publishedAt',
-];
+const baseStrapiProps = ['createdAt', 'updatedAt', 'publishedAt'];
 
 const TENANT_CONFIG_TOKEN = new InjectionToken('TenantConfig');
 

@@ -194,7 +194,10 @@ class TaLazyTranslationService extends TaBaseStrapiService {
         }, {})));
     }
     _getTranslationsFromFile(lang) {
-        return this._http.get(`${this._sourceConfig.filePath}${this._id}/${lang}.json`);
+        return this._http.get(`${this._sourceConfig.filePath}${this._id}/${lang}.json`).pipe(map((jsonData) => Object.entries(jsonData).map(([key, value]) => ({
+            key,
+            value,
+        }))));
     }
     _getTranslationsFromGraphQL(lang) {
         return this._strapiService.fetchQueryList$(GET_TRANSLATIONS(lang, this._id), 'translations');

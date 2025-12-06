@@ -64,8 +64,15 @@ export abstract class TaLazyTranslationService extends TaBaseStrapiService imple
     );
   }
 
-  private _getTranslationsFromFile(lang: string) {
-    return this._http.get<Translation[]>(`${this._sourceConfig.filePath}${this._id}/${lang}.json`);
+  private _getTranslationsFromFile(lang: string): Observable<Translation[]> {
+    return this._http.get<{ [key: string]: string }>(`${this._sourceConfig.filePath}${this._id}/${lang}.json`).pipe(
+      map((jsonData) =>
+        Object.entries(jsonData).map(([key, value]) => ({
+          key,
+          value,
+        })),
+      ),
+    );
   }
 
   private _getTranslationsFromGraphQL(lang: string) {

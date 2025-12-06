@@ -4,7 +4,7 @@ import { Feature } from './feature';
 
 export interface Translation extends BaseStrapi {
   key: string;
-  feature: Feature;
+  feature?: Feature;
   value: string;
 }
 const props: (keyof Translation)[] = ['key', 'feature', 'value'];
