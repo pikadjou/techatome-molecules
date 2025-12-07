@@ -61,7 +61,7 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
     } | null>
   >(
     this._userService.userProfile.get$().pipe(
-      map(up => {
+      map((up) => {
         if (!up) {
           return null;
         }
@@ -74,8 +74,8 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
           },
           size: 'lg',
         };
-      })
-    )
+      }),
+    ),
   );
   constructor() {
     super();
@@ -83,14 +83,14 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
 
   get profile$() {
     return this._userService.userProfile.get$().pipe(
-      map(data => {
+      map((data) => {
         return {
           title: {
             second: data?.firstname || data?.lastname,
           },
           email: data?.email || '',
         };
-      })
+      }),
     );
   }
 
@@ -113,7 +113,7 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
         label: 'user.logout',
         order: 4,
         style: 'dark',
-        icon: 'log-out',
+        icon: 'logout',
         iconsColor: 'icon-color-icon-tertiary',
         callback: () => this.disconnect(),
       }),

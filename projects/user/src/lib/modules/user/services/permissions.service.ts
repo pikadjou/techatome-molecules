@@ -67,7 +67,7 @@ export class TaPermissionsService {
     return this._updated$.pipe(map(() => this.hasRole(role)));
   }
   public hasRole(role: string) {
-    return this.roles.some(x => x === role);
+    return !!this.roles.find((x) => x === role);
   }
 
   public canDirectAccess(feature: string, level: Level) {

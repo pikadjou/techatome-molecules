@@ -54,7 +54,7 @@ class TaPermissionsService {
         return this._updated$.pipe(map(() => this.hasRole(role)));
     }
     hasRole(role) {
-        return this.roles.some(x => x === role);
+        return !!this.roles.find((x) => x === role);
     }
     canDirectAccess(feature, level) {
         if (level === 'authenticated') {
@@ -344,7 +344,7 @@ class MyAccountComponent extends TaBaseComponent {
         this._userService = inject(TA_USER_SERVICE);
         this._authService = inject(TA_AUTH_TOKEN);
         this.disconnectionMenu = signal(null);
-        this.userLogo$ = signal(this._userService.userProfile.get$().pipe(map(up => {
+        this.userLogo$ = signal(this._userService.userProfile.get$().pipe(map((up) => {
             if (!up) {
                 return null;
             }
@@ -359,7 +359,7 @@ class MyAccountComponent extends TaBaseComponent {
         })));
     }
     get profile$() {
-        return this._userService.userProfile.get$().pipe(map(data => {
+        return this._userService.userProfile.get$().pipe(map((data) => {
             return {
                 title: {
                     second: data?.firstname || data?.lastname,
@@ -384,7 +384,7 @@ class MyAccountComponent extends TaBaseComponent {
                 label: 'user.logout',
                 order: 4,
                 style: 'dark',
-                icon: 'log-out',
+                icon: 'logout',
                 iconsColor: 'icon-color-icon-tertiary',
                 callback: () => this.disconnect(),
             }),

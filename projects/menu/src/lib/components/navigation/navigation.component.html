@@ -10,15 +10,19 @@
     } @else {
       <div class="element-list" [ngClass]="this.menu.direction + ' ' + this.getSpaceClass()">
         @for (element of this.menu.elements; track element) {
-          <div class="element">
-            <ng-template
-              [ngTemplateOutlet]="template"
-              [ngTemplateOutletContext]="{
-                element: element,
-              }"
-            >
-            </ng-template>
-          </div>
+          @let visible = element.visible$ | async;
+          @if(visible) {
+            <div class="element">
+              <ng-template
+                [ngTemplateOutlet]="template"
+                [ngTemplateOutletContext]="{
+                  element: element,
+                }"
+              >
+              </ng-template>
+            </div>
+          }
+          
         }
       </div>
     }

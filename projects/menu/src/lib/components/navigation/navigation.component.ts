@@ -1,4 +1,4 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -31,6 +31,7 @@ import { TaSizes } from '@ta/styles';
     NotificationBadgeContainerComponent,
     SwiperLightComponent,
     TypedTemplateDirective,
+    AsyncPipe,
   ],
 })
 export class NavigationComponent extends TaAbstractComponent implements OnInit {
