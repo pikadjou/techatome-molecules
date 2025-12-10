@@ -47,12 +47,12 @@ class InputBase {
         }
         this._value.set(options.value === undefined ? null : options.value);
         this.key = options.key || Math.random().toString();
-        this.label = options.label || '';
-        this.type = options.type || '';
-        this.message = options.message || '';
-        this.controlType = options.controlType || '';
+        this.label = options.label || "";
+        this.type = options.type || "";
+        this.message = options.message || "";
+        this.controlType = options.controlType || "";
         this.validators = options.validators || [];
-        this.class = options.class || 'col-12';
+        this.class = options.class || "col-12";
         this.children = [];
         this.disabled = options.disabled === true;
         this.visible$ = options.visible$ || of(true);
@@ -86,7 +86,9 @@ class InputBase {
             if (this.disabled) {
                 this.formControl.disable();
             }
-            this._subscriberHandler.registerSubscription(this.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe((value) => {
+            this._subscriberHandler.registerSubscription(this.formControl.valueChanges
+                .pipe(distinctUntilChanged())
+                .subscribe((value) => {
                 this.value = value;
                 this.launchChangeValue();
             }));
@@ -118,9 +120,9 @@ class InputBase {
 class InputCheckBox extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'checkbox';
+        this.controlType = "checkbox";
         if (options.toggle === true) {
-            this.controlType = 'toggle';
+            this.controlType = "toggle";
         }
         if (!this.value) {
             this.value = false;
@@ -131,8 +133,8 @@ class InputCheckBox extends InputBase {
 class InputTextBox extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'textbox';
-        this.type = options.type || 'text';
+        this.controlType = "textbox";
+        this.type = options.type || "text";
         this.icon = options.icon || null;
         this.iconClicked = options.iconClicked;
     }
@@ -141,20 +143,22 @@ class InputTextBox extends InputBase {
 class InputColorPicker extends InputTextBox {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'colorPicker';
+        this.controlType = "colorPicker";
     }
 }
 
 class InputDropdown extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'dropdown';
+        this.controlType = "dropdown";
         this.showNothingOption = false;
         this.withSearch = false;
-        this.options$ = options['options$'] || of([]);
-        this.multiple = options['multiple'] || false;
-        this.showNothingOption = !this.multiple ? !!options.showNothingOption : false;
-        this.width = options.width || '100%';
+        this.options$ = options["options$"] || of([]);
+        this.multiple = options["multiple"] || false;
+        this.showNothingOption = !this.multiple
+            ? !!options.showNothingOption
+            : false;
+        this.width = options.width || "100%";
         this.withSearch = options.withSearch || false;
     }
 }
@@ -164,7 +168,7 @@ class InputImages extends InputBase {
         super(options);
         this.update = null;
         if (!this.controlType) {
-            this.controlType = 'images';
+            this.controlType = "images";
         }
         this.files$ = options.files$ || null;
         if (options.update) {
@@ -180,7 +184,7 @@ class InputImages extends InputBase {
 class InputLabel extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'label';
+        this.controlType = "label";
     }
     createFormControl(group) { }
 }
@@ -190,7 +194,7 @@ class InputLogo extends InputBase {
         super(options);
         this.update = null;
         if (!this.controlType) {
-            this.controlType = 'logo';
+            this.controlType = "logo";
         }
         this.availableFile$ = options.availableFile$ || null;
         if (options.update) {
@@ -211,16 +215,16 @@ class InputNumber extends InputTextBox {
     }
     constructor(options = {}) {
         super(options);
-        this.type = 'number';
+        this.type = "number";
     }
 }
 
 class InputPanel extends InputBase {
     constructor(options) {
         super(options);
-        this.controlType = 'panel';
+        this.controlType = "panel";
         this.containerClass = options.containerClass || [];
-        this.contentClass = options.contentClass || '';
+        this.contentClass = options.contentClass || "";
         this.children = options.children || [];
     }
 }
@@ -228,9 +232,9 @@ class InputPanel extends InputBase {
 class InputRadio extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'radio';
-        this.options = options['options'] || of([]);
-        this.type = 'radioGroup';
+        this.controlType = "radio";
+        this.options = options["options"] || of([]);
+        this.type = "radioGroup";
     }
 }
 
@@ -238,7 +242,7 @@ class InputSchema extends InputBase {
     constructor(options = {}) {
         super(options);
         this.update = null;
-        this.controlType = 'schema';
+        this.controlType = "schema";
         if (options.update) {
             this.update = options.update;
         }
@@ -248,14 +252,14 @@ class InputSchema extends InputBase {
 class InputTextarea extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'textarea';
+        this.controlType = "textarea";
     }
 }
 
 class InputUpload extends InputBase {
     constructor(options) {
         super(options);
-        this.controlType = 'upload';
+        this.controlType = "upload";
         this.confirmButton = options.confirmButton ?? false;
     }
     confirmValue(ids) {
@@ -266,7 +270,7 @@ class InputUpload extends InputBase {
 class InputWysiswyg extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'wysiswyg';
+        this.controlType = "wysiswyg";
         if (options.stringValue) {
             try {
                 this.value = JSON.parse(options.stringValue);
@@ -282,33 +286,33 @@ class InputFactory {
             options.children = options.templateChildren();
         }
         switch (key) {
-            case 'InputCheckBox':
+            case "InputCheckBox":
                 return new InputCheckBox(options);
-            case 'InputRadio':
+            case "InputRadio":
                 return new InputRadio(options);
-            case 'InputColorPicker':
+            case "InputColorPicker":
                 return new InputColorPicker(options);
-            case 'InputDropdown':
+            case "InputDropdown":
                 return new InputDropdown(options);
-            case 'InputImages':
+            case "InputImages":
                 return new InputImages(options);
-            case 'InputLabel':
+            case "InputLabel":
                 return new InputLabel(options);
-            case 'InputLogo':
+            case "InputLogo":
                 return new InputLogo(options);
-            case 'InputNumber':
+            case "InputNumber":
                 return new InputNumber(options);
-            case 'InputPanel':
+            case "InputPanel":
                 return new InputPanel(options);
-            case 'InputSchema':
+            case "InputSchema":
                 return new InputSchema(options);
-            case 'InputTextarea':
+            case "InputTextarea":
                 return new InputTextarea(options);
-            case 'InputTextBox':
+            case "InputTextBox":
                 return new InputTextBox(options);
-            case 'InputWysiswyg':
+            case "InputWysiswyg":
                 return new InputWysiswyg(options);
-            case 'InputUpload':
+            case "InputUpload":
                 return new InputUpload(options);
             default:
                 return new InputTextBox(options);
@@ -319,9 +323,9 @@ class InputFactory {
 class InputChoices extends InputDropdown {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'choices';
+        this.controlType = "choices";
         this.onlyTemplate = options.onlyTemplate;
-        this.advancedSearch$ = options['advancedSearch$'] || null;
+        this.advancedSearch$ = options["advancedSearch$"] || null;
         this.choiceTemplate = options.choiceTemplate;
         this.showNullableFields = options.showNullableFields ?? false;
     }
@@ -330,7 +334,7 @@ class InputChoices extends InputDropdown {
 class InputDatePicker extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'datePicker';
+        this.controlType = "datePicker";
         this.minDate = this.parseDate(options.minDate);
         this.maxDate = this.parseDate(options.maxDate);
         this.rangeEnabled = options.rangeEnabled ?? false;
@@ -343,7 +347,7 @@ class InputDatePicker extends InputBase {
             return date;
         }
         switch (date) {
-            case 'today':
+            case "today":
                 return new Date();
             default:
                 return new Date(date);
@@ -359,7 +363,7 @@ class InputDynamic extends InputBase {
         this.composedKeyForGroup = true;
         this.inputsGroup = options.inputsGroup || {};
         this.template = options.template || [];
-        this.controlType = 'dynamic';
+        this.controlType = "dynamic";
     }
     add(key) {
         const templates = [];
@@ -367,7 +371,7 @@ class InputDynamic extends InputBase {
         for (const template of this.template) {
             templates.push(InputFactory.getInput(template.type, {
                 ...template.options,
-                ...{ value: value ? value[template.options.key ?? ''] : null },
+                ...{ value: value ? value[template.options.key ?? ""] : null },
             }));
         }
         this._addControl(templates, key ?? this._inputKey());
@@ -375,7 +379,7 @@ class InputDynamic extends InputBase {
     }
     remove(id) {
         if (this.inputsGroup[id]) {
-            this.formControl?.removeControl(this.key + '-' + id);
+            this.formControl?.removeControl(this.key + "-" + id);
             delete this.inputsGroup[id];
         }
         this.listChanged$.next();
@@ -396,18 +400,18 @@ class InputDynamic extends InputBase {
         inputs.forEach((input) => {
             input.createFormControl(childGroup);
         });
-        this.formControl?.addControl(this.composedKeyForGroup ? this.key + '-' + key : key, childGroup);
+        this.formControl?.addControl(this.composedKeyForGroup ? this.key + "-" + key : key, childGroup);
         this.inputsGroup[key] = inputs;
     }
     _inputKey() {
-        return '' + Math.floor(Math.random() * 10000);
+        return "" + Math.floor(Math.random() * 10000);
     }
 }
 
 class InputEmail extends InputTextBox {
     constructor(options = {}) {
         super(options);
-        this.type = 'email';
+        this.type = "email";
         this.validators.push(Validators.email);
     }
 }
@@ -415,7 +419,7 @@ class InputEmail extends InputTextBox {
 class InputPassword extends InputTextBox {
     constructor(options = {}) {
         super(options);
-        this.type = 'password';
+        this.type = "password";
         this.validators.push(Validators.required);
     }
 }
@@ -423,9 +427,9 @@ class InputPassword extends InputTextBox {
 class InputPhone extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'phone';
-        this.type = 'tel';
-        this.preferredCountries = ['be', 'fr'];
+        this.controlType = "phone";
+        this.type = "tel";
+        this.preferredCountries = ["be", "fr"];
         this.validators.push(phoneValidator());
     }
 }
@@ -433,7 +437,7 @@ class InputPhone extends InputBase {
 class InputSlider extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'slider';
+        this.controlType = "slider";
         this.min = options.min || 0;
         this.max = options.max || 100;
     }
@@ -442,10 +446,10 @@ class InputSlider extends InputBase {
 class InputSwitch extends InputBase {
     constructor(options) {
         super(options);
-        this.matchtype = signal('');
-        this.controlType = 'switch';
+        this.matchtype = signal("");
+        this.controlType = "switch";
         this._subscriberHandler.registerSubscription(options.match
-            .pipe(tap(match => Object.assign(this, match.prop)), tap(match => this.matchtype.set(match.type)))
+            .pipe(tap((match) => Object.assign(this, match.prop)), tap((match) => this.matchtype.set(match.type)))
             .subscribe());
     }
 }
@@ -453,8 +457,8 @@ class InputSwitch extends InputBase {
 class InputTimePicker extends InputTextBox {
     constructor(options = {}) {
         super(options);
-        this.type = 'time';
-        this.controlType = 'timePicker';
+        this.type = "time";
+        this.controlType = "timePicker";
     }
 }
 
@@ -479,28 +483,28 @@ class InputAddress extends InputBase {
     }
     constructor(options = {}) {
         super(options);
-        this.controlType = 'address';
+        this.controlType = "address";
         this.street = new InputTextBox({
             key: EAddressValues.street,
-            label: 'street',
+            label: "street",
         });
         this.number = new InputTextBox({
             key: EAddressValues.number,
-            label: 'number',
+            label: "number",
         });
         this.city = new InputTextBox({
             key: EAddressValues.city,
-            label: 'city',
+            label: "city",
         });
         this.country = new InputTextBox({
             key: EAddressValues.country,
-            label: 'country',
+            label: "country",
         });
         this.zipCode = new InputTextBox({
             key: EAddressValues.zipCode,
-            label: 'zipCode',
+            label: "zipCode",
         });
-        this.type = 'address';
+        this.type = "address";
         this.value = this._value();
     }
     updateValue() {
@@ -520,7 +524,7 @@ class InputAddress extends InputBase {
 class InputTranslation extends InputDynamic {
     constructor(options) {
         super(options);
-        this.controlType = 'translation';
+        this.controlType = "translation";
         this.firstRender = false;
         this.composedKeyForGroup = false;
         this.mainCulture = options.mainCulture ?? null;
@@ -549,27 +553,27 @@ class InputCulture extends InputDropdown {
     constructor(options = {}) {
         super({
             ...options,
-            options$: of(extractEnum(Culture, true).map(item => ({
+            options$: of(extractEnum(Culture, true).map((item) => ({
                 id: item.value.toString(),
-                name: 'ui.culture.long.' + item.value,
+                name: "ui.culture.long." + item.value,
             }))),
         });
-        this.controlType = 'culture';
+        this.controlType = "culture";
     }
 }
 
 class InputComponent extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'component';
+        this.controlType = "component";
         this.selectedValue$ = new Subject();
         this.icon = options.icon || null;
         this.template = options.template;
         if (!this.template) {
-            Logger.LogError('No template for InputComponent');
+            Logger.LogError("No template for InputComponent");
         }
         this._subscriberHandler.registerSubscription(this.selectedValue$.subscribe({
-            next: value => (this.value = value),
+            next: (value) => (this.value = value),
         }));
     }
 }

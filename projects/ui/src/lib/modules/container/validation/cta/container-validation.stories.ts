@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { ContainerValidationComponent } from './container-validation.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { ContainerValidationComponent } from "./container-validation.component";
 
 type StoryType = ContainerValidationComponent;
 
 export default {
-  title: 'CONTAINER/validaiton',
+  title: "CONTAINER/validaiton",
   component: ContainerValidationComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

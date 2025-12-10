@@ -1,19 +1,27 @@
-import { NgClass, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { FontIconComponent } from '@ta/icons';
+import { FontIconComponent } from "@ta/icons";
 
-import { TaTranslationUI } from '../translation.service';
+import { TaTranslationUI } from "../../../translation.service";
 
-export type BadgeType = 'danger' | 'warning' | 'success' | 'primary' | 'secondary' | 'info' | 'purple' | 'orange';
+export type BadgeType =
+  | "danger"
+  | "warning"
+  | "success"
+  | "primary"
+  | "secondary"
+  | "info"
+  | "purple"
+  | "orange";
 @Component({
-  selector: 'ta-badge',
-  templateUrl: './badge.component.html',
-  styleUrls: ['./badge.component.scss'],
+  selector: "ta-badge",
+  templateUrl: "./badge.component.html",
+  styleUrls: ["./badge.component.scss"],
   standalone: true,
-  imports: [NgIf, NgClass, FontIconComponent, TranslateModule],
+  imports: [NgClass, FontIconComponent, TranslateModule],
 })
 export class BadgeComponent {
   /**
@@ -26,7 +34,7 @@ export class BadgeComponent {
    * Style of badge
    */
   @Input()
-  type: BadgeType = 'primary';
+  type: BadgeType = "primary";
 
   /**
    * @deprecated

@@ -1,22 +1,22 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { AsyncPipe, NgIf } from "@angular/common";
+import { Component, OnDestroy, inject } from "@angular/core";
 
-import { of } from 'rxjs';
+import { of } from "rxjs";
 
-import { DropdownComponent } from '@ta/form-input';
-import { InputDropdown } from '@ta/form-model';
-import { CamTranslationService, TranslatePipe } from '@ta/translation';
-import { ButtonComponent, TrigramComponent } from '@ta/ui';
-import { JoinPipe, StopPropagationDirective } from '@ta/utils';
-import { TaBaseComponent } from '@ta/utils';
+import { DropdownComponent } from "@ta/form-input";
+import { InputDropdown } from "@ta/form-model";
+import { CamTranslationService, TranslatePipe } from "@ta/translation";
+import { ButtonComponent, TrigramComponent } from "@ta/ui";
+import { JoinPipe, StopPropagationDirective } from "@ta/utils";
+import { TaBaseComponent } from "@ta/utils";
 
-import { CAM_AUTH_TOKEN } from '../../services/auth.service';
-import { TaPermissionsService } from '../../services/permissions.service';
+import { CAM_AUTH_TOKEN } from "../../services/auth.service";
+import { TaPermissionsService } from "../../services/permissions.service";
 
 @Component({
-  selector: 'ta-user-menu',
-  templateUrl: './menu-user.component.html',
-  styleUrls: ['./menu-user.component.scss'],
+  selector: "ta-user-menu",
+  templateUrl: "./menu-user.component.html",
+  styleUrls: ["./menu-user.component.scss"],
   standalone: true,
   imports: [
     NgIf,
@@ -42,12 +42,12 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
 
   public authService = inject(CAM_AUTH_TOKEN);
   public language = new InputDropdown<string>({
-    label: '',
+    label: "",
     options: of([
-      { id: 'fr', name: 'Français' },
-      { id: 'nl', name: 'Nederlands' },
-      { id: 'en', name: 'English' },
-      { id: 'es', name: 'Español' },
+      { id: "fr", name: "Français" },
+      { id: "nl", name: "Nederlands" },
+      { id: "en", name: "English" },
+      { id: "es", name: "Español" },
     ]),
   });
 
@@ -56,7 +56,11 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
 
     this.language.value = this.translateService.getLanguage();
 
-    this._registerSubscription(this.language.changeValue$.subscribe(value => this.translateService.use(value)));
+    this._registerSubscription(
+      this.language.changeValue$.subscribe((value) =>
+        this.translateService.use(value)
+      )
+    );
   }
 
   public login() {

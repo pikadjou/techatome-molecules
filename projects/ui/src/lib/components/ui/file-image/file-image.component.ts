@@ -1,14 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
-import { LocalIconComponent } from '@ta/icons';
-import { TaIconType } from '@ta/icons';
-import { TaSizes } from '@ta/styles';
-import { extractExtension } from '@ta/utils';
+import { LocalIconComponent } from "@ta/icons";
+import { TaIconType } from "@ta/icons";
+import { TaSizes } from "@ta/styles";
+import { extractExtension } from "@ta/utils";
 
 @Component({
-  selector: 'ta-file-image',
-  templateUrl: './file-image.component.html',
-  styleUrls: ['./file-image.component.scss'],
+  selector: "ta-file-image",
+  templateUrl: "./file-image.component.html",
+  styleUrls: ["./file-image.component.scss"],
   standalone: true,
   imports: [LocalIconComponent],
 })
@@ -17,17 +17,17 @@ export class FileImageComponent {
   fileName!: string;
 
   @Input()
-  size: TaSizes = 'sm';
+  size: TaSizes = "sm";
 
   get extIcon(): TaIconType {
     const ext = extractExtension(this.fileName);
 
     switch (ext) {
-      case 'docx':
+      case "docx":
         return TaIconType.Doc;
-      case 'pdf':
+      case "pdf":
         return TaIconType.Pdf;
-      case 'xlsx':
+      case "xlsx":
         return TaIconType.Xls;
       default:
         return TaIconType.FileEmpty;

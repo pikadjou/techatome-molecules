@@ -1,8 +1,8 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 
-import { Address } from './address';
-import { ProjectStatus } from './status';
-import { Tenant } from './tenant';
+import { Address } from "./address";
+import { ProjectStatus } from "./status";
+import { Tenant } from "./tenant";
 
 export interface Project {
   id: string;
@@ -14,10 +14,10 @@ export interface Project {
 }
 
 export const projectProps = new GraphSchema<Project>([
-  'id',
-  'name',
-  'status',
-  'projectAddress',
-  'tenantInformation',
-  'projectPictureUrl',
+  "id",
+  "name",
+  "status",
+  "projectAddress",
+  "tenantInformation",
+  "projectPictureUrl",
 ]);

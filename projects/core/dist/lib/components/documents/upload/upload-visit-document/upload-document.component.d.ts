@@ -1,9 +1,9 @@
-import { OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { UploadDocumentFormService } from '@ta/files-extended';
-import { IInputsError, InputBase } from '@ta/form-model';
-import { TaEnumerationService, TranslatedEnumeration } from '@ta/services';
+import { OnInit } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
+import { Observable } from "rxjs";
+import { UploadDocumentFormService } from "@ta/files-extended";
+import { IInputsError, InputBase } from "@ta/form-model";
+import { TaEnumerationService, TranslatedEnumeration } from "@ta/services";
 import * as i0 from "@angular/core";
 export interface UploadDocumentResult {
     description?: string;

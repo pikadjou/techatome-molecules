@@ -1,7 +1,7 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { inject } from '@angular/core';
+import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
+import { inject } from "@angular/core";
 
-import { map } from 'rxjs/operators';
+import { map } from "rxjs/operators";
 
 const breakpoint_xxl = 1400;
 const breakpoint_xl = 1200;

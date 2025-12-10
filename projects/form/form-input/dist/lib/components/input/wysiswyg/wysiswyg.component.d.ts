@@ -1,6 +1,6 @@
-import { InputWysiswyg } from '@ta/form-model';
-import { EditorInputSavedData } from '@ta/wysiswyg';
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputWysiswyg } from "@ta/form-model";
+import { EditorInputSavedData } from "@ta/wysiswyg";
+import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class WysiswygComponent extends TaAbstractInputComponent<InputWysiswyg> {
     set(value: EditorInputSavedData): void;

@@ -29,14 +29,14 @@ class StopPropagationDirective {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: StopPropagationDirective, decorators: [{
             type: Directive,
             args: [{
-                    selector: '[appStopPropagation]',
+                    selector: "[appStopPropagation]",
                     standalone: true,
                 }]
         }], propDecorators: { stopPropagationActivation: [{
                 type: Input
             }], onClick: [{
                 type: HostListener,
-                args: ['click', ['$event']]
+                args: ["click", ["$event"]]
             }] } });
 
 class TypedTemplateDirective {
@@ -52,7 +52,7 @@ class TypedTemplateDirective {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TypedTemplateDirective, decorators: [{
             type: Directive,
-            args: [{ selector: 'ng-template[typedTemplate]', standalone: true }]
+            args: [{ selector: "ng-template[typedTemplate]", standalone: true }]
         }], ctorParameters: () => [{ type: i0.TemplateRef }], propDecorators: { typedTemplate: [{
                 type: Input
             }] } });
@@ -87,7 +87,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             type: Directive,
             args: [{
                     // eslint-disable-next-line @angular-eslint/directive-selector
-                    selector: '[ngLet]',
+                    selector: "[ngLet]",
                 }]
         }], ctorParameters: () => [{ type: i0.ViewContainerRef }, { type: i0.TemplateRef }], propDecorators: { ngLet: [{
                 type: Input
@@ -98,7 +98,7 @@ class OnRenderDirective {
         this.rendered = new EventEmitter();
     }
     ngOnChanges(changes) {
-        if (changes['onRender'].previousValue !== changes['onRender'].currentValue) {
+        if (changes["onRender"].previousValue !== changes["onRender"].currentValue) {
             this.rendered.emit();
         }
     }
@@ -108,7 +108,7 @@ class OnRenderDirective {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OnRenderDirective, decorators: [{
             type: Directive,
             args: [{
-                    selector: '[TaOnRender]',
+                    selector: "[TaOnRender]",
                 }]
         }], propDecorators: { onRender: [{
                 type: Input
@@ -116,21 +116,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }] } });
 
-const FILE_SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+const FILE_SIZE_UNITS = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 const FILE_SIZE_UNITS_LONG = [
-    'Bytes',
-    'Kilobytes',
-    'Megabytes',
-    'Gigabytes',
-    'Pettabytes',
-    'Exabytes',
-    'Zettabytes',
-    'Yottabytes',
+    "Bytes",
+    "Kilobytes",
+    "Megabytes",
+    "Gigabytes",
+    "Pettabytes",
+    "Exabytes",
+    "Zettabytes",
+    "Yottabytes",
 ];
 class FileSizePipe {
     transform(sizeInBytes, longForm = false) {
         if (sizeInBytes === null) {
-            return '';
+            return "";
         }
         const units = longForm ? FILE_SIZE_UNITS_LONG : FILE_SIZE_UNITS;
         let power = Math.round(Math.log(sizeInBytes) / Math.log(1024));
@@ -146,12 +146,12 @@ class FileSizePipe {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FileSizePipe, decorators: [{
             type: Pipe,
             args: [{
-                    name: 'fileSize',
+                    name: "fileSize",
                 }]
         }] });
 
 class JoinPipe {
-    transform(input, sep = ', ') {
+    transform(input, sep = ", ") {
         return input.join(sep);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: JoinPipe, deps: [], target: i0.ɵɵFactoryTarget.Pipe }); }
@@ -160,14 +160,14 @@ class JoinPipe {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: JoinPipe, decorators: [{
             type: Pipe,
             args: [{
-                    name: 'join',
+                    name: "join",
                     standalone: true,
                 }]
         }] });
 
 class PluralTranslatePipe {
     transform(key, number) {
-        return `${key}.${number == 0 || number == 1 ? 'one' : 'plural'}`;
+        return `${key}.${number == 0 || number == 1 ? "one" : "plural"}`;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PluralTranslatePipe, deps: [], target: i0.ɵɵFactoryTarget.Pipe }); }
     static { this.ɵpipe = i0.ɵɵngDeclarePipe({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: PluralTranslatePipe, isStandalone: true, name: "pluralTranslate", pure: false }); }
@@ -175,7 +175,7 @@ class PluralTranslatePipe {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PluralTranslatePipe, decorators: [{
             type: Pipe,
             args: [{
-                    name: 'pluralTranslate',
+                    name: "pluralTranslate",
                     pure: false,
                     standalone: true,
                 }]
@@ -187,15 +187,15 @@ class SafePipe {
     }
     transform(value, type) {
         switch (type) {
-            case 'html':
+            case "html":
                 return this.sanitizer.bypassSecurityTrustHtml(value);
-            case 'style':
+            case "style":
                 return this.sanitizer.bypassSecurityTrustStyle(value);
-            case 'script':
+            case "script":
                 return this.sanitizer.bypassSecurityTrustScript(value);
-            case 'url':
+            case "url":
                 return this.sanitizer.bypassSecurityTrustUrl(value);
-            case 'resourceUrl':
+            case "resourceUrl":
                 return this.sanitizer.bypassSecurityTrustResourceUrl(value);
             default:
                 throw new Error(`Invalid safe type specified: ${type}`);
@@ -206,7 +206,7 @@ class SafePipe {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SafePipe, decorators: [{
             type: Pipe,
-            args: [{ name: 'safe', standalone: true }]
+            args: [{ name: "safe", standalone: true }]
         }], ctorParameters: () => [{ type: i1.DomSanitizer }] });
 
 /**
@@ -223,15 +223,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class TaDirectivePipeModule {
     constructor() { }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, declarations: [FileSizePipe, LetDirective, OnRenderDirective], imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective], exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective] }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, declarations: [FileSizePipe, LetDirective, OnRenderDirective], imports: [CommonModule,
+            SafePipe,
+            PluralTranslatePipe,
+            StopPropagationDirective,
+            JoinPipe,
+            TypedTemplateDirective], exports: [FileSizePipe,
+            LetDirective,
+            PluralTranslatePipe,
+            StopPropagationDirective,
+            OnRenderDirective] }); }
     static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, imports: [CommonModule] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [FileSizePipe, LetDirective, OnRenderDirective],
-                    imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective],
-                    exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective],
+                    imports: [
+                        CommonModule,
+                        SafePipe,
+                        PluralTranslatePipe,
+                        StopPropagationDirective,
+                        JoinPipe,
+                        TypedTemplateDirective,
+                    ],
+                    exports: [
+                        FileSizePipe,
+                        LetDirective,
+                        PluralTranslatePipe,
+                        StopPropagationDirective,
+                        OnRenderDirective,
+                    ],
                 }]
         }], ctorParameters: () => [] });
 
@@ -263,8 +285,8 @@ class TemporaryFile {
         return files.map((file, index) => ({
             isLoading: true,
             id: index,
-            type: 'Image',
-            url: file.localUrl || '',
+            type: "Image",
+            url: file.localUrl || "",
         }));
     }
 }
@@ -400,7 +422,7 @@ class BreakpointDetection {
 class RequestState {
     constructor() {
         this.loading = signal(false);
-        this.error = { status: -1, message: '' };
+        this.error = { status: -1, message: "" };
         this.alreadyAsked = false;
     }
     isLoading() {
@@ -426,7 +448,7 @@ class RequestState {
         this.loading.set(false);
     }
     resetError() {
-        this.error = { status: -1, message: '' };
+        this.error = { status: -1, message: "" };
     }
     onError(status, message) {
         this.loading.set(false);
@@ -470,11 +492,11 @@ class TaAbstractComponent {
         this._subscriberHandler.registerSubscription(subscription);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaAbstractComponent, selector: "ng-component", ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaAbstractComponent, selector: "ng-component", ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractComponent, decorators: [{
             type: Component,
-            args: [{ template: '' }]
+            args: [{ template: "" }]
         }], ctorParameters: () => [] });
 
 class TaBaseComponent extends TaAbstractComponent {
@@ -488,15 +510,17 @@ class TaBaseComponent extends TaAbstractComponent {
         return item.key;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseComponent, selector: "ng-component", usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseComponent, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseComponent, decorators: [{
             type: Component,
-            args: [{ template: '' }]
+            args: [{ template: "" }]
         }], ctorParameters: () => [] });
 
 const isObject = (variable) => {
-    return typeof variable === 'object' && variable !== null && !Array.isArray(variable);
+    return (typeof variable === "object" &&
+        variable !== null &&
+        !Array.isArray(variable));
 };
 const isNotEmptyObject = (variable) => {
     return Object.keys(variable).length > 0;
@@ -510,7 +534,7 @@ const isNotEmptyObject = (variable) => {
  */
 const merge = (override = true) => (init, ...objects) => {
     // RecursivePartial<T>
-    const isObject = (obj) => obj && typeof obj === 'object';
+    const isObject = (obj) => obj && typeof obj === "object";
     return objects.reduce((prev, obj) => {
         Object.keys(obj).forEach((key) => {
             const pVal = prev[key];
@@ -539,7 +563,7 @@ const getPropertyTypes = (obj) => {
     }
     return propertyTypes;
 };
-const ObjectKeys = (object) => (object instanceof Object ? Object.keys(object) : []);
+const ObjectKeys = (object) => object instanceof Object ? Object.keys(object) : [];
 const ObjectKeysReOrder = (base, keysOrder) => {
     return keysOrder.reduce((final, key) => {
         if (base.hasOwnProperty(key)) {
@@ -571,23 +595,24 @@ class TaBasePage extends TaAbstractComponent {
         return this._filterParams(this._route.queryParams, getPropertyTypes(data));
     }
     _filterParams(routeParams, paramsAsked) {
-        return routeParams.pipe(map(params => convertToParamMap(params)), map(params => this._getParamsTyped(paramsAsked, params)), distinctUntilChanged());
+        return routeParams.pipe(map((params) => convertToParamMap(params)), map((params) => this._getParamsTyped(paramsAsked, params)), distinctUntilChanged());
     }
     _getParamsTyped(paramsAsked, params) {
         let paramObject = {};
         for (let param in paramsAsked) {
             const value = params.get(param);
             if (value)
-                paramObject[param] = paramsAsked[param] === 'number' ? Number(value) : value;
+                paramObject[param] =
+                    paramsAsked[param] === "number" ? Number(value) : value;
         }
         return paramObject;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBasePage, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBasePage, selector: "ng-component", usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBasePage, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBasePage, decorators: [{
             type: Component,
-            args: [{ template: '' }]
+            args: [{ template: "" }]
         }], ctorParameters: () => [] });
 
 class TaBaseModal extends TaAbstractComponent {
@@ -595,11 +620,11 @@ class TaBaseModal extends TaAbstractComponent {
         super();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, decorators: [{
             type: Component,
-            args: [{ template: '' }]
+            args: [{ template: "" }]
         }], ctorParameters: () => [] });
 
 const isArray = (variable) => {
@@ -644,7 +669,7 @@ const removeElement = (array, elementToRemove) => {
 };
 
 const isLight = (color) => {
-    const hex = color.replace('#', '');
+    const hex = color.replace("#", "");
     const c_r = parseInt(hex.substring(0, 0 + 2), 16);
     const c_g = parseInt(hex.substring(2, 2 + 2), 16);
     const c_b = parseInt(hex.substring(4, 4 + 2), 16);
@@ -693,8 +718,8 @@ const diffInHourAndMinutes = (start, end) => {
     const hours = Math.floor(diff / 60);
     const minutes = Math.round(diff - hours * 60);
     return {
-        h: hours.toString().padStart(2, '0'),
-        m: minutes.toString().padStart(2, '0'),
+        h: hours.toString().padStart(2, "0"),
+        m: minutes.toString().padStart(2, "0"),
     };
 };
 const isStrictISODateString = (value) => {
@@ -707,7 +732,7 @@ const isStrictISODateString = (value) => {
 };
 
 const extractEnum = (allEnum, backendOne = false) => {
-    const keys = Object.keys(allEnum).filter((k) => typeof allEnum[k] === 'number');
+    const keys = Object.keys(allEnum).filter((k) => typeof allEnum[k] === "number");
     return keys
         .map((key) => {
         return { value: allEnum[key], name: key };
@@ -718,13 +743,13 @@ const extractEnum = (allEnum, backendOne = false) => {
 const newGuid = () => {
     return (s4() +
         s4() +
-        '-' +
+        "-" +
         s4() +
-        '-' +
+        "-" +
         s4() +
-        '-' +
+        "-" +
         s4() +
-        '-' +
+        "-" +
         s4() +
         s4() +
         s4());
@@ -743,7 +768,7 @@ const octetsToMo = (octets) => {
 };
 const extractExtension = (name) => {
     // Séparer le nom du fichier en parties en fonction du point (.)
-    var parties = name.split('.');
+    var parties = name.split(".");
     // Récupérer la dernière partie (qui est l'extension)
     var extension = parties[parties.length - 1];
     return extension;
@@ -761,7 +786,7 @@ const getBase64FromFile = (file) => {
     });
 };
 const getBlobImage = async (base64) => {
-    const blob = await fetch(base64).then(res => res.blob());
+    const blob = await fetch(base64).then((res) => res.blob());
     return await compressImage(blob);
 };
 const compressImage = async (blob) => {
@@ -781,10 +806,12 @@ const compressImage = async (blob) => {
 const downloadFile = (url) => {
     const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
     if (imageRegex.test(url)) {
-        window.open(url, '_blank');
+        window.open(url, "_blank");
     }
     else {
-        window.open('https://docs.google.com/a/google.com/viewer?url=' + url.replaceAll('&', '%26') + '&embedded=false', '_blank');
+        window.open("https://docs.google.com/a/google.com/viewer?url=" +
+            url.replaceAll("&", "%26") +
+            "&embedded=false", "_blank");
     }
 };
 const pickImages = async () => {
@@ -847,7 +874,7 @@ const determineNewSize = (originalHeight, originalWidth, newWidth, newHeight) =>
 };
 
 const searchOptions = {
-    replacement: ' ',
+    replacement: " ",
     lower: true,
     trim: true,
 };
@@ -900,7 +927,9 @@ const getCivilityIcon = (civility) => {
     }
 };
 const getCivility = (person) => {
-    return person.naming && person.naming.hasOwnProperty('civility') ? person.naming.civility : null;
+    return person.naming && person.naming.hasOwnProperty("civility")
+        ? person.naming.civility
+        : null;
 };
 const fullName = (naming) => {
     return `${naming?.firstname} ${naming?.lastname}`;
@@ -915,33 +944,33 @@ const sort = (array, options) => {
         return array;
     }
     return array.sort((a, b) => {
-        return compare(a[options.active], b[options.active], options.direction === 'asc');
+        return compare(a[options.active], b[options.active], options.direction === "asc");
     });
 };
 
 const getFileExtension = (filePath) => {
-    const extension = getFullFileNameFromUrl(filePath)?.split('.').pop()?.toLowerCase() || null;
+    const extension = getFullFileNameFromUrl(filePath)?.split(".").pop()?.toLowerCase() || null;
     switch (extension) {
-        case 'pdf':
+        case "pdf":
             return EFileExtension.PDF;
-        case 'docx':
+        case "docx":
             return EFileExtension.Word;
-        case 'xls':
-        case 'xlsx':
+        case "xls":
+        case "xlsx":
             return EFileExtension.Excel;
-        case 'jpg':
-        case 'jpeg':
-        case 'png':
+        case "jpg":
+        case "jpeg":
+        case "png":
             return EFileExtension.Image;
     }
     return EFileExtension.Unknown;
 };
 const getFullFileNameFromUrl = (url) => {
-    return url.split('/').pop() || null;
+    return url.split("/").pop() || null;
 };
 const trigram = (name) => {
     if (!name) {
-        return '';
+        return "";
     }
     if (name.length < 4) {
         return name;
@@ -963,10 +992,10 @@ const isURL = (str) => {
 const copyTextToClipboard = async (text, success, error) => {
     try {
         await navigator.clipboard.writeText(text);
-        success('ui.clipboard.success');
+        success("ui.clipboard.success");
     }
     catch (err) {
-        error('ui.clipboard.error');
+        error("ui.clipboard.error");
     }
 };
 
@@ -1007,10 +1036,10 @@ class HorizontalScroll {
             this._elementRef.scrollLeft = this._scrollLeft - walk;
         };
         this._elementRef = element;
-        this._elementRef.addEventListener('mousedown', this.mouseDown);
-        this._elementRef.addEventListener('mousemove', this.mouseMove);
-        this._elementRef.addEventListener('mouseleave', this.mouseLeft);
-        this._elementRef.addEventListener('mouseup', this.mouseLeft);
+        this._elementRef.addEventListener("mousedown", this.mouseDown);
+        this._elementRef.addEventListener("mousemove", this.mouseMove);
+        this._elementRef.addEventListener("mouseleave", this.mouseLeft);
+        this._elementRef.addEventListener("mouseup", this.mouseLeft);
     }
 }
 
@@ -1029,9 +1058,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             type: Injectable
         }] });
 
-const LOCAL = 'config_local';
-const APPLICATION_CONFIG = new InjectionToken('config_application');
-const DEFAULT_USER_LANGUAGE = new InjectionToken('default_user_language');
+const LOCAL = "config_local";
+const APPLICATION_CONFIG = new InjectionToken("config_application");
+const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
 
 /*
  * Public API Surface of utils

@@ -1,6 +1,6 @@
-import { DomSanitizer } from '@angular/platform-browser';
-import { TaSizes } from '@ta/styles';
-import { TaIconType, TaIconsService } from '../../services/icons.service';
+import { DomSanitizer } from "@angular/platform-browser";
+import { TaSizes } from "@ta/styles";
+import { TaIconType, TaIconsService } from "../../services/icons.service";
 import * as i0 from "@angular/core";
 /**
  * @deprecated
@@ -15,7 +15,7 @@ export declare class LocalIconComponent {
     /**
      * Size of the icon
      */
-    size: TaSizes | 'xl';
+    size: TaSizes | "xl";
     /**
      * If set to true, icon will have a rotation animation
      */

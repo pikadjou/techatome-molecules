@@ -1,6 +1,6 @@
-import { TemplateRef } from '@angular/core';
+import { TemplateRef } from "@angular/core";
 
-import { IMenuIconOption, MenuIcon } from './icon';
+import { IMenuIconOption, MenuIcon } from "./icon";
 
 export class MenuPanel extends MenuIcon {
   template: TemplateRef<any>;

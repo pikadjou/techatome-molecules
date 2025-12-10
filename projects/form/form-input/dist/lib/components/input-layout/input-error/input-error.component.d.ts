@@ -1,4 +1,4 @@
-import { InputBase } from '@ta/form-model';
+import { InputBase } from "@ta/form-model";
 import * as i0 from "@angular/core";
 export declare class InputErrorComponent {
     input: InputBase<any>;

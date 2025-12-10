@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { TaLazyTranslationService } from '@ta/translation';
+import { TaLazyTranslationService } from "@ta/translation";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaTranslationLayout extends TaLazyTranslationService {
   constructor() {
-    super('layout');
+    super("layout");
   }
 }

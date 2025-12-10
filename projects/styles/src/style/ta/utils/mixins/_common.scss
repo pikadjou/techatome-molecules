@@ -1,16 +1,16 @@
-@use 'sass:map';
-@use 'sass:list';
+@use "sass:map";
+@use "sass:list";
 
 /** Function **/
 @function is-map($var) {
-  @return type-of($var) == 'map';
+  @return type-of($var) == "map";
 }
 
 @function get-var-name($name, $keys) {
-  $full-name: '--ta-' + $name;
+  $full-name: "--ta-" + $name;
   @each $key in $keys {
-    @if $key != '' {
-      $full-name: $full-name + '-' + $key;
+    @if $key != "" {
+      $full-name: $full-name + "-" + $key;
     }
   }
   @return $full-name;
@@ -28,7 +28,7 @@
   $flat-map: ();
 
   @each $key, $value in $map {
-    $full-name: $name + '-' + $key;
+    $full-name: $name + "-" + $key;
     @if is-map($value) {
       $flat-map: map.merge($flat-map, flat-map($full-name, $value));
     } @else {
@@ -40,15 +40,15 @@
 }
 
 /** Generate CSS custom properties from a map **/
-@mixin generateMap($name, $map, $prefix: '') {
+@mixin generateMap($name, $map, $prefix: "") {
   @if length($map) > 0 {
     $flat: flat-map($name, $map);
-    
+
     @if length($flat) > 0 {
       :root {
         @each $key, $value in $flat {
           @if $value != null and $value != () {
-            $var-name: if($prefix != '', $prefix + '-' + $key, $key);
+            $var-name: if($prefix != "", $prefix + "-" + $key, $key);
             --ta-#{$var-name}: #{$value};
           }
         }

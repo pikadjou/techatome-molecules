@@ -1,16 +1,19 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from "@angular/common/http";
 
-import { setCompodocJson } from '@storybook/addon-docs/angular';
-import { applicationConfig } from '@storybook/angular';
-import { BehaviorSubject, Subject, of } from 'rxjs';
+import { setCompodocJson } from "@storybook/addon-docs/angular";
+import { applicationConfig } from "@storybook/angular";
+import { BehaviorSubject, Subject, of } from "rxjs";
 
-import { LAZY_SERVICE_TOKEN } from '../projects/notification/src/lib/services/notification.service';
+import { LAZY_SERVICE_TOKEN } from "../projects/notification/src/lib/services/notification.service";
 // Import des providers officiels des librairies
-import { provideServer } from '../projects/server/src/lib/provider';
-import { provideTranslation } from '../projects/translation/src/lib/provider';
+import { provideServer } from "../projects/server/src/lib/provider";
+import { provideTranslation } from "../projects/translation/src/lib/provider";
 // Import des services nécessaires pour les mocks spécifiques
-import { TaTranslationUI } from '../projects/ui/src/lib/components/ui/translation.service';
-import { APPLICATION_CONFIG, LOCAL } from '../projects/utils/src/lib/const/environment';
+import { TaTranslationUI } from "../projects/ui/src/lib/components/ui/translation.service";
+import {
+  APPLICATION_CONFIG,
+  LOCAL,
+} from "../projects/utils/src/lib/const/environment";
 
 /** @type { import('@storybook/angular').Preview } */
 const preview = {
@@ -23,15 +26,15 @@ const preview = {
         provideServer({
           graphQlConfig: {
             config: {
-              url: 'http://localhost:4000/graphql',
-              visitor: 'http://localhost:4000/graphql-visitor',
+              url: "http://localhost:4000/graphql",
+              visitor: "http://localhost:4000/graphql-visitor",
             },
           },
         }),
 
         provideTranslation({
-          default: 'fr',
-          supportedLanguages: ['fr', 'en', 'nl', 'de'],
+          default: "fr",
+          supportedLanguages: ["fr", "en", "nl", "de"],
         }),
 
         // Mock pour LAZY_SERVICE_TOKEN (notification service)
@@ -40,7 +43,8 @@ const preview = {
           useValue: {
             id: Math.random(),
             newNotification$: new Subject(),
-            addNotification: (message, code) => console.log('Mock notification:', message, code),
+            addNotification: (message, code) =>
+              console.log("Mock notification:", message, code),
           },
         },
 
@@ -63,7 +67,7 @@ const preview = {
     }),
   ],
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -72,7 +76,7 @@ const preview = {
     },
     options: {
       storySort: {
-        order: ['UI', 'Layout', 'Form', 'Icons', '*'],
+        order: ["UI", "Layout", "Form", "Icons", "*"],
       },
     },
   },

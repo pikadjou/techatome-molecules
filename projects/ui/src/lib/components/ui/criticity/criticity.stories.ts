@@ -1,18 +1,23 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { CriticityComponent, CriticityStatus } from './criticity.component';
+import { CriticityComponent, CriticityStatus } from "./criticity.component";
 
 export type StoryType = CriticityComponent;
 
 export default {
-  title: 'UI/Criticity',
+  title: "UI/Criticity",
   component: CriticityComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     criticity: {
-      control: { type: 'select' },
-      options: [CriticityStatus.Unknown, CriticityStatus.P1, CriticityStatus.P2, CriticityStatus.P3],
+      control: { type: "select" },
+      options: [
+        CriticityStatus.Unknown,
+        CriticityStatus.P1,
+        CriticityStatus.P2,
+        CriticityStatus.P3,
+      ],
     },
   },
   args: {

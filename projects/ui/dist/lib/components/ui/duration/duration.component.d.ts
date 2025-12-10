@@ -1,5 +1,5 @@
-import { OnInit } from '@angular/core';
-import { Duration } from 'date-fns';
+import { OnInit } from "@angular/core";
+import { Duration } from "date-fns";
 import * as i0 from "@angular/core";
 export declare class DurationComponent implements OnInit {
     startDate: number | string;

@@ -1,4 +1,4 @@
-import { IMenuBaseOption, MenuBase } from './base';
+import { IMenuBaseOption, MenuBase } from "./base";
 
 export class MenuAction extends MenuBase {
   action: Function;

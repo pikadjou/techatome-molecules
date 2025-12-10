@@ -2,7 +2,11 @@
 
 <div
   class="input-layout-container"
-  [ngClass]="[this.input.formControl?.invalid && this.input.formControl?.touched ? 'error' : '']"
+  [ngClass]="[
+    this.input.formControl?.invalid && this.input.formControl?.touched
+      ? 'error'
+      : ''
+  ]"
   [ngStyle]="this.containerStyles"
 >
   <ng-content></ng-content>

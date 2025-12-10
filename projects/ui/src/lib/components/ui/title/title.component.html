@@ -1,42 +1,34 @@
-@switch (this.level) {
-  @case (1) {
-    <h1 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
-      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </h1>
-  }
-  @case (2) {
-    <h2 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
-      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </h2>
-  }
-  @case (3) {
-    <h3 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
-      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </h3>
-  }
-  @case (4) {
-    <h4 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
-      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </h4>
-  }
-  @case (5) {
-    <h5 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
-      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </h5>
-  }
-  @case (6) {
-    <h6 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
-      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </h6>
-  }
-}
+@switch (this.level) { @case (1) {
+<h1 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</h1>
+} @case (2) {
+<h2 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</h2>
+} @case (3) {
+<h3 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</h3>
+} @case (4) {
+<h4 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</h4>
+} @case (5) {
+<h5 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</h5>
+} @case (6) {
+<h6 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</h6>
+} }
 
 <ng-template #contentTemplate>
   <div class="align-center g-space-sm">
     @if(this.icon(); as i) {
-      <ta-font-icon [name]="i" size="md"></ta-font-icon>
+    <ta-font-icon [name]="i" size="md"></ta-font-icon>
     }
     <ng-content></ng-content>
   </div>
-
 </ng-template>

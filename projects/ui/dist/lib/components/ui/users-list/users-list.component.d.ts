@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { UserLogoData } from '../user-logo/user-logo.component';
+import { Observable } from "rxjs";
+import { UserLogoData } from "../user-logo/user-logo.component";
 import * as i0 from "@angular/core";
 export declare class UsersListComponent {
     users: Observable<UserLogoData[]>;

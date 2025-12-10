@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TaBaseComponent } from '@ta/utils';
+import { EventEmitter } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class ContainerValidationComponent extends TaBaseComponent {
     dialog: MatDialog;

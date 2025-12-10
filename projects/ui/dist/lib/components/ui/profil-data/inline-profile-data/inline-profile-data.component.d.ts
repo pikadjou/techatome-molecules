@@ -1,6 +1,6 @@
-import { TaSizes } from '@ta/styles';
-import { UserLogoData } from '../../user-logo/user-logo.component';
-import { IProfileData } from '../IProfileData';
+import { TaSizes } from "@ta/styles";
+import { UserLogoData } from "../../user-logo/user-logo.component";
+import { IProfileData } from "../IProfileData";
 import * as i0 from "@angular/core";
 export declare class InlineProfileDataComponent {
     profile: IProfileData;

@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { DocumentDto, Picture } from '@ta/services';
-import { FileData, FileStructure } from '@ta/utils';
+import { DocumentDto, Picture } from "@ta/services";
+import { FileData, FileStructure } from "@ta/utils";
 
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export interface IInputImages extends IInputBase<DocumentDto[]> {
   files$?: Observable<FileData[]>;
@@ -21,7 +21,7 @@ export class InputImages extends InputBase<DocumentDto[]> {
   constructor(options: IInputImages = {}) {
     super(options);
     if (!this.controlType) {
-      this.controlType = 'images';
+      this.controlType = "images";
     }
 
     this.files$ = options.files$ || null;

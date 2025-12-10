@@ -1,4 +1,4 @@
-import { CacheStrategy } from '../../types/cache';
+import { CacheStrategy } from "../../types/cache";
 /**
  *
  * @param type

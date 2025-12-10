@@ -1,7 +1,7 @@
-import { OnInit } from '@angular/core';
-import { TenantConfig } from '@ta/server';
-import { TaBaseComponent } from '@ta/utils';
-import { TaCmsService } from '../../services/cms.service';
+import { OnInit } from "@angular/core";
+import { TenantConfig } from "@ta/server";
+import { TaBaseComponent } from "@ta/utils";
+import { TaCmsService } from "../../services/cms.service";
 import * as i0 from "@angular/core";
 export declare class CmsComponent extends TaBaseComponent implements OnInit {
     cmsService: TaCmsService;

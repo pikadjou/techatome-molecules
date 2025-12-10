@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-selector: 'ta-layout-side-cta',
-  templateUrl: './layout-side-cta.component.html',
-  styleUrls: ['./layout-side-cta.component.scss'],
+  selector: "ta-layout-side-cta",
+  templateUrl: "./layout-side-cta.component.html",
+  styleUrls: ["./layout-side-cta.component.scss"],
   standalone: true,
 })
 export class LayoutSideCtaComponent {

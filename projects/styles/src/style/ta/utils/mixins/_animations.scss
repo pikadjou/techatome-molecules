@@ -1,14 +1,24 @@
-@use 'sass:map';
-@use 'ta/settings/animations';
+@use "sass:map";
+@use "ta/settings/animations";
 
 /** Animation Mixins **/
 
 // Apply animation with custom parameters
-@mixin animate($name, $duration: normal, $easing: ease-out, $delay: 0s, $iteration: 1, $direction: normal, $fill-mode: both) {
-  $duration-value: map.get(animations.$animation-durations, $duration) or $duration;
+@mixin animate(
+  $name,
+  $duration: normal,
+  $easing: ease-out,
+  $delay: 0s,
+  $iteration: 1,
+  $direction: normal,
+  $fill-mode: both
+) {
+  $duration-value: map.get(animations.$animation-durations, $duration) or
+    $duration;
   $easing-value: map.get(animations.$animation-easings, $easing) or $easing;
-  
-  animation: #{$name} #{$duration-value} #{$easing-value} #{$delay} #{$iteration} #{$direction} #{$fill-mode};
+
+  animation: #{$name} #{$duration-value} #{$easing-value} #{$delay} #{$iteration}
+    #{$direction} #{$fill-mode};
 }
 
 // Quick fade in animation
@@ -53,33 +63,47 @@
 
 // Hover effects
 @mixin hoverScale($scale: 1.05, $duration: fast, $easing: ease-out) {
-  transition: transform map.get(animations.$animation-durations, $duration) map.get(animations.$animation-easings, $easing);
-  
+  transition: transform map.get(animations.$animation-durations, $duration)
+    map.get(animations.$animation-easings, $easing);
+
   &:hover {
     transform: scale($scale);
   }
 }
 
 @mixin hoverFade($opacity: 0.8, $duration: fast, $easing: ease-out) {
-  transition: opacity map.get(animations.$animation-durations, $duration) map.get(animations.$animation-easings, $easing);
-  
+  transition: opacity map.get(animations.$animation-durations, $duration)
+    map.get(animations.$animation-easings, $easing);
+
   &:hover {
     opacity: $opacity;
   }
 }
 
 // Transition helpers
-@mixin transition($properties, $duration: normal, $easing: ease-out, $delay: 0s) {
-  $duration-value: map.get(animations.$animation-durations, $duration) or $duration;
+@mixin transition(
+  $properties,
+  $duration: normal,
+  $easing: ease-out,
+  $delay: 0s
+) {
+  $duration-value: map.get(animations.$animation-durations, $duration) or
+    $duration;
   $easing-value: map.get(animations.$animation-easings, $easing) or $easing;
-  
+
   transition: #{$properties} #{$duration-value} #{$easing-value} #{$delay};
 }
 
 // Sequential animation delays for lists
-@mixin staggeredAnimation($name, $duration: normal, $easing: ease-out, $stagger-delay: 0.1s, $max-items: 10) {
+@mixin staggeredAnimation(
+  $name,
+  $duration: normal,
+  $easing: ease-out,
+  $stagger-delay: 0.1s,
+  $max-items: 10
+) {
   @include animate($name, $duration, $easing);
-  
+
   @for $i from 1 through $max-items {
     &:nth-child(#{$i}) {
       animation-delay: #{($i - 1) * $stagger-delay};

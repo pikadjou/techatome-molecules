@@ -1,17 +1,17 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { Civility } from '@ta/utils';
-import { CivilityComponent } from './civility.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { Civility } from "@ta/utils";
+import { CivilityComponent } from "./civility.component";
 
 export default {
-  title: 'UI/Civility',
+  title: "UI/Civility",
   component: CivilityComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     civility: {
-      options: Object.values(Civility).filter(x => typeof x === 'string'),
+      options: Object.values(Civility).filter((x) => typeof x === "string"),
       mapping: Civility,
-      control: { type: 'select' },
+      control: { type: "select" },
     },
   },
   args: {

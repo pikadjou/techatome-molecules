@@ -1,5 +1,5 @@
-import { MenuIcon } from '../../models/menu/item/icon';
-import { Menu } from '../../models/menu/menu';
+import { MenuIcon } from "../../models/menu/item/icon";
+import { Menu } from "../../models/menu/menu";
 import * as i0 from "@angular/core";
 export declare class ListComponent {
     menu: Menu<MenuIcon>;

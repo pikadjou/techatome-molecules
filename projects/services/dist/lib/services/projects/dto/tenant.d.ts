@@ -1,4 +1,4 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 export interface Tenant {
     id: string;
     tenantName: string;

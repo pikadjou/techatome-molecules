@@ -1,4 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver } from "@angular/cdk/layout";
 export declare const Breakpoints: {
     XSmall: string;
     Small: string;

@@ -1,7 +1,7 @@
-import { Picture } from '@ta/services';
-import { FileStructure } from '@ta/utils';
+import { Picture } from "@ta/services";
+import { FileStructure } from "@ta/utils";
 
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export interface IInputSchema extends IInputBase<string> {
   update?: (data: FileStructure[]) => Promise<Picture[]>;
@@ -12,7 +12,7 @@ export class InputSchema extends InputBase<string> {
 
   constructor(options: IInputSchema = {}) {
     super(options);
-    this.controlType = 'schema';
+    this.controlType = "schema";
 
     if (options.update) {
       this.update = options.update;

@@ -1,28 +1,34 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { filter, map } from 'rxjs';
+import { filter, map } from "rxjs";
 
-import { GraphEndpoint, HandleSimpleRequest, MappingApiType, Request, TaBaseService } from '@ta/server';
-import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
+import {
+  GraphEndpoint,
+  HandleSimpleRequest,
+  MappingApiType,
+  Request,
+  TaBaseService,
+} from "@ta/server";
+import { isNonNullable, keepUniqueObjectByProperty } from "@ta/utils";
 
-import { DocumentDto } from './dto/document';
-import { UploadFilePayloadInput } from './dto/post/UploadFilePayloadInput';
-import { GET_DOCUMENTS } from './queries';
+import { DocumentDto } from "./dto/document";
+import { UploadFilePayloadInput } from "./dto/post/UploadFilePayloadInput";
+import { GET_DOCUMENTS } from "./queries";
 
 const graphEndpoint: GraphEndpoint = {
-  clientName: 'documentService',
-  endpoint: 'document',
+  clientName: "documentService",
+  endpoint: "document",
 };
 
 const apiRoutes: MappingApiType = {
   UploadDocument: {
-    type: 'FILES',
-    url: '{ApiUrl}/Media/upload',
+    type: "FILES",
+    url: "{ApiUrl}/Media/upload",
   },
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaDocumentsService extends TaBaseService {
   public documents = new HandleSimpleRequest<DocumentDto[]>();
@@ -36,32 +42,38 @@ export class TaDocumentsService extends TaBaseService {
   }
 
   public getDocuments(ids: string[]) {
-    return this.documents.get()?.filter(doc => ids.includes(doc.id));
+    return this.documents.get()?.filter((doc) => ids.includes(doc.id));
   }
 
   public getDocuments$(ids: string[]) {
-    return this.documents.get$().pipe(map(list => list?.filter(doc => ids.includes(doc.id))));
+    return this.documents
+      .get$()
+      .pipe(map((list) => list?.filter((doc) => ids.includes(doc.id))));
   }
   public fetchDocuments$(ids: string[]) {
     return this.documents.fetch(
       this._graphService
-        .fetchPagedQueryList<DocumentDto>(GET_DOCUMENTS({ ids }), 'documents', graphEndpoint.clientName)
+        .fetchPagedQueryList<DocumentDto>(
+          GET_DOCUMENTS({ ids }),
+          "documents",
+          graphEndpoint.clientName
+        )
         .pipe(
-          map(data => data.items ?? []),
+          map((data) => data.items ?? []),
           filter(isNonNullable),
-          map(list => [...(list ?? []), ...(this.documents.get() ?? [])]),
-          map(list => keepUniqueObjectByProperty(list, item => item.id))
+          map((list) => [...(list ?? []), ...(this.documents.get() ?? [])]),
+          map((list) => keepUniqueObjectByProperty(list, (item) => item.id))
         )
     );
   }
 
   public addDocument$(doc: UploadFilePayloadInput) {
     const formData = new FormData();
-    formData.append('file', doc.file, doc.file.name);
+    formData.append("file", doc.file, doc.file.name);
 
     return this._serverService.request<DocumentDto>(
       new Request({
-        type: 'UploadDocument',
+        type: "UploadDocument",
         content: {
           files: formData,
         },

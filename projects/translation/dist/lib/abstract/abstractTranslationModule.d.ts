@@ -1,5 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
-import { ITranslation, TaTranslationRegistryService } from '../services/translation-registry.service';
+import { BehaviorSubject } from "rxjs";
+import { ITranslation, TaTranslationRegistryService } from "../services/translation-registry.service";
 /**
  * @deprecated
  */

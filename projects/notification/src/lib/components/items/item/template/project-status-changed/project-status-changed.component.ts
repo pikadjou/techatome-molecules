@@ -1,15 +1,15 @@
-import { AbstractNotificationTemplateComponent } from '../abstract';
-import { IconComponent } from '../../icon/icon.component';
-import { ItemComponent } from '../../item.component';
-import { NotificationTitleComponent } from '../../title/title.component';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { AbstractNotificationTemplateComponent } from "../abstract";
+import { IconComponent } from "../../icon/icon.component";
+import { ItemComponent } from "../../item.component";
+import { NotificationTitleComponent } from "../../title/title.component";
+import { NgIf, NgTemplateOutlet } from "@angular/common";
+import { Component } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'ta-notification-project-status-changed',
-  templateUrl: './project-status-changed.component.html',
-  styleUrls: ['./project-status-changed.component.scss'],
+  selector: "ta-notification-project-status-changed",
+  templateUrl: "./project-status-changed.component.html",
+  styleUrls: ["./project-status-changed.component.scss"],
   standalone: true,
   imports: [
     IconComponent,
@@ -17,13 +17,13 @@ import { TranslateModule } from '@ngx-translate/core';
     NgIf,
     NgTemplateOutlet,
     NotificationTitleComponent,
-    TranslateModule
+    TranslateModule,
   ],
 })
 export class ProjectStatusChangedComponent extends AbstractNotificationTemplateComponent {
   public template = this.sharedService.projectStatusTemplate;
   get projectStatus() {
-    return Number(this.extractContext('ProjectStatus'));
+    return Number(this.extractContext("ProjectStatus"));
   }
 
   override goTo() {
@@ -32,7 +32,7 @@ export class ProjectStatusChangedComponent extends AbstractNotificationTemplateC
     }
     super.goTo();
     this.sharedService.routing.project({
-      projectId: this.extractredirectContext('ProjectId'),
+      projectId: this.extractredirectContext("ProjectId"),
     });
   }
 }

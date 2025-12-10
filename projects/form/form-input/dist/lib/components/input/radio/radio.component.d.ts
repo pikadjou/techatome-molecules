@@ -1,6 +1,6 @@
-import { InputRadio } from '@ta/form-model';
-import { TaSizes } from '@ta/styles';
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputRadio } from "@ta/form-model";
+import { TaSizes } from "@ta/styles";
+import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class RadioComponent extends TaAbstractInputComponent<InputRadio<any>> {
     constructor();

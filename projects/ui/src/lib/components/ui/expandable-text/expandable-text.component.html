@@ -9,13 +9,13 @@
     </div>
   </div>
   @if (this.hasTooBigText) {
-    <button (click)="toggleText()">
-      {{
-        (this.showFullText
-          ? "ui.expandabletext.seeless"
-          : "ui.expandabletext.seemore"
-        ) | translate
-      }}
-    </button>
+  <button (click)="toggleText()">
+    {{
+      (this.showFullText
+        ? "ui.expandabletext.seeless"
+        : "ui.expandabletext.seemore"
+      ) | translate
+    }}
+  </button>
   }
 </div>

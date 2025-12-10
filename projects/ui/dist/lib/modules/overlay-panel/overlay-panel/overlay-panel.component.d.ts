@@ -1,6 +1,6 @@
-import { AfterViewInit, ElementRef, EventEmitter, TemplateRef } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
-import { OverlayMenuConfig, OverlayService } from '../overlay.service';
+import { AfterViewInit, ElementRef, EventEmitter, TemplateRef } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
+import { OverlayMenuConfig, OverlayService } from "../overlay.service";
 import * as i0 from "@angular/core";
 export declare class TaOverlayPanelComponent extends TaBaseComponent implements AfterViewInit {
     private overlayService;
@@ -8,7 +8,7 @@ export declare class TaOverlayPanelComponent extends TaBaseComponent implements 
     contentTpl: TemplateRef<any>;
     triggerHostRef: ElementRef<HTMLElement>;
     panelConfig: OverlayMenuConfig;
-    position: 'default' | 'right';
+    position: "default" | "right";
     closed: EventEmitter<void>;
     private _configWithDefaults;
     constructor(overlayService: OverlayService);

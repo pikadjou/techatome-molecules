@@ -10,50 +10,50 @@
   background-color: common.get-var(neutral, 100);
   border-radius: common.get-var(radius, rounded);
   transition: all common.get-var(transition, fast);
-  
+
   // Success type
   &.success {
     border-left: 4px solid common.get-var(semantic, green);
-    
+
     .benefit-icon {
       color: common.get-var(semantic, green);
     }
-    
+
     &:hover {
       background-color: common.get-var(neutral, 200);
     }
   }
-  
+
   // Warning type
   &.warning {
     border-left: 4px solid common.get-var(semantic, orange);
-    
+
     .benefit-icon {
       color: common.get-var(semantic, orange);
     }
-    
+
     &:hover {
       background-color: common.get-var(neutral, 200);
     }
   }
-  
+
   // Error type
   &.error {
     border-left: 4px solid common.get-var(semantic, red);
-    
+
     .benefit-icon {
       color: common.get-var(semantic, red);
     }
-    
+
     &:hover {
       background-color: common.get-var(neutral, 200);
     }
   }
-  
+
   .benefit-icon {
     flex-shrink: 0;
   }
-  
+
   .benefit-text {
     color: common.get-var(text, primary);
     @include fonts.fontSizeBody(sm);

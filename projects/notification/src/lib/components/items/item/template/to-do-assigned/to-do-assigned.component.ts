@@ -1,20 +1,20 @@
-import { AbstractNotificationTemplateComponent } from '../abstract';
-import { IconComponent } from '../../icon/icon.component';
-import { ItemComponent } from '../../item.component';
-import { NotificationTitleComponent } from '../../title/title.component';
-import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { AbstractNotificationTemplateComponent } from "../abstract";
+import { IconComponent } from "../../icon/icon.component";
+import { ItemComponent } from "../../item.component";
+import { NotificationTitleComponent } from "../../title/title.component";
+import { Component } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'ta-to-do-assigned',
-  templateUrl: './to-do-assigned.component.html',
-  styleUrls: ['./to-do-assigned.component.scss'],
+  selector: "ta-to-do-assigned",
+  templateUrl: "./to-do-assigned.component.html",
+  styleUrls: ["./to-do-assigned.component.scss"],
   standalone: true,
   imports: [
     IconComponent,
     ItemComponent,
     NotificationTitleComponent,
-    TranslateModule
+    TranslateModule,
   ],
 })
 export class ToDoAssignedComponent extends AbstractNotificationTemplateComponent {
@@ -24,7 +24,7 @@ export class ToDoAssignedComponent extends AbstractNotificationTemplateComponent
     }
     super.goTo();
     this.sharedService.routing?.task({
-      taskId: this.extractredirectContext('TaskId'),
+      taskId: this.extractredirectContext("TaskId"),
     });
   }
 }

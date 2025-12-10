@@ -1,18 +1,21 @@
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { InputTextBox } from '@ta/form-model';
-import { SearchFieldComponent } from './search-field.component';
+import { FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from "@angular/material/core";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
+import { InputTextBox } from "@ta/form-model";
+import { SearchFieldComponent } from "./search-field.component";
 
 type StoryType = SearchFieldComponent;
 
 export default {
-  title: 'MENU/Search Field',
+  title: "MENU/Search Field",
   component: SearchFieldComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -30,7 +33,9 @@ export default {
         FormsModule,
         ReactiveFormsModule,
       ],
-      providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
+      providers: [
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+      ],
     }),
   ],
   args: {

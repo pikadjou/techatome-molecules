@@ -1,17 +1,17 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { __classicMenu } from 'projects/menu/src/lib/components/menu/__mock__/menu';
+import { Meta, StoryObj } from "@storybook/angular";
+import { __classicMenu } from "projects/menu/src/lib/components/menu/__mock__/menu";
 
-import { Menu } from '@ta/menu';
+import { Menu } from "@ta/menu";
 
-import { LayoutPageComponent } from './layout-page.component';
+import { LayoutPageComponent } from "./layout-page.component";
 
 type StoryType = LayoutPageComponent & { menu: Menu; withHeader: boolean };
 
 export default {
-  title: 'LAYOUT/Page',
+  title: "LAYOUT/Page",
   component: LayoutPageComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -37,12 +37,12 @@ export default {
     menu: __classicMenu,
     profile: {
       title: {
-        main: 'VANDERHEYDEN',
-        seconde: 'Jean-François',
-        sub: 'client',
+        main: "VANDERHEYDEN",
+        seconde: "Jean-François",
+        sub: "client",
       },
-      email: 'redpanda@gmail.com',
-      phoneNumber: '+472695609',
+      email: "redpanda@gmail.com",
+      phoneNumber: "+472695609",
     },
     withHeader: true,
   },

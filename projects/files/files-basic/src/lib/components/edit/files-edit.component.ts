@@ -8,27 +8,42 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from '@angular/core';
+} from "@angular/core";
 
-import { NgIf, NgFor, NgClass } from '@angular/common';
-import { FontIconComponent, MaterialIconComponent } from '@ta/icons';
-import { InputSlider } from '@ta/form-model';
-import { LoaderComponent } from '@ta/ui';
-import { TaBaseComponent, determineNewSize, getBlobImage, isLight } from '@ta/utils';
-import { Observable } from 'rxjs';
-import ImageEditor from 'tui-image-editor';
+import { NgIf, NgFor, NgClass } from "@angular/common";
+import { FontIconComponent, MaterialIconComponent } from "@ta/icons";
+import { InputSlider } from "@ta/form-model";
+import { LoaderComponent } from "@ta/ui";
+import {
+  TaBaseComponent,
+  determineNewSize,
+  getBlobImage,
+  isLight,
+} from "@ta/utils";
+import { Observable } from "rxjs";
+import ImageEditor from "tui-image-editor";
 
-type Selection = 'line' | 'shape' | 'text' | '';
-type ShapeSelection = 'rect' | 'triangle' | 'circle' | 'line' | '';
+type Selection = "line" | "shape" | "text" | "";
+type ShapeSelection = "rect" | "triangle" | "circle" | "line" | "";
 
 @Component({
-selector: 'ta-files-edit',
-  templateUrl: './files-edit.component.html',
-  styleUrls: ['./files-edit.component.scss'],
+  selector: "ta-files-edit",
+  templateUrl: "./files-edit.component.html",
+  styleUrls: ["./files-edit.component.scss"],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, FontIconComponent, LoaderComponent, MaterialIconComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    NgClass,
+    FontIconComponent,
+    LoaderComponent,
+    MaterialIconComponent,
+  ],
 })
-export class FileEditComponent extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FileEditComponent
+  extends TaBaseComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @Input()
   imagePath!: string;
 
@@ -41,38 +56,38 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
   public tuiImageEditor!: ImageEditor;
 
   // control
-  public selection: Selection = '';
-  public shapeSelection: ShapeSelection = '';
+  public selection: Selection = "";
+  public shapeSelection: ShapeSelection = "";
 
-  public colorHexa: string = '#000000';
+  public colorHexa: string = "#000000";
   public colorList: string[] = [
-    '#ff0d00',
-    '#ffa200',
-    '#f4ff1f',
-    '#34e610',
-    '#147001',
-    '#00cad1',
-    '#0034d1',
-    '#3d009e',
-    '#000000',
-    '#ffffff',
+    "#ff0d00",
+    "#ffa200",
+    "#f4ff1f",
+    "#34e610",
+    "#147001",
+    "#00cad1",
+    "#0034d1",
+    "#3d009e",
+    "#000000",
+    "#ffffff",
   ];
 
   public objectActivated = null;
 
   public brushSize: number = 20;
   public slider = new InputSlider({
-    key: 'slider',
-    class: 'w-100',
+    key: "slider",
+    class: "w-100",
     max: 50,
   });
 
   public readonly isLight = isLight;
 
-  @ViewChild('containerRef')
+  @ViewChild("containerRef")
   private _containerRef!: ElementRef<HTMLDivElement>;
 
-  @ViewChild('tuiRef')
+  @ViewChild("tuiRef")
   private _tuiRef!: ElementRef<HTMLDivElement>;
   private _canvasSize: { width: number; height: number } = {
     width: 0,
@@ -86,9 +101,11 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
 
     this.slider.value = this.brushSize;
     this.slider.createFormControl();
-    this.slider.changeValue$.subscribe(value => this.changeBrushSize(value ?? 0));
+    this.slider.changeValue$.subscribe((value) =>
+      this.changeBrushSize(value ?? 0)
+    );
 
-    window.addEventListener('keyup', this.keyPress);
+    window.addEventListener("keyup", this.keyPress);
   }
 
   ngOnInit() {
@@ -102,7 +119,7 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
   }
 
   override ngOnDestroy(): void {
-    window.removeEventListener('keyup', this.keyPress);
+    window.removeEventListener("keyup", this.keyPress);
 
     this.tuiImageEditor.destroy();
   }
@@ -118,13 +135,13 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
   }
 
   public keyPress(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       this._stopDrawing();
     }
   }
   // control
   public showPanel() {
-    return this.selection !== '' && !this._intoDrawing;
+    return this.selection !== "" && !this._intoDrawing;
   }
   public changeSelection(newSelection: Selection) {
     this.selection = newSelection;
@@ -135,20 +152,20 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
       return;
     }
 
-    if (this.selection === 'line') {
-      this.drawing('FREE_DRAWING');
-      this.changeShapeSelection('');
+    if (this.selection === "line") {
+      this.drawing("FREE_DRAWING");
+      this.changeShapeSelection("");
       return;
     }
-    if (this.selection === 'shape') {
+    if (this.selection === "shape") {
       if (!this.shapeSelection) {
-        this.changeShapeSelection('line');
+        this.changeShapeSelection("line");
       }
       return;
     }
-    if (this.selection === 'text') {
+    if (this.selection === "text") {
       this.text();
-      this.changeShapeSelection('');
+      this.changeShapeSelection("");
 
       return;
     }
@@ -159,8 +176,8 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
     if (!this.shapeSelection) {
       return;
     }
-    if (this.shapeSelection === 'line') {
-      this.drawing('LINE_DRAWING');
+    if (this.shapeSelection === "line") {
+      this.drawing("LINE_DRAWING");
       return;
     }
 
@@ -176,20 +193,20 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
     this.tuiImageEditor.redo();
   }
 
-  public shape(type: 'rect' | 'circle' | 'triangle') {
+  public shape(type: "rect" | "circle" | "triangle") {
     this._stopDrawing();
     this.tuiImageEditor.setDrawingShape(type, this._getSettings());
-    this.tuiImageEditor.startDrawingMode('SHAPE');
+    this.tuiImageEditor.startDrawingMode("SHAPE");
   }
 
-  public drawing(type: 'LINE_DRAWING' | 'FREE_DRAWING') {
+  public drawing(type: "LINE_DRAWING" | "FREE_DRAWING") {
     this._stopDrawing();
     this.tuiImageEditor.startDrawingMode(type, this._getSettings());
   }
 
   public text() {
     this._stopDrawing();
-    this.tuiImageEditor.startDrawingMode('TEXT', this._getSettings());
+    this.tuiImageEditor.startDrawingMode("TEXT", this._getSettings());
   }
 
   public changeColor(color: string) {
@@ -214,7 +231,7 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
     this.requestState.asked();
 
     const data = this.tuiImageEditor.toDataURL({
-      format: 'png',
+      format: "png",
       quality: 0.4,
     });
 
@@ -227,7 +244,10 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
     this.tuiImageEditor = new ImageEditor(this._tuiRef.nativeElement, {
       usageStatistics: false,
     });
-    const crop = await this.tuiImageEditor.loadImageFromURL(this.imagePath, 'default');
+    const crop = await this.tuiImageEditor.loadImageFromURL(
+      this.imagePath,
+      "default"
+    );
     this._canvasSize = determineNewSize(
       crop.newHeight,
       crop.newWidth,
@@ -238,14 +258,14 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
       width: this._canvasSize.width,
       height: this._canvasSize.height,
     });
-    this.tuiImageEditor.on('mousedown', () => {
+    this.tuiImageEditor.on("mousedown", () => {
       this._intoDrawing = true;
     });
-    this.tuiImageEditor.on('objectActivated', (data: any) => {
+    this.tuiImageEditor.on("objectActivated", (data: any) => {
       this.objectActivated = data;
     });
-    this.tuiImageEditor.on('addText', (pos: any) => {
-      this.tuiImageEditor.addText('TEXTE', {
+    this.tuiImageEditor.on("addText", (pos: any) => {
+      this.tuiImageEditor.addText("TEXTE", {
         ...this._getSettings(),
         ...{ position: pos.originPosition },
       });
@@ -257,7 +277,7 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
     this.objectActivated = null;
   }
   private _reflow() {
-    if (this.selection === 'line') {
+    if (this.selection === "line") {
       this.tuiImageEditor.setBrush({
         color: this.colorHexa,
         width: this.brushSize,
@@ -265,7 +285,7 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
       return;
     }
 
-    if (this.selection === 'shape') {
+    if (this.selection === "shape") {
       this._stopDrawing();
       this.changeShapeSelection(this.shapeSelection);
       return;
@@ -275,7 +295,7 @@ export class FileEditComponent extends TaBaseComponent implements OnInit, AfterV
     return {
       color: this.colorHexa,
       width: this.brushSize,
-      fill: 'transparent',
+      fill: "transparent",
       stroke: this.colorHexa,
       strokeWidth: this.brushSize,
       styles: {

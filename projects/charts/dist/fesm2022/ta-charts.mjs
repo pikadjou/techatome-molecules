@@ -17,13 +17,13 @@ class BaseChartComponent {
         this.chart = null;
     }
     ngOnChanges(changes) {
-        if (!deepEqual(changes['labels']?.previousValue, changes['labels']?.currentValue) ||
-            !deepEqual(changes['datasets']?.previousValue, changes['datasets']?.currentValue)) {
+        if (!deepEqual(changes["labels"]?.previousValue, changes["labels"]?.currentValue) ||
+            !deepEqual(changes["datasets"]?.previousValue, changes["datasets"]?.currentValue)) {
             this.refreshChart();
         }
     }
     createChart() {
-        this.chart = new Chart(this.chartCanvas.nativeElement.getContext('2d'), {
+        this.chart = new Chart(this.chartCanvas.nativeElement.getContext("2d"), {
             type: this.type,
             options: this.chartOptions,
             data: {
@@ -41,11 +41,11 @@ class BaseChartComponent {
         this.chart?.update();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: BaseChartComponent, selector: "ng-component", inputs: { labels: "labels", datasets: "datasets", chartOptions: "chartOptions", chartHeight: "chartHeight" }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: BaseChartComponent, selector: "ng-component", inputs: { labels: "labels", datasets: "datasets", chartOptions: "chartOptions", chartHeight: "chartHeight" }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, decorators: [{
             type: Component,
-            args: [{ template: '' }]
+            args: [{ template: "" }]
         }], ctorParameters: () => [], propDecorators: { labels: [{
                 type: Input
             }], datasets: [{
@@ -56,95 +56,95 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Input
             }], chartCanvas: [{
                 type: ViewChild,
-                args: ['chartCanvas']
+                args: ["chartCanvas"]
             }] } });
 
 class TaChartBarComponent extends BaseChartComponent {
     constructor() {
         super();
-        this.type = 'bar';
+        this.type = "bar";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartBarComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaChartBarComponent, isStandalone: true, selector: "ta-bar-chart", usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartBarComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-bar-chart', standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
+            args: [{ selector: "ta-bar-chart", standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
         }], ctorParameters: () => [] });
 
 class TaChartLineComponent extends BaseChartComponent {
     constructor() {
         super();
-        this.type = 'line';
+        this.type = "line";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartLineComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaChartLineComponent, isStandalone: true, selector: "ta-line-chart", usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartLineComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-line-chart', standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
+            args: [{ selector: "ta-line-chart", standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
         }], ctorParameters: () => [] });
 
 class TaChartDoughnutComponent extends BaseChartComponent {
     constructor() {
         super();
-        this.type = 'doughnut';
+        this.type = "doughnut";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartDoughnutComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaChartDoughnutComponent, isStandalone: true, selector: "ta-doughnut-chart", usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartDoughnutComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-doughnut-chart', standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
+            args: [{ selector: "ta-doughnut-chart", standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
         }], ctorParameters: () => [] });
 
 class TaChartMixedComponent extends BaseChartComponent {
     constructor() {
         super();
-        this.type = 'scatter';
+        this.type = "scatter";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartMixedComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaChartMixedComponent, isStandalone: true, selector: "ta-mixed-chart", usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartMixedComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-mixed-chart', standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
+            args: [{ selector: "ta-mixed-chart", standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
         }], ctorParameters: () => [] });
 
 class TaChartPieComponent extends BaseChartComponent {
     constructor() {
         super();
-        this.type = 'pie';
+        this.type = "pie";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartPieComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaChartPieComponent, isStandalone: true, selector: "ta-pie-chart", inputs: { radius: "radius" }, usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartPieComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-pie-chart', standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
+            args: [{ selector: "ta-pie-chart", standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
         }], ctorParameters: () => [], propDecorators: { radius: [{
                 type: Input
             }] } });
 
 const ChartColors = {
-    blue900: '#1f2245',
-    blue800: '#172aa5',
-    blue700: '#3c54e4',
-    blue600: '#6b7cea',
-    blue500: '#98a6ff',
-    blue400: '#cbd3ff',
-    blue300: '#e5e9ff',
-    blue200: '#f2f4fe',
-    blue100: '#f8f9ff',
-    blue50: '#ffffff',
-    success: '#4CAF50',
-    danger: '#F44336',
-    warning: '#FFC107',
-    info: '#2196F3',
-    light: '#F1F1F1',
-    dark: '#212121',
-    white: '#FFFFFF',
-    black: '#000000',
+    blue900: "#1f2245",
+    blue800: "#172aa5",
+    blue700: "#3c54e4",
+    blue600: "#6b7cea",
+    blue500: "#98a6ff",
+    blue400: "#cbd3ff",
+    blue300: "#e5e9ff",
+    blue200: "#f2f4fe",
+    blue100: "#f8f9ff",
+    blue50: "#ffffff",
+    success: "#4CAF50",
+    danger: "#F44336",
+    warning: "#FFC107",
+    info: "#2196F3",
+    light: "#F1F1F1",
+    dark: "#212121",
+    white: "#FFFFFF",
+    black: "#000000",
 };
 
 /*

@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
-import { FontIconComponent } from '@ta/icons';
-import { LayoutContentComponent, LayoutPanelComponent, LayoutWithPanelComponent, LinkComponent } from '@ta/ui';
+import { FontIconComponent } from "@ta/icons";
+import {
+  LayoutContentComponent,
+  LayoutPanelComponent,
+  LayoutWithPanelComponent,
+  LinkComponent,
+} from "@ta/ui";
 
-import { FiltersFormComponent } from './form/filters-form.component';
+import { FiltersFormComponent } from "./form/filters-form.component";
 
 @Component({
-  selector: 'ta-filters',
-  templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss'],
+  selector: "ta-filters",
+  templateUrl: "./filters.component.html",
+  styleUrls: ["./filters.component.scss"],
   standalone: true,
   imports: [
     FontIconComponent,

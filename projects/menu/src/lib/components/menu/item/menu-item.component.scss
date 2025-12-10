@@ -55,8 +55,8 @@
     margin-right: common.get-var(space, sm);
   }
 
-
-  &.active, &:hover {
+  &.active,
+  &:hover {
     .icon {
       color: common.get-var(icon, brand, primary);
     }

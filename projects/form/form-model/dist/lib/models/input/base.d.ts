@@ -1,8 +1,8 @@
-import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { ENotificationCode } from '@ta/notification';
-import { SubscriberHandler } from '@ta/utils';
-import { InputLabel } from './label';
+import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
+import { Observable, Subject } from "rxjs";
+import { ENotificationCode } from "@ta/notification";
+import { SubscriberHandler } from "@ta/utils";
+import { InputLabel } from "./label";
 export interface IInputsError {
     status: ENotificationCode;
     message: string;

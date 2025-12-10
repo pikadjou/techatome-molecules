@@ -7,7 +7,7 @@ trigger:
   - develop
 
 pool:
-  name: 'Default'
+  name: "Default"
 
 stages:
   - stage: Package
@@ -24,31 +24,31 @@ stages:
             displayName: Checkout
           - task: NodeTool@0
             inputs:
-              versionSpec: '20.x'
-            displayName: 'Install Node.js 20.x'
+              versionSpec: "20.x"
+            displayName: "Install Node.js 20.x"
           - task: npmAuthenticate@0
             inputs:
-              workingFile: '.npmrc'
-            displayName: 'NPM Auth.'
+              workingFile: ".npmrc"
+            displayName: "NPM Auth."
           - script: |
               git fetch --all
               source=$(Build.SourceBranch)
               git checkout ${source#"refs/heads/"}
               yarn install
               yarn run build
-            displayName: 'Build Lerna'
-            workingDirectory: '$(Build.SourcesDirectory)'
+            displayName: "Build Lerna"
+            workingDirectory: "$(Build.SourcesDirectory)"
           - script: |
               git config --global user.email pipeline@merlinsoftware.be
               git config --global user.name "Pipeline"
               git update-index --assume-unchanged .npmrc
               git update-index --assume-unchanged yarn.lock
             displayName: Ref Git Head
-            workingDirectory: '$(Build.SourcesDirectory)'
+            workingDirectory: "$(Build.SourcesDirectory)"
           - script: |
               yarn run version --conventional-prerelease --preid beta --yes --message "[skip ci] Lerna Version"
             displayName: Publish Package from Develop
-            workingDirectory: '$(Build.SourcesDirectory)'
+            workingDirectory: "$(Build.SourcesDirectory)"
           - script: |
               yarn run publish --yes --force-publish=*
             displayName: Lerna Push
@@ -67,4 +67,4 @@ stages:
                 git pull --rebase origin $(Build.SourceBranchName)
                 git push --no-verify --follow-tags
               fi
-            displayName: 'Conditional Git Pull & Push'
+            displayName: "Conditional Git Pull & Push"

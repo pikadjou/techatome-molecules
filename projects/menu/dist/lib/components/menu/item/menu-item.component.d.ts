@@ -1,11 +1,11 @@
-import { OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { TaBaseComponent } from '@ta/utils';
-import { MenuAction } from '../../../models/menu/item/action';
-import { MenuBase } from '../../../models/menu/item/base';
-import { MenuIcon } from '../../../models/menu/item/icon';
-import { MenuPanel } from '../../../models/menu/item/panel';
+import { OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatMenuTrigger } from "@angular/material/menu";
+import { TaBaseComponent } from "@ta/utils";
+import { MenuAction } from "../../../models/menu/item/action";
+import { MenuBase } from "../../../models/menu/item/base";
+import { MenuIcon } from "../../../models/menu/item/icon";
+import { MenuPanel } from "../../../models/menu/item/panel";
 import * as i0 from "@angular/core";
 export declare class MenuItemComponent extends TaBaseComponent implements OnInit {
     modal: MatDialog;

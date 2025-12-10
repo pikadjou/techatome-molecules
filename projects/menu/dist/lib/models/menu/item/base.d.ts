@@ -1,6 +1,6 @@
-import { TemplateRef } from '@angular/core';
-import { QueryParamsHandling } from '@angular/router';
-import { Observable } from 'rxjs';
+import { TemplateRef } from "@angular/core";
+import { QueryParamsHandling } from "@angular/router";
+import { Observable } from "rxjs";
 export declare class MenuBase {
     key: string;
     label: string;

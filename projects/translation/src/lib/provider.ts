@@ -1,10 +1,17 @@
-import { APP_INITIALIZER, LOCALE_ID, Provider } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, Provider } from "@angular/core";
 
-import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import { TranslateLoader, provideTranslateService } from "@ngx-translate/core";
 
-import { TaTranslationLoader } from './services/translation.loader';
-import { TRANSLATION_SOURCE_CONFIG, ITranslationSourceConfig, TranslationSourceType } from './services/translation-source.config';
-import { TRANSLATION_CONFIG, TaTranslationService } from './services/translation.service';
+import { TaTranslationLoader } from "./services/translation.loader";
+import {
+  TRANSLATION_SOURCE_CONFIG,
+  ITranslationSourceConfig,
+  TranslationSourceType,
+} from "./services/translation-source.config";
+import {
+  TRANSLATION_CONFIG,
+  TaTranslationService,
+} from "./services/translation.service";
 
 export function HttpLoaderFactory() {
   return new TaTranslationLoader();
@@ -20,7 +27,9 @@ export interface IProvideTranslationConfig {
   source?: ITranslationSourceConfig;
 }
 
-export const provideTranslation = (data: IProvideTranslationConfig): Provider => [
+export const provideTranslation = (
+  data: IProvideTranslationConfig
+): Provider => [
   provideTranslateService({
     loader: {
       provide: TranslateLoader,
@@ -30,7 +39,8 @@ export const provideTranslation = (data: IProvideTranslationConfig): Provider =>
   {
     provide: LOCALE_ID,
     deps: [TaTranslationService],
-    useFactory: (TranslationService: TaTranslationService) => TranslationService.getLanguage(),
+    useFactory: (TranslationService: TaTranslationService) =>
+      TranslationService.getLanguage(),
   },
   {
     provide: APP_INITIALIZER,

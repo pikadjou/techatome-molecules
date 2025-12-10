@@ -2,8 +2,6 @@
   "search": "Rechercher un lieu",
   "noResults": "Aucun résultat trouvé",
   "markers": "Marqueurs",
-  "zoom": {
-    "in": "Zoom avant",
-    "out": "Zoom arrière"
-  }
+  "zoom.in": "Zoom avant",
+  "zoom.out": "Zoom arrière"
 }

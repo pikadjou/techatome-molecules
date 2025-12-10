@@ -8,43 +8,52 @@ import {
   Output,
   ViewChild,
   inject,
-} from '@angular/core';
+} from "@angular/core";
 
-import Delimiter from '@editorjs/delimiter';
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
+import Delimiter from "@editorjs/delimiter";
+import EditorJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
 // @ts-ignore
-import ImageTool from '@editorjs/image';
-import List from '@editorjs/list';
-import Quote from '@editorjs/quote';
-import Warning from '@editorjs/warning';
-import { ColorTool } from 'editorjs-color';
-import { Observable, firstValueFrom } from 'rxjs';
+import ImageTool from "@editorjs/image";
+import List from "@editorjs/list";
+import Quote from "@editorjs/quote";
+import Warning from "@editorjs/warning";
+import { ColorTool } from "editorjs-color";
+import { Observable, firstValueFrom } from "rxjs";
 
-import { TaDocumentsService } from '@ta/services';
-import { TaTranslationService } from '@ta/translation';
-import { TaBaseComponent, isNonNullable, isNotEmptyObject } from '@ta/utils';
+import { TaDocumentsService } from "@ta/services";
+import { TaTranslationService } from "@ta/translation";
+import { TaBaseComponent, isNonNullable, isNotEmptyObject } from "@ta/utils";
 
-import { WysiswgBlockData, convertBlocksToHtml } from '../../public-api';
-import { TagTool } from '../plugins/tag-editor/tag-editor';
-import * as en from './translation/en.json';
-import * as es from './translation/es.json';
-import * as fr from './translation/fr.json';
-import * as nl from './translation/nl.json';
+import { WysiswgBlockData, convertBlocksToHtml } from "../../public-api";
+import { TagTool } from "../plugins/tag-editor/tag-editor";
+import * as en from "./translation/en.json";
+import * as es from "./translation/es.json";
+import * as fr from "./translation/fr.json";
+import * as nl from "./translation/nl.json";
 
-export type EditorInputSavedData = { blocks: WysiswgBlockData[]; tags: string[] };
+export type EditorInputSavedData = {
+  blocks: WysiswgBlockData[];
+  tags: string[];
+};
 @Component({
-  selector: 'ta-cms-editor-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  selector: "ta-cms-editor-input",
+  templateUrl: "./input.component.html",
+  styleUrls: ["./input.component.scss"],
   standalone: true,
 })
-export class EditorInputComponent extends TaBaseComponent implements OnInit, AfterViewInit {
+export class EditorInputComponent
+  extends TaBaseComponent
+  implements OnInit, AfterViewInit
+{
   @Input()
   initValue?: WysiswgBlockData[] | null;
 
   @Input()
-  setNewValue$?: Observable<{ blocks: WysiswgBlockData[] | string | null; saveAfter?: boolean }>;
+  setNewValue$?: Observable<{
+    blocks: WysiswgBlockData[] | string | null;
+    saveAfter?: boolean;
+  }>;
 
   @Input()
   requestSave$?: Observable<void>;
@@ -80,7 +89,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
   private readonly _documentsService = inject(TaDocumentsService);
   private _saveAfter = false;
 
-  @ViewChild('editorjs', { static: true })
+  @ViewChild("editorjs", { static: true })
   editorjs!: ElementRef;
 
   public editorInstance: EditorJS | null = null;
@@ -109,7 +118,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
           next: ({ blocks, saveAfter }) => {
             this._saveAfter = saveAfter ?? false;
             if (this.editorInstance && blocks) {
-              if (typeof blocks === 'string') {
+              if (typeof blocks === "string") {
                 this.editorInstance.blocks.renderFromHTML(blocks);
               } else {
                 this.editorInstance.render({ blocks: blocks });
@@ -134,7 +143,10 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
       if (!data) {
         return;
       }
-      this.saved.emit({ blocks: data.blocks, tags: this._extractTags(data.blocks) });
+      this.saved.emit({
+        blocks: data.blocks,
+        tags: this._extractTags(data.blocks),
+      });
     }
   }
   public init(): EditorJS {
@@ -144,7 +156,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
       holder: this.editorjs.nativeElement,
       minHeight: 100,
       data: { blocks: this.initValue },
-      placeholder: translations['placeholder'],
+      placeholder: translations["placeholder"],
       tools: {
         header: Header,
         list: List,
@@ -154,8 +166,9 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
         TextColor: {
           class: ColorTool,
           config: {
-            backgroundColorLabel: translations['colortool.backgroundColorLabel'],
-            frontColorLabel: translations['colortool.frontColorLabel'],
+            backgroundColorLabel:
+              translations["colortool.backgroundColorLabel"],
+            frontColorLabel: translations["colortool.frontColorLabel"],
           },
         },
         image: {
@@ -181,7 +194,9 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
   }
 
   public uploadByFile = async (file: File) => {
-    const doc = await firstValueFrom(this._documentsService.addDocument$({ file }));
+    const doc = await firstValueFrom(
+      this._documentsService.addDocument$({ file })
+    );
 
     return {
       success: 1,
@@ -221,7 +236,9 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     }
 
     const styledSpans = Array.from(
-      this.editorjs.nativeElement.innerHTML.matchAll(/<span class="ce-inline-tool--color__token"(.*?)>/gs)
+      this.editorjs.nativeElement.innerHTML.matchAll(
+        /<span class="ce-inline-tool--color__token"(.*?)>/gs
+      )
     ).map((match: any) => ({
       style: match[1].trim(), // `style`
     }));
@@ -231,18 +248,21 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     }
 
     let spanIndex = 0;
-    const updatedBlocks = output.blocks.map(block => {
-      if (block.type !== 'paragraph' || !block.data?.text) {
+    const updatedBlocks = output.blocks.map((block) => {
+      if (block.type !== "paragraph" || !block.data?.text) {
         return block;
       }
 
-      const newText = block.data.text.replace(/<span class="ce-inline-tool--color__token">/gs, (match: unknown) => {
-        const styled = styledSpans[spanIndex++];
-        if (!styled) {
-          return match;
+      const newText = block.data.text.replace(
+        /<span class="ce-inline-tool--color__token">/gs,
+        (match: unknown) => {
+          const styled = styledSpans[spanIndex++];
+          if (!styled) {
+            return match;
+          }
+          return `<span class="ce-inline-tool--color__token" ${styled.style}>`;
         }
-        return `<span class="ce-inline-tool--color__token" ${styled.style}>`;
-      });
+      );
 
       return {
         ...block,
@@ -262,6 +282,6 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     const html = convertBlocksToHtml(blocks);
     const regex = /data-user-id="([^"]+)"/g;
     // Extraction des IDs sous forme de tableau
-    return [...html.matchAll(regex)].map(match => match[1]);
+    return [...html.matchAll(regex)].map((match) => match[1]);
   }
 }

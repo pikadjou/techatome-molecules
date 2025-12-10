@@ -1,4 +1,4 @@
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 export type InputUploadValue = {
     id: string;
     url: string;

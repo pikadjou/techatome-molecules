@@ -1,4 +1,4 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 
 export interface Address {
   id: string;
@@ -8,4 +8,10 @@ export interface Address {
   street: string;
 }
 
-export const addressProps = new GraphSchema<Address>(['id', 'country', 'city', 'postCode', 'street']);
+export const addressProps = new GraphSchema<Address>([
+  "id",
+  "country",
+  "city",
+  "postCode",
+  "street",
+]);

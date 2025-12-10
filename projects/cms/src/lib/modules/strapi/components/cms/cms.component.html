@@ -1,15 +1,18 @@
 @if (this.content$ | async; as content) {
-  <ta-loader [isLoading]="this.requestState.isLoading()">
-    <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
-      <ta-empty [isEmpty]="!content">
-        @if (content) {
-          <ta-title>
-            {{ content.Title }}
-          </ta-title>
+<ta-loader [isLoading]="this.requestState.isLoading()">
+  <ta-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
+    <ta-empty [isEmpty]="!content">
+      @if (content) {
+      <ta-title>
+        {{ content.Title }}
+      </ta-title>
 
-          <ta-rich-text [richText]="content.Description"></ta-rich-text>
-        }
-      </ta-empty>
-    </ta-error>
-  </ta-loader>
+      <ta-rich-text [richText]="content.Description"></ta-rich-text>
+      }
+    </ta-empty>
+  </ta-error>
+</ta-loader>
 }

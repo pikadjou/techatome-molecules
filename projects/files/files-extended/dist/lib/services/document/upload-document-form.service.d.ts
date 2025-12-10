@@ -1,5 +1,5 @@
-import { InputBase } from '@ta/form-model';
-import { UploadDocumentData } from './upload-document-data';
+import { InputBase } from "@ta/form-model";
+import { UploadDocumentData } from "./upload-document-data";
 import * as i0 from "@angular/core";
 export declare class UploadDocumentFormService {
     constructor();

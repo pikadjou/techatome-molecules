@@ -1,13 +1,20 @@
-import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
+import { NgFor, NgIf, NgTemplateOutlet } from "@angular/common";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { Validators } from "@angular/forms";
+import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 
-import { LocalStorage } from 'storage-manager-js';
+import { LocalStorage } from "storage-manager-js";
 
-import { SearchFieldComponent } from '@ta/form-input';
-import { InputTextBox } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
+import { SearchFieldComponent } from "@ta/form-input";
+import { InputTextBox } from "@ta/form-model";
+import { FontIconComponent } from "@ta/icons";
 import {
   ContactInformationComponent,
   EmptyComponent,
@@ -15,12 +22,12 @@ import {
   ListElementComponent,
   ListTagComponent,
   ListTitleComponent,
-} from '@ta/ui';
+} from "@ta/ui";
 
 @Component({
-  selector: 'ta-search-history-displayer',
-  templateUrl: './search-history-displayer.component.html',
-  styleUrls: ['./search-history-displayer.component.scss'],
+  selector: "ta-search-history-displayer",
+  templateUrl: "./search-history-displayer.component.html",
+  styleUrls: ["./search-history-displayer.component.scss"],
   standalone: true,
   imports: [
     NgIf,
@@ -45,7 +52,7 @@ export class SearchHistoryDisplayerComponent {
   };
 
   @Input()
-  placeholder: string = '';
+  placeholder: string = "";
 
   @Input()
   isDropDown: boolean = false;
@@ -53,9 +60,9 @@ export class SearchHistoryDisplayerComponent {
   @Output()
   valueCompleted = new EventEmitter();
 
-  @ViewChild('searchField', { read: ElementRef })
+  @ViewChild("searchField", { read: ElementRef })
   searchField: ElementRef | null = null;
-  @ViewChild('searchField', { read: MatMenuTrigger })
+  @ViewChild("searchField", { read: MatMenuTrigger })
   searchTrigger: MatMenuTrigger | null = null;
 
   get searchFieldWidth() {
@@ -63,8 +70,10 @@ export class SearchHistoryDisplayerComponent {
   }
   get listRecentSearches() {
     if (this.searchHistory?.type) {
-      const storedSearches: { research: string }[] = this._getFromLocalStorage(this.searchHistory?.type);
-      const searches: string[] = storedSearches.map(obj => obj.research);
+      const storedSearches: { research: string }[] = this._getFromLocalStorage(
+        this.searchHistory?.type
+      );
+      const searches: string[] = storedSearches.map((obj) => obj.research);
       return searches;
     }
     return null;
@@ -78,22 +87,21 @@ export class SearchHistoryDisplayerComponent {
     if (this.searchHistory?.type) {
       this._saveInLocalStorage(search);
     }
-    this.input.value = '';
+    this.input.value = "";
     this.searchTrigger?.closeMenu();
     this.valueCompleted.emit(search);
     return;
   }
 
   private _getFromLocalStorage(type: string) {
-    return JSON.parse(LocalStorage.get('search-' + type) || '[]');
+    return JSON.parse(LocalStorage.get("search-" + type) || "[]");
   }
 
   private _saveInLocalStorage(searchValue: string) {
     if (this.searchHistory?.type) {
-      let storedSearches: { research: string; storageTime: Date }[] = this._getFromLocalStorage(
-        this.searchHistory?.type
-      );
-      const search = storedSearches.find(s => s.research === searchValue);
+      let storedSearches: { research: string; storageTime: Date }[] =
+        this._getFromLocalStorage(this.searchHistory?.type);
+      const search = storedSearches.find((s) => s.research === searchValue);
       if (search) {
         search.storageTime = new Date();
       } else {
@@ -103,7 +111,10 @@ export class SearchHistoryDisplayerComponent {
         });
       }
       this.orderAndSelect(storedSearches);
-      LocalStorage.set('search-' + this.searchHistory?.type || '', JSON.stringify(storedSearches.slice(0, 5)));
+      LocalStorage.set(
+        "search-" + this.searchHistory?.type || "",
+        JSON.stringify(storedSearches.slice(0, 5))
+      );
     }
   }
 

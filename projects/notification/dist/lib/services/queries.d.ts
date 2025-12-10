@@ -1,4 +1,4 @@
-import { GraphMutationPayload, GraphQueryPayload } from '@ta/server';
+import { GraphMutationPayload, GraphQueryPayload } from "@ta/server";
 export type NotificationFilter = {
     projectId?: string;
     isNew?: boolean | null;

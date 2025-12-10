@@ -1,17 +1,18 @@
 @use "ta/vars";
-@use 'ta/settings/common';
+@use "ta/settings/common";
 
-@use 'ta/utils/mixins/text';
-
+@use "ta/utils/mixins/text";
 
 @mixin font($font-family, $font-folder, $font-name, $font-weight) {
-  $font-path: '/assets/fonts/' + $font-folder + $font-name;
+  $font-path: "/assets/fonts/" + $font-folder + $font-name;
   @font-face {
     font-family: $font-family;
-    src: url($font-path + '.eot');
-    src: local($font-name), url($font-path + '.eot?#iefix') format('embedded-opentype'),
-      url($font-path + '.woff') format('woff'), url($font-path + '.woff2') format('woff2'),
-      url($font-path + '.ttf') format('truetype');
+    src: url($font-path + ".eot");
+    src: local($font-name),
+      url($font-path + ".eot?#iefix") format("embedded-opentype"),
+      url($font-path + ".woff") format("woff"),
+      url($font-path + ".woff2") format("woff2"),
+      url($font-path + ".ttf") format("truetype");
     font-weight: $font-weight;
     font-style: normal;
     font-display: auto;
@@ -34,7 +35,7 @@
 }
 
 @mixin fontSizeHeader($scope, $bold: false) {
-  @include fontSize('', $scope, $bold);
+  @include fontSize("", $scope, $bold);
 }
 
 @mixin fontSizeBody($scope, $bold: false) {
@@ -49,7 +50,7 @@
   @include generateFontHelper();
 
   @include common.generateMap(
-    'font',
+    "font",
     vars.$font,
     (
       fs: font-size,

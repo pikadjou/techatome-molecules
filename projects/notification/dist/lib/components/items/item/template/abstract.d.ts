@@ -1,6 +1,6 @@
-import { TaNotificationDataService } from '../../../../services/data.service';
-import { NotificationDto } from '../../../../services/dto/notification';
-import { TaNotificationSharedService } from '../../../../services/shared.service';
+import { TaNotificationDataService } from "../../../../services/data.service";
+import { NotificationDto } from "../../../../services/dto/notification";
+import { TaNotificationSharedService } from "../../../../services/shared.service";
 import * as i0 from "@angular/core";
 export declare abstract class AbstractNotificationTemplateComponent {
     notification: NotificationDto;

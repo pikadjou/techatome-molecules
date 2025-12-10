@@ -1,21 +1,21 @@
-import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgClass } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { ColorType, TaSizes } from '@ta/styles';
+import { ColorType, TaSizes } from "@ta/styles";
 
 @Component({
-  selector: 'ta-label',
-  templateUrl: './label.component.html',
-  styleUrls: ['./label.component.scss'],
+  selector: "ta-label",
+  templateUrl: "./label.component.html",
+  styleUrls: ["./label.component.scss"],
   standalone: true,
   imports: [NgClass],
 })
 export class LabelComponent {
   @Input()
-  size: TaSizes = 'md';
+  size: TaSizes = "md";
 
   @Input()
-  type: ColorType = 'default';
+  type: ColorType = "default";
 
   public getClass(): string {
     return `label-${this.type} ${this.size}`;

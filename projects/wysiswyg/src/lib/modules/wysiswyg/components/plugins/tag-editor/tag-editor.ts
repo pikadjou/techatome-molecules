@@ -1,5 +1,9 @@
-import { API, BlockToolConstructorOptions, InlineTool } from '@editorjs/editorjs';
-import { MenuConfig } from '@editorjs/editorjs/types/tools';
+import {
+  API,
+  BlockToolConstructorOptions,
+  InlineTool,
+} from "@editorjs/editorjs";
+import { MenuConfig } from "@editorjs/editorjs/types/tools";
 
 type User = { id: string; name: string };
 
@@ -8,13 +12,13 @@ export class TagTool implements InlineTool {
     return true;
   }
   static get shortcut() {
-    return 'CTRL+A';
+    return "CTRL+A";
   }
   static get sanitize() {
     return {
       span: {
-        'class': true,
-        'data-user-id': true,
+        class: true,
+        "data-user-id": true,
       },
     };
   }
@@ -22,12 +26,15 @@ export class TagTool implements InlineTool {
   readonly api: API;
   public users: User[] = [];
 
-  public dropdown = document.createElement('div');
-  public templateTagSpan = document.createElement('span');
+  public dropdown = document.createElement("div");
+  public templateTagSpan = document.createElement("span");
 
   private _currentTagSpan: null | HTMLSpanElement = null;
 
-  constructor({ api, config }: BlockToolConstructorOptions<any, { users: User[] }>) {
+  constructor({
+    api,
+    config,
+  }: BlockToolConstructorOptions<any, { users: User[] }>) {
     this.api = api;
     this.users = config?.users || [];
 
@@ -36,8 +43,8 @@ export class TagTool implements InlineTool {
 
   public render(): MenuConfig {
     return {
-      icon: '@',
-      label: 'Tag',
+      icon: "@",
+      label: "Tag",
       onActivate: () => {
         this._insertTagAtCursor();
       },
@@ -52,7 +59,9 @@ export class TagTool implements InlineTool {
     if (!this._currentTagSpan) {
       return;
     }
-    this._currentTagSpan = this.templateTagSpan.cloneNode(true) as typeof this.templateTagSpan;
+    this._currentTagSpan = this.templateTagSpan.cloneNode(
+      true
+    ) as typeof this.templateTagSpan;
     range.insertNode(this._currentTagSpan);
 
     this._showDropdown();
@@ -66,12 +75,12 @@ export class TagTool implements InlineTool {
     if (!event || !(event instanceof KeyboardEvent)) {
       return;
     }
-    if (event.key === '@') {
+    if (event.key === "@") {
       event.preventDefault(); // Empêche l'insertion du @ par défaut
       this._insertTagAtCursor();
       return;
     }
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       this._cancelTag();
     }
   };
@@ -83,7 +92,9 @@ export class TagTool implements InlineTool {
     const query = text?.slice(1).toLowerCase(); // Supprime le @ et met en minuscule
 
     const filteredUsers =
-      !query || query?.length === 0 ? this.users : this.users.filter(user => user.name.toLowerCase().includes(query));
+      !query || query?.length === 0
+        ? this.users
+        : this.users.filter((user) => user.name.toLowerCase().includes(query));
 
     this._updateDropdown(filteredUsers);
   };
@@ -96,30 +107,40 @@ export class TagTool implements InlineTool {
     }
 
     // Vérifie si le clic n'est PAS sur la dropdown ni sur la mention en cours
-    if (!this.dropdown.contains(event.target as Node) && this._currentTagSpan !== event.target) {
+    if (
+      !this.dropdown.contains(event.target as Node) &&
+      this._currentTagSpan !== event.target
+    ) {
       this._cancelTag();
     }
   };
 
   private _initDOM() {
-    this.templateTagSpan.classList.add('tag-user', 'text-color-text-brand-primary');
-    this.templateTagSpan.dataset['userId'] = '';
-    this.templateTagSpan.textContent = '@';
+    this.templateTagSpan.classList.add(
+      "tag-user",
+      "text-color-text-brand-primary"
+    );
+    this.templateTagSpan.dataset["userId"] = "";
+    this.templateTagSpan.textContent = "@";
 
-    this.dropdown.classList.add('tag-dropdown', 'p-space-sm', 'bxs-shadow-black-sm');
-    this.dropdown.style.position = 'absolute';
-    this.dropdown.style.background = 'white';
-    this.dropdown.style.zIndex = '1000';
-    this.dropdown.style.maxHeight = '150px';
-    this.dropdown.style.overflowY = 'auto';
+    this.dropdown.classList.add(
+      "tag-dropdown",
+      "p-space-sm",
+      "bxs-shadow-black-sm"
+    );
+    this.dropdown.style.position = "absolute";
+    this.dropdown.style.background = "white";
+    this.dropdown.style.zIndex = "1000";
+    this.dropdown.style.maxHeight = "150px";
+    this.dropdown.style.overflowY = "auto";
 
-    const editorDiv = document.body.querySelector('.editor-container');
+    const editorDiv = document.body.querySelector(".editor-container");
     if (editorDiv) {
-      this.api.listeners.on(editorDiv, 'keydown', this.handleKeydown);
-      this.api.listeners.on(editorDiv, 'input', this.handleTyping);
+      this.api.listeners.on(editorDiv, "keydown", this.handleKeydown);
+      this.api.listeners.on(editorDiv, "input", this.handleTyping);
     }
 
-    this.api.listeners.on(document.body, 'click', this.handleOutsideClick);
+    this.api.listeners.on(document.body, "click", this.handleOutsideClick);
   }
   private _insertTagAtCursor() {
     const selection = window.getSelection();
@@ -133,7 +154,9 @@ export class TagTool implements InlineTool {
       return;
     }
 
-    this._currentTagSpan = this.templateTagSpan.cloneNode(true) as typeof this.templateTagSpan;
+    this._currentTagSpan = this.templateTagSpan.cloneNode(
+      true
+    ) as typeof this.templateTagSpan;
 
     range.insertNode(this._currentTagSpan);
     range.setStartAfter(this._currentTagSpan);
@@ -160,24 +183,24 @@ export class TagTool implements InlineTool {
   }
 
   private _updateDropdown(users: User[]) {
-    this.dropdown.innerHTML = '';
+    this.dropdown.innerHTML = "";
 
     if (users.length === 0) {
-      const noResult = document.createElement('div');
-      noResult.textContent = 'Aucun résultat';
-      noResult.style.padding = '5px';
+      const noResult = document.createElement("div");
+      noResult.textContent = "Aucun résultat";
+      noResult.style.padding = "5px";
       this.dropdown.appendChild(noResult);
       return;
     }
 
     users.forEach((user, index) => {
-      const option = document.createElement('div');
+      const option = document.createElement("div");
       option.textContent = user.name;
-      option.style.padding = '5px';
-      option.style.cursor = 'pointer';
-      option.dataset['index'] = index.toString();
+      option.style.padding = "5px";
+      option.style.cursor = "pointer";
+      option.dataset["index"] = index.toString();
 
-      option.addEventListener('click', () => this._selectUser(user));
+      option.addEventListener("click", () => this._selectUser(user));
 
       this.dropdown.appendChild(option);
     });
@@ -190,10 +213,10 @@ export class TagTool implements InlineTool {
 
     // Remplace le contenu du span avec le nom sélectionné
     this._currentTagSpan.textContent = `@${user.name}`;
-    this._currentTagSpan.dataset['userId'] = user.id;
+    this._currentTagSpan.dataset["userId"] = user.id;
 
     // Insère un nœud texte après la tag pour éviter de garder le style
-    const textNode = document.createTextNode('\u00A0'); // Un espace pour éviter que le curseur colle
+    const textNode = document.createTextNode("\u00A0"); // Un espace pour éviter que le curseur colle
     this._currentTagSpan.after(textNode);
 
     // 🔥 Déplace le curseur après la tag pour continuer à écrire normalement
@@ -215,7 +238,7 @@ export class TagTool implements InlineTool {
     }
 
     // Récupère le texte à l'intérieur de la span
-    const textContent = this._currentTagSpan.textContent || '';
+    const textContent = this._currentTagSpan.textContent || "";
 
     // Crée un nœud texte avec le même contenu
     const textNode = document.createTextNode(textContent);

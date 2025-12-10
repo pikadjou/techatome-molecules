@@ -1,17 +1,17 @@
 @if (this.value) {
-  <div class="header">
-    <div class="icon">
-      @if (this.localIcon) {
-        <ta-local-icon class="local-icon" [type]="this.localIcon"></ta-local-icon>
-      } @else if (this.icon) {
-        <ta-font-icon [name]="this.icon" type="sm"></ta-font-icon>
-      }
-    </div>
-
-    <div class="value">
-      <div class="text">{{ this.value | translate }}</div>
-    </div>
+<div class="header">
+  <div class="icon">
+    @if (this.localIcon) {
+    <ta-local-icon class="local-icon" [type]="this.localIcon"></ta-local-icon>
+    } @else if (this.icon) {
+    <ta-font-icon [name]="this.icon" type="sm"></ta-font-icon>
+    }
   </div>
+
+  <div class="value">
+    <div class="text">{{ this.value | translate }}</div>
+  </div>
+</div>
 }
 <div class="content">
   <ng-content></ng-content>

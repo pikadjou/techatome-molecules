@@ -1,5 +1,5 @@
-import { HandleComplexRequest, TaBaseStrapiService } from '@ta/server';
-import { Cms } from './dto/cms';
+import { HandleComplexRequest, TaBaseStrapiService } from "@ta/server";
+import { Cms } from "./dto/cms";
 import * as i0 from "@angular/core";
 export declare class TaCmsService extends TaBaseStrapiService {
     readonly local: string;

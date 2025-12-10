@@ -1,12 +1,17 @@
-import { signal } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { signal } from "@angular/core";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+} from "@angular/forms";
 
-import { Observable, Subject, distinctUntilChanged, of } from 'rxjs';
+import { Observable, Subject, distinctUntilChanged, of } from "rxjs";
 
-import { ENotificationCode } from '@ta/notification';
-import { SubscriberHandler } from '@ta/utils';
+import { ENotificationCode } from "@ta/notification";
+import { SubscriberHandler } from "@ta/utils";
 
-import { InputLabel } from './label';
+import { InputLabel } from "./label";
 
 export interface IInputsError {
   status: ENotificationCode;
@@ -65,18 +70,18 @@ export class InputBase<T> implements IInputBase<T> {
             }
             this.value = value;
           },
-        }),
+        })
       );
     }
 
     this._value.set(options.value === undefined ? null : options.value);
     this.key = options.key || Math.random().toString();
-    this.label = options.label || '';
-    this.type = options.type || '';
-    this.message = options.message || '';
-    this.controlType = options.controlType || '';
+    this.label = options.label || "";
+    this.type = options.type || "";
+    this.message = options.message || "";
+    this.controlType = options.controlType || "";
     this.validators = options.validators || [];
-    this.class = options.class || 'col-12';
+    this.class = options.class || "col-12";
     this.children = [];
     this.disabled = options.disabled === true;
 
@@ -98,7 +103,7 @@ export class InputBase<T> implements IInputBase<T> {
           if (!visible) {
             this.formControl?.setValue(null);
           }
-        }),
+        })
       );
     }
   }
@@ -116,10 +121,12 @@ export class InputBase<T> implements IInputBase<T> {
         this.formControl.disable();
       }
       this._subscriberHandler.registerSubscription(
-        this.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe((value) => {
-          this.value = value;
-          this.launchChangeValue();
-        }),
+        this.formControl.valueChanges
+          .pipe(distinctUntilChanged())
+          .subscribe((value) => {
+            this.value = value;
+            this.launchChangeValue();
+          })
       );
       if (group) {
         group.addControl(this.key, this.formControl);

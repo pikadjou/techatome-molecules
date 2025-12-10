@@ -1,32 +1,36 @@
 <div class="overlay">
   <div class="row user-info">
     <div class="col-5 align-items-center">
-      {{ 'user.language' | translate }}
+      {{ "user.language" | translate }}
     </div>
     <div class="col-7">
-      <ta-input-dropdown [input]="this.language" appStopPropagation [standalone]="true"></ta-input-dropdown>
+      <ta-input-dropdown
+        [input]="this.language"
+        appStopPropagation
+        [standalone]="true"
+      ></ta-input-dropdown>
     </div>
   </div>
 
   @if (this.authService.isAuthenticated$ | async) {
-    <div class="row user-info">
-      <div class="col-2">
-        <ta-trigram [value]="this.getFirstLetter"></ta-trigram>
-      </div>
-      <div class="col">
-        <div class="title">{{ (this.authService.user$ | async)?.name }}</div>
-        @if (this.roles.length > 0) {
-          <div class="subtitle">
-            {{ this.roles | join }}
-          </div>
-        }
-      </div>
+  <div class="row user-info">
+    <div class="col-2">
+      <ta-trigram [value]="this.getFirstLetter"></ta-trigram>
     </div>
+    <div class="col">
+      <div class="title">{{ (this.authService.user$ | async)?.name }}</div>
+      @if (this.roles.length > 0) {
+      <div class="subtitle">
+        {{ this.roles | join }}
+      </div>
+      }
+    </div>
+  </div>
 
-    <div class="row user-info">
-      <ta-button type="secondary" (action)="this.logout()">
-        {{ 'user.logout' | translate }}
-      </ta-button>
-    </div>
+  <div class="row user-info">
+    <ta-button type="secondary" (action)="this.logout()">
+      {{ "user.logout" | translate }}
+    </ta-button>
+  </div>
   }
 </div>

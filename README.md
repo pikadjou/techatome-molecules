@@ -39,7 +39,7 @@ ng g lib [LibName]
 - Dest to
 
 ```yaml
-'dest': 'dist'
+"dest": "dist"
 ```
 
 ## Change package.json from new lib
@@ -47,15 +47,15 @@ ng g lib [LibName]
 - Change "name" attribute to
 
 ```yaml
-'name': '@ta/[LibName]'
+"name": "@ta/[LibName]"
 ```
 
 - Add
 
 ```yaml
-'scripts': {
-    'build': 'ng build @ta/[LibName]', # Command to compile this particular lib
-    'postpublish': 'rm -rf dist/',
+"scripts": {
+    "build": "ng build @ta/[LibName]", # Command to compile this particular lib
+    "postpublish": "rm -rf dist/",
   }
 ```
 
@@ -64,23 +64,23 @@ ng g lib [LibName]
 Change
 
 ```yaml
-'[LibName]': {}
+"[LibName]": {}
 ```
 
 to
 
 ```yaml
-'@ta/[LibName]': {}
+"@ta/[LibName]": {}
 ```
 
 ## Change in tsconfig
 
 ```yaml
-'[LibName]': ['projects/[LibName]/dist']
+"[LibName]": ["projects/[LibName]/dist"]
 ```
 
 to
 
 ```yaml
-'@ta/[LibName]': ['projects/[LibName]/dist']
+"@ta/[LibName]": ["projects/[LibName]/dist"]
 ```

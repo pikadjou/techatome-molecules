@@ -1,5 +1,9 @@
 <ta-input-layout [input]="this.input">
-  <div class="input-group" [class.isDeployed]="this.isDeployed" [class.focus]="this.focusTextBox">
+  <div
+    class="input-group"
+    [class.isDeployed]="this.isDeployed"
+    [class.focus]="this.focusTextBox"
+  >
     <div class="search-div" appStopPropagation (click)="this.iconClicked()">
       <div class="action">
         <ta-font-icon name="search" size="xs"></ta-font-icon>

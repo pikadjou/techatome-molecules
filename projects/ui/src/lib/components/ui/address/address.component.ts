@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input } from "@angular/core";
 
 export interface Address {
   id: string;
@@ -11,9 +11,9 @@ export interface Address {
 }
 
 @Component({
-  selector: 'ta-address',
-  templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss'],
+  selector: "ta-address",
+  templateUrl: "./address.component.html",
+  styleUrls: ["./address.component.scss"],
   standalone: true,
 })
 export class AddressComponent {

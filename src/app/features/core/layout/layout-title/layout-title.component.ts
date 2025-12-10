@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
   standalone: true,
-  selector: 'app-layout-title',
+  selector: "app-layout-title",
   imports: [],
-  templateUrl: './layout-title.component.html',
-  styleUrl: './layout-title.component.scss'
+  templateUrl: "./layout-title.component.html",
+  styleUrl: "./layout-title.component.scss",
 })
-export class LayoutTitleComponent {
-
-}
+export class LayoutTitleComponent {}

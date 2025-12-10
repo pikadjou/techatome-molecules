@@ -1,4 +1,4 @@
-import { EFileExtension } from '../types/files/file-extension';
+import { EFileExtension } from "../types/files/file-extension";
 export declare const getFileExtension: (filePath: string) => EFileExtension;
 export declare const getFullFileNameFromUrl: (url: string) => string | null;
 export declare const trigram: (name: string | null | undefined) => string;

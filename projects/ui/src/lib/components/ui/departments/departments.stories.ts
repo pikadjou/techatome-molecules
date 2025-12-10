@@ -1,30 +1,32 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { DepartmentsComponent } from './departments.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { DepartmentsComponent } from "./departments.component";
 
 export default {
-  title: 'UI/Department/basic',
+  title: "UI/Department/basic",
   component: DepartmentsComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   args: {
     departments: [
       {
         id: 0,
-        name: 'BUREAU',
-        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/Renoenergy_icones_bic.png',
+        name: "BUREAU",
+        iconPath:
+          "https://rgroupstorage.blob.core.windows.net/prod/Renoenergy_icones_bic.png",
       },
       {
         id: 0,
-        name: 'HVAC',
-        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/Chauffage%20et%20cliu%CC%80.png',
+        name: "HVAC",
+        iconPath:
+          "https://rgroupstorage.blob.core.windows.net/prod/Chauffage%20et%20cliu%CC%80.png",
       },
       {
         id: 0,
-        name: 'PVELEC',
-        iconPath: 'https://rgroupstorage.blob.core.windows.net/prod/PVO.png',
+        name: "PVELEC",
+        iconPath: "https://rgroupstorage.blob.core.windows.net/prod/PVO.png",
       },
     ],
-    professions: ['Eleveur de moules', 'Conducteur de pouce-pouce'],
+    professions: ["Eleveur de moules", "Conducteur de pouce-pouce"],
   },
 } as Meta<DepartmentsComponent>;
 

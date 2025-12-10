@@ -1,5 +1,5 @@
-import { AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { AfterViewInit, OnChanges, SimpleChanges } from "@angular/core";
+import { MatDrawer } from "@angular/material/sidenav";
 import * as i0 from "@angular/core";
 export declare class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
     open: boolean;

@@ -1,13 +1,13 @@
 {
-  "type": {
-    "success": "Succès",
-    "error": "Erreur",
-    "warning": "Avertissement",
-    "info": "Information"
-  },
-  "action": {
-    "close": "Fermer",
-    "dismiss": "Ignorer",
-    "viewDetails": "Voir les détails"
-  }
+  "type.success": "Succès",
+  "type.error": "Erreur",
+  "type.warning": "Avertissement",
+  "type.info": "Information",
+  "action.close": "Fermer",
+  "action.dismiss": "Ignorer",
+  "action.viewDetails": "Voir les détails",
+  "notification.inline.label.error": "Erreur",
+  "notification.inline.label.info": "Information",
+  "notification.inline.label.success": "Succès",
+  "notification.inline.label.warning": "Avertissement"
 }

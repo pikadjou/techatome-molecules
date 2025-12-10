@@ -1,13 +1,13 @@
-import { Meta } from '@storybook/angular';
-import { TextToClipboardComponent } from './text-to-clipboard.component';
+import { Meta } from "@storybook/angular";
+import { TextToClipboardComponent } from "./text-to-clipboard.component";
 
 type StoryType = TextToClipboardComponent;
 
 export default {
-  title: 'CORE/TextToClipboard',
+  title: "CORE/TextToClipboard",
   component: TextToClipboardComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -17,6 +17,6 @@ export default {
     };
   },
   args: {
-    value: 'ClipBoard value',
+    value: "ClipBoard value",
   },
 } as Meta<StoryType>;

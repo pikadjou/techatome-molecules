@@ -1,10 +1,13 @@
 <div class="input-image-container">
   @if (this.tempFiles.files.length > 0) {
-    <ta-files-list [files]="this.tempFiles.files"></ta-files-list>
-    <hr />
+  <ta-files-list [files]="this.tempFiles.files"></ta-files-list>
+  <hr />
   }
 
-  <ta-files-list [files]="(this.getPics$() | async) || []" (fileSelected)="this.onFileSelected($event)">
+  <ta-files-list
+    [files]="(this.getPics$() | async) || []"
+    (fileSelected)="this.onFileSelected($event)"
+  >
   </ta-files-list>
 
   <div class="cta-container">

@@ -1,6 +1,6 @@
-import { TaIconType } from '@ta/icons';
+import { TaIconType } from "@ta/icons";
 
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export interface IInputTextBox<T> extends IInputBase<T> {
   type?: string;
@@ -9,13 +9,13 @@ export interface IInputTextBox<T> extends IInputBase<T> {
 }
 
 export class InputTextBox<T = string> extends InputBase<T> {
-  override controlType = 'textbox';
+  override controlType = "textbox";
   icon?: TaIconType | null;
   iconClicked?: () => void;
 
   constructor(options: IInputTextBox<T> = {}) {
     super(options);
-    this.type = options.type || 'text';
+    this.type = options.type || "text";
     this.icon = options.icon || null;
     this.iconClicked = options.iconClicked;
   }

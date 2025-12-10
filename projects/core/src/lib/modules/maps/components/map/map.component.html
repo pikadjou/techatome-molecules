@@ -1,12 +1,12 @@
 <google-map #map [options]="this.options">
   @for (marker of this.markers; track marker.position) {
-    <map-marker
-      #mapMarker="mapMarker"
-      [position]="marker.position"
-      [title]="marker.title"
-      [options]="marker.options"
-      (mapClick)="this.openInfoWindow(mapMarker)"
-    ></map-marker>
+  <map-marker
+    #mapMarker="mapMarker"
+    [position]="marker.position"
+    [title]="marker.title"
+    [options]="marker.options"
+    (mapClick)="this.openInfoWindow(mapMarker)"
+  ></map-marker>
   }
 
   <map-info-window>
@@ -15,22 +15,22 @@
 </google-map>
 
 @if (this.routeSummary) {
-  <div>
-    <h3>Résumé du trajet</h3>
-    <p>
-      Distance : {{ this.routeSummary.distanceKm }} km<br />
-      Durée estimée : {{ this.routeSummary.duration }}
-    </p>
-  </div>
-}
-
-@if (routeDetails().length > 0) {
-  <div>
-    <h3>Détails du trajet</h3>
-    <ul>
-      @for (step of routeDetails(); track step) {
-        <li>{{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}</li>
-      }
-    </ul>
-  </div>
+<div>
+  <h3>Résumé du trajet</h3>
+  <p>
+    Distance : {{ this.routeSummary.distanceKm }} km<br />
+    Durée estimée : {{ this.routeSummary.duration }}
+  </p>
+</div>
+} @if (routeDetails().length > 0) {
+<div>
+  <h3>Détails du trajet</h3>
+  <ul>
+    @for (step of routeDetails(); track step) {
+    <li>
+      {{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}
+    </li>
+    }
+  </ul>
+</div>
 }

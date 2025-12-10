@@ -2,18 +2,17 @@
 
 <div class="guard">
   @if (isValid) {
-    <div class="guard-valid">
-      <ng-content></ng-content>
-    </div>
-  }
-  @if (!isValid && this.canDisplayErrorMessage) {
-    <div class="guard-no-valid ta-c">
-      <ta-font-icon name="close-tool" size="md"></ta-font-icon>
-      {{ 'container.guard.content' | translate }}
+  <div class="guard-valid">
+    <ng-content></ng-content>
+  </div>
+  } @if (!isValid && this.canDisplayErrorMessage) {
+  <div class="guard-no-valid ta-c">
+    <ta-font-icon name="close-tool" size="md"></ta-font-icon>
+    {{ "user.guard.content" | translate }}
 
-      @if (this.level === 'authenticated') {
-        <ta-button (action)="this.goToLogin()"> Me connecter </ta-button>
-      }
-    </div>
+    @if (this.level === 'authenticated') {
+    <ta-button (action)="this.goToLogin()"> Me connecter </ta-button>
+    }
+  </div>
   }
 </div>

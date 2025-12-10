@@ -1,4 +1,4 @@
-import { TaSizes } from '@ta/styles';
+import { TaSizes } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class BooleanIconComponent {
     /**

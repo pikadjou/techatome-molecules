@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-selector: 'ta-layout-title',
-  templateUrl: './layout-title.component.html',
-  styleUrls: ['./layout-title.component.scss'],
+  selector: "ta-layout-title",
+  templateUrl: "./layout-title.component.html",
+  styleUrls: ["./layout-title.component.scss"],
   standalone: true,
 })
 export class LayoutTitleComponent {}

@@ -1,11 +1,11 @@
 @use "ta/vars";
-@use 'ta/settings/common';
+@use "ta/settings/common";
 
-@use 'ta/utils/mixins/common' as utils-common;
-@use 'ta/utils/mixins/shadows';
+@use "ta/utils/mixins/common" as utils-common;
+@use "ta/utils/mixins/shadows";
 
 @mixin generateComponents() {
-  @include common.generateMap('components', vars.$components);
+  @include common.generateMap("components", vars.$components);
 
   /* width */
   ::-webkit-scrollbar {

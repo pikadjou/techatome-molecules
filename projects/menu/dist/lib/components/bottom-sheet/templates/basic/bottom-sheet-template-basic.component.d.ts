@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
-import { BottomSheetData } from '../../../../models/bottom/bottom-sheet-data';
+import { Observable } from "rxjs";
+import { BottomSheetData } from "../../../../models/bottom/bottom-sheet-data";
 import * as i0 from "@angular/core";
 export interface BottomSheetTemplateBasicParams {
-    orientation: 'horizontal' | 'vertical';
+    orientation: "horizontal" | "vertical";
     menu$: Observable<BottomSheetData[]>;
 }
 export declare class BottomSheetTemplateBasicComponent {

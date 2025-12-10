@@ -1,4 +1,4 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .layout-title {
   background: common.get-var(surface, primary);
@@ -12,8 +12,10 @@
   .title-content {
     max-width: 1200px;
     margin: 0 auto;
-    
-    h1, h2, ta-title {
+
+    h1,
+    h2,
+    ta-title {
       margin: 0;
       color: common.get-var(text, primary);
       font-weight: 600;
@@ -34,9 +36,11 @@
 
   @media (max-width: 768px) {
     padding: common.get-var(space, md);
-    
+
     .title-content {
-      h1, h2, ta-title {
+      h1,
+      h2,
+      ta-title {
         font-size: common.get-var(font-size, lg);
       }
     }

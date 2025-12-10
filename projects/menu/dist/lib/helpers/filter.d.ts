@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Menu, MenuBase } from '../models/public-api';
+import { BehaviorSubject, Observable } from "rxjs";
+import { Menu, MenuBase } from "../models/public-api";
 export declare class FilterHelper {
     refresh$: BehaviorSubject<string>;
     get filter(): string;

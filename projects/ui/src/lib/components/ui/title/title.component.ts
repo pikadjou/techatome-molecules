@@ -1,12 +1,12 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, Input, input } from '@angular/core';
+import { NgClass, NgTemplateOutlet } from "@angular/common";
+import { Component, Input, input } from "@angular/core";
 
-import { FontIconComponent } from '@ta/icons';
+import { FontIconComponent } from "@ta/icons";
 
 @Component({
-  selector: 'ta-title',
-  templateUrl: './title.component.html',
-  styleUrls: ['./title.component.scss'],
+  selector: "ta-title",
+  templateUrl: "./title.component.html",
+  styleUrls: ["./title.component.scss"],
   standalone: true,
   imports: [NgClass, NgTemplateOutlet, FontIconComponent],
 })

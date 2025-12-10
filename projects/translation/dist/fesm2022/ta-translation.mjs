@@ -17,15 +17,15 @@ class TaTranslationRegistryService {
         this.newRegistrationSubscription$.next(null);
     }
     getTranslations(lang) {
-        return this.registered.map(r => r.getTranslation(lang));
+        return this.registered.map((r) => r.getTranslation(lang));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationRegistryService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationRegistryService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationRegistryService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationRegistryService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [] });
 
@@ -54,11 +54,11 @@ class TaAbstractTranslationModule {
     }
 }
 
-const TRANSLATION_CONFIG = 'config_translation';
+const TRANSLATION_CONFIG = "config_translation";
 class TaTranslationService {
     constructor(_config = {
-        default: 'fr',
-        supportedLanguages: ['fr'],
+        default: "fr",
+        supportedLanguages: ["fr"],
     }) {
         this._config = _config;
         this.translateService = inject(TranslateService);
@@ -66,8 +66,11 @@ class TaTranslationService {
         // this language will be used as a fallback when a translation isn't found in the current language
         this.translateService.setDefaultLang(this._config.default);
         // the lang to use, if the lang isn't available, it will use the current loader to get them
-        let lang = SessionStorage.get('lang') ?? this.translateService.getBrowserLang() ?? this._config.default;
-        if (!lang || !this._config.supportedLanguages.find(langId => langId === lang)) {
+        let lang = SessionStorage.get("lang") ??
+            this.translateService.getBrowserLang() ??
+            this._config.default;
+        if (!lang ||
+            !this._config.supportedLanguages.find((langId) => langId === lang)) {
             lang = this._config.default;
         }
         this.translateService.use(lang);
@@ -76,17 +79,20 @@ class TaTranslationService {
         // tap(data => console.log('reload lang', data))
         )
             .subscribe({
-            next: translations => this.translateService.onTranslationChange.emit({ lang: this.translateService.currentLang, translations }),
+            next: (translations) => this.translateService.onTranslationChange.emit({
+                lang: this.translateService.currentLang,
+                translations,
+            }),
         });
         this.translateService.onLangChange.subscribe(({ lang }) => {
-            if (!SessionStorage.has('lang')) {
-                SessionStorage.set('lang', lang);
+            if (!SessionStorage.has("lang")) {
+                SessionStorage.set("lang", lang);
                 return;
             }
-            if (lang === SessionStorage.get('lang')) {
+            if (lang === SessionStorage.get("lang")) {
                 return;
             }
-            SessionStorage.set('lang', lang);
+            SessionStorage.set("lang", lang);
             location.reload();
         });
     }
@@ -101,12 +107,12 @@ class TaTranslationService {
         return this.translateService.use(lang);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, deps: [{ token: TRANSLATION_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Optional
@@ -115,10 +121,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     args: [TRANSLATION_CONFIG]
                 }] }] });
 
-const props$1 = ['key'];
+const props$1 = ["key"];
 const featureProps = new GraphSchema(props$1.concat(baseStrapiProps));
 
-const props = ['key', 'feature', 'value'];
+const props = ["key", "feature", "value"];
 const translationProps = new GraphSchema(props.concat(baseStrapiProps));
 
 function GET_TRANSLATIONS(locale, feature) {
@@ -127,10 +133,10 @@ function GET_TRANSLATIONS(locale, feature) {
         query: Apollo_gql `
       query Translations($locale: I18NLocaleCode!, $filters: TranslationFiltersInput!) {
         translations(locale: $locale, filters: $filters, pagination: { pageSize: 50000 }) {
-          ${translationProps.get('key')}
-          ${translationProps.get('value')}
-          ${translationProps.get('feature')} {
-            ${featureProps.get('key')}
+          ${translationProps.get("key")}
+          ${translationProps.get("value")}
+          ${translationProps.get("feature")} {
+            ${featureProps.get("key")}
           }
         }
       }
@@ -147,8 +153,8 @@ var TranslationSourceType;
     TranslationSourceType["GRAPHQL"] = "graphql";
     TranslationSourceType["FILE"] = "file";
 })(TranslationSourceType || (TranslationSourceType = {}));
-const TRANSLATION_SOURCE_CONFIG = new InjectionToken('TRANSLATION_SOURCE_CONFIG', {
-    providedIn: 'root',
+const TRANSLATION_SOURCE_CONFIG = new InjectionToken("TRANSLATION_SOURCE_CONFIG", {
+    providedIn: "root",
     factory: () => ({
         type: TranslationSourceType.GRAPHQL,
     }),
@@ -163,7 +169,7 @@ class TaLazyTranslationService extends TaBaseStrapiService {
         this._registry = inject(TaTranslationRegistryService);
         this._sourceConfig = inject(TRANSLATION_SOURCE_CONFIG);
         this._http = inject(HttpClient);
-        this._id = '';
+        this._id = "";
         this._isApp = false;
         this._id = id;
         this._isApp = isApp;
@@ -177,10 +183,11 @@ class TaLazyTranslationService extends TaBaseStrapiService {
             ? this._getTranslationsFromFile(lang)
             : this._getTranslationsFromGraphQL(lang);
         return source$.pipe(map((translations) => translations.reduce((acc, translation) => {
-            acc[(this._isApp ? '' : this._id + '.') + translation.key.trim()] = translation.value;
+            acc[(this._isApp ? "" : this._id + ".") + translation.key.trim()] =
+                translation.value;
             return acc;
         }, {})), map((translations) => Object.entries(translations).reduce((acc, [key, value]) => {
-            const keys = key.split('.');
+            const keys = key.split(".");
             keys.reduce((current, k, index) => {
                 if (index === keys.length - 1) {
                     current[k] = value;
@@ -194,13 +201,15 @@ class TaLazyTranslationService extends TaBaseStrapiService {
         }, {})));
     }
     _getTranslationsFromFile(lang) {
-        return this._http.get(`${this._sourceConfig.filePath}${this._id}/${lang}.json`).pipe(map((jsonData) => Object.entries(jsonData).map(([key, value]) => ({
+        return this._http
+            .get(`${this._sourceConfig.filePath}${this._id}/${lang}.json`)
+            .pipe(map((jsonData) => Object.entries(jsonData).map(([key, value]) => ({
             key,
             value,
         }))));
     }
     _getTranslationsFromGraphQL(lang) {
-        return this._strapiService.fetchQueryList$(GET_TRANSLATIONS(lang, this._id), 'translations');
+        return this._strapiService.fetchQueryList$(GET_TRANSLATIONS(lang, this._id), "translations");
     }
 }
 
@@ -209,7 +218,7 @@ class TaTranslationLoader {
         this.registry = inject(TaTranslationRegistryService);
     }
     getTranslation(lang) {
-        return forkJoin([...this.registry.getTranslations(lang)]).pipe(map(translations => translations.reduce((acc, translation) => {
+        return forkJoin([...this.registry.getTranslations(lang)]).pipe(map((translations) => translations.reduce((acc, translation) => {
             if (!translation) {
                 return acc;
             }
@@ -224,7 +233,7 @@ class TaTranslationLoader {
      * @param item Object
      */
     _isObject(item) {
-        return !!(item && typeof item === 'object' && !Array.isArray(item));
+        return !!(item && typeof item === "object" && !Array.isArray(item));
     }
     /**
      * Deep merge two objects.

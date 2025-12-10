@@ -1,19 +1,19 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AsyncPipe, NgIf } from "@angular/common";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
-import { map } from 'rxjs';
+import { map } from "rxjs";
 
-import { FileListComponent } from '@ta/files-basic';
-import { DualButtonComponent } from '@ta/ui';
-import { FileData, TaBaseModal, TemporaryFile, pickImages } from '@ta/utils';
+import { FileListComponent } from "@ta/files-basic";
+import { DualButtonComponent } from "@ta/ui";
+import { FileData, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
 
-import { DialogData } from '../input-images.component';
+import { DialogData } from "../input-images.component";
 
 @Component({
-  selector: '',
-  styleUrls: ['./input-images-modal.component.scss'],
-  templateUrl: './input-images-modal.component.html',
+  selector: "",
+  styleUrls: ["./input-images-modal.component.scss"],
+  templateUrl: "./input-images-modal.component.html",
   standalone: true,
   imports: [NgIf, AsyncPipe, FileListComponent, DualButtonComponent],
 })
@@ -29,20 +29,22 @@ export class InputImageModal extends TaBaseModal implements OnInit {
   ) {
     super();
 
-    this.dialogRef.addPanelClass(['full-screen-modal', 'forced']);
+    this.dialogRef.addPanelClass(["full-screen-modal", "forced"]);
     this.selection = this.data.selection;
   }
 
   ngOnInit() {
     if (this.data.input.files$) {
-      this._registerSubscription(this.data.input.files$.subscribe(() => this.tempFiles.removeAll()));
+      this._registerSubscription(
+        this.data.input.files$.subscribe(() => this.tempFiles.removeAll())
+      );
     }
   }
 
   public getPics$() {
     return this.data.input.files$?.pipe(
-      map(files =>
-        files.map(file => ({
+      map((files) =>
+        files.map((file) => ({
           ...file,
           isSelected: this.selection.includes(file.url),
         }))
@@ -51,7 +53,7 @@ export class InputImageModal extends TaBaseModal implements OnInit {
   }
   public onFileSelected(file: FileData) {
     if (this.selection.includes(file.url)) {
-      this.selection = this.selection.filter(url => file.url !== url);
+      this.selection = this.selection.filter((url) => file.url !== url);
       return;
     }
     this.selection = [...this.selection, file.url];

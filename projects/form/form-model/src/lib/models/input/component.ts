@@ -1,11 +1,11 @@
-import { TemplateRef } from '@angular/core';
+import { TemplateRef } from "@angular/core";
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
-import { TaIconType } from '@ta/icons';
-import { Logger } from '@ta/server';
+import { TaIconType } from "@ta/icons";
+import { Logger } from "@ta/server";
 
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export type TypeComponentInputToken = {
   selectedValue$: Subject<string>;
@@ -16,7 +16,7 @@ export interface IInputComponent<T> extends IInputBase<T> {
 }
 
 export class InputComponent extends InputBase<string> {
-  override controlType = 'component';
+  override controlType = "component";
   icon?: TaIconType | null;
   template?: TemplateRef<TypeComponentInputToken>;
 
@@ -28,12 +28,12 @@ export class InputComponent extends InputBase<string> {
     this.template = options.template;
 
     if (!this.template) {
-      Logger.LogError('No template for InputComponent');
+      Logger.LogError("No template for InputComponent");
     }
 
     this._subscriberHandler.registerSubscription(
       this.selectedValue$.subscribe({
-        next: value => (this.value = value),
+        next: (value) => (this.value = value),
       })
     );
   }

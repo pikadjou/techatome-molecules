@@ -1,8 +1,8 @@
-import { TaBaseComponent } from '@ta/utils';
-import { MenuAction } from '../../models/menu/item/action';
-import { MenuBase } from '../../models/menu/item/base';
-import { MenuIcon } from '../../models/menu/item/icon';
-import { Menu } from '../../models/menu/menu';
+import { TaBaseComponent } from "@ta/utils";
+import { MenuAction } from "../../models/menu/item/action";
+import { MenuBase } from "../../models/menu/item/base";
+import { MenuIcon } from "../../models/menu/item/icon";
+import { Menu } from "../../models/menu/menu";
 import * as i0 from "@angular/core";
 export declare class ContextMenuComponent extends TaBaseComponent {
     menu: Menu;

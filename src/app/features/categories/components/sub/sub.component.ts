@@ -1,11 +1,18 @@
-import { Component, inject, Input, OnChanges, signal, ChangeDetectionStrategy } from '@angular/core';
-import { CategoriesService } from '../../../../services/categories/categories.service';
-import { TaBaseComponent } from '@ta/utils';
-import { TaRoutes } from '@ta/menu';
-import { EDocumentsRoute } from '../../../documents/documents.routes';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Category } from '../../../../services/categories/dto/category';
-import { ECategoriesRoute, FormKey } from '../../categories.routes';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  signal,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { CategoriesService } from "../../../../services/categories/categories.service";
+import { TaBaseComponent } from "@ta/utils";
+import { TaRoutes } from "@ta/menu";
+import { EDocumentsRoute } from "../../../documents/documents.routes";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Category } from "../../../../services/categories/dto/category";
+import { ECategoriesRoute, FormKey } from "../../categories.routes";
 import {
   CardComponent,
   CardContentComponent,
@@ -17,20 +24,20 @@ import {
   TaButtonComponent,
   TaTextComponent,
   TitleComponent,
-} from '@ta/ui';
-import { MatIcon } from '@angular/material/icon';
-import { combineLatest, Observable } from 'rxjs';
-import { DatePipe } from '@angular/common';
-import { Document } from '../../../../services/documents/dto/document';
-import { DocumentsService } from '../../../../services/documents/documents.service';
-import { ENotificationCode, TaNotificationService } from '@ta/notification';
-import { CategoryListComponent } from '../category-list/category-list.component';
-import { DocumentListComponent } from '../document-list/document-list.component';
-import { ErrorHandlerService } from '../../../../services/shared/error-handler.service';
+} from "@ta/ui";
+import { MatIcon } from "@angular/material/icon";
+import { combineLatest, Observable } from "rxjs";
+import { DatePipe } from "@angular/common";
+import { Document } from "../../../../services/documents/dto/document";
+import { DocumentsService } from "../../../../services/documents/documents.service";
+import { ENotificationCode, TaNotificationService } from "@ta/notification";
+import { CategoryListComponent } from "../category-list/category-list.component";
+import { DocumentListComponent } from "../document-list/document-list.component";
+import { ErrorHandlerService } from "../../../../services/shared/error-handler.service";
 
 @Component({
   standalone: true,
-  selector: 'app-category-sub',
+  selector: "app-category-sub",
   imports: [
     TaButtonComponent,
     TitleComponent,
@@ -45,8 +52,8 @@ import { ErrorHandlerService } from '../../../../services/shared/error-handler.s
     TaTextComponent,
     DatePipe,
   ],
-  templateUrl: './sub.component.html',
-  styleUrl: './sub.component.scss',
+  templateUrl: "./sub.component.html",
+  styleUrl: "./sub.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubComponent extends TaBaseComponent implements OnChanges {
@@ -70,32 +77,40 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
 
   public selected(catId: string | null) {
     this._router.navigateByUrl(
-      TaRoutes.getAbsoluteUrl([ECategoriesRoute.categories, ECategoriesRoute.list], { id: catId ?? 'all' }),
+      TaRoutes.getAbsoluteUrl(
+        [ECategoriesRoute.categories, ECategoriesRoute.list],
+        { id: catId ?? "all" }
+      )
     );
   }
   public goToDoc(id: string) {
-    this._router.navigateByUrl(TaRoutes.getAbsoluteUrl([EDocumentsRoute.documents, EDocumentsRoute.view], { id }));
+    this._router.navigateByUrl(
+      TaRoutes.getAbsoluteUrl(
+        [EDocumentsRoute.documents, EDocumentsRoute.view],
+        { id }
+      )
+    );
   }
   public add(cat: Category | null) {
     this._router.navigateByUrl(
       TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>(
         [ECategoriesRoute.categories, ECategoriesRoute.form],
         {
-          id: 'new',
+          id: "new",
         },
-        cat?.documentId ? { parentId: cat.documentId } : null,
-      ),
+        cat?.documentId ? { parentId: cat.documentId } : null
+      )
     );
   }
 
-  public update(cat: Category ) {
+  public update(cat: Category) {
     this._router.navigateByUrl(
       TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>(
         [ECategoriesRoute.categories, ECategoriesRoute.form],
         {
-          id: cat.documentId ?? '',
-        },
-      ),
+          id: cat.documentId ?? "",
+        }
+      )
     );
   }
   public delete() {
@@ -103,12 +118,22 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
     this.categoriesService.deleteCategory$(this.id).subscribe({
       complete: () => {
         this.requestState.completed();
-        this._errorHandler.handleSuccess({ operation: 'delete', entity: 'category' });
-        this.selected(this.categoriesService.category.get(this.id)?.parent?.documentId ?? null);
+        this._errorHandler.handleSuccess({
+          operation: "delete",
+          entity: "category",
+        });
+        this.selected(
+          this.categoriesService.category.get(this.id)?.parent?.documentId ??
+            null
+        );
       },
       error: (error: HttpErrorResponse) => {
         this.requestState.onError(error.status, error.statusText);
-        this._errorHandler.handleError(error, { operation: 'delete', entity: 'category', id: this.id });
+        this._errorHandler.handleError(error, {
+          operation: "delete",
+          entity: "category",
+          id: this.id,
+        });
       },
     });
   }
@@ -118,9 +143,10 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
       TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>(
         [EDocumentsRoute.documents, EDocumentsRoute.form],
         {
-          id: 'new',
+          id: "new",
         },
-        cat?.documentId ? { parentId: cat.documentId } : null),
+        cat?.documentId ? { parentId: cat.documentId } : null
+      )
     );
   }
 
@@ -139,7 +165,11 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
       },
       error: (error: HttpErrorResponse) => {
         this.requestState.onError(error.status, error.statusText);
-        this._errorHandler.handleError(error, { operation: 'fetch', entity: 'category', id: this.id });
+        this._errorHandler.handleError(error, {
+          operation: "fetch",
+          entity: "category",
+          id: this.id,
+        });
       },
     });
   }

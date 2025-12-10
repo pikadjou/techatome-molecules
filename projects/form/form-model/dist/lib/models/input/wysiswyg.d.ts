@@ -1,5 +1,5 @@
-import { WysiswgBlockData } from '@ta/wysiswyg';
-import { IInputBase, InputBase } from './base';
+import { WysiswgBlockData } from "@ta/wysiswyg";
+import { IInputBase, InputBase } from "./base";
 export interface IWysiswyg extends IInputBase<WysiswgBlockData[]> {
     stringValue?: string | null;
 }

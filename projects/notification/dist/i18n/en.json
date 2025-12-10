@@ -1,13 +1,13 @@
 {
-  "type": {
-    "success": "Success",
-    "error": "Error",
-    "warning": "Warning",
-    "info": "Information"
-  },
-  "action": {
-    "close": "Close",
-    "dismiss": "Dismiss",
-    "viewDetails": "View details"
-  }
+  "type.success": "Success",
+  "type.error": "Error",
+  "type.warning": "Warning",
+  "type.info": "Information",
+  "action.close": "Close",
+  "action.dismiss": "Dismiss",
+  "action.viewDetails": "View details",
+  "notification.inline.label.error": "Error",
+  "notification.inline.label.info": "Info",
+  "notification.inline.label.success": "Success",
+  "notification.inline.label.warning": "Warning"
 }

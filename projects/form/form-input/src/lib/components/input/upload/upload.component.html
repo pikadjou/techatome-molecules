@@ -1,65 +1,91 @@
 <ta-loader [isLoading]="this.requestState.isLoading()">
-  <div class="upload-container flex-column" appDnd (fileDropped)="this.onFileDropped($event)">
+  <div
+    class="upload-container flex-column"
+    appDnd
+    (fileDropped)="this.onFileDropped($event)"
+  >
     <div class="flex-responsive-ctr g-space-md">
       @if (this.inProgressFiles.length > 0) {
-        <div class="files-list flex-column g-space-sm">
-          @for (item of this.inProgressFiles; track item) {
-            <div class="flex-column">
-              <div class="flex-row align-center">
-                <ta-font-icon name="doc" size="xs"></ta-font-icon>
-                @if (item.progress < 100) {
-                  <ta-text class="name" size="sm">
-                    {{ item.name }}
-                  </ta-text>
-                } @else if (item.progress === 100 && item.completed) {
-                  <ta-link class="name" (action)="this.openDocument(item.completed)" size="sm">{{ item.name }}</ta-link>
-                }
-              </div>
-              <div class="extra flex-row g-space-md">
-                @if (item.progress < 100) {
-                  <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
-                  <ta-link (action)="this.deleteInProgressFile(item.name)" [underline]="false">
-                    <ta-font-icon name="close" type="sm"></ta-font-icon>
-                  </ta-link>
-                } @else if (item.progress === 100 && item.completed) {
-                  <ta-text size="sm" class="justify-end">
-                    <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
-                  </ta-text>
-                  @if (item.completed.id) {
-                    <ta-link (action)="this.deleteFile(item.completed.id)" [underline]="false">
-                      <ta-font-icon name="close" type="sm"></ta-font-icon>
-                    </ta-link>
-                  }
-                }
-              </div>
-            </div>
-          }
+      <div class="files-list flex-column g-space-sm">
+        @for (item of this.inProgressFiles; track item) {
+        <div class="flex-column">
+          <div class="flex-row align-center">
+            <ta-font-icon name="doc" size="xs"></ta-font-icon>
+            @if (item.progress < 100) {
+            <ta-text class="name" size="sm">
+              {{ item.name }}
+            </ta-text>
+            } @else if (item.progress === 100 && item.completed) {
+            <ta-link
+              class="name"
+              (action)="this.openDocument(item.completed)"
+              size="sm"
+              >{{ item.name }}</ta-link
+            >
+            }
+          </div>
+          <div class="extra flex-row g-space-md">
+            @if (item.progress < 100) {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="item.progress"
+            ></mat-progress-bar>
+            <ta-link
+              (action)="this.deleteInProgressFile(item.name)"
+              [underline]="false"
+            >
+              <ta-font-icon name="close" type="sm"></ta-font-icon>
+            </ta-link>
+            } @else if (item.progress === 100 && item.completed) {
+            <ta-text size="sm" class="justify-end">
+              <ta-megaoctet [octet]="item.completed.size"></ta-megaoctet>
+            </ta-text>
+            @if (item.completed.id) {
+            <ta-link
+              (action)="this.deleteFile(item.completed.id)"
+              [underline]="false"
+            >
+              <ta-font-icon name="close" type="sm"></ta-font-icon>
+            </ta-link>
+            } }
+          </div>
         </div>
+        }
+      </div>
       }
       <div class="content ta-c">
-        <input type="file" multiple (change)="this.fileBrowseHandler($event.target)" />
+        <input
+          type="file"
+          multiple
+          (change)="this.fileBrowseHandler($event.target)"
+        />
         <h3>
-          {{ 'input.upload.dragndrop' | translate }}
+          {{ "form.input.upload.dragndrop" | translate }}
         </h3>
         <div class="d-flex">
-          <ta-button type="secondary" icon="add" class="m-a" (action)="this.uploadFile()">
-            {{ 'input.upload.add' | translate }}
+          <ta-button
+            type="secondary"
+            icon="add"
+            class="m-a"
+            (action)="this.uploadFile()"
+          >
+            {{ "form.input.upload.add" | translate }}
           </ta-button>
         </div>
       </div>
     </div>
     @if (this.input.confirmButton) {
-      <div class="d-flex">
-        <ta-button
-          icon="check-line"
-          class="justify-end align-center"
-          (action)="this.validation()"
-          size="small"
-          [state]="this.isValidDocumentList() ? 'classic' : 'disabled'"
-        >
-          {{ 'input.upload.confirm' | translate }}
-        </ta-button>
-      </div>
+    <div class="d-flex">
+      <ta-button
+        icon="check-line"
+        class="justify-end align-center"
+        (action)="this.validation()"
+        size="small"
+        [state]="this.isValidDocumentList() ? 'classic' : 'disabled'"
+      >
+        {{ "form.input.upload.confirm" | translate }}
+      </ta-button>
+    </div>
     }
   </div>
 </ta-loader>

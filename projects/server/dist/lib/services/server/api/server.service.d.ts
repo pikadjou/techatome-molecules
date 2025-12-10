@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { InjectionToken } from '@angular/core';
-import { Subject } from 'rxjs';
-import { TempRequest } from '../interface';
-import { Request } from '../request';
-import { MappingApiType } from './requestMap';
+import { HttpClient } from "@angular/common/http";
+import { InjectionToken } from "@angular/core";
+import { Subject } from "rxjs";
+import { TempRequest } from "../interface";
+import { Request } from "../request";
+import { MappingApiType } from "./requestMap";
 import * as i0 from "@angular/core";
 export declare const SERVER_CONFIG_KEY: InjectionToken<IRestConfig>;
 export interface IRestConfig {

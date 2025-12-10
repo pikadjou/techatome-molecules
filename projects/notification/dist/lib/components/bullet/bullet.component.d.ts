@@ -1,7 +1,7 @@
-import { OnInit } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
-import { TaNotificationDataService } from '../../services/data.service';
-import { NotificationFilter } from '../../services/queries';
+import { OnInit } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
+import { TaNotificationDataService } from "../../services/data.service";
+import { NotificationFilter } from "../../services/queries";
 import * as i0 from "@angular/core";
 export declare class BulletComponent extends TaBaseComponent implements OnInit {
     private _notificationDataService;

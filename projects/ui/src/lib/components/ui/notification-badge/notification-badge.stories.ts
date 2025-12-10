@@ -1,18 +1,18 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { ButtonComponent } from '@ta/ui';
-import { NotificationBadgeContainerComponent } from './notification-badge-container.component';
-import { NotificationBadgeComponent } from './notification-badge/notification-badge.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { ButtonComponent } from "@ta/ui";
+import { NotificationBadgeContainerComponent } from "./notification-badge-container.component";
+import { NotificationBadgeComponent } from "./notification-badge/notification-badge.component";
 
 type StoryType = NotificationBadgeContainerComponent;
 
 export default {
-  title: 'UI/Notification badge',
+  title: "UI/Notification badge",
   component: NotificationBadgeContainerComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   moduleMetadata: {
     declarations: [ButtonComponent, NotificationBadgeComponent],
   },
-  render: args => {
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -26,13 +26,13 @@ export default {
   },
   argTypes: {
     style: {
-      options: ['primary', 'secondary', 'info', 'danger'],
-      control: { type: 'select' },
+      options: ["primary", "secondary", "info", "danger"],
+      control: { type: "select" },
     },
   },
   args: {
     number: 4551,
-    fontSize: 'xs',
+    fontSize: "xs",
   },
 } as Meta<StoryType>;
 

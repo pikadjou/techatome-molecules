@@ -1,6 +1,6 @@
-import { ElementRef, EventEmitter } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { InputTextBox } from '@ta/form-model';
+import { ElementRef, EventEmitter } from "@angular/core";
+import { MatMenuTrigger } from "@angular/material/menu";
+import { InputTextBox } from "@ta/form-model";
 import * as i0 from "@angular/core";
 export declare class SearchHistoryDisplayerComponent {
     searchHistory?: {

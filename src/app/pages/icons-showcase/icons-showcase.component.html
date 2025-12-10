@@ -1,7 +1,9 @@
 <div class="icons-showcase">
   <div class="demo-header">
     <ta-title [level]="1">Icons Components</ta-title>
-    <ta-text class="subtitle">Material Icons, Font Icons et Local Icons (@ta/icons)</ta-text>
+    <ta-text class="subtitle"
+      >Material Icons, Font Icons et Local Icons (@ta/icons)</ta-text
+    >
   </div>
 
   <div class="demo-sections">
@@ -10,10 +12,10 @@
       <ta-title [level]="2">Material Icons</ta-title>
       <div class="icons-grid">
         @for (icon of materialIcons; track icon) {
-          <div class="icon-item">
-            <ta-material-icon [name]="icon"></ta-material-icon>
-            <span class="icon-name">{{ icon }}</span>
-          </div>
+        <div class="icon-item">
+          <ta-material-icon [name]="icon"></ta-material-icon>
+          <span class="icon-name">{{ icon }}</span>
+        </div>
         }
       </div>
     </section>
@@ -23,12 +25,12 @@
       <ta-title [level]="2">Icon Sizes</ta-title>
       <div class="sizes-demo">
         @for (size of iconSizes; track size) {
-          <div class="size-group">
-            <ta-title [level]="4">{{ size | titlecase }}</ta-title>
-            <ta-material-icon name="star" [size]="size"></ta-material-icon>
-            <ta-material-icon name="favorite" [size]="size"></ta-material-icon>
-            <ta-material-icon name="settings" [size]="size"></ta-material-icon>
-          </div>
+        <div class="size-group">
+          <ta-title [level]="4">{{ size | titlecase }}</ta-title>
+          <ta-material-icon name="star" [size]="size"></ta-material-icon>
+          <ta-material-icon name="favorite" [size]="size"></ta-material-icon>
+          <ta-material-icon name="settings" [size]="size"></ta-material-icon>
+        </div>
         }
       </div>
     </section>
@@ -38,7 +40,9 @@
       <ta-title [level]="2">Font Icons</ta-title>
       <div class="font-icons-demo">
         <ta-font-icon name="icon-sample"></ta-font-icon>
-        <ta-text>Font icons utilisant des polices d'icônes personnalisées</ta-text>
+        <ta-text
+          >Font icons utilisant des polices d'icônes personnalisées</ta-text
+        >
       </div>
     </section>
 
@@ -55,9 +59,16 @@
   <div class="demo-info">
     <ta-title [level]="3">Types d'icônes disponibles</ta-title>
     <div class="icons-types-list">
-      <ta-text><strong>Material Icons :</strong> Icônes Google Material Design</ta-text>
-      <ta-text><strong>Font Icons :</strong> Polices d'icônes personnalisées</ta-text>
-      <ta-text><strong>Local Icons :</strong> Fichiers SVG/images locaux</ta-text>
+      <ta-text
+        ><strong>Material Icons :</strong> Icônes Google Material
+        Design</ta-text
+      >
+      <ta-text
+        ><strong>Font Icons :</strong> Polices d'icônes personnalisées</ta-text
+      >
+      <ta-text
+        ><strong>Local Icons :</strong> Fichiers SVG/images locaux</ta-text
+      >
     </div>
   </div>
 </div>

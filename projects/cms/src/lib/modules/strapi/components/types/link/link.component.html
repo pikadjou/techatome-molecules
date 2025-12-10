@@ -1,9 +1,7 @@
 @for (entity of this.link.children; track entity) {
-  <ta-link (action)="this.goTo()">
-    @switch (entity.type) {
-      @case ('text') {
-        <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
-      }
-    }
-  </ta-link>
+<ta-link (action)="this.goTo()">
+  @switch (entity.type) { @case ('text') {
+  <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
+  } }
+</ta-link>
 }

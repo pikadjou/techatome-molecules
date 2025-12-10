@@ -1,7 +1,7 @@
-import { TaState } from '@ta/styles';
-import { TaBaseComponent } from '@ta/utils';
+import { TaState } from "@ta/styles";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
-type Panel = 'left' | 'right' | 'center';
+type Panel = "left" | "right" | "center";
 export declare class LayoutFlexComponent extends TaBaseComponent {
     allowClose: boolean;
     constructor();

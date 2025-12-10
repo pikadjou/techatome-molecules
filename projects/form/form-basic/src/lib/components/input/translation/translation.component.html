@@ -1,43 +1,52 @@
 <div class="translation-container">
   @if (this.input.label) {
-    <ta-title [level]="3" [isBold]="true">{{ this.input.label | translate }}</ta-title>
+  <ta-title [level]="3" [isBold]="true">{{
+    this.input.label | translate
+  }}</ta-title>
   }
   <div class="flex-row align-center g-space-md">
     @if (this.cultureMenu) {
-      <ta-toggle-navigation [menu]="this.cultureMenu" container="tab"></ta-toggle-navigation>
+    <ta-toggle-navigation
+      [menu]="this.cultureMenu"
+      container="tab"
+    ></ta-toggle-navigation>
     }
-    <ta-button size="small" [matMenuTriggerFor]="menu" [stopPropagationActivation]="false">+</ta-button>
+    <ta-button
+      size="small"
+      [matMenuTriggerFor]="menu"
+      [stopPropagationActivation]="false"
+      >+</ta-button
+    >
   </div>
 
   <div class="pt-space-md">
-    @for (input of this.getInputs(this.currentCulture); track input) {
-      @if (input) {
-        <div [ngClass]="input.class">
-          <ng-container
-            [ngTemplateOutlet]="this.inputsTemplate"
-            [ngTemplateOutletContext]="{
+    @for (input of this.getInputs(this.currentCulture); track input) { @if
+    (input) {
+    <div [ngClass]="input.class">
+      <ng-container
+        [ngTemplateOutlet]="this.inputsTemplate"
+        [ngTemplateOutletContext]="{
               input: input,
             }"
-          >
-          </ng-container>
-        </div>
-      }
-    }
+      >
+      </ng-container>
+    </div>
+    } }
   </div>
 </div>
 
 <mat-menu #menu="matMenu">
   @for (culture of this.cultureList; track culture) {
-    <div>
-      <div class="flex-row g-space-sm p-space-sm">
-        @if (this.hasKey(culture.name)) {
-          <ta-font-icon name="check-line" class="checked"></ta-font-icon>
-          <ta-link (action)="this.remove(culture.name)">{{ culture.name }}</ta-link>
-        } @else {
-          <ta-font-icon name="check-line"> </ta-font-icon>
-          <ta-link (action)="this.add(culture.name)">{{ culture.name }}</ta-link>
-        }
-      </div>
+  <div>
+    <div class="flex-row g-space-sm p-space-sm">
+      @if (this.hasKey(culture.name)) {
+      <ta-font-icon name="check-line" class="checked"></ta-font-icon>
+      <ta-link (action)="this.remove(culture.name)">{{ culture.name }}</ta-link>
+      } @else {
+      <ta-font-icon name="check-line"> </ta-font-icon>
+      <ta-link (action)="this.add(culture.name)">{{ culture.name }}</ta-link>
+      }
     </div>
+  </div>
   }
 </mat-menu>

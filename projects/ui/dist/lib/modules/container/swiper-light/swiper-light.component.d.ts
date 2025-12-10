@@ -1,6 +1,6 @@
-import { OnInit, TemplateRef } from '@angular/core';
-import { TaDeviceInfoService } from '@ta/capacitor';
-import { TaBaseComponent } from '@ta/utils';
+import { OnInit, TemplateRef } from "@angular/core";
+import { TaDeviceInfoService } from "@ta/capacitor";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class SwiperLightComponent extends TaBaseComponent implements OnInit {
     private _deviceInfoService;

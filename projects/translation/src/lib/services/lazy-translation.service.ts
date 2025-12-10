@@ -1,16 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { inject } from "@angular/core";
 
-import { Observable, map } from 'rxjs';
+import { Observable, map } from "rxjs";
 
-import { TaBaseStrapiService } from '@ta/server';
+import { TaBaseStrapiService } from "@ta/server";
 
-import { Translation } from './dto/translation';
-import { GET_TRANSLATIONS } from './queries';
-import { ITranslation, TaTranslationRegistryService } from './translation-registry.service';
-import { TRANSLATION_SOURCE_CONFIG, TranslationSourceType } from './translation-source.config';
+import { Translation } from "./dto/translation";
+import { GET_TRANSLATIONS } from "./queries";
+import {
+  ITranslation,
+  TaTranslationRegistryService,
+} from "./translation-registry.service";
+import {
+  TRANSLATION_SOURCE_CONFIG,
+  TranslationSourceType,
+} from "./translation-source.config";
 
-export abstract class TaLazyTranslationService extends TaBaseStrapiService implements ITranslation {
+export abstract class TaLazyTranslationService
+  extends TaBaseStrapiService
+  implements ITranslation
+{
   get id() {
     return this._id;
   }
@@ -18,7 +27,7 @@ export abstract class TaLazyTranslationService extends TaBaseStrapiService imple
   private readonly _sourceConfig = inject(TRANSLATION_SOURCE_CONFIG);
   private readonly _http = inject(HttpClient);
 
-  private _id = '';
+  private _id = "";
   private _isApp = false;
 
   constructor(id: string, isApp = false) {
@@ -42,13 +51,14 @@ export abstract class TaLazyTranslationService extends TaBaseStrapiService imple
     return source$.pipe(
       map((translations) =>
         translations.reduce<{ [index: string]: string }>((acc, translation) => {
-          acc[(this._isApp ? '' : this._id + '.') + translation.key.trim()] = translation.value;
+          acc[(this._isApp ? "" : this._id + ".") + translation.key.trim()] =
+            translation.value;
           return acc;
-        }, {}),
+        }, {})
       ),
       map((translations) =>
         Object.entries(translations).reduce((acc, [key, value]) => {
-          const keys = key.split('.');
+          const keys = key.split(".");
           keys.reduce<{ [index: string]: any }>((current, k, index) => {
             if (index === keys.length - 1) {
               current[k] = value;
@@ -59,23 +69,30 @@ export abstract class TaLazyTranslationService extends TaBaseStrapiService imple
           }, acc);
 
           return acc;
-        }, {}),
-      ),
+        }, {})
+      )
     );
   }
 
   private _getTranslationsFromFile(lang: string): Observable<Translation[]> {
-    return this._http.get<{ [key: string]: string }>(`${this._sourceConfig.filePath}${this._id}/${lang}.json`).pipe(
-      map((jsonData) =>
-        Object.entries(jsonData).map(([key, value]) => ({
-          key,
-          value,
-        })),
-      ),
-    );
+    return this._http
+      .get<{ [key: string]: string }>(
+        `${this._sourceConfig.filePath}${this._id}/${lang}.json`
+      )
+      .pipe(
+        map((jsonData) =>
+          Object.entries(jsonData).map(([key, value]) => ({
+            key,
+            value,
+          }))
+        )
+      );
   }
 
   private _getTranslationsFromGraphQL(lang: string) {
-    return this._strapiService.fetchQueryList$<Translation>(GET_TRANSLATIONS(lang, this._id), 'translations');
+    return this._strapiService.fetchQueryList$<Translation>(
+      GET_TRANSLATIONS(lang, this._id),
+      "translations"
+    );
   }
 }

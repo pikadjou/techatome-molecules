@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { FontIconComponent } from './components/font-icon/font-icon.component';
-import { LocalIconComponent } from './components/local-icon/local-icon.component';
-import { MaterialIconComponent } from './components/material-icon/material-icon.component';
-import { TaIconsService } from './services/icons.service';
+import { FontIconComponent } from "./components/font-icon/font-icon.component";
+import { LocalIconComponent } from "./components/local-icon/local-icon.component";
+import { MaterialIconComponent } from "./components/material-icon/material-icon.component";
+import { TaIconsService } from "./services/icons.service";
 
 /**
  * @deprecated Use standalone components instead.
@@ -19,7 +19,12 @@ import { TaIconsService } from './services/icons.service';
  */
 @NgModule({
   declarations: [],
-  imports: [CommonModule, LocalIconComponent, MaterialIconComponent, FontIconComponent],
+  imports: [
+    CommonModule,
+    LocalIconComponent,
+    MaterialIconComponent,
+    FontIconComponent,
+  ],
   exports: [LocalIconComponent, MaterialIconComponent, FontIconComponent],
   providers: [TaIconsService],
 })

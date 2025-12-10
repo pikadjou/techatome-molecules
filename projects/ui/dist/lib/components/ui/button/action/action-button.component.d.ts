@@ -1,4 +1,4 @@
-import { ActionButtonData } from './action-button-data';
+import { ActionButtonData } from "./action-button-data";
 import * as i0 from "@angular/core";
 export declare class ActionButtonComponent {
     /**

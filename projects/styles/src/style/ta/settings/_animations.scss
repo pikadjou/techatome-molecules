@@ -1,6 +1,6 @@
-@use 'sass:map';
-@use 'ta/vars';
-@use 'ta/utils/mixins/common';
+@use "sass:map";
+@use "ta/vars";
+@use "ta/utils/mixins/common";
 
 /** Animations Settings **/
 
@@ -191,10 +191,12 @@ $animation-easings: map.merge(
 
   // Legacy classes for compatibility
   .fade-in {
-    animation: fadeIn map.get($animation-durations, normal) map.get($animation-easings, ease-out) both;
+    animation: fadeIn map.get($animation-durations, normal)
+      map.get($animation-easings, ease-out) both;
   }
 
   .slide-in-right {
-    animation: slideInRight map.get($animation-durations, normal) map.get($animation-easings, ease-out) both;
+    animation: slideInRight map.get($animation-durations, normal)
+      map.get($animation-easings, ease-out) both;
   }
 }

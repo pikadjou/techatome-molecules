@@ -1,20 +1,20 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { NgFor, NgIf } from "@angular/common";
+import { Component, inject } from "@angular/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { TaTranslationService, TranslatePipe } from '@ta/translation';
+import { FontIconComponent } from "@ta/icons";
+import { TaTranslationService, TranslatePipe } from "@ta/translation";
 import {
   ListContainerComponent,
   ListElementComponent,
   ListTagComponent,
   ListTitleComponent,
   LoaderComponent,
-} from '@ta/ui';
+} from "@ta/ui";
 
 @Component({
-  selector: 'ta-switch-language',
-  templateUrl: './switch-language.component.html',
-  styleUrls: ['./switch-language.component.scss'],
+  selector: "ta-switch-language",
+  templateUrl: "./switch-language.component.html",
+  styleUrls: ["./switch-language.component.scss"],
   standalone: true,
   imports: [
     NgIf,
@@ -31,10 +31,10 @@ import {
 export class SwitchLanguageComponent {
   readonly translateService = inject(TaTranslationService);
   readonly languages = [
-    { id: 'fr', name: 'Français' },
-    { id: 'nl', name: 'Nederlands' },
-    { id: 'en', name: 'English' },
-    { id: 'es', name: 'Español' },
+    { id: "fr", name: "Français" },
+    { id: "nl", name: "Nederlands" },
+    { id: "en", name: "English" },
+    { id: "es", name: "Español" },
   ];
 
   public activeLanguage = this.translateService.getLanguage();

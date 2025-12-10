@@ -1,8 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
-import { CategoriesService } from '../../../../services/categories/categories.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AsyncPipe } from '@angular/common';
+import { Component, inject, signal } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
+import { CategoriesService } from "../../../../services/categories/categories.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { AsyncPipe } from "@angular/common";
 import {
   CardComponent,
   CardHeaderComponent,
@@ -12,14 +12,14 @@ import {
   LoaderComponent,
   ErrorComponent,
   EmptyComponent,
-} from '@ta/ui';
-import { TaRoutes } from '@ta/menu';
-import { ECategoriesRoute } from '../../categories.routes';
-import { Category } from '../../../../services/categories/dto/category';
+} from "@ta/ui";
+import { TaRoutes } from "@ta/menu";
+import { ECategoriesRoute } from "../../categories.routes";
+import { Category } from "../../../../services/categories/dto/category";
 
 @Component({
   standalone: true,
-  selector: 'app-categories-list',
+  selector: "app-categories-list",
   imports: [
     AsyncPipe,
     CardComponent,
@@ -31,8 +31,8 @@ import { Category } from '../../../../services/categories/dto/category';
     ErrorComponent,
     EmptyComponent,
   ],
-  templateUrl: './list.component.html',
-  styleUrl: './list.component.scss',
+  templateUrl: "./list.component.html",
+  styleUrl: "./list.component.scss",
 })
 export class ListComponent extends TaBaseComponent {
   readonly categoriesService = inject(CategoriesService);
@@ -47,7 +47,10 @@ export class ListComponent extends TaBaseComponent {
 
   public selected(cat: Category | null) {
     this._router.navigateByUrl(
-      TaRoutes.getAbsoluteUrl([ECategoriesRoute.categories, ECategoriesRoute.list], { id: cat?.documentId ?? 'all' }),
+      TaRoutes.getAbsoluteUrl(
+        [ECategoriesRoute.categories, ECategoriesRoute.list],
+        { id: cat?.documentId ?? "all" }
+      )
     );
   }
 

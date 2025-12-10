@@ -1,4 +1,4 @@
-import { TypedDocumentNode } from 'apollo-angular';
+import { TypedDocumentNode } from "apollo-angular";
 type WhereType = {
     [index: string]: WhereType | WhereType[] | {
         [op: string]: string | number | boolean | null;

@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { __file } from '../../../../../__mock__/files';
-import { FileListComponent } from './files-list.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { __file } from "../../../../../__mock__/files";
+import { FileListComponent } from "./files-list.component";
 
 type StoryType = FileListComponent;
 
 export default {
-  title: 'LIST/File list',
+  title: "LIST/File list",
   component: FileListComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

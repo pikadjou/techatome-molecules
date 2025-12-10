@@ -1,24 +1,29 @@
-import { IInputTranslation, InputTranslation } from './translation';
+import { IInputTranslation, InputTranslation } from "./translation";
 
 export interface IInputDynamicTranslation extends IInputTranslation {}
 
 export class InputDynamicTranslation extends InputTranslation {
-  static untransformValue(transformedValue: Record<number, { InputTextBox: string }>): Record<number, string> {
-    return Object.entries(transformedValue).reduce<Record<number, string>>((acc, [culture, obj]) => {
-      acc[Number(culture)] = obj.InputTextBox;
-      return acc;
-    }, {});
+  static untransformValue(
+    transformedValue: Record<number, { InputTextBox: string }>
+  ): Record<number, string> {
+    return Object.entries(transformedValue).reduce<Record<number, string>>(
+      (acc, [culture, obj]) => {
+        acc[Number(culture)] = obj.InputTextBox;
+        return acc;
+      },
+      {}
+    );
   }
   constructor(options: IInputDynamicTranslation) {
     super(options);
 
     this.template = [
       {
-        type: 'InputTextBox',
+        type: "InputTextBox",
         options: {
-          key: 'InputTextBox',
+          key: "InputTextBox",
           label: this.label,
-          class: 'pb-2',
+          class: "pb-2",
         },
       },
     ];
@@ -27,7 +32,9 @@ export class InputDynamicTranslation extends InputTranslation {
   }
 
   private _transformedValue(originalValue: { [index: string]: any }) {
-    return Object.entries(originalValue).reduce<Record<string, { InputTextBox: string }>>((acc, [culture, text]) => {
+    return Object.entries(originalValue).reduce<
+      Record<string, { InputTextBox: string }>
+    >((acc, [culture, text]) => {
       acc[culture] = {
         InputTextBox: text,
       };

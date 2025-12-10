@@ -1,14 +1,14 @@
-import { NgIf } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { NgIf } from "@angular/common";
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { TaTranslationUI } from '../translation.service';
+import { TaTranslationUI } from "../../../translation.service";
 
 @Component({
-  selector: 'ta-expandable-text',
-  templateUrl: './expandable-text.component.html',
-  styleUrls: ['./expandable-text.component.scss'],
+  selector: "ta-expandable-text",
+  templateUrl: "./expandable-text.component.html",
+  styleUrls: ["./expandable-text.component.scss"],
   standalone: true,
   imports: [NgIf, TranslateModule],
 })
@@ -19,7 +19,7 @@ export class ExpandableTextComponent {
   public showFullText: boolean = false;
   public showButton: boolean = true;
 
-  @ViewChild('myText')
+  @ViewChild("myText")
   public _myText!: ElementRef<HTMLDivElement>;
 
   constructor() {
@@ -29,17 +29,17 @@ export class ExpandableTextComponent {
   get textHeight() {
     if (this._myText) {
       if (this._myText.nativeElement.offsetHeight < this.height) {
-        return 'auto';
+        return "auto";
       }
     }
     if (this.showFullText) {
-      return 'auto';
+      return "auto";
     }
     return `${this.height}px`;
   }
 
   get hasFixedHeight() {
-    return this.textHeight != 'auto';
+    return this.textHeight != "auto";
   }
 
   get hasTooBigText() {

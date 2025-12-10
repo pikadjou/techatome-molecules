@@ -1,5 +1,11 @@
-<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.documents$ | async as documents">
-  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+<ta-loader
+  [isLoading]="this.requestState.isLoading()"
+  *ngLet="this.documents$ | async as documents"
+>
+  <ta-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
     <ta-empty
       [isEmpty]="!documents || documents.length === 0"
       [text]="this.emptyMessage"
@@ -7,11 +13,14 @@
     >
       <div class="list flex-column g-space-sm">
         @for (doc of documents; track doc) {
-          <div>
-            <ng-container
-              *ngTemplateOutlet="this.actions !== 'select' ? defaultTemplate : selectTemplate; context: { doc: doc }"
-            ></ng-container>
-          </div>
+        <div>
+          <ng-container
+            *ngTemplateOutlet="
+              this.actions !== 'select' ? defaultTemplate : selectTemplate;
+              context: { doc: doc }
+            "
+          ></ng-container>
+        </div>
         }
       </div>
     </ta-empty>
@@ -23,7 +32,9 @@
     <div class="align-center">
       <ta-font-icon name="doc" size="xs"></ta-font-icon>
       <div>
-        <ta-link [underline]="false" (action)="this.openDocument(doc)">{{ doc.name }}</ta-link>
+        <ta-link [underline]="false" (action)="this.openDocument(doc)">{{
+          doc.name
+        }}</ta-link>
         <div class="extra flex-row g-space-md">
           <ta-time-ago [date]="doc.uploadedDate"></ta-time-ago>
           <ta-megaoctet [octet]="doc.size"></ta-megaoctet>
@@ -32,14 +43,19 @@
     </div>
     <div class="cta align-content-center">
       @if (this.actions === 'select') {
-        <input [disabled]="this.readonly" type="checkbox" [checked]="this.isChecked(doc)" (click)="this.check(doc)" />
+      <input
+        [disabled]="this.readonly"
+        type="checkbox"
+        [checked]="this.isChecked(doc)"
+        (click)="this.check(doc)"
+      />
       } @else if (this.actions === 'delete') {
-        <ta-button-tool
-          (action)="this.removeDocument(doc)"
-          icon="delete"
-          [size]="'sm'"
-          [readonly]="this.readonly"
-        ></ta-button-tool>
+      <ta-button-tool
+        (action)="this.removeDocument(doc)"
+        icon="delete"
+        [size]="'sm'"
+        [readonly]="this.readonly"
+      ></ta-button-tool>
       }
     </div>
   </div>
@@ -52,14 +68,22 @@
     (click)="this.check(doc)"
   >
     <div class="display flex-column align-items-start">
-      <ta-link [bold]="true" [underline]="false" (click)="$event.stopPropagation()" (action)="this.openDocument(doc)">
+      <ta-link
+        [bold]="true"
+        [underline]="false"
+        (click)="$event.stopPropagation()"
+        (action)="this.openDocument(doc)"
+      >
         {{ doc.name }}
       </ta-link>
       <div class="flex-row g-space-md">
         <div class="flex-row align-items-center">
           <ta-font-icon name="doc" size="xs"></ta-font-icon>
           <ta-text>
-            {{ 'communication.documents.file-type.' + this.FileType[doc.fileType].toLocaleLowerCase() | translate }}
+            {{
+              "communication.documents.file-type." +
+                this.FileType[doc.fileType].toLocaleLowerCase() | translate
+            }}
           </ta-text>
         </div>
         <ta-megaoctet [icon]="true" [octet]="doc.size"></ta-megaoctet>
@@ -67,9 +91,13 @@
     </div>
     <div class="button align-content-center">
       @if (this.actions === 'select') {
-        <input type="checkbox" [checked]="this.isChecked(doc)" />
+      <input type="checkbox" [checked]="this.isChecked(doc)" />
       } @else if (this.actions === 'delete') {
-        <ta-button-tool (action)="this.removeDocument(doc)" icon="delete" [size]="'sm'"></ta-button-tool>
+      <ta-button-tool
+        (action)="this.removeDocument(doc)"
+        icon="delete"
+        [size]="'sm'"
+      ></ta-button-tool>
       }
     </div>
   </div>

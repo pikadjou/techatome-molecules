@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { ButtonComponent } from './button.component';
+import { ButtonComponent } from "./button.component";
 
 type StoryType = ButtonComponent & { label?: string };
 
 export default {
-  title: 'UI/Button/Basic',
+  title: "UI/Button/Basic",
   component: ButtonComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { label, ...props } = args;
     return {
       props,
@@ -21,24 +21,24 @@ export default {
   },
   argTypes: {
     label: {
-      control: 'text',
+      control: "text",
     },
     state: {
-      options: ['classic', 'disabled', 'inactive'],
-      control: { type: 'select' },
+      options: ["classic", "disabled", "inactive"],
+      control: { type: "select" },
     },
     style: {
-      options: ['primary', 'secondary'],
-      control: { type: 'select' },
+      options: ["primary", "secondary"],
+      control: { type: "select" },
     },
     size: {
-      options: ['small', 'medium', 'large'],
-      control: { type: 'select' },
+      options: ["small", "medium", "large"],
+      control: { type: "select" },
     },
   },
   args: {
-    label: 'Button',
-    style: 'primary',
+    label: "Button",
+    style: "primary",
   },
 } as Meta<StoryType>;
 
@@ -46,18 +46,18 @@ export const Basic: StoryObj<StoryType> = {};
 
 export const Disabled: StoryObj<StoryType> = {
   args: {
-    state: 'disabled',
+    state: "disabled",
   },
 };
 
 export const Style: StoryObj<StoryType> = {
   args: {
-    type: 'secondary',
+    type: "secondary",
   },
 };
 
 export const CircularWithIcon: StoryObj<StoryType> = {
-  render: args => {
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -84,20 +84,20 @@ export const Circular: StoryObj<StoryType> = {
 export const CircularSmall: StoryObj<StoryType> = {
   args: {
     options: {
-      circular: 'small',
+      circular: "small",
     },
   },
 };
 export const CircularBig: StoryObj<StoryType> = {
   args: {
     options: {
-      circular: 'big',
+      circular: "big",
     },
   },
 };
 
 export const WithLabel: StoryObj<StoryType> = {
   args: {
-    label: 'I have read the terms and conditions.',
+    label: "I have read the terms and conditions.",
   },
 };

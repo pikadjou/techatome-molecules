@@ -1,9 +1,13 @@
 <div class="notification-box_container flex-column g-space-sm">
   @for (item of this.list; track item) {
-    <div>
-      <ta-toast [code]="item.code">
-        <ta-notification-inline [message]="item.message" [code]="item.code" [showClose]="false"></ta-notification-inline>
-      </ta-toast>
-    </div>
+  <div>
+    <ta-toast [code]="item.code">
+      <ta-notification-inline
+        [message]="item.message"
+        [code]="item.code"
+        [showClose]="false"
+      ></ta-notification-inline>
+    </ta-toast>
+  </div>
   }
 </div>

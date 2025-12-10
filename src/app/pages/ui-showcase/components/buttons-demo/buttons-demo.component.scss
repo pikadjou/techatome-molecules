@@ -1,4 +1,4 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .buttons-demo {
   max-width: 1000px;
@@ -53,9 +53,10 @@
 
   .demo-info {
     background: common.get-var(surface, secondary);
-    border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-    border-radius: common.get-var('border-radius-md');
-    padding: common.get-var('spacing-xl');
+    border: common.get-var("border-width") solid
+      common.get-var("color-neutral-300");
+    border-radius: common.get-var("border-radius-md");
+    padding: common.get-var("spacing-xl");
     margin-top: 2rem;
 
     ta-title {

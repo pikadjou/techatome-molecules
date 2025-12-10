@@ -1,4 +1,4 @@
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export interface IInputSlider extends IInputBase<number> {
   min?: number;
@@ -9,7 +9,7 @@ export class InputSlider extends InputBase<number> {
   public min: number;
   public max: number;
 
-  override controlType = 'slider';
+  override controlType = "slider";
 
   constructor(options: IInputSlider = {}) {
     super(options);

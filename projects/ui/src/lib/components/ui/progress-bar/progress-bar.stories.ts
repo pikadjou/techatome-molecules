@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { ProgressBarComponent } from './progress-bar.component';
+import { ProgressBarComponent } from "./progress-bar.component";
 
 export default {
-  title: 'UI/Progress bar',
+  title: "UI/Progress bar",
   component: ProgressBarComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   render: (args) => ({ props: args }),
   args: {
     current: 3,

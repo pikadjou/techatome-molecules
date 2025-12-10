@@ -1,20 +1,20 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
 
-import { PwaComponent } from './pwa.component';
+import { PwaComponent } from "./pwa.component";
 
 export type StoryType = PwaComponent;
 
 export default {
-  title: 'UI/PWA',
+  title: "UI/PWA",
   component: PwaComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     moduleMetadata({
       imports: [],
       providers: [
         // Mock PWA service for Storybook
         {
-          provide: 'TaPwaService',
+          provide: "TaPwaService",
           useValue: {
             isPWaCapability$: { subscribe: () => {} },
             launchInstall: () => {},
@@ -23,7 +23,7 @@ export default {
       ],
     }),
   ],
-  render: args => ({ props: args }),
+  render: (args) => ({ props: args }),
   argTypes: {},
   args: {},
 } as Meta<StoryType>;
@@ -31,7 +31,7 @@ export default {
 export const Basic: StoryObj<StoryType> = {};
 
 export const Shown: StoryObj<StoryType> = {
-  render: args => ({
+  render: (args) => ({
     props: {
       ...args,
       isShowed: true,
@@ -40,7 +40,7 @@ export const Shown: StoryObj<StoryType> = {
 };
 
 export const Desktop: StoryObj<StoryType> = {
-  render: args => ({
+  render: (args) => ({
     props: {
       ...args,
       isShowed: true,

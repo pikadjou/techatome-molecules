@@ -1,15 +1,15 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { Subject } from 'rxjs';
+import { Meta, StoryObj } from "@storybook/angular";
+import { Subject } from "rxjs";
 
-import { FileEditComponent } from './files-edit.component';
+import { FileEditComponent } from "./files-edit.component";
 
 type StoryType = FileEditComponent;
 
 export default {
-  title: 'FILES/Editor',
+  title: "FILES/Editor",
   component: FileEditComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -21,7 +21,7 @@ export default {
     };
   },
   args: {
-    imagePath: 'https://placehold.co/400x600',
+    imagePath: "https://placehold.co/400x600",
     saveImage$: new Subject(),
   },
 } as Meta<StoryType>;
@@ -30,12 +30,12 @@ export const Basic: StoryObj<StoryType> = {};
 
 export const BigImage: StoryObj<StoryType> = {
   args: {
-    imagePath: 'https://placehold.co/3000x4000',
+    imagePath: "https://placehold.co/3000x4000",
   },
 };
 
 export const Horizontal: StoryObj<StoryType> = {
   args: {
-    imagePath: 'https://placehold.co/2000x500',
+    imagePath: "https://placehold.co/2000x500",
   },
 };

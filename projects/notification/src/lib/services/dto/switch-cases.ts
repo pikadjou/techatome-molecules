@@ -1,86 +1,86 @@
 export type SwitchCasesProjectStatusChanged = {
-  type: 'ProjectStatusChanged';
+  type: "ProjectStatusChanged";
   context: [
     {
-      key: 'ProjectStatus';
+      key: "ProjectStatus";
       value: number;
     },
     {
-      key: 'ProjectId';
+      key: "ProjectId";
       value: string;
     }
   ];
   redirectContext: [
     {
-      key: 'ProjectId';
+      key: "ProjectId";
       value: string;
     }
   ];
 };
 
 export type SwitchCasesNewQuotationVersion = {
-  type: 'NewQuotationVersion';
+  type: "NewQuotationVersion";
   context: [
     {
-      key: 'VersionNumber';
+      key: "VersionNumber";
       value: number;
     }
   ];
   redirectContext: [
     {
-      key: 'ProjectId';
+      key: "ProjectId";
       value: string;
     },
     {
-      key: 'QuotationId';
+      key: "QuotationId";
       value: string;
     },
     {
-      key: 'QuotationVersionId';
+      key: "QuotationVersionId";
       value: string;
     }
   ];
 };
 
 export type SwitchCasesNewInvoice = {
-  type: 'NewInvoice';
+  type: "NewInvoice";
   context: [
     {
-      key: 'InvoiceRef';
+      key: "InvoiceRef";
       value: string;
     }
   ];
   redirectContext: [
     {
-      key: 'ProjectId';
+      key: "ProjectId";
       value: string;
     },
     {
-      key: 'InvoiceId';
+      key: "InvoiceId";
       value: string;
     }
   ];
 };
 
 export type SwitchCasesInvoicePaymentStatusChanged = {
-  type: 'InvoicePaymentStatusChanged';
+  type: "InvoicePaymentStatusChanged";
   context: [
     {
-      key: 'InvoiceRef';
+      key: "InvoiceRef";
       value: string;
     },
     {
-      key: 'PaymentStatus';
+      key: "PaymentStatus";
       value: number;
     }
   ];
   redirectContext: [
     {
-      key: 'ProjectId';
+      key: "ProjectId";
       value: string;
     },
     {
-      key: 'InvoiceId';
+      key: "InvoiceId";
       value: string;
     }
   ];

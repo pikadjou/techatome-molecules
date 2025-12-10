@@ -1,7 +1,9 @@
 <div class="menu-showcase">
   <div class="demo-header">
     <ta-title [level]="1">Menu Components</ta-title>
-    <ta-text class="subtitle">Navigation, menus contextuels et actions rapides</ta-text>
+    <ta-text class="subtitle"
+      >Navigation, menus contextuels et actions rapides</ta-text
+    >
   </div>
 
   <div class="demo-sections">
@@ -33,8 +35,7 @@
     <section class="demo-section">
       <ta-title [level]="2">Context Menu</ta-title>
       <div class="context-menu-demo">
-        <div class="context-trigger" 
-             (contextmenu)="$event.preventDefault()">
+        <div class="context-trigger" (contextmenu)="$event.preventDefault()">
           Right-click here for context menu
         </div>
         <ta-context-menu [items]="contextMenuItems"></ta-context-menu>
@@ -44,12 +45,24 @@
 
   <div class="demo-info">
     <ta-title [level]="3">Menu Components Overview</ta-title>
-    <ta-text>La librairie menu propose plusieurs types de composants de navigation :</ta-text>
+    <ta-text
+      >La librairie menu propose plusieurs types de composants de navigation
+      :</ta-text
+    >
     <div class="menu-types-list">
-      <ta-text><strong>Navigation :</strong> Menu principal avec support hierarchique</ta-text>
-      <ta-text><strong>Menu :</strong> Menu basique avec items et actions</ta-text>
-      <ta-text><strong>Quick Actions :</strong> Actions rapides avec icônes</ta-text>
-      <ta-text><strong>Context Menu :</strong> Menu contextuel au clic droit</ta-text>
+      <ta-text
+        ><strong>Navigation :</strong> Menu principal avec support
+        hierarchique</ta-text
+      >
+      <ta-text
+        ><strong>Menu :</strong> Menu basique avec items et actions</ta-text
+      >
+      <ta-text
+        ><strong>Quick Actions :</strong> Actions rapides avec icônes</ta-text
+      >
+      <ta-text
+        ><strong>Context Menu :</strong> Menu contextuel au clic droit</ta-text
+      >
     </div>
   </div>
 </div>

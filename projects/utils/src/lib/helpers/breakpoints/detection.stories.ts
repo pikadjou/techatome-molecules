@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { BreakpointDetection } from './detection';
+import { BreakpointDetection } from "./detection";
 
 type StoryType = {
   breakpointDetection: BreakpointDetection;
 };
 
 export default {
-  title: 'UTILS/Breakpoints',
-  tags: ['autodocs'],
+  title: "UTILS/Breakpoints",
+  tags: ["autodocs"],
   render: (args) => {
     const { breakpointDetection, ...props } = args;
     return {

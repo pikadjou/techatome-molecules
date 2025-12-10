@@ -1,12 +1,12 @@
-import { NgIf, NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgIf, NgFor } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { Department } from '../interface';
+import { Department } from "../interface";
 
 @Component({
-selector: 'ta-department-icon-list',
-  templateUrl: './department-icon-list.component.html',
-  styleUrls: ['./department-icon-list.component.scss'],
+  selector: "ta-department-icon-list",
+  templateUrl: "./department-icon-list.component.html",
+  styleUrls: ["./department-icon-list.component.scss"],
   standalone: true,
   imports: [NgIf, NgFor],
 })

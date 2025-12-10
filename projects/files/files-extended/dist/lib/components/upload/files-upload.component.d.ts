@@ -1,8 +1,8 @@
-import { EventEmitter } from '@angular/core';
-import { ActionButtonData } from '@ta/ui';
-import { FileStructure } from '@ta/utils';
+import { EventEmitter } from "@angular/core";
+import { ActionButtonData } from "@ta/ui";
+import { FileStructure } from "@ta/utils";
 import * as i0 from "@angular/core";
-export type Feature = 'take-pic' | 'upload-pic' | 'upload-file';
+export type Feature = "take-pic" | "upload-pic" | "upload-file";
 export declare class UploadComponent {
     features: Feature[];
     canSelectMultipleFiles: boolean;

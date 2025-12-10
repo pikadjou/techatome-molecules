@@ -1,10 +1,10 @@
-import { TaIconType } from '@ta/icons';
-import { TaSizes } from '@ta/styles';
-import { MessageLevel } from '@ta/utils';
+import { TaIconType } from "@ta/icons";
+import { TaSizes } from "@ta/styles";
+import { MessageLevel } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class PictureInfoMessageComponent {
     icon?: TaIconType | string;
-    iconSize?: TaSizes | 'xl';
+    iconSize?: TaSizes | "xl";
     text?: string;
     type?: MessageLevel;
     get displayedText(): string;

@@ -1,6 +1,6 @@
-import { Request } from '../request';
+import { Request } from "../request";
 export interface IRequestMap {
-    type: 'POST' | 'GET' | 'DELETE' | 'PUT' | 'PATCH' | 'FILES' | 'UPDATEFILES';
+    type: "POST" | "GET" | "DELETE" | "PUT" | "PATCH" | "FILES" | "UPDATEFILES";
     url: string;
 }
 export type MappingApiType = {

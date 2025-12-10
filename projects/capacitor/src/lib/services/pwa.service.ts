@@ -1,15 +1,15 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from "@angular/core";
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 
-export const PWA_CONFIG_KEY = 'config_pwa';
+export const PWA_CONFIG_KEY = "config_pwa";
 
 export interface IPwaConfig {
   active: boolean;
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaPwaService {
   public isPWaCapability$ = new BehaviorSubject<boolean>(false);
@@ -21,7 +21,7 @@ export class TaPwaService {
     private _config: IPwaConfig
   ) {
     if (this._config.active) {
-      window.addEventListener('beforeinstallprompt', event => {
+      window.addEventListener("beforeinstallprompt", (event) => {
         this._promptEvent = event;
         this.isPWaCapability$.next(true);
       });

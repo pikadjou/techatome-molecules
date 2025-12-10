@@ -1,4 +1,4 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .layout-showcase {
   max-width: 1000px;
@@ -45,7 +45,7 @@
         .demo-layout {
           height: 200px;
           border: 1px solid common.get-var(border, secondary);
-          
+
           .demo-sidebar {
             background: common.get-var(surface, tertiary);
             padding: common.get-var(space, md);

@@ -7,7 +7,9 @@
     [formControl]="$any(this.input.formControl)"
     [attr.aria-invalid]="this.input.formControl?.invalid"
     [attr.aria-describedby]="
-      this.input.formControl?.invalid && this.input.formControl?.touched ? 'error-message' : null
+      this.input.formControl?.invalid && this.input.formControl?.touched
+        ? 'error-message'
+        : null
     "
   ></textarea>
 </ta-input-layout>

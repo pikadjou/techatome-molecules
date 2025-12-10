@@ -1,11 +1,11 @@
-import { AfterViewInit, ElementRef, OnDestroy, SimpleChanges } from '@angular/core';
-import { ChartConfiguration, ChartDataset, ChartType, DefaultDataPoint } from 'chart.js';
-import Chart from 'chart.js/auto';
+import { AfterViewInit, ElementRef, OnDestroy, SimpleChanges } from "@angular/core";
+import { ChartConfiguration, ChartDataset, ChartType, DefaultDataPoint } from "chart.js";
+import Chart from "chart.js/auto";
 import * as i0 from "@angular/core";
 export declare abstract class BaseChartComponent<TType extends ChartType = ChartType, TData = DefaultDataPoint<TType>, TLabel = unknown> implements AfterViewInit, OnDestroy {
     labels: TLabel[];
     datasets: ChartDataset<ChartType, TData>[];
-    chartOptions: ChartConfiguration['options'];
+    chartOptions: ChartConfiguration["options"];
     chartHeight?: number;
     chartCanvas: ElementRef;
     type: TType;

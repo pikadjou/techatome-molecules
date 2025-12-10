@@ -1,12 +1,12 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject } from "@angular/core";
 
-import { KeyValue } from '@ta/server';
+import { KeyValue } from "@ta/server";
 
-import { TaNotificationDataService } from '../../../../services/data.service';
-import { NotificationDto } from '../../../../services/dto/notification';
-import { TaNotificationSharedService } from '../../../../services/shared.service';
+import { TaNotificationDataService } from "../../../../services/data.service";
+import { NotificationDto } from "../../../../services/dto/notification";
+import { TaNotificationSharedService } from "../../../../services/shared.service";
 
-@Component({ template: '' })
+@Component({ template: "" })
 export abstract class AbstractNotificationTemplateComponent {
   @Input()
   notification!: NotificationDto;
@@ -28,10 +28,17 @@ export abstract class AbstractNotificationTemplateComponent {
   }
 
   public extractContext(key: string) {
-    return (<KeyValue[]>this.notification.context).find(item => item.key === key)?.value ?? '';
+    return (
+      (<KeyValue[]>this.notification.context).find((item) => item.key === key)
+        ?.value ?? ""
+    );
   }
 
   public extractredirectContext(key: string) {
-    return (<KeyValue[]>this.notification.redirectContext).find(item => item.key === key)?.value ?? '';
+    return (
+      (<KeyValue[]>this.notification.redirectContext).find(
+        (item) => item.key === key
+      )?.value ?? ""
+    );
   }
 }

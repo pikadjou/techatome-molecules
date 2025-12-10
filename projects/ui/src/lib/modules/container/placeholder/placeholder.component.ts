@@ -1,14 +1,14 @@
-import { NgFor, NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgFor, NgClass } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { createRange } from '@ta/utils';
+import { createRange } from "@ta/utils";
 
-import { Placeholder } from './config';
+import { Placeholder } from "./config";
 
 @Component({
-selector: 'ta-placeholder',
-  templateUrl: './placeholder.component.html',
-  styleUrls: ['./placeholder.component.scss'],
+  selector: "ta-placeholder",
+  templateUrl: "./placeholder.component.html",
+  styleUrls: ["./placeholder.component.scss"],
   standalone: true,
   imports: [NgFor, NgClass],
 })
@@ -23,10 +23,10 @@ export class PlaceholderComponent {
   }
 
   public getColClass(gridSize: number | undefined): string {
-    return gridSize ? `ph-col-${gridSize}` : '';
+    return gridSize ? `ph-col-${gridSize}` : "";
   }
 
   public getAttributesClass(attributes: string[]): string {
-    return attributes ? attributes.join(' ') : '';
+    return attributes ? attributes.join(" ") : "";
   }
 }

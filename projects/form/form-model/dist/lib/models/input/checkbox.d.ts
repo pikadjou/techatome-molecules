@@ -1,4 +1,4 @@
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 export interface IInputCheckBox extends IInputBase<boolean> {
     toggle?: boolean;
 }

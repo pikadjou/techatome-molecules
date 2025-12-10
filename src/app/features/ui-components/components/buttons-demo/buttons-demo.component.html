@@ -1,7 +1,9 @@
 <div class="buttons-demo">
   <div class="demo-header">
     <ta-title [level]="2">Buttons Demo</ta-title>
-    <ta-text class="subtitle">Démonstration des différents types de boutons disponibles</ta-text>
+    <ta-text class="subtitle"
+      >Démonstration des différents types de boutons disponibles</ta-text
+    >
   </div>
 
   <div class="demo-sections">
@@ -10,17 +12,18 @@
       <ta-title [level]="3">Types de boutons</ta-title>
       <div class="demo-grid">
         @for (type of buttonTypes; track type) {
-          <div class="demo-item">
-            <ta-button 
-              [class]="'btn ' + type.class"
-              (click)="onButtonClick(type.name)">
-              {{ type.name }}
-            </ta-button>
-            <div class="demo-description">
-              <strong>{{ type.name }}</strong>
-              <ta-text>{{ type.description }}</ta-text>
-            </div>
+        <div class="demo-item">
+          <ta-button
+            [class]="'btn ' + type.class"
+            (click)="onButtonClick(type.name)"
+          >
+            {{ type.name }}
+          </ta-button>
+          <div class="demo-description">
+            <strong>{{ type.name }}</strong>
+            <ta-text>{{ type.description }}</ta-text>
           </div>
+        </div>
         }
       </div>
     </section>
@@ -30,17 +33,18 @@
       <ta-title [level]="3">Tailles de boutons</ta-title>
       <div class="demo-grid">
         @for (size of buttonSizes; track size) {
-          <div class="demo-item">
-            <ta-button 
-              [class]="'btn btn-primary ' + size.class"
-              (click)="onButtonClick(size.name)">
-              {{ size.name }}
-            </ta-button>
-            <div class="demo-description">
-              <strong>{{ size.name }}</strong>
-              <ta-text>{{ size.description }}</ta-text>
-            </div>
+        <div class="demo-item">
+          <ta-button
+            [class]="'btn btn-primary ' + size.class"
+            (click)="onButtonClick(size.name)"
+          >
+            {{ size.name }}
+          </ta-button>
+          <div class="demo-description">
+            <strong>{{ size.name }}</strong>
+            <ta-text>{{ size.description }}</ta-text>
           </div>
+        </div>
         }
       </div>
     </section>
@@ -58,19 +62,20 @@
             <ta-text>État par défaut</ta-text>
           </div>
         </div>
-        
+
         <div class="demo-item">
-          <ta-button class="btn btn-primary" disabled>
-            Disabled
-          </ta-button>
+          <ta-button class="btn btn-primary" disabled> Disabled </ta-button>
           <div class="demo-description">
             <strong>Disabled</strong>
             <ta-text>Bouton désactivé</ta-text>
           </div>
         </div>
-        
+
         <div class="demo-item">
-          <ta-button class="btn btn-primary loading" (click)="onButtonClick('loading')">
+          <ta-button
+            class="btn btn-primary loading"
+            (click)="onButtonClick('loading')"
+          >
             <span class="spinner"></span>
             Loading
           </ta-button>
@@ -87,7 +92,10 @@
       <ta-title [level]="3">Boutons avec icônes</ta-title>
       <div class="demo-grid">
         <div class="demo-item">
-          <ta-button class="btn btn-primary" (click)="onButtonClick('icon-left')">
+          <ta-button
+            class="btn btn-primary"
+            (click)="onButtonClick('icon-left')"
+          >
             <span class="material-icons">add</span>
             Ajouter
           </ta-button>
@@ -96,9 +104,12 @@
             <ta-text>Icône avant le texte</ta-text>
           </div>
         </div>
-        
+
         <div class="demo-item">
-          <ta-button class="btn btn-secondary" (click)="onButtonClick('icon-right')">
+          <ta-button
+            class="btn btn-secondary"
+            (click)="onButtonClick('icon-right')"
+          >
             Télécharger
             <span class="material-icons">download</span>
           </ta-button>
@@ -107,9 +118,12 @@
             <ta-text>Icône après le texte</ta-text>
           </div>
         </div>
-        
+
         <div class="demo-item">
-          <ta-button class="btn btn-primary icon-only" (click)="onButtonClick('icon-only')">
+          <ta-button
+            class="btn btn-primary icon-only"
+            (click)="onButtonClick('icon-only')"
+          >
             <span class="material-icons">edit</span>
           </ta-button>
           <div class="demo-description">
@@ -124,16 +138,32 @@
   <div class="demo-info">
     <ta-title [level]="3">Utilisation</ta-title>
     <ta-text>
-      Les boutons sont les éléments d'interaction principaux de l'interface. 
-      Utilisez les différents types en fonction du contexte et de l'importance de l'action.
+      Les boutons sont les éléments d'interaction principaux de l'interface.
+      Utilisez les différents types en fonction du contexte et de l'importance
+      de l'action.
     </ta-text>
     <div class="button-usage-list">
-      <ta-text><strong>Primary :</strong> Action principale de la page ou section</ta-text>
-      <ta-text><strong>Secondary :</strong> Actions secondaires ou alternatives</ta-text>
-      <ta-text><strong>Success :</strong> Actions de validation ou confirmation</ta-text>
-      <ta-text><strong>Warning :</strong> Actions nécessitant attention</ta-text>
-      <ta-text><strong>Danger :</strong> Actions destructives ou suppression</ta-text>
-      <ta-text><strong>Outline :</strong> Actions tertiaires ou optionnelles</ta-text>
+      <ta-text
+        ><strong>Primary :</strong> Action principale de la page ou
+        section</ta-text
+      >
+      <ta-text
+        ><strong>Secondary :</strong> Actions secondaires ou
+        alternatives</ta-text
+      >
+      <ta-text
+        ><strong>Success :</strong> Actions de validation ou
+        confirmation</ta-text
+      >
+      <ta-text
+        ><strong>Warning :</strong> Actions nécessitant attention</ta-text
+      >
+      <ta-text
+        ><strong>Danger :</strong> Actions destructives ou suppression</ta-text
+      >
+      <ta-text
+        ><strong>Outline :</strong> Actions tertiaires ou optionnelles</ta-text
+      >
     </div>
   </div>
 </div>

@@ -1,12 +1,17 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Inject, Injectable, Optional, inject } from '@angular/core';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from "@angular/common/http";
+import { Inject, Injectable, Optional, inject } from "@angular/core";
 
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from '@ta/server';
-import { APPLICATION_CONFIG, IApplicationConfig } from '@ta/utils';
+import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from "@ta/server";
+import { APPLICATION_CONFIG, IApplicationConfig } from "@ta/utils";
 
-import { TaUsersService } from './services/users.service';
+import { TaUsersService } from "./services/users.service";
 
 @Injectable()
 export class ContactScopeInterceptor implements HttpInterceptor {
@@ -19,8 +24,11 @@ export class ContactScopeInterceptor implements HttpInterceptor {
     private _userService: TaUsersService
   ) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.endsWith('.json')) {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (req.url.endsWith(".json")) {
       return next.handle(req);
     }
     if (!this._applicationConfig.isCustomerApplication) {
@@ -30,12 +38,15 @@ export class ContactScopeInterceptor implements HttpInterceptor {
     if (
       !this.graphQlConfig?.config?.url ||
       !req.url.startsWith(this.graphQlConfig?.config?.url) ||
-      req.url.endsWith('user')
+      req.url.endsWith("user")
     ) {
       return next.handle(req);
     }
 
-    if (this.graphQlConfig?.config?.visitor && req.url.startsWith(this.graphQlConfig?.config?.visitor)) {
+    if (
+      this.graphQlConfig?.config?.visitor &&
+      req.url.startsWith(this.graphQlConfig?.config?.visitor)
+    ) {
       return next.handle(req);
     }
 
@@ -43,9 +54,10 @@ export class ContactScopeInterceptor implements HttpInterceptor {
   }
 
   private _setContactToHeader(req: HttpRequest<any>, next: HttpHandler) {
-    const contactIds = this._userService.currentUserContactIds.get()?.join(';') ?? '';
+    const contactIds =
+      this._userService.currentUserContactIds.get()?.join(";") ?? "";
     const contactIdsRequest = req.clone({
-      headers: req.headers.set('ContactIds', contactIds),
+      headers: req.headers.set("ContactIds", contactIds),
     });
     return next.handle(contactIdsRequest);
   }

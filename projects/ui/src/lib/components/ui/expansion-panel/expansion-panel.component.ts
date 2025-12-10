@@ -1,8 +1,8 @@
-import { NgFor } from '@angular/common';
-import { Component, Input, TemplateRef } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { NgFor } from "@angular/common";
+import { Component, Input, TemplateRef } from "@angular/core";
+import { MatExpansionModule } from "@angular/material/expansion";
 
-import { TaBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from "@ta/utils";
 
 export interface ExpansionPanelInput {
   title: TemplateRef<any>;
@@ -10,9 +10,9 @@ export interface ExpansionPanelInput {
   context?: object;
 }
 @Component({
-  selector: 'ta-expansion-panel',
-  templateUrl: './expansion-panel.component.html',
-  styleUrls: ['./expansion-panel.component.scss'],
+  selector: "ta-expansion-panel",
+  templateUrl: "./expansion-panel.component.html",
+  styleUrls: ["./expansion-panel.component.scss"],
   standalone: true,
   imports: [NgFor, MatExpansionModule],
 })

@@ -1,8 +1,8 @@
-import { Picture } from '@ta/services';
-import { FileData, FileStructure } from '@ta/utils';
-import { Observable } from 'rxjs';
+import { Picture } from "@ta/services";
+import { FileData, FileStructure } from "@ta/utils";
+import { Observable } from "rxjs";
 
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export interface IInputLogo extends IInputBase<string> {
   availableFile$?: Observable<FileData>;
@@ -20,7 +20,7 @@ export class InputLogo extends InputBase<string> {
   constructor(options: IInputLogo = {}) {
     super(options);
     if (!this.controlType) {
-      this.controlType = 'logo';
+      this.controlType = "logo";
     }
 
     this.availableFile$ = options.availableFile$ || null;

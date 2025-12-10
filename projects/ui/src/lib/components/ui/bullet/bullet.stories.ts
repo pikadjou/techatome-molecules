@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { BulletComponent } from './bullet.component';
+import { BulletComponent } from "./bullet.component";
 
 export type StoryType = BulletComponent;
 
 export default {
-  title: 'UI/Bullet',
+  title: "UI/Bullet",
   component: BulletComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -18,14 +18,14 @@ export default {
     };
   },
   args: {
-    type: 'default',
+    type: "default",
   },
 } as Meta<StoryType>;
 
 export const Basic: StoryObj<StoryType> = {};
 
 export const Notification: StoryObj<StoryType> = {
-  render: args => {
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -35,48 +35,48 @@ export const Notification: StoryObj<StoryType> = {
     };
   },
   args: {
-    type: 'notif',
+    type: "notif",
   },
 };
 
 export const Small: StoryObj<StoryType> = {
   args: {
-    size: 'sm',
+    size: "sm",
   },
 };
 
 export const Secondary: StoryObj<StoryType> = {
   args: {
-    type: 'secondary',
+    type: "secondary",
   },
 };
 
 export const Success: StoryObj<StoryType> = {
   args: {
-    type: 'success',
+    type: "success",
   },
 };
 
 export const Warning: StoryObj<StoryType> = {
   args: {
-    type: 'warning',
+    type: "warning",
   },
 };
 
 export const Danger: StoryObj<StoryType> = {
   args: {
-    type: 'alert',
+    type: "alert",
   },
 };
 
 export const Purple: StoryObj<StoryType> = {
   args: {
-    type: 'purple',
+    type: "purple",
   },
 };
 
 export const New: StoryObj<StoryType> = {
   args: {
-    type: 'new',
+    type: "new",
   },
 };

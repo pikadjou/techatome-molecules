@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { IInputBase, InputBase } from './base';
+import { Observable } from "rxjs";
+import { IInputBase, InputBase } from "./base";
 export interface IInputDropdown<T> extends IInputBase<T> {
     options$?: Observable<{
         id: string;

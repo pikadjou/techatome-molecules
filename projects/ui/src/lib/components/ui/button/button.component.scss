@@ -8,7 +8,8 @@
   border: none;
 
   border-radius: common.get-var(components, button, radius);
-  padding: common.get-var(components, button, padding-vertical) common.get-var(components, button, padding-horizontal);
+  padding: common.get-var(components, button, padding-vertical)
+    common.get-var(components, button, padding-horizontal);
 
   @include fonts.fontSizeBody(md);
 
@@ -19,10 +20,12 @@
 
   &.small {
     @include fonts.fontSizeBody(sm);
-    padding: common.get-var(components, button, small, padding-vertical) common.get-var(components, button, small, padding-horizontal);
+    padding: common.get-var(components, button, small, padding-vertical)
+      common.get-var(components, button, small, padding-horizontal);
   }
   &.large {
-    padding: common.get-var(components, button, large, padding-vertical) common.get-var(components, button, large, padding-horizontal);
+    padding: common.get-var(components, button, large, padding-vertical)
+      common.get-var(components, button, large, padding-horizontal);
   }
   &.no-border {
     border: none;
@@ -37,34 +40,69 @@
 
     &:hover {
       color: common.get-var(components, button, primary, hover, color);
-      background-color: common.get-var(components, button, primary, hover, background);
-      border: 1px solid common.get-var(components, button, primary, hover, border);
-
+      background-color: common.get-var(
+        components,
+        button,
+        primary,
+        hover,
+        background
+      );
+      border: 1px solid
+        common.get-var(components, button, primary, hover, border);
     }
 
     &.disabled {
       color: common.get-var(components, button, primary, disabled, color);
-      background-color: common.get-var(components, button,  primary, disabled, background);
+      background-color: common.get-var(
+        components,
+        button,
+        primary,
+        disabled,
+        background
+      );
     }
     &.inactive {
       color: common.get-var(components, button, primary, inactive, color);
-      background-color: common.get-var(components, button,  primary, inactive, background);
+      background-color: common.get-var(
+        components,
+        button,
+        primary,
+        inactive,
+        background
+      );
     }
-
   }
   &.secondary {
     color: common.get-var(components, button, secondary, color);
     background-color: common.get-var(components, button, secondary, background);
     border: 1px solid common.get-var(components, button, secondary, border);
     &:hover {
-      border-color: common.get-var(components, button, secondary, hover, border);
+      border-color: common.get-var(
+        components,
+        button,
+        secondary,
+        hover,
+        border
+      );
     }
     &.disabled {
       color: common.get-var(components, button, secondary, disabled, color);
-      border-color: common.get-var(components, button, secondary, disabled, border);
+      border-color: common.get-var(
+        components,
+        button,
+        secondary,
+        disabled,
+        border
+      );
     }
     &.inactive {
-      border-color: common.get-var(components, button, secondary, inactive, border);
+      border-color: common.get-var(
+        components,
+        button,
+        secondary,
+        inactive,
+        border
+      );
     }
 
     ta-font-icon {
@@ -77,15 +115,33 @@
     border: 1px solid common.get-var(components, button, tertiary, border);
     &:hover {
       color: common.get-var(components, button, tertiary, hover, color);
-      background-color: common.get-var(components, button, tertiary, hover, border);
+      background-color: common.get-var(
+        components,
+        button,
+        tertiary,
+        hover,
+        border
+      );
       border-color: common.get-var(components, button, tertiary, hover, border);
     }
     &.disabled {
       color: common.get-var(components, button, tertiary, disabled, color);
-      border-color: common.get-var(components, button, tertiary, disabled, border);
+      border-color: common.get-var(
+        components,
+        button,
+        tertiary,
+        disabled,
+        border
+      );
     }
     &.inactive {
-      border-color: common.get-var(components, button, tertiary, inactive, border);
+      border-color: common.get-var(
+        components,
+        button,
+        tertiary,
+        inactive,
+        border
+      );
     }
   }
 }

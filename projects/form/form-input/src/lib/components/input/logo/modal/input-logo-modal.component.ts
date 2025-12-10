@@ -1,21 +1,27 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
-import { map } from 'rxjs';
+import { map } from "rxjs";
 
-import { FontIconComponent } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent, DualButtonComponent, TitleComponent } from '@ta/ui';
-import { FileData, TaBaseModal, TemporaryFile, pickImages } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import { TranslatePipe } from "@ta/translation";
+import { ButtonComponent, DualButtonComponent, TitleComponent } from "@ta/ui";
+import { FileData, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
 
-import { LogoDialogData } from '../input-logo.component';
+import { LogoDialogData } from "../input-logo.component";
 
 @Component({
-  selector: '',
-  styleUrls: ['./input-logo-modal.component.scss'],
-  templateUrl: './input-logo-modal.component.html',
+  selector: "",
+  styleUrls: ["./input-logo-modal.component.scss"],
+  templateUrl: "./input-logo-modal.component.html",
   standalone: true,
-  imports: [ButtonComponent, FontIconComponent, TitleComponent, DualButtonComponent, TranslatePipe],
+  imports: [
+    ButtonComponent,
+    FontIconComponent,
+    TitleComponent,
+    DualButtonComponent,
+    TranslatePipe,
+  ],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class InputLogoModal extends TaBaseModal implements OnInit {
@@ -29,19 +35,23 @@ export class InputLogoModal extends TaBaseModal implements OnInit {
   ) {
     super();
 
-    this.dialogRef.addPanelClass(['full-screen-modal', 'forced']);
+    this.dialogRef.addPanelClass(["full-screen-modal", "forced"]);
     this.selection = this.data.selection;
   }
 
   ngOnInit() {
     if (this.data.input.availableFile$) {
-      this._registerSubscription(this.data.input.availableFile$.subscribe(() => this.tempFiles.removeAll()));
+      this._registerSubscription(
+        this.data.input.availableFile$.subscribe(() =>
+          this.tempFiles.removeAll()
+        )
+      );
     }
   }
 
   public getPics$() {
     return this.data.input.availableFile$?.pipe(
-      map(file => ({
+      map((file) => ({
         ...file,
         isSelected: this.selection === file.url,
       }))

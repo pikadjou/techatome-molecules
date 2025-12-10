@@ -1,9 +1,9 @@
-import { AfterViewInit, ElementRef, EventEmitter, OnInit } from '@angular/core';
-import EditorJS from '@editorjs/editorjs';
-import { Observable } from 'rxjs';
-import { TaTranslationService } from '@ta/translation';
-import { TaBaseComponent } from '@ta/utils';
-import { WysiswgBlockData } from '../../public-api';
+import { AfterViewInit, ElementRef, EventEmitter, OnInit } from "@angular/core";
+import EditorJS from "@editorjs/editorjs";
+import { Observable } from "rxjs";
+import { TaTranslationService } from "@ta/translation";
+import { TaBaseComponent } from "@ta/utils";
+import { WysiswgBlockData } from "../../public-api";
 import * as i0 from "@angular/core";
 export type EditorInputSavedData = {
     blocks: WysiswgBlockData[];

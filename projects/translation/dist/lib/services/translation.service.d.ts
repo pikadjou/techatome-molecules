@@ -1,4 +1,4 @@
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from "@ngx-translate/core";
 import * as i0 from "@angular/core";
 export declare const TRANSLATION_CONFIG = "config_translation";
 export interface ITranslationConfig {

@@ -1,4 +1,4 @@
-import { ValidatorFn, Validators } from '@angular/forms';
+import { ValidatorFn, Validators } from "@angular/forms";
 import * as i0 from "@angular/core";
 export declare class FormLabelComponent {
     input: {

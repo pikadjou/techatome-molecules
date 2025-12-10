@@ -1,7 +1,7 @@
 <div class="flex-start g-space-xs">
   @for (culture of this.cultures; track culture; let isLast = $last) {
-    <div>
-      {{ 'ui.culture.short.' + culture | translate }}{{ !isLast ? ',' : '' }}
-    </div>
+  <div>
+    {{ "ui.culture.short." + culture | translate }}{{ !isLast ? "," : "" }}
+  </div>
   }
 </div>

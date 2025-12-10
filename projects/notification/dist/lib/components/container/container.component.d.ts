@@ -1,9 +1,9 @@
-import { EventEmitter, OnInit, TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TaBaseComponent } from '@ta/utils';
-import { TaNotificationDataService } from '../../services/data.service';
-import { NotificationFilter } from '../../services/queries';
-import { RoutingType, TaNotificationSharedService } from '../../services/shared.service';
+import { EventEmitter, OnInit, TemplateRef } from "@angular/core";
+import { Observable } from "rxjs";
+import { TaBaseComponent } from "@ta/utils";
+import { TaNotificationDataService } from "../../services/data.service";
+import { NotificationFilter } from "../../services/queries";
+import { RoutingType, TaNotificationSharedService } from "../../services/shared.service";
 import * as i0 from "@angular/core";
 export declare class ContainerComponent extends TaBaseComponent implements OnInit {
     private _notificationDataService;

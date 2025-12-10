@@ -1,5 +1,5 @@
-import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from '@ta/server';
-import { Project } from './dto/project';
+import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from "@ta/server";
+import { Project } from "./dto/project";
 import * as i0 from "@angular/core";
 export declare class TaProjectsService extends TaBaseService {
     protected _graphEndpoint: GraphEndpoint;

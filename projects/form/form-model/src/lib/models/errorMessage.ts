@@ -1,6 +1,6 @@
-import { InputBase } from './input/base';
-import { InputLabel } from './input/label';
-import { InputPanel } from './input/panel';
+import { InputBase } from "./input/base";
+import { InputLabel } from "./input/label";
+import { InputPanel } from "./input/panel";
 
 export class FormErrorMessage {
   static updateFormMessage(

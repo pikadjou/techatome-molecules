@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { __classicMenu } from 'projects/menu/src/lib/components/menu/__mock__/menu';
+import { Meta, StoryObj } from "@storybook/angular";
+import { __classicMenu } from "projects/menu/src/lib/components/menu/__mock__/menu";
 
-import { Menu } from '@ta/menu';
+import { Menu } from "@ta/menu";
 
-import { LayoutWithBottomNavComponent } from './layout-with-bottom-nav.component';
+import { LayoutWithBottomNavComponent } from "./layout-with-bottom-nav.component";
 
 type StoryType = LayoutWithBottomNavComponent & {
   menu: Menu;
@@ -11,10 +11,10 @@ type StoryType = LayoutWithBottomNavComponent & {
 };
 
 export default {
-  title: 'LAYOUT/Page with bottom nav',
+  title: "LAYOUT/Page with bottom nav",
   component: LayoutWithBottomNavComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

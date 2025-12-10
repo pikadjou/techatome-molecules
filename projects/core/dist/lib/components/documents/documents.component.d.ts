@@ -1,10 +1,10 @@
-import { EventEmitter, OnInit } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { Document } from '@ta/files-extended';
-import { FilterHelper, Menu } from '@ta/menu';
-import { FileData, TaBaseComponent } from '@ta/utils';
+import { EventEmitter, OnInit } from "@angular/core";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { MatDialog } from "@angular/material/dialog";
+import { Observable } from "rxjs";
+import { Document } from "@ta/files-extended";
+import { FilterHelper, Menu } from "@ta/menu";
+import { FileData, TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class DocumentsComponent extends TaBaseComponent implements OnInit {
     private _bottomSheet;

@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { Menu } from '../../models/menu/menu';
+import { Meta, StoryObj } from "@storybook/angular";
+import { Menu } from "../../models/menu/menu";
 import {
   __classicIconMenu,
   __classicMenu,
@@ -7,16 +7,16 @@ import {
   __labelMenu,
   __onClickMenu,
   __textTooLongMenu,
-} from '../menu/__mock__/menu';
-import { ToggleNavigationComponent } from './toggle-navigation.component';
+} from "../menu/__mock__/menu";
+import { ToggleNavigationComponent } from "./toggle-navigation.component";
 
 type StoryType = ToggleNavigationComponent & { menu?: Menu };
 
 export default {
-  title: 'MENU/Toggle navigation',
+  title: "MENU/Toggle navigation",
   component: ToggleNavigationComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -28,14 +28,14 @@ export default {
   },
   args: {
     menu: __classicMenu,
-    container: 'switch',
+    container: "switch",
   },
 } as Meta<StoryType>;
 
 export const Switch: StoryObj<ToggleNavigationComponent> = {};
 
 export const Tab: StoryObj<ToggleNavigationComponent> = {
-  args: { container: 'tab' },
+  args: { container: "tab" },
 };
 
 export const WithLabels: StoryObj<ToggleNavigationComponent> = {

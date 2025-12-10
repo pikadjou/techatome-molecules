@@ -1,19 +1,19 @@
-import { NgClass, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass, NgIf } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { TaSizes, TaState } from '@ta/styles';
+import { FontIconComponent } from "@ta/icons";
+import { TaSizes, TaState } from "@ta/styles";
 
 @Component({
-  selector: 'ta-link',
-  templateUrl: './link.component.html',
-  styleUrls: ['./link.component.scss'],
+  selector: "ta-link",
+  templateUrl: "./link.component.html",
+  styleUrls: ["./link.component.scss"],
   standalone: true,
   imports: [NgIf, NgClass, FontIconComponent],
 })
 export class LinkComponent {
   @Input()
-  state: TaState = 'classic';
+  state: TaState = "classic";
 
   @Input()
   underline?: boolean = true;
@@ -22,7 +22,7 @@ export class LinkComponent {
   bold: boolean = false;
 
   @Input()
-  size: TaSizes = 'md';
+  size: TaSizes = "md";
 
   @Input()
   icon: string | null = null;
@@ -33,7 +33,7 @@ export class LinkComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state === 'classic') {
+    if (this.state === "classic") {
       this.action.emit();
     }
   }

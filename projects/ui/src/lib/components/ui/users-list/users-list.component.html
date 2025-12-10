@@ -1,10 +1,11 @@
 <div class="flex-row g-space-xs">
-  @for (user of this.users | async; track user.firstname + ' ' + user.lastname) {
-    <ta-user-logo
-      [user]="user"
-      size="md"
-      defaultType="trigram"
-      [attr.title]="user.firstname + ' ' + user.lastname"
-    ></ta-user-logo>
+  @for (user of this.users | async; track user.firstname + ' ' + user.lastname)
+  {
+  <ta-user-logo
+    [user]="user"
+    size="md"
+    defaultType="trigram"
+    [attr.title]="user.firstname + ' ' + user.lastname"
+  ></ta-user-logo>
   }
 </div>

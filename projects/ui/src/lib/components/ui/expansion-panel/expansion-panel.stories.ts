@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TaExpansionPanelComponent } from './expansion-panel.component';
+import { TaExpansionPanelComponent } from "./expansion-panel.component";
 
 type StoryType = TaExpansionPanelComponent;
 
 export default {
-  title: 'UI/Expansion panel',
+  title: "UI/Expansion panel",
   component: TaExpansionPanelComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -37,7 +37,7 @@ export default {
 export const Basic: StoryObj<StoryType> = {};
 
 export const WithContext: StoryObj<StoryType> = {
-  render: args => {
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

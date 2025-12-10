@@ -4,13 +4,13 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
-import { differenceInMinutes } from 'date-fns';
-import { Observable, of, share, tap } from 'rxjs';
+import { differenceInMinutes } from "date-fns";
+import { Observable, of, share, tap } from "rxjs";
 
-import { Logger } from '../logger';
+import { Logger } from "../logger";
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
@@ -20,13 +20,13 @@ export class CacheInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.method !== 'GET') {
+    if (req.method !== "GET") {
       return next.handle(req);
     }
-    const cacheTime = Number(req.params.get('cacheTime'));
+    const cacheTime = Number(req.params.get("cacheTime"));
 
     if (cacheTime === 0) {
-      Logger.LogInfo('[SERVER] Api No Cache required', req.url);
+      Logger.LogInfo("[SERVER] Api No Cache required", req.url);
       return next.handle(req);
     }
     const cachedResponse = this.cache.get(req.url);
@@ -39,13 +39,13 @@ export class CacheInterceptor implements HttpInterceptor {
 
       if (cacheTime === -1 || cacheTime > diffInMinutes) {
         Logger.LogInfo(
-          '[SERVER] Api Cached response:',
+          "[SERVER] Api Cached response:",
           req.url,
           cachedResponse
         );
         return of(cachedResponse.response.clone());
       } else {
-        Logger.LogInfo('[SERVER] Api Cached expired', req.url);
+        Logger.LogInfo("[SERVER] Api Cached expired", req.url);
       }
     }
 

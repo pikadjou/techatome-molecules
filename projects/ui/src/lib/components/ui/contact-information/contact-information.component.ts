@@ -1,17 +1,17 @@
-import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgIf } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
-import { TaIconType } from '@ta/icons';
+import { FontIconComponent, LocalIconComponent } from "@ta/icons";
+import { TaIconType } from "@ta/icons";
 
-import { TaTranslationUI } from '../translation.service';
+import { TaTranslationUI } from "../../../translation.service";
 
 @Component({
-  selector: 'ta-contact-information',
-  templateUrl: './contact-information.component.html',
-  styleUrls: ['./contact-information.component.scss'],
+  selector: "ta-contact-information",
+  templateUrl: "./contact-information.component.html",
+  styleUrls: ["./contact-information.component.scss"],
   standalone: true,
   imports: [NgIf, FontIconComponent, LocalIconComponent, TranslateModule],
 })

@@ -1,55 +1,54 @@
 <ta-empty [isEmpty]="this.files.length === 0">
   @if (this.canDisplayFileType('Image')) {
-    <div class="files-container">
-      @for (file of this.files; track this.trackById($index, file); let i = $index) {
-        <div class="info-container" (click)="this.onFileSelected(file, i)">
-          @if (this.canDeleteFile) {
-            <div class="delete" (click)="this.deleteFile(file)" appStopPropagation>
-              <div class="delete-icon">
-                <ta-font-icon type="sm" name="close"></ta-font-icon>
-              </div>
-            </div>
-          }
-
-          @if (file.type === 'Image') {
-            <img [src]="file.thumbnailUrl || file.url | safe: 'url'" />
-          } @else if (file.type === 'Document') {
-            <ta-file-card [file]="file"></ta-file-card>
-          }
-
-          @if (file.isLoading) {
-            <div class="is-loading">
-              <ta-local-icon
-                class="align-middle"
-                [rotation]="file.isLoading"
-                [type]="this.icon.Loader"
-                [size]="'xs'"
-              ></ta-local-icon>
-            </div>
-          }
-          @if (file.isSelected) {
-            <div class="is-selected">
-              <ta-local-icon class="align-middle" [type]="this.icon.Checked" [size]="'xs'"></ta-local-icon>
-            </div>
-          }
+  <div class="files-container">
+    @for (file of this.files; track this.trackById($index, file); let i =
+    $index) {
+    <div class="info-container" (click)="this.onFileSelected(file, i)">
+      @if (this.canDeleteFile) {
+      <div class="delete" (click)="this.deleteFile(file)" appStopPropagation>
+        <div class="delete-icon">
+          <ta-font-icon type="sm" name="close"></ta-font-icon>
         </div>
+      </div>
+      } @if (file.type === 'Image') {
+      <img [src]="file.thumbnailUrl || file.url | safe : 'url'" />
+      } @else if (file.type === 'Document') {
+      <ta-file-card [file]="file"></ta-file-card>
+      } @if (file.isLoading) {
+      <div class="is-loading">
+        <ta-local-icon
+          class="align-middle"
+          [rotation]="file.isLoading"
+          [type]="this.icon.Loader"
+          [size]="'xs'"
+        ></ta-local-icon>
+      </div>
+      } @if (file.isSelected) {
+      <div class="is-selected">
+        <ta-local-icon
+          class="align-middle"
+          [type]="this.icon.Checked"
+          [size]="'xs'"
+        ></ta-local-icon>
+      </div>
       }
     </div>
-  }
-
-  @if (canDisplayFileType('Document')) {
-    <div class="row g-2 row-cols-1 row-cols-md-2 row-cols-xl-3 mb-space-lg">
-      @for (file of this.files; track this.trackById($index, file); let i = $index) {
-        <div>
-          @if (file.type === 'Document') {
-            <ta-file-card
-              (fileSelected)="this.onFileSelected(file, i)"
-              (moreInformationSelected)="this.onMoreInformationSelected(file)"
-              [file]="file"
-            ></ta-file-card>
-          }
-        </div>
+    }
+  </div>
+  } @if (canDisplayFileType('Document')) {
+  <div class="row g-2 row-cols-1 row-cols-md-2 row-cols-xl-3 mb-space-lg">
+    @for (file of this.files; track this.trackById($index, file); let i =
+    $index) {
+    <div>
+      @if (file.type === 'Document') {
+      <ta-file-card
+        (fileSelected)="this.onFileSelected(file, i)"
+        (moreInformationSelected)="this.onMoreInformationSelected(file)"
+        [file]="file"
+      ></ta-file-card>
       }
     </div>
+    }
+  </div>
   }
 </ta-empty>

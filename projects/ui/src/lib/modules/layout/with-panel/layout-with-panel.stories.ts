@@ -1,18 +1,22 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { LayoutContentComponent, LayoutPanelComponent, LayoutWithPanelComponent } from '../public-api';
+import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
+import {
+  LayoutContentComponent,
+  LayoutPanelComponent,
+  LayoutWithPanelComponent,
+} from "../public-api";
 
 type StoryType = LayoutWithPanelComponent & { isOpen: boolean };
 
 export default {
-  title: 'LAYOUT/Page with panel',
+  title: "LAYOUT/Page with panel",
   component: LayoutWithPanelComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     moduleMetadata({
       imports: [LayoutContentComponent, LayoutPanelComponent],
     }),
   ],
-  render: args => {
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

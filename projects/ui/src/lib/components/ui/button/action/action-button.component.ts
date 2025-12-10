@@ -1,15 +1,15 @@
-import { NgIf, NgFor, NgClass } from '@angular/common';
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
-import { Component, Input } from '@angular/core';
+import { NgIf, NgFor, NgClass } from "@angular/common";
+import { FontIconComponent, LocalIconComponent } from "@ta/icons";
+import { Component, Input } from "@angular/core";
 
-import { getFontIcon, isFontIcon, isLocalIcon } from '@ta/icons';
+import { getFontIcon, isFontIcon, isLocalIcon } from "@ta/icons";
 
-import { ActionButtonData } from './action-button-data';
+import { ActionButtonData } from "./action-button-data";
 
 @Component({
-selector: 'ta-action-button',
-  templateUrl: './action-button.component.html',
-  styleUrls: ['./action-button.component.scss'],
+  selector: "ta-action-button",
+  templateUrl: "./action-button.component.html",
+  styleUrls: ["./action-button.component.scss"],
   standalone: true,
   imports: [NgIf, NgFor, NgClass, FontIconComponent, LocalIconComponent],
 })

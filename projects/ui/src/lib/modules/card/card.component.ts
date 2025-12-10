@@ -1,11 +1,11 @@
-import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NewComponent } from '../../components/ui/new/new.component';
+import { NgClass } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { NewComponent } from "../../components/ui/new/new.component";
 
 @Component({
-selector: 'ta-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss'],
+  selector: "ta-card",
+  templateUrl: "./card.component.html",
+  styleUrls: ["./card.component.scss"],
   standalone: true,
   imports: [NgClass, NewComponent],
 })

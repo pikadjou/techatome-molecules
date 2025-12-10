@@ -8,14 +8,14 @@ export class Logger {
 
   public static LogDebug(message: string, data?: string | Object | any): void {
     if (data === undefined) {
-      data = '';
+      data = "";
     }
 
     if (Logger.config.DEBUG && Logger.DEBUG >= Logger.config.DEBUG_LEVEL) {
       // tslint:disable-next-line:no-console
       console.debug(message, data);
     }
-    this._fsLog('log', message, data);
+    this._fsLog("log", message, data);
   }
 
   public static LogInfo(message: string, ...data: any[]): void {
@@ -23,7 +23,7 @@ export class Logger {
       // tslint:disable-next-line:no-console
       console.info(message, data);
     }
-    this._fsLog('info', message, data);
+    this._fsLog("info", message, data);
   }
 
   public static LogWarning(
@@ -31,24 +31,24 @@ export class Logger {
     data?: string | Object | any
   ): void {
     if (data === undefined) {
-      data = '';
+      data = "";
     }
 
     if (Logger.config.DEBUG && Logger.WARNING >= Logger.config.DEBUG_LEVEL) {
-      console.warn('/!\\ ' + message + ' /!\\', data);
+      console.warn("/!\\ " + message + " /!\\", data);
     }
-    this._fsLog('warn', message, data);
+    this._fsLog("warn", message, data);
   }
 
   public static LogError(message: string, data?: any): void {
     if (data === undefined) {
-      data = '';
+      data = "";
     }
 
     if (Logger.config.DEBUG && Logger.ERROR >= Logger.config.DEBUG_LEVEL) {
-      console.error('/!\\ ' + message + ' /!\\', data);
+      console.error("/!\\ " + message + " /!\\", data);
     }
-    this._fsLog('error', message, data);
+    this._fsLog("error", message, data);
   }
 
   private static _fsLog(logLevel: string, message: string, data?: any) {

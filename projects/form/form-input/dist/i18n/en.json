@@ -1,12 +1,8 @@
 {
-  "placeholder": {
-    "text": "Enter text...",
-    "number": "Enter a number...",
-    "date": "Select a date...",
-    "select": "Select an option..."
-  },
-  "button": {
-    "clear": "Clear",
-    "select": "Select"
-  }
+  "placeholder.text": "Enter text...",
+  "placeholder.number": "Enter a number...",
+  "placeholder.date": "Select a date...",
+  "placeholder.select": "Select an option...",
+  "button.clear": "Clear",
+  "button.select": "Select"
 }

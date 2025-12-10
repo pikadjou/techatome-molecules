@@ -5,10 +5,10 @@ import {
   graphQlPaginationFields,
   graphQlTake,
   keyValueProps,
-} from '@ta/server';
-import { isNonNullable } from '@ta/utils';
+} from "@ta/server";
+import { isNonNullable } from "@ta/utils";
 
-import { notificationProps } from './dto/notification';
+import { notificationProps } from "./dto/notification";
 
 export type NotificationFilter = {
   projectId?: string;
@@ -16,28 +16,32 @@ export type NotificationFilter = {
   take?: number | null;
 } | null;
 
-export function GET_NOTIFICATIONS(filters: NotificationFilter): GraphQueryPayload {
+export function GET_NOTIFICATIONS(
+  filters: NotificationFilter
+): GraphQueryPayload {
   const where = computeFilters(filters);
   return {
     query: Apollo_gql`
     query Notifications {
-        notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(filters?.take)}) {
+        notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(
+      filters?.take
+    )}) {
             items {
-              ${notificationProps.get('id')}
-              ${notificationProps.get('date')}
-              ${notificationProps.get('level')}
-              ${notificationProps.get('isNew')}
-              ${notificationProps.get('userId')}
-              ${notificationProps.get('tenantId')}
-              ${notificationProps.get('tenantName')}
-              ${notificationProps.get('type')}
-              ${notificationProps.get('context')} {
-                ${keyValueProps.get('key')}
-                ${keyValueProps.get('value')}
+              ${notificationProps.get("id")}
+              ${notificationProps.get("date")}
+              ${notificationProps.get("level")}
+              ${notificationProps.get("isNew")}
+              ${notificationProps.get("userId")}
+              ${notificationProps.get("tenantId")}
+              ${notificationProps.get("tenantName")}
+              ${notificationProps.get("type")}
+              ${notificationProps.get("context")} {
+                ${keyValueProps.get("key")}
+                ${keyValueProps.get("value")}
               }
-              ${notificationProps.get('redirectContext')} {
-                ${keyValueProps.get('key')}
-                ${keyValueProps.get('value')}
+              ${notificationProps.get("redirectContext")} {
+                ${keyValueProps.get("key")}
+                ${keyValueProps.get("value")}
               }
             }
         }
@@ -47,12 +51,16 @@ export function GET_NOTIFICATIONS(filters: NotificationFilter): GraphQueryPayloa
   };
 }
 
-export function GET_NOTIFICATIONS_COUNT(filters: NotificationFilter): GraphQueryPayload {
+export function GET_NOTIFICATIONS_COUNT(
+  filters: NotificationFilter
+): GraphQueryPayload {
   const where = computeFilters(filters);
   return {
     query: Apollo_gql`
       query Notifications {
-          notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(filters?.take)}) {
+          notifications(${where}, order: { isNew: DESC, date: DESC }, ${graphQlTake(
+      filters?.take
+    )}) {
               ${graphQlPaginationFields()}
           }
       }
@@ -66,8 +74,8 @@ export function READ_NOTIFICATION(id: string): GraphMutationPayload {
     mutation: Apollo_gql`
       mutation NotificationRead($id: UUID!) {
         notificationRead(notificationId: $id) {
-            ${notificationProps.get('id')}
-            ${notificationProps.get('isNew')}
+            ${notificationProps.get("id")}
+            ${notificationProps.get("isNew")}
         }
       }
     `,
@@ -88,5 +96,5 @@ function computeFilters(filters: NotificationFilter): string {
     }
   }
 
-  return `where: { ${clause.join(',')} }`;
+  return `where: { ${clause.join(",")} }`;
 }

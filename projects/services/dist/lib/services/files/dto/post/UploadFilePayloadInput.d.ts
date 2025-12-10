@@ -1,4 +1,4 @@
-import { FileType } from '../file-type';
+import { FileType } from "../file-type";
 export interface UploadFilePayloadInput {
     type?: FileType;
     description?: String;

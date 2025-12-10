@@ -1,4 +1,4 @@
-import { TaIconType } from '@ta/icons';
+import { TaIconType } from "@ta/icons";
 import * as i0 from "@angular/core";
 export declare class ContactInformationComponent {
     /**

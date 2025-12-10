@@ -1,14 +1,18 @@
 @if (this.isEmpty) {
-  <div class="empty-container">
-    @if (this.showMessage) {
-      @if (this.isLight) {
-        <ta-picture-info-message [type]="this.type" [text]="this.text"> </ta-picture-info-message>
-      } @else {
-        <ta-picture-info-message [icon]="this.icon" [iconSize]="this.iconSize" [type]="this.type" [text]="this.text">
-        </ta-picture-info-message>
-      }
-    }
-  </div>
+<div class="empty-container">
+  @if (this.showMessage) { @if (this.isLight) {
+  <ta-picture-info-message [type]="this.type" [text]="this.text">
+  </ta-picture-info-message>
+  } @else {
+  <ta-picture-info-message
+    [icon]="this.icon"
+    [iconSize]="this.iconSize"
+    [type]="this.type"
+    [text]="this.text"
+  >
+  </ta-picture-info-message>
+  } }
+</div>
 } @else {
-  <ng-content></ng-content>
+<ng-content></ng-content>
 }

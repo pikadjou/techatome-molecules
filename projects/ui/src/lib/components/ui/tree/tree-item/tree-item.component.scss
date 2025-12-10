@@ -3,7 +3,7 @@
 .item {
   position: relative;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 20px;
     left: calc(common.get-var(space, xl) * -0.5);

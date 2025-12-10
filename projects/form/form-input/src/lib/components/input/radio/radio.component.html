@@ -4,29 +4,29 @@
 
 <div class="radio-container">
   @for (option of this.input.options | async; track option.id) {
-    <div
-      class="radio-element"
-      [ngClass]="{
+  <div
+    class="radio-element"
+    [ngClass]="{
         validated: this.input.value === option.id,
         disabled: this.input.disabled,
       }"
-      (click)="this.onOptionClicked(option.id)"
-    >
-      <div
-        [ngClass]="{
+    (click)="this.onOptionClicked(option.id)"
+  >
+    <div
+      [ngClass]="{
           'button-with-icon': this.hasLabel(option),
           'only-icon': !this.hasLabel(option),
         }"
-      >
-        @if (option.icon) {
-          <ta-local-icon [type]="option.icon" [size]="this.iconSize(option)"> </ta-local-icon>
-        }
-        @if (option.name) {
-          <span>
-            {{ option.name | translate }}
-          </span>
-        }
-      </div>
+    >
+      @if (option.icon) {
+      <ta-local-icon [type]="option.icon" [size]="this.iconSize(option)">
+      </ta-local-icon>
+      } @if (option.name) {
+      <span>
+        {{ option.name | translate }}
+      </span>
+      }
     </div>
+  </div>
   }
 </div>

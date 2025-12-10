@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   AfterViewInit,
   Component,
@@ -10,30 +10,34 @@ import {
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
-} from '@angular/core';
+} from "@angular/core";
 
-import { TaBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from "@ta/utils";
 
-import { TaDefaultPanelComponent } from '../default-panel/default-panel.component';
-import { OverlayMenuConfig, OverlayService } from '../overlay.service';
+import { TaDefaultPanelComponent } from "../default-panel/default-panel.component";
+import { OverlayMenuConfig, OverlayService } from "../overlay.service";
 
 @Component({
-  selector: 'ta-overlay-panel',
+  selector: "ta-overlay-panel",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './overlay-panel.component.html',
-  styleUrls: ['./overlay-panel.component.scss'],
+  templateUrl: "./overlay-panel.component.html",
+  styleUrls: ["./overlay-panel.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class TaOverlayPanelComponent extends TaBaseComponent implements AfterViewInit {
-  @ContentChild('panelTrigger') triggerTpl!: TemplateRef<any>;
-  @ContentChild('panelContent') contentTpl!: TemplateRef<any>;
+export class TaOverlayPanelComponent
+  extends TaBaseComponent
+  implements AfterViewInit
+{
+  @ContentChild("panelTrigger") triggerTpl!: TemplateRef<any>;
+  @ContentChild("panelContent") contentTpl!: TemplateRef<any>;
 
-  @ViewChild('triggerHost', { static: true }) triggerHostRef!: ElementRef<HTMLElement>;
+  @ViewChild("triggerHost", { static: true })
+  triggerHostRef!: ElementRef<HTMLElement>;
 
   @Input() panelConfig!: OverlayMenuConfig;
 
-  @Input() position: 'default' | 'right' = 'default';
+  @Input() position: "default" | "right" = "default";
 
   @Output() closed = new EventEmitter<void>();
 
@@ -45,33 +49,33 @@ export class TaOverlayPanelComponent extends TaBaseComponent implements AfterVie
 
   ngAfterViewInit(): void {
     if (!this.panelConfig) {
-      console.log('Missing panelConfig');
+      console.log("Missing panelConfig");
       return;
     }
     if (!this.contentTpl) {
-      console.log('Missing panelContent');
+      console.log("Missing panelContent");
       return;
     }
     if (!this.triggerTpl) {
-      console.log('Missing panelTrigger');
+      console.log("Missing panelTrigger");
       return;
     }
 
-    if (this.position === 'right') {
+    if (this.position === "right") {
       this.panelConfig.positions = [
         {
           // Position à droite du déclencheur
-          originX: 'end',
-          originY: 'center',
-          overlayX: 'start',
-          overlayY: 'center',
+          originX: "end",
+          originY: "center",
+          overlayX: "start",
+          overlayY: "center",
         },
         {
           // Position à gauche du déclencheur (fallback)
-          originX: 'start',
-          originY: 'center',
-          overlayX: 'end',
-          overlayY: 'center',
+          originX: "start",
+          originY: "center",
+          overlayX: "end",
+          overlayY: "center",
         },
       ];
     }
@@ -91,11 +95,15 @@ export class TaOverlayPanelComponent extends TaBaseComponent implements AfterVie
   }
 
   public open(manual = false) {
-    if (!manual && this._configWithDefaults && this._configWithDefaults.manualTrigger === true) {
+    if (
+      !manual &&
+      this._configWithDefaults &&
+      this._configWithDefaults.manualTrigger === true
+    ) {
       return;
     }
     if (!this._configWithDefaults?.triggerElement) {
-      console.log('OverlayPanel: no trigger element resolved');
+      console.log("OverlayPanel: no trigger element resolved");
       return;
     }
     this.overlayService.openMenu(this._configWithDefaults);

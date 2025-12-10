@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject } from "rxjs";
 import * as i0 from "@angular/core";
 export interface ITranslation {
     id: string;

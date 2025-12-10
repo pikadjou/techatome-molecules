@@ -1,5 +1,5 @@
-import { OperatingSystem } from '@capacitor/device';
-import { Observable } from 'rxjs';
+import { OperatingSystem } from "@capacitor/device";
+import { Observable } from "rxjs";
 import * as i0 from "@angular/core";
 export declare class TaDeviceInfoService {
     deviceClasses$: Observable<string[]>;

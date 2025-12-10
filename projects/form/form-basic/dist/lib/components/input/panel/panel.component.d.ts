@@ -1,6 +1,6 @@
-import { TemplateRef } from '@angular/core';
-import { InputPanel } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
+import { TemplateRef } from "@angular/core";
+import { InputPanel } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class PanelComponent extends TaBaseComponent {
     inputsTemplate: TemplateRef<any>;

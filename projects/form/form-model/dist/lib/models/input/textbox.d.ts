@@ -1,5 +1,5 @@
-import { TaIconType } from '@ta/icons';
-import { IInputBase, InputBase } from './base';
+import { TaIconType } from "@ta/icons";
+import { IInputBase, InputBase } from "./base";
 export interface IInputTextBox<T> extends IInputBase<T> {
     type?: string;
     icon?: TaIconType;

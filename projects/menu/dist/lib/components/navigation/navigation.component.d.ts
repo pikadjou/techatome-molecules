@@ -1,14 +1,14 @@
-import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TaAbstractComponent } from '@ta/utils';
-import { MenuAction } from '../../models/menu/item/action';
-import { MenuBase } from '../../models/menu/item/base';
-import { Menu, MenuIcon } from '../../models/public-api';
-import { TaSizes } from '@ta/styles';
+import { OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { TaAbstractComponent } from "@ta/utils";
+import { MenuAction } from "../../models/menu/item/action";
+import { MenuBase } from "../../models/menu/item/base";
+import { Menu, MenuIcon } from "../../models/public-api";
+import { TaSizes } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class NavigationComponent extends TaAbstractComponent implements OnInit {
     menu: Menu;
-    container: 'tags' | 'tab';
+    container: "tags" | "tab";
     swiper: boolean;
     options: {
         spaceElement?: TaSizes | null;

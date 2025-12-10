@@ -1,10 +1,10 @@
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 export interface IInputDatePicker extends IInputBase<string | Partial<{
     start: Date | null;
     end: Date | null;
 }>> {
-    minDate?: Date | 'today';
-    maxDate?: Date | 'today';
+    minDate?: Date | "today";
+    maxDate?: Date | "today";
     rangeEnabled?: boolean;
 }
 export declare class InputDatePicker extends InputBase<Date | Partial<{
@@ -15,5 +15,5 @@ export declare class InputDatePicker extends InputBase<Date | Partial<{
     maxDate: Date | null;
     rangeEnabled: boolean;
     constructor(options?: IInputDatePicker);
-    parseDate(date?: Date | 'today'): Date | null;
+    parseDate(date?: Date | "today"): Date | null;
 }

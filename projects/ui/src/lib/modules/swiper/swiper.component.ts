@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -9,10 +9,10 @@ import {
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
-} from '@angular/core';
+} from "@angular/core";
 
-import { Observable } from 'rxjs';
-import { Swiper } from 'swiper/types';
+import { Observable } from "rxjs";
+import { Swiper } from "swiper/types";
 
 export interface SwiperData {
   visible$: Observable<boolean>;
@@ -20,10 +20,10 @@ export interface SwiperData {
 }
 
 @Component({
-  selector: 'ta-swiper',
+  selector: "ta-swiper",
   standalone: true,
-  templateUrl: './swiper.component.html',
-  styleUrls: ['./swiper.component.scss'],
+  templateUrl: "./swiper.component.html",
+  styleUrls: ["./swiper.component.scss"],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule],
@@ -50,7 +50,7 @@ export class SwiperComponent {
   @Output()
   public onSlideChanged = new EventEmitter<number>();
 
-  @ViewChild('swiperContainer', { static: false })
+  @ViewChild("swiperContainer", { static: false })
   swiperContainer!: ElementRef<{ swiper: Swiper }>;
 
   constructor() {}

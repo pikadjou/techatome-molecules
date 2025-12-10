@@ -5,9 +5,7 @@
   "register": "Register",
   "settings": "Settings",
   "account": "Account",
-  "password": {
-    "change": "Change password",
-    "forgot": "Forgot password",
-    "reset": "Reset password"
-  }
+  "password.change": "Change password",
+  "password.forgot": "Forgot password",
+  "password.reset": "Reset password"
 }

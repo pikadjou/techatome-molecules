@@ -1,19 +1,19 @@
-import { Injectable, inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { Injectable, inject } from "@angular/core";
+import { ActivatedRouteSnapshot, Router } from "@angular/router";
 
-import { map } from 'rxjs/operators';
+import { map } from "rxjs/operators";
 
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { TaRoutes } from '@ta/menu';
+import { TaRoutes } from "@ta/menu";
 
-import { TaPermissionsService } from '../services/permissions.service';
+import { TaPermissionsService } from "../services/permissions.service";
 
 export interface RoleRouteData {
   role: string;
 }
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class RoleGuard {
   public readonly _permissionsService = inject(TaPermissionsService);
@@ -21,7 +21,7 @@ export class RoleGuard {
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
-    const role = route.data['role'];
+    const role = route.data["role"];
 
     if (this._permissionsService.received === true) {
       return this._isValidPermission(role);

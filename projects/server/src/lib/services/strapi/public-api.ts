@@ -1,6 +1,6 @@
-export * from './baseStrapi.service';
-export * from './strapi.service';
+export * from "./baseStrapi.service";
+export * from "./strapi.service";
 
-export * from './config';
+export * from "./config";
 
-export * from './dto/base';
+export * from "./dto/base";

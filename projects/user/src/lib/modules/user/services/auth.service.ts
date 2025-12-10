@@ -1,21 +1,24 @@
-import { Injectable, inject } from '@angular/core';
-import { InjectionToken } from '@angular/core';
+import { Injectable, inject } from "@angular/core";
+import { InjectionToken } from "@angular/core";
 
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, switchMap } from "rxjs";
 
-import { MappingApiType, TaBaseService } from '@ta/server';
+import { MappingApiType, TaBaseService } from "@ta/server";
 
-import { UserProfile } from './dto/user-profile';
-import { TaPermissionsService } from './permissions.service';
+import { UserProfile } from "./dto/user-profile";
+import { TaPermissionsService } from "./permissions.service";
 
-export const TA_AUTH_TOKEN = new InjectionToken<TaAuthService>('TaAuthService');
+export const TA_AUTH_TOKEN = new InjectionToken<TaAuthService>("TaAuthService");
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export abstract class TaAuthService extends TaBaseService {
   public readonly _permissionsService = inject(TaPermissionsService);
-  public isAuthenticated$ = this._permissionsService.canAccess$('', 'authenticated');
+  public isAuthenticated$ = this._permissionsService.canAccess$(
+    "",
+    "authenticated"
+  );
 
   user$ = new BehaviorSubject<unknown>(null);
 
@@ -31,7 +34,7 @@ export abstract class TaAuthService extends TaBaseService {
     super(apiRoutes);
     this.user$
       .pipe(
-        filter(user => !!user),
+        filter((user) => !!user),
         switchMap(() => this.fetchUserProfile$())
       )
       .subscribe();

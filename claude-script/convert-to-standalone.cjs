@@ -1,13 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Fonction pour convertir un composant en standalone
 function convertComponentToStandalone(filePath) {
   try {
-    let content = fs.readFileSync(filePath, 'utf8');
+    let content = fs.readFileSync(filePath, "utf8");
 
     // Vérifier si le composant est déjà standalone
-    if (content.includes('standalone: true')) {
+    if (content.includes("standalone: true")) {
       console.log(`✓ ${filePath} is already standalone`);
       return;
     }
@@ -19,76 +19,101 @@ function convertComponentToStandalone(filePath) {
     }
 
     // Analyser les imports nécessaires basés sur le template
-    const templatePath = filePath.replace('.ts', '.html');
-    let templateContent = '';
+    const templatePath = filePath.replace(".ts", ".html");
+    let templateContent = "";
     if (fs.existsSync(templatePath)) {
-      templateContent = fs.readFileSync(templatePath, 'utf8');
+      templateContent = fs.readFileSync(templatePath, "utf8");
     }
 
     // Détecter les imports nécessaires
     const imports = [];
 
     // Directives Angular communes
-    if (templateContent.includes('*ngIf') || templateContent.includes('@if')) {
-      imports.push('NgIf');
+    if (templateContent.includes("*ngIf") || templateContent.includes("@if")) {
+      imports.push("NgIf");
     }
-    if (templateContent.includes('*ngFor') || templateContent.includes('@for')) {
-      imports.push('NgFor');
+    if (
+      templateContent.includes("*ngFor") ||
+      templateContent.includes("@for")
+    ) {
+      imports.push("NgFor");
     }
-    if (templateContent.includes('[ngClass]') || templateContent.includes('ngClass')) {
-      imports.push('NgClass');
+    if (
+      templateContent.includes("[ngClass]") ||
+      templateContent.includes("ngClass")
+    ) {
+      imports.push("NgClass");
     }
-    if (templateContent.includes('[ngStyle]') || templateContent.includes('ngStyle')) {
-      imports.push('NgStyle');
+    if (
+      templateContent.includes("[ngStyle]") ||
+      templateContent.includes("ngStyle")
+    ) {
+      imports.push("NgStyle");
     }
-    if (templateContent.includes('| async')) {
-      imports.push('AsyncPipe');
+    if (templateContent.includes("| async")) {
+      imports.push("AsyncPipe");
     }
 
     // Composants d'icônes
-    if (templateContent.includes('ta-font-icon')) {
-      imports.push('FontIconComponent');
+    if (templateContent.includes("ta-font-icon")) {
+      imports.push("FontIconComponent");
     }
-    if (templateContent.includes('ta-material-icon')) {
-      imports.push('MaterialIconComponent');
+    if (templateContent.includes("ta-material-icon")) {
+      imports.push("MaterialIconComponent");
     }
-    if (templateContent.includes('ta-local-icon')) {
-      imports.push('LocalIconComponent');
+    if (templateContent.includes("ta-local-icon")) {
+      imports.push("LocalIconComponent");
     }
 
     // Directives personnalisées
-    if (templateContent.includes('appStopPropagation')) {
-      imports.push('TaStopPropagationDirective');
+    if (templateContent.includes("appStopPropagation")) {
+      imports.push("TaStopPropagationDirective");
     }
 
     // Construire les imports
     let newImports = [];
 
     // Angular Common imports
-    const commonImports = imports.filter(imp => ['NgIf', 'NgFor', 'NgClass', 'NgStyle', 'AsyncPipe'].includes(imp));
+    const commonImports = imports.filter((imp) =>
+      ["NgIf", "NgFor", "NgClass", "NgStyle", "AsyncPipe"].includes(imp)
+    );
     if (commonImports.length > 0) {
-      newImports.push(`import { ${commonImports.join(', ')} } from '@angular/common';`);
+      newImports.push(
+        `import { ${commonImports.join(", ")} } from '@angular/common';`
+      );
     }
 
     // Icon components
-    const iconImports = imports.filter(imp =>
-      ['FontIconComponent', 'MaterialIconComponent', 'LocalIconComponent'].includes(imp)
+    const iconImports = imports.filter((imp) =>
+      [
+        "FontIconComponent",
+        "MaterialIconComponent",
+        "LocalIconComponent",
+      ].includes(imp)
     );
     if (iconImports.length > 0) {
-      newImports.push(`import { ${iconImports.join(', ')} } from '@ta/icons';`);
+      newImports.push(`import { ${iconImports.join(", ")} } from '@ta/icons';`);
     }
 
     // Directives utils
-    const utilsImports = imports.filter(imp => ['TaStopPropagationDirective'].includes(imp));
+    const utilsImports = imports.filter((imp) =>
+      ["TaStopPropagationDirective"].includes(imp)
+    );
     if (utilsImports.length > 0) {
-      newImports.push(`import { ${utilsImports.join(', ')} } from '@ta/utils';`);
+      newImports.push(
+        `import { ${utilsImports.join(", ")} } from '@ta/utils';`
+      );
     }
 
     // Ajouter les nouveaux imports
     const firstImportMatch = content.match(/^import.*from.*;$/m);
     if (firstImportMatch && newImports.length > 0) {
       const insertPos = content.indexOf(firstImportMatch[0]);
-      content = content.slice(0, insertPos) + newImports.join('\n') + '\n' + content.slice(insertPos);
+      content =
+        content.slice(0, insertPos) +
+        newImports.join("\n") +
+        "\n" +
+        content.slice(insertPos);
     }
 
     // Modifier le décorateur @Component
@@ -100,11 +125,11 @@ function convertComponentToStandalone(filePath) {
       let newConfig = componentConfig;
 
       // Ajouter standalone: true
-      newConfig = newConfig.trim() + ',\n  standalone: true,';
+      newConfig = newConfig.trim() + ",\n  standalone: true,";
 
       // Ajouter imports si nécessaire
       if (imports.length > 0) {
-        newConfig += `\n  imports: [${imports.join(', ')}],`;
+        newConfig += `\n  imports: [${imports.join(", ")}],`;
       }
 
       const newComponent = `@Component({\n${newConfig}\n})`;
@@ -130,7 +155,7 @@ function findComponentFiles(dir) {
 
     if (stat.isDirectory()) {
       files.push(...findComponentFiles(fullPath));
-    } else if (item.endsWith('.component.ts')) {
+    } else if (item.endsWith(".component.ts")) {
       files.push(fullPath);
     }
   }
@@ -140,25 +165,25 @@ function findComponentFiles(dir) {
 
 // Point d'entrée principal
 function main() {
-  const projectsDir = path.join(__dirname, 'projects');
+  const projectsDir = path.join(__dirname, "projects");
 
   // Librairies à traiter dans l'ordre de dépendances
   const libraries = [
-    'icons',
-    'styles',
-    'ui',
-    'notification',
-    'form/form-basic',
-    'form/form-input',
-    'calendar',
-    'charts',
-    'menu',
-    'files/files-basic',
-    'files/files-extended',
-    'core',
-    'cms',
-    'user',
-    'wysiswyg',
+    "icons",
+    "styles",
+    "ui",
+    "notification",
+    "form/form-basic",
+    "form/form-input",
+    "calendar",
+    "charts",
+    "menu",
+    "files/files-basic",
+    "files/files-extended",
+    "core",
+    "cms",
+    "user",
+    "wysiswyg",
   ];
 
   for (const lib of libraries) {
@@ -176,7 +201,7 @@ function main() {
     }
   }
 
-  console.log('\n✅ Conversion completed!');
+  console.log("\n✅ Conversion completed!");
 }
 
 // Exécuter le script

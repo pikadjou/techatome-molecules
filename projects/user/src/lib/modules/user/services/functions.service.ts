@@ -1,24 +1,34 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject } from "@angular/core";
 
-import { Observable, catchError, filter, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, filter, map, of, switchMap } from "rxjs";
 
-import { CamBaseService, GraphEndpoint, HandleSimpleRequest } from '@ta/server';
-import { isNonNullable } from '@ta/utils';
+import { CamBaseService, GraphEndpoint, HandleSimpleRequest } from "@ta/server";
+import { isNonNullable } from "@ta/utils";
 
-import { TaUsersService } from './users.service';
-import { Function, FunctionCreationPayload, FunctionModifierPayload, functionProps } from './users/dto/function';
-import { Role, roleProps } from './users/dto/role';
-import { UserFunctionPayload } from './users/dto/user';
-import { ADD_FUNCTION, ADD_FUNCTION_TO_USER, REMOVE_FUNCTION_FROM_USER, UPDATE_FUNCTION } from './users/userMutations';
-import { GET_FUNCTIONS, GET_ROLES } from './users/userQueries';
+import { TaUsersService } from "./users.service";
+import {
+  Function,
+  FunctionCreationPayload,
+  FunctionModifierPayload,
+  functionProps,
+} from "./users/dto/function";
+import { Role, roleProps } from "./users/dto/role";
+import { UserFunctionPayload } from "./users/dto/user";
+import {
+  ADD_FUNCTION,
+  ADD_FUNCTION_TO_USER,
+  REMOVE_FUNCTION_FROM_USER,
+  UPDATE_FUNCTION,
+} from "./users/userMutations";
+import { GET_FUNCTIONS, GET_ROLES } from "./users/userQueries";
 
 const graphEndpoint: GraphEndpoint = {
-  clientName: 'userService',
-  endpoint: 'user',
+  clientName: "userService",
+  endpoint: "user",
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CamFunctionsService extends CamBaseService {
   public functions = new HandleSimpleRequest<Function[]>();
@@ -36,22 +46,22 @@ export class CamFunctionsService extends CamBaseService {
       this._graphService
         .fetchPagedQueryList<Function>(
           GET_FUNCTIONS(
-            '',
+            "",
             `
-              ${functionProps.get('id')}
-              ${functionProps.get('name')}
-              ${functionProps.get('roles')} {
-                ${roleProps.get('id')}
-                ${roleProps.get('name')}
+              ${functionProps.get("id")}
+              ${functionProps.get("name")}
+              ${functionProps.get("roles")} {
+                ${roleProps.get("id")}
+                ${roleProps.get("name")}
               }
             `
           ),
-          'functions',
+          "functions",
           graphEndpoint.clientName
         )
         .pipe(
           filter(isNonNullable),
-          map(data => data.items ?? [])
+          map((data) => data.items ?? [])
         )
     );
   }
@@ -61,45 +71,57 @@ export class CamFunctionsService extends CamBaseService {
       this._graphService
         .fetchPagedQueryList<Role>(
           GET_ROLES(
-            '',
+            "",
             `
-              ${roleProps.get('id')}
-              ${roleProps.get('name')}
+              ${roleProps.get("id")}
+              ${roleProps.get("name")}
             `
           ),
-          'roles',
+          "roles",
           graphEndpoint.clientName
         )
         .pipe(
           filter(isNonNullable),
-          map(data => data.items ?? [])
+          map((data) => data.items ?? [])
         )
     );
   }
 
-  public addFunction$(functionAddedPayload: FunctionCreationPayload): Observable<Function[] | null> {
+  public addFunction$(
+    functionAddedPayload: FunctionCreationPayload
+  ): Observable<Function[] | null> {
     return this._graphService
-      .mutate<Function>(ADD_FUNCTION(functionAddedPayload), 'addFunction', graphEndpoint.clientName, ['functions'])
+      .mutate<Function>(
+        ADD_FUNCTION(functionAddedPayload),
+        "addFunction",
+        graphEndpoint.clientName,
+        ["functions"]
+      )
       .pipe(
         filter(isNonNullable),
         switchMap(() => this.fetchFunctions$()),
-        catchError(error => {
-          console.error('Error adding function:', error);
+        catchError((error) => {
+          console.error("Error adding function:", error);
           return of(null);
         })
       );
   }
 
-  public updateFunction$(functionModifierPayload: Partial<FunctionModifierPayload>): Observable<Function[] | null> {
+  public updateFunction$(
+    functionModifierPayload: Partial<FunctionModifierPayload>
+  ): Observable<Function[] | null> {
     return this._graphService
-      .mutate<Function>(UPDATE_FUNCTION(functionModifierPayload), 'updateFunction', graphEndpoint.clientName, [
-        'functions',
-      ])
+      .mutate<Function>(
+        UPDATE_FUNCTION(functionModifierPayload),
+        "updateFunction",
+        graphEndpoint.clientName,
+        ["functions"]
+      )
       .pipe(
         filter(isNonNullable),
         switchMap(() => this.fetchFunctions$()),
-        catchError(error => {
-          console.error('Error adding function:', error);
+        catchError((error) => {
+          console.error("Error adding function:", error);
           return of(null);
         })
       );
@@ -107,12 +129,17 @@ export class CamFunctionsService extends CamBaseService {
 
   public addFunctionToUser$(payload: UserFunctionPayload) {
     return this._graphService
-      .mutate<Function>(ADD_FUNCTION_TO_USER(payload), 'addFunctionToUser', graphEndpoint.clientName, ['userById'])
+      .mutate<Function>(
+        ADD_FUNCTION_TO_USER(payload),
+        "addFunctionToUser",
+        graphEndpoint.clientName,
+        ["userById"]
+      )
       .pipe(
         filter(isNonNullable),
         switchMap(() => this._usersService.fetchUser$(payload.userId)),
-        catchError(error => {
-          console.error('Error adding function:', error);
+        catchError((error) => {
+          console.error("Error adding function:", error);
           return of(null);
         })
       );
@@ -120,14 +147,17 @@ export class CamFunctionsService extends CamBaseService {
 
   public removeFunctionFromUser$(payload: UserFunctionPayload) {
     return this._graphService
-      .mutate<Function>(REMOVE_FUNCTION_FROM_USER(payload), 'removeFunctionFromUser', graphEndpoint.clientName, [
-        'userById',
-      ])
+      .mutate<Function>(
+        REMOVE_FUNCTION_FROM_USER(payload),
+        "removeFunctionFromUser",
+        graphEndpoint.clientName,
+        ["userById"]
+      )
       .pipe(
         filter(isNonNullable),
         switchMap(() => this._usersService.fetchUser$(payload.userId)),
-        catchError(error => {
-          console.error('Error adding function:', error);
+        catchError((error) => {
+          console.error("Error adding function:", error);
           return of(null);
         })
       );

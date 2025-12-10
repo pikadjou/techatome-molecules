@@ -1,17 +1,21 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { Camera, CameraResultType } from '@capacitor/camera';
-import { FilePicker, PickedFile } from '@capawesome/capacitor-file-picker';
+import { Camera, CameraResultType } from "@capacitor/camera";
+import { FilePicker, PickedFile } from "@capawesome/capacitor-file-picker";
 
-import { ActionButtonComponent, ActionButtonData, ButtonComponent } from '@ta/ui';
-import { FileStructure, pathToFile, pickImages } from '@ta/utils';
+import {
+  ActionButtonComponent,
+  ActionButtonData,
+  ButtonComponent,
+} from "@ta/ui";
+import { FileStructure, pathToFile, pickImages } from "@ta/utils";
 
-export type Feature = 'take-pic' | 'upload-pic' | 'upload-file';
+export type Feature = "take-pic" | "upload-pic" | "upload-file";
 
 @Component({
-  selector: 'ta-files-upload',
-  templateUrl: './files-upload.component.html',
-  styleUrls: ['./files-upload.component.scss'],
+  selector: "ta-files-upload",
+  templateUrl: "./files-upload.component.html",
+  styleUrls: ["./files-upload.component.scss"],
   standalone: true,
   imports: [ActionButtonComponent, ButtonComponent],
 })
@@ -31,27 +35,27 @@ export class UploadComponent {
   get addActions(): ActionButtonData[] {
     const actionsAvailable: ActionButtonData[] = [];
 
-    if (this._haveFeature('take-pic')) {
+    if (this._haveFeature("take-pic")) {
       actionsAvailable.push({
-        label: 'Take',
-        icon: 'add_a_photo',
-        callback: _ => this._takePic(),
+        label: "Take",
+        icon: "add_a_photo",
+        callback: (_) => this._takePic(),
       });
     }
 
-    if (this._haveFeature('upload-pic')) {
+    if (this._haveFeature("upload-pic")) {
       actionsAvailable.push({
-        label: 'Upload',
-        icon: 'insert_photo',
-        callback: _ => this._uploadPic(),
+        label: "Upload",
+        icon: "insert_photo",
+        callback: (_) => this._uploadPic(),
       });
     }
 
-    if (this._haveFeature('upload-file')) {
+    if (this._haveFeature("upload-file")) {
       actionsAvailable.push({
-        label: 'upload file',
-        icon: 'upload_file',
-        callback: _ => this._uploadFile(),
+        label: "upload file",
+        icon: "upload_file",
+        callback: (_) => this._uploadFile(),
       });
     }
 
@@ -91,15 +95,15 @@ export class UploadComponent {
       multiple: this.canSelectMultipleFiles,
       types: [
         // pdf
-        'application/pdf',
+        "application/pdf",
         // word
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/msword',
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/msword",
         // excel
-        'application/vnd.ms-excel',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         // text
-        'text/plain',
+        "text/plain",
       ],
     });
 

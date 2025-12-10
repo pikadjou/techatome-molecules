@@ -1,5 +1,5 @@
-import { PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl } from '@angular/platform-browser';
+import { PipeTransform } from "@angular/core";
+import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl } from "@angular/platform-browser";
 import * as i0 from "@angular/core";
 export declare class SafePipe implements PipeTransform {
     protected sanitizer: DomSanitizer;

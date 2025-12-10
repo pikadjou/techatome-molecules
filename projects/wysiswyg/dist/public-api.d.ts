@@ -1,1 +1,1 @@
-export * from './lib/modules/wysiswyg/public-api';
+export * from "./lib/modules/wysiswyg/public-api";

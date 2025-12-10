@@ -1,6 +1,6 @@
-import { FormGroup } from '@angular/forms';
-import { Culture } from '@ta/utils';
-import { IInputDynamic, InputDynamic } from './dynamic';
+import { FormGroup } from "@angular/forms";
+import { Culture } from "@ta/utils";
+import { IInputDynamic, InputDynamic } from "./dynamic";
 export interface IInputTranslation extends IInputDynamic {
     mainCulture?: Culture;
 }

@@ -1,5 +1,5 @@
 export const isLight = (color: string) => {
-  const hex = color.replace('#', '');
+  const hex = color.replace("#", "");
   const c_r = parseInt(hex.substring(0, 0 + 2), 16);
   const c_g = parseInt(hex.substring(2, 2 + 2), 16);
   const c_b = parseInt(hex.substring(4, 4 + 2), 16);

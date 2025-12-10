@@ -1,25 +1,35 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDatepicker, MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { Component, ViewChild } from "@angular/core";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import {
+  MatDatepicker,
+  MatDatepickerInputEvent,
+  MatDatepickerModule,
+} from "@angular/material/datepicker";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 
-import { isEqual } from 'date-fns';
+import { isEqual } from "date-fns";
 
-import { InputDatePicker } from '@ta/form-model';
+import { InputDatePicker } from "@ta/form-model";
 
-import { TaAbstractInputComponent } from '../../abstract.component';
-import { InputLayoutComponent } from '../../input-layout/input-layout.component';
+import { TaAbstractInputComponent } from "../../abstract.component";
+import { InputLayoutComponent } from "../../input-layout/input-layout.component";
 
 @Component({
-  selector: 'ta-input-date-picker',
-  templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss'],
+  selector: "ta-input-date-picker",
+  templateUrl: "./date-picker.component.html",
+  styleUrls: ["./date-picker.component.scss"],
   standalone: true,
-  imports: [ReactiveFormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, InputLayoutComponent],
+  imports: [
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    InputLayoutComponent,
+  ],
 })
 export class DatePickerComponent extends TaAbstractInputComponent<InputDatePicker> {
-  @ViewChild('picker') picker!: MatDatepicker<any>;
+  @ViewChild("picker") picker!: MatDatepicker<any>;
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -41,7 +51,7 @@ export class DatePickerComponent extends TaAbstractInputComponent<InputDatePicke
             end: value.end,
           };
         },
-      }),
+      })
     );
   }
 

@@ -1,6 +1,6 @@
-import { OutputBlockData } from '@editorjs/editorjs';
-import { ENotificationCode } from '@ta/notification';
-import { TaBaseComponent } from '@ta/utils';
+import { OutputBlockData } from "@editorjs/editorjs";
+import { ENotificationCode } from "@ta/notification";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class BlockTextComponent extends TaBaseComponent {
     blocks: OutputBlockData[];

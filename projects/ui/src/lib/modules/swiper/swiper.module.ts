@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 
-import { SwiperComponent } from './swiper.component';
+import { SwiperComponent } from "./swiper.component";
 
 /**
  * @deprecated Use standalone components instead.

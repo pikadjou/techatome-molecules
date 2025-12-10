@@ -1,7 +1,6 @@
 @use "ta/utils/mixins/common";
 @use "ta/utils/mixins/fonts";
 
-
 h1 {
   @include fonts.fontSizeHeader(h1);
   margin: 0;

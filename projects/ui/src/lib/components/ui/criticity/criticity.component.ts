@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { BadgeComponent } from '../badge/badge.component';
-import { TaTranslationUI } from '../translation.service';
+import { BadgeComponent } from "../badge/badge.component";
+import { TaTranslationUI } from "../../../translation.service";
 
 export enum CriticityStatus {
   Unknown = 0,
@@ -11,12 +11,13 @@ export enum CriticityStatus {
   P2 = 2,
   P3 = 3,
 }
-export const criticityLabel = (criticity: CriticityStatus) => `ui.criticity.${criticity}`;
+export const criticityLabel = (criticity: CriticityStatus) =>
+  `ui.criticity.${criticity}`;
 
 @Component({
-  selector: 'ta-criticity',
-  templateUrl: './criticity.component.html',
-  styleUrls: ['./criticity.component.scss'],
+  selector: "ta-criticity",
+  templateUrl: "./criticity.component.html",
+  styleUrls: ["./criticity.component.scss"],
   standalone: true,
   imports: [TranslateModule, BadgeComponent],
 })
@@ -33,13 +34,13 @@ export class CriticityComponent {
   public type() {
     switch (this.criticity) {
       case CriticityStatus.P1:
-        return 'danger';
+        return "danger";
       case CriticityStatus.P2:
-        return 'warning';
+        return "warning";
       case CriticityStatus.P3:
-        return 'success';
+        return "success";
       default:
-        return 'primary';
+        return "primary";
     }
   }
 }

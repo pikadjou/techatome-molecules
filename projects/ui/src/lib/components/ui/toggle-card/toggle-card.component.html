@@ -8,21 +8,24 @@
 >
   <div class="toggle-card__content">
     @if (icon) {
-      <div class="toggle-card__icon">
-        <i [class]="'icon-' + icon"></i>
-      </div>
+    <div class="toggle-card__icon">
+      <i [class]="'icon-' + icon"></i>
+    </div>
     }
     <div class="toggle-card__text">
       <div class="toggle-card__title">{{ title }}</div>
       @if (description) {
-        <div class="toggle-card__description">{{ description }}</div>
+      <div class="toggle-card__description">{{ description }}</div>
       }
     </div>
   </div>
   <div class="toggle-card__indicator">
-    <div class="toggle-card__check" [ngClass]="{ 'toggle-card__check--active': isActive }">
+    <div
+      class="toggle-card__check"
+      [ngClass]="{ 'toggle-card__check--active': isActive }"
+    >
       @if (isActive) {
-        <span>✓</span>
+      <span>✓</span>
       }
     </div>
   </div>

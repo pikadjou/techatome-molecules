@@ -1,6 +1,6 @@
-import { ColorType } from '@ta/styles';
+import { ColorType } from "@ta/styles";
 import * as i0 from "@angular/core";
-export type BenefitType = 'success' | 'warning' | 'error';
+export type BenefitType = "success" | "warning" | "error";
 export interface BenefitConfig {
     icon: string;
     backgroundColor: string;

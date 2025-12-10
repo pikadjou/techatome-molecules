@@ -1,8 +1,8 @@
-import { Logger } from '../../logger';
-import { Request } from '../request';
+import { Logger } from "../../logger";
+import { Request } from "../request";
 
 export interface IRequestMap {
-  type: 'POST' | 'GET' | 'DELETE' | 'PUT' | 'PATCH' | 'FILES' | 'UPDATEFILES';
+  type: "POST" | "GET" | "DELETE" | "PUT" | "PATCH" | "FILES" | "UPDATEFILES";
   url: string;
 }
 
@@ -26,8 +26,8 @@ class RequestMapCore {
   }): string {
     return (
       this._formatUrl(data.serverUrl, data.url, data.request) +
-      '' +
-      (data.apiExt ?? '')
+      "" +
+      (data.apiExt ?? "")
     );
   }
 
@@ -35,7 +35,7 @@ class RequestMapCore {
     if (this.mappingApi.hasOwnProperty(id)) {
       return this.mappingApi[id];
     }
-    Logger.LogError('No Api Configuration found for: ', id);
+    Logger.LogError("No Api Configuration found for: ", id);
     return null;
   }
 
@@ -50,7 +50,7 @@ class RequestMapCore {
       ) {
         return request.BrutContent[string];
       }
-      if (string === 'ApiUrl') {
+      if (string === "ApiUrl") {
         return serverUrl;
       }
       return match;

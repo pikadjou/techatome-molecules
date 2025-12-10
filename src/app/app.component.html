@@ -5,16 +5,14 @@
     </div>
     <div class="nav-menu">
       @for (item of mainMenu; track item) {
-        <a [routerLink]="item.route" 
-           class="nav-item"
-           routerLinkActive="active">
-          <span class="material-icons">{{ item.icon.name }}</span>
-          {{ item.title }}
-        </a>
+      <a [routerLink]="item.route" class="nav-item" routerLinkActive="active">
+        <span class="material-icons">{{ item.icon.name }}</span>
+        {{ item.title }}
+      </a>
       }
     </div>
   </nav>
-  
+
   <main class="main-content">
     <router-outlet />
   </main>

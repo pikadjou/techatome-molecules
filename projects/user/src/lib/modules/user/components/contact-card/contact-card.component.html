@@ -1,8 +1,17 @@
-<ta-loader [isLoading]="this.requestState.isLoading()" *ngLet="this.user$ | async as user">
-  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+<ta-loader
+  [isLoading]="this.requestState.isLoading()"
+  *ngLet="this.user$ | async as user"
+>
+  <ta-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
     <ta-empty [isEmpty]="!user">
       @if (user) {
-        <ta-user-logo class="user-logo" [user]="this.getUserLogoData(user)"></ta-user-logo>
+      <ta-user-logo
+        class="user-logo"
+        [user]="this.getUserLogoData(user)"
+      ></ta-user-logo>
       }
       <div class="contact-name">{{ user?.firstName }} {{ user?.lastName }}</div>
       <div class="contacts align-center">

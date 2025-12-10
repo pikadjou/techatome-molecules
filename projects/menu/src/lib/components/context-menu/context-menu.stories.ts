@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { __contextMenu } from '../menu/__mock__/menu';
-import { ContextMenuComponent } from '../public-api';
+import { Meta, StoryObj } from "@storybook/angular";
+import { __contextMenu } from "../menu/__mock__/menu";
+import { ContextMenuComponent } from "../public-api";
 
 type StoryType = ContextMenuComponent;
 
 export default {
-  title: 'MENU/Context menu',
+  title: "MENU/Context menu",
   component: ContextMenuComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

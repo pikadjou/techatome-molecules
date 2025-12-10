@@ -1,22 +1,34 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe } from "@angular/common";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
+import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 
-import deepEqual from 'fast-deep-equal';
-import { Observable, distinctUntilChanged } from 'rxjs';
+import deepEqual from "fast-deep-equal";
+import { Observable, distinctUntilChanged } from "rxjs";
 
-import { IInputsError, InputBase } from '@ta/form-model';
-import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
-import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent, LoaderComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { IInputsError, InputBase } from "@ta/form-model";
+import {
+  ENotificationCode,
+  NotificationInlineComponent,
+} from "@ta/notification";
+import { TranslatePipe } from "@ta/translation";
+import { ButtonComponent, LoaderComponent } from "@ta/ui";
+import { TaBaseComponent } from "@ta/utils";
 
-import { InputsComponent } from './inputs/inputs.component';
+import { InputsComponent } from "./inputs/inputs.component";
 
 @Component({
-  selector: 'ta-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],
+  selector: "ta-form",
+  templateUrl: "./form.component.html",
+  styleUrls: ["./form.component.scss"],
   standalone: true,
   imports: [
     AsyncPipe,
@@ -28,7 +40,10 @@ import { InputsComponent } from './inputs/inputs.component';
     InputsComponent,
   ],
 })
-export class FormComponent extends TaBaseComponent implements OnInit, OnChanges, OnDestroy {
+export class FormComponent
+  extends TaBaseComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input()
   inputs!: InputBase<any>[];
 
@@ -41,7 +56,7 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
   @Input()
   loader = false;
   @Input()
-  error: IInputsError = { status: ENotificationCode.none, message: '' };
+  error: IInputsError = { status: ENotificationCode.none, message: "" };
 
   @Input()
   border = true;
@@ -49,7 +64,7 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
   @Input()
   canDisplayButton = true;
   @Input()
-  buttonTitle = 'form.save';
+  buttonTitle = "form.save";
   @Input()
   onLive = false;
 
@@ -68,7 +83,11 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
   ngOnInit() {
     this.form = this.toFormGroup(this.inputs);
 
-    this._registerSubscription(this.form.statusChanges.subscribe(() => this.isFormValid.emit(this.isValid())));
+    this._registerSubscription(
+      this.form.statusChanges.subscribe(() =>
+        this.isFormValid.emit(this.isValid())
+      )
+    );
 
     if (this.onLive) {
       this._registerSubscription(
@@ -79,19 +98,21 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
     }
 
     if (this.askValidation$) {
-      this._registerSubscription(this.askValidation$.subscribe(_ => this.onSubmit()));
+      this._registerSubscription(
+        this.askValidation$.subscribe((_) => this.onSubmit())
+      );
     }
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
-    if (simpleChanges['inputs'] && !simpleChanges['inputs'].firstChange) {
+    if (simpleChanges["inputs"] && !simpleChanges["inputs"].firstChange) {
       this.form = this.toFormGroup(this.inputs);
     }
   }
 
   override ngOnDestroy() {
     super.ngOnDestroy();
-    this.inputs.forEach(input => {
+    this.inputs.forEach((input) => {
       input.destroy();
     });
     if (this.askOnDestroy) {
@@ -115,7 +136,7 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
     if (inputs === null || inputs.length === 0) {
       return group;
     }
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       input.createFormControl(group);
     });
     return group;

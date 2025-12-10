@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
-import { ActiveFilterTag } from '../types';
+import { EventEmitter } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
+import { ActiveFilterTag } from "../types";
 import * as i0 from "@angular/core";
 export declare class FiltersTagComponent extends TaBaseComponent {
     activeFilter: ActiveFilterTag[];

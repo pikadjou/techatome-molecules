@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { MaterialIconComponent } from './material-icon.component';
+import { MaterialIconComponent } from "./material-icon.component";
 
 type StoryType = MaterialIconComponent & { icon?: string };
 
 export default {
-  title: 'ICONS/Material Icon',
+  title: "ICONS/Material Icon",
   component: MaterialIconComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { icon, ...props } = args;
     return {
       props,
@@ -20,7 +20,7 @@ export default {
     };
   },
   args: {
-    icon: 'play_circle_filled',
+    icon: "play_circle_filled",
   },
 } as Meta<StoryType>;
 
@@ -52,6 +52,6 @@ export const DualTone: StoryObj<MaterialIconComponent> = {
 
 export const Small: StoryObj<MaterialIconComponent> = {
   args: {
-    type: 'xs',
+    type: "xs",
   },
 };

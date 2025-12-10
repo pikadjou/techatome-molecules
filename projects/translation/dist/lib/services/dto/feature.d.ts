@@ -1,4 +1,4 @@
-import { BaseStrapi, GraphSchema } from '@ta/server';
+import { BaseStrapi, GraphSchema } from "@ta/server";
 export interface Feature extends BaseStrapi {
     key: string;
 }

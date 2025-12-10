@@ -1,22 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
-import { TaIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { TaDirectivePipeModule } from '@ta/utils';
+import { TaIconsModule } from "@ta/icons";
+import { TranslatePipe } from "@ta/translation";
+import { TaDirectivePipeModule } from "@ta/utils";
 
-import { TaUiModule } from '../../components/ui/ui.module';
-import { TaLayoutModule } from '../layout/layout.module';
-import { EmptyComponent } from './empty/empty.component';
-import { ErrorComponent } from './error/error.component';
-import { LoaderComponent } from './loader/loader.component';
-import { PlaceholderComponent } from './placeholder/placeholder.component';
-import { SwiperLightComponent } from './swiper-light/swiper-light.component';
-import { TaTranslationContainer } from './translation.service';
-import { ContainerValidationComponent } from './validation/cta/container-validation.component';
-import { ValidationModal } from './validation/modal/modal-validation.component';
+import { TaUiModule } from "../../components/ui/ui.module";
+import { TaLayoutModule } from "../layout/layout.module";
+import { EmptyComponent } from "./empty/empty.component";
+import { ErrorComponent } from "./error/error.component";
+import { LoaderComponent } from "./loader/loader.component";
+import { PlaceholderComponent } from "./placeholder/placeholder.component";
+import { SwiperLightComponent } from "./swiper-light/swiper-light.component";
+import { ContainerValidationComponent } from "./validation/cta/container-validation.component";
+import { ValidationModal } from "./validation/modal/modal-validation.component";
 
 /**
  * @deprecated Use standalone components instead.
@@ -48,10 +47,12 @@ import { ValidationModal } from './validation/modal/modal-validation.component';
     SwiperLightComponent,
   ],
   declarations: [],
-  exports: [ContainerValidationComponent, EmptyComponent, ErrorComponent, LoaderComponent, SwiperLightComponent],
+  exports: [
+    ContainerValidationComponent,
+    EmptyComponent,
+    ErrorComponent,
+    LoaderComponent,
+    SwiperLightComponent,
+  ],
 })
-export class TaContainerModule {
-  constructor() {
-    TaTranslationContainer.getInstance();
-  }
-}
+export class TaContainerModule {}

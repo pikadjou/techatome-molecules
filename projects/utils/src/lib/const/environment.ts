@@ -1,13 +1,13 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 
-import { Culture } from '../types/culture';
+import { Culture } from "../types/culture";
 
-export const LOCAL = 'config_local';
+export const LOCAL = "config_local";
 export const APPLICATION_CONFIG = new InjectionToken<IApplicationConfig>(
-  'config_application'
+  "config_application"
 );
 export const DEFAULT_USER_LANGUAGE = new InjectionToken<IDefaultUserLanguage>(
-  'default_user_language'
+  "default_user_language"
 );
 
 export interface ILocalConfig {

@@ -1,26 +1,33 @@
 <div class="icons space-between">
   <div class="back">
     @if (this.showBack) {
-      <ta-font-icon class="close" (click)="this.showBackAction()" name="arrow-big-left" type="md">
-      </ta-font-icon>
+    <ta-font-icon
+      class="close"
+      (click)="this.showBackAction()"
+      name="arrow-big-left"
+      type="md"
+    >
+    </ta-font-icon>
     }
   </div>
 
   <div class="title">
     @if (this.title) {
-      {{ this.title | translate }}
+    {{ this.title | translate }}
     }
   </div>
 
   <div class="more" [matMenuTriggerFor]="menu">
     @if (this.menuTemplate) {
-      <ta-font-icon class="more" name="more" type="md"></ta-font-icon>
+    <ta-font-icon class="more" name="more" type="md"></ta-font-icon>
     }
   </div>
 </div>
 
 <mat-menu #menu="matMenu">
   @if (this.menuTemplate) {
-    <ng-template *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"></ng-template>
+  <ng-template
+    *ngTemplateOutlet="this.menuTemplate; context: { element: menu }"
+  ></ng-template>
   }
 </mat-menu>

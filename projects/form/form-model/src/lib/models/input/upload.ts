@@ -1,4 +1,4 @@
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export type InputUploadValue = {
   id: string;
@@ -15,7 +15,7 @@ export class InputUpload extends InputBase<InputUploadValue[]> {
 
   constructor(options: IInputUpload) {
     super(options);
-    this.controlType = 'upload';
+    this.controlType = "upload";
     this.confirmButton = options.confirmButton ?? false;
   }
 

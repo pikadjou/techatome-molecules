@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'ta-tree-item',
+  selector: "ta-tree-item",
   standalone: true,
   imports: [],
-  templateUrl: './tree-item.component.html',
-  styleUrl: './tree-item.component.scss',
+  templateUrl: "./tree-item.component.html",
+  styleUrl: "./tree-item.component.scss",
 })
 export class TaTreeItemComponent {}

@@ -1,44 +1,49 @@
 <div class="banners-demo">
   <ta-title [level]="1">Banners Demo</ta-title>
-  
+
   <section class="demo-section">
     <ta-title [level]="2">Banner Types</ta-title>
     <div class="demo-group">
-      <ta-banner 
-        title="Information" 
+      <ta-banner
+        title="Information"
         message="Voici un message informatif"
-        type="info">
+        type="info"
+      >
       </ta-banner>
-      
-      <ta-banner 
-        title="Succès" 
+
+      <ta-banner
+        title="Succès"
         message="Opération réussie avec succès"
-        type="success">
+        type="success"
+      >
       </ta-banner>
-      
-      <ta-banner 
-        title="Attention" 
+
+      <ta-banner
+        title="Attention"
         message="Veuillez faire attention à ceci"
-        type="warning">
+        type="warning"
+      >
       </ta-banner>
-      
-      <ta-banner 
-        title="Erreur" 
+
+      <ta-banner
+        title="Erreur"
         message="Une erreur s'est produite"
-        type="error">
+        type="error"
+      >
       </ta-banner>
     </div>
   </section>
 
   <section class="demo-section">
     <ta-title [level]="2">Banners with Actions</ta-title>
-    <ta-banner 
-      title="Action Required" 
+    <ta-banner
+      title="Action Required"
       message="Cette bannière nécessite une action de votre part"
       type="warning"
       [showAction]="true"
       actionText="Action"
-      (actionClick)="onBannerAction()">
+      (actionClick)="onBannerAction()"
+    >
     </ta-banner>
   </section>
 </div>

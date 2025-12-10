@@ -1,16 +1,21 @@
-import { NgIf } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Input, TemplateRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
+import { NgIf } from "@angular/common";
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  Input,
+  TemplateRef,
+} from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatMenuModule } from "@angular/material/menu";
 
-import { FontIconComponent } from '@ta/icons';
-import { TaBaseComponent } from '@ta/utils';
-import { Observable } from 'rxjs';
+import { FontIconComponent } from "@ta/icons";
+import { TaBaseComponent } from "@ta/utils";
+import { Observable } from "rxjs";
 
 import {
   TemplateModalContainer,
   TemplateModalContainerData,
-} from '../../layout-modal/layout-modal-container/layout-modal-container.component';
+} from "../../layout-modal/layout-modal-container/layout-modal-container.component";
 
 interface UserLogoNaming {
   name: string;
@@ -19,9 +24,9 @@ interface UserLogoNaming {
 }
 
 @Component({
-  selector: 'ta-layout-header-logo',
-  templateUrl: './layout-header-logo.component.html',
-  styleUrls: ['./layout-header-logo.component.scss'],
+  selector: "ta-layout-header-logo",
+  templateUrl: "./layout-header-logo.component.html",
+  styleUrls: ["./layout-header-logo.component.scss"],
   standalone: true,
   imports: [NgIf, FontIconComponent, MatMenuModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -50,7 +55,7 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
     if (!this.profile) {
       return {
         naming: null,
-        profilePictureUrl: '',
+        profilePictureUrl: "",
       };
     }
     return {
@@ -60,29 +65,35 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
   }
 
   public goToHome() {
-    this._router.navigateByUrl('/');
+    this._router.navigateByUrl("/");
   }
   public openProfile() {
     if (!this.profile?.template) {
       return;
     }
-    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
-      data: {
-        template: this.profile?.template,
-        askClosing$: this.askClosing$,
-      },
-    });
+    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
+      TemplateModalContainer,
+      {
+        data: {
+          template: this.profile?.template,
+          askClosing$: this.askClosing$,
+        },
+      }
+    );
   }
 
   public openNotification() {
     if (!this.notificationTemplate) {
       return;
     }
-    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
-      data: {
-        template: this.notificationTemplate,
-        askClosing$: this.askClosing$,
-      },
-    });
+    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
+      TemplateModalContainer,
+      {
+        data: {
+          template: this.notificationTemplate,
+          askClosing$: this.askClosing$,
+        },
+      }
+    );
   }
 }

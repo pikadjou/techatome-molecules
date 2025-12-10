@@ -1,13 +1,21 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { Injectable, InjectionToken, Injector, TemplateRef, Type } from '@angular/core';
+import { ConnectedPosition, Overlay, OverlayRef } from "@angular/cdk/overlay";
+import { ComponentPortal } from "@angular/cdk/portal";
+import {
+  Injectable,
+  InjectionToken,
+  Injector,
+  TemplateRef,
+  Type,
+} from "@angular/core";
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
-import { TaBaseService } from '@ta/server';
+import { TaBaseService } from "@ta/server";
 
-export const MENU_TEMPLATE = new InjectionToken<TemplateRef<any>>('MENU_TEMPLATE');
-export const MENU_MAX_HEIGHT = new InjectionToken<number>('MENU_MAX_HEIGHT');
+export const MENU_TEMPLATE = new InjectionToken<TemplateRef<any>>(
+  "MENU_TEMPLATE"
+);
+export const MENU_MAX_HEIGHT = new InjectionToken<number>("MENU_MAX_HEIGHT");
 
 export interface OverlayMenuConfig<T = any> {
   menuComponent?: Type<T>;
@@ -23,7 +31,7 @@ export interface OverlayMenuConfig<T = any> {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class OverlayService extends TaBaseService {
   private _overlayRef?: OverlayRef;
@@ -33,35 +41,32 @@ export class OverlayService extends TaBaseService {
 
   private readonly defaultPositions: ConnectedPosition[] = [
     {
-      originX: 'start',
-      originY: 'bottom',
-      overlayX: 'start',
-      overlayY: 'top',
+      originX: "start",
+      originY: "bottom",
+      overlayX: "start",
+      overlayY: "top",
     },
     {
-      originX: 'start',
-      originY: 'top',
-      overlayX: 'start',
-      overlayY: 'bottom',
+      originX: "start",
+      originY: "top",
+      overlayX: "start",
+      overlayY: "bottom",
     },
     {
-      originX: 'end',
-      originY: 'bottom',
-      overlayX: 'end',
-      overlayY: 'top',
+      originX: "end",
+      originY: "bottom",
+      overlayX: "end",
+      overlayY: "top",
     },
     {
-      originX: 'end',
-      originY: 'top',
-      overlayX: 'end',
-      overlayY: 'bottom',
+      originX: "end",
+      originY: "top",
+      overlayX: "end",
+      overlayY: "bottom",
     },
   ];
 
-  constructor(
-    private overlay: Overlay,
-    private injector: Injector
-  ) {
+  constructor(private overlay: Overlay, private injector: Injector) {
     super();
   }
 
@@ -79,11 +84,11 @@ export class OverlayService extends TaBaseService {
     } = config;
 
     if (!triggerElement) {
-      console.log('OverlayService: triggerElement is required.');
+      console.log("OverlayService: triggerElement is required.");
       return;
     }
     if (!menuComponent) {
-      console.log('OverlayService: menuComponent is required.');
+      console.log("OverlayService: menuComponent is required.");
       return;
     }
 
@@ -102,11 +107,13 @@ export class OverlayService extends TaBaseService {
     this._overlayRef = this.overlay.create({
       positionStrategy,
       hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop',
+      backdropClass: "cdk-overlay-transparent-backdrop",
       scrollStrategy: this.overlay.scrollStrategies.close(),
       width: matchTriggerWidth ? triggerElement.clientWidth : undefined,
     });
-    this._registerSubscription(this._overlayRef.backdropClick().subscribe(() => this.closeMenu()));
+    this._registerSubscription(
+      this._overlayRef.backdropClick().subscribe(() => this.closeMenu())
+    );
 
     const portalInjector = Injector.create({
       providers: [

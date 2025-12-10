@@ -1,14 +1,13 @@
 // based on https://github.com/CodyReeves/css-grid-system-library/blob/production/scss/class-creators/_grid.scss
 
 @use "ta/vars";
-@use 'ta/settings/common';
-@use 'ta/utils/mixins/mediaQueriesRanges';
-
+@use "ta/settings/common";
+@use "ta/utils/mixins/mediaQueriesRanges";
 
 @mixin generateGrids() {
   .grid {
     display: grid;
-    
+
     @each $col-size, $size in vars.$grid-breakpoints {
       @include mediaQueriesRanges.to($col-size) {
         &.align-center-vert-#{$col-size} {
@@ -33,8 +32,7 @@
   .grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    
-    
+
     .full {
       grid-column: span 12;
     }
@@ -42,7 +40,7 @@
     .two-thirds {
       grid-column: span 8;
     }
-    
+
     .one-half {
       grid-column: span 6;
     }

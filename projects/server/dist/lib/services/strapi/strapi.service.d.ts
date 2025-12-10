@@ -1,6 +1,6 @@
-import { GraphQueryPayload } from '../graphql/models/graphPayload';
-import { TaBaseService } from '../server/baseService';
-import { IStrapiConfig } from './config';
+import { GraphQueryPayload } from "../graphql/models/graphPayload";
+import { TaBaseService } from "../server/baseService";
+import { IStrapiConfig } from "./config";
 import * as i0 from "@angular/core";
 export declare class TaStrapiService extends TaBaseService {
     private _strapiConfig;

@@ -1,6 +1,6 @@
-import { IInputBase, InputBase } from './base';
-import { InputLabel } from './label';
-type classAvailable = 'with-separator' | 'no-title-space' | 'highlight-title' | string;
+import { IInputBase, InputBase } from "./base";
+import { InputLabel } from "./label";
+type classAvailable = "with-separator" | "no-title-space" | "highlight-title" | string;
 export interface IInputPanel extends IInputBase<null> {
     children?: (InputBase<any> | InputLabel)[];
     containerClass?: classAvailable[];

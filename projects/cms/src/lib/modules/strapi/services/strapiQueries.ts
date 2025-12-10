@@ -1,9 +1,13 @@
-import { Apollo_gql, GraphQueryPayload } from '@ta/server';
+import { Apollo_gql, GraphQueryPayload } from "@ta/server";
 
-import { cmsProps } from './dto/cms';
-import { saleProps } from './dto/sale';
+import { cmsProps } from "./dto/cms";
+import { saleProps } from "./dto/sale";
 
-export function GET_CMS_CONTENT(type: string, locale: string, uid: string): GraphQueryPayload {
+export function GET_CMS_CONTENT(
+  type: string,
+  locale: string,
+  uid: string
+): GraphQueryPayload {
   return {
     query: Apollo_gql`
       query CmsContents($type: String!, $locale: I18NLocaleCode!, $uid: String!) {
@@ -11,12 +15,12 @@ export function GET_CMS_CONTENT(type: string, locale: string, uid: string): Grap
           data {
             id
             attributes {
-              ${cmsProps.get('Title')}
-              ${cmsProps.get('Description')}
-              ${cmsProps.get('Type')}
-              ${cmsProps.get('createdAt')}
-              ${cmsProps.get('updatedAt')}
-              ${cmsProps.get('publishedAt')}
+              ${cmsProps.get("Title")}
+              ${cmsProps.get("Description")}
+              ${cmsProps.get("Type")}
+              ${cmsProps.get("createdAt")}
+              ${cmsProps.get("updatedAt")}
+              ${cmsProps.get("publishedAt")}
             }
           }
         }
@@ -30,7 +34,10 @@ export function GET_CMS_CONTENT(type: string, locale: string, uid: string): Grap
   };
 }
 
-export function GET_SALE_CONTENT(uid: string, locale: string): GraphQueryPayload {
+export function GET_SALE_CONTENT(
+  uid: string,
+  locale: string
+): GraphQueryPayload {
   return {
     query: Apollo_gql`
       query Sale($locale: I18NLocaleCode!, $uid: String!) {
@@ -38,7 +45,7 @@ export function GET_SALE_CONTENT(uid: string, locale: string): GraphQueryPayload
           data {
             id
             attributes {
-              ${saleProps.get('Content')}
+              ${saleProps.get("Content")}
             }
           }
         }

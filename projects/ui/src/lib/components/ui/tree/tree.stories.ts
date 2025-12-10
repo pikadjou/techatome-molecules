@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TaTreeContainerComponent } from './tree-container/tree-container.component';
+import { TaTreeContainerComponent } from "./tree-container/tree-container.component";
 
 export type StoryType = TaTreeContainerComponent;
 
 export default {
-  title: 'UI/Tree',
+  title: "UI/Tree",
   component: TaTreeContainerComponent,
-  tags: ['autodocs'],
-  render: args => ({
+  tags: ["autodocs"],
+  render: (args) => ({
     props: args,
     template: `
       <ta-tree-container>
@@ -25,7 +25,7 @@ export default {
 export const Basic: StoryObj<StoryType> = {};
 
 export const SingleItem: StoryObj<StoryType> = {
-  render: args => ({
+  render: (args) => ({
     props: args,
     template: `
       <ta-tree-container>
@@ -36,7 +36,7 @@ export const SingleItem: StoryObj<StoryType> = {
 };
 
 export const ManyItems: StoryObj<StoryType> = {
-  render: args => ({
+  render: (args) => ({
     props: args,
     template: `
       <ta-tree-container>

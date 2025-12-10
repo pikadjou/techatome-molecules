@@ -1,43 +1,62 @@
 <div class="edit" #containerRef>
-  <div #tuiRef [style.height]="this.getHeight()" [style.width]="this.getWidth()" class="m-a image-container"></div>
+  <div
+    #tuiRef
+    [style.height]="this.getHeight()"
+    [style.width]="this.getWidth()"
+    class="m-a image-container"
+  ></div>
 
   <ta-loader [isLoading]="this.requestState.isLoading()">
     <div class="control">
       @if (this.showPanel()) {
-        <div class="panel">
-          @if (this.selection === 'line') {
-            <ng-template [ngTemplateOutlet]="Range"></ng-template>
-            <ng-template [ngTemplateOutlet]="Colors"></ng-template>
-          } @else if (this.selection === 'shape') {
-            <div class="row g-0 shape-selection">
-              <div class="col" (click)="this.changeShapeSelection('rect')">
-                <div class="item" [ngClass]="{ selected: this.shapeSelection === 'rect' }">
-                  <ta-material-icon type="sm">check_box_outline_blank</ta-material-icon>
-                </div>
-              </div>
-              <div class="col" (click)="this.changeShapeSelection('triangle')">
-                <div class="item" [ngClass]="{ selected: this.shapeSelection === 'triangle' }">
-                  <ta-material-icon type="sm">change_history</ta-material-icon>
-                </div>
-              </div>
-              <div class="col" (click)="this.changeShapeSelection('circle')">
-                <div class="item" [ngClass]="{ selected: this.shapeSelection === 'circle' }">
-                  <ta-material-icon type="sm">circle</ta-material-icon>
-                </div>
-              </div>
-              <div class="col" (click)="this.changeShapeSelection('line')">
-                <div class="item" [ngClass]="{ selected: this.shapeSelection === 'line' }">
-                  <ta-material-icon type="sm">straighten</ta-material-icon>
-                </div>
-              </div>
+      <div class="panel">
+        @if (this.selection === 'line') {
+        <ng-template [ngTemplateOutlet]="Range"></ng-template>
+        <ng-template [ngTemplateOutlet]="Colors"></ng-template>
+        } @else if (this.selection === 'shape') {
+        <div class="row g-0 shape-selection">
+          <div class="col" (click)="this.changeShapeSelection('rect')">
+            <div
+              class="item"
+              [ngClass]="{ selected: this.shapeSelection === 'rect' }"
+            >
+              <ta-material-icon type="sm"
+                >check_box_outline_blank</ta-material-icon
+              >
             </div>
-            <ng-template [ngTemplateOutlet]="Range"></ng-template>
-            <ng-template [ngTemplateOutlet]="Colors"></ng-template>
-          } @else if (this.selection === 'text') {
-            <ng-template [ngTemplateOutlet]="Range"></ng-template>
-            <ng-template [ngTemplateOutlet]="Colors"></ng-template>
-          }
+          </div>
+          <div class="col" (click)="this.changeShapeSelection('triangle')">
+            <div
+              class="item"
+              [ngClass]="{ selected: this.shapeSelection === 'triangle' }"
+            >
+              <ta-material-icon type="sm">change_history</ta-material-icon>
+            </div>
+          </div>
+          <div class="col" (click)="this.changeShapeSelection('circle')">
+            <div
+              class="item"
+              [ngClass]="{ selected: this.shapeSelection === 'circle' }"
+            >
+              <ta-material-icon type="sm">circle</ta-material-icon>
+            </div>
+          </div>
+          <div class="col" (click)="this.changeShapeSelection('line')">
+            <div
+              class="item"
+              [ngClass]="{ selected: this.shapeSelection === 'line' }"
+            >
+              <ta-material-icon type="sm">straighten</ta-material-icon>
+            </div>
+          </div>
         </div>
+        <ng-template [ngTemplateOutlet]="Range"></ng-template>
+        <ng-template [ngTemplateOutlet]="Colors"></ng-template>
+        } @else if (this.selection === 'text') {
+        <ng-template [ngTemplateOutlet]="Range"></ng-template>
+        <ng-template [ngTemplateOutlet]="Colors"></ng-template>
+        }
+      </div>
       }
 
       <div class="selection row g-0">
@@ -52,7 +71,10 @@
           </div>
         </div>
         <div class="col" (click)="this.changeSelection('shape')">
-          <div class="item" [ngClass]="{ selected: this.selection === 'shape' }">
+          <div
+            class="item"
+            [ngClass]="{ selected: this.selection === 'shape' }"
+          >
             <ta-material-icon type="sm">interests</ta-material-icon>
           </div>
         </div>
@@ -92,13 +114,17 @@
   <div class="colors">
     <div class="row g-0">
       @for (color of this.colorList; track color) {
-        <div class="col" (click)="this.changeColor(color)">
-          <div class="color" [style.background-color]="color" [ngClass]="{ 'is-light': this.isLight(color) }">
-            @if (this.colorHexa === color) {
-              <ta-material-icon [type]="'sm'">done</ta-material-icon>
-            }
-          </div>
+      <div class="col" (click)="this.changeColor(color)">
+        <div
+          class="color"
+          [style.background-color]="color"
+          [ngClass]="{ 'is-light': this.isLight(color) }"
+        >
+          @if (this.colorHexa === color) {
+          <ta-material-icon [type]="'sm'">done</ta-material-icon>
+          }
         </div>
+      </div>
       }
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { FileMetadata } from './file-metadata';
+import { FileMetadata } from "./file-metadata";
 
 export interface Document {
   id: number;

@@ -1,18 +1,18 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { HourDateLineComponent } from './hour-date-line.component';
+import { HourDateLineComponent } from "./hour-date-line.component";
 
 export default {
-  title: 'UI/HourDateLine',
+  title: "UI/HourDateLine",
   component: HourDateLineComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   render: (args) => ({ props: args }),
   argTypes: {
     startDate: {
-      control: 'date',
+      control: "date",
     },
     endDate: {
-      control: 'date',
+      control: "date",
     },
   },
   args: {

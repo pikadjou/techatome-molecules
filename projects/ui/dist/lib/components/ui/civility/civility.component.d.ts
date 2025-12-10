@@ -1,4 +1,4 @@
-import { Civility } from '@ta/utils';
+import { Civility } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class CivilityComponent {
     /**

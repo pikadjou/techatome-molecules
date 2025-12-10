@@ -11,27 +11,28 @@
     <div class="p-space-lg">
       <div class="showcase-intro">
         <ta-title [level]="2">Composants d'interface utilisateur</ta-title>
-        <ta-text>Explorez les différents composants UI disponibles dans la librairie &#64;ta/ui</ta-text>
+        <ta-text
+          >Explorez les différents composants UI disponibles dans la librairie
+          &#64;ta/ui</ta-text
+        >
       </div>
 
       <div class="components-grid">
         @for (component of components; track component) {
-          <a 
-            [routerLink]="component.route"
-            class="component-card">
-            <div class="card-content">
-              <div class="card-icon" [style.color]="component.color">
-                <span class="material-icons">{{ component.icon }}</span>
-              </div>
-              <div class="card-text">
-                <ta-title [level]="3">{{ component.title }}</ta-title>
-                <ta-text>{{ component.description }}</ta-text>
-              </div>
-              <div class="card-arrow">
-                <span class="material-icons">arrow_forward</span>
-              </div>
+        <a [routerLink]="component.route" class="component-card">
+          <div class="card-content">
+            <div class="card-icon" [style.color]="component.color">
+              <span class="material-icons">{{ component.icon }}</span>
             </div>
-          </a>
+            <div class="card-text">
+              <ta-title [level]="3">{{ component.title }}</ta-title>
+              <ta-text>{{ component.description }}</ta-text>
+            </div>
+            <div class="card-arrow">
+              <span class="material-icons">arrow_forward</span>
+            </div>
+          </div>
+        </a>
         }
       </div>
     </div>

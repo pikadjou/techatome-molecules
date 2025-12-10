@@ -1,5 +1,10 @@
 <ta-input-layout [input]="this.input">
-  <input type="hidden" #focusedElement [formControl]="$any(this.input.formControl)" [value]="this.input.value" />
+  <input
+    type="hidden"
+    #focusedElement
+    [formControl]="$any(this.input.formControl)"
+    [value]="this.input.value"
+  />
 
   <ta-cms-editor-input
     class="form-control"

@@ -1,9 +1,12 @@
 <ul class="menu" [ngClass]="this.containerCss">
-  @for (item of this.menu.elements; track item.key) {
-    @if ((item.visible$ | async) === true) {
-      <li>
-        <ta-menu-item [item]="item" [class]="item.key" [styleType]="this.menu.direction"></ta-menu-item>
-      </li>
-    }
-  }
+  @for (item of this.menu.elements; track item.key) { @if ((item.visible$ |
+  async) === true) {
+  <li>
+    <ta-menu-item
+      [item]="item"
+      [class]="item.key"
+      [styleType]="this.menu.direction"
+    ></ta-menu-item>
+  </li>
+  } }
 </ul>

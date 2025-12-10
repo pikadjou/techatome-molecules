@@ -1,8 +1,8 @@
-import { TemplateRef } from '@angular/core';
-import { QueryParamsHandling } from '@angular/router';
+import { TemplateRef } from "@angular/core";
+import { QueryParamsHandling } from "@angular/router";
 
-import { isNonNullable } from '@ta/utils';
-import { Observable, of } from 'rxjs';
+import { isNonNullable } from "@ta/utils";
+import { Observable, of } from "rxjs";
 
 export class MenuBase {
   key: string;
@@ -26,18 +26,21 @@ export class MenuBase {
     extraTemplate?: TemplateRef<any>;
   };
   constructor(options: IMenuBaseOption = {}) {
-    this.key = options.key || '';
-    this.label = options.label || '';
+    this.key = options.key || "";
+    this.label = options.label || "";
     this.order = options.order === undefined ? 1 : options.order;
-    this.link = options.link || '';
+    this.link = options.link || "";
     this.callback = options.callback;
-    this.style = options.style || 'bloc';
+    this.style = options.style || "bloc";
     this.children = options.children || [];
     this.visible$ = options.visible$ || of(true);
-    this.defaultOpen = options.defaultOpen === undefined ? false : options.defaultOpen;
+    this.defaultOpen =
+      options.defaultOpen === undefined ? false : options.defaultOpen;
     this.exact = options.exact === undefined ? false : options.exact;
-    this.replaceUrl = isNonNullable(options.replaceUrl) ? options.replaceUrl : false;
-    this.queryParamsHandling = options.queryParamsHandling ?? '';
+    this.replaceUrl = isNonNullable(options.replaceUrl)
+      ? options.replaceUrl
+      : false;
+    this.queryParamsHandling = options.queryParamsHandling ?? "";
     this.disabled = options.disabled === undefined ? false : options.disabled;
     this.translationData = options.translationData;
     this.endingIcon = options.endingIcon;

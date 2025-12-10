@@ -1,20 +1,16 @@
 @if (this.container === 'button') {
-  <ta-button [options]="{ circular: true }" (action)="this.open()">
-    <ta-font-icon [name]="this.iconType"></ta-font-icon>
-  </ta-button>
+<ta-button [options]="{ circular: true }" (action)="this.open()">
+  <ta-font-icon [name]="this.iconType"></ta-font-icon>
+</ta-button>
 } @else if (this.container === 'link') {
-  <div (click)="this.open()">
-    <ta-font-icon [name]="this.iconType"></ta-font-icon>
-  </div>
-}
-
-@if (!this.mobileDetection) {
-  @if (this.isFilterOpen) {
-    <ta-layout-full-panel (closeEvent)="this.close()">
-      <ng-template [ngTemplateOutlet]="filterTemplate"></ng-template>
-    </ta-layout-full-panel>
-  }
-}
+<div (click)="this.open()">
+  <ta-font-icon [name]="this.iconType"></ta-font-icon>
+</div>
+} @if (!this.mobileDetection) { @if (this.isFilterOpen) {
+<ta-layout-full-panel (closeEvent)="this.close()">
+  <ng-template [ngTemplateOutlet]="filterTemplate"></ng-template>
+</ta-layout-full-panel>
+} }
 
 <ng-template #filterTemplate>
   <ta-filter-container

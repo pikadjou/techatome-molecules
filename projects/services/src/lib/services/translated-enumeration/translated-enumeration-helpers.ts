@@ -1,7 +1,9 @@
-import { compare } from '@ta/utils';
+import { compare } from "@ta/utils";
 
-import { TranslatedEnumeration } from '../common/dto/translated-enumeration';
+import { TranslatedEnumeration } from "../common/dto/translated-enumeration";
 
 export const sortByTranslatedValue = (translated: TranslatedEnumeration[]) => {
-  return translated.sort((a, b) => compare(a.translatedValue || '', b.translatedValue || '', true));
+  return translated.sort((a, b) =>
+    compare(a.translatedValue || "", b.translatedValue || "", true)
+  );
 };

@@ -10,31 +10,31 @@ import { Geolocation } from '@capacitor/geolocation';
 class TaDeviceInfoService {
     constructor() {
         this._getInfo$ = new BehaviorSubject(null);
-        Device.getInfo().then(deviceInformation => this._getInfo$.next(deviceInformation));
-        this.os$ = this._getInfo$.pipe(filter(deviceInfo => !!deviceInfo), map(deviceInfo => deviceInfo?.operatingSystem ?? 'unknown'));
-        this.deviceClasses$ = this.os$.pipe(map(os => {
+        Device.getInfo().then((deviceInformation) => this._getInfo$.next(deviceInformation));
+        this.os$ = this._getInfo$.pipe(filter((deviceInfo) => !!deviceInfo), map((deviceInfo) => deviceInfo?.operatingSystem ?? "unknown"));
+        this.deviceClasses$ = this.os$.pipe(map((os) => {
             return [os, this._getMobileClass(os)];
         }));
     }
     isMobileOs$() {
-        return this.os$.pipe(map(value => this.isMobileOs(value)));
+        return this.os$.pipe(map((value) => this.isMobileOs(value)));
     }
     isWeb$() {
-        return this.os$.pipe(map(value => !this.isMobileOs(value)));
+        return this.os$.pipe(map((value) => !this.isMobileOs(value)));
     }
     isMobileOs(os) {
-        return os === 'android' || os === 'ios';
+        return os === "android" || os === "ios";
     }
     _getMobileClass(os) {
-        return this.isMobileOs(os) ? 'mobile-device' : 'desktop-device';
+        return this.isMobileOs(os) ? "mobile-device" : "desktop-device";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceInfoService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceInfoService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceInfoService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceInfoService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [] });
 
@@ -48,7 +48,7 @@ class TaDeviceNetworkService {
     async observeNetworkStateChanges() {
         // save the current
         this._state = await this._getCurrentNetworkState();
-        Network.addListener('networkStatusChange', async (currentState) => {
+        Network.addListener("networkStatusChange", async (currentState) => {
             if (this._state === currentState.connected) {
                 return;
             }
@@ -71,17 +71,17 @@ class TaDeviceNetworkService {
     }
     _logNetworkStateChanged(isConnected, canDisplayNotification = false) {
         if (isConnected)
-            Logger.LogWarning(`[Network] connection restored ${canDisplayNotification ? '[notification] send' : ''}`);
+            Logger.LogWarning(`[Network] connection restored ${canDisplayNotification ? "[notification] send" : ""}`);
         else
-            Logger.LogWarning(`[Network] connection lost ${canDisplayNotification ? '[notification] send' : ''}`);
+            Logger.LogWarning(`[Network] connection lost ${canDisplayNotification ? "[notification] send" : ""}`);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceNetworkService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceNetworkService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceNetworkService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDeviceNetworkService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [] });
 
@@ -97,30 +97,30 @@ class TaDevicePositionService {
         this._canAccessPosition$ = new BehaviorSubject(false);
     }
     fetchCanAccessPosition() {
-        Geolocation.checkPermissions().then(permissionStatus => this._canAccessPosition$.next(permissionStatus.location !== 'denied'));
+        Geolocation.checkPermissions().then((permissionStatus) => this._canAccessPosition$.next(permissionStatus.location !== "denied"));
     }
     fetchCurrentPosition() {
-        Geolocation.getCurrentPosition().then(position => {
+        Geolocation.getCurrentPosition().then((position) => {
             this._currentPosition$.next(position);
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDevicePositionService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDevicePositionService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDevicePositionService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDevicePositionService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [] });
 
-const PWA_CONFIG_KEY = 'config_pwa';
+const PWA_CONFIG_KEY = "config_pwa";
 class TaPwaService {
     constructor(_config) {
         this._config = _config;
         this.isPWaCapability$ = new BehaviorSubject(false);
         if (this._config.active) {
-            window.addEventListener('beforeinstallprompt', event => {
+            window.addEventListener("beforeinstallprompt", (event) => {
                 this._promptEvent = event;
                 this.isPWaCapability$.next(true);
             });
@@ -135,12 +135,12 @@ class TaPwaService {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaPwaService, deps: [{ token: PWA_CONFIG_KEY }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaPwaService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaPwaService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaPwaService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Inject,

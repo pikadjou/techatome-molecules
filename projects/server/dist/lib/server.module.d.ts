@@ -1,10 +1,10 @@
-import { ModuleWithProviders } from '@angular/core';
-import { IGraphConfig } from './services/graphql/models/graphConfig';
+import { ModuleWithProviders } from "@angular/core";
+import { IGraphConfig } from "./services/graphql/models/graphConfig";
 import * as i0 from "@angular/core";
 import * as i1 from "@angular/common";
 import * as i2 from "@angular/common/http";
 import * as i3 from "apollo-angular";
-export { gql as Apollo_gql } from 'apollo-angular';
+export { gql as Apollo_gql } from "apollo-angular";
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.

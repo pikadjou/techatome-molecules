@@ -1,16 +1,22 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgFor, NgIf } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
-import { EmptyComponent } from '@ta/ui';
-import { FileData, FileType, SafePipe, StopPropagationDirective, TaBaseComponent } from '@ta/utils';
+import { FontIconComponent, LocalIconComponent } from "@ta/icons";
+import { EmptyComponent } from "@ta/ui";
+import {
+  FileData,
+  FileType,
+  SafePipe,
+  StopPropagationDirective,
+  TaBaseComponent,
+} from "@ta/utils";
 
-import { FileCardComponent } from './card/file/file-card.component';
+import { FileCardComponent } from "./card/file/file-card.component";
 
 @Component({
-  selector: 'ta-files-list',
-  templateUrl: './files-list.component.html',
-  styleUrls: ['./files-list.component.scss'],
+  selector: "ta-files-list",
+  templateUrl: "./files-list.component.html",
+  styleUrls: ["./files-list.component.scss"],
   standalone: true,
   imports: [
     NgIf,
@@ -34,7 +40,8 @@ export class FileListComponent extends TaBaseComponent {
   fileSelected = new EventEmitter<FileData & { index: number }>();
 
   @Output()
-  moreInformationSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
+  moreInformationSelected: EventEmitter<FileData> =
+    new EventEmitter<FileData>();
 
   @Output()
   fileDeleted = new EventEmitter<FileData>();

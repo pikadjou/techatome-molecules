@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { User } from '@auth0/auth0-angular';
-import { BehaviorSubject } from 'rxjs';
+import { User } from "@auth0/auth0-angular";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CamConfigurationService {
-  public organizationName$ = new BehaviorSubject<string>('');
+  public organizationName$ = new BehaviorSubject<string>("");
 
   constructor() {}
 
   public set(user: User) {
-    this.organizationName$.next(user['g-lambert/orgname']);
+    this.organizationName$.next(user["g-lambert/orgname"]);
   }
 }

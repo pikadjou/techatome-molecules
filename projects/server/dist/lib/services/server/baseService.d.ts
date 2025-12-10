@@ -1,8 +1,8 @@
-import { OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { GraphEndpoint, GraphOptions, TaGraphService } from '../graphql/public-api';
-import { MappingApiType } from './api/requestMap';
-import { TaServerSevice } from './api/server.service';
+import { OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+import { GraphEndpoint, GraphOptions, TaGraphService } from "../graphql/public-api";
+import { MappingApiType } from "./api/requestMap";
+import { TaServerSevice } from "./api/server.service";
 import * as i0 from "@angular/core";
 export declare abstract class TaBaseService implements OnDestroy {
     protected _subscriptionList: Subscription[];

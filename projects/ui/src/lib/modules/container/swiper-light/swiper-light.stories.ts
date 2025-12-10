@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { SwiperLightComponent } from './swiper-light.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { SwiperLightComponent } from "./swiper-light.component";
 
 export default {
-  title: 'Container/Swiper Light',
+  title: "Container/Swiper Light",
   component: SwiperLightComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -40,60 +40,60 @@ export default {
     };
   },
   args: {
-    mobileClass: 'mobile-device',
-    swiperClasses: 'swiper-class',
-    containerClasses: 'row container-class',
+    mobileClass: "mobile-device",
+    swiperClasses: "swiper-class",
+    containerClasses: "row container-class",
     items: [
       {
-        label: 'Il',
+        label: "Il",
       },
       {
-        label: 'était',
+        label: "était",
       },
       {
-        label: 'un',
+        label: "un",
       },
       {
-        label: 'petit',
+        label: "petit",
       },
       {
-        label: 'navire',
+        label: "navire",
       },
       {
-        label: 'qui',
+        label: "qui",
       },
       {
         label: "n'",
       },
       {
-        label: 'avait',
+        label: "avait",
       },
       {
-        label: 'ja...',
+        label: "ja...",
       },
       {
-        label: 'ja...',
+        label: "ja...",
       },
       {
-        label: 'jamais',
+        label: "jamais",
       },
       {
-        label: 'navigué',
+        label: "navigué",
       },
       {
-        label: '!',
+        label: "!",
       },
       {
-        label: 'Ohé',
+        label: "Ohé",
       },
       {
-        label: '!',
+        label: "!",
       },
       {
-        label: 'Ohééé',
+        label: "Ohééé",
       },
       {
-        label: '!!!',
+        label: "!!!",
       },
     ],
   },

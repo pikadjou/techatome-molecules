@@ -1,14 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { LetDirective } from './directive/let.directive';
-import { OnRenderDirective } from './directive/on-render.directive';
-import { StopPropagationDirective } from './directive/stop-propagation.directive';
-import { TypedTemplateDirective } from './directive/type-template-directive';
-import { FileSizePipe } from './pipe/file-size.pipe';
-import { JoinPipe } from './pipe/join.pipe';
-import { PluralTranslatePipe } from './pipe/plural.pipe';
-import { SafePipe } from './pipe/safe.pipe';
+import { LetDirective } from "./directive/let.directive";
+import { OnRenderDirective } from "./directive/on-render.directive";
+import { StopPropagationDirective } from "./directive/stop-propagation.directive";
+import { TypedTemplateDirective } from "./directive/type-template-directive";
+import { FileSizePipe } from "./pipe/file-size.pipe";
+import { JoinPipe } from "./pipe/join.pipe";
+import { PluralTranslatePipe } from "./pipe/plural.pipe";
+import { SafePipe } from "./pipe/safe.pipe";
 
 /**
  * @deprecated Use standalone components instead.
@@ -23,8 +23,21 @@ import { SafePipe } from './pipe/safe.pipe';
  */
 @NgModule({
   declarations: [FileSizePipe, LetDirective, OnRenderDirective],
-  imports: [CommonModule, SafePipe, PluralTranslatePipe, StopPropagationDirective, JoinPipe, TypedTemplateDirective],
-  exports: [FileSizePipe, LetDirective, PluralTranslatePipe, StopPropagationDirective, OnRenderDirective],
+  imports: [
+    CommonModule,
+    SafePipe,
+    PluralTranslatePipe,
+    StopPropagationDirective,
+    JoinPipe,
+    TypedTemplateDirective,
+  ],
+  exports: [
+    FileSizePipe,
+    LetDirective,
+    PluralTranslatePipe,
+    StopPropagationDirective,
+    OnRenderDirective,
+  ],
 })
 export class TaDirectivePipeModule {
   constructor() {}

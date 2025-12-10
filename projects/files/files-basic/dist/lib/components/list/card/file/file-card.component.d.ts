@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
-import { TaIconType } from '@ta/icons';
-import { FileData } from '@ta/utils';
+import { EventEmitter } from "@angular/core";
+import { TaIconType } from "@ta/icons";
+import { FileData } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class FileCardComponent {
     file: FileData;

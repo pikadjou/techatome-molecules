@@ -1,4 +1,4 @@
-import { Culture } from '@ta/utils';
+import { Culture } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class CultureComponent {
     cultures: Culture[];

@@ -1,22 +1,36 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { InputNumber, InputTextBox } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
-import { TaSizes } from '@ta/styles';
-import { StopPropagationDirective } from '@ta/utils';
+import { InputNumber, InputTextBox } from "@ta/form-model";
+import { FontIconComponent } from "@ta/icons";
+import { TaSizes } from "@ta/styles";
+import { StopPropagationDirective } from "@ta/utils";
 
-import { TaAbstractInputComponent } from '../../abstract.component';
-import { InputLayoutComponent } from '../../input-layout/input-layout.component';
+import { TaAbstractInputComponent } from "../../abstract.component";
+import { InputLayoutComponent } from "../../input-layout/input-layout.component";
 
 @Component({
-  selector: 'ta-search-field',
-  templateUrl: './search-field.component.html',
-  styleUrls: ['./search-field.component.scss'],
+  selector: "ta-search-field",
+  templateUrl: "./search-field.component.html",
+  styleUrls: ["./search-field.component.scss"],
   standalone: true,
-  imports: [FontIconComponent, StopPropagationDirective, ReactiveFormsModule, TranslateModule, InputLayoutComponent],
+  imports: [
+    FontIconComponent,
+    StopPropagationDirective,
+    ReactiveFormsModule,
+    TranslateModule,
+    InputLayoutComponent,
+  ],
 })
 export class SearchFieldComponent
   extends TaAbstractInputComponent<InputTextBox | InputNumber>
@@ -26,13 +40,13 @@ export class SearchFieldComponent
   isOpen: boolean = false;
 
   @Input()
-  placeholder: string = '';
+  placeholder: string = "";
 
   @Input()
   space = true;
 
   @Input()
-  type: TaSizes = 'sm';
+  type: TaSizes = "sm";
 
   @Output()
   valueCompleted = new EventEmitter();
@@ -82,9 +96,9 @@ export class SearchFieldComponent
     }
   }
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener("window:keyup", ["$event"])
   public keyPress = (event: KeyboardEvent): void => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       this.iconClicked();
     }
   };

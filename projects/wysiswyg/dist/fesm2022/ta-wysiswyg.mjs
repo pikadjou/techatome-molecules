@@ -23,11 +23,17 @@ class BlockTextComponent extends TaBaseComponent {
         this.ENotificationCode = ENotificationCode;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BlockTextComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: BlockTextComponent, isStandalone: true, selector: "ta-cms-editor-blocks", inputs: { blocks: "blocks" }, usesInheritance: true, ngImport: i0, template: "@for (block of this.blocks; track block.id) {\n  @switch (block.type) {\n    @case ('header') {\n      <ta-title [level]=\"block.data.level\">\n        {{ block.data.text }}\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <ta-text>\n        <div [innerHTML]=\"block.data.text | safe: 'html'\"></div>\n      </ta-text>\n    }\n    @case ('list') {\n      @if (block.data.style === 'ordered') {\n        <ol>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ol>\n      } @else if (block.data.style === 'unordered') {\n        <ul>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ul>\n      }\n    }\n    @case ('delimiter') {\n      <hr />\n    }\n    @case ('image') {\n      <img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n    }\n    @case ('quote') {\n      <div class=\"flex-start g-space-xs\">\n        @if (block.data.caption) {\n          <div>{{ block.data.caption }}:</div>\n        }\n        <q [innerHTML]=\"block.data.text | safe: 'html'\"></q>\n      </div>\n    }\n    @case ('warning') {\n      <ta-toast>\n        <ta-notification-inline\n          [message]=\"block.data.message\"\n          [code]=\"this.ENotificationCode.warning\"\n          [showClose]=\"false\"\n        ></ta-notification-inline>\n      </ta-toast>\n    }\n  }\n}\n", styles: [""], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "pipe", type: SafePipe, name: "safe" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: BlockTextComponent, isStandalone: true, selector: "ta-cms-editor-blocks", inputs: { blocks: "blocks" }, usesInheritance: true, ngImport: i0, template: "@for (block of this.blocks; track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n", styles: [""], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "pipe", type: SafePipe, name: "safe" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BlockTextComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-cms-editor-blocks', standalone: true, imports: [NotificationInlineComponent, SafePipe, TitleComponent, TextComponent, ToastComponent], template: "@for (block of this.blocks; track block.id) {\n  @switch (block.type) {\n    @case ('header') {\n      <ta-title [level]=\"block.data.level\">\n        {{ block.data.text }}\n      </ta-title>\n    }\n    @case ('paragraph') {\n      <ta-text>\n        <div [innerHTML]=\"block.data.text | safe: 'html'\"></div>\n      </ta-text>\n    }\n    @case ('list') {\n      @if (block.data.style === 'ordered') {\n        <ol>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ol>\n      } @else if (block.data.style === 'unordered') {\n        <ul>\n          @for (item of block.data.items; track item) {\n            <li>\n              {{ item }}\n            </li>\n          }\n        </ul>\n      }\n    }\n    @case ('delimiter') {\n      <hr />\n    }\n    @case ('image') {\n      <img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n    }\n    @case ('quote') {\n      <div class=\"flex-start g-space-xs\">\n        @if (block.data.caption) {\n          <div>{{ block.data.caption }}:</div>\n        }\n        <q [innerHTML]=\"block.data.text | safe: 'html'\"></q>\n      </div>\n    }\n    @case ('warning') {\n      <ta-toast>\n        <ta-notification-inline\n          [message]=\"block.data.message\"\n          [code]=\"this.ENotificationCode.warning\"\n          [showClose]=\"false\"\n        ></ta-notification-inline>\n      </ta-toast>\n    }\n  }\n}\n" }]
+            args: [{ selector: "ta-cms-editor-blocks", standalone: true, imports: [
+                        NotificationInlineComponent,
+                        SafePipe,
+                        TitleComponent,
+                        TextComponent,
+                        ToastComponent,
+                    ], template: "@for (block of this.blocks; track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n" }]
         }], propDecorators: { blocks: [{
                 type: Input
             }] } });
@@ -37,31 +43,31 @@ class TagTool {
         return true;
     }
     static get shortcut() {
-        return 'CTRL+A';
+        return "CTRL+A";
     }
     static get sanitize() {
         return {
             span: {
-                'class': true,
-                'data-user-id': true,
+                class: true,
+                "data-user-id": true,
             },
         };
     }
-    constructor({ api, config }) {
+    constructor({ api, config, }) {
         this.users = [];
-        this.dropdown = document.createElement('div');
-        this.templateTagSpan = document.createElement('span');
+        this.dropdown = document.createElement("div");
+        this.templateTagSpan = document.createElement("span");
         this._currentTagSpan = null;
         this.handleKeydown = (event) => {
             if (!event || !(event instanceof KeyboardEvent)) {
                 return;
             }
-            if (event.key === '@') {
+            if (event.key === "@") {
                 event.preventDefault(); // Empêche l'insertion du @ par défaut
                 this._insertTagAtCursor();
                 return;
             }
-            if (event.key === 'Escape') {
+            if (event.key === "Escape") {
                 this._cancelTag();
             }
         };
@@ -71,7 +77,9 @@ class TagTool {
             }
             const text = this._currentTagSpan?.textContent?.trim();
             const query = text?.slice(1).toLowerCase(); // Supprime le @ et met en minuscule
-            const filteredUsers = !query || query?.length === 0 ? this.users : this.users.filter(user => user.name.toLowerCase().includes(query));
+            const filteredUsers = !query || query?.length === 0
+                ? this.users
+                : this.users.filter((user) => user.name.toLowerCase().includes(query));
             this._updateDropdown(filteredUsers);
         };
         this.handleOutsideClick = (event) => {
@@ -82,7 +90,8 @@ class TagTool {
                 return;
             }
             // Vérifie si le clic n'est PAS sur la dropdown ni sur la mention en cours
-            if (!this.dropdown.contains(event.target) && this._currentTagSpan !== event.target) {
+            if (!this.dropdown.contains(event.target) &&
+                this._currentTagSpan !== event.target) {
                 this._cancelTag();
             }
         };
@@ -92,8 +101,8 @@ class TagTool {
     }
     render() {
         return {
-            icon: '@',
-            label: 'Tag',
+            icon: "@",
+            label: "Tag",
             onActivate: () => {
                 this._insertTagAtCursor();
             },
@@ -114,21 +123,21 @@ class TagTool {
         return false;
     }
     _initDOM() {
-        this.templateTagSpan.classList.add('tag-user', 'text-color-text-brand-primary');
-        this.templateTagSpan.dataset['userId'] = '';
-        this.templateTagSpan.textContent = '@';
-        this.dropdown.classList.add('tag-dropdown', 'p-space-sm', 'bxs-shadow-black-sm');
-        this.dropdown.style.position = 'absolute';
-        this.dropdown.style.background = 'white';
-        this.dropdown.style.zIndex = '1000';
-        this.dropdown.style.maxHeight = '150px';
-        this.dropdown.style.overflowY = 'auto';
-        const editorDiv = document.body.querySelector('.editor-container');
+        this.templateTagSpan.classList.add("tag-user", "text-color-text-brand-primary");
+        this.templateTagSpan.dataset["userId"] = "";
+        this.templateTagSpan.textContent = "@";
+        this.dropdown.classList.add("tag-dropdown", "p-space-sm", "bxs-shadow-black-sm");
+        this.dropdown.style.position = "absolute";
+        this.dropdown.style.background = "white";
+        this.dropdown.style.zIndex = "1000";
+        this.dropdown.style.maxHeight = "150px";
+        this.dropdown.style.overflowY = "auto";
+        const editorDiv = document.body.querySelector(".editor-container");
         if (editorDiv) {
-            this.api.listeners.on(editorDiv, 'keydown', this.handleKeydown);
-            this.api.listeners.on(editorDiv, 'input', this.handleTyping);
+            this.api.listeners.on(editorDiv, "keydown", this.handleKeydown);
+            this.api.listeners.on(editorDiv, "input", this.handleTyping);
         }
-        this.api.listeners.on(document.body, 'click', this.handleOutsideClick);
+        this.api.listeners.on(document.body, "click", this.handleOutsideClick);
     }
     _insertTagAtCursor() {
         const selection = window.getSelection();
@@ -161,21 +170,21 @@ class TagTool {
         document.body.removeChild(this.dropdown);
     }
     _updateDropdown(users) {
-        this.dropdown.innerHTML = '';
+        this.dropdown.innerHTML = "";
         if (users.length === 0) {
-            const noResult = document.createElement('div');
-            noResult.textContent = 'Aucun résultat';
-            noResult.style.padding = '5px';
+            const noResult = document.createElement("div");
+            noResult.textContent = "Aucun résultat";
+            noResult.style.padding = "5px";
             this.dropdown.appendChild(noResult);
             return;
         }
         users.forEach((user, index) => {
-            const option = document.createElement('div');
+            const option = document.createElement("div");
             option.textContent = user.name;
-            option.style.padding = '5px';
-            option.style.cursor = 'pointer';
-            option.dataset['index'] = index.toString();
-            option.addEventListener('click', () => this._selectUser(user));
+            option.style.padding = "5px";
+            option.style.cursor = "pointer";
+            option.dataset["index"] = index.toString();
+            option.addEventListener("click", () => this._selectUser(user));
             this.dropdown.appendChild(option);
         });
     }
@@ -185,9 +194,9 @@ class TagTool {
         }
         // Remplace le contenu du span avec le nom sélectionné
         this._currentTagSpan.textContent = `@${user.name}`;
-        this._currentTagSpan.dataset['userId'] = user.id;
+        this._currentTagSpan.dataset["userId"] = user.id;
         // Insère un nœud texte après la tag pour éviter de garder le style
-        const textNode = document.createTextNode('\u00A0'); // Un espace pour éviter que le curseur colle
+        const textNode = document.createTextNode("\u00A0"); // Un espace pour éviter que le curseur colle
         this._currentTagSpan.after(textNode);
         // 🔥 Déplace le curseur après la tag pour continuer à écrire normalement
         const range = document.createRange();
@@ -205,7 +214,7 @@ class TagTool {
             return;
         }
         // Récupère le texte à l'intérieur de la span
-        const textContent = this._currentTagSpan.textContent || '';
+        const textContent = this._currentTagSpan.textContent || "";
         // Crée un nœud texte avec le même contenu
         const textNode = document.createTextNode(textContent);
         // Remplace la span par le texte brut
@@ -587,7 +596,7 @@ class EditorInputComponent extends TaBaseComponent {
                 next: ({ blocks, saveAfter }) => {
                     this._saveAfter = saveAfter ?? false;
                     if (this.editorInstance && blocks) {
-                        if (typeof blocks === 'string') {
+                        if (typeof blocks === "string") {
                             this.editorInstance.blocks.renderFromHTML(blocks);
                         }
                         else {
@@ -610,7 +619,10 @@ class EditorInputComponent extends TaBaseComponent {
             if (!data) {
                 return;
             }
-            this.saved.emit({ blocks: data.blocks, tags: this._extractTags(data.blocks) });
+            this.saved.emit({
+                blocks: data.blocks,
+                tags: this._extractTags(data.blocks),
+            });
         }
     }
     init() {
@@ -619,7 +631,7 @@ class EditorInputComponent extends TaBaseComponent {
             holder: this.editorjs.nativeElement,
             minHeight: 100,
             data: { blocks: this.initValue },
-            placeholder: translations['placeholder'],
+            placeholder: translations["placeholder"],
             tools: {
                 header: Header,
                 list: List,
@@ -629,8 +641,8 @@ class EditorInputComponent extends TaBaseComponent {
                 TextColor: {
                     class: ColorTool,
                     config: {
-                        backgroundColorLabel: translations['colortool.backgroundColorLabel'],
-                        frontColorLabel: translations['colortool.frontColorLabel'],
+                        backgroundColorLabel: translations["colortool.backgroundColorLabel"],
+                        frontColorLabel: translations["colortool.frontColorLabel"],
                     },
                 },
                 image: {
@@ -672,8 +684,8 @@ class EditorInputComponent extends TaBaseComponent {
             return output;
         }
         let spanIndex = 0;
-        const updatedBlocks = output.blocks.map(block => {
-            if (block.type !== 'paragraph' || !block.data?.text) {
+        const updatedBlocks = output.blocks.map((block) => {
+            if (block.type !== "paragraph" || !block.data?.text) {
                 return block;
             }
             const newText = block.data.text.replace(/<span class="ce-inline-tool--color__token">/gs, (match) => {
@@ -700,14 +712,14 @@ class EditorInputComponent extends TaBaseComponent {
         const html = convertBlocksToHtml(blocks);
         const regex = /data-user-id="([^"]+)"/g;
         // Extraction des IDs sous forme de tableau
-        return [...html.matchAll(regex)].map(match => match[1]);
+        return [...html.matchAll(regex)].map((match) => match[1]);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: "initValue", setNewValue$: "setNewValue$", requestSave$: "requestSave$", clear$: "clear$", users: "users", saveOnChange: "saveOnChange", maxHeight: "maxHeight" }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-cms-editor-input', standalone: true, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }]
+            args: [{ selector: "ta-cms-editor-input", standalone: true, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }]
         }], ctorParameters: () => [], propDecorators: { initValue: [{
                 type: Input
             }], setNewValue$: [{
@@ -728,12 +740,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }], editorjs: [{
                 type: ViewChild,
-                args: ['editorjs', { static: true }]
+                args: ["editorjs", { static: true }]
             }] } });
 
 const convertBlocksToHtml = (blocks) => {
     const edjsParser = edjsHTML();
-    return edjsParser.parse({ blocks }).join(' ');
+    return edjsParser.parse({ blocks }).join(" ");
 };
 
 /**
@@ -749,14 +761,29 @@ const convertBlocksToHtml = (blocks) => {
  */
 class TaWysiswygModule {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, TaNotificationModule, SafePipe, BlockTextComponent, EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, TaNotificationModule, BlockTextComponent] }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule,
+            TaUiModule,
+            TaNotificationModule,
+            SafePipe,
+            BlockTextComponent,
+            EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule,
+            TaUiModule,
+            TaNotificationModule,
+            BlockTextComponent] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [CommonModule, TaUiModule, TaNotificationModule, SafePipe, BlockTextComponent, EditorInputComponent],
+                    imports: [
+                        CommonModule,
+                        TaUiModule,
+                        TaNotificationModule,
+                        SafePipe,
+                        BlockTextComponent,
+                        EditorInputComponent,
+                    ],
                     exports: [BlockTextComponent, EditorInputComponent],
                 }]
         }] });

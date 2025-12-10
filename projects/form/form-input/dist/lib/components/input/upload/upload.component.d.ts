@@ -1,7 +1,7 @@
-import { ElementRef, EventEmitter, OnInit } from '@angular/core';
-import { InputUpload } from '@ta/form-model';
-import { DocumentDto } from '@ta/services';
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { ElementRef, EventEmitter, OnInit } from "@angular/core";
+import { InputUpload } from "@ta/form-model";
+import { DocumentDto } from "@ta/services";
+import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 type InProgressFile = {
     name: string;

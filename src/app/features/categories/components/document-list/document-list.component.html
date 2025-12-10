@@ -1,28 +1,29 @@
 <div class="documents-grid">
   @for (document of documents; track trackByDocument($index, document)) {
-    <ta-card 
-      class="document-card" 
-      (click)="onDocumentClick(document)"
-      role="button"
-      tabindex="0">
-      <ta-card-header>
-        <ta-card-title>{{ document.title }}</ta-card-title>
-        <mat-icon class="document-icon">description</mat-icon>
-      </ta-card-header>
-      @if (document.content) {
-        <ta-card-content>
-          <ta-text class="document-preview">
-            {{ document.content | slice:0:150 }}{{ document.content.length > 150 ? '...' : '' }}
-          </ta-text>
-        </ta-card-content>
-      }
-      @if (document.updatedAt) {
-        <ta-card-content>
-          <ta-text variant="caption" class="text-muted">
-            Mis à jour le {{ document.updatedAt | date:'short' }}
-          </ta-text>
-        </ta-card-content>
-      }
-    </ta-card>
+  <ta-card
+    class="document-card"
+    (click)="onDocumentClick(document)"
+    role="button"
+    tabindex="0"
+  >
+    <ta-card-header>
+      <ta-card-title>{{ document.title }}</ta-card-title>
+      <mat-icon class="document-icon">description</mat-icon>
+    </ta-card-header>
+    @if (document.content) {
+    <ta-card-content>
+      <ta-text class="document-preview">
+        {{ document.content | slice : 0 : 150
+        }}{{ document.content.length > 150 ? "..." : "" }}
+      </ta-text>
+    </ta-card-content>
+    } @if (document.updatedAt) {
+    <ta-card-content>
+      <ta-text variant="caption" class="text-muted">
+        Mis à jour le {{ document.updatedAt | date : "short" }}
+      </ta-text>
+    </ta-card-content>
+    }
+  </ta-card>
   }
 </div>

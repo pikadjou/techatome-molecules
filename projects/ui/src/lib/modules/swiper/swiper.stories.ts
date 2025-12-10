@@ -1,12 +1,12 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { SwiperComponent } from '@ta/ui';
+import { Meta, StoryObj } from "@storybook/angular";
+import { SwiperComponent } from "@ta/ui";
 type StoryType = SwiperComponent;
 
 export default {
-  title: 'SWIPER/base',
+  title: "SWIPER/base",
   component: SwiperComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { LinkComponent } from './link.component';
+import { LinkComponent } from "./link.component";
 
 type StoryType = LinkComponent & { text?: string; underline?: boolean };
 
 export default {
-  title: 'UI/Link',
+  title: "UI/Link",
   component: LinkComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { text, ...props } = args;
     return {
       props,
@@ -21,7 +21,7 @@ export default {
   },
   args: {
     underline: true,
-    text: 'Link',
+    text: "Link",
   },
 } as Meta<StoryType>;
 

@@ -1,27 +1,42 @@
-import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { NgIf } from "@angular/common";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
-import { FontIconComponent } from '@ta/icons';
-import { BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams } from '@ta/menu';
-import { ButtonComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import {
+  BottomSheetTemplateGenericComponent,
+  BottomSheetTemplateGenericParams,
+} from "@ta/menu";
+import { ButtonComponent } from "@ta/ui";
+import { TaBaseComponent } from "@ta/utils";
 
-import { SearchHistoryDisplayerComponent } from './search-history-displayer/search-history-displayer.component';
+import { SearchHistoryDisplayerComponent } from "./search-history-displayer/search-history-displayer.component";
 
 @Component({
-  selector: 'ta-search-displayer',
-  templateUrl: './search-displayer.component.html',
-  styleUrls: ['./search-displayer.component.scss'],
+  selector: "ta-search-displayer",
+  templateUrl: "./search-displayer.component.html",
+  styleUrls: ["./search-displayer.component.scss"],
   standalone: true,
-  imports: [NgIf, FontIconComponent, SearchHistoryDisplayerComponent, ButtonComponent],
+  imports: [
+    NgIf,
+    FontIconComponent,
+    SearchHistoryDisplayerComponent,
+    ButtonComponent,
+  ],
 })
 export class SearchDisplayerComponent extends TaBaseComponent {
   @Input()
-  container: 'button' | 'link' = 'button';
+  container: "button" | "link" = "button";
 
   @Input()
-  placeholder: string = '';
+  placeholder: string = "";
 
   @Input()
   searchHistory?: {
@@ -31,7 +46,7 @@ export class SearchDisplayerComponent extends TaBaseComponent {
   @Output()
   valueCompleted = new EventEmitter();
 
-  @ViewChild('searchTemplate', { read: TemplateRef })
+  @ViewChild("searchTemplate", { read: TemplateRef })
   searchTemplate!: TemplateRef<void>;
 
   get mobileDetection() {
@@ -46,17 +61,17 @@ export class SearchDisplayerComponent extends TaBaseComponent {
     if (!this.searchHistory?.type) {
       return;
     }
-    this._bottomSheet.open<BottomSheetTemplateGenericComponent, BottomSheetTemplateGenericParams>(
+    this._bottomSheet.open<
       BottomSheetTemplateGenericComponent,
-      {
-        data: {
-          template: this.searchTemplate,
-          context: {
-            options: { isDropDown: false },
-          },
+      BottomSheetTemplateGenericParams
+    >(BottomSheetTemplateGenericComponent, {
+      data: {
+        template: this.searchTemplate,
+        context: {
+          options: { isDropDown: false },
         },
-      }
-    );
+      },
+    });
   }
 
   public action(result: any) {

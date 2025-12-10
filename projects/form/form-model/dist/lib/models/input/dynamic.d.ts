@@ -1,7 +1,7 @@
-import { FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { FactoryInputType } from '../factory';
-import { IInputBase, InputBase } from './base';
+import { FormGroup } from "@angular/forms";
+import { Subject } from "rxjs";
+import { FactoryInputType } from "../factory";
+import { IInputBase, InputBase } from "./base";
 interface IInputTemplateDynamic {
     type: FactoryInputType;
     options: IInputChildrenDynamic;

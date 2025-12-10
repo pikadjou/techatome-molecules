@@ -1,7 +1,7 @@
-import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { InputBase } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
+import { EventEmitter } from "@angular/core";
+import { Observable } from "rxjs";
+import { InputBase } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class FiltersFormComponent extends TaBaseComponent {
     form: InputBase<any>[];

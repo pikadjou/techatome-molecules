@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
 export class SubscriberHandler {
   protected _subscriptionList: Subscription[] = [];

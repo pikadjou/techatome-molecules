@@ -1,6 +1,6 @@
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { TaPermissionsService } from '../services/permissions.service';
+import { ActivatedRouteSnapshot, Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { TaPermissionsService } from "../services/permissions.service";
 import * as i0 from "@angular/core";
 export interface RoleRouteData {
     role: string;

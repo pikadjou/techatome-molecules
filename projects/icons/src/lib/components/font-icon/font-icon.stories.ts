@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { FontIconComponent } from './font-icon.component';
+import { FontIconComponent } from "./font-icon.component";
 
 type StoryType = FontIconComponent;
 
 export default {
-  title: 'ICONS/font icon',
+  title: "ICONS/font icon",
   component: FontIconComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -19,8 +19,8 @@ export default {
   },
   argTypes: {},
   args: {
-    name: 'phone',
-    type: 'md',
+    name: "phone",
+    type: "md",
   },
 } as Meta<StoryType>;
 
@@ -28,11 +28,11 @@ export const Basic: StoryObj<StoryType> = {};
 
 export const small: StoryObj<StoryType> = {
   args: {
-    type: 'xs',
+    type: "xs",
   },
 };
 export const Big: StoryObj<StoryType> = {
   args: {
-    type: 'md',
+    type: "md",
   },
 };

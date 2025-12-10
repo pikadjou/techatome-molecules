@@ -1,4 +1,4 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 
 export interface DocumentDto {
   createdDate?: string;
@@ -8,4 +8,10 @@ export interface DocumentDto {
   size: number;
 }
 
-export const documentProps = new GraphSchema<DocumentDto>(['id', 'url', 'description', 'createdDate', 'size']);
+export const documentProps = new GraphSchema<DocumentDto>([
+  "id",
+  "url",
+  "description",
+  "createdDate",
+  "size",
+]);

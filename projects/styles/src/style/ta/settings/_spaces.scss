@@ -1,9 +1,9 @@
 @use "ta/vars";
-@use 'ta/settings/common';
+@use "ta/settings/common";
 
 @mixin generateRadius() {
   @include common.generateMap(
-    'radius',
+    "radius",
     vars.$radius,
     (
       bdr: border-radius,
@@ -13,7 +13,7 @@
 
 @mixin generateSpaces() {
   @include common.generateMap(
-    'space',
+    "space",
     vars.$space,
     (
       g: gap,

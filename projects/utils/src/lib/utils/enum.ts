@@ -3,7 +3,7 @@ export const extractEnum = (
   backendOne = false
 ): { value: number; name: string }[] => {
   const keys = Object.keys(allEnum).filter(
-    (k) => typeof allEnum[k as any] === 'number'
+    (k) => typeof allEnum[k as any] === "number"
   );
   return keys
     .map((key) => {

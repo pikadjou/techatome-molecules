@@ -1,15 +1,15 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { ProgressCircleComponent } from './progress-circle.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { ProgressCircleComponent } from "./progress-circle.component";
 
 export default {
-  title: 'UI/Progress circle',
+  title: "UI/Progress circle",
   component: ProgressCircleComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   args: {
     progress: 50,
-    upTitle: 'Up title',
-    downTitle: 'Down title',
+    upTitle: "Up title",
+    downTitle: "Down title",
   },
 } as Meta<ProgressCircleComponent>;
 

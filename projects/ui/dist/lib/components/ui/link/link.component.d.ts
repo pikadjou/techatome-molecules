@@ -1,5 +1,5 @@
-import { EventEmitter } from '@angular/core';
-import { TaSizes, TaState } from '@ta/styles';
+import { EventEmitter } from "@angular/core";
+import { TaSizes, TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class LinkComponent {
     state: TaState;

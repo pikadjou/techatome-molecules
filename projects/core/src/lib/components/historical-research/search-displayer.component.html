@@ -1,20 +1,16 @@
-@if (this.mobileDetection) {
-  @if (this.container === 'button') {
-    <ta-button [options]="{ circular: true }" (action)="this.openDialog()">
-      <ta-font-icon [name]="'search'"></ta-font-icon>
-    </ta-button>
-  } @else if (this.container === 'link') {
-    <div (click)="this.openDialog()">
-      <ta-font-icon [name]="'search'"></ta-font-icon>
-    </div>
-  }
-}
-
-@if (!this.mobileDetection) {
-  <ng-template
-    [ngTemplateOutlet]="searchTemplate"
-    [ngTemplateOutletContext]="{ options: { isDropDown: true } }"
-  ></ng-template>
+@if (this.mobileDetection) { @if (this.container === 'button') {
+<ta-button [options]="{ circular: true }" (action)="this.openDialog()">
+  <ta-font-icon [name]="'search'"></ta-font-icon>
+</ta-button>
+} @else if (this.container === 'link') {
+<div (click)="this.openDialog()">
+  <ta-font-icon [name]="'search'"></ta-font-icon>
+</div>
+} } @if (!this.mobileDetection) {
+<ng-template
+  [ngTemplateOutlet]="searchTemplate"
+  [ngTemplateOutletContext]="{ options: { isDropDown: true } }"
+></ng-template>
 }
 
 <ng-template #searchTemplate let-options="options">

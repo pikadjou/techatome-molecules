@@ -1,7 +1,7 @@
-import { TemplateRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TaBaseComponent } from '@ta/utils';
-import { Observable } from 'rxjs';
+import { TemplateRef } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { TaBaseComponent } from "@ta/utils";
+import { Observable } from "rxjs";
 import * as i0 from "@angular/core";
 interface UserLogoNaming {
     name: string;

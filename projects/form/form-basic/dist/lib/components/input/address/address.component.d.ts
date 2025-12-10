@@ -1,5 +1,5 @@
-import { InputAddress } from '@ta/form-model';
-import { TaAbstractInputComponent } from '@ta/form-input';
+import { InputAddress } from "@ta/form-model";
+import { TaAbstractInputComponent } from "@ta/form-input";
 import * as i0 from "@angular/core";
 export declare class InputAddressComponent extends TaAbstractInputComponent<InputAddress> {
     constructor();

@@ -1,5 +1,5 @@
-import { InputCheckBox } from '@ta/form-model';
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputCheckBox } from "@ta/form-model";
+import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class CheckboxComponent extends TaAbstractInputComponent<InputCheckBox, boolean> {
     constructor();

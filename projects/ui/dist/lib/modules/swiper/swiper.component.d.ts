@@ -1,6 +1,6 @@
-import { ElementRef, EventEmitter, TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Swiper } from 'swiper/types';
+import { ElementRef, EventEmitter, TemplateRef } from "@angular/core";
+import { Observable } from "rxjs";
+import { Swiper } from "swiper/types";
 import * as i0 from "@angular/core";
 export interface SwiperData {
     visible$: Observable<boolean>;

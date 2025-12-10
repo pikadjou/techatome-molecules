@@ -1,7 +1,7 @@
-import { Provider } from '@angular/core';
-import { TaTranslationLoader } from './services/translation.loader';
-import { ITranslationSourceConfig } from './services/translation-source.config';
-import { TaTranslationService } from './services/translation.service';
+import { Provider } from "@angular/core";
+import { TaTranslationLoader } from "./services/translation.loader";
+import { ITranslationSourceConfig } from "./services/translation-source.config";
+import { TaTranslationService } from "./services/translation.service";
 export declare function HttpLoaderFactory(): TaTranslationLoader;
 export declare function initTranslation(service: TaTranslationService): () => void;
 export interface IProvideTranslationConfig {

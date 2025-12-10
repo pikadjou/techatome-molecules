@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { LogoComponent } from './logo.component';
+import { LogoComponent } from "./logo.component";
 
 export default {
-  title: 'UI/Logo',
+  title: "UI/Logo",
   component: LogoComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   render: (args) => ({ props: args }),
   args: {
-    color: 'black',
+    color: "black",
     widthPercentage: 80,
   },
 } as Meta<LogoComponent>;
@@ -23,12 +23,12 @@ export const Small: StoryObj<LogoComponent> = {
 
 export const White: StoryObj<LogoComponent> = {
   args: {
-    color: 'white',
+    color: "white",
   },
 };
 
 export const OneLine: StoryObj<LogoComponent> = {
   args: {
-    type: 'oneline',
+    type: "oneline",
   },
 };

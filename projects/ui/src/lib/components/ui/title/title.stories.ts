@@ -1,15 +1,15 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { ButtonComponent } from '../button/button.component';
-import { TitleComponent } from './title.component';
+import { ButtonComponent } from "../button/button.component";
+import { TitleComponent } from "./title.component";
 
 type StoryType = ButtonComponent & { titleText?: string };
 
 export default {
-  title: 'UI/Title',
+  title: "UI/Title",
   component: TitleComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { titleText, ...props } = args;
     return {
       props,
@@ -23,18 +23,18 @@ export default {
   argTypes: {
     level: {
       options: [1, 2, 3, 4],
-      control: 'number',
+      control: "number",
     },
     isTheme: {
-      control: 'boolean',
+      control: "boolean",
     },
     titleText: {
-      control: 'text',
+      control: "text",
     },
   },
   args: {
     level: 1,
-    titleText: 'Title',
+    titleText: "Title",
   },
 } as Meta<StoryType>;
 

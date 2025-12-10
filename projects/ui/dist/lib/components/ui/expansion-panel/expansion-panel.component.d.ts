@@ -1,5 +1,5 @@
-import { TemplateRef } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
+import { TemplateRef } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export interface ExpansionPanelInput {
     title: TemplateRef<any>;

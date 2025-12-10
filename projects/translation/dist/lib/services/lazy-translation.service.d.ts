@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
-import { TaBaseStrapiService } from '@ta/server';
-import { ITranslation } from './translation-registry.service';
+import { Observable } from "rxjs";
+import { TaBaseStrapiService } from "@ta/server";
+import { ITranslation } from "./translation-registry.service";
 export declare abstract class TaLazyTranslationService extends TaBaseStrapiService implements ITranslation {
     get id(): string;
     private readonly _registry;

@@ -1,20 +1,20 @@
-import { AbstractNotificationTemplateComponent } from '../abstract';
-import { IconComponent } from '../../icon/icon.component';
-import { ItemComponent } from '../../item.component';
-import { NotificationTitleComponent } from '../../title/title.component';
-import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { AbstractNotificationTemplateComponent } from "../abstract";
+import { IconComponent } from "../../icon/icon.component";
+import { ItemComponent } from "../../item.component";
+import { NotificationTitleComponent } from "../../title/title.component";
+import { Component } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'ta-new-invoice',
-  templateUrl: './new-invoice.component.html',
-  styleUrls: ['./new-invoice.component.scss'],
+  selector: "ta-new-invoice",
+  templateUrl: "./new-invoice.component.html",
+  styleUrls: ["./new-invoice.component.scss"],
   standalone: true,
   imports: [
     IconComponent,
     ItemComponent,
     NotificationTitleComponent,
-    TranslateModule
+    TranslateModule,
   ],
 })
 export class NewInvoiceComponent extends AbstractNotificationTemplateComponent {
@@ -24,8 +24,8 @@ export class NewInvoiceComponent extends AbstractNotificationTemplateComponent {
     }
     super.goTo();
     this.sharedService.routing?.invoice({
-      projectId: this.extractredirectContext('ProjectId'),
-      invoiceId: this.extractredirectContext('InvoiceId'),
+      projectId: this.extractredirectContext("ProjectId"),
+      invoiceId: this.extractredirectContext("InvoiceId"),
     });
   }
 }

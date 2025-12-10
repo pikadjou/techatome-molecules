@@ -1,4 +1,4 @@
-import { TaLazyTranslationService } from '@ta/translation';
+import { TaLazyTranslationService } from "@ta/translation";
 import * as i0 from "@angular/core";
 export declare class TaTranslationInput extends TaLazyTranslationService {
     constructor();

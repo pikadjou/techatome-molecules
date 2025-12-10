@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { UiProfileDisplayComponent } from './ui-profile-display.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { UiProfileDisplayComponent } from "./ui-profile-display.component";
 
 type StoryType = UiProfileDisplayComponent;
 
 export default {
-  title: 'UI/Profil Display',
+  title: "UI/Profil Display",
   component: UiProfileDisplayComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -26,29 +26,29 @@ export default {
     };
   },
   args: {
-    label: 'Jean-François Vanderheyden',
+    label: "Jean-François Vanderheyden",
     userLogo: {
       userInfo: {
         profilePictureUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_eQMBIoGyHlsmDCKsRwjZpvyRzkr7HA0dIwcrMQtnSxGcNQfQXa_ZQrzUY0NEWcuxyMU&usqp=CAU',
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_eQMBIoGyHlsmDCKsRwjZpvyRzkr7HA0dIwcrMQtnSxGcNQfQXa_ZQrzUY0NEWcuxyMU&usqp=CAU",
         naming: {
-          name: 'Dark',
-          firstName: 'Vadehors',
-          trigram: 'DVD',
+          name: "Dark",
+          firstName: "Vadehors",
+          trigram: "DVD",
         },
       },
       size: 120,
     },
     ctas: [
       {
-        icon: 'phone',
-        label: 'Appelez',
-        callback: () => alert('phone'),
+        icon: "phone",
+        label: "Appelez",
+        callback: () => alert("phone"),
       },
       {
-        icon: 'mail',
-        label: 'Envoyez',
-        callback: () => alert('mail'),
+        icon: "mail",
+        label: "Envoyez",
+        callback: () => alert("mail"),
       },
     ],
   },
@@ -61,9 +61,9 @@ export const WithoutPicture: StoryObj<UiProfileDisplayComponent> = {
     userLogo: {
       userInfo: {
         naming: {
-          name: 'Dark',
-          firstName: 'Vadehors',
-          trigram: 'DVD',
+          name: "Dark",
+          firstName: "Vadehors",
+          trigram: "DVD",
         },
       },
       size: 120,
@@ -74,8 +74,8 @@ export const WithoutPicture: StoryObj<UiProfileDisplayComponent> = {
 export const WithSideIcon: StoryObj<UiProfileDisplayComponent> = {
   args: {
     sideIcon: {
-      icon: 'home',
-      callback: () => alert('home'),
+      icon: "home",
+      callback: () => alert("home"),
     },
   },
 };

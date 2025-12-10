@@ -1,4 +1,4 @@
-import { TaSizes } from '@ta/styles';
+import { TaSizes } from "@ta/styles";
 import * as i0 from "@angular/core";
 /**
  * @deprecated
@@ -23,7 +23,7 @@ export declare class MaterialIconComponent {
     /**
      * If set to true, define a size for the icon
      */
-    type: TaSizes | '';
+    type: TaSizes | "";
     getDisplayStyle(): string;
     getTypeStyle(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<MaterialIconComponent, never>;

@@ -1,20 +1,20 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TimeAgoComponent } from './time-ago.component';
+import { TimeAgoComponent } from "./time-ago.component";
 
 export type StoryType = TimeAgoComponent;
 
 export default {
-  title: 'UI/Time Ago',
+  title: "UI/Time Ago",
   component: TimeAgoComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     date: {
-      control: 'text',
+      control: "text",
     },
     withHours: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
   args: {

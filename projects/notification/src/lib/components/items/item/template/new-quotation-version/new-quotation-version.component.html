@@ -1,6 +1,9 @@
 <ta-notification-item [notification]="this.notification" (click)="this.goTo()">
   <ta-notification-item-title>
-    {{ 'notification.items.new-quotation-version.title' | translate: this.getTranslation() }}
+    {{
+      "notification.items.new-quotation-version.title"
+        | translate : this.getTranslation()
+    }}
   </ta-notification-item-title>
   <ta-notification-item-icon icon="article-line"></ta-notification-item-icon>
 </ta-notification-item>

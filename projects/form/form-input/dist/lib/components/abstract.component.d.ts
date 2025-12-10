@@ -1,9 +1,9 @@
-import { AfterViewInit, ElementRef, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { Observable } from 'rxjs';
-import { InputBase } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
+import { AfterViewInit, ElementRef, EventEmitter, OnDestroy, OnInit } from "@angular/core";
+import { Validators } from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
+import { Observable } from "rxjs";
+import { InputBase } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare abstract class TaAbstractInputComponent<C extends InputBase<any>, V = unknown> extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     input: C;

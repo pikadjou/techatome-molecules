@@ -1,20 +1,20 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { DurationComponent } from './duration.component';
+import { DurationComponent } from "./duration.component";
 
 export type StoryType = DurationComponent;
 
 export default {
-  title: 'UI/Duration',
+  title: "UI/Duration",
   component: DurationComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     startDate: {
-      control: 'text',
+      control: "text",
     },
     endDate: {
-      control: 'text',
+      control: "text",
     },
   },
   args: {

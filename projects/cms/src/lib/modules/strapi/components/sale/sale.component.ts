@@ -1,38 +1,55 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Inject, OnInit, Optional, Output } from '@angular/core';
+import { AsyncPipe, NgIf } from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Optional,
+  Output,
+} from "@angular/core";
 
-import { filter, of } from 'rxjs';
+import { filter, of } from "rxjs";
 
-import { ToggleComponent } from '@ta/form-input';
-import { InputCheckBox } from '@ta/form-model';
-import { TENANT_CONFIG_TOKEN, TenantConfig } from '@ta/server';
-import { EmptyComponent, ErrorComponent, LoaderComponent } from '@ta/ui';
-import { TaBaseComponent, isNonNullable } from '@ta/utils';
+import { ToggleComponent } from "@ta/form-input";
+import { InputCheckBox } from "@ta/form-model";
+import { TENANT_CONFIG_TOKEN, TenantConfig } from "@ta/server";
+import { EmptyComponent, ErrorComponent, LoaderComponent } from "@ta/ui";
+import { TaBaseComponent, isNonNullable } from "@ta/utils";
 
-import { TaSaleService } from '../../services/sale.service';
-import { RichTextComponent } from '../types/rich-text/rich-text.component';
+import { TaSaleService } from "../../services/sale.service";
+import { RichTextComponent } from "../types/rich-text/rich-text.component";
 
 @Component({
-  selector: 'ta-sale',
-  templateUrl: './sale.component.html',
-  styleUrls: ['./sale.component.scss'],
+  selector: "ta-sale",
+  templateUrl: "./sale.component.html",
+  styleUrls: ["./sale.component.scss"],
   standalone: true,
-  imports: [NgIf, AsyncPipe, LoaderComponent, ErrorComponent, EmptyComponent, RichTextComponent, ToggleComponent],
+  imports: [
+    NgIf,
+    AsyncPipe,
+    LoaderComponent,
+    ErrorComponent,
+    EmptyComponent,
+    RichTextComponent,
+    ToggleComponent,
+  ],
 })
 export class SaleComponent extends TaBaseComponent implements OnInit {
   @Output()
   acceptation = new EventEmitter<boolean>();
 
   public checkbox = new InputCheckBox({
-    label: 'strapi.sale.cguAcceptation',
+    label: "strapi.sale.cguAcceptation",
     toggle: true,
   });
   get content$() {
     if (!this.tenantConfig.tenantId) {
       return of();
     }
-    return this.saleService.saleContents.get$(this.tenantConfig.tenantId?.toString());
+    return this.saleService.saleContents.get$(
+      this.tenantConfig.tenantId?.toString()
+    );
   }
   constructor(
     public saleService: TaSaleService,
@@ -43,7 +60,7 @@ export class SaleComponent extends TaBaseComponent implements OnInit {
     this.checkbox.createFormControl();
     this._registerSubscription(
       this.checkbox.changeValue$.pipe(filter(isNonNullable)).subscribe({
-        next: value => this.acceptation.emit(value),
+        next: (value) => this.acceptation.emit(value),
       })
     );
   }

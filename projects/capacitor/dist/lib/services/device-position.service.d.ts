@@ -1,4 +1,4 @@
-import { Position } from '@capacitor/geolocation';
+import { Position } from "@capacitor/geolocation";
 import * as i0 from "@angular/core";
 export declare class TaDevicePositionService {
     private _currentPosition$;

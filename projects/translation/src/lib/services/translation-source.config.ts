@@ -1,8 +1,8 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 
 export enum TranslationSourceType {
-  GRAPHQL = 'graphql',
-  FILE = 'file',
+  GRAPHQL = "graphql",
+  FILE = "file",
 }
 
 export interface ITranslationSourceConfig {
@@ -14,12 +14,10 @@ export interface ITranslationSourceConfig {
   filePath?: string;
 }
 
-export const TRANSLATION_SOURCE_CONFIG = new InjectionToken<ITranslationSourceConfig>(
-  'TRANSLATION_SOURCE_CONFIG',
-  {
-    providedIn: 'root',
+export const TRANSLATION_SOURCE_CONFIG =
+  new InjectionToken<ITranslationSourceConfig>("TRANSLATION_SOURCE_CONFIG", {
+    providedIn: "root",
     factory: () => ({
       type: TranslationSourceType.GRAPHQL,
     }),
-  }
-);
+  });

@@ -1,8 +1,8 @@
-import { InjectionToken } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { MappingApiType, TaBaseService } from '@ta/server';
-import { UserProfile } from './dto/user-profile';
-import { TaPermissionsService } from './permissions.service';
+import { InjectionToken } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
+import { MappingApiType, TaBaseService } from "@ta/server";
+import { UserProfile } from "./dto/user-profile";
+import { TaPermissionsService } from "./permissions.service";
 import * as i0 from "@angular/core";
 export declare const TA_AUTH_TOKEN: InjectionToken<TaAuthService>;
 export declare abstract class TaAuthService extends TaBaseService {

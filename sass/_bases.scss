@@ -1,8 +1,8 @@
-@use 'ta';
+@use "ta";
 @use "ta/utils/mixins/fonts";
 
-@include fonts.font('Roboto', 'roboto/', 'Roboto-Light', 300);
+@include fonts.font("Roboto", "roboto/", "Roboto-Light", 300);
 
-@include fonts.font('Roboto', 'roboto/', 'Roboto-Regular', 400);
+@include fonts.font("Roboto", "roboto/", "Roboto-Regular", 400);
 
-@include fonts.font('Roboto', 'roboto/', 'Roboto-SemiBold', 600);
+@include fonts.font("Roboto", "roboto/", "Roboto-SemiBold", 600);

@@ -1,56 +1,45 @@
-@for (block of this.blocks; track block.id) {
-  @switch (block.type) {
-    @case ('header') {
-      <ta-title [level]="block.data.level">
-        {{ block.data.text }}
-      </ta-title>
-    }
-    @case ('paragraph') {
-      <ta-text>
-        <div [innerHTML]="block.data.text | safe: 'html'"></div>
-      </ta-text>
-    }
-    @case ('list') {
-      @if (block.data.style === 'ordered') {
-        <ol>
-          @for (item of block.data.items; track item) {
-            <li>
-              {{ item }}
-            </li>
-          }
-        </ol>
-      } @else if (block.data.style === 'unordered') {
-        <ul>
-          @for (item of block.data.items; track item) {
-            <li>
-              {{ item }}
-            </li>
-          }
-        </ul>
-      }
-    }
-    @case ('delimiter') {
-      <hr />
-    }
-    @case ('image') {
-      <img [src]="block.data.file.url" style="max-width: 100%" />
-    }
-    @case ('quote') {
-      <div class="flex-start g-space-xs">
-        @if (block.data.caption) {
-          <div>{{ block.data.caption }}:</div>
-        }
-        <q [innerHTML]="block.data.text | safe: 'html'"></q>
-      </div>
-    }
-    @case ('warning') {
-      <ta-toast>
-        <ta-notification-inline
-          [message]="block.data.message"
-          [code]="this.ENotificationCode.warning"
-          [showClose]="false"
-        ></ta-notification-inline>
-      </ta-toast>
-    }
+@for (block of this.blocks; track block.id) { @switch (block.type) { @case
+('header') {
+<ta-title [level]="block.data.level">
+  {{ block.data.text }}
+</ta-title>
+} @case ('paragraph') {
+<ta-text>
+  <div [innerHTML]="block.data.text | safe : 'html'"></div>
+</ta-text>
+} @case ('list') { @if (block.data.style === 'ordered') {
+<ol>
+  @for (item of block.data.items; track item) {
+  <li>
+    {{ item }}
+  </li>
   }
-}
+</ol>
+} @else if (block.data.style === 'unordered') {
+<ul>
+  @for (item of block.data.items; track item) {
+  <li>
+    {{ item }}
+  </li>
+  }
+</ul>
+} } @case ('delimiter') {
+<hr />
+} @case ('image') {
+<img [src]="block.data.file.url" style="max-width: 100%" />
+} @case ('quote') {
+<div class="flex-start g-space-xs">
+  @if (block.data.caption) {
+  <div>{{ block.data.caption }}:</div>
+  }
+  <q [innerHTML]="block.data.text | safe : 'html'"></q>
+</div>
+} @case ('warning') {
+<ta-toast>
+  <ta-notification-inline
+    [message]="block.data.message"
+    [code]="this.ENotificationCode.warning"
+    [showClose]="false"
+  ></ta-notification-inline>
+</ta-toast>
+} } }

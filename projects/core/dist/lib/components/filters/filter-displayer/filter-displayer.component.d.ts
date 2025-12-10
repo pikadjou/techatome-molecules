@@ -1,13 +1,13 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { InputBase } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
+import { EventEmitter, TemplateRef } from "@angular/core";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { InputBase } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class FilterDisplayerComponent extends TaBaseComponent {
     private _bottomSheet;
     form: InputBase<any>[];
     iconType: string;
-    container: 'button' | 'link';
+    container: "button" | "link";
     filtersSelected: EventEmitter<any>;
     filterTemplate: TemplateRef<void>;
     private _isFilterOpen;

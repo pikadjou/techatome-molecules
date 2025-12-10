@@ -1,16 +1,16 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .showcase-intro {
   text-align: center;
   margin-bottom: common.get-var(space, xxl);
-  
+
   ta-title {
     margin: 0 0 common.get-var(space, md) 0;
     color: common.get-var(text, primary);
     font-size: 1.8rem;
     font-weight: 600;
   }
-  
+
   ta-text {
     margin: 0;
     color: common.get-var(text, secondary);
@@ -22,7 +22,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: common.get-var(space, lg);
-  
+
   .component-card {
     background: common.get-var(surface, primary);
     border: 1px solid common.get-var(border, primary);
@@ -99,7 +99,7 @@
 .breadcrumb {
   font-size: 0.9rem;
   color: common.get-var(text, secondary);
-  
+
   span:last-child {
     color: common.get-var(text, primary);
     font-weight: 500;
@@ -113,7 +113,7 @@
 
     .component-card .card-content {
       padding: common.get-var(space, lg);
-      
+
       .card-icon {
         width: 60px;
         height: 60px;
@@ -121,7 +121,7 @@
       }
     }
   }
-  
+
   .showcase-intro ta-title {
     font-size: common.get-var(font-size, lg);
   }

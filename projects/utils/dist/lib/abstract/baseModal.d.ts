@@ -1,4 +1,4 @@
-import { TaAbstractComponent } from './abstractComponent';
+import { TaAbstractComponent } from "./abstractComponent";
 import * as i0 from "@angular/core";
 export declare abstract class TaBaseModal extends TaAbstractComponent {
     constructor();

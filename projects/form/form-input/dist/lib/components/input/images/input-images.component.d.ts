@@ -1,7 +1,7 @@
-import { OnInit } from '@angular/core';
-import { InputImages } from '@ta/form-model';
-import { DocumentDto } from '@ta/services';
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { OnInit } from "@angular/core";
+import { InputImages } from "@ta/form-model";
+import { DocumentDto } from "@ta/services";
+import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class InputImagesComponent extends TaAbstractInputComponent<InputImages> implements OnInit {
     private _documentsService;

@@ -1,4 +1,4 @@
-@use '@ta/styles/utils/mixins/common';
+@use "@ta/styles/utils/mixins/common";
 
 .app-layout {
   display: flex;
@@ -6,48 +6,50 @@
 }
 
 .sidebar {
-  width: common.get-var('sidebar-width');
-  background: common.get-var('color-surface-secondary');
-  border-right: common.get-var('border-width') solid common.get-var('color-border-primary');
+  width: common.get-var("sidebar-width");
+  background: common.get-var("color-surface-secondary");
+  border-right: common.get-var("border-width") solid
+    common.get-var("color-border-primary");
   overflow-y: auto;
 
   .sidebar-header {
-    padding: common.get-var('spacing-md');
-    border-bottom: common.get-var('border-width') solid common.get-var('color-border-primary');
-    background: common.get-var('color-surface-primary');
+    padding: common.get-var("spacing-md");
+    border-bottom: common.get-var("border-width") solid
+      common.get-var("color-border-primary");
+    background: common.get-var("color-surface-primary");
 
     ta-title {
       margin: 0;
-      color: common.get-var('color-text-primary');
-      font-size: common.get-var('font-size-lg');
-      font-weight: common.get-var('font-weight-semibold');
+      color: common.get-var("color-text-primary");
+      font-size: common.get-var("font-size-lg");
+      font-weight: common.get-var("font-weight-semibold");
     }
   }
 
   .nav-menu {
-    padding: common.get-var('spacing-md') 0;
+    padding: common.get-var("spacing-md") 0;
 
     .nav-item {
       display: flex;
       align-items: center;
-      gap: common.get-var('spacing-sm');
-      padding: common.get-var('spacing-sm') common.get-var('spacing-md');
+      gap: common.get-var("spacing-sm");
+      padding: common.get-var("spacing-sm") common.get-var("spacing-md");
       text-decoration: none;
-      color: common.get-var('color-text-secondary');
-      transition: all common.get-var('transition-duration') ease;
+      color: common.get-var("color-text-secondary");
+      transition: all common.get-var("transition-duration") ease;
 
       &:hover {
-        background: common.get-var('color-surface-tertiary');
-        color: common.get-var('color-text-primary');
+        background: common.get-var("color-surface-tertiary");
+        color: common.get-var("color-text-primary");
       }
 
       &.active {
-        background: common.get-var('color-primary');
-        color: common.get-var('color-text-inverse');
+        background: common.get-var("color-primary");
+        color: common.get-var("color-text-inverse");
       }
 
       .material-icons {
-        font-size: common.get-var('font-size-lg');
+        font-size: common.get-var("font-size-lg");
       }
     }
   }
@@ -55,7 +57,7 @@
 
 .main-content {
   flex: 1;
-  padding: common.get-var('spacing-lg');
-  background: common.get-var('color-surface-primary');
+  padding: common.get-var("spacing-lg");
+  background: common.get-var("color-surface-primary");
   overflow-y: auto;
 }

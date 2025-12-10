@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
-import { ENotificationCode } from '../../../enum';
+import { EventEmitter } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
+import { ENotificationCode } from "../../../enum";
 import * as i0 from "@angular/core";
 export declare class NotificationInlineComponent extends TaBaseComponent {
     set message(value: string);

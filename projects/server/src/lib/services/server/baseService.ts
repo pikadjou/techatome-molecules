@@ -1,13 +1,17 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from "@angular/core";
 
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
-import { GraphEndpoint, GraphOptions, TaGraphService } from '../graphql/public-api';
-import { MappingApiType } from './api/requestMap';
-import { TaServerSevice } from './api/server.service';
+import {
+  GraphEndpoint,
+  GraphOptions,
+  TaGraphService,
+} from "../graphql/public-api";
+import { MappingApiType } from "./api/requestMap";
+import { TaServerSevice } from "./api/server.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export abstract class TaBaseService implements OnDestroy {
   protected _subscriptionList: Subscription[] = [];
@@ -18,13 +22,19 @@ export abstract class TaBaseService implements OnDestroy {
     this.registerRoutes({ apiRoutes });
   }
 
-  public registerRoutes(routes: { apiRoutes?: MappingApiType; graphEndpoint?: GraphEndpoint }, options?: GraphOptions) {
+  public registerRoutes(
+    routes: { apiRoutes?: MappingApiType; graphEndpoint?: GraphEndpoint },
+    options?: GraphOptions
+  ) {
     if (routes.apiRoutes) this._serverService.registerRoutes(routes.apiRoutes);
-    if (routes.graphEndpoint) this._graphService.registerGraphEndpoint(routes.graphEndpoint, options);
+    if (routes.graphEndpoint)
+      this._graphService.registerGraphEndpoint(routes.graphEndpoint, options);
   }
 
   ngOnDestroy() {
-    this._subscriptionList.forEach(subscription => subscription.unsubscribe());
+    this._subscriptionList.forEach((subscription) =>
+      subscription.unsubscribe()
+    );
   }
 
   protected _registerSubscription(subscription: Subscription) {

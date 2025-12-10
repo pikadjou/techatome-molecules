@@ -1,34 +1,34 @@
 export type Placeholder = {
-  type: 'container' | 'row' | 'col' | 'item' | 'picture' | 'avatar';
+  type: "container" | "row" | "col" | "item" | "picture" | "avatar";
   children?: Placeholder[];
   gridSize?: number;
-  attributes?: ('big' | 'empty' | 'block' | 'no-shadow')[];
+  attributes?: ("big" | "empty" | "block" | "no-shadow")[];
   repeat: number;
 };
 
 export const cardPlaceholder: Placeholder = {
-  type: 'item',
+  type: "item",
   children: [
     {
-      type: 'col',
+      type: "col",
       children: [
         {
-          type: 'row',
+          type: "row",
           children: [
             {
-              type: 'col',
+              type: "col",
               gridSize: 8,
-              attributes: ['big'],
+              attributes: ["big"],
               repeat: 1,
             },
             {
-              type: 'col',
+              type: "col",
               gridSize: 4,
-              attributes: ['empty', 'big'],
+              attributes: ["empty", "big"],
               repeat: 1,
             },
             {
-              type: 'col',
+              type: "col",
               gridSize: 4,
               repeat: 1,
             },
@@ -39,32 +39,32 @@ export const cardPlaceholder: Placeholder = {
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 2,
       children: [
         {
-          type: 'avatar',
+          type: "avatar",
           repeat: 1,
         },
       ],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 12,
       children: [
         {
-          type: 'row',
+          type: "row",
           children: [
             {
-              type: 'col',
+              type: "col",
               gridSize: 8,
               repeat: 1,
             },
             {
-              type: 'col',
+              type: "col",
               gridSize: 4,
-              attributes: ['empty'],
+              attributes: ["empty"],
               repeat: 1,
             },
           ],
@@ -74,10 +74,10 @@ export const cardPlaceholder: Placeholder = {
       repeat: 1,
     },
     {
-      type: 'row',
+      type: "row",
       children: [
         {
-          type: 'col',
+          type: "col",
           gridSize: 12,
           repeat: 6,
         },
@@ -89,36 +89,36 @@ export const cardPlaceholder: Placeholder = {
 };
 
 export const menuPlaceholder: Placeholder = {
-  type: 'row',
+  type: "row",
   children: [
     {
-      type: 'col',
+      type: "col",
       gridSize: 3,
-      attributes: ['big'],
+      attributes: ["big"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 1,
-      attributes: ['big', 'empty'],
+      attributes: ["big", "empty"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 4,
-      attributes: ['big'],
+      attributes: ["big"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 1,
-      attributes: ['big', 'empty'],
+      attributes: ["big", "empty"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 3,
-      attributes: ['big'],
+      attributes: ["big"],
       repeat: 1,
     },
   ],
@@ -126,30 +126,30 @@ export const menuPlaceholder: Placeholder = {
 };
 
 export const morePlaceholder: Placeholder = {
-  type: 'row',
+  type: "row",
   children: [
     {
-      type: 'col',
+      type: "col",
       gridSize: 4,
-      attributes: ['big', 'empty'],
+      attributes: ["big", "empty"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 4,
-      attributes: ['big'],
+      attributes: ["big"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 4,
-      attributes: ['big', 'empty'],
+      attributes: ["big", "empty"],
       repeat: 1,
     },
     {
-      type: 'col',
+      type: "col",
       gridSize: 12,
-      attributes: ['empty'],
+      attributes: ["empty"],
       repeat: 1,
     },
   ],
@@ -157,22 +157,22 @@ export const morePlaceholder: Placeholder = {
 };
 
 export const fileListPlaceholder: Placeholder = {
-  type: 'container',
-  attributes: ['block'],
+  type: "container",
+  attributes: ["block"],
   children: [
     {
-      type: 'item',
-      attributes: ['no-shadow'],
+      type: "item",
+      attributes: ["no-shadow"],
       gridSize: 3,
       repeat: 1,
       children: [
         {
-          type: 'col',
+          type: "col",
           gridSize: 4,
           repeat: 9,
           children: [
             {
-              type: 'picture',
+              type: "picture",
               repeat: 1,
             },
           ],
@@ -183,15 +183,15 @@ export const fileListPlaceholder: Placeholder = {
   repeat: 1,
 };
 export const cardListPlaceholder: Placeholder = {
-  type: 'container',
+  type: "container",
   children: [
     {
-      type: 'container',
+      type: "container",
       children: [cardPlaceholder],
       repeat: 3,
     },
     {
-      type: 'container',
+      type: "container",
       children: [morePlaceholder],
       repeat: 3,
     },
@@ -200,27 +200,27 @@ export const cardListPlaceholder: Placeholder = {
 };
 
 export const detailPlaceholder: Placeholder = {
-  type: 'container',
+  type: "container",
   children: [
     {
-      type: 'container',
+      type: "container",
       children: [cardPlaceholder],
       repeat: 2,
     },
   ],
   repeat: 1,
 };
-export type PlaceholderConfig = 'default' | 'cardList' | 'detail' | 'fileList';
+export type PlaceholderConfig = "default" | "cardList" | "detail" | "fileList";
 
 export const getPlaceholderConfig = (
   placeHolder: PlaceholderConfig
 ): Placeholder => {
   switch (placeHolder) {
-    case 'cardList':
+    case "cardList":
       return cardListPlaceholder;
-    case 'detail':
+    case "detail":
       return detailPlaceholder;
-    case 'fileList':
+    case "fileList":
       return fileListPlaceholder;
     default:
       return cardPlaceholder;

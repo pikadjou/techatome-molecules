@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { TaFilesBasicModule } from '@ta/files-basic';
-import { TaFormModule } from '@ta/form-basic';
-import { TaFormInputsModule } from '@ta/form-input';
-import { TaIconsModule } from '@ta/icons';
-import { TaMenuModule } from '@ta/menu';
-import { TaEnumerationService } from '@ta/services';
-import { TaCardModule, TaContainerModule, TaUiModule } from '@ta/ui';
-import { TaDirectivePipeModule } from '@ta/utils';
+import { TaFilesBasicModule } from "@ta/files-basic";
+import { TaFormModule } from "@ta/form-basic";
+import { TaFormInputsModule } from "@ta/form-input";
+import { TaIconsModule } from "@ta/icons";
+import { TaMenuModule } from "@ta/menu";
+import { TaEnumerationService } from "@ta/services";
+import { TaCardModule, TaContainerModule, TaUiModule } from "@ta/ui";
+import { TaDirectivePipeModule } from "@ta/utils";
 
-import { FilesDisplayComponent } from './components/display/files-display.component';
-import { UploadComponent } from './components/upload/files-upload.component';
-import { UploadDocumentFormService } from './services/document/upload-document-form.service';
+import { FilesDisplayComponent } from "./components/display/files-display.component";
+import { UploadComponent } from "./components/upload/files-upload.component";
+import { UploadDocumentFormService } from "./services/document/upload-document-form.service";
 
 /**
  * @deprecated Use standalone components instead.

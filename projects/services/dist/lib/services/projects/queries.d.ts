@@ -1,5 +1,5 @@
-import { GraphQueryPayload } from '@ta/server';
-import { ProjectStatus } from './dto/status';
+import { GraphQueryPayload } from "@ta/server";
+import { ProjectStatus } from "./dto/status";
 export declare function GET_MY_PROJECTS(filters?: {
     statusList?: ProjectStatus[];
     take?: number;

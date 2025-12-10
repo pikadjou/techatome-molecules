@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-selector: 'ta-progress-bar',
-  templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss'],
+  selector: "ta-progress-bar",
+  templateUrl: "./progress-bar.component.html",
+  styleUrls: ["./progress-bar.component.scss"],
   standalone: true,
 })
 export class ProgressBarComponent {

@@ -1,7 +1,9 @@
 <div class="buttons-demo">
   <div class="demo-header">
     <ta-title [level]="1">Buttons Demo</ta-title>
-    <ta-text class="subtitle">Démonstration des différents types de boutons disponibles</ta-text>
+    <ta-text class="subtitle"
+      >Démonstration des différents types de boutons disponibles</ta-text
+    >
   </div>
 
   <div class="demo-sections">
@@ -9,27 +11,24 @@
     <section class="demo-section">
       <ta-title [level]="2">Basic Buttons</ta-title>
       <div class="demo-group">
-        <ta-button 
-          text="Button Default"
-          (click)="onButtonClick('default')">
+        <ta-button text="Button Default" (click)="onButtonClick('default')">
         </ta-button>
-        
-        <ta-button 
+
+        <ta-button
           text="Primary Button"
           type="primary"
-          (click)="onButtonClick('primary')">
+          (click)="onButtonClick('primary')"
+        >
         </ta-button>
-        
-        <ta-button 
+
+        <ta-button
           text="Secondary Button"
           type="secondary"
-          (click)="onButtonClick('secondary')">
+          (click)="onButtonClick('secondary')"
+        >
         </ta-button>
-        
-        <ta-button 
-          text="Disabled Button"
-          [disabled]="true">
-        </ta-button>
+
+        <ta-button text="Disabled Button" [disabled]="true"> </ta-button>
       </div>
     </section>
 
@@ -37,24 +36,23 @@
     <section class="demo-section">
       <ta-title [level]="2">Action Buttons</ta-title>
       <div class="demo-group">
-        <ta-action-button
-          label="Add Item"
-          icon="add"
-          (click)="onActionClick()">
+        <ta-action-button label="Add Item" icon="add" (click)="onActionClick()">
         </ta-action-button>
-        
+
         <ta-action-button
           label="Edit"
           icon="edit"
           type="secondary"
-          (click)="onActionClick()">
+          (click)="onActionClick()"
+        >
         </ta-action-button>
-        
+
         <ta-action-button
           label="Delete"
           icon="delete"
           type="danger"
-          (click)="onActionClick()">
+          (click)="onActionClick()"
+        >
         </ta-action-button>
       </div>
     </section>
@@ -67,16 +65,18 @@
           primaryLabel="Save"
           secondaryLabel="Cancel"
           (primaryClick)="onPrimaryClick()"
-          (secondaryClick)="onSecondaryClick()">
+          (secondaryClick)="onSecondaryClick()"
+        >
         </ta-dual-button>
-        
+
         <ta-dual-button
           primaryLabel="Apply"
           secondaryLabel="Reset"
           primaryType="primary"
           secondaryType="secondary"
           (primaryClick)="onPrimaryClick()"
-          (secondaryClick)="onSecondaryClick()">
+          (secondaryClick)="onSecondaryClick()"
+        >
         </ta-dual-button>
       </div>
     </section>
@@ -85,22 +85,17 @@
     <section class="demo-section">
       <ta-title [level]="2">Button Sizes</ta-title>
       <div class="demo-group">
-        <ta-button 
-          text="Small"
-          size="small"
-          (click)="onButtonClick('small')">
+        <ta-button text="Small" size="small" (click)="onButtonClick('small')">
         </ta-button>
-        
-        <ta-button 
+
+        <ta-button
           text="Medium"
           size="medium"
-          (click)="onButtonClick('medium')">
+          (click)="onButtonClick('medium')"
+        >
         </ta-button>
-        
-        <ta-button 
-          text="Large"
-          size="large"
-          (click)="onButtonClick('large')">
+
+        <ta-button text="Large" size="large" (click)="onButtonClick('large')">
         </ta-button>
       </div>
     </section>
@@ -109,23 +104,22 @@
     <section class="demo-section">
       <ta-title [level]="2">Icons & Text Combinations</ta-title>
       <div class="demo-group">
-        <ta-button 
-          text="With Icon"
-          icon="star"
-          (click)="onButtonClick('icon')">
+        <ta-button text="With Icon" icon="star" (click)="onButtonClick('icon')">
         </ta-button>
-        
-        <ta-button 
+
+        <ta-button
           text="Icon Right"
           icon="arrow_forward"
           iconPosition="right"
-          (click)="onButtonClick('icon-right')">
+          (click)="onButtonClick('icon-right')"
+        >
         </ta-button>
-        
-        <ta-button 
+
+        <ta-button
           icon="favorite"
           [textOnly]="false"
-          (click)="onButtonClick('icon-only')">
+          (click)="onButtonClick('icon-only')"
+        >
         </ta-button>
       </div>
     </section>
@@ -134,14 +128,20 @@
   <div class="demo-info">
     <ta-title [level]="3">Usage Information</ta-title>
     <ta-text>
-      Les boutons sont les éléments d'interaction principaux de l'interface. 
+      Les boutons sont les éléments d'interaction principaux de l'interface.
       Utilisez les différents types en fonction du contexte :
     </ta-text>
     <div class="usage-list">
       <ta-text><strong>Primary :</strong> Action principale de la page</ta-text>
       <ta-text><strong>Secondary :</strong> Actions secondaires</ta-text>
-      <ta-text><strong>Action Button :</strong> Actions avec icône descriptive</ta-text>
-      <ta-text><strong>Dual Button :</strong> Deux actions liées (ex: Save/Cancel)</ta-text>
+      <ta-text
+        ><strong>Action Button :</strong> Actions avec icône
+        descriptive</ta-text
+      >
+      <ta-text
+        ><strong>Dual Button :</strong> Deux actions liées (ex:
+        Save/Cancel)</ta-text
+      >
     </div>
   </div>
 </div>

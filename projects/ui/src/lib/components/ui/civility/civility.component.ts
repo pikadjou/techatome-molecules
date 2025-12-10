@@ -1,13 +1,13 @@
-import { NgIf } from '@angular/common';
-import { MaterialIconComponent } from '@ta/icons';
-import { Component, Input } from '@angular/core';
+import { NgIf } from "@angular/common";
+import { MaterialIconComponent } from "@ta/icons";
+import { Component, Input } from "@angular/core";
 
-import { Civility } from '@ta/utils';
+import { Civility } from "@ta/utils";
 
 @Component({
-selector: 'ta-civility',
-  templateUrl: './civility.component.html',
-  styleUrls: ['./civility.component.scss'],
+  selector: "ta-civility",
+  templateUrl: "./civility.component.html",
+  styleUrls: ["./civility.component.scss"],
   standalone: true,
   imports: [NgIf, MaterialIconComponent],
 })
@@ -23,15 +23,15 @@ export class CivilityComponent {
   public getIcon(): string {
     switch (this.civility) {
       case Civility.Unknown:
-        return '';
+        return "";
       case Civility.Dear:
-        return 'wc';
+        return "wc";
       case Civility.Madame:
-        return 'woman';
+        return "woman";
       case Civility.Sir:
-        return 'man';
+        return "man";
       default:
-        return '';
+        return "";
     }
   }
 }

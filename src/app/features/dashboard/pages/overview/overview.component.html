@@ -9,15 +9,15 @@
   </app-layout-title>
   <app-layout-content>
     <div class="p-space-lg">
-      
       <!-- Welcome Section -->
       <div class="welcome-section">
         <div class="welcome-content">
           <ta-title [level]="2">Bienvenue dans la Sandbox</ta-title>
           <ta-text class="lead">
-            Explorez et testez tous les composants de la librairie Techatome Molecules. 
-            Cette sandbox vous permet de découvrir les fonctionnalités, de voir les composants en action 
-            et de comprendre leur utilisation dans vos projets.
+            Explorez et testez tous les composants de la librairie Techatome
+            Molecules. Cette sandbox vous permet de découvrir les
+            fonctionnalités, de voir les composants en action et de comprendre
+            leur utilisation dans vos projets.
           </ta-text>
         </div>
         <div class="welcome-visual">
@@ -30,15 +30,15 @@
       <!-- Stats Cards -->
       <div class="stats-grid">
         @for (stat of stats; track stat) {
-          <div class="stat-card">
-            <div class="stat-icon">
-              <span class="material-icons">{{ stat.icon }}</span>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value">{{ stat.value }}</div>
-              <div class="stat-label">{{ stat.label }}</div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-icons">{{ stat.icon }}</span>
           </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
         }
       </div>
 
@@ -47,23 +47,21 @@
         <ta-title [level]="3">Explorez les fonctionnalités</ta-title>
         <div class="features-grid">
           @for (feature of features; track feature) {
-            <a 
-              [routerLink]="feature.route"
-              class="feature-card">
-              <div class="feature-header">
-                <div class="feature-icon" [style.color]="feature.color">
-                  <span class="material-icons">{{ feature.icon }}</span>
-                </div>
-                <div class="feature-stats">{{ feature.stats }}</div>
+          <a [routerLink]="feature.route" class="feature-card">
+            <div class="feature-header">
+              <div class="feature-icon" [style.color]="feature.color">
+                <span class="material-icons">{{ feature.icon }}</span>
               </div>
-              <div class="feature-content">
-                <ta-title [level]="4">{{ feature.title }}</ta-title>
-                <ta-text>{{ feature.description }}</ta-text>
-              </div>
-              <div class="feature-arrow">
-                <span class="material-icons">arrow_forward</span>
-              </div>
-            </a>
+              <div class="feature-stats">{{ feature.stats }}</div>
+            </div>
+            <div class="feature-content">
+              <ta-title [level]="4">{{ feature.title }}</ta-title>
+              <ta-text>{{ feature.description }}</ta-text>
+            </div>
+            <div class="feature-arrow">
+              <span class="material-icons">arrow_forward</span>
+            </div>
+          </a>
           }
         </div>
       </div>
@@ -74,9 +72,9 @@
           <div class="about-content">
             <ta-title [level]="3">À propos de Techatome Molecules</ta-title>
             <ta-text>
-              Techatome Molecules est une collection de librairies Angular spécialisées, 
-              conçues selon une architecture micro-library pour offrir une flexibilité maximale 
-              et une maintenabilité optimale.
+              Techatome Molecules est une collection de librairies Angular
+              spécialisées, conçues selon une architecture micro-library pour
+              offrir une flexibilité maximale et une maintenabilité optimale.
             </ta-text>
             <div class="features-list">
               <div class="feature-item">
@@ -99,7 +97,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </app-layout-content>
 </app-layout-first-level>

@@ -1,27 +1,27 @@
-@for (rich of this.richText; track rich) {
-  @switch (rich.type) {
-    @case ('heading') {
-      <ta-title [level]="rich.level">
-        <ng-container *ngTemplateOutlet="textTemplate; context: { childrenText: rich.children }"></ng-container>
-      </ta-title>
-    }
-    @case ('paragraph') {
-      <div class="paragraph">
-        <ng-container *ngTemplateOutlet="textTemplate; context: { childrenText: rich.children }"></ng-container>
-      </div>
-    }
-  }
-}
+@for (rich of this.richText; track rich) { @switch (rich.type) { @case
+('heading') {
+<ta-title [level]="rich.level">
+  <ng-container
+    *ngTemplateOutlet="textTemplate; context: { childrenText: rich.children }"
+  ></ng-container>
+</ta-title>
+} @case ('paragraph') {
+<div class="paragraph">
+  <ng-container
+    *ngTemplateOutlet="textTemplate; context: { childrenText: rich.children }"
+  ></ng-container>
+</div>
+} } }
 
-<ng-template #textTemplate let-childrenText="childrenText" [typedTemplate]="this.typeToken">
-  @for (entity of childrenText; track entity) {
-    @switch (entity.type) {
-      @case ('text') {
-        <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
-      }
-      @case ('link') {
-        <ta-rich-paragraph-link [link]="$any(entity)"></ta-rich-paragraph-link>
-      }
-    }
-  }
+<ng-template
+  #textTemplate
+  let-childrenText="childrenText"
+  [typedTemplate]="this.typeToken"
+>
+  @for (entity of childrenText; track entity) { @switch (entity.type) { @case
+  ('text') {
+  <ta-rich-paragraph-text [text]="$any(entity)"></ta-rich-paragraph-text>
+  } @case ('link') {
+  <ta-rich-paragraph-link [link]="$any(entity)"></ta-rich-paragraph-link>
+  } } }
 </ng-template>

@@ -1,25 +1,26 @@
 <div class="flex-column g-space-md" [ngClass]="this.panel.containerClass">
   @if (this.panel.label) {
-    <ta-title [level]="2" class="panel-title">{{ this.panel.label | translate }}</ta-title>
+  <ta-title [level]="2" class="panel-title">{{
+    this.panel.label | translate
+  }}</ta-title>
   }
 
   <div [ngClass]="this.panel.contentClass">
     @for (input of this.panel.children; track this.trackByKey($index, input)) {
-      @if (input) {
-        <div
-          [ngClass]="input.class"
-          [style.display]="(input.visible$ | async) ? 'block' : 'none'"
-          class="mb-space-sm"
-        >
-          <ng-container
-            [ngTemplateOutlet]="this.inputsTemplate"
-            [ngTemplateOutletContext]="{
-              input: input
-            }"
-          >
-          </ng-container>
-        </div>
-      }
-    }
+    @if (input) {
+    <div
+      [ngClass]="input.class"
+      [style.display]="(input.visible$ | async) ? 'block' : 'none'"
+      class="mb-space-sm"
+    >
+      <ng-container
+        [ngTemplateOutlet]="this.inputsTemplate"
+        [ngTemplateOutletContext]="{
+          input: input
+        }"
+      >
+      </ng-container>
+    </div>
+    } }
   </div>
 </div>

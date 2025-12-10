@@ -2,10 +2,10 @@
  * Public API Surface of icons
  */
 
-export * from './lib/components/public-api';
+export * from "./lib/components/public-api";
 
-export * from './lib/services/icons.service';
+export * from "./lib/services/icons.service";
 
-export * from './lib/icons.module';
+export * from "./lib/icons.module";
 
-export * from './lib/helpers';
+export * from "./lib/helpers";

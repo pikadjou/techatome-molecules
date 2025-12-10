@@ -1,2 +1,2 @@
-export * from './provide';
-export * from './components/map/map.component';
+export * from "./provide";
+export * from "./components/map/map.component";

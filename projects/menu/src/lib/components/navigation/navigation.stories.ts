@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { Menu } from '../../models/menu/menu';
+import { Meta, StoryObj } from "@storybook/angular";
+import { Menu } from "../../models/menu/menu";
 import {
   __classicIconMenu,
   __classicMenu,
@@ -7,16 +7,16 @@ import {
   __labelMenu,
   __onClickMenu,
   __textTooLongMenu,
-} from '../menu/__mock__/menu';
-import { NavigationComponent } from './navigation.component';
+} from "../menu/__mock__/menu";
+import { NavigationComponent } from "./navigation.component";
 
 type StoryType = NavigationComponent & { menu?: Menu };
 
 export default {
-  title: 'MENU/Navigation',
+  title: "MENU/Navigation",
   component: NavigationComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -28,7 +28,7 @@ export default {
   },
   args: {
     menu: __classicMenu,
-    container: 'tags',
+    container: "tags",
   },
 } as Meta<StoryType>;
 

@@ -26,7 +26,6 @@ import * as i15 from "./swiper-light/swiper-light.component";
  * import { ContainerValidationComponent, EmptyComponent, ErrorComponent } from '@ta/library-name';
  */
 export declare class TaContainerModule {
-    constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<TaContainerModule, never>;
     static ɵmod: i0.ɵɵNgModuleDeclaration<TaContainerModule, never, [typeof i1.CommonModule, typeof i2.MatIconModule, typeof i3.MatProgressSpinnerModule, typeof i4.TaDirectivePipeModule, typeof i5.TaUiModule, typeof i6.TaIconsModule, typeof i7.TranslatePipe, typeof i8.TaLayoutModule, typeof i9.ContainerValidationComponent, typeof i10.ValidationModal, typeof i11.EmptyComponent, typeof i12.ErrorComponent, typeof i13.LoaderComponent, typeof i14.PlaceholderComponent, typeof i15.SwiperLightComponent], [typeof i9.ContainerValidationComponent, typeof i11.EmptyComponent, typeof i12.ErrorComponent, typeof i13.LoaderComponent, typeof i15.SwiperLightComponent]>;
     static ɵinj: i0.ɵɵInjectorDeclaration<TaContainerModule>;

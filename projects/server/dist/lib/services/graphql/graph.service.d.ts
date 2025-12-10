@@ -1,8 +1,8 @@
-import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/http';
-import { BehaviorSubject } from 'rxjs';
-import { GraphMutationPayload, GraphQueryPayload } from './models/graphPayload';
-import { GraphEndpoint, IGraphConfig } from './public-api';
+import { Apollo } from "apollo-angular";
+import { HttpLink } from "apollo-angular/http";
+import { BehaviorSubject } from "rxjs";
+import { GraphMutationPayload, GraphQueryPayload } from "./models/graphPayload";
+import { GraphEndpoint, IGraphConfig } from "./public-api";
 import * as i0 from "@angular/core";
 export type GraphOptions = {
     visitor: boolean;

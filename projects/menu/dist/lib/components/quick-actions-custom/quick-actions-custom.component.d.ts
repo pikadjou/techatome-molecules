@@ -1,5 +1,5 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
-import { SwiperData } from '@ta/ui';
+import { EventEmitter, TemplateRef } from "@angular/core";
+import { SwiperData } from "@ta/ui";
 import * as i0 from "@angular/core";
 export declare class QuickActionsCustomComponent {
     elementPerPage: number;

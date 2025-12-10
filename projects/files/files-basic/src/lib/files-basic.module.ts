@@ -1,15 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { TaIconsModule } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { TaCardModule, TaContainerModule, TaUiModule } from '@ta/ui';
-import { SafePipe, TaDirectivePipeModule } from '@ta/utils';
+import { TaIconsModule } from "@ta/icons";
+import { TranslatePipe } from "@ta/translation";
+import { TaCardModule, TaContainerModule, TaUiModule } from "@ta/ui";
+import { SafePipe, TaDirectivePipeModule } from "@ta/utils";
 
-import { DocumentsListComponent } from './components/documents/list/list.component';
-import { FileEditComponent } from './components/edit/files-edit.component';
-import { FileCardComponent } from './components/list/card/file/file-card.component';
-import { FileListComponent } from './components/list/files-list.component';
+import { DocumentsListComponent } from "./components/documents/list/list.component";
+import { FileEditComponent } from "./components/edit/files-edit.component";
+import { FileCardComponent } from "./components/list/card/file/file-card.component";
+import { FileListComponent } from "./components/list/files-list.component";
 
 /**
  * @deprecated Use standalone components instead.

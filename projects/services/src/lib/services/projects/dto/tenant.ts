@@ -1,4 +1,4 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 
 export interface Tenant {
   id: string;
@@ -8,4 +8,10 @@ export interface Tenant {
   customerId?: number;
 }
 
-export const tenantProps = new GraphSchema<Tenant>(['id', 'tenantId', 'tenantName', 'customerId', 'projectId']);
+export const tenantProps = new GraphSchema<Tenant>([
+  "id",
+  "tenantId",
+  "tenantName",
+  "customerId",
+  "projectId",
+]);

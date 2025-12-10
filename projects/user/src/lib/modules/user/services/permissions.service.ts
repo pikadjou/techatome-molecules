@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { BehaviorSubject, Observable, filter, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map } from "rxjs";
 
-import { isNonNullable } from '@ta/utils';
+import { isNonNullable } from "@ta/utils";
 
-export type Level = 'authenticated' | 'unauthenticated' | 'authorize' | 'administrator';
+export type Level =
+  | "authenticated"
+  | "unauthenticated"
+  | "authorize"
+  | "administrator";
 
 export type GuardInfo = {
   guards?: string[];
@@ -13,7 +17,7 @@ export type GuardInfo = {
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaPermissionsService {
   private _updated$ = new BehaviorSubject<number | null>(null);
@@ -71,14 +75,14 @@ export class TaPermissionsService {
   }
 
   public canDirectAccess(feature: string, level: Level) {
-    if (level === 'authenticated') {
+    if (level === "authenticated") {
       return this.isAuthenticated;
     }
-    if (level === 'unauthenticated') {
+    if (level === "unauthenticated") {
       return !this.isAuthenticated;
     }
 
-    if (level === 'authorize') {
+    if (level === "authorize") {
       return this.features.includes(feature);
     }
 

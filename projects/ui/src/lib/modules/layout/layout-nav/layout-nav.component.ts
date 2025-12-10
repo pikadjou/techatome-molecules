@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-selector: 'ta-layout-nav',
-  templateUrl: './layout-nav.component.html',
-  styleUrls: ['./layout-nav.component.scss'],
+  selector: "ta-layout-nav",
+  templateUrl: "./layout-nav.component.html",
+  styleUrls: ["./layout-nav.component.scss"],
   standalone: true,
 })
 export class LayoutNavComponent {

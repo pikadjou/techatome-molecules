@@ -1,27 +1,27 @@
 <div class="ui-showcase">
   <div class="showcase-header">
     <ta-title [level]="1">UI Components</ta-title>
-    <ta-text class="subtitle">Composants d'interface utilisateur de base</ta-text>
+    <ta-text class="subtitle"
+      >Composants d'interface utilisateur de base</ta-text
+    >
   </div>
 
   <div class="components-grid">
     @for (component of components; track component) {
-      <ta-card 
-        class="component-card"
-        [routerLink]="component.route">
-        <div class="card-content">
-          <div class="card-icon">
-            <span class="material-icons">{{ component.icon }}</span>
-          </div>
-          <div class="card-text">
-            <ta-title [level]="3">{{ component.title }}</ta-title>
-            <ta-text>{{ component.description }}</ta-text>
-          </div>
-          <div class="card-arrow">
-            <span class="material-icons">arrow_forward</span>
-          </div>
+    <ta-card class="component-card" [routerLink]="component.route">
+      <div class="card-content">
+        <div class="card-icon">
+          <span class="material-icons">{{ component.icon }}</span>
         </div>
-      </ta-card>
+        <div class="card-text">
+          <ta-title [level]="3">{{ component.title }}</ta-title>
+          <ta-text>{{ component.description }}</ta-text>
+        </div>
+        <div class="card-arrow">
+          <span class="material-icons">arrow_forward</span>
+        </div>
+      </div>
+    </ta-card>
     }
   </div>
 </div>

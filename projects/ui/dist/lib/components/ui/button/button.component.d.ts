@@ -1,5 +1,5 @@
-import { EventEmitter } from '@angular/core';
-import { TaState } from '@ta/styles';
+import { EventEmitter } from "@angular/core";
+import { TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class ButtonComponent {
     /**
@@ -9,8 +9,8 @@ export declare class ButtonComponent {
     /**
      * Indicate the button type
      */
-    type: 'primary' | 'secondary' | 'tertiary' | 'danger';
-    size: 'small' | 'medium' | 'large';
+    type: "primary" | "secondary" | "tertiary" | "danger";
+    size: "small" | "medium" | "large";
     icon: string | null;
     /**
      * Class - Add custom classes separates by space
@@ -20,7 +20,7 @@ export declare class ButtonComponent {
      */
     options: {
         class?: string;
-        circular?: boolean | 'big' | 'small';
+        circular?: boolean | "big" | "small";
         border?: boolean;
     } | null;
     stopPropagationActivation: boolean;

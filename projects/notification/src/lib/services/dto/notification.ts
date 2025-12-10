@@ -1,7 +1,7 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 
-import { ENotificationLevel } from './level';
-import { SwitchCases } from './switch-cases';
+import { ENotificationLevel } from "./level";
+import { SwitchCases } from "./switch-cases";
 
 export type NotificationDto = {
   id: string;
@@ -20,14 +20,14 @@ export type NotificationDto = {
 } & SwitchCases;
 
 export const notificationProps = new GraphSchema<NotificationDto>([
-  'id',
-  'date',
-  'level',
-  'isNew',
-  'userId',
-  'tenantId',
-  'tenantName',
-  'type',
-  'context',
-  'redirectContext',
+  "id",
+  "date",
+  "level",
+  "isNew",
+  "userId",
+  "tenantId",
+  "tenantName",
+  "type",
+  "context",
+  "redirectContext",
 ]);

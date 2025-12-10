@@ -1,4 +1,4 @@
-import { AbstractNotificationTemplateComponent } from '../abstract';
+import { AbstractNotificationTemplateComponent } from "../abstract";
 import * as i0 from "@angular/core";
 export declare class ProjectStatusChangedComponent extends AbstractNotificationTemplateComponent {
     template: import("@angular/core").TemplateRef<any> | null;

@@ -10,10 +10,10 @@ export class HorizontalScroll {
   constructor(element: HTMLElement) {
     this._elementRef = element;
 
-    this._elementRef.addEventListener('mousedown', this.mouseDown);
-    this._elementRef.addEventListener('mousemove', this.mouseMove);
-    this._elementRef.addEventListener('mouseleave', this.mouseLeft);
-    this._elementRef.addEventListener('mouseup', this.mouseLeft);
+    this._elementRef.addEventListener("mousedown", this.mouseDown);
+    this._elementRef.addEventListener("mousemove", this.mouseMove);
+    this._elementRef.addEventListener("mouseleave", this.mouseLeft);
+    this._elementRef.addEventListener("mouseup", this.mouseLeft);
   }
 
   public mouseDown = (event: MouseEvent) => {

@@ -1,24 +1,23 @@
 <ta-loader [isLoading]="this.isLoading">
-  @let input = this.renderInput();
-  @if (!this.editMode()) {
-    <div
-      class="value-container"
-      [ngClass]="{ 'no-border': !this.withBorder }"
-      [class.is-disabled]="this.disabled"
-      (click)="!this.disabled ? this.toggleEditMode() : null"
-      appStopPropagation
-    >
-      <ng-content></ng-content>
-    </div>
+  @let input = this.renderInput(); @if (!this.editMode()) {
+  <div
+    class="value-container"
+    [ngClass]="{ 'no-border': !this.withBorder }"
+    [class.is-disabled]="this.disabled"
+    (click)="!this.disabled ? this.toggleEditMode() : null"
+    appStopPropagation
+  >
+    <ng-content></ng-content>
+  </div>
   } @else if (input) {
-    <div class="align-center g-space-sm">
-      <ta-inputs
-        class="flex-fill"
-        appStopPropagation
-        [input]="input"
-        [standalone]="true"
-        [onFocus]="this.onFocus"
-      ></ta-inputs>
-    </div>
+  <div class="align-center g-space-sm">
+    <ta-inputs
+      class="flex-fill"
+      appStopPropagation
+      [input]="input"
+      [standalone]="true"
+      [onFocus]="this.onFocus"
+    ></ta-inputs>
+  </div>
   }
 </ta-loader>

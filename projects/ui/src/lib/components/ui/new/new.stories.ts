@@ -1,29 +1,29 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { NewComponent } from './new.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { NewComponent } from "./new.component";
 
 export type StoryType = NewComponent;
 
 export default {
-  title: 'UI/New',
+  title: "UI/New",
   component: NewComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     visible: {
-      control: 'boolean',
+      control: "boolean",
     },
     isRelative: {
-      control: 'boolean',
+      control: "boolean",
     },
     size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      control: { type: "select" },
+      options: ["xs", "sm", "md", "lg", "xl"],
     },
   },
   args: {
     visible: true,
     isRelative: false,
-    size: 'md',
+    size: "md",
   },
 } as Meta<StoryType>;
 
@@ -43,12 +43,12 @@ export const Relative: StoryObj<StoryType> = {
 
 export const SmallSize: StoryObj<StoryType> = {
   args: {
-    size: 'sm',
+    size: "sm",
   },
 };
 
 export const LargeSize: StoryObj<StoryType> = {
   args: {
-    size: 'lg',
+    size: "lg",
   },
 };

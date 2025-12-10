@@ -1,17 +1,17 @@
-import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgIf } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { octetsToMo, roundToDecimal } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import { octetsToMo, roundToDecimal } from "@ta/utils";
 
-import { TaTranslationUI } from '../translation.service';
+import { TaTranslationUI } from "../../../translation.service";
 
 @Component({
-  selector: 'ta-megaoctet',
-  templateUrl: './megaoctet.component.html',
-  styleUrls: ['./megaoctet.component.scss'],
+  selector: "ta-megaoctet",
+  templateUrl: "./megaoctet.component.html",
+  styleUrls: ["./megaoctet.component.scss"],
   standalone: true,
   imports: [NgIf, FontIconComponent, TranslateModule],
 })

@@ -2,16 +2,17 @@
   <app-layout-title>
     <div class="space-between align-center">
       <ta-title [level]="1">Charts & Visualizations</ta-title>
-      <div class="breadcrumb">
-        <span>Sandbox</span> / <span>Charts</span>
-      </div>
+      <div class="breadcrumb"><span>Sandbox</span> / <span>Charts</span></div>
     </div>
   </app-layout-title>
   <app-layout-content>
     <div class="p-space-lg">
       <div class="showcase-intro">
         <ta-title [level]="2">Graphiques et visualisations</ta-title>
-        <ta-text>Explorez les différents types de graphiques disponibles avec la librairie &#64;ta/charts</ta-text>
+        <ta-text
+          >Explorez les différents types de graphiques disponibles avec la
+          librairie &#64;ta/charts</ta-text
+        >
         <div class="info-badge">
           <span class="material-icons">info</span>
           Intégration Chart.js pour des visualisations interactives
@@ -20,25 +21,26 @@
 
       <div class="charts-grid">
         @for (chart of chartTypes; track chart) {
-          <a 
-            [routerLink]="chart.route"
-            class="chart-card">
-            <div class="card-header">
-              <div class="chart-icon" [style.color]="chart.color">
-                <span class="material-icons">{{ chart.icon }}</span>
-              </div>
-              <div class="status-badge" [class.coming-soon]="chart.status === 'À venir'">
-                {{ chart.status }}
-              </div>
+        <a [routerLink]="chart.route" class="chart-card">
+          <div class="card-header">
+            <div class="chart-icon" [style.color]="chart.color">
+              <span class="material-icons">{{ chart.icon }}</span>
             </div>
-            <div class="card-content">
-              <ta-title [level]="3">{{ chart.title }}</ta-title>
-              <ta-text>{{ chart.description }}</ta-text>
+            <div
+              class="status-badge"
+              [class.coming-soon]="chart.status === 'À venir'"
+            >
+              {{ chart.status }}
             </div>
-            <div class="card-arrow">
-              <span class="material-icons">arrow_forward</span>
-            </div>
-          </a>
+          </div>
+          <div class="card-content">
+            <ta-title [level]="3">{{ chart.title }}</ta-title>
+            <ta-text>{{ chart.description }}</ta-text>
+          </div>
+          <div class="card-arrow">
+            <span class="material-icons">arrow_forward</span>
+          </div>
+        </a>
         }
       </div>
 
@@ -49,7 +51,9 @@
             <span class="material-icons">touch_app</span>
             <div>
               <ta-title [level]="4">Interactifs</ta-title>
-              <ta-text>Graphiques interactifs avec tooltips et animations</ta-text>
+              <ta-text
+                >Graphiques interactifs avec tooltips et animations</ta-text
+              >
             </div>
           </div>
           <div class="feature-item">

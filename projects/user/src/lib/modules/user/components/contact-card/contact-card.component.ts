@@ -1,24 +1,37 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { AsyncPipe, NgIf } from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Component, Input } from "@angular/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { EmptyComponent, ErrorComponent, LoaderComponent, UserLogoComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import {
+  EmptyComponent,
+  ErrorComponent,
+  LoaderComponent,
+  UserLogoComponent,
+} from "@ta/ui";
+import { TaBaseComponent } from "@ta/utils";
 
-import { TaUsersService } from '../../services/users.service';
-import { User } from '../../services/users/dto/user';
+import { TaUsersService } from "../../services/users.service";
+import { User } from "../../services/users/dto/user";
 
 @Component({
-  selector: 'ta-contact-card',
-  templateUrl: './contact-card.component.html',
-  styleUrls: ['./contact-card.component.scss'],
+  selector: "ta-contact-card",
+  templateUrl: "./contact-card.component.html",
+  styleUrls: ["./contact-card.component.scss"],
   standalone: true,
-  imports: [NgIf, AsyncPipe, FontIconComponent, LoaderComponent, ErrorComponent, EmptyComponent, UserLogoComponent],
+  imports: [
+    NgIf,
+    AsyncPipe,
+    FontIconComponent,
+    LoaderComponent,
+    ErrorComponent,
+    EmptyComponent,
+    UserLogoComponent,
+  ],
 })
 export class ContactCardComponent extends TaBaseComponent {
   @Input()
-  userId: string = '';
+  userId: string = "";
 
   get user$() {
     return this._usersService.user.get$(this.userId);

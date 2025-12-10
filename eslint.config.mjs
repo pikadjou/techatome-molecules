@@ -1,3 +1,3 @@
-import eslintConfig from "./projects/config/eslint-config/index.mjs";
+import eslintConfig from "./molecule-ui/projects/config/eslint-config/index.mjs";
 
 export default eslintConfig;

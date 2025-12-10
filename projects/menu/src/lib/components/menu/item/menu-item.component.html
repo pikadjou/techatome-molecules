@@ -1,31 +1,39 @@
 @if (!this.hasChild()) {
-  <ng-container [style.cursor]="this.item.callback ? 'pointer' : 'default'">
-    @if (this.getLink()) {
-      <a
-        class="link"
-        [ngClass]="this.getStyleType()"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: this.item.exact }"
-        [routerLink]="[this.getLink()]"
-        [replaceUrl]="this.item.replaceUrl"
-      >
-        <ng-template [ngTemplateOutlet]="Item"></ng-template>
-      </a>
-    } @else {
-      <a (click)="this.executeCallback()" class="link" [ngClass]="this.getStyleType()">
-        <ng-template [ngTemplateOutlet]="Item"></ng-template>
-      </a>
-    }
-  </ng-container>
+<ng-container [style.cursor]="this.item.callback ? 'pointer' : 'default'">
+  @if (this.getLink()) {
+  <a
+    class="link"
+    [ngClass]="this.getStyleType()"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: this.item.exact }"
+    [routerLink]="[this.getLink()]"
+    [replaceUrl]="this.item.replaceUrl"
+  >
+    <ng-template [ngTemplateOutlet]="Item"></ng-template>
+  </a>
+  } @else {
+  <a
+    (click)="this.executeCallback()"
+    class="link"
+    [ngClass]="this.getStyleType()"
+  >
+    <ng-template [ngTemplateOutlet]="Item"></ng-template>
+  </a>
+  }
+</ng-container>
 }
 
 <ng-template #Item [typedTemplate]="this.typeToken">
   <div class="item pointer" [class.disable]="item.disabled">
     <div class="icon">
       @if (this.hasFontIcon()) {
-        <span class="icon-material">
-          <ta-font-icon [name]="this.getFontIcon()" size="xs" [ngClass]="item.iconsColor"></ta-font-icon>
-        </span>
+      <span class="icon-material">
+        <ta-font-icon
+          [name]="this.getFontIcon()"
+          size="xs"
+          [ngClass]="item.iconsColor"
+        ></ta-font-icon>
+      </span>
       }
     </div>
 
@@ -33,31 +41,30 @@
 
     <div class="badge-container d-flex">
       @if (item.options?.notificationBadge?.label) {
-        <ta-notification-badge
-          [number]="item.options?.notificationBadge?.label || 0"
-          [style]="'brand-700'"
-          fontSize="xs"
-          [relative]="true"
-        ></ta-notification-badge>
-      }
-      @let extraTemplate = item.options?.extraTemplate;
-      @if (extraTemplate) {
-        <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
+      <ta-notification-badge
+        [number]="item.options?.notificationBadge?.label || 0"
+        [style]="'brand-700'"
+        fontSize="xs"
+        [relative]="true"
+      ></ta-notification-badge>
+      } @let extraTemplate = item.options?.extraTemplate; @if (extraTemplate) {
+      <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
       }
     </div>
     @if (item.endingIcon) {
-      <div class="ending-icon-container">
-        <ta-font-icon [name]="item.endingIcon" [ngClass]="item.iconsColor"></ta-font-icon>
-      </div>
-    }
-    @let template = this.getTemplate();
-    @if (template) {
-      <div class="trigger-container">
-        <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
-        <mat-menu #menu="matMenu">
-          <ng-container *ngTemplateOutlet="template"></ng-container>
-        </mat-menu>
-      </div>
+    <div class="ending-icon-container">
+      <ta-font-icon
+        [name]="item.endingIcon"
+        [ngClass]="item.iconsColor"
+      ></ta-font-icon>
+    </div>
+    } @let template = this.getTemplate(); @if (template) {
+    <div class="trigger-container">
+      <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngTemplateOutlet="template"></ng-container>
+      </mat-menu>
+    </div>
     }
   </div>
 </ng-template>

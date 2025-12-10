@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from "@angular/core";
 
 interface LetContext<T> {
   ngLet: T;
@@ -7,7 +7,7 @@ interface LetContext<T> {
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[ngLet]',
+  selector: "[ngLet]",
 })
 export class LetDirective<T> {
   private _context: LetContext<T | null> = { ngLet: null, $implicit: null };
@@ -39,7 +39,7 @@ export class LetDirective<T> {
    * to `NgLet` should be narrowed in some way. For `NgLet`, the binding expression itself is used to
    * narrow its type, which allows the strictNullChecks feature of TypeScript to work with `NgLet`.
    */
-  static ngTemplateGuard_ngLet: 'binding';
+  static ngTemplateGuard_ngLet: "binding";
 
   /**
    * Asserts the correct type of the context for the template that `NgLet` will render.
@@ -50,7 +50,7 @@ export class LetDirective<T> {
   static ngTemplateContextGuard<T>(
     dir: LetDirective<T>,
     ctx: any
-  ): ctx is LetContext<Exclude<T, false | 0 | '' | null | undefined>> {
+  ): ctx is LetContext<Exclude<T, false | 0 | "" | null | undefined>> {
     return true;
   }
 }

@@ -1,7 +1,7 @@
-import { TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { TemplateRef } from "@angular/core";
+import { Observable } from "rxjs";
 import * as i0 from "@angular/core";
-export type RoutingType = 'project' | 'invoice' | 'quotationVersion' | 'task';
+export type RoutingType = "project" | "invoice" | "quotationVersion" | "task";
 export declare class TaNotificationSharedService {
     paymentStatusTemplate: TemplateRef<any> | null;
     projectStatusTemplate: TemplateRef<any> | null;

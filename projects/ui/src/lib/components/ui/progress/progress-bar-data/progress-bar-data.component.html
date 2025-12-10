@@ -2,21 +2,25 @@
   <div class="title">
     <ta-title [level]="3">{{ this.title | translate }}</ta-title>
     @if (this.titleIcon) {
-      <ta-material-icon [type]="'sm'">{{ this.titleIcon }}</ta-material-icon>
+    <ta-material-icon [type]="'sm'">{{ this.titleIcon }}</ta-material-icon>
     }
   </div>
 
   <div class="right-side">
     <span class="progress-value">{{ this.progressValue }}</span>
     @if (this.description) {
-      <span class="description color-grey-600">{{ this.description | translate }}</span>
-    }
-    @if (this.rightText?.text) {
-      <span class="description" [ngClass]="this.rightText?.colorClass ?? ''">{{
-        this.rightText?.text ?? '' | translate
-      }}</span>
+    <span class="description color-grey-600">{{
+      this.description | translate
+    }}</span>
+    } @if (this.rightText?.text) {
+    <span class="description" [ngClass]="this.rightText?.colorClass ?? ''">{{
+      this.rightText?.text ?? "" | translate
+    }}</span>
     }
   </div>
 </div>
 
-<ta-progress-bar [current]="this.current ?? 0" [max]="this.max ?? 0"></ta-progress-bar>
+<ta-progress-bar
+  [current]="this.current ?? 0"
+  [max]="this.max ?? 0"
+></ta-progress-bar>

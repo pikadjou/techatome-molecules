@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
-import { MenuIcon } from '../../models/menu/item/icon';
-import { Menu } from '../../models/menu/menu';
+import { EventEmitter } from "@angular/core";
+import { MenuIcon } from "../../models/menu/item/icon";
+import { Menu } from "../../models/menu/menu";
 import * as i0 from "@angular/core";
 export declare class QuickActionsComponent {
     tabSelection: string | null;

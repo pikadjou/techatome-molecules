@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Geolocation, Position } from '@capacitor/geolocation';
-import { BehaviorSubject } from 'rxjs';
+import { Geolocation, Position } from "@capacitor/geolocation";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaDevicePositionService {
   private _currentPosition$ = new BehaviorSubject<Position | null>(null);
@@ -21,13 +21,13 @@ export class TaDevicePositionService {
   constructor() {}
 
   public fetchCanAccessPosition() {
-    Geolocation.checkPermissions().then(permissionStatus =>
-      this._canAccessPosition$.next(permissionStatus.location !== 'denied')
+    Geolocation.checkPermissions().then((permissionStatus) =>
+      this._canAccessPosition$.next(permissionStatus.location !== "denied")
     );
   }
 
   public fetchCurrentPosition() {
-    Geolocation.getCurrentPosition().then(position => {
+    Geolocation.getCurrentPosition().then((position) => {
       this._currentPosition$.next(position);
     });
   }

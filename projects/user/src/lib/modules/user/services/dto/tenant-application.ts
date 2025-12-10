@@ -1,4 +1,4 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 
 export interface TenantApplication {
   id: string;
@@ -13,15 +13,17 @@ export interface TenantApplication {
 }
 
 export const tenantApplicationBrutProps: (keyof TenantApplication)[] = [
-  'id',
-  'estateId',
-  'tenantId',
-  'applicationDate',
-  'status',
-  'applicantName',
-  'applicantEmail',
-  'applicantPhone',
-  'documents',
+  "id",
+  "estateId",
+  "tenantId",
+  "applicationDate",
+  "status",
+  "applicantName",
+  "applicantEmail",
+  "applicantPhone",
+  "documents",
 ];
 
-export const tenantApplicationProps = new GraphSchema<TenantApplication>(tenantApplicationBrutProps);
+export const tenantApplicationProps = new GraphSchema<TenantApplication>(
+  tenantApplicationBrutProps
+);

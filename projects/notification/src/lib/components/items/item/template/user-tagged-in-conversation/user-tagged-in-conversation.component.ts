@@ -1,20 +1,20 @@
-import { AbstractNotificationTemplateComponent } from '../abstract';
-import { IconComponent } from '../../icon/icon.component';
-import { ItemComponent } from '../../item.component';
-import { NotificationTitleComponent } from '../../title/title.component';
-import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { AbstractNotificationTemplateComponent } from "../abstract";
+import { IconComponent } from "../../icon/icon.component";
+import { ItemComponent } from "../../item.component";
+import { NotificationTitleComponent } from "../../title/title.component";
+import { Component } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'ta-user-tagged-in-conversation',
-  templateUrl: './user-tagged-in-conversation.component.html',
-  styleUrls: ['./user-tagged-in-conversation.component.scss'],
+  selector: "ta-user-tagged-in-conversation",
+  templateUrl: "./user-tagged-in-conversation.component.html",
+  styleUrls: ["./user-tagged-in-conversation.component.scss"],
   standalone: true,
   imports: [
     IconComponent,
     ItemComponent,
     NotificationTitleComponent,
-    TranslateModule
+    TranslateModule,
   ],
 })
 export class UserTaggedInConversationComponent extends AbstractNotificationTemplateComponent {
@@ -24,7 +24,7 @@ export class UserTaggedInConversationComponent extends AbstractNotificationTempl
     }
     super.goTo();
     this.sharedService.routing?.task({
-      taskId: this.extractredirectContext('TaskId'),
+      taskId: this.extractredirectContext("TaskId"),
     });
   }
 }

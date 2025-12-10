@@ -1,15 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { ModuleWithProviders, NgModule } from "@angular/core";
 
-import { ApolloModule } from 'apollo-angular';
+import { ApolloModule } from "apollo-angular";
 
-import { TaGraphService } from './services/graphql/graph.service';
-import { GRAPHQL_SERVER_CONFIG, IGraphConfig } from './services/graphql/models/graphConfig';
-import { CacheInterceptor } from './services/server/cacheInterceptor';
-import { TenantInterceptor } from './services/server/tenantInterceptor';
+import { TaGraphService } from "./services/graphql/graph.service";
+import {
+  GRAPHQL_SERVER_CONFIG,
+  IGraphConfig,
+} from "./services/graphql/models/graphConfig";
+import { CacheInterceptor } from "./services/server/cacheInterceptor";
+import { TenantInterceptor } from "./services/server/tenantInterceptor";
 
-export { gql as Apollo_gql } from 'apollo-angular';
+export { gql as Apollo_gql } from "apollo-angular";
 
 /**
  * @deprecated Use standalone components instead.
@@ -36,7 +39,9 @@ export { gql as Apollo_gql } from 'apollo-angular';
   ],
 })
 export class TaServerModule {
-  static forRoot(graphQlConfig: IGraphConfig): ModuleWithProviders<TaServerModule> {
+  static forRoot(
+    graphQlConfig: IGraphConfig
+  ): ModuleWithProviders<TaServerModule> {
     return {
       ngModule: TaServerModule,
       providers: [

@@ -1,12 +1,8 @@
 {
-  "placeholder": {
-    "text": "Saisir du texte...",
-    "number": "Saisir un nombre...",
-    "date": "Sélectionner une date...",
-    "select": "Sélectionner une option..."
-  },
-  "button": {
-    "clear": "Effacer",
-    "select": "Sélectionner"
-  }
+  "placeholder.text": "Saisir du texte...",
+  "placeholder.number": "Saisir un nombre...",
+  "placeholder.date": "Sélectionner une date...",
+  "placeholder.select": "Sélectionner une option...",
+  "button.clear": "Effacer",
+  "button.select": "Sélectionner"
 }

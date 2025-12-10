@@ -1,4 +1,4 @@
-import { TranslatedEnumeration, User } from '@ta/services';
+import { TranslatedEnumeration, User } from "@ta/services";
 
 export interface FileMetadata {
   creationDate: string;

@@ -1,5 +1,5 @@
-import { OnDestroy } from '@angular/core';
-import { TaAbstractComponent } from './abstractComponent';
+import { OnDestroy } from "@angular/core";
+import { TaAbstractComponent } from "./abstractComponent";
 import * as i0 from "@angular/core";
 export declare abstract class TaBaseComponent extends TaAbstractComponent implements OnDestroy {
     constructor();

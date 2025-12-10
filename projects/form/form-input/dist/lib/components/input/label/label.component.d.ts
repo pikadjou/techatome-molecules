@@ -1,5 +1,5 @@
-import { InputLabel } from '@ta/form-model';
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputLabel } from "@ta/form-model";
+import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class LabelComponent extends TaAbstractInputComponent<InputLabel> {
     constructor();

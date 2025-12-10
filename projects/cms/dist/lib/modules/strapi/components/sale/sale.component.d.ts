@@ -1,8 +1,8 @@
-import { EventEmitter, OnInit } from '@angular/core';
-import { InputCheckBox } from '@ta/form-model';
-import { TenantConfig } from '@ta/server';
-import { TaBaseComponent } from '@ta/utils';
-import { TaSaleService } from '../../services/sale.service';
+import { EventEmitter, OnInit } from "@angular/core";
+import { InputCheckBox } from "@ta/form-model";
+import { TenantConfig } from "@ta/server";
+import { TaBaseComponent } from "@ta/utils";
+import { TaSaleService } from "../../services/sale.service";
 import * as i0 from "@angular/core";
 export declare class SaleComponent extends TaBaseComponent implements OnInit {
     saleService: TaSaleService;

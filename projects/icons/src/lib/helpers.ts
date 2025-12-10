@@ -1,14 +1,14 @@
-import { TaIconType } from './services/icons.service';
+import { TaIconType } from "./services/icons.service";
 
 export const isFontIcon = (icon: string | TaIconType): boolean => {
-  return typeof icon === 'string';
+  return typeof icon === "string";
 };
 
 export const getFontIcon = (icon: string | TaIconType): string => {
   if (isFontIcon(icon)) {
     return icon.toString();
   }
-  return '';
+  return "";
 };
 
 export const isLocalIcon = (icon: string | TaIconType): boolean => {

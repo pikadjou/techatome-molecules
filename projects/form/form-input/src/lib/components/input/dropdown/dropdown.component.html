@@ -1,51 +1,58 @@
 @if (this.input) {
-  <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: true }" (closed)="this.onOverlayClosed()">
-    <ng-template #panelTrigger>
-      <ta-input-layout [input]="this.input">
-        <div #focusedElement class="custom-dropdown-button form-control" [class.disabled]="this.input.disabled">
-          <span class="selected-value align-center g-space-xs">
-            @if (!this.input.multiple) {
-              @if (this.input.value) {
-                <span>
-                  {{ this.getOptionName(this.input.value) | translate }}
-                </span>
-              } @else {
-                {{ 'form.input.dropdown.novalue' | translate }}
-              }
-            } @else if (this.input.multiple) {
-              @for (value of this.input.value; track value) {
-                <ta-label size="sm" class="d-flex">
-                  {{ this.getOptionName(value) | translate }}
-                </ta-label>
-              }
-            }
+<ta-overlay-panel
+  [panelConfig]="{ matchTriggerWidth: true }"
+  (closed)="this.onOverlayClosed()"
+>
+  <ng-template #panelTrigger>
+    <ta-input-layout [input]="this.input">
+      <div
+        #focusedElement
+        class="custom-dropdown-button form-control"
+        [class.disabled]="this.input.disabled"
+      >
+        <span class="selected-value align-center g-space-xs">
+          @if (!this.input.multiple) { @if (this.input.value) {
+          <span>
+            {{ this.getOptionName(this.input.value) | translate }}
           </span>
-          <ta-font-icon name="arrow-big-bottom" type="sm"></ta-font-icon>
-        </div>
-      </ta-input-layout>
-    </ng-template>
-
-    <ng-template #panelContent>
-      <div class="custom-menu">
-        @if (this.input.withSearch) {
-          <input class="input-search" type="search" placeholder="Rechercher..." (input)="this.onSearchChange($event)" />
-        }
-
-        @for (opt of this.filteredOptions; track opt.id) {
-          <button
-            [attr.cdkMenuItem]="!this.input.multiple ? '' : null"
-            (click)="this.selectOption(opt.id, $event)"
-            [class.selected]="this.isSelected(opt.id)"
-            [class.disabled]="opt.disabled"
-            class="dropdown-option space-between"
-          >
-            {{ opt.name | translate }}
-            @if (this.isSelected(opt.id)) {
-              <ta-font-icon class="checkmark" name="check-line"></ta-font-icon>
-            }
-          </button>
-        }
+          } @else {
+          {{ "form.input.dropdown.novalue" | translate }}
+          } } @else if (this.input.multiple) { @for (value of this.input.value;
+          track value) {
+          <ta-label size="sm" class="d-flex">
+            {{ this.getOptionName(value) | translate }}
+          </ta-label>
+          } }
+        </span>
+        <ta-font-icon name="arrow-big-bottom" type="sm"></ta-font-icon>
       </div>
-    </ng-template>
-  </ta-overlay-panel>
+    </ta-input-layout>
+  </ng-template>
+
+  <ng-template #panelContent>
+    <div class="custom-menu">
+      @if (this.input.withSearch) {
+      <input
+        class="input-search"
+        type="search"
+        placeholder="Rechercher..."
+        (input)="this.onSearchChange($event)"
+      />
+      } @for (opt of this.filteredOptions; track opt.id) {
+      <button
+        [attr.cdkMenuItem]="!this.input.multiple ? '' : null"
+        (click)="this.selectOption(opt.id, $event)"
+        [class.selected]="this.isSelected(opt.id)"
+        [class.disabled]="opt.disabled"
+        class="dropdown-option space-between"
+      >
+        {{ opt.name | translate }}
+        @if (this.isSelected(opt.id)) {
+        <ta-font-icon class="checkmark" name="check-line"></ta-font-icon>
+        }
+      </button>
+      }
+    </div>
+  </ng-template>
+</ta-overlay-panel>
 }

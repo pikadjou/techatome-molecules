@@ -3,11 +3,11 @@ export declare class LogoComponent {
     /**
      * If set, logo white or black version will be taken
      */
-    color?: 'white' | 'black';
+    color?: "white" | "black";
     /**
      * If set, logo oneline version will be taken
      */
-    type?: 'oneline';
+    type?: "oneline";
     /**
      * Set the logo width in %
      */

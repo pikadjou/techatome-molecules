@@ -1,12 +1,12 @@
-import { EventEmitter, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { InputUploadValue } from '@ta/form-model';
-import { DocumentDto, FileType } from '@ta/services';
-import { TaBaseComponent } from '@ta/utils';
+import { EventEmitter, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { InputUploadValue } from "@ta/form-model";
+import { DocumentDto, FileType } from "@ta/services";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class DocumentsListComponent extends TaBaseComponent implements OnInit, OnChanges {
     documentsIds: string[];
     emptyMessage: string;
-    actions: 'delete' | 'select' | '';
+    actions: "delete" | "select" | "";
     defaultSelected: string[];
     readonly: boolean;
     remove: EventEmitter<string>;

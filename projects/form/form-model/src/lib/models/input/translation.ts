@@ -1,8 +1,8 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup } from "@angular/forms";
 
-import { Culture } from '@ta/utils';
+import { Culture } from "@ta/utils";
 
-import { IInputDynamic, InputDynamic } from './dynamic';
+import { IInputDynamic, InputDynamic } from "./dynamic";
 
 export interface IInputTranslation extends IInputDynamic {
   mainCulture?: Culture;
@@ -13,7 +13,7 @@ export class InputTranslation extends InputDynamic {
 
   constructor(options: IInputTranslation) {
     super(options);
-    this.controlType = 'translation';
+    this.controlType = "translation";
 
     this.firstRender = false;
     this.composedKeyForGroup = false;

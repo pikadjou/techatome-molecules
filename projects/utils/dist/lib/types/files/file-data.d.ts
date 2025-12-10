@@ -1,5 +1,5 @@
-import { EFileExtension } from './file-extension';
-export type FileType = 'Unknown' | 'Document' | 'Image';
+import { EFileExtension } from "./file-extension";
+export type FileType = "Unknown" | "Document" | "Image";
 export interface FileData<T = any> {
     id: number;
     url: string;

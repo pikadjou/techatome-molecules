@@ -1,34 +1,34 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { of } from 'rxjs';
+import { Meta, StoryObj } from "@storybook/angular";
+import { of } from "rxjs";
 
-import { UserLogoData } from '../user-logo/user-logo.component';
-import { UsersListComponent } from './users-list.component';
+import { UserLogoData } from "../user-logo/user-logo.component";
+import { UsersListComponent } from "./users-list.component";
 
 export type StoryType = UsersListComponent;
 
 const mockUsers: UserLogoData[] = [
   {
-    firstName: 'John',
-    lastName: 'Doe',
-    trigram: 'JDO',
+    firstName: "John",
+    lastName: "Doe",
+    trigram: "JDO",
   },
   {
-    firstName: 'Jane',
-    lastName: 'Smith',
-    trigram: 'JSM',
+    firstName: "Jane",
+    lastName: "Smith",
+    trigram: "JSM",
   },
   {
-    firstName: 'Bob',
-    lastName: 'Johnson',
-    trigram: 'BJO',
+    firstName: "Bob",
+    lastName: "Johnson",
+    trigram: "BJO",
   },
 ];
 
 export default {
-  title: 'UI/Users List',
+  title: "UI/Users List",
   component: UsersListComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {},
   args: {
     users: of(mockUsers),
@@ -48,19 +48,19 @@ export const ManyUsers: StoryObj<StoryType> = {
     users: of([
       ...mockUsers,
       {
-        firstName: 'Alice',
-        lastName: 'Wilson',
-        trigram: 'AWI',
+        firstName: "Alice",
+        lastName: "Wilson",
+        trigram: "AWI",
       },
       {
-        firstName: 'Charlie',
-        lastName: 'Brown',
-        trigram: 'CBR',
+        firstName: "Charlie",
+        lastName: "Brown",
+        trigram: "CBR",
       },
       {
-        firstName: 'Diana',
-        lastName: 'Davis',
-        trigram: 'DDA',
+        firstName: "Diana",
+        lastName: "Davis",
+        trigram: "DDA",
       },
     ]),
   },

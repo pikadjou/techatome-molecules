@@ -1,6 +1,6 @@
-import { FileStructure } from '../types/files/temporary-files';
+import { FileStructure } from "../types/files/temporary-files";
 export declare const octetsToMo: (octets: number) => number;
-export declare const extractExtension: (name: string) => 'docx' | 'pdf' | 'xlsx' | string;
+export declare const extractExtension: (name: string) => "docx" | "pdf" | "xlsx" | string;
 export declare const getBase64FromFile: (file: File) => Promise<string>;
 export declare const getBlobImage: (base64: string) => Promise<Blob>;
 export declare const compressImage: (blob: Blob) => Promise<Blob>;

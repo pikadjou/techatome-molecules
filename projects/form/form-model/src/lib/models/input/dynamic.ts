@@ -1,9 +1,9 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup } from "@angular/forms";
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
-import { FactoryInputType, InputFactory } from '../factory';
-import { IInputBase, InputBase } from './base';
+import { FactoryInputType, InputFactory } from "../factory";
+import { IInputBase, InputBase } from "./base";
 
 interface IInputTemplateDynamic {
   type: FactoryInputType;
@@ -31,7 +31,7 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
     this.inputsGroup = options.inputsGroup || {};
     this.template = options.template || [];
 
-    this.controlType = 'dynamic';
+    this.controlType = "dynamic";
   }
 
   public add(key?: string) {
@@ -41,7 +41,7 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
       templates.push(
         InputFactory.getInput(template.type, {
           ...template.options,
-          ...{ value: value ? value[template.options.key ?? ''] : null },
+          ...{ value: value ? value[template.options.key ?? ""] : null },
         })
       );
     }
@@ -50,7 +50,7 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
   }
   public remove(id: string) {
     if (this.inputsGroup[id]) {
-      this.formControl?.removeControl(this.key + '-' + id);
+      this.formControl?.removeControl(this.key + "-" + id);
       delete this.inputsGroup[id];
     }
     this.listChanged$.next();
@@ -73,13 +73,13 @@ export class InputDynamic extends InputBase<{ [index: string]: any }> {
       input.createFormControl(childGroup);
     });
     this.formControl?.addControl(
-      this.composedKeyForGroup ? this.key + '-' + key : key,
+      this.composedKeyForGroup ? this.key + "-" + key : key,
       childGroup
     );
     this.inputsGroup[key] = inputs;
   }
 
   private _inputKey(): string {
-    return '' + Math.floor(Math.random() * 10000);
+    return "" + Math.floor(Math.random() * 10000);
   }
 }

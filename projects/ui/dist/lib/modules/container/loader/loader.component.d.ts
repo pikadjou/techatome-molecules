@@ -1,7 +1,7 @@
-import { TaSizes } from '@ta/styles';
-import { Placeholder, PlaceholderConfig } from '../placeholder/config';
+import { TaSizes } from "@ta/styles";
+import { Placeholder, PlaceholderConfig } from "../placeholder/config";
 import * as i0 from "@angular/core";
-export type LoaderSize = 'sm' | 'md' | 'lg';
+export type LoaderSize = "sm" | "md" | "lg";
 export declare class LoaderComponent {
     isLoading: boolean;
     skeleton: PlaceholderConfig | null;

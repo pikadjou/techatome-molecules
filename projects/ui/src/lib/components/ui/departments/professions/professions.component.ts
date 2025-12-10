@@ -1,14 +1,14 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgFor, NgIf } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { TaSizes } from '@ta/styles';
+import { TaSizes } from "@ta/styles";
 
-import { BadgeComponent } from '../../badge/badge.component';
+import { BadgeComponent } from "../../badge/badge.component";
 
 @Component({
-  selector: 'ta-department-professions',
-  templateUrl: './professions.component.html',
-  styleUrls: ['./professions.component.scss'],
+  selector: "ta-department-professions",
+  templateUrl: "./professions.component.html",
+  styleUrls: ["./professions.component.scss"],
   standalone: true,
   imports: [NgIf, NgFor, BadgeComponent],
 })
@@ -23,7 +23,7 @@ export class DepartmentProfessionsComponent {
    * font-size
    */
   @Input()
-  fontSize: TaSizes = 'xs';
+  fontSize: TaSizes = "xs";
 
   @Input() maxVisible?: number;
 

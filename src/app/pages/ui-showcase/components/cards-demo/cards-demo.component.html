@@ -1,6 +1,6 @@
 <div class="cards-demo">
   <ta-title [level]="1">Cards Demo</ta-title>
-  
+
   <section class="demo-section">
     <ta-title [level]="2">Basic Cards</ta-title>
     <div class="cards-grid">
@@ -10,14 +10,17 @@
           <ta-text>This is a basic card with some content inside.</ta-text>
         </div>
       </ta-card>
-      
+
       <ta-card elevated="true">
         <div class="card-content">
           <ta-title [level]="3">Elevated Card</ta-title>
-          <ta-text>This card has elevation/shadow for better visual hierarchy.</ta-text>
+          <ta-text
+            >This card has elevation/shadow for better visual
+            hierarchy.</ta-text
+          >
         </div>
       </ta-card>
-      
+
       <ta-card outlined="true">
         <div class="card-content">
           <ta-title [level]="3">Outlined Card</ta-title>
@@ -36,7 +39,7 @@
           <ta-text>Click me to see the action!</ta-text>
         </div>
       </ta-card>
-      
+
       <ta-card hover="true">
         <div class="card-content">
           <ta-title [level]="3">Hover Effect</ta-title>
@@ -53,8 +56,12 @@
         <ta-title [level]="3">Card with Actions</ta-title>
         <ta-text>This card demonstrates content with action buttons.</ta-text>
         <div class="card-actions">
-          <ta-button variant="primary" (click)="onAction('primary')">Primary</ta-button>
-          <ta-button variant="secondary" (click)="onAction('secondary')">Secondary</ta-button>
+          <ta-button variant="primary" (click)="onAction('primary')"
+            >Primary</ta-button
+          >
+          <ta-button variant="secondary" (click)="onAction('secondary')"
+            >Secondary</ta-button
+          >
         </div>
       </div>
     </ta-card>

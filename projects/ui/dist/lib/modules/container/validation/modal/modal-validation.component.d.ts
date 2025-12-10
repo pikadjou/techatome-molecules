@@ -1,5 +1,5 @@
-import { MatDialogRef } from '@angular/material/dialog';
-import { ModalParameter } from '../common-modal';
+import { MatDialogRef } from "@angular/material/dialog";
+import { ModalParameter } from "../common-modal";
 import * as i0 from "@angular/core";
 export declare class ValidationModal {
     dialogRef: MatDialogRef<ValidationModal>;

@@ -1,5 +1,12 @@
-export type TaState = 'classic' | 'disabled' | 'inactive';
+export type TaState = "classic" | "disabled" | "inactive";
 
-export type TaSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big';
+export type TaSizes = "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "big";
 
-export type ColorType = 'default' | 'secondary' | 'success' | 'warning' | 'alert' | 'purple' | 'new';
+export type ColorType =
+  | "default"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "alert"
+  | "purple"
+  | "new";

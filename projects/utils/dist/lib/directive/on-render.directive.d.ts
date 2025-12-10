@@ -1,4 +1,4 @@
-import { EventEmitter, SimpleChanges } from '@angular/core';
+import { EventEmitter, SimpleChanges } from "@angular/core";
 import * as i0 from "@angular/core";
 export declare class OnRenderDirective {
     onRender: boolean;

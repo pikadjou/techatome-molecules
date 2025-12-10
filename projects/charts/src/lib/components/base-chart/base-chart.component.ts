@@ -1,16 +1,28 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 
-import { ChartConfiguration, ChartDataset, ChartType, DefaultDataPoint } from 'chart.js';
-import Chart from 'chart.js/auto';
-import deepEqual from 'fast-deep-equal';
+import {
+  ChartConfiguration,
+  ChartDataset,
+  ChartType,
+  DefaultDataPoint,
+} from "chart.js";
+import Chart from "chart.js/auto";
+import deepEqual from "fast-deep-equal";
 
-@Component({ template: '' })
+@Component({ template: "" })
 export abstract class BaseChartComponent<
-    TType extends ChartType = ChartType,
-    TData = DefaultDataPoint<TType>,
-    TLabel = unknown,
-  >
-  implements AfterViewInit, OnDestroy
+  TType extends ChartType = ChartType,
+  TData = DefaultDataPoint<TType>,
+  TLabel = unknown
+> implements AfterViewInit, OnDestroy
 {
   @Input()
   labels!: TLabel[];
@@ -18,11 +30,11 @@ export abstract class BaseChartComponent<
   @Input()
   datasets!: ChartDataset<ChartType, TData>[];
 
-  @Input() chartOptions: ChartConfiguration['options'] = {};
+  @Input() chartOptions: ChartConfiguration["options"] = {};
 
   @Input() chartHeight?: number;
 
-  @ViewChild('chartCanvas') chartCanvas!: ElementRef;
+  @ViewChild("chartCanvas") chartCanvas!: ElementRef;
 
   public type!: TType;
 
@@ -40,15 +52,21 @@ export abstract class BaseChartComponent<
   }
   ngOnChanges(changes: SimpleChanges) {
     if (
-      !deepEqual(changes['labels']?.previousValue, changes['labels']?.currentValue) ||
-      !deepEqual(changes['datasets']?.previousValue, changes['datasets']?.currentValue)
+      !deepEqual(
+        changes["labels"]?.previousValue,
+        changes["labels"]?.currentValue
+      ) ||
+      !deepEqual(
+        changes["datasets"]?.previousValue,
+        changes["datasets"]?.currentValue
+      )
     ) {
       this.refreshChart();
     }
   }
 
   public createChart() {
-    this.chart = new Chart(this.chartCanvas.nativeElement.getContext('2d'), {
+    this.chart = new Chart(this.chartCanvas.nativeElement.getContext("2d"), {
       type: this.type,
       options: this.chartOptions,
       data: {

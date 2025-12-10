@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 import * as i0 from "@angular/core";
-export type Level = 'authenticated' | 'unauthenticated' | 'authorize' | 'administrator';
+export type Level = "authenticated" | "unauthenticated" | "authorize" | "administrator";
 export type GuardInfo = {
     guards?: string[];
     roles?: string[];

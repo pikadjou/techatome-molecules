@@ -1,7 +1,7 @@
-import { TemplateRef } from '@angular/core';
-import { Subject } from 'rxjs';
-import { TaIconType } from '@ta/icons';
-import { IInputBase, InputBase } from './base';
+import { TemplateRef } from "@angular/core";
+import { Subject } from "rxjs";
+import { TaIconType } from "@ta/icons";
+import { IInputBase, InputBase } from "./base";
 export type TypeComponentInputToken = {
     selectedValue$: Subject<string>;
 };

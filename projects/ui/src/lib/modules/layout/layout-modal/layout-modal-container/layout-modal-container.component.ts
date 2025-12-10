@@ -1,12 +1,12 @@
-import { NgTemplateOutlet } from '@angular/common';
-import { Component, Inject, TemplateRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NgTemplateOutlet } from "@angular/common";
+import { Component, Inject, TemplateRef } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { TaBaseModal } from '@ta/utils';
+import { TaBaseModal } from "@ta/utils";
 
-import { LayoutModalComponent, ModalStyle } from '../layout-modal.component';
+import { LayoutModalComponent, ModalStyle } from "../layout-modal.component";
 
 export interface TemplateModalContainerData {
   template: TemplateRef<any>;
@@ -14,7 +14,7 @@ export interface TemplateModalContainerData {
   style?: ModalStyle;
 }
 @Component({
-  selector: '',
+  selector: "",
   template:
     '<ta-layout-modal [style]="this.style"><ng-template [ngTemplateOutlet]="this.data.template"></ng-template></ta-layout-modal>',
   standalone: true,
@@ -22,7 +22,7 @@ export interface TemplateModalContainerData {
 })
 export class TemplateModalContainer extends TaBaseModal {
   get style(): ModalStyle {
-    return this.data.style ?? 'full';
+    return this.data.style ?? "full";
   }
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: TemplateModalContainerData,
@@ -31,7 +31,9 @@ export class TemplateModalContainer extends TaBaseModal {
     super();
 
     if (this.data.askClosing$) {
-      this._registerSubscription(this.data.askClosing$.subscribe(_ => this.dialogRef.close()));
+      this._registerSubscription(
+        this.data.askClosing$.subscribe((_) => this.dialogRef.close())
+      );
     }
   }
 }

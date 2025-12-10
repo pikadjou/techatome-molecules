@@ -1,38 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from "@storybook/angular";
 
-import { TaSizes } from '@ta/styles';
+import { TaSizes } from "@ta/styles";
 
-import { BooleanIconComponent } from './boolean-icon.component';
+import { BooleanIconComponent } from "./boolean-icon.component";
 
 type StoryType = BooleanIconComponent & {
   // Add any additional story-specific properties if needed
 };
 
 export default {
-  title: 'UI/BooleanIcon',
+  title: "UI/BooleanIcon",
   component: BooleanIconComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     value: {
-      control: { type: 'radio' },
+      control: { type: "radio" },
       options: [true, false, null, undefined],
-      description: 'Boolean value to display (true shows ✓ green, false shows ✗ red, null/undefined shows text)',
+      description:
+        "Boolean value to display (true shows ✓ green, false shows ✗ red, null/undefined shows text)",
     },
     size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'big'] as TaSizes[],
-      description: 'Size of the icon',
+      control: "select",
+      options: ["xs", "sm", "md", "lg", "xl", "xxl", "big"] as TaSizes[],
+      description: "Size of the icon",
     },
     nullText: {
-      control: 'text',
-      description: 'Text to display for null/undefined values',
+      control: "text",
+      description: "Text to display for null/undefined values",
     },
   },
   args: {
     value: true,
-    size: 'sm',
-    nullText: 'ui.boolean-icon.not-communicated',
+    size: "sm",
+    nullText: "ui.boolean-icon.not-communicated",
   },
 } as Meta<StoryType>;
 
@@ -51,14 +52,14 @@ export const Error: StoryObj<StoryType> = {
 export const Small: StoryObj<StoryType> = {
   args: {
     value: true,
-    size: 'xs',
+    size: "xs",
   },
 };
 
 export const Large: StoryObj<StoryType> = {
   args: {
     value: true,
-    size: 'lg',
+    size: "lg",
   },
 };
 
@@ -77,7 +78,7 @@ export const UndefinedValue: StoryObj<StoryType> = {
 export const CustomNullText: StoryObj<StoryType> = {
   args: {
     value: null,
-    nullText: 'Non communiqué',
+    nullText: "Non communiqué",
   },
 };
 

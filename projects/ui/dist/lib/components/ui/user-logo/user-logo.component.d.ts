@@ -1,4 +1,4 @@
-import { TaSizes } from '@ta/styles';
+import { TaSizes } from "@ta/styles";
 import * as i0 from "@angular/core";
 export interface UserLogoData {
     firstname: string;
@@ -12,7 +12,7 @@ export declare class UserLogoComponent {
      */
     size?: TaSizes;
     forcedSize?: number;
-    defaultType: 'font' | 'trigram';
+    defaultType: "font" | "trigram";
     get sizeValue(): number;
     getTrigram(): string;
     private _trigram;

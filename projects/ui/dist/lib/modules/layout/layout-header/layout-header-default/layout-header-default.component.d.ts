@@ -1,5 +1,5 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
-import { TaBaseComponent } from '@ta/utils';
+import { EventEmitter, TemplateRef } from "@angular/core";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class LayoutHeaderDefaultComponent extends TaBaseComponent {
     showBack: boolean;

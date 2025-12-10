@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter } from "@angular/core";
 import * as i0 from "@angular/core";
-export type BadgeType = 'danger' | 'warning' | 'success' | 'primary' | 'secondary' | 'info' | 'purple' | 'orange';
+export type BadgeType = "danger" | "warning" | "success" | "primary" | "secondary" | "info" | "purple" | "orange";
 export declare class BadgeComponent {
     /**
      * Text to display in badge

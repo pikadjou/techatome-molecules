@@ -1,13 +1,15 @@
-import { Injectable, InjectionToken } from '@angular/core';
+import { Injectable, InjectionToken } from "@angular/core";
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
-import { ENotificationCode } from '../enum';
+import { ENotificationCode } from "../enum";
 
-export const LAZY_SERVICE_TOKEN = new InjectionToken<TaNotificationService>('TaNotificationService');
+export const LAZY_SERVICE_TOKEN = new InjectionToken<TaNotificationService>(
+  "TaNotificationService"
+);
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaNotificationService {
   public id = Math.random();

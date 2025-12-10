@@ -1,15 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject, Input, Optional, TemplateRef } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Component, Inject, Input, Optional, TemplateRef } from "@angular/core";
 
-import { MENU_MAX_HEIGHT, MENU_TEMPLATE } from '../overlay.service';
+import { MENU_MAX_HEIGHT, MENU_TEMPLATE } from "../overlay.service";
 
 @Component({
-  selector: 'ta-default-panel',
-  templateUrl: './default-panel.component.html',
-  styleUrls: ['./default-panel.component.scss'],
+  selector: "ta-default-panel",
+  templateUrl: "./default-panel.component.html",
+  styleUrls: ["./default-panel.component.scss"],
   standalone: true,
   host: {
-    style: 'display: block; width: 100%;',
+    style: "display: block; width: 100%;",
   },
   imports: [CommonModule],
 })

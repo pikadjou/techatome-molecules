@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from "@angular/router";
 export declare enum TaMainRoute {
     HOME = "HOME",
     USERLOGIN = "USERLOGIN",

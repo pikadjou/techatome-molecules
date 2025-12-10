@@ -1,39 +1,28 @@
-@if (this.interval) {
-  @if (
-    !this.interval.years &&
-    !this.interval.months &&
-    !this.interval.days &&
-    !this.interval?.hours
-  ) {
-    {{ "ui.duration.less-than-one" | translate }}
-  }
-
-  @if (this.interval.years) {
-    {{
-      "ui.duration.years"
-        | pluralTranslate : this.interval.years
-        | translate : { years: this.interval.years }
-    }}
-  }
-  @if (this.interval.months) {
-    {{
-      "ui.duration.months"
-        | pluralTranslate : this.interval.months
-        | translate : { months: this.interval.months }
-    }}
-  }
-  @if (this.interval.days) {
-    {{
-      "ui.duration.days"
-        | pluralTranslate : this.interval.days
-        | translate : { days: this.interval.days }
-    }}
-  }
-  @if (this.interval.hours) {
-    {{
-      "ui.duration.hours"
-        | pluralTranslate : this.interval.hours
-        | translate : { hours: this.interval.hours }
-    }}
-  }
-}
+@if (this.interval) { @if ( !this.interval.years && !this.interval.months &&
+!this.interval.days && !this.interval?.hours ) {
+{{ "ui.duration.less-than-one" | translate }}
+} @if (this.interval.years) {
+{{
+  "ui.duration.years"
+    | pluralTranslate : this.interval.years
+    | translate : { years: this.interval.years }
+}}
+} @if (this.interval.months) {
+{{
+  "ui.duration.months"
+    | pluralTranslate : this.interval.months
+    | translate : { months: this.interval.months }
+}}
+} @if (this.interval.days) {
+{{
+  "ui.duration.days"
+    | pluralTranslate : this.interval.days
+    | translate : { days: this.interval.days }
+}}
+} @if (this.interval.hours) {
+{{
+  "ui.duration.hours"
+    | pluralTranslate : this.interval.hours
+    | translate : { hours: this.interval.hours }
+}}
+} }

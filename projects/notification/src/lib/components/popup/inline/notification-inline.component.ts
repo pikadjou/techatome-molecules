@@ -1,21 +1,21 @@
-import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { NgClass } from "@angular/common";
+import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { LinkComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import { LinkComponent } from "@ta/ui";
+import { TaBaseComponent } from "@ta/utils";
 
-import { ENotificationCode } from '../../../enum';
-import { TaTranslationNotification } from '../../../translation.service';
-import { openErrorModal } from '../../error-box/error-box.component';
+import { ENotificationCode } from "../../../enum";
+import { TaTranslationNotification } from "../../../translation.service";
+import { openErrorModal } from "../../error-box/error-box.component";
 
 @Component({
-  selector: 'ta-notification-inline',
-  templateUrl: './notification-inline.component.html',
-  styleUrls: ['./notification-inline.component.scss'],
+  selector: "ta-notification-inline",
+  templateUrl: "./notification-inline.component.html",
+  styleUrls: ["./notification-inline.component.scss"],
   standalone: true,
   imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule],
 })
@@ -67,27 +67,27 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   public getIcon(): string {
     if (this.isError) {
-      return 'close-tool';
+      return "close-tool";
     }
     if (this.isWarning) {
-      return 'warning';
+      return "warning";
     }
     if (this.isSuccess) {
-      return 'checked';
+      return "checked";
     }
-    return 'help';
+    return "help";
   }
   public getTypeClass(): string {
     if (this.isError) {
-      return 'danger';
+      return "danger";
     } else if (this.isWarning) {
-      return 'warning';
+      return "warning";
     } else if (this.isInformation) {
-      return 'info';
+      return "info";
     } else if (this.isSuccess) {
-      return 'success';
+      return "success";
     } else {
-      return '';
+      return "";
     }
   }
 

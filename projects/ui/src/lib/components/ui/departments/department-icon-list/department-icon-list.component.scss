@@ -7,11 +7,17 @@
 
 .department {
   @include flex.align-center();
-  margin-right: common.get-var(space, space); /* Espacement entre les départements */
+  margin-right: common.get-var(
+    space,
+    space
+  ); /* Espacement entre les départements */
 }
 
 .img-container {
-  margin-right: common.get-var(space, xs); /* Espacement entre l'icône et le texte */
+  margin-right: common.get-var(
+    space,
+    xs
+  ); /* Espacement entre l'icône et le texte */
   width: 20px;
   img {
     width: 100%;

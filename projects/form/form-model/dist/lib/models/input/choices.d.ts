@@ -1,6 +1,6 @@
-import { TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IInputDropdown, InputDropdown } from './dropdown';
+import { TemplateRef } from "@angular/core";
+import { Observable } from "rxjs";
+import { IInputDropdown, InputDropdown } from "./dropdown";
 export type InputChoicesOption = {
     id: string;
     name: string;

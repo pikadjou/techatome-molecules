@@ -1,4 +1,4 @@
 // app.config.js
 export const appConfig = {
-  test: 'C:\\XXX',
+  test: "C:\\XXX",
 };

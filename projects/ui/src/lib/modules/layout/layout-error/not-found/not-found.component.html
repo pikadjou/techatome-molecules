@@ -3,12 +3,14 @@
     <ta-font-icon name="close-tool" size="lg"></ta-font-icon>
   </div>
   <div class="title">
-    {{ 'layout.notfound.title' | translate }}
+    {{ "ui.layout.notfound.title" | translate }}
   </div>
   <div class="content">
-    {{ 'layout.notfound.content' | translate }}
+    {{ "ui.layout.notfound.content" | translate }}
   </div>
   <div class="button">
-    <ta-button (action)="this.goToHome()">{{ 'layout.notfound.cta' | translate }}</ta-button>
+    <ta-button (action)="this.goToHome()">{{
+      "ui.layout.notfound.cta" | translate
+    }}</ta-button>
   </div>
 </div>

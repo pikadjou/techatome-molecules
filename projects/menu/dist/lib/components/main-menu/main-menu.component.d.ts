@@ -1,13 +1,13 @@
-import { TemplateRef } from '@angular/core';
-import { TaSharedMenuService } from '@ta/services';
-import { TaBaseComponent } from '@ta/utils';
-import { Menu } from '../../models/menu/menu';
+import { TemplateRef } from "@angular/core";
+import { TaSharedMenuService } from "@ta/services";
+import { TaBaseComponent } from "@ta/utils";
+import { Menu } from "../../models/menu/menu";
 import * as i0 from "@angular/core";
 export declare class MainMenuComponent extends TaBaseComponent {
     menuMain: Menu;
     menuUser: Menu;
     userMenuTemplate?: TemplateRef<any>;
-    direction: 'horizontal' | 'vertical';
+    direction: "horizontal" | "vertical";
     sharedMenu: TaSharedMenuService;
     toggleView(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MainMenuComponent, never>;

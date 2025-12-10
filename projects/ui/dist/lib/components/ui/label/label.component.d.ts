@@ -1,4 +1,4 @@
-import { ColorType, TaSizes } from '@ta/styles';
+import { ColorType, TaSizes } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class LabelComponent {
     size: TaSizes;

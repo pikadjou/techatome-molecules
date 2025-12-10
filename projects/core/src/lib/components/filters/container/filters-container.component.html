@@ -1,15 +1,17 @@
 <div class="space-between p-space-sm">
   @if (this.activeFilter) {
-    <div>
-      <ta-filters-tag
-        [activeFilter]="this.activeFilter"
-        (removedFilter)="this.removedFilter.emit($event)"
-      ></ta-filters-tag>
-    </div>
+  <div>
+    <ta-filters-tag
+      [activeFilter]="this.activeFilter"
+      (removedFilter)="this.removedFilter.emit($event)"
+    ></ta-filters-tag>
+  </div>
   }
   <div>
     <ta-link (action)="this.toggleFilter()">
-      <ta-font-icon [name]="this.isFilterOpen ? 'check-line' : 'filter-tool'"></ta-font-icon>
+      <ta-font-icon
+        [name]="this.isFilterOpen ? 'check-line' : 'filter-tool'"
+      ></ta-font-icon>
     </ta-link>
   </div>
 </div>

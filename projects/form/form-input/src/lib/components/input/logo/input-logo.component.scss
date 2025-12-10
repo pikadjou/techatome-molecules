@@ -11,14 +11,14 @@
   cursor: pointer;
   border: 2px dashed common.get-var(border, secondary);
   transition: all 0.3s ease;
-  
+
   &:hover {
     border-color: common.get-var(brand, 500);
-    
+
     .logo-overlay {
       opacity: 1;
     }
-    
+
     .logo-placeholder {
       background-color: common.get-var(surface, secondary);
       border-color: common.get-var(brand, 500);
@@ -47,11 +47,11 @@
   transition: opacity 0.3s ease;
   color: common.get-var(text, inverse);
   gap: common.get-var(space, xs);
-  
+
   ta-font-icon {
     font-size: common.get-var(font, h3, default, size);
   }
-  
+
   span {
     @include fonts.fontSizeBody(sm, true);
   }
@@ -66,11 +66,11 @@
   transition: all 0.3s ease;
   color: common.get-var(text, secondary);
   gap: common.get-var(space, sm);
-  
+
   ta-font-icon {
     font-size: common.get-var(font, h1, default, size);
   }
-  
+
   span {
     @include fonts.fontSizeBody(sm, true);
     text-align: center;

@@ -1,4 +1,4 @@
-import { NotificationDto } from '../../../services/dto/notification';
+import { NotificationDto } from "../../../services/dto/notification";
 import * as i0 from "@angular/core";
 export declare class ItemComponent {
     notification: NotificationDto;

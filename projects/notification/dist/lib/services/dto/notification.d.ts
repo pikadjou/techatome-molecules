@@ -1,6 +1,6 @@
-import { GraphSchema } from '@ta/server';
-import { ENotificationLevel } from './level';
-import { SwitchCases } from './switch-cases';
+import { GraphSchema } from "@ta/server";
+import { ENotificationLevel } from "./level";
+import { SwitchCases } from "./switch-cases";
 export type NotificationDto = {
     id: string;
     date: string;

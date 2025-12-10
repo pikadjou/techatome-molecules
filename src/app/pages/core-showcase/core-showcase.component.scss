@@ -1,66 +1,70 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .core-showcase {
-  max-width: common.get-var('container-max-width', 1000px);
+  max-width: common.get-var("container-max-width", 1000px);
   margin: 0 auto;
 
   .demo-header {
     text-align: center;
-    margin-bottom: common.get-var('spacing-xl');
+    margin-bottom: common.get-var("spacing-xl");
 
     ta-title {
-      font-size: common.get-var('spacing-xl');
-      color: common.get-var('color-text-primary');
-      margin: 0 0 common.get-var('spacing-md') 0;
+      font-size: common.get-var("spacing-xl");
+      color: common.get-var("color-text-primary");
+      margin: 0 0 common.get-var("spacing-md") 0;
     }
 
     .subtitle {
-      color: common.get-var('color-text-secondary');
+      color: common.get-var("color-text-secondary");
       margin: 0;
     }
   }
 
   .demo-sections {
     .demo-section {
-      background: common.get-var('color-background-primary');
-      border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-      border-radius: common.get-var('border-radius-md');
-      padding: common.get-var('spacing-xl');
-      margin-bottom: common.get-var('spacing-xl');
+      background: common.get-var("color-background-primary");
+      border: common.get-var("border-width") solid
+        common.get-var("color-neutral-300");
+      border-radius: common.get-var("border-radius-md");
+      padding: common.get-var("spacing-xl");
+      margin-bottom: common.get-var("spacing-xl");
 
       ta-title {
-        font-size: 1.common.get-var('spacing-3xl');
-        color: common.get-var('color-text-primary');
-        margin: 0 0 common.get-var('spacing-lg') 0;
-        border-bottom: common.get-var('border-width-thick') solid common.get-var('color-neutral-200');
-        padding-bottom: common.get-var('spacing-xs');
+        font-size: 1common.get-var("spacing-3xl");
+        color: common.get-var("color-text-primary");
+        margin: 0 0 common.get-var("spacing-lg") 0;
+        border-bottom: common.get-var("border-width-thick") solid
+          common.get-var("color-neutral-200");
+        padding-bottom: common.get-var("spacing-xs");
       }
 
       .filters-demo,
       .clipboard-demo {
-        background: common.get-var('color-neutral-100');
-        border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-        border-radius: common.get-var('border-radius-sm');
-        padding: common.get-var('spacing-lg');
+        background: common.get-var("color-neutral-100");
+        border: common.get-var("border-width") solid
+          common.get-var("color-neutral-300");
+        border-radius: common.get-var("border-radius-sm");
+        padding: common.get-var("spacing-lg");
         text-align: center;
       }
 
       .other-components {
-        background: common.get-var('color-neutral-100');
-        border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-        border-radius: common.get-var('border-radius-sm');
-        padding: common.get-var('spacing-lg');
+        background: common.get-var("color-neutral-100");
+        border: common.get-var("border-width") solid
+          common.get-var("color-neutral-300");
+        border-radius: common.get-var("border-radius-sm");
+        padding: common.get-var("spacing-lg");
 
         ul {
           margin: 0;
-          color: common.get-var('color-text-secondary');
+          color: common.get-var("color-text-secondary");
           line-height: 1.8;
 
           li {
-            margin: common.get-var('spacing-xs') 0;
+            margin: common.get-var("spacing-xs") 0;
 
             strong {
-              color: common.get-var('color-text-primary');
+              color: common.get-var("color-text-primary");
             }
           }
         }

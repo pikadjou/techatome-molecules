@@ -1,25 +1,29 @@
-import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
+import { Component, Input, OnInit } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
-import { TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { TranslateModule } from "@ngx-translate/core";
+import { Observable } from "rxjs";
 
-import { FontIconComponent } from '@ta/icons';
-import { NotificationBadgeComponent, NotificationBadgeContainerComponent, SwiperLightComponent } from '@ta/ui';
-import { TaAbstractComponent, TypedTemplateDirective } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import {
+  NotificationBadgeComponent,
+  NotificationBadgeContainerComponent,
+  SwiperLightComponent,
+} from "@ta/ui";
+import { TaAbstractComponent, TypedTemplateDirective } from "@ta/utils";
 
-import { getFontIcon, hasFontIcon } from '../../helpers/icon-manager';
-import { MenuAction } from '../../models/menu/item/action';
-import { MenuBase } from '../../models/menu/item/base';
-import { Menu, MenuIcon } from '../../models/public-api';
-import { TaTranslationMenu } from '../../translation.service';
-import { TaSizes } from '@ta/styles';
+import { getFontIcon, hasFontIcon } from "../../helpers/icon-manager";
+import { MenuAction } from "../../models/menu/item/action";
+import { MenuBase } from "../../models/menu/item/base";
+import { Menu, MenuIcon } from "../../models/public-api";
+import { TaTranslationMenu } from "../../translation.service";
+import { TaSizes } from "@ta/styles";
 
 @Component({
-  selector: 'ta-menu-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+  selector: "ta-menu-navigation",
+  templateUrl: "./navigation.component.html",
+  styleUrls: ["./navigation.component.scss"],
   standalone: true,
   imports: [
     NgClass,
@@ -39,7 +43,7 @@ export class NavigationComponent extends TaAbstractComponent implements OnInit {
   menu!: Menu;
 
   @Input()
-  container!: 'tags' | 'tab';
+  container!: "tags" | "tab";
 
   @Input()
   swiper = false;
@@ -56,7 +60,7 @@ export class NavigationComponent extends TaAbstractComponent implements OnInit {
   readonly getFontIcon = getFontIcon;
 
   public readonly typeItem!: { item: MenuBase | MenuAction | MenuIcon };
-  public activeKey: string = '';
+  public activeKey: string = "";
 
   constructor() {
     super();
@@ -75,28 +79,30 @@ export class NavigationComponent extends TaAbstractComponent implements OnInit {
       this._registerSubscription(
         this.manuallyChanged$.subscribe({
           next: (key: string) => {
-            const found = this.menu.elements.find((element) => element.key === key);
+            const found = this.menu.elements.find(
+              (element) => element.key === key
+            );
             if (found) {
               this.callback(found);
             }
           },
-        }),
+        })
       );
     }
   }
 
   public getSpaceClass() {
     if (this.options.spaceElement === null) {
-      return '';
+      return "";
     }
-    return `g-space-${this.options.spaceElement ?? 'lg'}`;
+    return `g-space-${this.options.spaceElement ?? "lg"}`;
   }
   public getLink(item: MenuIcon | MenuAction | MenuBase) {
-    if (item.link && item.link !== '') {
+    if (item.link && item.link !== "") {
       return item.link;
     }
 
-    return ''; // TODO this._navigationService.currentPageUrl;
+    return ""; // TODO this._navigationService.currentPageUrl;
   }
 
   public callback(item: MenuBase) {

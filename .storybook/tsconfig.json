@@ -4,9 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "files": [
-    "./preview.ts"
-  ],
+  "files": ["./preview.ts"],
   "include": [
     "../projects/ui/src/**/*",
     "../projects/styles/src/**/*",

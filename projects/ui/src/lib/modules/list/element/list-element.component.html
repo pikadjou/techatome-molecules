@@ -1,4 +1,8 @@
-<div class="list-element" [class.list-border]="this.withSeparator" [class.responsive-container]="this.flexColumn">
+<div
+  class="list-element"
+  [class.list-border]="this.withSeparator"
+  [class.responsive-container]="this.flexColumn"
+>
   <div class="titles-container" (click)="this.action.emit()">
     <div class="list-title-container">
       <ng-content select="ta-list-title"></ng-content>

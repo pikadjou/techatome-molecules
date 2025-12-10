@@ -1,38 +1,38 @@
 @if (this.showMessage) {
-  <div class="notification-container">
-    <div class="text">
-      <div class="label" [ngClass]="this.getTypeClass()">
-        <ta-font-icon class="mr-space-xs" [name]="this.getIcon()" type="md"></ta-font-icon>
-        @if (!this.message) {
-          @switch (true) {
-            @case (this.isError) {
-              {{ 'notification.inline.label.error' | translate }}
-            }
-            @case (this.isWarning) {
-              {{ 'notification.inline.label.warning' | translate }}
-            }
-            @case (this.isInformation) {
-              {{ 'notification.inline.label.info' | translate }}
-            }
-            @case (this.isSuccess) {
-              {{ 'notification.inline.label.success' | translate }}
-            }
-          }
-        } @else {
-          {{ this.message | translate }}
-        }
-      </div>
+<div class="notification-container">
+  <div class="text">
+    <div class="label" [ngClass]="this.getTypeClass()">
+      <ta-font-icon
+        class="mr-space-xs"
+        [name]="this.getIcon()"
+        type="md"
+      ></ta-font-icon>
+      @if (!this.message) { @switch (true) { @case (this.isError) {
+      {{ "notification.inline.label.error" | translate }}
+      } @case (this.isWarning) {
+      {{ "notification.inline.label.warning" | translate }}
+      } @case (this.isInformation) {
+      {{ "notification.inline.label.info" | translate }}
+      } @case (this.isSuccess) {
+      {{ "notification.inline.label.success" | translate }}
+      } } } @else {
+      {{ this.message | translate }}
+      }
     </div>
-    @if (this.showClose) {
-      <span class="close" (click)="this.close()">
-        <ta-font-icon name="close"></ta-font-icon>
-      </span>
-    }
   </div>
+  @if (this.showClose) {
+  <span class="close" (click)="this.close()">
+    <ta-font-icon name="close"></ta-font-icon>
+  </span>
+  }
+</div>
 } @else {
-    <ng-content></ng-content>
-}
-
-@if (this.isError) {
-  <ta-link size="sm" class="color-semantic-orange-dark flex-end" (action)="this.openErrorBox()">Open</ta-link>
+<ng-content></ng-content>
+} @if (this.isError) {
+<ta-link
+  size="sm"
+  class="color-semantic-orange-dark flex-end"
+  (action)="this.openErrorBox()"
+  >Open</ta-link
+>
 }

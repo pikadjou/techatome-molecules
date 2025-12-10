@@ -1,16 +1,16 @@
 @use "ta/utils/mixins/common";
 
 .image-preview-wrapper {
-    position: relative;
+  position: relative;
 
-    background-color: common.get-var(surface, secondary);
-    img {
-        border-radius: common.get-var(radius, rounded);
-        aspect-ratio: 3/4;
-        overflow: hidden;
-    }
+  background-color: common.get-var(surface, secondary);
+  img {
+    border-radius: common.get-var(radius, rounded);
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
 }
 
 .image-remove {
-    padding: common.get-var(spacing, sm);
+  padding: common.get-var(spacing, sm);
 }

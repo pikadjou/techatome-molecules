@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { LayoutHeaderDefaultComponent } from './layout-header-default.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { LayoutHeaderDefaultComponent } from "./layout-header-default.component";
 
 type StoryType = LayoutHeaderDefaultComponent;
 
 export default {
-  title: 'LAYOUT/header/default',
+  title: "LAYOUT/header/default",
   component: LayoutHeaderDefaultComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -39,7 +39,7 @@ export default {
 export const Basic: StoryObj<StoryType> = {};
 export const Title: StoryObj<StoryType> = {
   args: {
-    title: 'Checklists',
+    title: "Checklists",
   },
 };
 export const OnlyOption: StoryObj<StoryType> = {

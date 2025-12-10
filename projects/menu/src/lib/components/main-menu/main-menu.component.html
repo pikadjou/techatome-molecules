@@ -1,6 +1,5 @@
-<div class="main-nav-container">   
+<div class="main-nav-container">
   <div class="max-container">
-
     <div class="main-nav" [ngClass]="this.direction">
       <div class="logo">
         <ta-logo class="small"></ta-logo>
@@ -8,22 +7,27 @@
       </div>
       <div class="flex-start align-center">
         <div class="menu-nav">
-          <ta-menu class="menu" [menu]="this.menuMain" [container]="'main'"></ta-menu>
+          <ta-menu
+            class="menu"
+            [menu]="this.menuMain"
+            [container]="'main'"
+          ></ta-menu>
         </div>
         @if (this.menuUser) {
-          <div class="user-nav">
-            <div class="sep"></div>
-            <ta-menu class="menu" [menu]="this.menuUser" [container]="'main'"></ta-menu>
-          </div>
-        }
-        @if (this.userMenuTemplate) {
-          <div class="user-template">
-            <ng-template [ngTemplateOutlet]="this.userMenuTemplate"></ng-template>
-          </div>
+        <div class="user-nav">
+          <div class="sep"></div>
+          <ta-menu
+            class="menu"
+            [menu]="this.menuUser"
+            [container]="'main'"
+          ></ta-menu>
+        </div>
+        } @if (this.userMenuTemplate) {
+        <div class="user-template">
+          <ng-template [ngTemplateOutlet]="this.userMenuTemplate"></ng-template>
+        </div>
         }
       </div>
     </div>
-    
   </div>
-    
 </div>

@@ -1,4 +1,4 @@
-import { PageInfo } from './pageInfo';
+import { PageInfo } from "./pageInfo";
 export type GraphReponsePagedData<T> = {
     [key: string]: {
         pageInfo?: PageInfo;

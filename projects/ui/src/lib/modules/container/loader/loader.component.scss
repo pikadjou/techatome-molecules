@@ -1,5 +1,5 @@
-@use 'ta/utils/mixins/common';
-@use 'ta/utils/mixins/flex';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 
 .loader {
   @include flex.flex-column();
@@ -14,17 +14,17 @@
 
   .spinner {
     color: common.get-var(brand, 600);
-    
+
     &.sm {
       height: 32px;
       width: 32px;
     }
-    
+
     &.md {
       height: 48px;
       width: 48px;
     }
-    
+
     &.lg {
       height: 64px;
       width: 64px;
@@ -77,7 +77,8 @@
   }
 
   @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
     }
     50% {

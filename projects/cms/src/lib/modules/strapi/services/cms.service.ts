@@ -1,14 +1,14 @@
-import { Injectable, LOCALE_ID, inject } from '@angular/core';
+import { Injectable, LOCALE_ID, inject } from "@angular/core";
 
-import { map } from 'rxjs';
+import { map } from "rxjs";
 
-import { HandleComplexRequest, TaBaseStrapiService } from '@ta/server';
+import { HandleComplexRequest, TaBaseStrapiService } from "@ta/server";
 
-import { Cms } from './dto/cms';
-import { GET_CMS_CONTENT } from './strapiQueries';
+import { Cms } from "./dto/cms";
+import { GET_CMS_CONTENT } from "./strapiQueries";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaCmsService extends TaBaseStrapiService {
   readonly local = inject(LOCALE_ID);
@@ -22,8 +22,11 @@ export class TaCmsService extends TaBaseStrapiService {
     return this.cmsContents.fetch(
       type,
       this._strapiService
-        .fetchQueryList$<Cms>(GET_CMS_CONTENT(type, this.local, tenantId), 'contents')
-        .pipe(map(list => list[0]))
+        .fetchQueryList$<Cms>(
+          GET_CMS_CONTENT(type, this.local, tenantId),
+          "contents"
+        )
+        .pipe(map((list) => list[0]))
     );
   }
 }

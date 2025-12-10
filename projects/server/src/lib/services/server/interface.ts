@@ -1,6 +1,6 @@
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
-import { Request } from './request';
+import { Request } from "./request";
 
 export interface TempRequest {
   subject: Subject<Object>;

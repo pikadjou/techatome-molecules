@@ -1,5 +1,5 @@
 @use "ta/vars";
-@use 'ta/settings/common';
+@use "ta/settings/common";
 
 @mixin generateBorders() {
   .bdp {
@@ -20,7 +20,7 @@
   }
 
   @include common.generateMap(
-    'border',
+    "border",
     vars.$border,
     (
       color: border-color,

@@ -1,15 +1,18 @@
 <ta-notification-item [notification]="this.notification" (click)="this.goTo()">
   <ta-notification-item-title>
     <div class="flex-row g-space-sm">
-      {{ 'notification.items.invoice-payment-status-changed.title' | translate: this.getTranslation() }}
+      {{
+        "notification.items.invoice-payment-status-changed.title"
+          | translate : this.getTranslation()
+      }}
       <div class="flex">
         @if (this.template) {
-          <ng-container
-            [ngTemplateOutlet]="this.template"
-            [ngTemplateOutletContext]="{
+        <ng-container
+          [ngTemplateOutlet]="this.template"
+          [ngTemplateOutletContext]="{
               data: this.paymentStatus,
             }"
-          ></ng-container>
+        ></ng-container>
         }
       </div>
     </div>

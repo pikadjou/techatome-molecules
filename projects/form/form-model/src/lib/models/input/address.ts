@@ -1,14 +1,14 @@
-import { IInputBase, InputBase } from './base';
-import { InputTextBox } from './textbox';
+import { IInputBase, InputBase } from "./base";
+import { InputTextBox } from "./textbox";
 
 export enum EAddressValues {
-  street = 'street',
-  number = 'number',
-  city = 'city',
-  zipCode = 'zipCode',
-  country = 'country',
-  longitude = 'longitude',
-  latitude = 'latitude',
+  street = "street",
+  number = "number",
+  city = "city",
+  zipCode = "zipCode",
+  country = "country",
+  longitude = "longitude",
+  latitude = "latitude",
 }
 
 export interface IAddressValue {
@@ -23,7 +23,7 @@ export interface IAddressValue {
 export interface IInputAddress extends IInputBase<Partial<IAddressValue>> {}
 
 export class InputAddress extends InputBase<Partial<IAddressValue>> {
-  override controlType = 'address';
+  override controlType = "address";
 
   override set value(data: Partial<IAddressValue> | null) {
     super.value = data;
@@ -36,32 +36,32 @@ export class InputAddress extends InputBase<Partial<IAddressValue>> {
 
   public street = new InputTextBox({
     key: EAddressValues.street,
-    label: 'street',
+    label: "street",
   });
 
   public number = new InputTextBox({
     key: EAddressValues.number,
-    label: 'number',
+    label: "number",
   });
 
   public city = new InputTextBox({
     key: EAddressValues.city,
-    label: 'city',
+    label: "city",
   });
 
   public country = new InputTextBox({
     key: EAddressValues.country,
-    label: 'country',
+    label: "country",
   });
 
   public zipCode = new InputTextBox({
     key: EAddressValues.zipCode,
-    label: 'zipCode',
+    label: "zipCode",
   });
 
   constructor(options: IInputAddress = {}) {
     super(options);
-    this.type = 'address';
+    this.type = "address";
 
     this.value = this._value();
   }

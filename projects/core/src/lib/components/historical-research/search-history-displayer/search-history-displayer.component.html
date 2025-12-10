@@ -1,17 +1,22 @@
 <ng-template #menuTemplate>
   <div class="p-space-md">
-    <ta-contact-information icon="history" value="core.historical-research.last-searches">
-      <ta-empty [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown">
+    <ta-contact-information
+      icon="history"
+      value="core.historical-research.last-searches"
+    >
+      <ta-empty
+        [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown"
+      >
         <ta-list-container class="list-container">
           @for (search of this.listRecentSearches; track search) {
-            <ta-list-element (click)="this.searchCompleted(search)">
-              <ta-list-title>
-                {{ search }}
-              </ta-list-title>
-              <ta-list-tag>
-                <ta-font-icon name="arrow-big-right" type="sm"></ta-font-icon>
-              </ta-list-tag>
-            </ta-list-element>
+          <ta-list-element (click)="this.searchCompleted(search)">
+            <ta-list-title>
+              {{ search }}
+            </ta-list-title>
+            <ta-list-tag>
+              <ta-font-icon name="arrow-big-right" type="sm"></ta-font-icon>
+            </ta-list-tag>
+          </ta-list-element>
           }
         </ta-list-container>
       </ta-empty>
@@ -25,19 +30,23 @@
   [placeholder]="this.placeholder"
   [input]="this.input"
   (valueCompleted)="this.searchCompleted($event)"
-  [matMenuTriggerFor]="this.searchHistory?.type && this.isDropDown === true ? menu : null"
+  [matMenuTriggerFor]="
+    this.searchHistory?.type && this.isDropDown === true ? menu : null
+  "
 ></ta-search-field>
 
 <mat-menu #menu="matMenu">
   <div class="" [style.width.px]="this.searchFieldWidth">
     @if (menuTemplate) {
-      <ng-container *ngTemplateOutlet="menuTemplate; context: { element: menu }"></ng-container>
+    <ng-container
+      *ngTemplateOutlet="menuTemplate; context: { element: menu }"
+    ></ng-container>
     }
   </div>
 </mat-menu>
 
 @if (menuTemplate && this.searchHistory?.type && this.isDropDown === false) {
-  <ng-container *ngTemplateOutlet="menuTemplate; context: { element: menu }"></ng-container>
+<ng-container
+  *ngTemplateOutlet="menuTemplate; context: { element: menu }"
+></ng-container>
 }
-
-

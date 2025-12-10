@@ -1,8 +1,8 @@
-import { compare } from './compare';
+import { compare } from "./compare";
 
 type Option = {
   active: string;
-  direction: 'asc';
+  direction: "asc";
 };
 
 export const sort = (array: any[], options: Option): any[] => {
@@ -13,7 +13,7 @@ export const sort = (array: any[], options: Option): any[] => {
     return compare(
       a[options.active],
       b[options.active],
-      options.direction === 'asc'
+      options.direction === "asc"
     );
   });
 };

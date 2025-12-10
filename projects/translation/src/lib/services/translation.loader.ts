@@ -1,9 +1,9 @@
-import { inject } from '@angular/core';
+import { inject } from "@angular/core";
 
-import { TranslateLoader } from '@ngx-translate/core';
-import { Observable, forkJoin, map } from 'rxjs';
+import { TranslateLoader } from "@ngx-translate/core";
+import { Observable, forkJoin, map } from "rxjs";
 
-import { TaTranslationRegistryService } from './translation-registry.service';
+import { TaTranslationRegistryService } from "./translation-registry.service";
 
 export class TaTranslationLoader implements TranslateLoader {
   private registry = inject(TaTranslationRegistryService);
@@ -11,7 +11,7 @@ export class TaTranslationLoader implements TranslateLoader {
 
   getTranslation(lang: string): Observable<object> {
     return forkJoin([...this.registry.getTranslations(lang)]).pipe(
-      map(translations =>
+      map((translations) =>
         translations.reduce<object>((acc, translation) => {
           if (!translation) {
             return acc;
@@ -31,7 +31,7 @@ export class TaTranslationLoader implements TranslateLoader {
    * @param item Object
    */
   private _isObject(item: object | undefined): boolean {
-    return !!(item && typeof item === 'object' && !Array.isArray(item));
+    return !!(item && typeof item === "object" && !Array.isArray(item));
   }
 
   /**
@@ -39,7 +39,10 @@ export class TaTranslationLoader implements TranslateLoader {
    * @param target Object
    * @param ...sources objects
    */
-  private _mergeDeep(target: { [key: string]: any }, ...sources: { [key: string]: any }[]): { [key: string]: any } {
+  private _mergeDeep(
+    target: { [key: string]: any },
+    ...sources: { [key: string]: any }[]
+  ): { [key: string]: any } {
     if (!sources.length) {
       return target;
     }

@@ -1,17 +1,17 @@
-import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgIf } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
-import { TaSizes } from '@ta/styles';
+import { TranslateModule } from "@ngx-translate/core";
+import { TaSizes } from "@ta/styles";
 
-import { CamTranslationUI } from '../translation.service';
-import { UserLogoNaming } from '../user-logo/user-logo.component';
-import { UserLogoComponent } from '../user-logo/user-logo.component';
+import { CamTranslationUI } from "../../../translation.service";
+import { UserLogoNaming } from "../user-logo/user-logo.component";
+import { UserLogoComponent } from "../user-logo/user-logo.component";
 
 @Component({
-  selector: 'ta-hello-user',
-  templateUrl: './hello-user.component.html',
-  styleUrls: ['./hello-user.component.scss'],
+  selector: "ta-hello-user",
+  templateUrl: "./hello-user.component.html",
+  styleUrls: ["./hello-user.component.scss"],
   standalone: true,
   imports: [NgIf, TranslateModule, UserLogoComponent],
 })
@@ -21,7 +21,7 @@ export class HelloUserComponent {
     profilePictureUrl?: string;
     naming: UserLogoNaming | null;
   };
-  @Input() bulletSize: TaSizes = 'lg';
+  @Input() bulletSize: TaSizes = "lg";
   @Input() footer?: string;
 
   constructor() {

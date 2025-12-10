@@ -1,26 +1,36 @@
-import { AsyncPipe } from '@angular/common';
-import { AfterViewChecked, Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
+import { AsyncPipe } from "@angular/common";
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  inject,
+} from "@angular/core";
 
-import { combineLatest, map, startWith } from 'rxjs';
+import { combineLatest, map, startWith } from "rxjs";
 
-import { TaSharedMenuService } from '@ta/services';
-import { TaBaseComponent } from '@ta/utils';
+import { TaSharedMenuService } from "@ta/services";
+import { TaBaseComponent } from "@ta/utils";
 
 @Component({
-  selector: 'ta-layout-with-bottom-nav',
-  templateUrl: './layout-with-bottom-nav.component.html',
-  styleUrls: ['./layout-with-bottom-nav.component.scss'],
+  selector: "ta-layout-with-bottom-nav",
+  templateUrl: "./layout-with-bottom-nav.component.html",
+  styleUrls: ["./layout-with-bottom-nav.component.scss"],
   standalone: true,
   imports: [AsyncPipe],
 })
-export class LayoutWithBottomNavComponent extends TaBaseComponent implements AfterViewChecked {
+export class LayoutWithBottomNavComponent
+  extends TaBaseComponent
+  implements AfterViewChecked
+{
   @Input()
   type!: string;
 
-  @ViewChild('bottomNavContainer')
+  @ViewChild("bottomNavContainer")
   private _bottomNav!: ElementRef<HTMLDivElement>;
 
-  @ViewChild('bottomLayoutContainer')
+  @ViewChild("bottomLayoutContainer")
   private _layoutContent!: ElementRef<HTMLDivElement>;
 
   public sharedMenu = inject(TaSharedMenuService);
@@ -29,7 +39,7 @@ export class LayoutWithBottomNavComponent extends TaBaseComponent implements Aft
     this.sharedMenu.isMinimized$.pipe(startWith(false)),
     this.breakpoints.isDesktop$,
   ]).pipe(
-    map(data => ({
+    map((data) => ({
       isMinimized: data[0],
       isDesktop: data[1],
     })),
@@ -43,7 +53,13 @@ export class LayoutWithBottomNavComponent extends TaBaseComponent implements Aft
     const clientHeight = this._bottomNav.nativeElement.clientHeight;
     const clientWidth = this._bottomNav.nativeElement.clientWidth;
 
-    this._layoutContent.nativeElement.setAttribute('style', `padding-bottom: ${clientHeight + 10}px`);
-    this._layoutContent.nativeElement.setAttribute('style', `width: ${window.screen.width - clientWidth}px`);
+    this._layoutContent.nativeElement.setAttribute(
+      "style",
+      `padding-bottom: ${clientHeight + 10}px`
+    );
+    this._layoutContent.nativeElement.setAttribute(
+      "style",
+      `width: ${window.screen.width - clientWidth}px`
+    );
   }
 }

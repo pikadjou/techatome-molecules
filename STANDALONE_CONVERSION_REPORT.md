@@ -42,9 +42,9 @@ La conversion complète des composants Angular du monorepo Techatome Molecules v
 
 ```typescript
 @Component({
-  selector: 'ta-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+  selector: "ta-button",
+  templateUrl: "./button.component.html",
+  styleUrls: ["./button.component.scss"],
 })
 export class ButtonComponent {}
 ```
@@ -53,9 +53,9 @@ export class ButtonComponent {}
 
 ```typescript
 @Component({
-  selector: 'ta-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+  selector: "ta-button",
+  templateUrl: "./button.component.html",
+  styleUrls: ["./button.component.scss"],
   standalone: true,
   imports: [NgClass, NgIf, FontIconComponent, TaStopPropagationDirective],
 })

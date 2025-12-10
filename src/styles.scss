@@ -1,21 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
-@use 'bases';
-@use '@ta/styles/utils/mixins/common';
+@use "bases";
+@use "@ta/styles/utils/mixins/common";
 
 // Variables CSS globales pour les propriétés spécifiques à l'application
 // Toutes les variables sont maintenant centralisées dans le système @ta/styles
 
-html, body { 
-  height: 100%; 
+html,
+body {
+  height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body { 
-  font-family: 'Inter', 'Roboto', "Helvetica Neue", sans-serif;
-  background-color: common.get-var('color-surface-tertiary');
-  color: common.get-var('color-text-primary');
+body {
+  font-family: "Inter", "Roboto", "Helvetica Neue", sans-serif;
+  background-color: common.get-var("color-surface-tertiary");
+  color: common.get-var("color-text-primary");
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -27,28 +28,27 @@ body {
   box-sizing: inherit;
 }
 
-
 // Styles pour les états de focus améliorés
 :focus-visible {
-  outline: 2px solid common.get-var('color-primary');
-  outline-offset: common.get-var('spacing-xs');
-  border-radius: common.get-var('border-radius-xs');
+  outline: 2px solid common.get-var("color-primary");
+  outline-offset: common.get-var("spacing-xs");
+  border-radius: common.get-var("border-radius-xs");
 }
 
 // Scroll personnalisé
 ::-webkit-scrollbar {
-  width: common.get-var('spacing-xs');
+  width: common.get-var("spacing-xs");
 }
 
 ::-webkit-scrollbar-track {
-  background: common.get-var('color-surface-primary');
+  background: common.get-var("color-surface-primary");
 }
 
 ::-webkit-scrollbar-thumb {
-  background: common.get-var('color-text-tertiary');
-  border-radius: common.get-var('border-radius-xs');
+  background: common.get-var("color-text-tertiary");
+  border-radius: common.get-var("border-radius-xs");
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: common.get-var('color-text-secondary');
+  background: common.get-var("color-text-secondary");
 }

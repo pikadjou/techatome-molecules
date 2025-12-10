@@ -1,14 +1,14 @@
 <ta-list-container class="content">
   @for (item of this.menu.elements; track item) {
-    <ta-list-element>
-      <ta-list-title>
-        <div>
-          @if (item.icon) {
-            <ta-font-icon [name]="$any(item.icon)"></ta-font-icon>
-          }
-          {{ item.label }}
-        </div>
-      </ta-list-title>
-    </ta-list-element>
+  <ta-list-element>
+    <ta-list-title>
+      <div>
+        @if (item.icon) {
+        <ta-font-icon [name]="$any(item.icon)"></ta-font-icon>
+        }
+        {{ item.label }}
+      </div>
+    </ta-list-title>
+  </ta-list-element>
   }
 </ta-list-container>

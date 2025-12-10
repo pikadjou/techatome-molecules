@@ -1,4 +1,4 @@
-import { GraphSchema } from '../graphql/models/graphSchema';
+import { GraphSchema } from "../graphql/models/graphSchema";
 export interface KeyValue {
     key: string;
     value: string;

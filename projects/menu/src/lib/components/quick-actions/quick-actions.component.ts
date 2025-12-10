@@ -1,21 +1,27 @@
-import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgIf, NgTemplateOutlet } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { LocalIconComponent } from '@ta/icons';
-import { SwiperComponent } from '@ta/ui';
+import { LocalIconComponent } from "@ta/icons";
+import { SwiperComponent } from "@ta/ui";
 
-import { MenuIcon } from '../../models/menu/item/icon';
-import { Menu } from '../../models/menu/menu';
-import { TaTranslationMenu } from '../../translation.service';
+import { MenuIcon } from "../../models/menu/item/icon";
+import { Menu } from "../../models/menu/menu";
+import { TaTranslationMenu } from "../../translation.service";
 
 @Component({
-  selector: 'ta-quick-actions',
-  templateUrl: './quick-actions.component.html',
-  styleUrls: ['./quick-actions.component.scss'],
+  selector: "ta-quick-actions",
+  templateUrl: "./quick-actions.component.html",
+  styleUrls: ["./quick-actions.component.scss"],
   standalone: true,
-  imports: [NgIf, NgTemplateOutlet, TranslateModule, LocalIconComponent, SwiperComponent],
+  imports: [
+    NgIf,
+    NgTemplateOutlet,
+    TranslateModule,
+    LocalIconComponent,
+    SwiperComponent,
+  ],
 })
 export class QuickActionsComponent {
   @Input()

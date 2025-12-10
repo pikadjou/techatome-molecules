@@ -1,4 +1,4 @@
-import { Department } from './interface';
+import { Department } from "./interface";
 import * as i0 from "@angular/core";
 export declare class DepartmentsComponent {
     /**

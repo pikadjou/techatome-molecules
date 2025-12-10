@@ -1,21 +1,21 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TaIconType } from '@ta/icons';
+import { TaIconType } from "@ta/icons";
 
-import { PictureInfoMessageComponent } from './picture-info-message.component';
+import { PictureInfoMessageComponent } from "./picture-info-message.component";
 
 type StoryType = PictureInfoMessageComponent;
 
 export default {
-  title: 'UI/Picture info message',
+  title: "UI/Picture info message",
   component: PictureInfoMessageComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   args: {
     text: "It's meee, Marioooo",
     icon: TaIconType.Checked,
-    iconSize: 'md',
-    type: 'warning',
+    iconSize: "md",
+    type: "warning",
   },
 } as Meta<StoryType>;
 

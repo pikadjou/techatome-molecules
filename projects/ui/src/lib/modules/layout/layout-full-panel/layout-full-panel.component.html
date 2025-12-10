@@ -2,7 +2,9 @@
 <div class="side-panel" [style.width]="this.width">
   <ta-layout-header>
     <div class="flex-row justify-content-between">
-      <ta-title [level]="3" [isBold]="true">{{ this.title | translate }}</ta-title>
+      <ta-title [level]="3" [isBold]="true">{{
+        this.title | translate
+      }}</ta-title>
       <div (click)="this.askClose()">
         <ta-font-icon name="close"></ta-font-icon>
       </div>

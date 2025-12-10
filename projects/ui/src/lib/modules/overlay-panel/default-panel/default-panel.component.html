@@ -1,7 +1,9 @@
 <div class="menu-panel" [style.max-height.px]="this.maxHeight">
   @if (this.templateRef) {
-    <ng-container *ngTemplateOutlet="this.templateRef"></ng-container>
+  <ng-container *ngTemplateOutlet="this.templateRef"></ng-container>
   } @else {
-    <ng-template> Ceci est le template par defaut. Il faut renseigner un template. </ng-template>
+  <ng-template>
+    Ceci est le template par defaut. Il faut renseigner un template.
+  </ng-template>
   }
 </div>

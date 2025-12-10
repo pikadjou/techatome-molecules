@@ -1,4 +1,4 @@
-import { AddressType } from './addessType';
+import { AddressType } from "./addessType";
 
 export interface Address {
   addressType: AddressType[];

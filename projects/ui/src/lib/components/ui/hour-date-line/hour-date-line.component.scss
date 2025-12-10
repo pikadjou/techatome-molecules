@@ -2,7 +2,6 @@
 @use "ta/utils/mixins/common";
 @use "ta/utils/mixins/fonts";
 
-
 .hour-date-line-container {
   @include flex.space-between();
 

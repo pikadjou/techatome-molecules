@@ -1,4 +1,4 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .cards-demo {
   max-width: common.get-var(space, xxxl);

@@ -1,10 +1,10 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TaBaseComponent } from '@ta/utils';
+import { EventEmitter, TemplateRef } from "@angular/core";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class SearchDisplayerComponent extends TaBaseComponent {
     private _bottomSheet;
-    container: 'button' | 'link';
+    container: "button" | "link";
     placeholder: string;
     searchHistory?: {
         type: string;

@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { LayoutHeaderLogoComponent } from './layout-header-logo.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { LayoutHeaderLogoComponent } from "./layout-header-logo.component";
 
 type StoryType = LayoutHeaderLogoComponent;
 
 export default {
-  title: 'LAYOUT/header/login',
+  title: "LAYOUT/header/login",
   component: LayoutHeaderLogoComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

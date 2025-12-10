@@ -1,3 +1,3 @@
-import prettierConfig from "./projects/config/prettier-config/index.mjs";
+import prettierConfig from "./molecule-ui/projects/config/prettier-config/index.mjs";
 
 export default prettierConfig;

@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TrigramComponent } from './trigram.component';
+import { TrigramComponent } from "./trigram.component";
 
 export default {
-  title: 'UI/Trigram',
+  title: "UI/Trigram",
   component: TrigramComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   render: (args) => ({ props: args }),
   args: {
-    value: 'TRI',
+    value: "TRI",
     size: 150,
   },
 } as Meta<TrigramComponent>;

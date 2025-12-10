@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { Menu } from '../../models/menu/menu';
+import { Meta, StoryObj } from "@storybook/angular";
+import { Menu } from "../../models/menu/menu";
 import {
   __classicIconMenu,
   __classicMenu,
@@ -7,16 +7,16 @@ import {
   __labelMenu,
   __onClickMenu,
   __textTooLongMenu,
-} from '../menu/__mock__/menu';
-import { QuickActionsComponent } from './quick-actions.component';
+} from "../menu/__mock__/menu";
+import { QuickActionsComponent } from "./quick-actions.component";
 
 type StoryType = QuickActionsComponent & { menu?: Menu };
 
 export default {
-  title: 'MENU/Quick action',
+  title: "MENU/Quick action",
   component: QuickActionsComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -28,7 +28,7 @@ export default {
   },
   args: {
     menu: __labelMenu,
-    tabSelection: 'home',
+    tabSelection: "home",
   },
 } as Meta<StoryType>;
 

@@ -1,18 +1,18 @@
 <mat-accordion>
   @for (template of this.templates; track template) {
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <ng-template
-            [ngTemplateOutlet]="template.title"
-            [ngTemplateOutletContext]="template.context ?? {}"
-          ></ng-template>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ng-template
-        [ngTemplateOutlet]="template.content"
-        [ngTemplateOutletContext]="template.context ?? {}"
-      ></ng-template>
-    </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <ng-template
+          [ngTemplateOutlet]="template.title"
+          [ngTemplateOutletContext]="template.context ?? {}"
+        ></ng-template>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template
+      [ngTemplateOutlet]="template.content"
+      [ngTemplateOutletContext]="template.context ?? {}"
+    ></ng-template>
+  </mat-expansion-panel>
   }
 </mat-accordion>

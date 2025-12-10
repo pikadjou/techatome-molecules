@@ -1,6 +1,6 @@
-import { TaIconType } from '@ta/icons';
-import { TaAbstractComponent } from '@ta/utils';
-import { Level } from '../../services/permissions.service';
+import { TaIconType } from "@ta/icons";
+import { TaAbstractComponent } from "@ta/utils";
+import { Level } from "../../services/permissions.service";
 import * as i0 from "@angular/core";
 export declare class GuardComponent extends TaAbstractComponent {
     level?: Level;

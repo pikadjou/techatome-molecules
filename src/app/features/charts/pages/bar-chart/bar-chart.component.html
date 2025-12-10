@@ -2,12 +2,13 @@
   <app-layout-title>
     <div class="space-between align-center">
       <div class="title-with-back">
-        <ta-button 
-          variant="outline" 
+        <ta-button
+          variant="outline"
           size="small"
-          (click)="goBack()" 
+          (click)="goBack()"
           aria-label="Retour"
-          class="back-button">
+          class="back-button"
+        >
           <mat-icon>arrow_back</mat-icon>
         </ta-button>
         <ta-title [level]="1">Bar Chart</ta-title>
@@ -21,7 +22,10 @@
           <span class="material-icons">bar_chart</span>
         </div>
         <ta-title [level]="2">Bar Chart à venir</ta-title>
-        <ta-text>Cette page contiendra la démonstration des graphiques en barres.</ta-text>
+        <ta-text
+          >Cette page contiendra la démonstration des graphiques en
+          barres.</ta-text
+        >
       </ta-banner>
     </div>
   </app-layout-content>

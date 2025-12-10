@@ -4,29 +4,30 @@
   </div>
 
   @for (key of getKeys(); track trackByFn($index, key)) {
-    <div>
-      @if (this.canRemove(key)) {
-        <div class="remove-action">
-          <ta-button class="remove-action" [style]="'danger'" (action)="remove(key)">
-            <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
-          </ta-button>
-        </div>
-      }
-
-      @for (input of this.getInputs(key); track trackInputByFn($index, input)) {
-        @if (input) {
-          <div [ngClass]="input.class">
-            <ng-container
-              [ngTemplateOutlet]="this.inputsTemplate"
-              [ngTemplateOutletContext]="{
+  <div>
+    @if (this.canRemove(key)) {
+    <div class="remove-action">
+      <ta-button
+        class="remove-action"
+        [style]="'danger'"
+        (action)="remove(key)"
+      >
+        <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
+      </ta-button>
+    </div>
+    } @for (input of this.getInputs(key); track trackInputByFn($index, input)) {
+    @if (input) {
+    <div [ngClass]="input.class">
+      <ng-container
+        [ngTemplateOutlet]="this.inputsTemplate"
+        [ngTemplateOutletContext]="{
                 input: input,
               }"
-            >
-            </ng-container>
-          </div>
-        }
-      }
+      >
+      </ng-container>
     </div>
+    } }
+  </div>
   }
-  <ta-button (action)="add()">{{ 'form.dynamic.add' | translate }}</ta-button>
+  <ta-button (action)="add()">{{ "form.dynamic.add" | translate }}</ta-button>
 </div>

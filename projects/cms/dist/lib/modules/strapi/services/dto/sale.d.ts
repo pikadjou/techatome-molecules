@@ -1,5 +1,5 @@
-import { BaseStrapi, GraphSchema } from '@ta/server';
-import { RichText } from './types/rich-text';
+import { BaseStrapi, GraphSchema } from "@ta/server";
+import { RichText } from "./types/rich-text";
 export interface Sale extends BaseStrapi {
     Content: RichText;
 }

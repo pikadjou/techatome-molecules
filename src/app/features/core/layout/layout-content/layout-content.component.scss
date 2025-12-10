@@ -1,8 +1,8 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .layout-content {
   flex: 1;
-  background: common.get-var('color-neutral-100');
+  background: common.get-var("color-neutral-100");
   overflow-y: auto;
 
   .content-wrapper {
@@ -13,36 +13,36 @@
 
   // Utility classes
   .p-space-sm {
-    padding: common.get-var('spacing-md');
+    padding: common.get-var("spacing-md");
   }
 
   .p-space-md {
-    padding: common.get-var('spacing-lg');
+    padding: common.get-var("spacing-lg");
   }
 
   .p-space-lg {
-    padding: common.get-var('spacing-xl');
+    padding: common.get-var("spacing-xl");
   }
 
   .p-space-xl {
-    padding: common.get-var('spacing-3xl');
+    padding: common.get-var("spacing-3xl");
   }
 
-  @media (max-width: common.get-var('breakpoint-md')) {
+  @media (max-width: common.get-var("breakpoint-md")) {
     .content-wrapper {
-      padding: 0 common.get-var('spacing-md');
+      padding: 0 common.get-var("spacing-md");
     }
 
     .p-space-md {
-      padding: common.get-var('spacing-md');
+      padding: common.get-var("spacing-md");
     }
 
     .p-space-lg {
-      padding: common.get-var('spacing-lg');
+      padding: common.get-var("spacing-lg");
     }
 
     .p-space-xl {
-      padding: common.get-var('spacing-xl');
+      padding: common.get-var("spacing-xl");
     }
   }
 }

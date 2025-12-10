@@ -1,9 +1,9 @@
-import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { InputBase } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { InputBase } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
+import { BehaviorSubject, Observable } from "rxjs";
 import * as i0 from "@angular/core";
-export type Layout = 'row' | 'column';
+export type Layout = "row" | "column";
 export declare class EditFieldComponent extends TaBaseComponent implements OnInit, OnChanges {
     private elementRef;
     getInput: () => InputBase<any>;

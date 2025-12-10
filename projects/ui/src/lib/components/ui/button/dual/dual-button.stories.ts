@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { DualButtonComponent } from './dual-button.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { DualButtonComponent } from "./dual-button.component";
 
 type StoryType = DualButtonComponent;
 
 export default {
-  title: 'UI/Button/Dual',
+  title: "UI/Button/Dual",
   component: DualButtonComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -18,17 +18,17 @@ export default {
   },
   args: {
     first: {
-      icon: 'home',
-      label: 'Home',
+      icon: "home",
+      label: "Home",
       callback: () => {
-        alert('first');
+        alert("first");
       },
     },
     second: {
-      icon: 'home',
-      label: 'is Done',
+      icon: "home",
+      label: "is Done",
       callback: () => {
-        alert('second');
+        alert("second");
       },
     },
   },

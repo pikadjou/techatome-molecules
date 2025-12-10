@@ -22,14 +22,14 @@ class GraphSchema {
     }
 }
 
-const keyValueProps = new GraphSchema(['key', 'value']);
+const keyValueProps = new GraphSchema(["key", "value"]);
 
 class HandleComplexRequest {
     constructor() {
         this.data$ = new BehaviorSubject({});
     }
     fetch(id, subscriber) {
-        return subscriber.pipe(filter(data => !!data), tap(entity => {
+        return subscriber.pipe(filter((data) => !!data), tap((entity) => {
             const entities = this.data$.getValue();
             entities[id] = entity;
             this.data$.next(entities);
@@ -56,7 +56,7 @@ class HandleComplexRequest {
         return this.data$.getValue()[key] ?? null;
     }
     get$(key) {
-        return this.data$.pipe(map(data => data[key]), filter(data => !!data));
+        return this.data$.pipe(map((data) => data[key]), filter((data) => !!data));
     }
 }
 class HandleSimpleRequest {
@@ -64,7 +64,7 @@ class HandleSimpleRequest {
         this.data$ = new BehaviorSubject(null);
     }
     fetch(subscriber) {
-        return subscriber.pipe(filter(isNonNullable), tap(entity => {
+        return subscriber.pipe(filter(isNonNullable), tap((entity) => {
             this.data$.next(entity);
         }));
     }
@@ -72,7 +72,7 @@ class HandleSimpleRequest {
         return this.data$.getValue() ?? null;
     }
     get$() {
-        return this.data$.pipe(filter(data => !!data));
+        return this.data$.pipe(filter((data) => !!data));
     }
 }
 
@@ -84,38 +84,38 @@ class Logger {
     static { this.config = { DEBUG: true, DEBUG_LEVEL: Logger.DEBUG }; }
     static LogDebug(message, data) {
         if (data === undefined) {
-            data = '';
+            data = "";
         }
         if (Logger.config.DEBUG && Logger.DEBUG >= Logger.config.DEBUG_LEVEL) {
             // tslint:disable-next-line:no-console
             console.debug(message, data);
         }
-        this._fsLog('log', message, data);
+        this._fsLog("log", message, data);
     }
     static LogInfo(message, ...data) {
         if (Logger.config.DEBUG && Logger.INFO >= Logger.config.DEBUG_LEVEL) {
             // tslint:disable-next-line:no-console
             console.info(message, data);
         }
-        this._fsLog('info', message, data);
+        this._fsLog("info", message, data);
     }
     static LogWarning(message, data) {
         if (data === undefined) {
-            data = '';
+            data = "";
         }
         if (Logger.config.DEBUG && Logger.WARNING >= Logger.config.DEBUG_LEVEL) {
-            console.warn('/!\\ ' + message + ' /!\\', data);
+            console.warn("/!\\ " + message + " /!\\", data);
         }
-        this._fsLog('warn', message, data);
+        this._fsLog("warn", message, data);
     }
     static LogError(message, data) {
         if (data === undefined) {
-            data = '';
+            data = "";
         }
         if (Logger.config.DEBUG && Logger.ERROR >= Logger.config.DEBUG_LEVEL) {
-            console.error('/!\\ ' + message + ' /!\\', data);
+            console.error("/!\\ " + message + " /!\\", data);
         }
-        this._fsLog('error', message, data);
+        this._fsLog("error", message, data);
     }
     static _fsLog(logLevel, message, data) {
         if (window.FS) {
@@ -138,14 +138,14 @@ class RequestMapCore {
     }
     parseUrl(data) {
         return (this._formatUrl(data.serverUrl, data.url, data.request) +
-            '' +
-            (data.apiExt ?? ''));
+            "" +
+            (data.apiExt ?? ""));
     }
     _getConfigById(id) {
         if (this.mappingApi.hasOwnProperty(id)) {
             return this.mappingApi[id];
         }
-        Logger.LogError('No Api Configuration found for: ', id);
+        Logger.LogError("No Api Configuration found for: ", id);
         return null;
     }
     _formatUrl(serverUrl, url, request) {
@@ -157,7 +157,7 @@ class RequestMapCore {
                 request.BrutContent.hasOwnProperty(string)) {
                 return request.BrutContent[string];
             }
-            if (string === 'ApiUrl') {
+            if (string === "ApiUrl") {
                 return serverUrl;
             }
             return match;
@@ -176,7 +176,7 @@ var StatusReponse;
     StatusReponse[StatusReponse["Error"] = 500] = "Error";
 })(StatusReponse || (StatusReponse = {}));
 
-const SERVER_CONFIG_KEY = new InjectionToken('config_server');
+const SERVER_CONFIG_KEY = new InjectionToken("config_server");
 class TaServerSevice {
     get requestInProgressNumber() {
         return this._correlations.length;
@@ -198,16 +198,16 @@ class TaServerSevice {
         this._correlations = [];
         this._isAuthenticated = false;
         this._onPacketReceived = (id, response) => {
-            Logger.LogInfo('[SERVER] Api Reponse:', response);
+            Logger.LogInfo("[SERVER] Api Reponse:", response);
             this._resolveCorrelation(id, response.body);
         };
         this._resolveCorrelation = (corrId, body) => {
-            const correlation = this._correlations.find(item => item.id === corrId);
+            const correlation = this._correlations.find((item) => item.id === corrId);
             if (!correlation) {
                 return;
             }
             let content;
-            if (typeof body === 'string') {
+            if (typeof body === "string") {
                 try {
                     content = JSON.parse(body);
                 }
@@ -219,7 +219,7 @@ class TaServerSevice {
                 content = body;
             }
             this._resolveResponseStatus(correlation, content);
-            this._correlations = this._correlations.filter(item => item !== correlation);
+            this._correlations = this._correlations.filter((item) => item !== correlation);
             if (this.requestInProgressNumber === 0) {
                 this._retryPending();
             }
@@ -271,38 +271,38 @@ class TaServerSevice {
             request,
             apiExt: this._config.apiExt,
         });
-        Logger.LogInfo('[SERVER] Api Request:', url, request);
+        Logger.LogInfo("[SERVER] Api Request:", url, request);
         switch (requestConfig.type) {
-            case 'GET':
+            case "GET":
                 this._get(url, request);
                 break;
-            case 'POST':
+            case "POST":
                 this._post(url, request);
                 break;
-            case 'PUT':
+            case "PUT":
                 this._put(url, request);
                 break;
-            case 'PATCH':
+            case "PATCH":
                 this._patch(url, request);
                 break;
-            case 'DELETE':
+            case "DELETE":
                 this._delete(url, request);
                 break;
-            case 'FILES':
+            case "FILES":
                 this._files(url, request);
                 break;
-            case 'UPDATEFILES':
+            case "UPDATEFILES":
                 this._updateFiles(url, request);
                 break;
             default:
-                Logger.LogError('[ERROR] Request not send');
+                Logger.LogError("[ERROR] Request not send");
         }
     }
     _addCorrelation(corrId, request, sub) {
         this._correlations.push({ id: corrId, request: request, subject: sub });
     }
     _resolveResponseStatus(correlation, content) {
-        Logger.LogInfo('[SERVER] Api Reponse content:', content.Status, content.Content);
+        Logger.LogInfo("[SERVER] Api Reponse content:", content.Status, content.Content);
         switch (content.Status) {
             case StatusReponse.Successful:
             case StatusReponse.NoContent:
@@ -333,13 +333,13 @@ class TaServerSevice {
             params: { cacheTime: request.cacheTime },
         })
             .subscribe({
-            next: response => {
+            next: (response) => {
                 this._onPacketReceived(request.id, this._formatReponse(response, 200));
             },
-            error: message => {
+            error: (message) => {
                 this._onPacketReceived(request.id, this._formatReponse(message, message.status));
             },
-            complete: () => Logger.LogDebug('API GET CLOSE'),
+            complete: () => Logger.LogDebug("API GET CLOSE"),
         });
     }
     _post(url, request) {
@@ -348,60 +348,66 @@ class TaServerSevice {
             headers: this._headers(),
         })
             .subscribe({
-            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
-            complete: () => Logger.LogDebug('API POST CLOSE'),
+            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            complete: () => Logger.LogDebug("API POST CLOSE"),
         });
     }
     _patch(url, request) {
-        this.$http.patch(url, request.Content, { headers: this._headers() }).subscribe({
-            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
-            complete: () => Logger.LogDebug('API PATCH CLOSE'),
+        this.$http
+            .patch(url, request.Content, { headers: this._headers() })
+            .subscribe({
+            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            complete: () => Logger.LogDebug("API PATCH CLOSE"),
         });
     }
     _put(url, request) {
-        this.$http.put(url, request.Content, { headers: this._headers() }).subscribe({
-            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
-            complete: () => Logger.LogDebug('API PUT CLOSE'),
+        this.$http
+            .put(url, request.Content, { headers: this._headers() })
+            .subscribe({
+            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            complete: () => Logger.LogDebug("API PUT CLOSE"),
         });
     }
     _delete(url, request) {
-        this.$http.delete(url, { headers: this._headers() }).subscribe({
-            next: response => this._onPacketReceived(request.id, this._formatReponse(response)),
-            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
-            complete: () => Logger.LogDebug('API DELETE CLOSE'),
+        this.$http
+            .delete(url, { headers: this._headers() })
+            .subscribe({
+            next: (response) => this._onPacketReceived(request.id, this._formatReponse(response)),
+            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            complete: () => Logger.LogDebug("API DELETE CLOSE"),
         });
     }
     _files(url, request) {
         this.$http
             .post(url, request.BrutContent.files, {
             headers: this._headers({
-                contentType: '',
+                contentType: "",
             }),
         })
             .subscribe({
-            next: response => {
+            next: (response) => {
                 this._onPacketReceived(request.id, this._formatReponse(response));
             },
-            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
-            complete: () => Logger.LogDebug('API DELETE CLOSE'),
+            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            complete: () => Logger.LogDebug("API DELETE CLOSE"),
         });
     }
     _updateFiles(url, request) {
         this.$http
             .put(url, request.BrutContent.files, {
             headers: this._headers({
-                contentType: '',
+                contentType: "",
             }),
         })
             .subscribe({
-            next: response => {
+            next: (response) => {
                 this._onPacketReceived(request.id, this._formatReponse(response));
             },
-            error: message => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
-            complete: () => Logger.LogDebug('API DELETE CLOSE'),
+            error: (message) => this._onPacketReceived(request.id, this._formatReponse(message, message.status)),
+            complete: () => Logger.LogDebug("API DELETE CLOSE"),
         });
     }
     _formatReponse(response, status = 200) {
@@ -409,20 +415,20 @@ class TaServerSevice {
     }
     _headers(option) {
         let headers = new HttpHeaders();
-        if (option?.contentType !== '') {
-            headers = headers.set('Content-Type', option?.contentType ? option?.contentType : 'application/json');
+        if (option?.contentType !== "") {
+            headers = headers.set("Content-Type", option?.contentType ? option?.contentType : "application/json");
         }
-        headers = headers.set('Access-Control-Allow-Origin', this._config?.serverUrl ?? '');
-        Logger.LogInfo('[SERVER] Api Request Header:', headers);
+        headers = headers.set("Access-Control-Allow-Origin", this._config?.serverUrl ?? "");
+        Logger.LogInfo("[SERVER] Api Request Header:", headers);
         return headers;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerSevice, deps: [{ token: HttpClient }, { token: SERVER_CONFIG_KEY, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerSevice, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerSevice, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerSevice, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: i1.HttpClient, decorators: [{
                     type: Inject,
@@ -434,7 +440,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     args: [SERVER_CONFIG_KEY]
                 }] }] });
 
-const GRAPHQL_SERVER_CONFIG = 'config_graphQl_server';
+const GRAPHQL_SERVER_CONFIG = "config_graphQl_server";
 
 const graphQlTake = (take) => {
     return `take: ${take || 1000}`;
@@ -459,19 +465,19 @@ class TaServerErrorService {
     }
     addError(query, error) {
         this.notifications().push({
-            query: print('query' in query ? query.query : query.mutation),
+            query: print("query" in query ? query.query : query.mutation),
             variables: query.variables,
             error,
             errorsMessage: error.networkError.error.errors,
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerErrorService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerErrorService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerErrorService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerErrorService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [] });
 
@@ -497,16 +503,18 @@ class TaGraphService {
         });
     }
     fetchQueryList(payload, node, context) {
-        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQueryList:', {
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo("[GraphQL] [Query] fetchQueryList:", {
             payload,
             node,
             context,
-        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryList:', {
+        })), switchMap(() => this.apollo
+            .query(this._setupData(payload, context))
+            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Response] fetchQueryList:", {
             data,
             node,
             context,
-        })), filter(response => !!response.data), map(response => response.data[node]), catchError((err) => {
-            Logger.LogError('[GraphQL] [Error] fetchQueryList:', {
+        })), filter((response) => !!response.data), map((response) => response.data[node]), catchError((err) => {
+            Logger.LogError("[GraphQL] [Error] fetchQueryList:", {
                 payload,
                 node,
                 context,
@@ -515,7 +523,7 @@ class TaGraphService {
             //this._errorServices.addError(err);
             return throwError(() => err);
         }), catchError((err) => {
-            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
+            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
                 payload,
                 node,
                 context,
@@ -526,21 +534,23 @@ class TaGraphService {
         }))), take(1));
     }
     fetchPagedQueryList(payload, node, context) {
-        Logger.LogInfo('[GraphQL] [Prepare] fetchPagedQueryList:', {
+        Logger.LogInfo("[GraphQL] [Prepare] fetchPagedQueryList:", {
             payload,
             node,
             context,
         });
-        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchPagedQueryList:', {
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo("[GraphQL] [Query] fetchPagedQueryList:", {
             payload,
             node,
             context,
-        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchPagedQueryList:', {
+        })), switchMap(() => this.apollo
+            .query(this._setupData(payload, context))
+            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Response] fetchPagedQueryList:", {
             data,
             node,
             context,
-        })), filter(response => !!response.data), map(response => response.data[node]), catchError((err) => {
-            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
+        })), filter((response) => !!response.data), map((response) => response.data[node]), catchError((err) => {
+            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
                 payload,
                 node,
                 context,
@@ -551,16 +561,18 @@ class TaGraphService {
         }))), take(1));
     }
     fetchQuery(payload, node, context) {
-        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQuery:', {
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo("[GraphQL] [Query] fetchQuery:", {
             payload,
             node,
             context,
-        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQuery:', {
+        })), switchMap(() => this.apollo
+            .query(this._setupData(payload, context))
+            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Response] fetchQuery:", {
             data,
             node,
             context,
-        })), filter(response => !!response.data), map(data => data.data[node]), catchError((err) => {
-            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
+        })), filter((response) => !!response.data), map((data) => data.data[node]), catchError((err) => {
+            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
                 payload,
                 node,
                 context,
@@ -571,11 +583,13 @@ class TaGraphService {
         }))), take(1));
     }
     mutate(payload, mutationName, context, clearCache) {
-        Logger.LogInfo('[GraphQL]  [Prepare] mutate', payload, mutationName);
-        return this.apollo.mutate(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Reponse] mutate', data)), filter(response => !!response.data), tap(() => clearCache?.forEach(cacheKey => this.clearCache(cacheKey))), map(response => {
+        Logger.LogInfo("[GraphQL]  [Prepare] mutate", payload, mutationName);
+        return this.apollo
+            .mutate(this._setupData(payload, context))
+            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Reponse] mutate", data)), filter((response) => !!response.data), tap(() => clearCache?.forEach((cacheKey) => this.clearCache(cacheKey))), map((response) => {
             return response.data[mutationName];
         }), catchError((err) => {
-            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
+            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
                 payload,
                 context,
                 message: err.message,
@@ -585,13 +599,17 @@ class TaGraphService {
         }));
     }
     registerGraphEndpoint(graphEndpoint, options) {
-        const url = options?.visitor === true && this._graphConfig?.visitor ? this._graphConfig?.visitor : this._graphConfig?.url;
-        let uri = isURL(graphEndpoint.endpoint) ? graphEndpoint.endpoint : url + graphEndpoint.endpoint;
+        const url = options?.visitor === true && this._graphConfig?.visitor
+            ? this._graphConfig?.visitor
+            : this._graphConfig?.url;
+        let uri = isURL(graphEndpoint.endpoint)
+            ? graphEndpoint.endpoint
+            : url + graphEndpoint.endpoint;
         const newHttpLink = this.httpLink.create({
             headers: graphEndpoint.headers,
             uri: uri,
         });
-        this.apollo.client.setLink(this.apollo.client.link.concat(ApolloLink.split(operation => operation.getContext()['clientName'] === graphEndpoint.clientName, newHttpLink)));
+        this.apollo.client.setLink(this.apollo.client.link.concat(ApolloLink.split((operation) => operation.getContext()["clientName"] === graphEndpoint.clientName, newHttpLink)));
     }
     _setupData(payload, context) {
         return { ...payload, ...{ context: { clientName: context } } };
@@ -600,12 +618,12 @@ class TaGraphService {
         return this.isReady$;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: i1$1.HttpLink }, { token: i2.Apollo }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Optional
@@ -628,18 +646,18 @@ class TaBaseService {
             this._graphService.registerGraphEndpoint(routes.graphEndpoint, options);
     }
     ngOnDestroy() {
-        this._subscriptionList.forEach(subscription => subscription.unsubscribe());
+        this._subscriptionList.forEach((subscription) => subscription.unsubscribe());
     }
     _registerSubscription(subscription) {
         this._subscriptionList.push(subscription);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseService, deps: "invalid", target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: undefined }] });
 
@@ -648,23 +666,23 @@ class CacheInterceptor {
         this.cache = new Map();
     }
     intercept(req, next) {
-        if (req.method !== 'GET') {
+        if (req.method !== "GET") {
             return next.handle(req);
         }
-        const cacheTime = Number(req.params.get('cacheTime'));
+        const cacheTime = Number(req.params.get("cacheTime"));
         if (cacheTime === 0) {
-            Logger.LogInfo('[SERVER] Api No Cache required', req.url);
+            Logger.LogInfo("[SERVER] Api No Cache required", req.url);
             return next.handle(req);
         }
         const cachedResponse = this.cache.get(req.url);
         if (cachedResponse) {
             const diffInMinutes = differenceInMinutes(new Date(), cachedResponse?.timestamp);
             if (cacheTime === -1 || cacheTime > diffInMinutes) {
-                Logger.LogInfo('[SERVER] Api Cached response:', req.url, cachedResponse);
+                Logger.LogInfo("[SERVER] Api Cached response:", req.url, cachedResponse);
                 return of(cachedResponse.response.clone());
             }
             else {
-                Logger.LogInfo('[SERVER] Api Cached expired', req.url);
+                Logger.LogInfo("[SERVER] Api Cached expired", req.url);
             }
         }
         return next.handle(req).pipe(tap((stateEvent) => {
@@ -706,7 +724,7 @@ class Request {
     }
 }
 
-const STRAPI_SERVER_CONFIG = 'config_strapi_server';
+const STRAPI_SERVER_CONFIG = "config_strapi_server";
 
 class TaStrapiService extends TaBaseService {
     constructor(_strapiConfig) {
@@ -717,25 +735,25 @@ class TaStrapiService extends TaBaseService {
         });
         super.registerRoutes({
             graphEndpoint: {
-                clientName: 'strapi',
+                clientName: "strapi",
                 endpoint: this._strapiConfig.url,
                 headers: headers,
             },
         });
     }
     fetchQuery$(payload, node) {
-        return this._graphService.fetchQuery(payload, node, 'strapi').pipe(filter(isNonNullable), map(data => data));
+        return this._graphService.fetchQuery(payload, node, "strapi").pipe(filter(isNonNullable), map((data) => data));
     }
     fetchQueryList$(payload, node) {
-        return this._graphService.fetchQuery(payload, node, 'strapi').pipe(filter(isNonNullable), map(data => data));
+        return this._graphService.fetchQuery(payload, node, "strapi").pipe(filter(isNonNullable), map((data) => data));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, deps: [{ token: STRAPI_SERVER_CONFIG }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, providedIn: 'root' }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: 'root',
+                    providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Inject,
@@ -749,9 +767,13 @@ class TaBaseStrapiService extends TaBaseService {
     }
 }
 
-const baseStrapiProps = ['createdAt', 'updatedAt', 'publishedAt'];
+const baseStrapiProps = [
+    "createdAt",
+    "updatedAt",
+    "publishedAt",
+];
 
-const TENANT_CONFIG_TOKEN = new InjectionToken('TenantConfig');
+const TENANT_CONFIG_TOKEN = new InjectionToken("TenantConfig");
 
 class TenantInterceptor {
     constructor(tenantConfig, graphQlConfig) {
@@ -759,9 +781,11 @@ class TenantInterceptor {
         this.graphQlConfig = graphQlConfig;
     }
     intercept(req, next) {
-        if (this.tenantConfig?.tenantId && this.graphQlConfig?.url && req.url.startsWith(this.graphQlConfig?.url)) {
+        if (this.tenantConfig?.tenantId &&
+            this.graphQlConfig?.url &&
+            req.url.startsWith(this.graphQlConfig?.url)) {
             const tenantRequest = req.clone({
-                headers: req.headers.set('TenantId', this.tenantConfig.tenantId.toString()),
+                headers: req.headers.set("TenantId", this.tenantConfig.tenantId.toString()),
             });
             return next.handle(tenantRequest);
         }

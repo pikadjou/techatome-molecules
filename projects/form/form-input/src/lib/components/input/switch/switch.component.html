@@ -1,22 +1,15 @@
 <div>
-  @switch (input.matchtype()) {
-    @case ('textbox') {
-      <ta-input-textbox [input]="$any(input)"></ta-input-textbox>
-    }
-    @case ('number') {
-      <ta-input-textbox [input]="$any(input)"></ta-input-textbox>
-    }
-    @case ('checkbox') {
-      <ta-input-checkbox [input]="$any(input)"></ta-input-checkbox>
-    }
-    @case ('datePicker') {
-      <ta-input-date-picker [input]="$any(input)"></ta-input-date-picker>
-    }
-    @case ('dropdown') {
-      <ta-input-dropdown [input]="$any(input)"></ta-input-dropdown>
-    }
-    @default {
-      <span>Aucune valeur selectionnée</span>
-    }
-  }
+  @switch (input.matchtype()) { @case ('textbox') {
+  <ta-input-textbox [input]="$any(input)"></ta-input-textbox>
+  } @case ('number') {
+  <ta-input-textbox [input]="$any(input)"></ta-input-textbox>
+  } @case ('checkbox') {
+  <ta-input-checkbox [input]="$any(input)"></ta-input-checkbox>
+  } @case ('datePicker') {
+  <ta-input-date-picker [input]="$any(input)"></ta-input-date-picker>
+  } @case ('dropdown') {
+  <ta-input-dropdown [input]="$any(input)"></ta-input-dropdown>
+  } @default {
+  <span>Aucune valeur selectionnée</span>
+  } }
 </div>

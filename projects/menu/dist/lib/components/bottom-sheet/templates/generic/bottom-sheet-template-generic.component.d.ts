@@ -1,4 +1,4 @@
-import { TemplateRef } from '@angular/core';
+import { TemplateRef } from "@angular/core";
 import * as i0 from "@angular/core";
 export type BottomSheetTemplateGenericParams<T = any> = {
     maxHeight?: number;

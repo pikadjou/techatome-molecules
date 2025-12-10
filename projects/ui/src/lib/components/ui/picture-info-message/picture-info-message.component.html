@@ -1,20 +1,23 @@
 @if (this.icon) {
-  <div class="card">
-    @if (this.isLocalIcon(this.icon)) {
-      <ta-local-icon
-        [type]="this.icon"
-        [size]="this.iconSize ?? 'md'"
-      ></ta-local-icon>
-    } @else if (this.isFontIcon(this.icon)) {
-      <ta-font-icon
-        class="font-icon"
-        [name]="this.getFontIcon(this.icon)"
-        [type]="this.iconSize ?? 'md'"
-      ></ta-font-icon>
-    }
+<div class="card">
+  @if (this.isLocalIcon(this.icon)) {
+  <ta-local-icon
+    [type]="this.icon"
+    [size]="this.iconSize ?? 'md'"
+  ></ta-local-icon>
+  } @else if (this.isFontIcon(this.icon)) {
+  <ta-font-icon
+    class="font-icon"
+    [name]="this.getFontIcon(this.icon)"
+    [type]="this.iconSize ?? 'md'"
+  ></ta-font-icon>
+  }
 
-    <div class="pt-space-xs">{{ this.displayedText | translate }}</div>
-  </div>
+  <div class="pt-space-xs">{{ this.displayedText | translate }}</div>
+</div>
 } @else {
-  <ta-typed-message [text]="this.displayedText" [type]="this.type ?? 'info'"></ta-typed-message>
+<ta-typed-message
+  [text]="this.displayedText"
+  [type]="this.type ?? 'info'"
+></ta-typed-message>
 }

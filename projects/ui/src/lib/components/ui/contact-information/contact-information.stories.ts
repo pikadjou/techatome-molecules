@@ -1,16 +1,16 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TaIconType } from '@ta/icons';
+import { TaIconType } from "@ta/icons";
 
-import { ContactInformationComponent } from './contact-information.component';
+import { ContactInformationComponent } from "./contact-information.component";
 
 type StoryType = ContactInformationComponent;
 
 export default {
-  title: 'UI/Contact Information',
+  title: "UI/Contact Information",
   component: ContactInformationComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -23,20 +23,20 @@ export default {
   },
   argTypes: {
     value: {
-      control: 'text',
+      control: "text",
     },
     icon: {
-      control: 'text',
+      control: "text",
     },
     localIcon: {
-      options: Object.values(TaIconType).filter(x => typeof x === 'string'),
+      options: Object.values(TaIconType).filter((x) => typeof x === "string"),
       mapping: TaIconType,
-      control: { type: 'select' },
+      control: { type: "select" },
     },
   },
   args: {
-    icon: 'mail',
-    value: 'Contact information',
+    icon: "mail",
+    value: "Contact information",
   },
 } as Meta<StoryType>;
 

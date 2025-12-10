@@ -1,27 +1,28 @@
 <div class="dashboard">
   <div class="dashboard-header">
     <ta-title [level]="1">Techatome Molecules Sandbox</ta-title>
-    <ta-text class="subtitle">Explorez et testez tous les composants de la librairie Techatome Molecules</ta-text>
+    <ta-text class="subtitle"
+      >Explorez et testez tous les composants de la librairie Techatome
+      Molecules</ta-text
+    >
   </div>
 
   <div class="sections-grid">
     @for (section of sections; track section) {
-      <div 
-        class="section-card"
-        [routerLink]="section.route">
-        <div class="card-content">
-          <div class="card-icon" [style.color]="section.color">
-            <span class="material-icons">{{ section.icon }}</span>
-          </div>
-          <div class="card-text">
-            <ta-title [level]="3">{{ section.title }}</ta-title>
-            <ta-text>{{ section.description }}</ta-text>
-          </div>
-          <div class="card-arrow">
-            <span class="material-icons">arrow_forward</span>
-          </div>
+    <div class="section-card" [routerLink]="section.route">
+      <div class="card-content">
+        <div class="card-icon" [style.color]="section.color">
+          <span class="material-icons">{{ section.icon }}</span>
+        </div>
+        <div class="card-text">
+          <ta-title [level]="3">{{ section.title }}</ta-title>
+          <ta-text>{{ section.description }}</ta-text>
+        </div>
+        <div class="card-arrow">
+          <span class="material-icons">arrow_forward</span>
         </div>
       </div>
+    </div>
     }
   </div>
 
@@ -30,9 +31,10 @@
       <div class="card-content">
         <ta-title [level]="3">À propos de cette sandbox</ta-title>
         <ta-text>
-          Cette application de démonstration vous permet de tester et d'explorer toutes les fonctionnalités 
-          des librairies Techatome Molecules. Chaque section présente les composants disponibles avec 
-          des exemples d'utilisation pratiques.
+          Cette application de démonstration vous permet de tester et d'explorer
+          toutes les fonctionnalités des librairies Techatome Molecules. Chaque
+          section présente les composants disponibles avec des exemples
+          d'utilisation pratiques.
         </ta-text>
         <div class="features-list">
           <ta-text>• Plus de 20 librairies spécialisées</ta-text>

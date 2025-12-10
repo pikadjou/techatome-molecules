@@ -1,6 +1,10 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "allowedNonPeerDependencies": ["@ta", "tui-image-editor", "apollo-upload-client"],
+  "allowedNonPeerDependencies": [
+    "@ta",
+    "tui-image-editor",
+    "apollo-upload-client"
+  ],
   "dest": "dist",
   "lib": {
     "entryFile": "src/public-api.ts",

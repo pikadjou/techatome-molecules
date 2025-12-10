@@ -1,16 +1,16 @@
-import { Location } from '@angular/common';
-import { Component, OnDestroy, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from "@angular/common";
+import { Component, OnDestroy, inject } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
-import { TaIconType } from '@ta/icons';
+import { TaIconType } from "@ta/icons";
 
-import { BreakpointDetection } from '../helpers/breakpoints/detection';
-import { RequestState } from '../helpers/request/state';
-import { SubscriberHandler } from '../helpers/subscriber/handler';
+import { BreakpointDetection } from "../helpers/breakpoints/detection";
+import { RequestState } from "../helpers/request/state";
+import { SubscriberHandler } from "../helpers/subscriber/handler";
 
-@Component({ template: '' })
+@Component({ template: "" })
 export abstract class TaAbstractComponent implements OnDestroy {
   public breakpoints = new BreakpointDetection();
   public requestState = new RequestState();

@@ -1,16 +1,16 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { TaIconType } from '@ta/icons';
+import { TaIconType } from "@ta/icons";
 
-import { EmptyComponent } from './empty.component';
+import { EmptyComponent } from "./empty.component";
 
 type StoryType = EmptyComponent;
 
 export default {
-  title: 'Container/Empty',
+  title: "Container/Empty",
   component: EmptyComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -29,9 +29,9 @@ export default {
   },
   args: {
     icon: TaIconType.Edit,
-    iconSize: 'sm',
-    text: 'Je suis tout vide :(',
-    type: 'info',
+    iconSize: "sm",
+    text: "Je suis tout vide :(",
+    type: "info",
     isEmpty: true,
     isLight: false,
   },
@@ -42,9 +42,9 @@ export const Basic: StoryObj<StoryType> = {};
 export const Light: StoryObj<StoryType> = {
   args: {
     icon: TaIconType.Edit,
-    iconSize: 'sm',
-    text: 'Je suis tout vide :(',
-    type: 'info',
+    iconSize: "sm",
+    text: "Je suis tout vide :(",
+    type: "info",
     isEmpty: true,
     isLight: true,
   },

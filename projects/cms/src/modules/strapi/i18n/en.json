@@ -1,11 +1,7 @@
 {
   "loading": "Loading data...",
-  "error": {
-    "fetch": "Error fetching data",
-    "save": "Error saving",
-    "delete": "Error deleting"
-  },
-  "confirm": {
-    "delete": "Are you sure you want to delete this item?"
-  }
+  "error.fetch": "Error fetching data",
+  "error.save": "Error saving",
+  "error.delete": "Error deleting",
+  "confirm.delete": "Are you sure you want to delete this item?"
 }

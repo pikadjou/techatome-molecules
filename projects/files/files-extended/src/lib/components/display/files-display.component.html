@@ -1,16 +1,22 @@
 <div class="toggle-navigation">
-  <ta-toggle-navigation [menu]="this.menu" [container]="'tab'"></ta-toggle-navigation>
+  <ta-toggle-navigation
+    [menu]="this.menu"
+    [container]="'tab'"
+  ></ta-toggle-navigation>
 </div>
 
 @if (this.canDisplayTempsFiles) {
-  <div>
-    <ta-files-list [files]="this.tempFiles"></ta-files-list>
-    <hr />
-  </div>
+<div>
+  <ta-files-list [files]="this.tempFiles"></ta-files-list>
+  <hr />
+</div>
 }
 
 <ta-loader [isLoading]="this.requestState.isLoading()" skeleton="fileList">
-  <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
+  <ta-error
+    [message]="this.requestState.getErrorMessage()"
+    [code]="this.requestState.getErrorStatus()"
+  >
     <div class="list">
       <ta-files-list
         [files]="(this.files$ | async) || []"
@@ -23,12 +29,12 @@
 </ta-loader>
 
 @if (this.canAddFile === true) {
-  <div class="floating-add">
-    <ta-files-upload
-      [features]="this.getFeature()"
-      [canSelectMultipleFiles]="this.canSelectMultipleFiles"
-      (filesPicked)="this.fileUploading.emit($event)"
-    >
-    </ta-files-upload>
-  </div>
+<div class="floating-add">
+  <ta-files-upload
+    [features]="this.getFeature()"
+    [canSelectMultipleFiles]="this.canSelectMultipleFiles"
+    (filesPicked)="this.fileUploading.emit($event)"
+  >
+  </ta-files-upload>
+</div>
 }

@@ -1,6 +1,6 @@
-export * from './dto/project';
-export * from './dto/status';
+export * from "./dto/project";
+export * from "./dto/status";
 
-export * from './queries';
+export * from "./queries";
 
-export * from './projects.service';
+export * from "./projects.service";

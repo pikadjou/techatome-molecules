@@ -1,19 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { map } from 'rxjs';
+import { map } from "rxjs";
 
-import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from '@ta/server';
+import {
+  GraphEndpoint,
+  HandleComplexRequest,
+  HandleSimpleRequest,
+  TaBaseService,
+} from "@ta/server";
 
-import { Project, projectProps } from './dto/project';
-import { GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID } from './queries';
+import { Project, projectProps } from "./dto/project";
+import {
+  GET_LIGHT_PROJECTS,
+  GET_MY_PROJECTS,
+  GET_PROJECTS,
+  GET_PROJECT_BY_ID,
+} from "./queries";
 
 const graphEndpoint: GraphEndpoint = {
-  clientName: 'projectService',
-  endpoint: 'project',
+  clientName: "projectService",
+  endpoint: "project",
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaProjectsService extends TaBaseService {
   protected _graphEndpoint = graphEndpoint;
@@ -29,8 +39,12 @@ export class TaProjectsService extends TaBaseService {
 
   public getProjectsLightInfo$(ids: string[]) {
     return this._graphService
-      .fetchPagedQueryList<Project>(GET_LIGHT_PROJECTS(ids), 'projects', graphEndpoint.clientName)
-      .pipe(map(data => data.items ?? []));
+      .fetchPagedQueryList<Project>(
+        GET_LIGHT_PROJECTS(ids),
+        "projects",
+        graphEndpoint.clientName
+      )
+      .pipe(map((data) => data.items ?? []));
   }
 
   public fetchProjectsByContact$(contactId: string) {
@@ -41,29 +55,37 @@ export class TaProjectsService extends TaBaseService {
           GET_PROJECTS(
             `where: { contactId: { eq: "${contactId}" } }`,
             `
-              ${projectProps.get('id')}
-              ${projectProps.get('name')}
+              ${projectProps.get("id")}
+              ${projectProps.get("name")}
             `
           ),
-          'projects',
+          "projects",
           graphEndpoint.clientName
         )
-        .pipe(map(data => data.items ?? []))
+        .pipe(map((data) => data.items ?? []))
     );
   }
 
   public fetchProjects$() {
     return this.projects.fetch(
       this._graphService
-        .fetchPagedQueryList<Project>(GET_MY_PROJECTS(), 'projects', graphEndpoint.clientName)
-        .pipe(map(data => data.items))
+        .fetchPagedQueryList<Project>(
+          GET_MY_PROJECTS(),
+          "projects",
+          graphEndpoint.clientName
+        )
+        .pipe(map((data) => data.items))
     );
   }
 
   public fetchProject$(id: string) {
     return this.project.fetch(
       id,
-      this._graphService.fetchQuery<Project>(GET_PROJECT_BY_ID(id), 'projectById', graphEndpoint.clientName)
+      this._graphService.fetchQuery<Project>(
+        GET_PROJECT_BY_ID(id),
+        "projectById",
+        graphEndpoint.clientName
+      )
     );
   }
 }

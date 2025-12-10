@@ -1,9 +1,9 @@
-import { EventEmitter } from '@angular/core';
-import { TaSizes, TaState } from '@ta/styles';
+import { EventEmitter } from "@angular/core";
+import { TaSizes, TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class ButtonToolComponent {
     state: TaState;
-    type: 'primary';
+    type: "primary";
     size: TaSizes;
     icon: string | null;
     stopPropagationActivation: boolean;

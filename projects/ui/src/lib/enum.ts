@@ -8,14 +8,14 @@ export enum ENotificationCode {
 
 export const getTypeClass = (code: ENotificationCode) => {
   if (code === ENotificationCode.error) {
-    return 'danger';
+    return "danger";
   } else if (code === ENotificationCode.warning) {
-    return 'warning';
+    return "warning";
   } else if (code === ENotificationCode.information) {
-    return 'info';
+    return "info";
   } else if (code === ENotificationCode.success) {
-    return 'success';
+    return "success";
   } else {
-    return '';
+    return "";
   }
 };

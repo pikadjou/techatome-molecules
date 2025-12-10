@@ -1,6 +1,6 @@
-import { Picture } from '@ta/services';
-import { FileStructure } from '@ta/utils';
-import { IInputBase, InputBase } from './base';
+import { Picture } from "@ta/services";
+import { FileStructure } from "@ta/utils";
+import { IInputBase, InputBase } from "./base";
 export interface IInputSchema extends IInputBase<string> {
     update?: (data: FileStructure[]) => Promise<Picture[]>;
 }

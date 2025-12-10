@@ -1,18 +1,20 @@
 {
-  "common": {
-    "save": "Enregistrer",
-    "cancel": "Annuler",
-    "delete": "Supprimer",
-    "edit": "Modifier",
-    "add": "Ajouter",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "export": "Exporter",
-    "import": "Importer"
-  },
-  "messages": {
-    "success": "Opération réussie",
-    "error": "Une erreur s'est produite",
-    "loading": "Chargement en cours..."
-  }
+  "common.save": "Enregistrer",
+  "common.cancel": "Annuler",
+  "common.delete": "Supprimer",
+  "common.edit": "Modifier",
+  "common.add": "Ajouter",
+  "common.search": "Rechercher",
+  "common.filter": "Filtrer",
+  "common.export": "Exporter",
+  "common.import": "Importer",
+  "messages.success": "Opération réussie",
+  "messages.error": "Une erreur s'est produite",
+  "messages.loading": "Chargement en cours...",
+  "core.filter.clear": "Effacer",
+  "core.filter.validate": "Valider",
+  "documents.all": "Tous",
+  "documents.delete": "Supprimer",
+  "documents.download": "Télécharger",
+  "documents.mine": "Mes documents"
 }

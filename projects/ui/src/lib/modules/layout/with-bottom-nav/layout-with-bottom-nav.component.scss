@@ -19,7 +19,8 @@ $menu-size-large: 220px;
     .container {
       width: auto;
       @media screen and (min-width: 576px) {
-        padding: common.get-var(components, header, top) common.get-var(space, md) 0 common.get-var(space, md);
+        padding: common.get-var(components, header, top)
+          common.get-var(space, md) 0 common.get-var(space, md);
         padding-bottom: common.get-var(space, sm) !important;
       }
     }

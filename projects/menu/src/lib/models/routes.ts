@@ -1,12 +1,12 @@
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from "@angular/router";
 
 export enum TaMainRoute {
-  HOME = 'HOME',
-  USERLOGIN = 'USERLOGIN',
-  SINGIN = 'SINGIN',
-  USERLOGOUT = 'USERLOGOUT',
-  NOTIFICATIONS = 'NOTIFICATIONS',
-  REDIRECT = 'REDIRECT',
+  HOME = "HOME",
+  USERLOGIN = "USERLOGIN",
+  SINGIN = "SINGIN",
+  USERLOGOUT = "USERLOGOUT",
+  NOTIFICATIONS = "NOTIFICATIONS",
+  REDIRECT = "REDIRECT",
 }
 export interface IRoute {
   key: string;
@@ -19,27 +19,27 @@ export class TaRoutesCore {
   public routes: IRoute[] = [
     {
       key: TaMainRoute.HOME,
-      url: '',
+      url: "",
     },
     {
       key: TaMainRoute.USERLOGIN,
-      url: 'login',
+      url: "login",
     },
     {
       key: TaMainRoute.SINGIN,
-      url: 'signin',
+      url: "signin",
     },
     {
       key: TaMainRoute.USERLOGOUT,
-      url: 'logout',
+      url: "logout",
     },
     {
       key: TaMainRoute.NOTIFICATIONS,
-      url: 'notifications',
+      url: "notifications",
     },
     {
       key: TaMainRoute.REDIRECT,
-      url: 'redirect',
+      url: "redirect",
     },
   ];
 
@@ -49,7 +49,7 @@ export class TaRoutesCore {
     this.routes.push(route);
   }
   public addRoutes(routes: IRoute[]) {
-    routes.forEach(route => this.addRoute(route));
+    routes.forEach((route) => this.addRoute(route));
   }
   public getHome() {
     return this.getAbsoluteUrl([TaMainRoute.HOME]);
@@ -67,11 +67,18 @@ export class TaRoutesCore {
     const url = this._replaceParams(this._getUrl(eNums), params);
     return strict ? this._removeParams(url) : url;
   }
-  public getAbsoluteUrl(eNums: string[], params: {} = {}, strict = false): string {
+  public getAbsoluteUrl(
+    eNums: string[],
+    params: {} = {},
+    strict = false
+  ): string {
     const url = this._replaceParams(this._getUrl(eNums, true), params);
     return strict ? this._removeParams(url) : url;
   }
-  public addQueryParamsToUrl(route: ActivatedRouteSnapshot, params: { [index: string]: any } = {}): string {
+  public addQueryParamsToUrl(
+    route: ActivatedRouteSnapshot,
+    params: { [index: string]: any } = {}
+  ): string {
     const keys = Object.keys(params);
 
     for (let key of keys) {
@@ -93,18 +100,21 @@ export class TaRoutesCore {
       return url;
     }
     // Create regex using the keys of the replacement object.
-    const regex = new RegExp(':(' + Object.keys(params).join('|') + ')', 'g');
+    const regex = new RegExp(":(" + Object.keys(params).join("|") + ")", "g");
     // Replace the string by the value in object
     return url.replace(regex, (m, $1) => params[$1] || m);
   }
   private _removeParams(url: string): string {
-    const regex = new RegExp('/:([a-zA-Z0-9_]*)', 'g');
-    return url.replace(regex, '');
+    const regex = new RegExp("/:([a-zA-Z0-9_]*)", "g");
+    return url.replace(regex, "");
   }
   private _getRouteByENum(eNums: any[]): IRoute | null {
     let route: IRoute | null = null;
     for (const eNum of eNums) {
-      route = this._getByENum(route === null ? this.routes : route.children, eNum);
+      route = this._getByENum(
+        route === null ? this.routes : route.children,
+        eNum
+      );
       if (route === null) {
         return null;
       }
@@ -114,18 +124,24 @@ export class TaRoutesCore {
 
   private _getUrl(eNums: any[], absolute = false): string {
     let route: IRoute | null = null;
-    let url = '';
+    let url = "";
     for (const eNum of eNums) {
-      route = this._getByENum(route === null ? this.routes : route.children, eNum);
+      route = this._getByENum(
+        route === null ? this.routes : route.children,
+        eNum
+      );
       if (route === null) {
         break;
       }
-      url += (url === '' ? '' : '/') + route.url;
+      url += (url === "" ? "" : "/") + route.url;
     }
-    return route === null ? '' : absolute === false ? route.url : '/' + url;
+    return route === null ? "" : absolute === false ? route.url : "/" + url;
   }
 
-  private _getByENum(routes: IRoute[] | null | undefined, eNum: string): IRoute | null {
+  private _getByENum(
+    routes: IRoute[] | null | undefined,
+    eNum: string
+  ): IRoute | null {
     if (!routes) {
       return null;
     }

@@ -1,4 +1,4 @@
-import { ENotificationLevel } from '../../../../services/dto/level';
+import { ENotificationLevel } from "../../../../services/dto/level";
 import * as i0 from "@angular/core";
 export declare class IconComponent {
     level: ENotificationLevel;

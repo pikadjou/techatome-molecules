@@ -1,11 +1,11 @@
-import { signal } from '@angular/core';
+import { signal } from "@angular/core";
 
 export type RequeststateErrorType = { status: number; message: string };
 
 export class RequestState {
   public loading = signal(false);
 
-  public error: RequeststateErrorType = { status: -1, message: '' };
+  public error: RequeststateErrorType = { status: -1, message: "" };
   public alreadyAsked = false;
 
   public isLoading() {
@@ -31,7 +31,7 @@ export class RequestState {
     this.loading.set(false);
   }
   public resetError() {
-    this.error = { status: -1, message: '' };
+    this.error = { status: -1, message: "" };
   }
   public onError(status: number, message: string) {
     this.loading.set(false);

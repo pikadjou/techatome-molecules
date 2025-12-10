@@ -1,15 +1,15 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { InputTimePicker } from '@ta/form-model';
+import { Meta, StoryObj } from "@storybook/angular";
+import { InputTimePicker } from "@ta/form-model";
 
-import { TimePickerComponent } from './time-picker.component';
+import { TimePickerComponent } from "./time-picker.component";
 
 type StoryType = TimePickerComponent;
 
 export default {
-  title: 'FORM/TimePicker',
+  title: "FORM/TimePicker",
   component: TimePickerComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const props = args;
 
     return {
@@ -21,8 +21,8 @@ export default {
   },
   args: {
     input: new InputTimePicker({
-      key: 'key',
-      label: 'label',
+      key: "key",
+      label: "label",
     }),
   },
 } as Meta<StoryType>;

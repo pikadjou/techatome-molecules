@@ -1,0 +1,11 @@
+{
+  "user.clientnumber": "Numéro de client",
+  "user.guard.content": "Vous n'avez pas accès à cette ressource",
+  "user.infos": "Informations",
+  "user.language": "Langue",
+  "user.login": "Se connecter",
+  "user.logout": "Se déconnecter",
+  "user.modify": "Modifier",
+  "user.params": "Paramètres",
+  "user.tenantlisttitle": "Liste des locataires"
+}

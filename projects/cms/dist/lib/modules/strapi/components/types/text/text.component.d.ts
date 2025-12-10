@@ -1,4 +1,4 @@
-import { RichParagraphText } from '../../../services/dto/types/rich-text';
+import { RichParagraphText } from "../../../services/dto/types/rich-text";
 import * as i0 from "@angular/core";
 export declare class TextComponent {
     text: RichParagraphText;

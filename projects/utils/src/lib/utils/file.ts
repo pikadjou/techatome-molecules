@@ -1,16 +1,18 @@
-import { Camera } from '@capacitor/camera';
-import Compressor from 'compressorjs';
+import { Camera } from "@capacitor/camera";
+import Compressor from "compressorjs";
 
-import { FileStructure } from '../types/files/temporary-files';
-import { newGuid } from './identifier';
+import { FileStructure } from "../types/files/temporary-files";
+import { newGuid } from "./identifier";
 
 export const octetsToMo = (octets: number) => {
   return octets / (1024 * 1024);
 };
 
-export const extractExtension = (name: string): 'docx' | 'pdf' | 'xlsx' | string => {
+export const extractExtension = (
+  name: string
+): "docx" | "pdf" | "xlsx" | string => {
   // Séparer le nom du fichier en parties en fonction du point (.)
-  var parties = name.split('.');
+  var parties = name.split(".");
   // Récupérer la dernière partie (qui est l'extension)
   var extension = parties[parties.length - 1];
   return extension;
@@ -29,7 +31,7 @@ export const getBase64FromFile = (file: File): Promise<string> => {
 };
 
 export const getBlobImage = async (base64: string) => {
-  const blob = await fetch(base64).then(res => res.blob());
+  const blob = await fetch(base64).then((res) => res.blob());
   return await compressImage(blob);
 };
 
@@ -52,11 +54,13 @@ export const downloadFile = (url: string) => {
   const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
 
   if (imageRegex.test(url)) {
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   } else {
     window.open(
-      'https://docs.google.com/a/google.com/viewer?url=' + url.replaceAll('&', '%26') + '&embedded=false',
-      '_blank'
+      "https://docs.google.com/a/google.com/viewer?url=" +
+        url.replaceAll("&", "%26") +
+        "&embedded=false",
+      "_blank"
     );
   }
 };
@@ -82,7 +86,10 @@ export const pickImages = async (): Promise<FileStructure[]> => {
   return pics;
 };
 
-export const pathToFile = async (pic: { webPath?: string; format: string }): Promise<File | null> => {
+export const pathToFile = async (pic: {
+  webPath?: string;
+  format: string;
+}): Promise<File | null> => {
   if (!pic.webPath) return null;
 
   const response = await fetch(pic.webPath);
@@ -98,7 +105,11 @@ export const pathToFile = async (pic: { webPath?: string; format: string }): Pro
  * @param originalWidth
  * @param newWidth
  */
-export const determineNewHeight = (originalHeight: number, originalWidth: number, newWidth: number) => {
+export const determineNewHeight = (
+  originalHeight: number,
+  originalWidth: number,
+  newWidth: number
+) => {
   return (originalHeight / originalWidth) * newWidth;
 };
 
@@ -109,7 +120,11 @@ export const determineNewHeight = (originalHeight: number, originalWidth: number
  * @param originalHeight
  * @param newWidth
  */
-export const determineNewWidth = (originalWidth: number, originalHeight: number, newHeight: number) => {
+export const determineNewWidth = (
+  originalWidth: number,
+  originalHeight: number,
+  newHeight: number
+) => {
   return (originalWidth / originalHeight) * newHeight;
 };
 

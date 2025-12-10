@@ -1,6 +1,6 @@
-import { newId } from '@ta/utils';
+import { newId } from "@ta/utils";
 
-import { CacheStrategy, ECacheStrategy } from '../../types/cache';
+import { CacheStrategy, ECacheStrategy } from "../../types/cache";
 
 /**
  *

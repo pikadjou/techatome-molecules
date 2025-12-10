@@ -1,12 +1,12 @@
-import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgClass } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { ColorType } from '@ta/styles';
+import { FontIconComponent } from "@ta/icons";
+import { ColorType } from "@ta/styles";
 
-import { TextComponent } from '../text/text.component';
+import { TextComponent } from "../text/text.component";
 
-export type BenefitType = 'success' | 'warning' | 'error';
+export type BenefitType = "success" | "warning" | "error";
 
 export interface BenefitConfig {
   icon: string;
@@ -16,15 +16,15 @@ export interface BenefitConfig {
 }
 
 @Component({
-  selector: 'ta-benefit-item',
-  templateUrl: './benefit-item.component.html',
-  styleUrls: ['./benefit-item.component.scss'],
+  selector: "ta-benefit-item",
+  templateUrl: "./benefit-item.component.html",
+  styleUrls: ["./benefit-item.component.scss"],
   standalone: true,
   imports: [NgClass, FontIconComponent, TextComponent],
 })
 export class BenefitItemComponent {
-  @Input() type: ColorType = 'success';
-  @Input() text: string = '';
+  @Input() type: ColorType = "success";
+  @Input() text: string = "";
 
   protected config!: BenefitConfig;
   protected isInitialized = false;
@@ -35,14 +35,14 @@ export class BenefitItemComponent {
 
   public icon() {
     switch (this.type) {
-      case 'success':
-        return 'check';
-      case 'warning':
-        return 'warning';
-      case 'alert':
-        return 'error';
+      case "success":
+        return "check";
+      case "warning":
+        return "warning";
+      case "alert":
+        return "error";
       default:
-        return 'check';
+        return "check";
     }
   }
 }

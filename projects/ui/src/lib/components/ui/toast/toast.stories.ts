@@ -1,18 +1,18 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { ToastComponent } from './toast.component';
-import { ENotificationCode } from '../../../enum';
+import { ToastComponent } from "./toast.component";
+import { ENotificationCode } from "../../../enum";
 
 export type StoryType = ToastComponent;
 
 export default {
-  title: 'UI/Toast',
+  title: "UI/Toast",
   component: ToastComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     code: {
-      control: { type: 'select' },
+      control: { type: "select" },
       options: [
         ENotificationCode.none,
         ENotificationCode.error,

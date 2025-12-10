@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { BaseChartComponent } from './base-chart/base-chart.component';
+import { BaseChartComponent } from "./base-chart/base-chart.component";
 
 @Component({
-  selector: 'ta-line-chart',
-  templateUrl: './base-chart/base-chart.component.html',
-  styleUrls: ['./base-chart/base-chart.component.scss'],
+  selector: "ta-line-chart",
+  templateUrl: "./base-chart/base-chart.component.html",
+  styleUrls: ["./base-chart/base-chart.component.scss"],
   standalone: true,
   imports: [],
 })
-export class TaChartLineComponent extends BaseChartComponent<'line'> {
+export class TaChartLineComponent extends BaseChartComponent<"line"> {
   constructor() {
     super();
 
-    this.type = 'line';
+    this.type = "line";
   }
 }

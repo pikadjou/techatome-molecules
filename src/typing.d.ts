@@ -1,2 +1,2 @@
-declare module 'html-to-docx';
-declare module 'file-saver';
+declare module "html-to-docx";
+declare module "file-saver";

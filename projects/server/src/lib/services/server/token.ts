@@ -1,5 +1,7 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 
-import { TenantConfig } from './interface';
+import { TenantConfig } from "./interface";
 
-export const TENANT_CONFIG_TOKEN = new InjectionToken<TenantConfig>('TenantConfig');
+export const TENANT_CONFIG_TOKEN = new InjectionToken<TenantConfig>(
+  "TenantConfig"
+);

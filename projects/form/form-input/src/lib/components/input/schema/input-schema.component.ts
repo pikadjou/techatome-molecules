@@ -1,23 +1,29 @@
-import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { NgIf } from "@angular/common";
+import { Component } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 
-import { FileListComponent } from '@ta/files-basic';
-import { InputSchema } from '@ta/form-model';
-import { LocalIconComponent } from '@ta/icons';
-import { ButtonComponent } from '@ta/ui';
-import { FileData, FileStructure, getBase64FromFile } from '@ta/utils';
+import { FileListComponent } from "@ta/files-basic";
+import { InputSchema } from "@ta/form-model";
+import { LocalIconComponent } from "@ta/icons";
+import { ButtonComponent } from "@ta/ui";
+import { FileData, FileStructure, getBase64FromFile } from "@ta/utils";
 
-import { TaAbstractInputComponent } from '../../abstract.component';
-import { InputLayoutComponent } from '../../input-layout/input-layout.component';
-import { InputSchemaModal } from './modal/input-schema-modal.component';
+import { TaAbstractInputComponent } from "../../abstract.component";
+import { InputLayoutComponent } from "../../input-layout/input-layout.component";
+import { InputSchemaModal } from "./modal/input-schema-modal.component";
 
 @Component({
-  selector: 'ta-input-schema',
-  templateUrl: './input-schema.component.html',
-  styleUrls: ['./input-schema.component.scss'],
+  selector: "ta-input-schema",
+  templateUrl: "./input-schema.component.html",
+  styleUrls: ["./input-schema.component.scss"],
   standalone: true,
-  imports: [NgIf, LocalIconComponent, ButtonComponent, FileListComponent, InputLayoutComponent],
+  imports: [
+    NgIf,
+    LocalIconComponent,
+    ButtonComponent,
+    FileListComponent,
+    InputLayoutComponent,
+  ],
 })
 export class InputSchemaComponent extends TaAbstractInputComponent<InputSchema> {
   get pics(): FileData[] | null {
@@ -28,7 +34,7 @@ export class InputSchemaComponent extends TaAbstractInputComponent<InputSchema> 
     return [
       {
         id: 0,
-        type: 'Image',
+        type: "Image",
         url: this.input.value,
       },
     ];
@@ -49,21 +55,26 @@ export class InputSchemaComponent extends TaAbstractInputComponent<InputSchema> 
   }
 
   public openDialog(): void {
-    const dialogRef = this.dialog.open<InputSchemaModal, { file: FileStructure }>(InputSchemaModal);
+    const dialogRef = this.dialog.open<
+      InputSchemaModal,
+      { file: FileStructure }
+    >(InputSchemaModal);
 
     this._registerSubscription(
-      dialogRef.afterClosed().subscribe(async (data: { file: FileStructure }) => {
-        if (!data || !data.file) {
-          return;
-        }
-        if (this.input.update) {
-          const pics = await this.input.update([data.file]);
-
-          if (pics && pics.length > 0 && data.file.file) {
-            this.selection = await getBase64FromFile(data.file.file);
+      dialogRef
+        .afterClosed()
+        .subscribe(async (data: { file: FileStructure }) => {
+          if (!data || !data.file) {
+            return;
           }
-        }
-      })
+          if (this.input.update) {
+            const pics = await this.input.update([data.file]);
+
+            if (pics && pics.length > 0 && data.file.file) {
+              this.selection = await getBase64FromFile(data.file.file);
+            }
+          }
+        })
     );
   }
 }

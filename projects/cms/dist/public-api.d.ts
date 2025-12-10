@@ -1,1 +1,1 @@
-export * from './lib/modules/strapi/public-api';
+export * from "./lib/modules/strapi/public-api";

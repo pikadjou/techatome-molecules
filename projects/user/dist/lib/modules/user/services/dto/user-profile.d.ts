@@ -1,4 +1,4 @@
-import { GraphSchema } from '@ta/server';
+import { GraphSchema } from "@ta/server";
 export interface UserProfile {
     id: string;
     firstname: string;

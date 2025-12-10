@@ -1,6 +1,6 @@
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { TaPermissionsService } from '../services/permissions.service';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
+import { Observable } from "rxjs";
+import { TaPermissionsService } from "../services/permissions.service";
 import * as i0 from "@angular/core";
 export declare class AuthGuard {
     private router;

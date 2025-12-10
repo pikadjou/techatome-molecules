@@ -1,8 +1,8 @@
-import { map } from 'rxjs/operators';
+import { map } from "rxjs/operators";
 
-import { Logger } from '@ta/server';
-import { isNonNullable } from '@ta/utils';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+import { Logger } from "@ta/server";
+import { isNonNullable } from "@ta/utils";
+import { BehaviorSubject, Observable, filter } from "rxjs";
 
 /** @deprecated */
 export class PermissionsCore {
@@ -28,12 +28,12 @@ export class PermissionsCore {
     },
     isAuthenticated: boolean
   ) {
-    Logger.LogInfo('[PERMISSIONS] List brut:', info.permissions);
+    Logger.LogInfo("[PERMISSIONS] List brut:", info.permissions);
 
     this.guards = {};
     if (info.permissions) {
       for (let perm of info.permissions) {
-        const access = perm.split(':');
+        const access = perm.split(":");
 
         if (!this.guards[access[1]]) {
           this.guards[access[1]] = [];
@@ -49,7 +49,7 @@ export class PermissionsCore {
     this.setSilentAuthenticated(isAuthenticated);
 
     this._canYouUpdate();
-    Logger.LogInfo('[PERMISSIONS] List:', this.guards, this.roles);
+    Logger.LogInfo("[PERMISSIONS] List:", this.guards, this.roles);
   }
 
   public setSilentAuthenticated(isAuthenticated: boolean) {
@@ -64,11 +64,11 @@ export class PermissionsCore {
   }
 
   public hasRole(role: string): boolean {
-    return this.roles.some(x => x.includes(role));
+    return this.roles.some((x) => x.includes(role));
   }
 
   public canDirectAccess(feature: string, level: string): boolean {
-    if (level === 'authenticated') {
+    if (level === "authenticated") {
       return this.isAuthenticated;
     }
 
@@ -81,7 +81,7 @@ export class PermissionsCore {
       return false;
     }
 
-    if (featureGuard.includes('all')) {
+    if (featureGuard.includes("all")) {
       return true;
     }
 
@@ -92,7 +92,10 @@ export class PermissionsCore {
     return true;
   }
 
-  public canAccess(feature: string, level: string | 'authenticated' | 'authorize'): Observable<boolean> {
+  public canAccess(
+    feature: string,
+    level: string | "authenticated" | "authorize"
+  ): Observable<boolean> {
     return this._updated$.pipe(map(() => this.canDirectAccess(feature, level)));
   }
 

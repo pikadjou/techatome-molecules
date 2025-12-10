@@ -1,6 +1,6 @@
-import { HandleSimpleRequest, TaBaseService } from '@ta/server';
-import { DocumentDto } from './dto/document';
-import { UploadFilePayloadInput } from './dto/post/UploadFilePayloadInput';
+import { HandleSimpleRequest, TaBaseService } from "@ta/server";
+import { DocumentDto } from "./dto/document";
+import { UploadFilePayloadInput } from "./dto/post/UploadFilePayloadInput";
 import * as i0 from "@angular/core";
 export declare class TaDocumentsService extends TaBaseService {
     documents: HandleSimpleRequest<DocumentDto[]>;

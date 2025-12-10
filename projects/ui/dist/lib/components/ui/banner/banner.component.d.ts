@@ -1,4 +1,4 @@
-import { TaBaseComponent } from '@ta/utils';
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class BannerComponent extends TaBaseComponent {
     message: string;

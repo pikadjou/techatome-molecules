@@ -4,4 +4,8 @@ export interface BaseStrapi {
   publishedAt?: string;
 }
 
-export const baseStrapiProps: (keyof BaseStrapi)[] = ['createdAt', 'updatedAt', 'publishedAt'];
+export const baseStrapiProps: (keyof BaseStrapi)[] = [
+  "createdAt",
+  "updatedAt",
+  "publishedAt",
+];

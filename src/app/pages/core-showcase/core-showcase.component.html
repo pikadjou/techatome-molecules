@@ -1,7 +1,9 @@
 <div class="core-showcase">
   <div class="demo-header">
     <ta-title [level]="1">Core Components</ta-title>
-    <ta-text class="subtitle">Composants centraux et utilitaires (@ta/core)</ta-text>
+    <ta-text class="subtitle"
+      >Composants centraux et utilitaires (@ta/core)</ta-text
+    >
   </div>
 
   <div class="demo-sections">
@@ -9,9 +11,10 @@
     <section class="demo-section">
       <ta-title [level]="2">Filters Component</ta-title>
       <div class="filters-demo">
-        <ta-filters 
+        <ta-filters
           [options]="filterOptions"
-          (filterChange)="onFilterChange($event)">
+          (filterChange)="onFilterChange($event)"
+        >
         </ta-filters>
       </div>
     </section>
@@ -20,9 +23,7 @@
     <section class="demo-section">
       <ta-title [level]="2">Text to Clipboard</ta-title>
       <div class="clipboard-demo">
-        <ta-text-to-clipboard 
-          [text]="sampleText"
-          (copied)="onTextCopied()">
+        <ta-text-to-clipboard [text]="sampleText" (copied)="onTextCopied()">
         </ta-text-to-clipboard>
       </div>
     </section>
@@ -32,10 +33,22 @@
       <ta-title [level]="2">Autres composants Core disponibles</ta-title>
       <div class="other-components">
         <div class="components-list">
-          <ta-text><strong>Documents :</strong> Gestion et affichage de documents</ta-text>
-          <ta-text><strong>Historical Research :</strong> Recherche et historique</ta-text>
-          <ta-text><strong>Maps Integration :</strong> Intégration Google Maps</ta-text>
-          <ta-text><strong>Translation Service :</strong> Service de traduction</ta-text>
+          <ta-text
+            ><strong>Documents :</strong> Gestion et affichage de
+            documents</ta-text
+          >
+          <ta-text
+            ><strong>Historical Research :</strong> Recherche et
+            historique</ta-text
+          >
+          <ta-text
+            ><strong>Maps Integration :</strong> Intégration Google
+            Maps</ta-text
+          >
+          <ta-text
+            ><strong>Translation Service :</strong> Service de
+            traduction</ta-text
+          >
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ export declare class DualButtonComponent {
     isFull: boolean;
     first: DualButtonInput;
     second: DualButtonInput;
-    type: 'primary' | 'secondary';
+    type: "primary" | "secondary";
     constructor();
     getClass(): {
         [index: string]: boolean;

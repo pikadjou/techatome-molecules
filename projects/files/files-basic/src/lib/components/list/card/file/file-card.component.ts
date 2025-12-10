@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { FontIconComponent, LocalIconComponent } from '@ta/icons';
-import { TaIconType } from '@ta/icons';
+import { FontIconComponent, LocalIconComponent } from "@ta/icons";
+import { TaIconType } from "@ta/icons";
 import {
   BadgeComponent,
   CardComponent,
@@ -12,13 +12,13 @@ import {
   CardTitleComponent,
   TitleComponent,
   TrigramComponent,
-} from '@ta/ui';
-import { EFileExtension, FileData } from '@ta/utils';
+} from "@ta/ui";
+import { EFileExtension, FileData } from "@ta/utils";
 
 @Component({
-  selector: 'ta-file-card',
-  templateUrl: './file-card.component.html',
-  styleUrls: ['./file-card.component.scss'],
+  selector: "ta-file-card",
+  templateUrl: "./file-card.component.html",
+  styleUrls: ["./file-card.component.scss"],
   standalone: true,
   imports: [
     BadgeComponent,
@@ -41,7 +41,8 @@ export class FileCardComponent {
   fileSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
 
   @Output()
-  moreInformationSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
+  moreInformationSelected: EventEmitter<FileData> =
+    new EventEmitter<FileData>();
 
   get localIcon() {
     switch (this.file.fileExtension) {

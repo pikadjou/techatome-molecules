@@ -1,20 +1,20 @@
-import { EFileExtension } from '../types/files/file-extension';
+import { EFileExtension } from "../types/files/file-extension";
 
 export const getFileExtension = (filePath: string): EFileExtension => {
   const extension: string | null =
-    getFullFileNameFromUrl(filePath)?.split('.').pop()?.toLowerCase() || null;
+    getFullFileNameFromUrl(filePath)?.split(".").pop()?.toLowerCase() || null;
 
   switch (extension) {
-    case 'pdf':
+    case "pdf":
       return EFileExtension.PDF;
-    case 'docx':
+    case "docx":
       return EFileExtension.Word;
-    case 'xls':
-    case 'xlsx':
+    case "xls":
+    case "xlsx":
       return EFileExtension.Excel;
-    case 'jpg':
-    case 'jpeg':
-    case 'png':
+    case "jpg":
+    case "jpeg":
+    case "png":
       return EFileExtension.Image;
   }
 
@@ -22,12 +22,12 @@ export const getFileExtension = (filePath: string): EFileExtension => {
 };
 
 export const getFullFileNameFromUrl = (url: string): string | null => {
-  return url.split('/').pop() || null;
+  return url.split("/").pop() || null;
 };
 
 export const trigram = (name: string | null | undefined) => {
   if (!name) {
-    return '';
+    return "";
   }
   if (name.length < 4) {
     return name;

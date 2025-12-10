@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { TaAbstractComponent } from './abstractComponent';
+import { TaAbstractComponent } from "./abstractComponent";
 
-@Component({ template: '' })
+@Component({ template: "" })
 export abstract class TaBaseModal extends TaAbstractComponent {
   constructor() {
     super();

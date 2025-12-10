@@ -1,28 +1,40 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { MatDialog } from "@angular/material/dialog";
 
-import { map } from 'rxjs/operators';
+import { map } from "rxjs/operators";
 
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, combineLatest, of } from "rxjs";
 
-import { Document, FileMetadata, FilesDisplayComponent } from '@ta/files-extended';
+import {
+  Document,
+  FileMetadata,
+  FilesDisplayComponent,
+} from "@ta/files-extended";
 import {
   BottomSheetData,
   BottomSheetTemplateBasicComponent,
   BottomSheetTemplateBasicParams,
   FilterHelper,
   Menu,
-} from '@ta/menu';
-import { openModal } from '@ta/ui';
-import { FileData, TaBaseComponent, downloadFile, getFileExtension } from '@ta/utils';
+} from "@ta/menu";
+import { openModal } from "@ta/ui";
+import {
+  FileData,
+  TaBaseComponent,
+  downloadFile,
+  getFileExtension,
+} from "@ta/utils";
 
-import { UploadDocumentModal, UploadDocumentResult } from './upload/upload-visit-document/upload-document.component';
+import {
+  UploadDocumentModal,
+  UploadDocumentResult,
+} from "./upload/upload-visit-document/upload-document.component";
 
 @Component({
-  selector: 'ta-documents',
-  templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.scss'],
+  selector: "ta-documents",
+  templateUrl: "./documents.component.html",
+  styleUrls: ["./documents.component.scss"],
   standalone: true,
   imports: [FilesDisplayComponent],
 })
@@ -42,8 +54,8 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
   public menu: Menu;
 
   public filterHelper = new FilterHelper([
-    { label: 'documents.mine', defaultOpen: false },
-    { label: 'documents.all', defaultOpen: true },
+    { label: "documents.mine", defaultOpen: false },
+    { label: "documents.all", defaultOpen: true },
   ]);
 
   constructor(
@@ -56,15 +68,17 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
   ngOnInit(): void {
     this._registerSubscription(
       combineLatest({
-        all: this._filteredDocuments$('all'),
-        mine: this._filteredDocuments$('mine'),
-      }).subscribe(data => {
+        all: this._filteredDocuments$("all"),
+        mine: this._filteredDocuments$("mine"),
+      }).subscribe((data) => {
         this._updateMenu({ all: data.all.length, mine: data.mine.length });
       })
     );
   }
 
-  public uploadDocuments(files: { file: File | null; localUrl: string | null }[]) {
+  public uploadDocuments(
+    files: { file: File | null; localUrl: string | null }[]
+  ) {
     this._openUploadWorkflow(files[0].file!);
   }
   public downloadDocument(fileData: FileData) {
@@ -75,36 +89,36 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
   public openBottomSheet(fileData: FileData): void {
     const bottomSheetData: BottomSheetData[] = [
       {
-        label: 'documents.download',
-        icon: 'download',
+        label: "documents.download",
+        icon: "download",
         action: () => this.downloadDocument(fileData),
       },
       {
-        label: 'documents.delete',
-        icon: 'delete',
+        label: "documents.delete",
+        icon: "delete",
         action: () => this._proposeDeleteDocument(fileData),
       },
     ];
 
-    this._bottomSheet.open<BottomSheetTemplateBasicComponent, BottomSheetTemplateBasicParams>(
+    this._bottomSheet.open<
       BottomSheetTemplateBasicComponent,
-      {
-        data: {
-          orientation: 'horizontal',
-          menu$: of(bottomSheetData),
-        },
-      }
-    );
+      BottomSheetTemplateBasicParams
+    >(BottomSheetTemplateBasicComponent, {
+      data: {
+        orientation: "horizontal",
+        menu$: of(bottomSheetData),
+      },
+    });
   }
 
   public getDocs$() {
     return this._filteredDocuments$(this.filterHelper.filter).pipe(
-      map(documents =>
-        documents.map<FileData>(document => {
+      map((documents) =>
+        documents.map<FileData>((document) => {
           return {
             id: document.id,
             url: document.url,
-            type: 'Document',
+            type: "Document",
             fileMetaData: document.fileMetadata,
             fileExtension: getFileExtension(document.url),
           };
@@ -115,10 +129,10 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
 
   private _filteredDocuments$(filter: string) {
     return this.document$.pipe(
-      map(documents =>
-        documents.filter(document => {
-          if (filter === 'all') return true;
-          if (filter === 'mine' && document.isOwner) return true;
+      map((documents) =>
+        documents.filter((document) => {
+          if (filter === "all") return true;
+          if (filter === "mine" && document.isOwner) return true;
           return false;
         })
       )
@@ -134,7 +148,7 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
     this._registerSubscription(
       this._dialog
         .open(UploadDocumentModal, {
-          panelClass: 'full-screen-modal',
+          panelClass: "full-screen-modal",
           data: {
             file,
           },
@@ -148,7 +162,7 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
             description: result.description,
             fileType: {
               id: result.documentTypeId,
-              translatedValue: '',
+              translatedValue: "",
             },
           });
         })
@@ -174,7 +188,7 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
   private _updateMenu(data: { all: number; mine: number }) {
     this.filterHelper.updateMenuDatas([
       {
-        key: 'documents.mine',
+        key: "documents.mine",
         options: {
           notificationBadge: {
             label: data.mine,
@@ -182,7 +196,7 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
         },
       },
       {
-        key: 'documents.all',
+        key: "documents.all",
         options: {
           notificationBadge: {
             label: data.all,

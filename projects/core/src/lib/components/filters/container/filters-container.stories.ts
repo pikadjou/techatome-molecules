@@ -1,14 +1,14 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { __basicForm } from 'projects/form/__mock__/form';
-import { FiltersContainerComponent } from './filters-container.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { __basicForm } from "projects/form/__mock__/form";
+import { FiltersContainerComponent } from "./filters-container.component";
 
 type StoryType = FiltersContainerComponent;
 
 export default {
-  title: 'CORE/Filters',
+  title: "CORE/Filters",
   component: FiltersContainerComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,
@@ -22,8 +22,8 @@ export default {
   args: {
     form: __basicForm,
     activeFilter: [
-      { id: '3', name: 'mon filtre' },
-      { id: '2', name: 'Ton filtre' },
+      { id: "3", name: "mon filtre" },
+      { id: "2", name: "Ton filtre" },
     ],
   },
 } as Meta<StoryType>;

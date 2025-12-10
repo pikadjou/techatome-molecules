@@ -1,20 +1,26 @@
-import { Component, inject, Input, output, ChangeDetectionStrategy } from '@angular/core';
-import { Category } from '../../../../services/categories/dto/category';
-import { 
-  CardComponent, 
-  CardContentComponent, 
-  CardHeaderComponent, 
+import {
+  Component,
+  inject,
+  Input,
+  output,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Category } from "../../../../services/categories/dto/category";
+import {
+  CardComponent,
+  CardContentComponent,
+  CardHeaderComponent,
   CardTitleComponent,
   TaButtonComponent,
-  TaTextComponent 
-} from '@ta/ui';
-import { MatIcon } from '@angular/material/icon';
-import { MatTooltip } from '@angular/material/tooltip';
-import { DatePipe } from '@angular/common';
+  TaTextComponent,
+} from "@ta/ui";
+import { MatIcon } from "@angular/material/icon";
+import { MatTooltip } from "@angular/material/tooltip";
+import { DatePipe } from "@angular/common";
 
 @Component({
   standalone: true,
-  selector: 'app-category-list',
+  selector: "app-category-list",
   imports: [
     CardComponent,
     CardHeaderComponent,
@@ -24,15 +30,15 @@ import { DatePipe } from '@angular/common';
     TaTextComponent,
     MatIcon,
     MatTooltip,
-    DatePipe
+    DatePipe,
   ],
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.scss',
+  templateUrl: "./category-list.component.html",
+  styleUrl: "./category-list.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListComponent {
   @Input({ required: true }) categories: Category[] = [];
-  
+
   readonly categorySelected = output<string>();
   readonly categoryEdit = output<Category>();
   readonly categoryAdd = output<Category | null>();
@@ -42,7 +48,7 @@ export class CategoryListComponent {
   trackByCategory = (index: number, category: Category) => category.documentId;
 
   onCategoryClick(category: Category): void {
-    this.categorySelected.emit(category.documentId || '');
+    this.categorySelected.emit(category.documentId || "");
   }
 
   onEditCategory(category: Category, event: Event): void {

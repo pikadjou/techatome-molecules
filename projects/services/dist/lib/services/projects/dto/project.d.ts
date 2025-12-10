@@ -1,7 +1,7 @@
-import { GraphSchema } from '@ta/server';
-import { Address } from './address';
-import { ProjectStatus } from './status';
-import { Tenant } from './tenant';
+import { GraphSchema } from "@ta/server";
+import { Address } from "./address";
+import { ProjectStatus } from "./status";
+import { Tenant } from "./tenant";
 export interface Project {
     id: string;
     name: string;

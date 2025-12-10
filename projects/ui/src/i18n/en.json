@@ -1,16 +1,22 @@
 {
-  "button": {
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "close": "Close"
-  },
-  "dialog": {
-    "title": "Dialog",
-    "confirmClose": "Are you sure you want to close?"
-  },
-  "table": {
-    "noData": "No data available",
-    "loading": "Loading..."
-  }
+  "button.submit": "Submit",
+  "button.cancel": "Cancel",
+  "button.confirm": "Confirm",
+  "button.close": "Close",
+  "dialog.title": "Dialog",
+  "dialog.confirmClose": "Are you sure you want to close?",
+  "table.noData": "No data available",
+  "table.loading": "Loading...",
+  "ui.boolean-icon.not-communicated": "Not communicated",
+  "ui.container.validation.modal.cta.cancel": "Cancel",
+  "ui.container.validation.modal.cta.ok": "OK",
+  "ui.duration.less-than-one": "Less than one",
+  "ui.layout.notfound.content": "The page you are looking for does not exist",
+  "ui.layout.notfound.cta": "Back to home",
+  "ui.layout.notfound.title": "Page not found",
+  "ui.pwa.cancel": "Cancel",
+  "ui.pwa.description": "Install the app for a better experience",
+  "ui.pwa.install": "Install",
+  "ui.pwa.no-more": "Don't show again",
+  "ui.pwa.title": "Install app"
 }

@@ -1,27 +1,32 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { RouterModule } from '@angular/router';
+import { NgClass, NgTemplateOutlet } from "@angular/common";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
+import { RouterModule } from "@angular/router";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { FontIconComponent } from '@ta/icons';
-import { NotificationBadgeComponent } from '@ta/ui';
-import { TemplateModalContainer, TemplateModalContainerData } from '@ta/ui';
-import { TaBaseComponent, TypedTemplateDirective } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import { NotificationBadgeComponent } from "@ta/ui";
+import { TemplateModalContainer, TemplateModalContainerData } from "@ta/ui";
+import { TaBaseComponent, TypedTemplateDirective } from "@ta/utils";
 
-import { getFontIcon, getIcon, hasFontIcon, hasIconImage } from '../../../helpers/icon-manager';
-import { MenuAction } from '../../../models/menu/item/action';
-import { MenuBase } from '../../../models/menu/item/base';
-import { MenuIcon } from '../../../models/menu/item/icon';
-import { MenuPanel } from '../../../models/menu/item/panel';
-import { TaTranslationMenu } from '../../../translation.service';
+import {
+  getFontIcon,
+  getIcon,
+  hasFontIcon,
+  hasIconImage,
+} from "../../../helpers/icon-manager";
+import { MenuAction } from "../../../models/menu/item/action";
+import { MenuBase } from "../../../models/menu/item/base";
+import { MenuIcon } from "../../../models/menu/item/icon";
+import { MenuPanel } from "../../../models/menu/item/panel";
+import { TaTranslationMenu } from "../../../translation.service";
 
 @Component({
-  selector: 'ta-menu-item',
-  templateUrl: './menu-item.component.html',
-  styleUrls: ['./menu-item.component.scss'],
+  selector: "ta-menu-item",
+  templateUrl: "./menu-item.component.html",
+  styleUrls: ["./menu-item.component.scss"],
   standalone: true,
   imports: [
     NgClass,
@@ -39,7 +44,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   item!: MenuIcon | MenuAction | MenuBase | MenuPanel;
 
   @Input()
-  styleType: String = 'bloc';
+  styleType: String = "bloc";
 
   @ViewChild(MatMenuTrigger) triggerMenu!: MatMenuTrigger;
 
@@ -56,7 +61,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   }
 
   public getStyleType() {
-    return this.styleType + ' ' + this.item.style;
+    return this.styleType + " " + this.item.style;
   }
 
   public hasFontIcon(): boolean {
@@ -90,18 +95,21 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   }
 
   public trackByFn(index: any, item: MenuBase) {
-    return this.item + '-' + item.key;
+    return this.item + "-" + item.key;
   }
 
   public executeCallback() {
     const myTemplate = this.getTemplate();
     if (myTemplate) {
       if (this.breakpoints.isLessThanXS) {
-        this.modal.open<TemplateModalContainer, TemplateModalContainerData>(TemplateModalContainer, {
-          data: {
-            template: myTemplate,
-          },
-        });
+        this.modal.open<TemplateModalContainer, TemplateModalContainerData>(
+          TemplateModalContainer,
+          {
+            data: {
+              template: myTemplate,
+            },
+          }
+        );
       } else {
         this.triggerMenu.openMenu();
       }
@@ -111,8 +119,8 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   }
 
   public getLink() {
-    if (this.item.link && this.item.link !== '') return this.item.link;
+    if (this.item.link && this.item.link !== "") return this.item.link;
 
-    return '';
+    return "";
   }
 }

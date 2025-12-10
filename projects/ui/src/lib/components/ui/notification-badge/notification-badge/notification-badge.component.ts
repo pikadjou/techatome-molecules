@@ -1,12 +1,12 @@
-import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgClass } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
-import { TaSizes } from '@ta/styles';
+import { TaSizes } from "@ta/styles";
 
 @Component({
-  selector: 'ta-notification-badge',
-  templateUrl: './notification-badge.component.html',
-  styleUrls: ['./notification-badge.component.scss'],
+  selector: "ta-notification-badge",
+  templateUrl: "./notification-badge.component.html",
+  styleUrls: ["./notification-badge.component.scss"],
   standalone: true,
   imports: [NgClass],
 })
@@ -15,7 +15,7 @@ export class NotificationBadgeComponent {
   number!: number;
 
   @Input()
-  fontSize: TaSizes = 'xs';
+  fontSize: TaSizes = "xs";
 
   @Input()
   style?: string | undefined;
@@ -26,10 +26,10 @@ export class NotificationBadgeComponent {
   public getClass() {
     const css: { [index: string]: boolean } = {};
 
-    css[`bgc-${this.style ?? 'semantic-token-info'}`] = true;
+    css[`bgc-${this.style ?? "semantic-token-info"}`] = true;
 
     if (this.relative) {
-      css['relative'] = true;
+      css["relative"] = true;
     }
 
     return css;

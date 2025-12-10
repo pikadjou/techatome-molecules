@@ -1,8 +1,11 @@
-import { inject } from '@angular/core';
+import { inject } from "@angular/core";
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 
-import { ITranslation, TaTranslationRegistryService } from '../services/translation-registry.service';
+import {
+  ITranslation,
+  TaTranslationRegistryService,
+} from "../services/translation-registry.service";
 
 /**
  * @deprecated
@@ -11,11 +14,15 @@ export abstract class TaAbstractTranslationModule implements ITranslation {
   protected _registry = inject(TaTranslationRegistryService);
 
   public id: string;
-  protected translation: BehaviorSubject<{ [index: string]: any }> = new BehaviorSubject({});
+  protected translation: BehaviorSubject<{ [index: string]: any }> =
+    new BehaviorSubject({});
 
   private _lang: { [index: string]: object };
 
-  constructor(id: string, lang: { en: object; fr: object; nl: object; es: object }) {
+  constructor(
+    id: string,
+    lang: { en: object; fr: object; nl: object; es: object }
+  ) {
     this.id = id;
     this._lang = lang;
     this._registry.register(this);

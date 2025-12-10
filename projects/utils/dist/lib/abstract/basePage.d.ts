@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { TaAbstractComponent } from './abstractComponent';
+import { Observable } from "rxjs";
+import { TaAbstractComponent } from "./abstractComponent";
 import * as i0 from "@angular/core";
 export declare abstract class TaBasePage extends TaAbstractComponent {
     constructor();

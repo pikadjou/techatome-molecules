@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { TaIconsModule } from '@ta/icons';
+import { TaIconsModule } from "@ta/icons";
 
-import { TaUiModule } from '../../components/ui/ui.module';
-import { CardImageComponent } from './card-image/card-image.component';
-import { CardComponent } from './card.component';
-import { CardContentComponent } from './content/card-content.component';
-import { CardCtaComponent } from './cta/card-cta.component';
-import { DashboardCardComponent } from './dashboard/dashboard.component';
-import { CardHeaderComponent } from './header/card-header.component';
-import { CardSubtitleComponent } from './subtitle/card-subtitle.component';
-import { CardTagComponent } from './tag/card-tag.component';
-import { CardTitleComponent } from './title/card-title.component';
+import { TaUiModule } from "../../components/ui/ui.module";
+import { CardImageComponent } from "./card-image/card-image.component";
+import { CardComponent } from "./card.component";
+import { CardContentComponent } from "./content/card-content.component";
+import { CardCtaComponent } from "./cta/card-cta.component";
+import { DashboardCardComponent } from "./dashboard/dashboard.component";
+import { CardHeaderComponent } from "./header/card-header.component";
+import { CardSubtitleComponent } from "./subtitle/card-subtitle.component";
+import { CardTagComponent } from "./tag/card-tag.component";
+import { CardTitleComponent } from "./title/card-title.component";
 
 const exports = [
   CardComponent,

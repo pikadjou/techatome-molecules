@@ -1,6 +1,6 @@
-import { TaBaseComponent } from '@ta/utils';
-import { ENotificationCode } from '../../../enum';
-import { TaNotificationService } from '../../../services/notification.service';
+import { TaBaseComponent } from "@ta/utils";
+import { ENotificationCode } from "../../../enum";
+import { TaNotificationService } from "../../../services/notification.service";
 import * as i0 from "@angular/core";
 export declare class NotificationBoxComponent extends TaBaseComponent {
     private _notificationService;

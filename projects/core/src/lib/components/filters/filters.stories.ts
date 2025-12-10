@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { FiltersComponent } from './filters.component';
+import { Meta, StoryObj } from "@storybook/angular";
+import { FiltersComponent } from "./filters.component";
 
 type StoryType = FiltersComponent;
 
 export default {
-  title: 'UI/Filters',
+  title: "UI/Filters",
   component: FiltersComponent,
-  tags: ['autodocs'],
-  render: args => {
+  tags: ["autodocs"],
+  render: (args) => {
     const { ...props } = args;
     return {
       props,

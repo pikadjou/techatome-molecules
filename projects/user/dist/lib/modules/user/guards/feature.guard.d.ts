@@ -1,6 +1,6 @@
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Level, TaPermissionsService } from '../services/permissions.service';
+import { ActivatedRouteSnapshot, Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { Level, TaPermissionsService } from "../services/permissions.service";
 import * as i0 from "@angular/core";
 export interface FeatureRouteData {
     feature: string;

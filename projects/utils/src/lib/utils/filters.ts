@@ -1,7 +1,7 @@
-import slugify from 'slugify';
+import slugify from "slugify";
 
 const searchOptions = {
-  replacement: ' ',
+  replacement: " ",
   lower: true,
   trim: true,
 };

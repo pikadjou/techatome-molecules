@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject } from "rxjs";
 
 export interface ITranslation {
   id: string;
@@ -8,7 +8,7 @@ export interface ITranslation {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaTranslationRegistryService {
   registered: ITranslation[] = [];
@@ -22,6 +22,6 @@ export class TaTranslationRegistryService {
   }
 
   public getTranslations(lang: string) {
-    return this.registered.map(r => r.getTranslation(lang));
+    return this.registered.map((r) => r.getTranslation(lang));
   }
 }

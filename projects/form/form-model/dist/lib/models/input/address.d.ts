@@ -1,5 +1,5 @@
-import { IInputBase, InputBase } from './base';
-import { InputTextBox } from './textbox';
+import { IInputBase, InputBase } from "./base";
+import { InputTextBox } from "./textbox";
 export declare enum EAddressValues {
     street = "street",
     number = "number",

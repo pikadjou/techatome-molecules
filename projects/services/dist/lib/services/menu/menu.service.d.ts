@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 import * as i0 from "@angular/core";
 export declare class TaSharedMenuService {
     isMinimized$: BehaviorSubject<boolean>;

@@ -1,4 +1,4 @@
-import { RichText, RichTextChildren } from '../../../services/dto/types/rich-text';
+import { RichText, RichTextChildren } from "../../../services/dto/types/rich-text";
 import * as i0 from "@angular/core";
 export declare class RichTextComponent {
     richText: RichText;

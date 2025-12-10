@@ -1,4 +1,4 @@
-import { IInputTextBox, InputTextBox } from './textbox';
+import { IInputTextBox, InputTextBox } from "./textbox";
 export declare class InputNumber extends InputTextBox<number> {
     get value(): number;
     set value(value: number);

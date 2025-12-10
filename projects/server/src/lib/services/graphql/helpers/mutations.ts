@@ -1,5 +1,7 @@
-import { ObjectKeys } from '@ta/utils';
+import { ObjectKeys } from "@ta/utils";
 
-export const graphQlUpdateFields = (object: any): { updatedFields: string[] } => {
+export const graphQlUpdateFields = (
+  object: any
+): { updatedFields: string[] } => {
   return { updatedFields: <string[]>ObjectKeys(object) };
 };

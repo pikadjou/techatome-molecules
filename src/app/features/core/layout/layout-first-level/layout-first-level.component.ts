@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
   standalone: true,
-  selector: 'app-layout-first-level',
+  selector: "app-layout-first-level",
   imports: [],
-  templateUrl: './layout-first-level.component.html',
-  styleUrl: './layout-first-level.component.scss'
+  templateUrl: "./layout-first-level.component.html",
+  styleUrl: "./layout-first-level.component.scss",
 })
-export class LayoutFirstLevelComponent {
-
-}
+export class LayoutFirstLevelComponent {}

@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
-import { TaIconType } from '@ta/icons';
-import { IInputBase, InputBase } from './base';
+import { Observable } from "rxjs";
+import { TaIconType } from "@ta/icons";
+import { IInputBase, InputBase } from "./base";
 export interface IInputRadio<T> extends IInputBase<T> {
     options?: Observable<{
         id: T;

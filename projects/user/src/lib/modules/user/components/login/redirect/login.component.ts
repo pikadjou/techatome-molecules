@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject } from "@angular/core";
 
-import { TA_AUTH_TOKEN } from '../../../services/auth.service';
+import { TA_AUTH_TOKEN } from "../../../services/auth.service";
 
 @Component({
-  selector: '',
-  template: '',
+  selector: "",
+  template: "",
   standalone: true,
 })
 export class LoginRedirectComponent {

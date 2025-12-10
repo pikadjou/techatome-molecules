@@ -1,14 +1,14 @@
 @use "ta/vars";
-@use 'ta/settings/common';
+@use "ta/settings/common";
 
 @mixin generateColors() {
   /** Foundation **/
-  
+
   @debug "generateColors";
   @debug vars.$brand;
 
   @include common.generateMap(
-    'brand',
+    "brand",
     vars.$brand,
     (
       color: color,
@@ -16,7 +16,7 @@
     )
   );
   @include common.generateMap(
-    'neutral',
+    "neutral",
     vars.$neutral,
     (
       color: color,
@@ -24,7 +24,7 @@
     )
   );
   @include common.generateMap(
-    'semantic',
+    "semantic",
     vars.$semantic,
     (
       color: color,
@@ -34,7 +34,7 @@
 
   /** Token **/
   @include common.generateMap(
-    'surface',
+    "surface",
     vars.$surface,
     (
       color: color,
@@ -42,7 +42,7 @@
     )
   );
   @include common.generateMap(
-    'semantic-token',
+    "semantic-token",
     vars.$semantic-token,
     (
       color: color,
@@ -51,14 +51,14 @@
   );
 
   @include common.generateMap(
-    'icon',
+    "icon",
     vars.$icon,
     (
       icon-color: color,
     )
   );
   @include common.generateMap(
-    'text',
+    "text",
     vars.$text,
     (
       text-color: color,

@@ -1,20 +1,20 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { Meta, StoryObj } from "@storybook/angular";
 
-import { MegaoctetComponent } from './megaoctet.component';
+import { MegaoctetComponent } from "./megaoctet.component";
 
 export type StoryType = MegaoctetComponent;
 
 export default {
-  title: 'UI/Megaoctet',
+  title: "UI/Megaoctet",
   component: MegaoctetComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     octet: {
-      control: 'number',
+      control: "number",
     },
     icon: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
   args: {

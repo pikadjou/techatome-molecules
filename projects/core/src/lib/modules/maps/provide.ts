@@ -1,8 +1,10 @@
-import { APP_INITIALIZER, Provider } from '@angular/core';
+import { APP_INITIALIZER, Provider } from "@angular/core";
 
-import { GoogleMapsLoaderService } from './googleMapsLoader.service';
+import { GoogleMapsLoaderService } from "./googleMapsLoader.service";
 
-export function initializeGoogleMaps(loader: GoogleMapsLoaderService): () => Promise<void> {
+export function initializeGoogleMaps(
+  loader: GoogleMapsLoaderService
+): () => Promise<void> {
   return () => loader.load();
 }
 

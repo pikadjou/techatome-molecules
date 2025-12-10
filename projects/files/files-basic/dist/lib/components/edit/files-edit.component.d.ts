@@ -1,11 +1,11 @@
-import { AfterViewInit, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { InputSlider } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
-import { Observable } from 'rxjs';
-import ImageEditor from 'tui-image-editor';
+import { AfterViewInit, EventEmitter, OnDestroy, OnInit } from "@angular/core";
+import { InputSlider } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
+import { Observable } from "rxjs";
+import ImageEditor from "tui-image-editor";
 import * as i0 from "@angular/core";
-type Selection = 'line' | 'shape' | 'text' | '';
-type ShapeSelection = 'rect' | 'triangle' | 'circle' | 'line' | '';
+type Selection = "line" | "shape" | "text" | "";
+type ShapeSelection = "rect" | "triangle" | "circle" | "line" | "";
 export declare class FileEditComponent extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     imagePath: string;
     saveImage$: Observable<null>;
@@ -35,8 +35,8 @@ export declare class FileEditComponent extends TaBaseComponent implements OnInit
     changeShapeSelection(newSelection: ShapeSelection): void;
     undo(): void;
     redo(): void;
-    shape(type: 'rect' | 'circle' | 'triangle'): void;
-    drawing(type: 'LINE_DRAWING' | 'FREE_DRAWING'): void;
+    shape(type: "rect" | "circle" | "triangle"): void;
+    drawing(type: "LINE_DRAWING" | "FREE_DRAWING"): void;
     text(): void;
     changeColor(color: string): void;
     changeBrushSize(size: number): void;

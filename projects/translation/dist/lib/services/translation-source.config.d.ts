@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 export declare enum TranslationSourceType {
     GRAPHQL = "graphql",
     FILE = "file"

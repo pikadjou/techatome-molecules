@@ -1,18 +1,18 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { Culture } from '@ta/utils';
+import { Meta, StoryObj } from "@storybook/angular";
+import { Culture } from "@ta/utils";
 
-import { CultureComponent } from './culture.component';
+import { CultureComponent } from "./culture.component";
 
 export type StoryType = CultureComponent;
 
 export default {
-  title: 'UI/Culture',
+  title: "UI/Culture",
   component: CultureComponent,
-  tags: ['autodocs'],
-  render: args => ({ props: args }),
+  tags: ["autodocs"],
+  render: (args) => ({ props: args }),
   argTypes: {
     cultures: {
-      control: 'object',
+      control: "object",
     },
   },
   args: {

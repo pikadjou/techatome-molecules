@@ -1,9 +1,9 @@
-import edjsHTML from 'editorjs-html';
+import edjsHTML from "editorjs-html";
 
-import { WysiswgBlockData } from './public-api';
+import { WysiswgBlockData } from "./public-api";
 
 export const convertBlocksToHtml = (blocks: WysiswgBlockData[]) => {
   const edjsParser = edjsHTML();
 
-  return edjsParser.parse({ blocks }).join(' ');
+  return edjsParser.parse({ blocks }).join(" ");
 };

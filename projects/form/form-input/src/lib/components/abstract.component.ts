@@ -8,17 +8,20 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from '@angular/core';
-import { Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+} from "@angular/core";
+import { Validators } from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
 
-import { Observable, delay } from 'rxjs';
+import { Observable, delay } from "rxjs";
 
-import { InputBase } from '@ta/form-model';
-import { TaBaseComponent } from '@ta/utils';
+import { InputBase } from "@ta/form-model";
+import { TaBaseComponent } from "@ta/utils";
 
-@Component({ template: '' })
-export abstract class TaAbstractInputComponent<C extends InputBase<any>, V = unknown>
+@Component({ template: "" })
+export abstract class TaAbstractInputComponent<
+    C extends InputBase<any>,
+    V = unknown
+  >
   extends TaBaseComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
@@ -37,7 +40,7 @@ export abstract class TaAbstractInputComponent<C extends InputBase<any>, V = unk
   @Output()
   valueChanged = new EventEmitter<V>();
 
-  @ViewChild('focusedElement', { read: ElementRef })
+  @ViewChild("focusedElement", { read: ElementRef })
   focusedElement!: ElementRef;
 
   readonly validators = Validators;
@@ -55,7 +58,7 @@ export abstract class TaAbstractInputComponent<C extends InputBase<any>, V = unk
     }
     this._registerSubscription(
       this.input.changeValue$.subscribe({
-        next: value => this.onChange(value),
+        next: (value) => this.onChange(value),
       })
     );
   }

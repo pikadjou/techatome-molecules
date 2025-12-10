@@ -1,10 +1,10 @@
-@mixin mobileDevice($context: '.mobile-device') {
+@mixin mobileDevice($context: ".mobile-device") {
   :host-context(#{$context}) {
     @content;
   }
 }
 
-@mixin desktopDevice($context: '.desktop-device') {
+@mixin desktopDevice($context: ".desktop-device") {
   :host-context(#{$context}) {
     @content;
   }

@@ -1,4 +1,4 @@
-import { FileData } from './file-data';
+import { FileData } from "./file-data";
 
 export interface FileStructure {
   file: File | null;
@@ -26,8 +26,8 @@ export class TemporaryFile {
     return files.map<FileData>((file, index) => ({
       isLoading: true,
       id: index,
-      type: 'Image',
-      url: file.localUrl || '',
+      type: "Image",
+      url: file.localUrl || "",
     }));
   }
 }

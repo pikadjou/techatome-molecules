@@ -1,4 +1,4 @@
-import { IInputTextBox, InputTextBox } from './textbox';
+import { IInputTextBox, InputTextBox } from "./textbox";
 
 export class InputNumber extends InputTextBox<number> {
   override get value() {
@@ -9,6 +9,6 @@ export class InputNumber extends InputTextBox<number> {
   }
   constructor(options: IInputTextBox<number> = {}) {
     super(options);
-    this.type = 'number';
+    this.type = "number";
   }
 }

@@ -1,5 +1,5 @@
-import { TaIconType } from '@ta/icons';
-import { TaSizes } from '@ta/styles';
+import { TaIconType } from "@ta/icons";
+import { TaSizes } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class FileImageComponent {
     fileName: string;

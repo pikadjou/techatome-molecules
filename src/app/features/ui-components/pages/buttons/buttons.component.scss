@@ -1,60 +1,61 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .title-with-back {
   display: flex;
   align-items: center;
-  gap: common.get-var('spacing-md');
+  gap: common.get-var("spacing-md");
 }
 
 .back-button {
   background: none;
-  border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-  border-radius: common.get-var('border-radius-md');
-  padding: common.get-var('spacing-xs');
+  border: common.get-var("border-width") solid
+    common.get-var("color-neutral-300");
+  border-radius: common.get-var("border-radius-md");
+  padding: common.get-var("spacing-xs");
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all common.get-var('transition-duration') ease;
-  color: common.get-var('color-text-secondary');
+  transition: all common.get-var("transition-duration") ease;
+  color: common.get-var("color-text-secondary");
 
   &:hover {
-    background: common.get-var('color-neutral-100');
-    border-color: common.get-var('color-neutral-400');
-    color: common.get-var('color-text-primary');
+    background: common.get-var("color-neutral-100");
+    border-color: common.get-var("color-neutral-400");
+    color: common.get-var("color-text-primary");
   }
 
   mat-icon {
-    font-size: common.get-var('font-size-xl');
-    width: common.get-var('font-size-xl');
-    height: common.get-var('font-size-xl');
+    font-size: common.get-var("font-size-xl");
+    width: common.get-var("font-size-xl");
+    height: common.get-var("font-size-xl");
   }
 }
 
 .breadcrumb {
-  font-size: common.get-var('font-size-sm');
-  color: common.get-var('color-text-secondary');
-  
+  font-size: common.get-var("font-size-sm");
+  color: common.get-var("color-text-secondary");
+
   span:last-child {
-    color: common.get-var('color-text-primary');
+    color: common.get-var("color-text-primary");
     font-weight: 500;
   }
 }
 
 ta-title {
   margin: 0;
-  font-size: common.get-var('font-size-lg');
-  font-weight: common.get-var('font-weight-semibold');
-  color: common.get-var('color-text-primary');
+  font-size: common.get-var("font-size-lg");
+  font-weight: common.get-var("font-weight-semibold");
+  color: common.get-var("color-text-primary");
 }
 
-@media (max-width: common.get-var('breakpoint-md')) {
+@media (max-width: common.get-var("breakpoint-md")) {
   .title-with-back {
-    gap: common.get-var('spacing-sm');
+    gap: common.get-var("spacing-sm");
   }
 
   ta-title {
-    font-size: common.get-var('font-size-lg');
+    font-size: common.get-var("font-size-lg");
   }
 
   .breadcrumb {

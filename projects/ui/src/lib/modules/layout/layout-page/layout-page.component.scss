@@ -1,5 +1,5 @@
 @use "ta/utils/mixins/common";
 
 .layout-page-content {
-  padding: common.get-var(space,sm);
+  padding: common.get-var(space, sm);
 }

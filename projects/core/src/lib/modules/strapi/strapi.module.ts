@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { StrapiComponent } from './components/strapi/strapi.component';
+import { StrapiComponent } from "./components/strapi/strapi.component";
 
 /**
  * @deprecated Use standalone components instead.

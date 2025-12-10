@@ -2,11 +2,11 @@
 <label class="form-label" [class.mb-space-sm]="this.withMarginBottom">
   {{ input.label | translate }}
   @for (validator of this.input.validators; track validator) {
-    <span>
-      @if(validator === validators.required) {
-      <span> * </span>
-      }
-    </span>
+  <span>
+    @if(validator === validators.required) {
+    <span> * </span>
+    }
+  </span>
   }
 </label>
 }

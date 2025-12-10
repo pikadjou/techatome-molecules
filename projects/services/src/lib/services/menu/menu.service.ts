@@ -1,15 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 
-const isMinimizedKey = 'isMinimizedMenu';
+const isMinimizedKey = "isMinimizedMenu";
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaSharedMenuService {
-  public isMinimized$ = new BehaviorSubject<boolean>(localStorage.getItem(isMinimizedKey) === '1' ? true : false);
+  public isMinimized$ = new BehaviorSubject<boolean>(
+    localStorage.getItem(isMinimizedKey) === "1" ? true : false
+  );
 
   constructor() {
-    this.isMinimized$.subscribe(isMinimized => localStorage.setItem(isMinimizedKey, isMinimized ? '1' : '0'));
+    this.isMinimized$.subscribe((isMinimized) =>
+      localStorage.setItem(isMinimizedKey, isMinimized ? "1" : "0")
+    );
   }
 }

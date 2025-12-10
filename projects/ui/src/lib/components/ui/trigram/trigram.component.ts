@@ -1,10 +1,10 @@
-import { NgIf, NgStyle } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgIf, NgStyle } from "@angular/common";
+import { Component, Input } from "@angular/core";
 
 @Component({
-selector: 'ta-trigram',
-  templateUrl: './trigram.component.html',
-  styleUrls: ['./trigram.component.scss'],
+  selector: "ta-trigram",
+  templateUrl: "./trigram.component.html",
+  styleUrls: ["./trigram.component.scss"],
   standalone: true,
   imports: [NgIf, NgStyle],
 })

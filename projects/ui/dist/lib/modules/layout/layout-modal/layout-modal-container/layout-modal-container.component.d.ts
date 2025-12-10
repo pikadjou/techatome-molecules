@@ -1,8 +1,8 @@
-import { TemplateRef } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { TaBaseModal } from '@ta/utils';
-import { ModalStyle } from '../layout-modal.component';
+import { TemplateRef } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
+import { Observable } from "rxjs";
+import { TaBaseModal } from "@ta/utils";
+import { ModalStyle } from "../layout-modal.component";
 import * as i0 from "@angular/core";
 export interface TemplateModalContainerData {
     template: TemplateRef<any>;

@@ -1,5 +1,5 @@
-import { API, BlockToolConstructorOptions, InlineTool } from '@editorjs/editorjs';
-import { MenuConfig } from '@editorjs/editorjs/types/tools';
+import { API, BlockToolConstructorOptions, InlineTool } from "@editorjs/editorjs";
+import { MenuConfig } from "@editorjs/editorjs/types/tools";
 type User = {
     id: string;
     name: string;
@@ -10,7 +10,7 @@ export declare class TagTool implements InlineTool {
     static get sanitize(): {
         span: {
             class: boolean;
-            'data-user-id': boolean;
+            "data-user-id": boolean;
         };
     };
     readonly api: API;
@@ -18,7 +18,7 @@ export declare class TagTool implements InlineTool {
     dropdown: HTMLDivElement;
     templateTagSpan: HTMLSpanElement;
     private _currentTagSpan;
-    constructor({ api, config }: BlockToolConstructorOptions<any, {
+    constructor({ api, config, }: BlockToolConstructorOptions<any, {
         users: User[];
     }>);
     render(): MenuConfig;

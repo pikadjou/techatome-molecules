@@ -1,20 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { BenefitItemComponent } from './benefit-item.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { BenefitItemComponent } from "./benefit-item.component";
 
 const meta: Meta<BenefitItemComponent> = {
-  title: 'UI/Benefit Item',
+  title: "UI/Benefit Item",
   component: BenefitItemComponent,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     type: {
-      control: { type: 'select' },
-      options: ['success', 'warning', 'error'],
+      control: { type: "select" },
+      options: ["success", "warning", "error"],
     },
     text: {
-      control: { type: 'text' },
+      control: { type: "text" },
     },
   },
 };
@@ -24,22 +24,22 @@ export type StoryType = BenefitItemComponent;
 
 export const Success: StoryObj<BenefitItemComponent> = {
   args: {
-    type: 'success',
-    text: 'Accès complet aux fonctionnalités'
+    type: "success",
+    text: "Accès complet aux fonctionnalités",
   },
 };
 
 export const Warning: StoryObj<BenefitItemComponent> = {
   args: {
-    type: 'warning',
-    text: 'Certaines fonctionnalités sont limitées'
+    type: "warning",
+    text: "Certaines fonctionnalités sont limitées",
   },
 };
 
 export const Error: StoryObj<BenefitItemComponent> = {
   args: {
-    type: 'error',
-    text: 'Accès restreint aux données sensibles'
+    type: "error",
+    text: "Accès restreint aux données sensibles",
   },
 };
 

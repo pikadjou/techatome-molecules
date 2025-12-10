@@ -1,92 +1,98 @@
 <div class="categories-grid">
   @for (category of categories; track trackByCategory($index, category)) {
-    <ta-card 
-      class="category-card fade-in" 
-      (click)="onCategoryClick(category)"
-      (keydown.enter)="onCategoryClick(category)"
-      (keydown.space)="onCategoryClick(category)"
-      role="button"
-      tabindex="0"
-      [attr.aria-label]="'Ouvrir la catégorie ' + category.name"
-      [class.has-subcategories]="hasSubcategories(category)">
-      
-      <ta-card-header>
-        <ta-card-title>
-          <div class="category-title-content">
-            <mat-icon class="category-icon">folder</mat-icon>
-            <span>{{ category.name }}</span>
-            @if (hasSubcategories(category)) {
-              <mat-icon 
-                class="subcategory-indicator" 
-                matTooltip="Cette catégorie contient des sous-catégories">
-                account_tree
-              </mat-icon>
-            }
-          </div>
-        </ta-card-title>
-        
-        <div class="category-actions">
-          <ta-button 
-            variant="icon" 
-            (click)="onEditCategory(category, $event)"
-            [attr.aria-label]="'Éditer la catégorie ' + category.name"
-            matTooltip="Éditer cette catégorie"
-            matTooltipPosition="above">
-            <mat-icon>edit</mat-icon>
-          </ta-button>
-          <ta-button 
-            variant="icon" 
-            (click)="onAddSubCategory(category, $event)"
-            [attr.aria-label]="'Ajouter une sous-catégorie à ' + category.name"
-            matTooltip="Ajouter une sous-catégorie"
-            matTooltipPosition="above">
-            <mat-icon>add</mat-icon>
-          </ta-button>
-          <ta-button 
-            variant="icon" 
-            (click)="onViewDocuments(category, $event)"
-            [attr.aria-label]="'Voir les documents de ' + category.name"
-            matTooltip="Voir les documents"
-            matTooltipPosition="above">
-            <mat-icon>description</mat-icon>
-          </ta-button>
-        </div>
-      </ta-card-header>
-      
-      @if (category.description) {
-        <ta-card-content>
-          <ta-text class="category-description">{{ category.description }}</ta-text>
-        </ta-card-content>
-      }
-      
-      <ta-card-content class="category-meta">
-        <div class="meta-row">
-          @if (category.updatedAt) {
-            <ta-text variant="caption" class="text-muted">
-              <mat-icon class="meta-icon">schedule</mat-icon>
-              Mis à jour le {{ category.updatedAt | date:'short' }}
-            </ta-text>
-          }
-          @if (getDocumentCount(category) > 0) {
-            <ta-text variant="caption" class="document-count">
-              <mat-icon class="meta-icon">description</mat-icon>
-              {{ getDocumentCount(category) }} document{{ getDocumentCount(category) > 1 ? 's' : '' }}
-            </ta-text>
+  <ta-card
+    class="category-card fade-in"
+    (click)="onCategoryClick(category)"
+    (keydown.enter)="onCategoryClick(category)"
+    (keydown.space)="onCategoryClick(category)"
+    role="button"
+    tabindex="0"
+    [attr.aria-label]="'Ouvrir la catégorie ' + category.name"
+    [class.has-subcategories]="hasSubcategories(category)"
+  >
+    <ta-card-header>
+      <ta-card-title>
+        <div class="category-title-content">
+          <mat-icon class="category-icon">folder</mat-icon>
+          <span>{{ category.name }}</span>
+          @if (hasSubcategories(category)) {
+          <mat-icon
+            class="subcategory-indicator"
+            matTooltip="Cette catégorie contient des sous-catégories"
+          >
+            account_tree
+          </mat-icon>
           }
         </div>
-      </ta-card-content>
-    </ta-card>
-  }
-  
-  @if (categories.length === 0) {
-    <div class="empty-state">
-      <mat-icon class="empty-icon">folder_open</mat-icon>
-      <ta-title [level]="3">Aucune catégorie</ta-title>
-      <ta-text>Commencez par créer votre première catégorie pour organiser vos documents.</ta-text>
-      <ta-button (action)="onCreateFirstCategory()">
-        <mat-icon>add</mat-icon>
-        Créer une catégorie
-      </ta-button>
-    </div>
+      </ta-card-title>
+
+      <div class="category-actions">
+        <ta-button
+          variant="icon"
+          (click)="onEditCategory(category, $event)"
+          [attr.aria-label]="'Éditer la catégorie ' + category.name"
+          matTooltip="Éditer cette catégorie"
+          matTooltipPosition="above"
+        >
+          <mat-icon>edit</mat-icon>
+        </ta-button>
+        <ta-button
+          variant="icon"
+          (click)="onAddSubCategory(category, $event)"
+          [attr.aria-label]="'Ajouter une sous-catégorie à ' + category.name"
+          matTooltip="Ajouter une sous-catégorie"
+          matTooltipPosition="above"
+        >
+          <mat-icon>add</mat-icon>
+        </ta-button>
+        <ta-button
+          variant="icon"
+          (click)="onViewDocuments(category, $event)"
+          [attr.aria-label]="'Voir les documents de ' + category.name"
+          matTooltip="Voir les documents"
+          matTooltipPosition="above"
+        >
+          <mat-icon>description</mat-icon>
+        </ta-button>
+      </div>
+    </ta-card-header>
+
+    @if (category.description) {
+    <ta-card-content>
+      <ta-text class="category-description">{{ category.description }}</ta-text>
+    </ta-card-content>
+    }
+
+    <ta-card-content class="category-meta">
+      <div class="meta-row">
+        @if (category.updatedAt) {
+        <ta-text variant="caption" class="text-muted">
+          <mat-icon class="meta-icon">schedule</mat-icon>
+          Mis à jour le {{ category.updatedAt | date : "short" }}
+        </ta-text>
+        } @if (getDocumentCount(category) > 0) {
+        <ta-text variant="caption" class="document-count">
+          <mat-icon class="meta-icon">description</mat-icon>
+          {{ getDocumentCount(category) }} document{{
+            getDocumentCount(category) > 1 ? "s" : ""
+          }}
+        </ta-text>
+        }
+      </div>
+    </ta-card-content>
+  </ta-card>
+  } @if (categories.length === 0) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">folder_open</mat-icon>
+    <ta-title [level]="3">Aucune catégorie</ta-title>
+    <ta-text
+      >Commencez par créer votre première catégorie pour organiser vos
+      documents.</ta-text
+    >
+    <ta-button (action)="onCreateFirstCategory()">
+      <mat-icon>add</mat-icon>
+      Créer une catégorie
+    </ta-button>
+  </div>
   }
 </div>

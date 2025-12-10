@@ -1,24 +1,38 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
+import { AsyncPipe } from "@angular/common";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+  signal,
+} from "@angular/core";
 
-import { Observable, map } from 'rxjs';
+import { Observable, map } from "rxjs";
 
-import { FontIconComponent } from '@ta/icons';
-import { Menu, MenuComponent, MenuIcon } from '@ta/menu';
-import { TaSizes } from '@ta/styles';
-import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent, EmptyComponent, ErrorComponent, LoaderComponent, UserLogoData } from '@ta/ui';
-import { InlineProfileDataComponent } from '@ta/ui';
-import { StopPropagationDirective } from '@ta/utils';
-import { TaBaseComponent } from '@ta/utils';
+import { FontIconComponent } from "@ta/icons";
+import { Menu, MenuComponent, MenuIcon } from "@ta/menu";
+import { TaSizes } from "@ta/styles";
+import { TranslatePipe } from "@ta/translation";
+import {
+  ButtonComponent,
+  EmptyComponent,
+  ErrorComponent,
+  LoaderComponent,
+  UserLogoData,
+} from "@ta/ui";
+import { InlineProfileDataComponent } from "@ta/ui";
+import { StopPropagationDirective } from "@ta/utils";
+import { TaBaseComponent } from "@ta/utils";
 
-import { TA_AUTH_TOKEN } from '../../services/auth.service';
-import { TA_USER_SERVICE } from '../../services/user.service';
+import { TA_AUTH_TOKEN } from "../../services/auth.service";
+import { TA_USER_SERVICE } from "../../services/user.service";
 
 @Component({
-  selector: 'ta-my-account',
-  templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss'],
+  selector: "ta-my-account",
+  templateUrl: "./my-account.component.html",
+  styleUrls: ["./my-account.component.scss"],
   standalone: true,
   imports: [
     AsyncPipe,
@@ -69,13 +83,13 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
         return {
           user: {
             picture: up.picture,
-            lastname: up.lastname ?? '',
-            firstname: up.firstname ?? '',
+            lastname: up.lastname ?? "",
+            firstname: up.firstname ?? "",
           },
-          size: 'lg',
+          size: "lg",
         };
-      }),
-    ),
+      })
+    )
   );
   constructor() {
     super();
@@ -88,9 +102,9 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
           title: {
             second: data?.firstname || data?.lastname,
           },
-          email: data?.email || '',
+          email: data?.email || "",
         };
-      }),
+      })
     );
   }
 
@@ -109,19 +123,19 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
   public getDisconnectionMenu() {
     const menu = [
       new MenuIcon({
-        key: 'logout',
-        label: 'user.logout',
+        key: "logout",
+        label: "user.logout",
         order: 4,
-        style: 'dark',
-        icon: 'logout',
-        iconsColor: 'icon-color-icon-tertiary',
+        style: "dark",
+        icon: "logout",
+        iconsColor: "icon-color-icon-tertiary",
         callback: () => this.disconnect(),
       }),
     ];
 
     return new Menu({
       elements: menu.sort((a, b) => a.order - b.order),
-      direction: 'vertical',
+      direction: "vertical",
     });
   }
 

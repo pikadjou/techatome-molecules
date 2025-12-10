@@ -1,4 +1,4 @@
-import { MessageLevel } from '@ta/utils';
+import { MessageLevel } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class TypedMessageComponent {
     text: string;

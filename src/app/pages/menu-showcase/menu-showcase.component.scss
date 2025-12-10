@@ -1,61 +1,65 @@
-@use 'ta/utils/mixins/common';
+@use "ta/utils/mixins/common";
 
 .menu-showcase {
-  max-width: common.get-var('container-max-width', 1000px);
+  max-width: common.get-var("container-max-width", 1000px);
   margin: 0 auto;
 
   .demo-header {
     text-align: center;
-    margin-bottom: common.get-var('spacing-xl');
+    margin-bottom: common.get-var("spacing-xl");
 
     ta-title {
-      font-size: common.get-var('spacing-xl');
-      color: common.get-var('color-text-primary');
-      margin: 0 0 common.get-var('spacing-md') 0;
+      font-size: common.get-var("spacing-xl");
+      color: common.get-var("color-text-primary");
+      margin: 0 0 common.get-var("spacing-md") 0;
     }
 
     .subtitle {
-      color: common.get-var('color-text-secondary');
+      color: common.get-var("color-text-secondary");
       margin: 0;
     }
   }
 
   .demo-sections {
     .demo-section {
-      background: common.get-var('color-background-primary');
-      border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-      border-radius: common.get-var('border-radius-md');
-      padding: common.get-var('spacing-xl');
-      margin-bottom: common.get-var('spacing-xl');
+      background: common.get-var("color-background-primary");
+      border: common.get-var("border-width") solid
+        common.get-var("color-neutral-300");
+      border-radius: common.get-var("border-radius-md");
+      padding: common.get-var("spacing-xl");
+      margin-bottom: common.get-var("spacing-xl");
 
       ta-title {
-        font-size: 1.common.get-var('spacing-3xl');
-        color: common.get-var('color-text-primary');
-        margin: 0 0 common.get-var('spacing-lg') 0;
-        border-bottom: common.get-var('border-width-thick') solid common.get-var('color-neutral-200');
-        padding-bottom: common.get-var('spacing-xs');
+        font-size: 1common.get-var("spacing-3xl");
+        color: common.get-var("color-text-primary");
+        margin: 0 0 common.get-var("spacing-lg") 0;
+        border-bottom: common.get-var("border-width-thick") solid
+          common.get-var("color-neutral-200");
+        padding-bottom: common.get-var("spacing-xs");
       }
 
       .navigation-demo,
       .menu-demo,
       .quick-actions-demo,
       .context-menu-demo {
-        background: common.get-var('color-neutral-100');
-        border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-        border-radius: common.get-var('border-radius-sm');
-        padding: common.get-var('spacing-lg');
+        background: common.get-var("color-neutral-100");
+        border: common.get-var("border-width") solid
+          common.get-var("color-neutral-300");
+        border-radius: common.get-var("border-radius-sm");
+        padding: common.get-var("spacing-lg");
 
         .context-trigger {
-          padding: common.get-var('spacing-xl');
-          border: common.get-var('border-width-thick') dashed common.get-var('color-neutral-400');
-          border-radius: common.get-var('border-radius-sm');
+          padding: common.get-var("spacing-xl");
+          border: common.get-var("border-width-thick") dashed
+            common.get-var("color-neutral-400");
+          border-radius: common.get-var("border-radius-sm");
           text-align: center;
-          color: common.get-var('color-text-tertiary');
+          color: common.get-var("color-text-tertiary");
           cursor: pointer;
           user-select: none;
 
           &:hover {
-            background: common.get-var('color-neutral-300');
+            background: common.get-var("color-neutral-300");
           }
         }
       }
@@ -63,34 +67,35 @@
   }
 
   .demo-info {
-    background: common.get-var('color-neutral-100');
-    border: common.get-var('border-width') solid common.get-var('color-neutral-300');
-    border-radius: common.get-var('border-radius-md');
-    padding: common.get-var('spacing-xl');
-    margin-top: common.get-var('spacing-xl');
+    background: common.get-var("color-neutral-100");
+    border: common.get-var("border-width") solid
+      common.get-var("color-neutral-300");
+    border-radius: common.get-var("border-radius-md");
+    padding: common.get-var("spacing-xl");
+    margin-top: common.get-var("spacing-xl");
 
     ta-title {
-      font-size: 1.common.get-var('spacing-xl');
-      color: common.get-var('color-text-primary');
-      margin: 0 0 common.get-var('spacing-md') 0;
+      font-size: 1common.get-var("spacing-xl");
+      color: common.get-var("color-text-primary");
+      margin: 0 0 common.get-var("spacing-md") 0;
     }
 
     ta-text {
-      color: common.get-var('color-text-secondary');
-      line-height: common.get-var('line-height-normal');
-      margin: 0 0 common.get-var('spacing-md') 0;
+      color: common.get-var("color-text-secondary");
+      line-height: common.get-var("line-height-normal");
+      margin: 0 0 common.get-var("spacing-md") 0;
     }
 
     ul {
-      color: common.get-var('color-text-secondary');
-      line-height: common.get-var('line-height-normal');
+      color: common.get-var("color-text-secondary");
+      line-height: common.get-var("line-height-normal");
       margin: 0;
 
       li {
-        margin: common.get-var('spacing-xs') 0;
+        margin: common.get-var("spacing-xs") 0;
 
         strong {
-          color: common.get-var('color-text-primary');
+          color: common.get-var("color-text-primary");
         }
       }
     }

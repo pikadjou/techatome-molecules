@@ -1,45 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, tap } from "rxjs/operators";
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from "rxjs";
 
-import { MappingApiType, Request, TaBaseService } from '@ta/server';
+import { MappingApiType, Request, TaBaseService } from "@ta/server";
 
-import { TranslatedEnumeration } from '../common/dto/translated-enumeration';
-import { sortByTranslatedValue } from './translated-enumeration-helpers';
+import { TranslatedEnumeration } from "../common/dto/translated-enumeration";
+import { sortByTranslatedValue } from "./translated-enumeration-helpers";
 
 const apiRoutes: MappingApiType = {
   GetWontDoReasons: {
-    type: 'GET',
-    url: '{ApiUrl}/wontdoreason',
+    type: "GET",
+    url: "{ApiUrl}/wontdoreason",
   },
   GetWorkerJustifications: {
-    type: 'GET',
-    url: '{ApiUrl}/workerjustifications',
+    type: "GET",
+    url: "{ApiUrl}/workerjustifications",
   },
   GetIncidentTypes: {
-    type: 'GET',
-    url: '{ApiUrl}/incidenttypes',
+    type: "GET",
+    url: "{ApiUrl}/incidenttypes",
   },
   GetAbandonReasons: {
-    type: 'GET',
-    url: '{ApiUrl}/abandonreasons',
+    type: "GET",
+    url: "{ApiUrl}/abandonreasons",
   },
   GetFileTypes: {
-    type: 'GET',
-    url: '{ApiUrl}/FileTypes',
+    type: "GET",
+    url: "{ApiUrl}/FileTypes",
   },
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TaEnumerationService extends TaBaseService {
   public getAbandonReasons$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
   public wontDoReasons$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
   public incidentTypes$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
-  public workerJustifications$ = new BehaviorSubject<TranslatedEnumeration[]>([]);
+  public workerJustifications$ = new BehaviorSubject<TranslatedEnumeration[]>(
+    []
+  );
 
   private _getFileTypes$ = new BehaviorSubject<{
     [index: string]: TranslatedEnumeration[];
@@ -51,10 +53,12 @@ export class TaEnumerationService extends TaBaseService {
 
   public fetchWontDoReasons$(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(new Request({ type: 'GetWontDoReasons', content: {}, cacheTime: 60 }))
+      .request<TranslatedEnumeration[]>(
+        new Request({ type: "GetWontDoReasons", content: {}, cacheTime: 60 })
+      )
       .pipe(
-        filter(data => !!data),
-        tap(data => {
+        filter((data) => !!data),
+        tap((data) => {
           this.wontDoReasons$.next(data);
         })
       );
@@ -64,14 +68,14 @@ export class TaEnumerationService extends TaBaseService {
     return this._serverService
       .request<TranslatedEnumeration[]>(
         new Request({
-          type: 'GetWorkerJustifications',
+          type: "GetWorkerJustifications",
           content: {},
           cacheTime: 60,
         })
       )
       .pipe(
-        filter(data => !!data),
-        tap(data => {
+        filter((data) => !!data),
+        tap((data) => {
           this.workerJustifications$.next(data);
         })
       );
@@ -79,41 +83,49 @@ export class TaEnumerationService extends TaBaseService {
 
   public fetchIncidentTypes$(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(new Request({ type: 'GetIncidentTypes', content: {}, cacheTime: 60 }))
+      .request<TranslatedEnumeration[]>(
+        new Request({ type: "GetIncidentTypes", content: {}, cacheTime: 60 })
+      )
       .pipe(
-        filter(data => !!data),
-        tap(data => {
+        filter((data) => !!data),
+        tap((data) => {
           this.incidentTypes$.next(data);
         })
       );
   }
   public fetchAbandonReasons(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(new Request({ type: 'GetAbandonReasons', cacheTime: -1 }))
+      .request<TranslatedEnumeration[]>(
+        new Request({ type: "GetAbandonReasons", cacheTime: -1 })
+      )
       .pipe(
-        filter(myData => !!myData),
-        map(reasons => sortByTranslatedValue(reasons)),
-        tap(reasons => this.getAbandonReasons$.next(reasons))
+        filter((myData) => !!myData),
+        map((reasons) => sortByTranslatedValue(reasons)),
+        tap((reasons) => this.getAbandonReasons$.next(reasons))
       );
   }
 
   public getFileTypes = (id: number) => (fileTypeId: number) => {
-    return this._getFileTypes$.getValue()[id].find(document => document.id === fileTypeId);
+    return this._getFileTypes$
+      .getValue()
+      [id].find((document) => document.id === fileTypeId);
   };
 
   public getFileTypes$ = (id: number): Observable<TranslatedEnumeration[]> =>
     this._getFileTypes$.pipe(
-      map(data => data[id]),
-      filter(myData => !!myData),
-      map(fileTypes => sortByTranslatedValue(fileTypes))
+      map((data) => data[id]),
+      filter((myData) => !!myData),
+      map((fileTypes) => sortByTranslatedValue(fileTypes))
     );
 
   public fetchFileTypes(): Observable<TranslatedEnumeration[]> {
     return this._serverService
-      .request<TranslatedEnumeration[]>(new Request({ type: 'GetFileTypes', cacheTime: -1 }))
+      .request<TranslatedEnumeration[]>(
+        new Request({ type: "GetFileTypes", cacheTime: -1 })
+      )
       .pipe(
-        filter(myData => !!myData),
-        map(fileTypes => sortByTranslatedValue(fileTypes))
+        filter((myData) => !!myData),
+        map((fileTypes) => sortByTranslatedValue(fileTypes))
       );
   }
 }

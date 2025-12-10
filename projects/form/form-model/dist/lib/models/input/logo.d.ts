@@ -1,7 +1,7 @@
-import { Picture } from '@ta/services';
-import { FileData, FileStructure } from '@ta/utils';
-import { Observable } from 'rxjs';
-import { IInputBase, InputBase } from './base';
+import { Picture } from "@ta/services";
+import { FileData, FileStructure } from "@ta/utils";
+import { Observable } from "rxjs";
+import { IInputBase, InputBase } from "./base";
 export interface IInputLogo extends IInputBase<string> {
     availableFile$?: Observable<FileData>;
     update?: (data: FileStructure) => Promise<Picture>;

@@ -1,4 +1,4 @@
-import { PageInfo } from './pageInfo';
+import { PageInfo } from "./pageInfo";
 
 export interface ReponseQueryData<T> {
   pageInfo?: PageInfo;

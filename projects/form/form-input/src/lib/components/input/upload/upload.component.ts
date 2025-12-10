@@ -1,16 +1,30 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+  inject,
+} from "@angular/core";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
-import { FilePicker, PickedFile } from '@capawesome/capacitor-file-picker';
-import { TranslateModule } from '@ngx-translate/core';
+import { FilePicker, PickedFile } from "@capawesome/capacitor-file-picker";
+import { TranslateModule } from "@ngx-translate/core";
 
-import { InputUpload, InputUploadValue } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
-import { DocumentDto, TaDocumentsService } from '@ta/services';
-import { ButtonComponent, LinkComponent, LoaderComponent, MegaoctetComponent, TextComponent } from '@ta/ui';
-import { downloadFile, isNonNullable } from '@ta/utils';
+import { InputUpload, InputUploadValue } from "@ta/form-model";
+import { FontIconComponent } from "@ta/icons";
+import { DocumentDto, TaDocumentsService } from "@ta/services";
+import {
+  ButtonComponent,
+  LinkComponent,
+  LoaderComponent,
+  MegaoctetComponent,
+  TextComponent,
+} from "@ta/ui";
+import { downloadFile, isNonNullable } from "@ta/utils";
 
-import { TaAbstractInputComponent } from '../../abstract.component';
+import { TaAbstractInputComponent } from "../../abstract.component";
 
 type InProgressFile = {
   name: string;
@@ -19,9 +33,9 @@ type InProgressFile = {
 };
 
 @Component({
-  selector: 'ta-input-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss'],
+  selector: "ta-input-upload",
+  templateUrl: "./upload.component.html",
+  styleUrls: ["./upload.component.scss"],
   standalone: true,
   imports: [
     FontIconComponent,
@@ -34,10 +48,13 @@ type InProgressFile = {
     MatProgressBarModule,
   ],
 })
-export class UploadComponent extends TaAbstractInputComponent<InputUpload> implements OnInit {
+export class UploadComponent
+  extends TaAbstractInputComponent<InputUpload>
+  implements OnInit
+{
   @Output() uploadStatusChanged = new EventEmitter<boolean>();
 
-  @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
+  @ViewChild("fileDropRef", { static: false }) fileDropEl!: ElementRef;
 
   private readonly _documentsService = inject(TaDocumentsService);
   private _invervalId: number;
@@ -73,7 +90,7 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
           const documents = this._documentsService.getDocuments(ids);
           for (let doc of documents ?? []) {
             this.inProgressFiles.push({
-              name: doc.description ?? '',
+              name: doc.description ?? "",
               completed: doc,
               progress: 100,
             });
@@ -110,10 +127,10 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
         file.completed
           ? {
               id: file.completed.id,
-              name: file.completed.description ?? '',
+              name: file.completed.description ?? "",
               url: file.completed.url,
             }
-          : null,
+          : null
       )
       .filter(isNonNullable);
 
@@ -121,11 +138,15 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
   }
 
   public deleteInProgressFile(name: string) {
-    this.inProgressFiles = this.inProgressFiles.filter((file) => file.name !== name);
+    this.inProgressFiles = this.inProgressFiles.filter(
+      (file) => file.name !== name
+    );
     this._refreshUploadStatus();
   }
   public deleteFile(id: string) {
-    this.inProgressFiles = this.inProgressFiles.filter((file) => file.completed?.id !== id);
+    this.inProgressFiles = this.inProgressFiles.filter(
+      (file) => file.completed?.id !== id
+    );
     this._refreshUploadStatus();
   }
 
@@ -159,15 +180,15 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
       multiple: true,
       types: [
         // pdf
-        'application/pdf',
+        "application/pdf",
         // word
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/msword',
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/msword",
         // excel
-        'application/vnd.ms-excel',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         // text
-        'text/plain',
+        "text/plain",
       ],
     });
 
@@ -181,7 +202,9 @@ export class UploadComponent extends TaAbstractInputComponent<InputUpload> imple
   }
 
   private _refreshUploadStatus() {
-    const allComplete = this.inProgressFiles.every((file) => file.progress === 100);
+    const allComplete = this.inProgressFiles.every(
+      (file) => file.progress === 100
+    );
     this.uploadStatusChanged.emit(allComplete);
   }
 

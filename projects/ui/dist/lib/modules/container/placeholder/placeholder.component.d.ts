@@ -1,4 +1,4 @@
-import { Placeholder } from './config';
+import { Placeholder } from "./config";
 import * as i0 from "@angular/core";
 export declare class PlaceholderComponent {
     placeholder: Placeholder;

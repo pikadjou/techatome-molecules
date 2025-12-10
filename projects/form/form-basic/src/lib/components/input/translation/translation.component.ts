@@ -1,22 +1,37 @@
-import { NgIf, NgFor, NgClass, NgTemplateOutlet } from '@angular/common';
-import { FontIconComponent } from '@ta/icons';
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { MatMenuModule } from '@angular/material/menu';
+import { NgIf, NgFor, NgClass, NgTemplateOutlet } from "@angular/common";
+import { FontIconComponent } from "@ta/icons";
+import { Component, Input, OnInit, TemplateRef } from "@angular/core";
+import { MatMenuModule } from "@angular/material/menu";
 
-import { InputBase, InputTranslation } from '@ta/form-model';
-import { Menu, MenuBase, ToggleNavigationComponent } from '@ta/menu';
-import { TranslatePipe } from '@ta/translation';
-import { TitleComponent, LinkComponent, ButtonComponent } from '@ta/ui';
-import { TaBaseComponent, Culture, extractEnum } from '@ta/utils';
+import { InputBase, InputTranslation } from "@ta/form-model";
+import { Menu, MenuBase, ToggleNavigationComponent } from "@ta/menu";
+import { TranslatePipe } from "@ta/translation";
+import { TitleComponent, LinkComponent, ButtonComponent } from "@ta/ui";
+import { TaBaseComponent, Culture, extractEnum } from "@ta/utils";
 
 @Component({
-selector: 'ta-input-translation',
-  templateUrl: './translation.component.html',
-  styleUrls: ['./translation.component.scss'],
+  selector: "ta-input-translation",
+  templateUrl: "./translation.component.html",
+  styleUrls: ["./translation.component.scss"],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, NgTemplateOutlet, FontIconComponent, MatMenuModule, ToggleNavigationComponent, TitleComponent, LinkComponent, ButtonComponent, TranslatePipe],
+  imports: [
+    NgIf,
+    NgFor,
+    NgClass,
+    NgTemplateOutlet,
+    FontIconComponent,
+    MatMenuModule,
+    ToggleNavigationComponent,
+    TitleComponent,
+    LinkComponent,
+    ButtonComponent,
+    TranslatePipe,
+  ],
 })
-export class InputTranslationComponent extends TaBaseComponent implements OnInit {
+export class InputTranslationComponent
+  extends TaBaseComponent
+  implements OnInit
+{
   @Input()
   input!: InputTranslation;
   @Input()
@@ -75,7 +90,7 @@ export class InputTranslationComponent extends TaBaseComponent implements OnInit
   private _renderMenu() {
     this.cultureMenu = new Menu({
       elements: this.getKeys().map(
-        cul =>
+        (cul) =>
           new MenuBase({
             key: cul,
             label: cul,
@@ -84,7 +99,7 @@ export class InputTranslationComponent extends TaBaseComponent implements OnInit
             callback: () => this.changeSelection(cul),
           })
       ),
-      direction: 'horizontal',
+      direction: "horizontal",
     });
   }
 }

@@ -1,5 +1,5 @@
-import { TranslateLoader } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { TranslateLoader } from "@ngx-translate/core";
+import { Observable } from "rxjs";
 export declare class TaTranslationLoader implements TranslateLoader {
     private registry;
     constructor();
