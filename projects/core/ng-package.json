@@ -5,14 +5,9 @@
     "@angular",
     "date-fns",
     "ag-grid-",
-    "@googlemaps"
+    "@googlemaps",
+    "@edumetz16/angular-google-tag-manager"
   ],
-  "dest": "dist",
-
-  "lib": {
-    "entryFile": "src/public-api.ts",
-    "styleIncludePaths": ["../styles/src/style"]
-  },
   "assets": [
     {
       "glob": "**/*.json",
@@ -24,5 +19,11 @@
       "input": "src/modules/maps/i18n",
       "output": "i18n/maps"
     }
-  ]
+  ],
+  "dest": "dist",
+
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "styleIncludePaths": ["../styles/src/style"]
+  }
 }

@@ -1,6 +1,6 @@
 import { NgIf, NgFor, NgTemplateOutlet, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { EventEmitter, Output, Input, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, inject, NgModule } from '@angular/core';
+import { EventEmitter, Output, Input, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, inject, NgModule, importProvidersFrom } from '@angular/core';
 import { Subject, combineLatest, of } from 'rxjs';
 import { FontIconComponent, TaIconsModule } from '@ta/icons';
 import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent, LayoutModalComponent, openModal, TaLayoutModule, TaUiModule, TaCardModule, TaContainerModule, TaListModule } from '@ta/ui';
@@ -25,6 +25,7 @@ import { FilesDisplayComponent, TaFilesExtendedModule } from '@ta/files-extended
 import { map } from 'rxjs/operators';
 import * as i1$2 from '@ta/services';
 import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
+import { GoogleTagManagerModule } from '@edumetz16/angular-google-tag-manager';
 
 class FiltersFormComponent extends TaBaseComponent {
     constructor() {
@@ -1001,6 +1002,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
+const provideGTM = (config) => [
+    importProvidersFrom(GoogleTagManagerModule.forRoot({
+        id: config.gtmId,
+    })),
+];
+
 /*
  * Public API Surface of core
  */
@@ -1009,5 +1016,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { DocumentsComponent, FilterContainerComponent, FilterDisplayerComponent, FiltersContainerComponent, FiltersTagComponent, MapComponent, SearchDisplayerComponent, SearchHistoryDisplayerComponent, TaCoreModule, TextToClipboardComponent, UploadDocumentModal, initializeGoogleMaps, provideGoogleMaps };
+export { DocumentsComponent, FilterContainerComponent, FilterDisplayerComponent, FiltersContainerComponent, FiltersTagComponent, MapComponent, SearchDisplayerComponent, SearchHistoryDisplayerComponent, TaCoreModule, TextToClipboardComponent, UploadDocumentModal, initializeGoogleMaps, provideGTM, provideGoogleMaps };
 //# sourceMappingURL=ta-core.mjs.map
