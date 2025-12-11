@@ -26,6 +26,7 @@ import { map } from 'rxjs/operators';
 import * as i1$2 from '@ta/services';
 import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
 import { GoogleTagManagerModule } from '@edumetz16/angular-google-tag-manager';
+export { GoogleTagManagerService as TaGoogleTagManagerService } from '@edumetz16/angular-google-tag-manager';
 
 class FiltersFormComponent extends TaBaseComponent {
     constructor() {
