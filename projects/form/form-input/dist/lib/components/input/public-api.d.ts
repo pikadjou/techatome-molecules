@@ -4,6 +4,7 @@ export * from "./date-picker/date-picker.component";
 export * from "./dropdown/dropdown.component";
 export * from "./label/label.component";
 export * from "./radio/radio.component";
+export * from "./rating/rating.component";
 export * from "./slider/slider.component";
 export * from "./switch/switch.component";
 export * from "./textarea/textarea.component";

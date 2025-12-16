@@ -17,6 +17,7 @@ export * from "./input/panel";
 export * from "./input/password";
 export * from "./input/phone";
 export * from "./input/radio";
+export * from "./input/rating";
 export * from "./input/schema";
 export * from "./input/slider";
 export * from "./input/switch";
