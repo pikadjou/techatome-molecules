@@ -1,5 +1,5 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
 
 .label-container {
   padding: common.get-var(space, sm) common.get-var(space, md);
@@ -36,19 +36,19 @@
 }
 
 .label-success {
-  color: common.get-var(text, invert, primary);
+  color: common.get-var(neutral, white);
   background: common.get-var(surface, success);
   border-color: common.get-var(border, success);
 }
 
 .label-warning {
-  color: common.get-var(text, warning);
+  color: common.get-var(neutral, white);
   background: common.get-var(surface, warning);
   border-color: common.get-var(border, warning);
 }
 
 .label-alert {
-  color: common.get-var(text, alert);
+  color: common.get-var(neutral, white);
   background: common.get-var(surface, alert);
   border-color: common.get-var(border, alert);
 }

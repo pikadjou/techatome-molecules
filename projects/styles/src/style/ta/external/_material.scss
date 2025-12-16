@@ -1,30 +1,30 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use "@angular/material" as mat;
-@use "sass:map";
+@use '@angular/material' as mat;
+@use 'sass:map';
 
-@use "ta/vars";
-@use "ta/utils/mixins/common";
+@use 'ta/vars';
+@use 'ta/utils/mixins/common';
 
 @include mat.core();
 
 $ta-colours: (
-  0: map.get($neutral, white),
-  10: map.get($brand, 100),
-  20: map.get($brand, 200),
-  25: map.get($brand, 200),
-  30: map.get($brand, 300),
-  35: map.get($brand, 300),
-  40: map.get($brand, 400),
-  50: map.get($brand, 500),
-  60: map.get($brand, 600),
-  70: map.get($brand, 700),
-  80: map.get($brand, 800),
-  90: map.get($brand, 900),
-  95: map.get($brand, 900),
-  98: map.get($brand, 900),
-  99: map.get($brand, 900),
-  100: map.get($neutral, black),
+  0: map.get(vars.$neutral, white),
+  10: map.get(vars.$brand, 100),
+  20: map.get(vars.$brand, 200),
+  25: map.get(vars.$brand, 200),
+  30: map.get(vars.$brand, 300),
+  35: map.get(vars.$brand, 300),
+  40: map.get(vars.$brand, 400),
+  50: map.get(vars.$brand, 500),
+  60: map.get(vars.$brand, 600),
+  70: map.get(vars.$brand, 700),
+  80: map.get(vars.$brand, 800),
+  90: map.get(vars.$brand, 900),
+  95: map.get(vars.$brand, 900),
+  98: map.get(vars.$brand, 900),
+  99: map.get(vars.$brand, 900),
+  100: map.get(vars.$neutral, black),
   secondary: (
     0: #000000,
     10: #131c2b,
@@ -68,7 +68,7 @@ $ta-colours: (
     24: #39393d,
     87: #dbdade,
     92: #e9e8ec,
-    94: map.get($neutral, 100),
+    94: map.get(vars.$neutral, 100),
     96: #f5f3f7,
   ),
   neutral-variant: (
@@ -121,5 +121,6 @@ $ta-theme: mat.define-theme(
 );
 
 :root {
-  @include mat.all-component-themes($ta-theme);
+  // Charger uniquement le thème du datepicker au lieu de tous les composants
+  @include mat.datepicker-theme($ta-theme);
 }
