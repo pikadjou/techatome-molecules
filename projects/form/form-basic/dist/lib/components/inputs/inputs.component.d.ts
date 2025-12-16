@@ -1,8 +1,8 @@
-import { FormControl, FormGroupDirective, NgForm } from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material/core";
-import { InputBase } from "@ta/form-model";
-import { TaBaseComponent } from "@ta/utils";
-import { Observable } from "rxjs";
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { Observable } from 'rxjs';
+import { InputBase } from '@ta/form-model';
+import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean;

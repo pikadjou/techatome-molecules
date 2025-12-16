@@ -35,6 +35,7 @@ export * from "./progress-bar/progress-bar.component";
 export * from "./progress/circle/progress-circle/progress-circle.component";
 export * from "./progress/progress-bar-data/progress-bar-data.component";
 export * from "./pwa/pwa.component";
+export * from "./rating/rating.component";
 export * from "./segmented-tab-items/segmented-tab-item";
 export * from "./text/text.component";
 export * from "./time-ago/time-ago.component";

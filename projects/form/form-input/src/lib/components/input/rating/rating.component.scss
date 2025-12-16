@@ -1,1 +1,7 @@
-// Styles pour le composant rating
+:host {
+  display: block;
+
+  ta-rating {
+    display: inline-block;
+  }
+}

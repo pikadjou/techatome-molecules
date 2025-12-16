@@ -1,0 +1,32 @@
+.ta-rating-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
+}
+
+.ta-rating-star {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.2s ease;
+
+  &:not(.ta-rating-star--readonly):hover {
+    transform: scale(1.1);
+  }
+
+  &:not(.ta-rating-star--readonly):active {
+    transform: scale(0.95);
+  }
+}
+
+.ta-rating-star-bg,
+.ta-rating-star-fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.ta-rating-star-fg {
+  transition: clip-path 0.2s ease;
+}

@@ -437,12 +437,11 @@ class InputPhone extends InputBase {
 class InputRating extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = "rating";
-        this.max = options.max || 5;
-        this.icon = options.icon || "star";
-        this.iconFilled = options.iconFilled || "star_fill";
-        this.allowHalf = options.allowHalf || false;
-        this.readonly = options.readonly || false;
+        this.controlType = 'rating';
+        this.max = options.max ?? 5;
+        this.size = options.size ?? 24;
+        this.allowHalf = options.allowHalf ?? false;
+        this.readonly = options.readonly ?? false;
     }
 }
 

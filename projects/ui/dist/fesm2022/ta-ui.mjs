@@ -1448,6 +1448,121 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Input
             }] } });
 
+class RatingComponent {
+    constructor() {
+        /**
+         * Current rating value (supports decimals for partial stars)
+         */
+        this.value = 0;
+        /**
+         * Maximum number of stars
+         */
+        this.max = 5;
+        /**
+         * Size of the stars in pixels
+         */
+        this.size = 24;
+        /**
+         * Color of filled stars
+         */
+        this.color = '#fbbf24';
+        /**
+         * Color of empty stars
+         */
+        this.emptyColor = '#d1d5db';
+        /**
+         * Read-only mode (no click interactions)
+         */
+        this.readonly = false;
+        /**
+         * Show hover effect
+         */
+        this.showHover = true;
+        /**
+         * Emits the new rating value when a star is clicked
+         */
+        this.ratingChange = new EventEmitter();
+        /**
+         * Emits when hovering over a star
+         */
+        this.hoverChange = new EventEmitter();
+        this.hoveredRating = null;
+    }
+    get stars() {
+        return Array.from({ length: this.max }, (_, i) => i + 1);
+    }
+    /**
+     * Get fill percentage for a star (0-100)
+     */
+    getStarFillPercentage(star) {
+        const effectiveValue = this.hoveredRating ?? this.value;
+        if (effectiveValue >= star) {
+            return 100;
+        }
+        else if (effectiveValue > star - 1) {
+            return (effectiveValue - (star - 1)) * 100;
+        }
+        return 0;
+    }
+    /**
+     * Handle star click
+     */
+    onStarClick(star) {
+        if (!this.readonly) {
+            this.value = star;
+            this.ratingChange.emit(star);
+        }
+    }
+    /**
+     * Handle star hover
+     */
+    onStarHover(star) {
+        if (!this.readonly && this.showHover) {
+            this.hoveredRating = star;
+            this.hoverChange.emit(star);
+        }
+    }
+    /**
+     * Handle mouse leave
+     */
+    onMouseLeave() {
+        this.hoveredRating = null;
+        if (!this.readonly && this.showHover) {
+            this.hoverChange.emit(this.value);
+        }
+    }
+    /**
+     * Get cursor style
+     */
+    getCursorStyle() {
+        return this.readonly ? 'default' : 'pointer';
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RatingComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: RatingComponent, isStandalone: true, selector: "ta-rating", inputs: { value: "value", max: "max", size: "size", color: "color", emptyColor: "emptyColor", readonly: "readonly", showHover: "showHover" }, outputs: { ratingChange: "ratingChange", hoverChange: "hoverChange" }, ngImport: i0, template: "<div class=\"ta-rating-container\" (mouseleave)=\"this.onMouseLeave()\" [ngStyle]=\"{ cursor: this.getCursorStyle() }\">\n  @for (star of this.stars; track star) {\n    <div\n      class=\"ta-rating-star\"\n      [ngClass]=\"{ 'ta-rating-star--readonly': readonly }\"\n      [ngStyle]=\"{ width: size + 'px', height: size + 'px' }\"\n      (click)=\"this.onStarClick(star)\"\n      (mouseenter)=\"this.onStarHover(star)\"\n    >\n      <!-- Background star (empty) -->\n      <svg\n        class=\"ta-rating-star-bg\"\n        viewBox=\"0 0 24 24\"\n        [attr.width]=\"size\"\n        [attr.height]=\"size\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n      >\n        <path\n          [attr.fill]=\"emptyColor\"\n          d=\"M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z\"\n        />\n      </svg>\n\n      <!-- Foreground star (filled) with clip-path for partial fill -->\n      <svg\n        class=\"ta-rating-star-fg\"\n        viewBox=\"0 0 24 24\"\n        [attr.width]=\"size\"\n        [attr.height]=\"size\"\n        [ngStyle]=\"{ 'clip-path': 'inset(0 ' + (100 - this.getStarFillPercentage(star)) + '% 0 0)' }\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n      >\n        <path\n          [attr.fill]=\"color\"\n          d=\"M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z\"\n        />\n      </svg>\n    </div>\n  }\n</div>\n", styles: [".ta-rating-container{display:inline-flex;align-items:center;gap:4px;-webkit-user-select:none;user-select:none}.ta-rating-star{position:relative;display:inline-block;transition:transform .2s ease}.ta-rating-star:not(.ta-rating-star--readonly):hover{transform:scale(1.1)}.ta-rating-star:not(.ta-rating-star--readonly):active{transform:scale(.95)}.ta-rating-star-bg,.ta-rating-star-fg{position:absolute;top:0;left:0;pointer-events:none}.ta-rating-star-fg{transition:clip-path .2s ease}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RatingComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-rating', standalone: true, imports: [NgFor, NgClass, NgStyle], template: "<div class=\"ta-rating-container\" (mouseleave)=\"this.onMouseLeave()\" [ngStyle]=\"{ cursor: this.getCursorStyle() }\">\n  @for (star of this.stars; track star) {\n    <div\n      class=\"ta-rating-star\"\n      [ngClass]=\"{ 'ta-rating-star--readonly': readonly }\"\n      [ngStyle]=\"{ width: size + 'px', height: size + 'px' }\"\n      (click)=\"this.onStarClick(star)\"\n      (mouseenter)=\"this.onStarHover(star)\"\n    >\n      <!-- Background star (empty) -->\n      <svg\n        class=\"ta-rating-star-bg\"\n        viewBox=\"0 0 24 24\"\n        [attr.width]=\"size\"\n        [attr.height]=\"size\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n      >\n        <path\n          [attr.fill]=\"emptyColor\"\n          d=\"M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z\"\n        />\n      </svg>\n\n      <!-- Foreground star (filled) with clip-path for partial fill -->\n      <svg\n        class=\"ta-rating-star-fg\"\n        viewBox=\"0 0 24 24\"\n        [attr.width]=\"size\"\n        [attr.height]=\"size\"\n        [ngStyle]=\"{ 'clip-path': 'inset(0 ' + (100 - this.getStarFillPercentage(star)) + '% 0 0)' }\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n      >\n        <path\n          [attr.fill]=\"color\"\n          d=\"M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z\"\n        />\n      </svg>\n    </div>\n  }\n</div>\n", styles: [".ta-rating-container{display:inline-flex;align-items:center;gap:4px;-webkit-user-select:none;user-select:none}.ta-rating-star{position:relative;display:inline-block;transition:transform .2s ease}.ta-rating-star:not(.ta-rating-star--readonly):hover{transform:scale(1.1)}.ta-rating-star:not(.ta-rating-star--readonly):active{transform:scale(.95)}.ta-rating-star-bg,.ta-rating-star-fg{position:absolute;top:0;left:0;pointer-events:none}.ta-rating-star-fg{transition:clip-path .2s ease}\n"] }]
+        }], propDecorators: { value: [{
+                type: Input
+            }], max: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }], color: [{
+                type: Input
+            }], emptyColor: [{
+                type: Input
+            }], readonly: [{
+                type: Input
+            }], showHover: [{
+                type: Input
+            }], ratingChange: [{
+                type: Output
+            }], hoverChange: [{
+                type: Output
+            }] } });
+
 class ToggleCardComponent {
     constructor() {
         this.title = "";
@@ -3180,5 +3295,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
+export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, PwaComponent, RatingComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

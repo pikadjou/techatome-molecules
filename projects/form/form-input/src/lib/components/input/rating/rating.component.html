@@ -1,1 +1,11 @@
-<star-rating [starType]="'svg'" [rating]="2.63"></star-rating>
+<ta-input-layout [input]="this.input">
+  <ta-rating
+    [value]="this.input.value || 0"
+    [max]="this.input.max"
+    [size]="this.input.size"
+    [readonly]="this.input.readonly || this.input.formControl?.disabled || false"
+    [showHover]="!this.input.readonly"
+    (ratingChange)="this.onRatingChange($event)"
+  >
+  </ta-rating>
+</ta-input-layout>

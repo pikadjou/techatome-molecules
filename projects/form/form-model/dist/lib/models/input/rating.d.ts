@@ -1,16 +1,14 @@
-import { IInputBase, InputBase } from "./base";
+import { IInputBase, InputBase } from './base';
 export interface IInputRating<T> extends IInputBase<T> {
     max?: number;
-    icon?: string;
-    iconFilled?: string;
+    size?: number;
     allowHalf?: boolean;
     readonly?: boolean;
 }
 export declare class InputRating<T = number> extends InputBase<T> {
     controlType: string;
     max: number;
-    icon?: string;
-    iconFilled?: string;
+    size: number;
     allowHalf: boolean;
     readonly: boolean;
     constructor(options?: IInputRating<T>);
