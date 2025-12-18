@@ -28,6 +28,7 @@ export * from "./file-image/file-image.component";
 export * from "./hour-date-line/hour-date-line.component";
 export * from "./label/label.component";
 export * from "./link/link.component";
+export * from "./progress/progress.component";
 export * from "./logo/logo.component";
 export * from "./megaoctet/megaoctet.component";
 export * from "./new/new.component";
