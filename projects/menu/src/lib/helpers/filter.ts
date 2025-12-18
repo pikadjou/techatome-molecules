@@ -1,9 +1,9 @@
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Menu, MenuBase } from "../models/public-api";
+import { Menu, MenuBase } from '../models/public-api';
 
 export class FilterHelper {
-  public refresh$ = new BehaviorSubject("");
+  public refresh$ = new BehaviorSubject('');
 
   get filter() {
     return this._filter;
@@ -13,9 +13,10 @@ export class FilterHelper {
 
     this.refresh$.next(this._filter);
   }
-  private _filter: string = "";
+  private _filter: string = '';
 
   private _items: {
+    key?: string;
     label: string;
     defaultOpen: boolean;
     order?: number;
@@ -25,6 +26,7 @@ export class FilterHelper {
   }[];
   constructor(
     items: {
+      key?: string;
       label: string;
       defaultOpen: boolean;
       order?: number;
@@ -37,8 +39,8 @@ export class FilterHelper {
   }
   public getMenu() {
     return new Menu({
-      elements: this._items.map((item) => {
-        const key = this._getKey(item.label);
+      elements: this._items.map(item => {
+        const key = item.key ?? this._getKey(item.label);
         return new MenuBase({
           key: key,
           label: item.label,
@@ -50,7 +52,7 @@ export class FilterHelper {
           options: item.options,
         });
       }),
-      direction: "responsive",
+      direction: 'responsive',
     });
   }
 
@@ -63,9 +65,7 @@ export class FilterHelper {
     }[]
   ) {
     for (const item of data) {
-      const itemToModify = this._items.find(
-        (x) => this._getKey(x.label) === item.key
-      );
+      const itemToModify = this._items.find(x => this._getKey(x.label) === item.key);
       if (itemToModify) {
         itemToModify.translationData = item.translationData;
         itemToModify.options = item.options;
@@ -77,7 +77,7 @@ export class FilterHelper {
   }
 
   private _getKey(label: string): string {
-    const lastDot = label.lastIndexOf(".");
+    const lastDot = label.lastIndexOf('.');
     if (lastDot !== -1) {
       return label.substring(lastDot + 1);
     } else {

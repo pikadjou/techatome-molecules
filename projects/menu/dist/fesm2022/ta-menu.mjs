@@ -698,14 +698,14 @@ class FilterHelper {
         this.refresh$.next(this._filter);
     }
     constructor(items) {
-        this.refresh$ = new BehaviorSubject("");
-        this._filter = "";
+        this.refresh$ = new BehaviorSubject('');
+        this._filter = '';
         this._items = items;
     }
     getMenu() {
         return new Menu({
-            elements: this._items.map((item) => {
-                const key = this._getKey(item.label);
+            elements: this._items.map(item => {
+                const key = item.key ?? this._getKey(item.label);
                 return new MenuBase({
                     key: key,
                     label: item.label,
@@ -717,12 +717,12 @@ class FilterHelper {
                     options: item.options,
                 });
             }),
-            direction: "responsive",
+            direction: 'responsive',
         });
     }
     updateMenuDatas(data) {
         for (const item of data) {
-            const itemToModify = this._items.find((x) => this._getKey(x.label) === item.key);
+            const itemToModify = this._items.find(x => this._getKey(x.label) === item.key);
             if (itemToModify) {
                 itemToModify.translationData = item.translationData;
                 itemToModify.options = item.options;
@@ -733,7 +733,7 @@ class FilterHelper {
         }
     }
     _getKey(label) {
-        const lastDot = label.lastIndexOf(".");
+        const lastDot = label.lastIndexOf('.');
         if (lastDot !== -1) {
             return label.substring(lastDot + 1);
         }
