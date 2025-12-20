@@ -1,4 +1,4 @@
-@use "ta/utils/mixins/flex";
+@use 'ta/utils/mixins/flex';
 
 @mixin generateFlex() {
   .flex {
@@ -39,5 +39,8 @@
   }
   .flex-full {
     @include flex.flex-full();
+  }
+  .flex-fill {
+    @include flex.flex-fill();
   }
 }

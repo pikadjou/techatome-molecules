@@ -64,3 +64,7 @@
   display: flex;
   flex: 1 1 100%;
 }
+@mixin flex-fill() {
+  display: flex;
+  flex: 1 1 auto;
+}
