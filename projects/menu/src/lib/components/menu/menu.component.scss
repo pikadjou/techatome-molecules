@@ -1,10 +1,10 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 @mixin menu-item-horizontal() {
-  li {
-    flex: 1;
-  }
+  gap: common.get-var(space, md);
+  @include fonts.fontSizeBody(md, true);
 }
 
 @mixin menu-item-vertical() {

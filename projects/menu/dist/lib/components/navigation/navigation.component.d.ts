@@ -1,21 +1,21 @@
-import { OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { TaAbstractComponent } from "@ta/utils";
-import { MenuAction } from "../../models/menu/item/action";
-import { MenuBase } from "../../models/menu/item/base";
-import { Menu, MenuIcon } from "../../models/public-api";
-import { TaSizes } from "@ta/styles";
+import { OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TaSizes } from '@ta/styles';
+import { TaAbstractComponent } from '@ta/utils';
+import { MenuAction } from '../../models/menu/item/action';
+import { MenuBase } from '../../models/menu/item/base';
+import { Menu, MenuIcon } from '../../models/public-api';
 import * as i0 from "@angular/core";
 export declare class NavigationComponent extends TaAbstractComponent implements OnInit {
     menu: Menu;
-    container: "tags" | "tab";
+    container: 'tags' | 'tab' | 'submenu';
     swiper: boolean;
     options: {
         spaceElement?: TaSizes | null;
     };
     manuallyChanged$?: Observable<string>;
-    readonly hasFontIcon: (item: MenuBase | Menu<MenuBase> | MenuIcon) => boolean;
-    readonly getFontIcon: (item: MenuBase | Menu<MenuBase> | MenuIcon) => string;
+    readonly hasFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => boolean;
+    readonly getFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => string;
     readonly typeItem: {
         item: MenuBase | MenuAction | MenuIcon;
     };
