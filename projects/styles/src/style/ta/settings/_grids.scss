@@ -1,8 +1,8 @@
 // based on https://github.com/CodyReeves/css-grid-system-library/blob/production/scss/class-creators/_grid.scss
 
-@use "ta/vars";
-@use "ta/settings/common";
-@use "ta/utils/mixins/mediaQueriesRanges";
+@use 'ta/vars';
+@use 'ta/settings/common';
+@use 'ta/utils/mixins/mediaQueriesRanges';
 
 @mixin generateGrids() {
   .grid {
@@ -194,5 +194,13 @@
     //     }
     //   }
     // }
+  }
+  .grid-one-half {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    > * {
+      grid-column: span 6;
+    }
   }
 }
