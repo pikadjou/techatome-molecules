@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 .element-list {
   gap: common.get-var(space, md);
@@ -71,6 +71,39 @@
       .item {
         color: common.get-var(text, brand, primary);
         border-bottom-color: common.get-var(border, brand);
+      }
+    }
+  }
+}
+.submenu {
+  padding: common.get-var(space, xs);
+  background-color: common.get-var(surface, default);
+  border-radius: common.get-var(radius, rounded);
+  .element-list {
+    gap: common.get-var(space, xs);
+
+    @include flex.space-between();
+    .element {
+      @include flex.flex-fill();
+    }
+  }
+  .item-container {
+    .item {
+      @include flex.flex-row();
+      @include flex.align-center();
+      padding: common.get-var(space, sm);
+      border-radius: common.get-var(radius, rounded);
+
+      @include fonts.fontSizeBody(md);
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+    &.active {
+      .item {
+        background-color: common.get-var(surface, primary);
+        color: common.get-var(text, brand, primary);
       }
     }
   }

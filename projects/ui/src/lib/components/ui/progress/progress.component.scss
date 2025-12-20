@@ -1,6 +1,10 @@
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/flex';
 
+:host {
+  @include flex.flex-full();
+}
 .progress-container {
   position: relative;
   width: 100%;
@@ -48,7 +52,7 @@
 
 .progress-default {
   .progress-bar {
-    background: common.get-var(surface, default);
+    background: common.get-var(surface, brand, primary);
   }
 }
 
@@ -57,7 +61,7 @@
     background: common.get-var(neutral, 600);
   }
   .progress-label {
-    color: common.get-var(text, body);
+    color: common.get-var(neutral, white);
   }
 }
 
@@ -75,7 +79,7 @@
     background: common.get-var(surface, warning);
   }
   .progress-label {
-    color: common.get-var(neutral, white);
+    color: common.get-var(neutral, black);
   }
 }
 
@@ -84,7 +88,7 @@
     background: common.get-var(surface, alert);
   }
   .progress-label {
-    color: common.get-var(neutral, white);
+    color: common.get-var(neutral, black);
   }
 }
 

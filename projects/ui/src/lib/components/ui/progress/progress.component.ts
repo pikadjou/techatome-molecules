@@ -1,21 +1,21 @@
-import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
-import { ColorType, TaSizes } from "@ta/styles";
+import { ColorType, TaSizes } from '@ta/styles';
 
 @Component({
-  selector: "ta-progress",
-  templateUrl: "./progress.component.html",
-  styleUrls: ["./progress.component.scss"],
+  selector: 'ta-progress',
+  templateUrl: './progress.component.html',
+  styleUrls: ['./progress.component.scss'],
   standalone: true,
   imports: [NgClass],
 })
 export class ProgressComponent {
   @Input()
-  size: TaSizes = "md";
+  size: TaSizes = 'md';
 
   @Input()
-  type: ColorType = "default";
+  type: ColorType = 'default';
 
   @Input()
   value: number = 0;
@@ -24,8 +24,7 @@ export class ProgressComponent {
     return `progress-${this.type} ${this.size}`;
   }
 
-  public getProgressStyle(): { width: string } {
-    const clampedValue = Math.max(0, Math.min(100, this.value));
-    return { width: `${clampedValue}%` };
+  public getProgressStyle() {
+    return { width: `${Math.max(0, Math.min(100, this.value))}%` };
   }
 }
