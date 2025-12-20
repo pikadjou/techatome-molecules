@@ -1,0 +1,39 @@
+<div class="space-between align-center g-space-md">
+  <div class="list-tag flex-start g-space-sm">
+    <div class="group-tag flex-start g-space-xs align-center">
+      @if (this.group) {
+        {{ 'grid.core.groupBy' | translate }}:
+        <ta-badge [value]="this.group" type="primary" icon="close" (clickAction)="this.removeGroup()"></ta-badge>
+      }
+    </div>
+
+    @for (tag of this.activeFilters; track tag.key) {
+      <div class="item-tag flex-start g-space-xs align-center">
+        <div class="tag-title">{{ 'grid.' + this.gridId + '.core.' + tag.key | translate }}:</div>
+        @for (value of tag.values; track value.field) {
+          <ta-badge
+            [value]="value.type + ' ' + value.value"
+            type="primary"
+            icon="close"
+            (clickAction)="this.remove(value)"
+          ></ta-badge>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="reset-n-result flex-start g-space-md align-center">
+    @if (this.activeFilters.length > 0) {
+      <div class="reset">
+        <ta-button (action)="this.clear()">
+          {{ 'grid.tag.reset' | translate }}
+        </ta-button>
+      </div>
+    }
+    <div class="result">
+      <ta-text>
+        {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}
+      </ta-text>
+    </div>
+  </div>
+</div>

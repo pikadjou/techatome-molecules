@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+
+import { HandleComplexRequest } from '@ta/server';
+
+import { Filter } from '../models/types';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class TaGridSessionService {
+  private _filterData = new HandleComplexRequest<Filter[]>();
+
+  public setFilter(key: string, filter: Filter[]) {
+    this._filterData.update(key, filter, false);
+  }
+  public getFilter(key: string) {
+    return this._filterData.get(key);
+  }
+
+  public clearFilter(key: string): void {
+    this._filterData.update(key, []);
+  }
+}

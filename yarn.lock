@@ -5773,6 +5773,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/tabulator-tables@^6.2.6":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@types/tabulator-tables/-/tabulator-tables-6.3.0.tgz#21f40355174a14f61688ca0a341e09e6ed09d79f"
+  integrity sha512-/mQzrThCdSQXc2lz2SUZglIG+vWQ1sb1CEiVxw9SFGKPulaj1543zrL2qABeJIKjKPxcSgmWUyDA9e8CMaI2cQ==
+
 "@types/uuid@^9.0.1":
   version "9.0.8"
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.8.tgz#7545ba4fc3c003d6c756f651f3bf163d8f0f29ba"
@@ -16595,6 +16600,11 @@ tablesort@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/tablesort/-/tablesort-5.6.0.tgz#4ce174e7ffbabfbba8ae72f9df70654c32eb981c"
   integrity sha512-cZZXK3G089PbpxH8N7vN7Z21SEKqXAaCiSVOmZdR/v7z8TFCsF/OFr0rzjhQuFlQQHy9uQtW9P2oQFJzJFGVrg==
+
+tabulator-tables@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/tabulator-tables/-/tabulator-tables-6.3.1.tgz#648c2893167bfb1f531c52670fad92d6353b8b40"
+  integrity sha512-qFW7kfadtcaISQIibKAIy0f3eeIXUVi8242Vly1iJfMD79kfEGzfczNuPBN/80hDxHzQJXYbmJ8VipI40hQtfA==
 
 tapable@^2.0.0, tapable@^2.1.1, tapable@^2.2.0, tapable@^2.2.1, tapable@^2.3.0:
   version "2.3.0"

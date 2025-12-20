@@ -7,6 +7,12 @@
 
   display: flex;
   flex-direction: row;
+  .item-container {
+    cursor: pointer;
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
   &.vertical {
     display: flex;
     flex-direction: column;
@@ -91,9 +97,10 @@
     .item {
       @include flex.flex-row();
       @include flex.align-center();
+      @include flex.justify-center();
       padding: common.get-var(space, sm);
       border-radius: common.get-var(radius, rounded);
-
+      color: common.get-var(text, secondary);
       @include fonts.fontSizeBody(md);
     }
 
@@ -104,6 +111,13 @@
       .item {
         background-color: common.get-var(surface, primary);
         color: common.get-var(text, brand, primary);
+        @include fonts.fontSizeBody(md, true);
+      }
+    }
+    &:hover {
+      .item {
+        color: common.get-var(text, brand, primary);
+        @include fonts.fontSizeBody(md, true);
       }
     }
   }

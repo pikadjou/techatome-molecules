@@ -85,8 +85,7 @@
     "projects/*",
     "projects/form/*",
     "projects/config/*",
-    "projects/files/*",
-    "projects/features/*"
+    "projects/files/*"
   ],
   "main": "index.js",
   "repository": "https://techatome@dev.azure.com/techatome/Techatome/_git/Techatome",

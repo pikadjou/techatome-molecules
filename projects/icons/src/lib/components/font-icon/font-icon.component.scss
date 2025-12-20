@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/fonts';
 
-@use "../../styles/icon.scss";
+@use '../../styles/icon.scss';
 i {
   display: block;
 }
@@ -12,19 +12,29 @@ i {
 }
 .md {
   height: 24px;
+  width: 24px;
   font-size: 24px;
-  line-height: 24px;
 }
 .lg {
-  height: 48px;
+  height: 34px;
+  width: 34px;
   font-size: 34px;
-  line-height: 48px;
 }
 
 .xl {
+  font-size: 45px;
+  height: 45px;
+  width: 45px;
+}
+
+.xxl {
   font-size: 60px;
+  height: 60px;
+  width: 60px;
 }
 
 .big {
-  font-size: 300px;
+  font-size: 150px;
+  height: 150px;
+  width: 150px;
 }

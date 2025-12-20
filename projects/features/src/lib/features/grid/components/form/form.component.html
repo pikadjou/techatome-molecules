@@ -1,0 +1,22 @@
+<div>
+  <ta-title [level]="2">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>
+</div>
+
+<div class="space-between">
+  <div>
+    <ta-form
+      [inputs]="this.filtersForm()"
+      (valid)="this.applyFilters($event)"
+      [askOnDestroy]="true"
+      [canDisplayButton]="false"
+    ></ta-form>
+  </div>
+  <div>
+    <ta-form
+      [inputs]="this.groupForm()"
+      (valid)="this.applyGroup($event)"
+      [askOnDestroy]="true"
+      [canDisplayButton]="false"
+    ></ta-form>
+  </div>
+</div>

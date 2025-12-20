@@ -703,11 +703,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class NotificationBadgeContainerComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBadgeContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: NotificationBadgeContainerComponent, isStandalone: true, selector: "ta-notification-badge-container", ngImport: i0, template: "<div class=\"notification-badge-container\">\n  <ng-content></ng-content>\n  <ng-content select=\"ta-notification-badge\"></ng-content>\n</div>\n", styles: [".notification-badge-container{position:relative}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: NotificationBadgeContainerComponent, isStandalone: true, selector: "ta-notification-badge-container", ngImport: i0, template: "<div class=\"notification-badge-container flex-full\">\r\n  <ng-content></ng-content>\r\n  <ng-content select=\"ta-notification-badge\"></ng-content>\r\n</div>\r\n", styles: [".notification-badge-container{position:relative}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBadgeContainerComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-badge-container", standalone: true, template: "<div class=\"notification-badge-container\">\n  <ng-content></ng-content>\n  <ng-content select=\"ta-notification-badge\"></ng-content>\n</div>\n", styles: [".notification-badge-container{position:relative}\n"] }]
+            args: [{ selector: "ta-notification-badge-container", standalone: true, template: "<div class=\"notification-badge-container flex-full\">\r\n  <ng-content></ng-content>\r\n  <ng-content select=\"ta-notification-badge\"></ng-content>\r\n</div>\r\n", styles: [".notification-badge-container{position:relative}\n"] }]
         }] });
 
 class NotificationBadgeComponent {

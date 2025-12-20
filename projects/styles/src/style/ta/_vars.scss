@@ -1,5 +1,5 @@
-@use "sass:map";
-@use "sass:list";
+@use 'sass:map';
+@use 'sass:list';
 
 /** Vars */
 $container-max-widths: (
@@ -150,9 +150,9 @@ $text: map.merge(
 
 $surface: map.merge(
   (
-    default: map.get($neutral, 200),
+    default: map.get($neutral, 300),
     primary: map.get($neutral, white),
-    secondary: map.get($neutral, 100),
+    secondary: map.get($neutral, 200),
     tertiary: map.get($brand, 50),
     brand: (
       primary: map.get($brand, 900),
@@ -248,8 +248,8 @@ $shadow: map.merge(
 $font: map.merge(
   (
     family: (
-      "Inter",
-      "Diodrum Cyrillic",
+      'Inter',
+      'Diodrum Cyrillic',
       sans-serif,
     ),
     h1: (
@@ -513,8 +513,7 @@ $components: map.merge(
       ),
 
       // Scope .circular
-      circular:
-        (
+      circular: (
           height: 50px,
           width: 50px,
           radius: 50px,
@@ -537,64 +536,57 @@ $components: map.merge(
       color: map.get($text, primary),
       border: map.get($border, tertiary),
       // Scope .hover
-      hover:
-        (
+      hover: (
           background: map.get($surface, hover, primary),
         ),
 
       // Scope .full-height
-      full-height:
-        (
+      full-height: (
           spacing-offset: map.get($space, md),
         ),
 
       // Scope .highlight
-      highlight:
-        (
+      highlight: (
           background: map.get($surface, hover, secondary),
           border: map.get($border, secondary),
         ),
 
       // Scope .card-shadow
-      card-shadow:
-        (
+      card-shadow: (
           box-shadow: map.get($shadow, brand, sm),
         ),
     ),
     card-image: (
       // Styles de base .img-container
-      aspect-ratio: "16 / 9",
+      aspect-ratio: '16 / 9',
       border-radius: map.get($radius, rounded),
       // Scope .img
-      img:
-        (
+      img: (
           width: 100%,
         ),
     ),
     text: (
       // Styles de base .text - utilise les mixins fonts existants
-      // Les tailles sont gérées par les mixins fonts.fontSizeBody(),
+       // Les tailles sont gérées par les mixins fonts.fontSizeBody(),
     ),
     toggle-card: (
       // Styles de base .toggle-card
       padding: map.get($space, lg),
-      transition: "all 0.2s ease-in-out",
+      transition: 'all 0.2s ease-in-out',
       border: map.get($surface, secondary),
       border-radius: map.get($radius, rounded),
       background: map.get($surface, primary),
-      box-shadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      box-shadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
 
       // Scope hover (non-disabled)
-      hover:
-        (
+      hover: (
           border-color: map.get($brand, 600),
           background: map.get($surface, secondary),
-          box-shadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          box-shadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
         ),
 
       // Scope --active
-      active:
-        (
+      active: (
           border-color: map.get($brand, 700),
           background: map.get($surface, secondary),
           hover: (
@@ -604,8 +596,7 @@ $components: map.merge(
         ),
 
       // Scope --disabled
-      disabled:
-        (
+      disabled: (
           background: map.get($surface, tertiary),
           border-color: map.get($surface, secondary),
           opacity: 0.6,
@@ -613,14 +604,12 @@ $components: map.merge(
         ),
 
       // Scope __content
-      content:
-        (
+      content: (
           flex: 1,
         ),
 
       // Scope __icon
-      icon:
-        (
+      icon: (
           margin-right: map.get($space, md),
           color: map.get($text, secondary),
           font-size: map.get($font, key, lg, default, size),
@@ -630,43 +619,38 @@ $components: map.merge(
         ),
 
       // Scope __text
-      text:
-        (
+      text: (
           flex: 1,
         ),
 
       // Scope __title
-      title:
-        (
+      title: (
           font-size: map.get($font, key, md, default, size),
           font-weight: map.get($font, key, md, bold, weight),
           color: map.get($text, primary),
-          margin: "0 0 #{map.get($space, xs)} 0",
+          margin: '0 0 #{map.get($space, xs)} 0',
         ),
 
       // Scope __description
-      description:
-        (
+      description: (
           font-size: map.get($font, key, sm, default, size),
           color: map.get($text, secondary),
           margin: 0,
         ),
 
       // Scope __indicator
-      indicator:
-        (
+      indicator: (
           margin-left: map.get($space, md),
         ),
 
       // Scope __check
-      check:
-        (
+      check: (
           width: 24px,
           height: 24px,
-          border-radius: "50%",
+          border-radius: '50%',
           border: map.get($surface, secondary),
           background: map.get($surface, primary),
-          transition: "all 0.2s ease-in-out",
+          transition: 'all 0.2s ease-in-out',
           font-size: map.get($font, key, sm, default, size),
           font-weight: map.get($font, key, sm, bold, weight),
           active: (

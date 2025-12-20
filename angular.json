@@ -1,6 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "cli": {
+    "analytics": false
+  },
   "newProjectRoot": "projects",
   "projects": {
     "Techatome": {
@@ -183,10 +185,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["projects/styles/src/style"]
             },
-            "styles": [
-              "projects/styles/src/index.scss",
-              ".storybook/styles.scss"
-            ]
+            "styles": ["projects/styles/src/index.scss", ".storybook/styles.scss"]
           }
         },
         "build-storybook": {
@@ -901,23 +900,23 @@
         }
       }
     },
-    "@ta/project": {
+    "@ta/features": {
       "projectType": "library",
-      "root": "projects/features/project",
-      "sourceRoot": "projects/features/project/src",
-      "prefix": "lib",
+      "root": "projects/features",
+      "sourceRoot": "projects/features/src",
+      "prefix": "ta",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/features/project/ng-package.json"
+            "project": "projects/features/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/features/project/tsconfig.lib.prod.json"
+              "tsConfig": "projects/features/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/features/project/tsconfig.lib.json"
+              "tsConfig": "projects/features/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -925,14 +924,12 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/features/project/tsconfig.spec.json",
+            "tsConfig": "projects/features/tsconfig.spec.json",
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
     }
   },
-  "cli": {
-    "analytics": false
-  }
+  "version": 1
 }

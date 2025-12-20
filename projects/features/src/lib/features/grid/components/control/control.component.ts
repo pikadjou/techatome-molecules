@@ -1,0 +1,72 @@
+import { AsyncPipe } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+
+import { ButtonComponent } from '@ta/ui';
+
+import { Preset, ViewType } from '../../models/types';
+import { TaAbstractGridComponent } from '../abstract.component';
+import { TaGridFormComponent } from '../form/form.component';
+
+@Component({
+  selector: 'ta-grid-control',
+  templateUrl: './control.component.html',
+  styleUrls: ['./control.component.scss'],
+  standalone: true,
+  imports: [MatIcon, AsyncPipe, MatMenuModule],
+})
+export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
+  @Input()
+  show: { switchView?: boolean; filters?: boolean; preset?: boolean } = {
+    switchView: true,
+    filters: true,
+    preset: true,
+  };
+
+  readonly dialog = inject(MatDialog);
+
+  constructor() {
+    super();
+  }
+
+  public override ngOnInit() {
+    super.ngOnInit();
+    if (this.breakpoints.isMobile && this.show.switchView) {
+      this.switchView('card');
+    }
+  }
+
+  public switchView(type: ViewType) {
+    this._grid.switchView(type);
+  }
+
+  public openFilters() {
+    this.dialog.open<FiltersModal, FiltersModalData>(FiltersModal, {
+      data: { gridId: this.gridId() },
+    });
+  }
+  public setPreset(preset: Preset) {
+    this.grid.filters?.apply(preset.filters);
+  }
+}
+
+interface FiltersModalData {
+  gridId: string;
+}
+@Component({
+  selector: '',
+  template:
+    '<div class="p-space-md"><ta-grid-form [gridId]="this.data.gridId"></ta-grid-form><ta-button (action)="this.close()">Applied</ta-button></div>',
+  standalone: true,
+  imports: [TaGridFormComponent, ButtonComponent],
+})
+export class FiltersModal {
+  public readonly dialogRef = inject(MatDialogRef<FiltersModal>);
+  public readonly data = inject<FiltersModalData>(MAT_DIALOG_DATA);
+
+  public close() {
+    this.dialogRef.close();
+  }
+}

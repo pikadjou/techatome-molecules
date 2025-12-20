@@ -53,7 +53,8 @@
       "@ta/user": ["projects/user"],
       "@ta/cms": ["projects/cms"],
       "@ta/wysiswyg": ["projects/wysiswyg"],
-      "@ta/charts": ["projects/charts"]
+      "@ta/charts": ["projects/charts"],
+      "@ta/features": ["projects/features"]
     },
     "lib": ["ES2022", "dom"]
   }

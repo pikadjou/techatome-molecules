@@ -1,0 +1,26 @@
+{
+  "name": "@ta/features",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "ng build @ta/features"
+  },
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0"
+  },
+  "dependencies": {
+    "tabulator-tables": "^6.3.1",
+    "tslib": "^2.3.0",
+    "@ta/ui": "^0.0.0",
+    "@ta/form-basic": "^0.0.0",
+    "@ta/form-model": "^0.0.0",
+    "@ta/form-input": "^0.0.0",
+    "@ta/translation": "^0.0.0",
+    "@ta/utils": "^0.0.0",
+    "@ta/server": "^0.0.0"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/tabulator-tables": "^6.2.6"
+  }
+}

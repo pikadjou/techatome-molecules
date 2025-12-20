@@ -5,12 +5,6 @@
     }
   },
   "npmClient": "yarn",
-  "packages": [
-    "projects/*",
-    "projects/files/*",
-    "projects/form/*",
-    "projects/config/*",
-    "projects/features/*"
-  ],
+  "packages": ["projects/*", "projects/files/*", "projects/form/*", "projects/config/*"],
   "version": "0.0.0"
 }

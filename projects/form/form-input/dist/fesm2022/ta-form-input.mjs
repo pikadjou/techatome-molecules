@@ -396,7 +396,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class TextBoxComponent extends TaAbstractInputComponent {
     get isPassword() {
-        return this.input.type === "password";
+        return this.input.type === 'password';
     }
     constructor() {
         super();
@@ -418,13 +418,7 @@ class TextBoxComponent extends TaAbstractInputComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextBoxComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-textbox", standalone: true, imports: [
-                        NgIf,
-                        FontIconComponent,
-                        ReactiveFormsModule,
-                        TextareaComponent,
-                        InputLayoutComponent,
-                    ], template: "@if (this.input.type === 'textarea') {\n<ta-input-textarea\n  [input]=\"this.input\"\n  [matcher]=\"this.matcher\"\n></ta-input-textarea>\n} @else {\n<ta-input-layout [input]=\"this.input\">\n  <div>\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      [type]=\"this.isPassword && !this.hide ? 'text' : this.input.type\"\n      (keyup)=\"this.onChange(box.value)\"\n    />\n    @if (this.isPassword) {\n    <span class=\"toggle-icon\" (click)=\"this.hide = !this.hide\">\n      <ta-font-icon name=\"eye\"></ta-font-icon>\n    </span>\n    }\n  </div>\n</ta-input-layout>\n}\n", styles: [".form-control{box-sizing:border-box}\n"] }]
+            args: [{ selector: 'ta-input-textbox', standalone: true, imports: [FontIconComponent, ReactiveFormsModule, TextareaComponent, InputLayoutComponent], template: "@if (this.input.type === 'textarea') {\n<ta-input-textarea\n  [input]=\"this.input\"\n  [matcher]=\"this.matcher\"\n></ta-input-textarea>\n} @else {\n<ta-input-layout [input]=\"this.input\">\n  <div>\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      [type]=\"this.isPassword && !this.hide ? 'text' : this.input.type\"\n      (keyup)=\"this.onChange(box.value)\"\n    />\n    @if (this.isPassword) {\n    <span class=\"toggle-icon\" (click)=\"this.hide = !this.hide\">\n      <ta-font-icon name=\"eye\"></ta-font-icon>\n    </span>\n    }\n  </div>\n</ta-input-layout>\n}\n", styles: [".form-control{box-sizing:border-box}\n"] }]
         }], ctorParameters: () => [], propDecorators: { space: [{
                 type: Input
             }] } });

@@ -1,0 +1,46 @@
+import { ElementRef } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { TabulatorFull as Tabulator } from 'tabulator-tables';
+import { BaseCol } from './cols/base-col';
+import { TaGridFilters } from './grid-filters';
+import { ColMetaData, Filter, Preset, ViewType, ajaxRequestFuncParams, ajaxResponse } from './types';
+export interface IDataService<T> {
+    getData$: (params: ajaxRequestFuncParams) => Observable<ajaxResponse<T>>;
+}
+export declare class TaGridData<T> {
+    readonly scope: string;
+    get data(): T[];
+    get dataByGroup(): {
+        key: string;
+        data: T[];
+    }[];
+    get isGroup(): boolean;
+    readonly rowClicked$: Subject<T>;
+    table: Tabulator | null;
+    cols: {
+        [index: string]: BaseCol<any>;
+    };
+    filters: TaGridFilters | null;
+    readonly isReady$: BehaviorSubject<boolean>;
+    readonly isDataReady$: BehaviorSubject<boolean>;
+    tableHtml: ElementRef | null;
+    readonly displayType: import("@angular/core").WritableSignal<ViewType>;
+    groupBy: keyof T | null;
+    readonly totalItems: import("@angular/core").WritableSignal<number>;
+    constructor(scope: string);
+    init(params: {
+        elementRef: ElementRef;
+        colsMetaData: ColMetaData[];
+        data?: T[];
+        services?: IDataService<T>;
+        initialFilter?: Filter[];
+        preset?: Preset[];
+    }): void;
+    destroy(): void;
+    setGroupBy(field: string): void;
+    clearGroupBy(): void;
+    switchView(type: ViewType): void;
+    private _getOptions;
+    private _getColumns;
+    private _factoryCols;
+}

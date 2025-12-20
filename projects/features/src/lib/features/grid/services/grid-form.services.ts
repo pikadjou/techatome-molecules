@@ -1,0 +1,82 @@
+import { Injectable } from '@angular/core';
+
+import { of } from 'rxjs';
+
+import { InputBase, InputDropdown, InputPanel } from '@ta/form-model';
+import { isNonNullable } from '@ta/utils';
+
+import { TaGridData } from '../models/grid-data';
+import { Filter } from '../models/types';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class TaGridFormService<T> {
+  constructor() {}
+
+  public getFiltersForm(model: TaGridData<T>): InputBase<any>[] {
+    const keys = Object.keys(model.cols);
+    if (!keys || keys.length === 0) {
+      return [];
+    }
+
+    return [
+      new InputPanel({
+        key: 'main-panel',
+        class: 'p-space-sm',
+        contentClass: 'grid g-space-md',
+        children: keys
+          .filter(key => model.cols[key].data.col.showOnSearch)
+          .map(key => model.cols[key].getInputForm())
+          .filter(isNonNullable)
+          .map(
+            input =>
+              new InputPanel({
+                key: 'panel',
+                class: 'g-col-6',
+                children: [input],
+              })
+          ),
+      }),
+    ];
+  }
+
+  public formatFiltersForm(model: TaGridData<T>, data: any): Filter[] {
+    return Object.keys(model.cols).reduce<Filter[]>((acc, key) => {
+      const filter = model.cols[key].formatInputForm(data);
+
+      if (!filter) {
+        return acc;
+      }
+      return [...acc, filter];
+    }, []);
+  }
+
+  public getGroupForm(model: TaGridData<T>): InputBase<any>[] {
+    return [
+      new InputPanel({
+        key: 'main-panel',
+        class: 'p-space-sm',
+        children: [
+          new InputDropdown({
+            key: 'group',
+            label: 'grid.core.groupBy',
+            options$: of(
+              Object.values(model.cols)
+                .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
+                .map(group => ({
+                  id: group.key,
+                  name: group.inputLabel,
+                }))
+            ),
+            value: model.groupBy,
+          }),
+        ],
+      }),
+    ];
+  }
+
+  public formatGroupForm(data: any): string | null {
+    return data['group'] || null;
+  }
+}
