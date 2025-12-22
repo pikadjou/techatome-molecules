@@ -9,6 +9,9 @@
 @mixin one-third() {
   grid-column: span 4;
 }
+@mixin two-thirds() {
+  grid-column: span 8;
+}
 @mixin one-fourth() {
   grid-column: span 3;
 }
