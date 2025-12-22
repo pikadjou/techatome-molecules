@@ -3,6 +3,7 @@
 @use 'ta/vars';
 @use 'ta/settings/common';
 @use 'ta/utils/mixins/mediaQueriesRanges';
+@use 'ta/utils/mixins/grid';
 
 @mixin generateGrids() {
   .grid {
@@ -30,31 +31,30 @@
   }
 
   .grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    @include grid.grid();
 
     .full {
-      grid-column: span 12;
+      @include grid.full();
     }
 
     .two-thirds {
-      grid-column: span 8;
+      @include grid.two-thirds();
     }
 
     .one-half {
-      grid-column: span 6;
+      @include grid.one-half();
     }
 
     .one-third {
-      grid-column: span 4;
+      @include grid.one-third();
     }
 
     .one-fourth {
-      grid-column: span 3;
+      @include grid.one-fourth();
     }
 
     .one-sixth {
-      grid-column: span 2;
+      @include grid.one-sixth();
     }
     // @each $col-size, $size in in vars.$grid-breakpoints {
     //   @include mediaQueriesRanges.to($col-size) {
@@ -196,11 +196,6 @@
     // }
   }
   .grid-one-half {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-
-    > * {
-      grid-column: span 6;
-    }
+    @include grid.grid-one-half();
   }
 }

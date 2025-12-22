@@ -1,0 +1,48 @@
+@mixin grid() {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+@mixin one-sixth() {
+  grid-column: span 2;
+}
+@mixin one-third() {
+  grid-column: span 4;
+}
+@mixin one-fourth() {
+  grid-column: span 3;
+}
+@mixin one-half() {
+  grid-column: span 6;
+}
+@mixin one-fourth() {
+  grid-column: span 8;
+}
+@mixin full() {
+  grid-column: span 12;
+}
+
+@mixin grid-one-half() {
+  @include grid.grid();
+  > * {
+    @include grid.one-half();
+  }
+}
+@mixin grid-one-fourth() {
+  @include grid.grid();
+  > * {
+    @include grid.one-fourth();
+  }
+}
+@mixin grid-one-third() {
+  @include grid.grid();
+  > * {
+    @include grid.one-third();
+  }
+}
+@mixin grid-one-sixth() {
+  @include grid.grid();
+  > * {
+    @include grid.one-sixth();
+  }
+}
