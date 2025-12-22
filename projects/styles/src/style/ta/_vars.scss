@@ -94,10 +94,12 @@ $neutral: map.merge(
 
 $semantic: map.merge(
   (
+    red-light: transparentize(#e74c3c, 0.5),
     red: #e74c3c,
+    orange-light: transparentize(#f39c12, 0.5),
     orange: #f39c12,
     yellow: #ffd166,
-    // Jaune doré accent
+    green-light: transparentize(#38a172, 0.5),
     green: #38a172,
     // Vert validation
     accent: #e74c3c,
@@ -255,23 +257,19 @@ $font: map.merge(
     h1: (
       default: (
         size: 30px,
-        line: 40px,
         weight: 300,
       ),
       desktop: (
         size: 42px,
-        line: 52px,
       ),
     ),
     h2: (
       default: (
         size: 24px,
-        line: 32px,
         weight: 300,
       ),
       desktop: (
         size: 30px,
-        line: 36px,
       ),
       bold: (
         weight: 600,
@@ -280,12 +278,10 @@ $font: map.merge(
     h3: (
       default: (
         size: 20px,
-        line: 28px,
         weight: 400,
       ),
       desktop: (
         size: 24px,
-        line: 32px,
       ),
       bold: (
         weight: 600,
@@ -294,12 +290,10 @@ $font: map.merge(
     h4: (
       default: (
         size: 18px,
-        line: 25px,
         weight: 400,
       ),
       desktop: (
         size: 22px,
-        line: 28px,
       ),
       bold: (
         weight: 600,
@@ -309,12 +303,10 @@ $font: map.merge(
       md: (
         default: (
           size: 15px,
-          line: 22px,
           weight: 400,
         ),
         desktop: (
           size: 16px,
-          line: 24px,
         ),
         bold: (
           weight: 600,
@@ -323,12 +315,10 @@ $font: map.merge(
       sm: (
         default: (
           size: 13px,
-          line: 16px,
           weight: 400,
         ),
         desktop: (
           size: 13px,
-          line: 18px,
         ),
         bold: (
           weight: 600,
@@ -337,12 +327,10 @@ $font: map.merge(
       xs: (
         default: (
           size: 10px,
-          line: 13px,
           weight: 400,
         ),
         desktop: (
           size: 11px,
-          line: 14px,
         ),
         bold: (
           weight: 600,
@@ -353,12 +341,10 @@ $font: map.merge(
       xl: (
         default: (
           size: 36px,
-          line: 42px,
           weight: 500,
         ),
         desktop: (
           size: 42px,
-          line: 48px,
         ),
         bold: (
           weight: 600,
@@ -367,12 +353,10 @@ $font: map.merge(
       lg: (
         default: (
           size: 20px,
-          line: 28px,
           weight: 400,
         ),
         desktop: (
           size: 24px,
-          line: 32px,
         ),
         bold: (
           weight: 600,
@@ -381,12 +365,10 @@ $font: map.merge(
       md: (
         default: (
           size: 18px,
-          line: 25px,
           weight: 400,
         ),
         desktop: (
           size: 22px,
-          line: 28px,
         ),
         bold: (
           weight: 600,
@@ -395,12 +377,10 @@ $font: map.merge(
       sm: (
         default: (
           size: 15px,
-          line: 22px,
           weight: 400,
         ),
         desktop: (
           size: 16px,
-          line: 24px,
         ),
         bold: (
           weight: 600,
@@ -409,23 +389,19 @@ $font: map.merge(
       xs: (
         default: (
           size: 13px,
-          line: 18px,
           weight: 400,
         ),
         desktop: (
           size: 13px,
-          line: 18px,
         ),
       ),
       xxs: (
         default: (
           size: 10px,
-          line: 13px,
           weight: 400,
         ),
         desktop: (
           size: 11px,
-          line: 14px,
         ),
       ),
     ),

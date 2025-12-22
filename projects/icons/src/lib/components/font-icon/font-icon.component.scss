@@ -1,14 +1,23 @@
 @use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 @use '../../styles/icon.scss';
+
+:host {
+  display: flex;
+}
 i {
   display: block;
 }
 .xs {
   @include fonts.fontSizeBody(xs);
+  height: common.get-var(font, body, xs, default, size);
+  width: common.get-var(font, body, xs, default, size);
 }
 .sm {
   @include fonts.fontSizeBody(sm);
+  height: common.get-var(font, body, sm, default, size);
+  width: common.get-var(font, body, sm, default, size);
 }
 .md {
   height: 24px;

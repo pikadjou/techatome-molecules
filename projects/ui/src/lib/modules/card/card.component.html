@@ -10,7 +10,13 @@
   (click)="this.clickTrigger()"
 >
   <ta-new [visible]="this.isNew"></ta-new>
-  <div class="responsive-content">
+  <div
+    class="responsive-content"
+    [ngClass]="{
+      'horizontal-card': this.directionCard === 'horizontal',
+      'vertical-card': this.directionCard === 'vertical',
+    }"
+  >
     <div class="img-container">
       <div class="card-img-container">
         <ng-content select="ta-card-image"></ng-content>

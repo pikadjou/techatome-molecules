@@ -34,6 +34,11 @@ export type Sort = {
     field: string;
     dir: 'asc' | 'desc';
 };
+export type GridOptions<T> = (services?: any) => {
+    key: string;
+    colsMetaData: ColMetaData<T>[];
+    preset?: Preset[];
+};
 export type ajaxResponse<T> = {
     data: T[];
     last_page: number;
