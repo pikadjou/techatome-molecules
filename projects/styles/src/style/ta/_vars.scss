@@ -94,10 +94,12 @@ $neutral: map.merge(
 
 $semantic: map.merge(
   (
+    red-light: transparentize(#e74c3c, 0.5),
     red: #e74c3c,
+    orange-light: transparentize(#f39c12, 0.5),
     orange: #f39c12,
     yellow: #ffd166,
-    // Jaune doré accent
+    green-light: transparentize(#38a172, 0.5),
     green: #38a172,
     // Vert validation
     accent: #e74c3c,

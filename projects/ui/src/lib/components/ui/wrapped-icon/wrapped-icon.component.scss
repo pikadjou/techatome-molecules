@@ -1,65 +1,54 @@
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/fonts';
 
+:host {
+  display: flex;
+}
 .wrapped-icon-container {
-  padding: common.get-var(space, sm) common.get-var(space, md);
-  @include fonts.fontSizeBody(sm);
-
+  padding: common.get-var(space, md) common.get-var(space, md);
   border-radius: common.get-var(radius, label);
-  border: 1px solid transparent;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 
   &.xs {
     padding: common.get-var(space, xs) common.get-var(space, xs);
-    @include fonts.fontSizeBody(xs);
+    border-radius: common.get-var(radius, minimal);
   }
 
   &.sm {
-    padding: common.get-var(space, xs) common.get-var(space, lg);
-    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, sm) common.get-var(space, sm);
+    border-radius: common.get-var(radius, rounded);
   }
 
   &.lg {
-    padding: common.get-var(space, md) common.get-var(space, lg);
-    @include fonts.fontSizeBody(md);
+    padding: common.get-var(space, lg) common.get-var(space, lg);
   }
 }
 
 .wrapped-icon-default {
   color: common.get-var(text, brand, primary);
   background: common.get-var(surface, default);
-  border-color: common.get-var(border, brand);
 }
 
 .wrapped-icon-secondary {
   color: common.get-var(text, body);
-  background: common.get-var(surface, secondary);
-  border-color: common.get-var(neutral, 600);
+  background: common.get-var(surface, tertiary);
 }
 
 .wrapped-icon-success {
   color: common.get-var(neutral, white);
-  background: common.get-var(surface, success);
-  border-color: common.get-var(border, success);
+  background: common.get-var(semantic, green-light);
 }
 
 .wrapped-icon-warning {
   color: common.get-var(neutral, white);
-  background: common.get-var(surface, warning);
-  border-color: common.get-var(border, warning);
+  background: common.get-var(semantic, orange-light);
 }
 
 .wrapped-icon-alert {
   color: common.get-var(neutral, white);
-  background: common.get-var(surface, alert);
-  border-color: common.get-var(border, alert);
+  background: common.get-var(semantic, red-light);
 }
 
 .wrapped-icon-purple {
   color: common.get-var(semantic, purple-dark);
   background: common.get-var(semantic, purple-light);
-  border-color: common.get-var(semantic, purple-dark);
 }

@@ -1,4 +1,4 @@
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/fonts';
 
 .text {
   @include fonts.fontSizeBody(md);
@@ -9,6 +9,6 @@
 .xs {
   @include fonts.fontSizeBody(xs);
 }
-.bold {
-  @include fonts.fontSizeBody(md, true);
+.lg {
+  @include fonts.fontSizeKey(lg);
 }

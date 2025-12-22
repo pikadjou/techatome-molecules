@@ -1,12 +1,12 @@
-import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
-import { TaSizes } from "@ta/styles";
+import { ColorType, TaSizes } from '@ta/styles';
 
 @Component({
-  selector: "ta-text",
-  templateUrl: "./text.component.html",
-  styleUrls: ["./text.component.scss"],
+  selector: 'ta-text',
+  templateUrl: './text.component.html',
+  styleUrls: ['./text.component.scss'],
   standalone: true,
   imports: [NgClass],
 })
@@ -16,7 +16,7 @@ export class TextComponent {
    * Add small class to text
    */
   @Input()
-  size: TaSizes = "md";
+  size: TaSizes = 'md';
 
   /**
    *
@@ -30,7 +30,7 @@ export class TextComponent {
    * Add bold class to text
    */
   @Input()
-  color: string = "primary";
+  color: ColorType = 'default';
 
   public getColorClass() {
     return `text-color-text-${this.color}`;

@@ -1,6 +1,7 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/grid';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 $spacing: common.get-var(components, card, padding);
 
@@ -24,9 +25,7 @@ $spacing: common.get-var(components, card, padding);
   @include fonts.fontSizeBody(md);
 
   &.full-height {
-    height: calc(
-      100% - common.get-var(components, card, full-height, spacing-offset) * 2
-    );
+    height: calc(100% - common.get-var(components, card, full-height, spacing-offset) * 2);
   }
   &.highlight {
     background-color: common.get-var(components, card, highlight, background);
@@ -38,14 +37,10 @@ $spacing: common.get-var(components, card, padding);
 
   .responsive-content {
     @include flex.flex-column();
-  }
-}
-
-.card-force-mobile {
-  .card {
-    .responsive-content {
-      @include flex.flex-column();
+    &.horizontal-card {
+      @include grid.grid();
       .img-container {
+        @include grid.one-sixth();
         order: 0;
       }
     }
