@@ -1,4 +1,5 @@
 @use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 .text {
   @include fonts.fontSizeBody(md);
@@ -11,4 +12,8 @@
 }
 .lg {
   @include fonts.fontSizeKey(lg);
+}
+
+.bold {
+  font-weight: common.get-var(font, body, md, bold, weight);
 }

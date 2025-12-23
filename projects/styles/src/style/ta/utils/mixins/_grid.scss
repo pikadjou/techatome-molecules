@@ -1,4 +1,4 @@
-@mixin grid() {
+@mixin grid-base() {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 }
@@ -9,43 +9,43 @@
 @mixin one-third() {
   grid-column: span 4;
 }
-@mixin two-thirds() {
-  grid-column: span 8;
-}
 @mixin one-fourth() {
   grid-column: span 3;
 }
 @mixin one-half() {
   grid-column: span 6;
 }
-@mixin one-fourth() {
+@mixin two-thirds() {
   grid-column: span 8;
+}
+@mixin five-sixths() {
+  grid-column: span 10;
 }
 @mixin full() {
   grid-column: span 12;
 }
 
 @mixin grid-one-half() {
-  @include grid.grid();
+  @include grid-base();
   > * {
-    @include grid.one-half();
+    @include one-half();
   }
 }
 @mixin grid-one-fourth() {
-  @include grid.grid();
+  @include grid-base();
   > * {
-    @include grid.one-fourth();
+    @include one-fourth();
   }
 }
 @mixin grid-one-third() {
-  @include grid.grid();
+  @include grid-base();
   > * {
-    @include grid.one-third();
+    @include one-third();
   }
 }
 @mixin grid-one-sixth() {
-  @include grid.grid();
+  @include grid-base();
   > * {
-    @include grid.one-sixth();
+    @include one-sixth();
   }
 }

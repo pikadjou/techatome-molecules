@@ -38,10 +38,15 @@ $spacing: common.get-var(components, card, padding);
   .responsive-content {
     @include flex.flex-column();
     &.horizontal-card {
-      @include grid.grid();
+      @include grid.grid-base();
+      gap: common.get-var(space, sm);
       .img-container {
         @include grid.one-sixth();
         order: 0;
+      }
+      .content-container {
+        @include grid.five-sixths();
+        order: 1;
       }
     }
   }

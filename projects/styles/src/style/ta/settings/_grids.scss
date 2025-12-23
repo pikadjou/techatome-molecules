@@ -31,7 +31,7 @@
   }
 
   .grid {
-    @include grid.grid();
+    @include grid.grid-base();
 
     .full {
       @include grid.full();
