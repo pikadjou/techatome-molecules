@@ -1,12 +1,14 @@
-import { NgClass, NgFor, NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { TextComponent } from '../text/text.component';
 
 @Component({
   selector: 'ta-rating',
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss'],
   standalone: true,
-  imports: [NgFor, NgClass, NgStyle],
+  imports: [NgClass, NgStyle, TextComponent],
 })
 export class RatingComponent {
   /**

@@ -1,40 +1,43 @@
-<div class="ta-rating-container" (mouseleave)="this.onMouseLeave()" [ngStyle]="{ cursor: this.getCursorStyle() }">
-  @for (star of this.stars; track star) {
-    <div
-      class="ta-rating-star"
-      [ngClass]="{ 'ta-rating-star--readonly': readonly }"
-      [ngStyle]="{ width: size + 'px', height: size + 'px' }"
-      (click)="this.onStarClick(star)"
-      (mouseenter)="this.onStarHover(star)"
-    >
-      <!-- Background star (empty) -->
-      <svg
-        class="ta-rating-star-bg"
-        viewBox="0 0 24 24"
-        [attr.width]="size"
-        [attr.height]="size"
-        xmlns="http://www.w3.org/2000/svg"
+<div class="flex-row align-center g-space-sm">
+  <div class="ta-rating-container" (mouseleave)="this.onMouseLeave()" [ngStyle]="{ cursor: this.getCursorStyle() }">
+    @for (star of this.stars; track star) {
+      <div
+        class="ta-rating-star"
+        [ngClass]="{ 'ta-rating-star--readonly': readonly }"
+        [ngStyle]="{ width: size + 'px', height: size + 'px' }"
+        (click)="this.onStarClick(star)"
+        (mouseenter)="this.onStarHover(star)"
       >
-        <path
-          [attr.fill]="emptyColor"
-          d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-        />
-      </svg>
+        <!-- Background star (empty) -->
+        <svg
+          class="ta-rating-star-bg"
+          viewBox="0 0 24 24"
+          [attr.width]="size"
+          [attr.height]="size"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            [attr.fill]="emptyColor"
+            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+          />
+        </svg>
 
-      <!-- Foreground star (filled) with clip-path for partial fill -->
-      <svg
-        class="ta-rating-star-fg"
-        viewBox="0 0 24 24"
-        [attr.width]="size"
-        [attr.height]="size"
-        [ngStyle]="{ 'clip-path': 'inset(0 ' + (100 - this.getStarFillPercentage(star)) + '% 0 0)' }"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          [attr.fill]="color"
-          d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-        />
-      </svg>
-    </div>
-  }
+        <!-- Foreground star (filled) with clip-path for partial fill -->
+        <svg
+          class="ta-rating-star-fg"
+          viewBox="0 0 24 24"
+          [attr.width]="size"
+          [attr.height]="size"
+          [ngStyle]="{ 'clip-path': 'inset(0 ' + (100 - this.getStarFillPercentage(star)) + '% 0 0)' }"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            [attr.fill]="color"
+            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+          />
+        </svg>
+      </div>
+    }
+  </div>
+  <ta-text>{{ this.value }} / {{ this.max }}</ta-text>
 </div>
