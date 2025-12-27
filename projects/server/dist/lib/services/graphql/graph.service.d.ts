@@ -1,8 +1,8 @@
-import { Apollo } from "apollo-angular";
-import { HttpLink } from "apollo-angular/http";
-import { BehaviorSubject } from "rxjs";
-import { GraphMutationPayload, GraphQueryPayload } from "./models/graphPayload";
-import { GraphEndpoint, IGraphConfig } from "./public-api";
+import { Apollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { BehaviorSubject } from 'rxjs';
+import { GraphMutationPayload, GraphPayload, GraphQueryPayload } from './models/graphPayload';
+import { GraphEndpoint, IGraphConfig } from './public-api';
 import * as i0 from "@angular/core";
 export type GraphOptions = {
     visitor: boolean;
@@ -23,6 +23,7 @@ export declare class TaGraphService {
         totalCount: number;
         items?: T[] | undefined;
     }>;
+    fetchQueryBuilder<T>(payload: GraphPayload, context: string): import("rxjs").Observable<T>;
     fetchQuery<T>(payload: GraphQueryPayload, node: string, context: string): import("rxjs").Observable<T>;
     mutate<T>(payload: GraphMutationPayload, mutationName: string, context: string, clearCache?: string[]): import("rxjs").Observable<T>;
     registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions): void;

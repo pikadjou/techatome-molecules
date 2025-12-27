@@ -1,10 +1,10 @@
-import { isNonNullable, ObjectKeys, isURL, newId } from '@ta/utils';
+import { isNonNullable, capitalizeFirstLetter, ObjectKeys, isURL, newId } from '@ta/utils';
 import { BehaviorSubject, filter, tap, map, Subject, switchMap, catchError, throwError, take, of, share } from 'rxjs';
 import * as i1 from '@angular/common/http';
 import { HttpHeaders, HttpClient, HttpResponse, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import * as i0 from '@angular/core';
 import { InjectionToken, Inject, Optional, Injectable, signal, inject, importProvidersFrom, NgModule } from '@angular/core';
-import { ApolloLink, InMemoryCache, ApolloClient } from '@apollo/client/core';
+import { gql, ApolloLink, InMemoryCache, ApolloClient } from '@apollo/client/core';
 import { print } from 'graphql';
 import * as i1$1 from 'apollo-angular/http';
 import * as i2 from 'apollo-angular';
@@ -440,8 +440,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     args: [SERVER_CONFIG_KEY]
                 }] }] });
 
-const GRAPHQL_SERVER_CONFIG = "config_graphQl_server";
-
 const graphQlTake = (take) => {
     return `take: ${take || 1000}`;
 };
@@ -454,6 +452,46 @@ const graphQlPaginationFields = () => {
         totalCount
     `;
 };
+
+function createQuery(name, input) {
+    const capName = capitalizeFirstLetter(name);
+    const capPrefixType = input.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
+    // Construire dynamiquement les paramètres de la query
+    const queryParams = [];
+    const queryArgs = [];
+    const variables = {};
+    if (input.where) {
+        queryParams.push(`$where: ${capPrefixType}FilterInput`);
+        queryArgs.push('where: $where');
+        variables.where = input.where;
+    }
+    if (input.order) {
+        queryParams.push(`$order: [${capPrefixType}SortInput!]`);
+        queryArgs.push('order: $order');
+        variables.order = input.order;
+    }
+    if (input.take) {
+        const takeClause = graphQlTake(input.take);
+        if (takeClause) {
+            queryArgs.push(takeClause);
+        }
+    }
+    const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
+    const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
+    return {
+        name: name,
+        query: gql `
+          query ${capName}${queryParamsStr} {
+            ${name}${queryArgsStr} {
+              ${input.props}
+            }
+          }
+        `,
+        variables,
+    };
+}
+
+const GRAPHQL_SERVER_CONFIG = "config_graphQl_server";
 
 const graphQlUpdateFields = (object) => {
     return { updatedFields: ObjectKeys(object) };
@@ -503,18 +541,16 @@ class TaGraphService {
         });
     }
     fetchQueryList(payload, node, context) {
-        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo("[GraphQL] [Query] fetchQueryList:", {
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQueryList:', {
             payload,
             node,
             context,
-        })), switchMap(() => this.apollo
-            .query(this._setupData(payload, context))
-            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Response] fetchQueryList:", {
+        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryList:', {
             data,
             node,
             context,
-        })), filter((response) => !!response.data), map((response) => response.data[node]), catchError((err) => {
-            Logger.LogError("[GraphQL] [Error] fetchQueryList:", {
+        })), filter(response => !!response.data), map(response => response.data[node]), catchError((err) => {
+            Logger.LogError('[GraphQL] [Error] fetchQueryList:', {
                 payload,
                 node,
                 context,
@@ -523,7 +559,7 @@ class TaGraphService {
             //this._errorServices.addError(err);
             return throwError(() => err);
         }), catchError((err) => {
-            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
+            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
                 payload,
                 node,
                 context,
@@ -534,23 +570,21 @@ class TaGraphService {
         }))), take(1));
     }
     fetchPagedQueryList(payload, node, context) {
-        Logger.LogInfo("[GraphQL] [Prepare] fetchPagedQueryList:", {
+        Logger.LogInfo('[GraphQL] [Prepare] fetchPagedQueryList:', {
             payload,
             node,
             context,
         });
-        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo("[GraphQL] [Query] fetchPagedQueryList:", {
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchPagedQueryList:', {
             payload,
             node,
             context,
-        })), switchMap(() => this.apollo
-            .query(this._setupData(payload, context))
-            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Response] fetchPagedQueryList:", {
+        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchPagedQueryList:', {
             data,
             node,
             context,
-        })), filter((response) => !!response.data), map((response) => response.data[node]), catchError((err) => {
-            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
+        })), filter(response => !!response.data), map(response => response.data[node]), catchError((err) => {
+            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
                 payload,
                 node,
                 context,
@@ -560,19 +594,38 @@ class TaGraphService {
             return throwError(() => err);
         }))), take(1));
     }
+    fetchQueryBuilder(payload, context) {
+        Logger.LogInfo('[GraphQL] [Prepare] fetchQueryBuilder:', {
+            payload,
+            context,
+        });
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQueryBuilder:', {
+            payload,
+            context,
+        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
+            data,
+            context,
+        })), filter(response => !!response.data), map(response => response.data[payload.name]), catchError((err) => {
+            Logger.LogError('[GraphQL] [Error] fetchQueryBuilder:', {
+                payload,
+                context,
+                message: err.message,
+            });
+            this._errorServices.addError(payload, err);
+            return throwError(() => err);
+        }))), take(1));
+    }
     fetchQuery(payload, node, context) {
-        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo("[GraphQL] [Query] fetchQuery:", {
+        return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQuery:', {
             payload,
             node,
             context,
-        })), switchMap(() => this.apollo
-            .query(this._setupData(payload, context))
-            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Response] fetchQuery:", {
+        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQuery:', {
             data,
             node,
             context,
-        })), filter((response) => !!response.data), map((data) => data.data[node]), catchError((err) => {
-            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
+        })), filter(response => !!response.data), map(data => data.data[node]), catchError((err) => {
+            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
                 payload,
                 node,
                 context,
@@ -583,13 +636,11 @@ class TaGraphService {
         }))), take(1));
     }
     mutate(payload, mutationName, context, clearCache) {
-        Logger.LogInfo("[GraphQL]  [Prepare] mutate", payload, mutationName);
-        return this.apollo
-            .mutate(this._setupData(payload, context))
-            .pipe(tap((data) => Logger.LogInfo("[GraphQL] [Reponse] mutate", data)), filter((response) => !!response.data), tap(() => clearCache?.forEach((cacheKey) => this.clearCache(cacheKey))), map((response) => {
+        Logger.LogInfo('[GraphQL]  [Prepare] mutate', payload, mutationName);
+        return this.apollo.mutate(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Reponse] mutate', data)), filter(response => !!response.data), tap(() => clearCache?.forEach(cacheKey => this.clearCache(cacheKey))), map(response => {
             return response.data[mutationName];
         }), catchError((err) => {
-            Logger.LogError("[GraphQL] [Error] fetchPagedQueryList:", {
+            Logger.LogError('[GraphQL] [Error] fetchPagedQueryList:', {
                 payload,
                 context,
                 message: err.message,
@@ -599,17 +650,13 @@ class TaGraphService {
         }));
     }
     registerGraphEndpoint(graphEndpoint, options) {
-        const url = options?.visitor === true && this._graphConfig?.visitor
-            ? this._graphConfig?.visitor
-            : this._graphConfig?.url;
-        let uri = isURL(graphEndpoint.endpoint)
-            ? graphEndpoint.endpoint
-            : url + graphEndpoint.endpoint;
+        const url = options?.visitor === true && this._graphConfig?.visitor ? this._graphConfig?.visitor : this._graphConfig?.url;
+        let uri = isURL(graphEndpoint.endpoint) ? graphEndpoint.endpoint : url + graphEndpoint.endpoint;
         const newHttpLink = this.httpLink.create({
             headers: graphEndpoint.headers,
             uri: uri,
         });
-        this.apollo.client.setLink(this.apollo.client.link.concat(ApolloLink.split((operation) => operation.getContext()["clientName"] === graphEndpoint.clientName, newHttpLink)));
+        this.apollo.client.setLink(this.apollo.client.link.concat(ApolloLink.split(operation => operation.getContext()['clientName'] === graphEndpoint.clientName, newHttpLink)));
     }
     _setupData(payload, context) {
         return { ...payload, ...{ context: { clientName: context } } };
@@ -618,12 +665,12 @@ class TaGraphService {
         return this.isReady$;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, deps: [{ token: GRAPHQL_SERVER_CONFIG, optional: true }, { token: i1$1.HttpLink }, { token: i2.Apollo }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, providedIn: "root" }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGraphService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: "root",
+                    providedIn: 'root',
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Optional
@@ -896,5 +943,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerModule, TaServerSevice, TaStrapiService, baseStrapiProps, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerModule, TaServerSevice, TaStrapiService, baseStrapiProps, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map
