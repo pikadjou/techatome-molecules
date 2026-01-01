@@ -12,7 +12,7 @@ export type OrderType<T> = {
     [index in keyof T]: 'ASC' | 'DESC';
 };
 export type WhereType<T> = {
-    [index in keyof Partial<T>]: WhereType<T> | WhereType<T>[] | {
+    [index in keyof Partial<T>]: WhereType<T[index]> | WhereType<T>[] | {
         [op: string]: string | string[] | number | boolean | Date | null;
     };
 };

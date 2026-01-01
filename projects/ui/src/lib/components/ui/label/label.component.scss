@@ -12,12 +12,12 @@
   border: 1px solid transparent;
 
   &.xs {
-    padding: common.get-var(space, xs) common.get-var(space, xs);
+    padding: common.get-var(space, xs) common.get-var(space, sm);
     @include fonts.fontSizeBody(xs);
   }
 
   &.sm {
-    padding: common.get-var(space, xs) common.get-var(space, lg);
+    padding: common.get-var(space, sm) common.get-var(space, md);
     @include fonts.fontSizeBody(sm);
   }
 

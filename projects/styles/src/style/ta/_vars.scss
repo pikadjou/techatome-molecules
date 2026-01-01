@@ -163,7 +163,7 @@ $surface: map.merge(
     ),
     hover: (
       primary: map.get($brand, 100),
-      secondary: map.get($second, 300),
+      secondary: map.get($second, 800),
     ),
     invert: map.get($brand, 900),
     success: map.get($semantic, green),
@@ -523,8 +523,8 @@ $components: map.merge(
 
       // Scope .highlight
       highlight: (
-          background: map.get($surface, hover, secondary),
-          border: map.get($border, secondary),
+          color: map.get($surface, hover, secondary),
+          border: map.get($surface, hover, secondary),
         ),
 
       // Scope .card-shadow

@@ -29,7 +29,7 @@
 </div>
 
 <ng-template #template let-element="element">
-  <ta-notification-badge-container class="c-pointer flex-full">
+  <div class="c-pointer flex-full">
     @if (element.callback || element.disabled) {
       <div
         (click)="this.callback(element)"
@@ -61,18 +61,11 @@
         </ng-template>
       </div>
     }
-    @if (element.options?.notificationBadge?.label) {
-      <ta-notification-badge
-        [number]="element.options?.notificationBadge?.label || 0"
-        [style]="element.options?.notificationBadge?.style"
-        fontSize="xs"
-      ></ta-notification-badge>
-    }
-  </ta-notification-badge-container>
+  </div>
 </ng-template>
 
 <ng-template #Item let-item="item" [typedTemplate]="this.typeItem">
-  <div class="item flex-full" [class.disabled]="item.disabled">
+  <div class="item flex-full flex-start g-space-sm" [class.disabled]="item.disabled">
     @if (this.hasFontIcon(item)) {
       <div class="icon">
         <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>
@@ -82,6 +75,11 @@
       <div class="label">
         {{ item.label | translate }}
       </div>
+    }
+    @if (item.options?.notificationBadge?.label) {
+      <ta-label [style]="item.options?.notificationBadge?.style" size="xs" type="warning">
+        {{ item.options?.notificationBadge?.label || 0 }}
+      </ta-label>
     }
     @if (item.translationData?.length) {
       <div class="bullet">({{ item.translationData?.length }})</div>

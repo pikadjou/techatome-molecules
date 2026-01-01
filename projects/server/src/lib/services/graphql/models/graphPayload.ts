@@ -22,7 +22,7 @@ export type OrderType<T> = {
 
 export type WhereType<T> = {
   [index in keyof Partial<T>]:
-    | WhereType<T>
+    | WhereType<T[index]>
     | WhereType<T>[]
     | {
         [op: string]: string | string[] | number | boolean | Date | null;

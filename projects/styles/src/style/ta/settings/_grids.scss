@@ -198,4 +198,7 @@
   .grid-one-half {
     @include grid.grid-one-half();
   }
+  .grid-one-third {
+    @include grid.grid-one-third();
+  }
 }

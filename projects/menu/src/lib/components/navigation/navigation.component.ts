@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 import { FontIconComponent } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
-import { NotificationBadgeComponent, NotificationBadgeContainerComponent, SwiperLightComponent } from '@ta/ui';
+import { LabelComponent, SwiperLightComponent } from '@ta/ui';
 import { TaAbstractComponent, TypedTemplateDirective } from '@ta/utils';
 
 import { getFontIcon, hasFontIcon } from '../../helpers/icon-manager';
@@ -27,11 +27,10 @@ import { TaTranslationMenu } from '../../translation.service';
     RouterModule,
     TranslateModule,
     FontIconComponent,
-    NotificationBadgeComponent,
-    NotificationBadgeContainerComponent,
-    SwiperLightComponent,
     TypedTemplateDirective,
     AsyncPipe,
+    LabelComponent,
+    SwiperLightComponent,
   ],
 })
 export class NavigationComponent extends TaAbstractComponent implements OnInit {

@@ -28,7 +28,7 @@ $spacing: common.get-var(components, card, padding);
     height: calc(100% - common.get-var(components, card, full-height, spacing-offset) * 2);
   }
   &.highlight {
-    background-color: common.get-var(components, card, highlight, background);
+    color: common.get-var(components, card, highlight, color);
     border: 1px solid common.get-var(components, card, highlight, border);
   }
   &.card-shadow {
