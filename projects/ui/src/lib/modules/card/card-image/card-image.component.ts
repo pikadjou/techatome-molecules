@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "ta-card-image",
@@ -7,8 +7,7 @@ import { Component, Input } from "@angular/core";
   standalone: true,
 })
 export class CardImageComponent {
-  @Input()
-  src: string = "";
+  src = input<string>("");
 
   constructor() {}
 }

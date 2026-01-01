@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaSizes, TaState } from "@ta/styles";
@@ -12,20 +12,15 @@ import { TaSizes, TaState } from "@ta/styles";
   imports: [NgIf, NgClass, FontIconComponent],
 })
 export class LinkComponent {
-  @Input()
-  state: TaState = "classic";
+  state = input<TaState>("classic");
 
-  @Input()
-  underline?: boolean = true;
+  underline = input<boolean>(true);
 
-  @Input()
-  bold: boolean = false;
+  bold = input<boolean>(false);
 
-  @Input()
-  size: TaSizes = "md";
+  size = input<TaSizes>("md");
 
-  @Input()
-  icon: string | null = null;
+  icon = input<string | null>(null);
 
   @Output()
   action = new EventEmitter();
@@ -33,7 +28,7 @@ export class LinkComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state === "classic") {
+    if (this.state() === "classic") {
       this.action.emit();
     }
   }
@@ -41,8 +36,8 @@ export class LinkComponent {
   public getClass() {
     const css: { [index: string]: boolean } = {};
 
-    css[this.state] = true;
-    css[this.size] = true;
+    css[this.state()] = true;
+    css[this.size()] = true;
 
     return css;
   }

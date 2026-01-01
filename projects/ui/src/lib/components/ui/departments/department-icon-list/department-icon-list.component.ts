@@ -1,5 +1,5 @@
 import { NgIf, NgFor } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { Department } from "../interface";
 
@@ -14,9 +14,7 @@ export class DepartmentIconListComponent {
   /**
    * List of departments object to display
    */
-  @Input()
-  public departments!: Department[];
+  departments = input.required<Department[]>();
 
-  @Input()
-  public withName: boolean = false;
+  withName = input<boolean>(false);
 }

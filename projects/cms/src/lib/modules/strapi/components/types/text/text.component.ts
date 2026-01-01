@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { RichParagraphText } from "../../../services/dto/types/rich-text";
 
@@ -9,6 +9,5 @@ import { RichParagraphText } from "../../../services/dto/types/rich-text";
   standalone: true,
 })
 export class TextComponent {
-  @Input()
-  text!: RichParagraphText;
+  text = input.required<RichParagraphText>();
 }

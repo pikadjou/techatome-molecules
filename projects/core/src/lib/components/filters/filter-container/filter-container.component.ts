@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, input } from "@angular/core";
 
 import { Subject } from "rxjs";
 
@@ -35,8 +35,7 @@ export class FilterContainerComponent
   extends TaBaseComponent
   implements OnInit
 {
-  @Input()
-  form: InputBase<any>[] = [];
+  form = input<InputBase<any>[]>([]);
 
   @Output()
   filtersSelected = new EventEmitter<any>();

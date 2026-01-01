@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { Department } from "./interface";
 import { DepartmentIconListComponent } from "./department-icon-list/department-icon-list.component";
@@ -15,12 +15,10 @@ export class DepartmentsComponent {
   /**
    * List of departments object to display
    */
-  @Input()
-  departments!: Department[];
+  departments = input.required<Department[]>();
 
   /**
    * List of professions to display
    */
-  @Input()
-  professions!: string[];
+  professions = input.required<string[]>();
 }

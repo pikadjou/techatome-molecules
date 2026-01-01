@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -19,20 +19,17 @@ export class ContactInformationComponent {
   /**
    * Text to display
    */
-  @Input()
-  value!: string | null;
+  value = input.required<string | null>();
 
   /**
    * Material icon to display
    */
-  @Input()
-  icon!: string;
+  icon = input.required<string>();
 
   /**
    * Local icon to display
    */
-  @Input()
-  localIcon!: TaIconType;
+  localIcon = input.required<TaIconType>();
 
   constructor() {
     TaTranslationUI.getInstance();

@@ -1,6 +1,6 @@
 import { NgIf, NgFor, NgClass, NgTemplateOutlet } from "@angular/common";
 import { FontIconComponent } from "@ta/icons";
-import { Component, Input, OnInit, TemplateRef } from "@angular/core";
+import { Component, input, OnInit, TemplateRef } from "@angular/core";
 import { MatMenuModule } from "@angular/material/menu";
 
 import { InputBase, InputTranslation } from "@ta/form-model";
@@ -32,10 +32,13 @@ export class InputTranslationComponent
   extends TaBaseComponent
   implements OnInit
 {
-  @Input()
-  input!: InputTranslation;
-  @Input()
-  inputsTemplate!: TemplateRef<any>;
+  inputModel = input.required<InputTranslation>({ alias: 'input' });
+  inputsTemplate = input.required<TemplateRef<any>>();
+
+  // Getter for backward compatibility
+  get input(): InputTranslation {
+    return this.inputModel();
+  }
 
   public cultureList = extractEnum(Culture, true);
   public cultureMenu: Menu | null = null;

@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgFor, NgIf } from "@angular/common";
-import { Component, Input, OnInit, TemplateRef } from "@angular/core";
+import { Component, input, OnInit, TemplateRef } from "@angular/core";
 
 import { TaDeviceInfoService } from "@ta/capacitor";
 import { TaBaseComponent } from "@ta/utils";
@@ -12,20 +12,15 @@ import { TaBaseComponent } from "@ta/utils";
   imports: [NgIf, NgFor, NgClass, AsyncPipe],
 })
 export class SwiperLightComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  items!: any[];
+  items = input.required<any[]>();
 
-  @Input()
-  template!: TemplateRef<any>;
+  template = input.required<TemplateRef<any>>();
 
-  @Input()
-  swiperClasses = "g-space-sm";
+  swiperClasses = input<string>("g-space-sm");
 
-  @Input()
-  containerClasses?: string;
+  containerClasses = input<string | undefined>(undefined);
 
-  @Input()
-  forced?: boolean = false;
+  forced = input<boolean>(false);
 
   public classes: string = "";
 
@@ -34,14 +29,14 @@ export class SwiperLightComponent extends TaBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.forced) {
-      this.classes = `items ${this.swiperClasses ?? ""}`;
+    if (this.forced()) {
+      this.classes = `items ${this.swiperClasses() ?? ""}`;
     } else {
       this._registerSubscription(
         this._deviceInfoService.os$.subscribe((os) => {
           this.classes = this._deviceInfoService.isMobileOs(os)
-            ? `items ${this.swiperClasses ?? ""}`
-            : this.containerClasses ?? "";
+            ? `items ${this.swiperClasses() ?? ""}`
+            : this.containerClasses() ?? "";
         })
       );
     }

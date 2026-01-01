@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, input, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { RouterModule } from "@angular/router";
@@ -40,11 +40,9 @@ import { TaTranslationMenu } from "../../../translation.service";
   ],
 })
 export class MenuItemComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  item!: MenuIcon | MenuAction | MenuBase | MenuPanel;
+  item = input.required<MenuIcon | MenuAction | MenuBase | MenuPanel>();
 
-  @Input()
-  styleType: String = "bloc";
+  styleType = input<String>("bloc");
 
   @ViewChild(MatMenuTrigger) triggerMenu!: MatMenuTrigger;
 
@@ -57,45 +55,45 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isOpen = this.item.defaultOpen;
+    this.isOpen = this.item().defaultOpen;
   }
 
   public getStyleType() {
-    return this.styleType + " " + this.item.style;
+    return this.styleType() + " " + this.item().style;
   }
 
   public hasFontIcon(): boolean {
-    return hasFontIcon(this.item);
+    return hasFontIcon(this.item());
   }
 
   public hasIconImage(): boolean {
-    return hasIconImage(this.item);
+    return hasIconImage(this.item());
   }
 
   public getIcon() {
-    return getIcon(this.item);
+    return getIcon(this.item());
   }
 
   public getFontIcon() {
-    return getFontIcon(this.item);
+    return getFontIcon(this.item());
   }
 
   public hasChild(): boolean {
-    return this.item.children.length > 0;
+    return this.item().children.length > 0;
   }
   public toggle() {
     this.isOpen = !this.isOpen;
   }
 
   public getTemplate() {
-    if (this.item.isMenuPanel) {
-      return (<MenuPanel>this.item).template;
+    if (this.item().isMenuPanel) {
+      return (<MenuPanel>this.item()).template;
     }
     return null;
   }
 
   public trackByFn(index: any, item: MenuBase) {
-    return this.item + "-" + item.key;
+    return this.item() + "-" + item.key;
   }
 
   public executeCallback() {
@@ -114,12 +112,12 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
         this.triggerMenu.openMenu();
       }
     } else {
-      this.item.callback?.();
+      this.item().callback?.();
     }
   }
 
   public getLink() {
-    if (this.item.link && this.item.link !== "") return this.item.link;
+    if (this.item().link && this.item().link !== "") return this.item().link;
 
     return "";
   }

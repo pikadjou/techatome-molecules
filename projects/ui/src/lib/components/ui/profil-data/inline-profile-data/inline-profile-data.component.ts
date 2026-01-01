@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TaSizes } from "@ta/styles";
 
@@ -14,12 +14,10 @@ import { IProfileData } from "../IProfileData";
   imports: [UserLogoComponent],
 })
 export class InlineProfileDataComponent {
-  @Input()
-  profile!: IProfileData;
+  profile = input.required<IProfileData>();
 
-  @Input()
-  userLogo?: {
+  userLogo = input<{
     user: UserLogoData;
     size?: TaSizes;
-  } | null;
+  } | null | undefined>(undefined);
 }

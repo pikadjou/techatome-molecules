@@ -1,6 +1,6 @@
 import { NgIf, NgFor, NgClass } from "@angular/common";
 import { FontIconComponent, LocalIconComponent } from "@ta/icons";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { getFontIcon, isFontIcon, isLocalIcon } from "@ta/icons";
 
@@ -17,7 +17,7 @@ export class ActionButtonComponent {
   /**
    * List of action available
    */
-  @Input() actions!: ActionButtonData[];
+  actions = input.required<ActionButtonData[]>();
 
   public isFontIcon(action: ActionButtonData): boolean {
     return isFontIcon(action.icon);
@@ -34,16 +34,16 @@ export class ActionButtonComponent {
   public isOpen: boolean = false;
 
   public openBullet(): void {
-    if (this.actions.length === 0) {
+    if (this.actions().length === 0) {
       return;
     }
-    if (this.actions.length > 1) {
+    if (this.actions().length > 1) {
       // more than one feature, we open all options
       this.isOpen = !this.isOpen;
       return;
     }
 
-    const action: ActionButtonData = this.actions[0];
+    const action: ActionButtonData = this.actions()[0];
     action.callback();
   }
 }

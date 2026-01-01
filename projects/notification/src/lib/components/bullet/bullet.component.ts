@@ -1,6 +1,6 @@
 import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, input, OnInit } from "@angular/core";
 
 import { BulletComponent as TaBulletComponent } from "@ta/ui";
 import { TaBaseComponent } from "@ta/utils";
@@ -16,12 +16,11 @@ import { NotificationFilter } from "../../services/queries";
   imports: [AsyncPipe, TaBulletComponent],
 })
 export class BulletComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  filters: NotificationFilter = null;
+  filters = input<NotificationFilter>(null);
 
   get number$() {
     return this._notificationDataService.count.get$(
-      this._notificationDataService.computeKey(this.filters)
+      this._notificationDataService.computeKey(this.filters())
     );
   }
 
@@ -32,7 +31,7 @@ export class BulletComponent extends TaBaseComponent implements OnInit {
   ngOnInit() {
     this.requestState.asked();
     this._notificationDataService
-      .fetchNumberOfNotifications$(this.filters)
+      .fetchNumberOfNotifications$(this.filters())
       .subscribe({
         complete: () => this.requestState.completed(),
         error: (error: HttpErrorResponse) => {

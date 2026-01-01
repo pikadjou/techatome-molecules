@@ -2,10 +2,10 @@ import { AsyncPipe } from "@angular/common";
 import {
   Component,
   EventEmitter,
-  Input,
   OnInit,
   Output,
   inject,
+  input,
   signal,
 } from "@angular/core";
 
@@ -49,14 +49,11 @@ import { TA_USER_SERVICE } from "../../services/user.service";
   ],
 })
 export class MyAccountComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  profileMenu: Menu | null = null;
+  profileMenu = input<Menu | null>(null);
 
-  @Input()
-  appVersion: string | null = null;
+  appVersion = input<string | null>(null);
 
-  @Input()
-  isEditable: boolean = false;
+  isEditable = input<boolean>(false);
 
   @Output()
   navigateEvent = new EventEmitter();

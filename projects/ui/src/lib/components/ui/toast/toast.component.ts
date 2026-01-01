@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { ENotificationCode, getTypeClass } from "../../../enum";
 
@@ -11,8 +11,7 @@ import { ENotificationCode, getTypeClass } from "../../../enum";
   imports: [NgClass],
 })
 export class ToastComponent {
-  @Input()
-  code: ENotificationCode = ENotificationCode.information;
+  code = input<ENotificationCode>(ENotificationCode.information);
 
   readonly getTypeClass = getTypeClass;
 }

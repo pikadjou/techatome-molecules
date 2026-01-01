@@ -1,5 +1,5 @@
 import { NgClass, NgIf, NgTemplateOutlet } from "@angular/common";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, input, OnInit } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -39,11 +39,9 @@ import { TaTranslationMenu } from "../../translation.service";
   ],
 })
 export class ToggleNavigationComponent implements OnInit {
-  @Input()
-  menu!: Menu;
+  menu = input.required<Menu>();
 
-  @Input()
-  container!: "tab" | "switch";
+  container = input.required<"tab" | "switch">();
 
   public activeKey: string = "";
   public readonly typeItem!: { item: MenuBase | MenuAction | MenuIcon };
@@ -54,19 +52,19 @@ export class ToggleNavigationComponent implements OnInit {
   }
 
   get containerCss() {
-    return this.container ?? "";
+    return this.container() ?? "";
   }
 
   ngOnInit() {
     if (
-      this.menu.elements.find(
+      this.menu().elements.find(
         (element) => element.options?.notificationBadge?.label
       )
     ) {
       this.notifEnabled = true;
     }
 
-    const activeItem = this.menu.elements.find((item) => item.defaultOpen);
+    const activeItem = this.menu().elements.find((item) => item.defaultOpen);
     if (activeItem) {
       this.callback(activeItem);
     }

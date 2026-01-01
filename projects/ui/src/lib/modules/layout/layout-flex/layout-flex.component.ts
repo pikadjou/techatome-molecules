@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaState } from "@ta/styles";
@@ -24,8 +24,7 @@ type Panel = "left" | "right" | "center";
   ],
 })
 export class LayoutFlexComponent extends TaBaseComponent {
-  @Input()
-  allowClose = false;
+  allowClose = input<boolean>(false);
 
   constructor() {
     super();

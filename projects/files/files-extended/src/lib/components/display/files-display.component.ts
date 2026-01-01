@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { Observable } from "rxjs";
 
@@ -26,11 +26,11 @@ import { Feature, UploadComponent } from "../upload/files-upload.component";
   ],
 })
 export class FilesDisplayComponent extends TaBaseComponent {
-  @Input() files$!: Observable<FileData[]>;
-  @Input() menu!: Menu;
-  @Input() canAddFile: boolean = true;
-  @Input() tempFiles!: FileData[];
-  @Input() fileType!: FileType;
+  files$ = input.required<Observable<FileData[]>>();
+  menu = input.required<Menu>();
+  canAddFile = input<boolean>(true);
+  tempFiles = input.required<FileData[]>();
+  fileType = input.required<FileType>();
 
   @Output() fileSelected: EventEmitter<FileData & { index: number }> =
     new EventEmitter();
@@ -39,7 +39,7 @@ export class FilesDisplayComponent extends TaBaseComponent {
   @Output() fileUploading: EventEmitter<FileStructure[]> = new EventEmitter();
 
   get canSelectMultipleFiles(): boolean {
-    switch (this.fileType) {
+    switch (this.fileType()) {
       case "Document":
         return false;
       case "Image":
@@ -50,11 +50,11 @@ export class FilesDisplayComponent extends TaBaseComponent {
   }
 
   get canDisplayTempsFiles(): boolean {
-    return this.tempFiles?.length > 0;
+    return this.tempFiles()?.length > 0;
   }
 
   public getFeature(): Feature[] {
-    switch (this.fileType) {
+    switch (this.fileType()) {
       case "Document":
         return ["upload-file"];
       case "Image":

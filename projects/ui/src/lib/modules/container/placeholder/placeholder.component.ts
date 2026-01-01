@@ -1,5 +1,5 @@
 import { NgFor, NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { createRange } from "@ta/utils";
 
@@ -13,8 +13,7 @@ import { Placeholder } from "./config";
   imports: [NgFor, NgClass],
 })
 export class PlaceholderComponent {
-  @Input()
-  placeholder!: Placeholder;
+  placeholder = input.required<Placeholder>();
 
   constructor() {}
 

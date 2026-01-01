@@ -2,7 +2,7 @@ import { AsyncPipe } from "@angular/common";
 import {
   Component,
   EventEmitter,
-  Input,
+  input,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -44,29 +44,20 @@ export class FormComponent
   extends TaBaseComponent
   implements OnInit, OnChanges, OnDestroy
 {
-  @Input()
-  inputs!: InputBase<any>[];
+  inputs = input.required<InputBase<any>[]>();
 
-  @Input()
-  askValidation$!: Observable<null>;
+  askValidation$ = input<Observable<null>>();
 
-  @Input()
-  askOnDestroy!: boolean;
+  askOnDestroy = input<boolean>();
 
-  @Input()
-  loader = false;
-  @Input()
-  error: IInputsError = { status: ENotificationCode.none, message: "" };
+  loader = input<boolean>(false);
+  error = input<IInputsError>({ status: ENotificationCode.none, message: "" });
 
-  @Input()
-  border = true;
+  border = input<boolean>(true);
 
-  @Input()
-  canDisplayButton = true;
-  @Input()
-  buttonTitle = "form.save";
-  @Input()
-  onLive = false;
+  canDisplayButton = input<boolean>(true);
+  buttonTitle = input<string>("form.save");
+  onLive = input<boolean>(false);
 
   @Output()
   valid: EventEmitter<{}> = new EventEmitter();
@@ -81,7 +72,7 @@ export class FormComponent
   }
 
   ngOnInit() {
-    this.form = this.toFormGroup(this.inputs);
+    this.form = this.toFormGroup(this.inputs());
 
     this._registerSubscription(
       this.form.statusChanges.subscribe(() =>
@@ -89,7 +80,7 @@ export class FormComponent
       )
     );
 
-    if (this.onLive) {
+    if (this.onLive()) {
       this._registerSubscription(
         this.form.valueChanges
           .pipe(distinctUntilChanged((prev, curr) => deepEqual(prev, curr)))
@@ -97,25 +88,26 @@ export class FormComponent
       );
     }
 
-    if (this.askValidation$) {
+    const askValidation = this.askValidation$();
+    if (askValidation) {
       this._registerSubscription(
-        this.askValidation$.subscribe((_) => this.onSubmit())
+        askValidation.subscribe((_) => this.onSubmit())
       );
     }
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (simpleChanges["inputs"] && !simpleChanges["inputs"].firstChange) {
-      this.form = this.toFormGroup(this.inputs);
+      this.form = this.toFormGroup(this.inputs());
     }
   }
 
   override ngOnDestroy() {
     super.ngOnDestroy();
-    this.inputs.forEach((input) => {
-      input.destroy();
+    this.inputs().forEach((inputItem) => {
+      inputItem.destroy();
     });
-    if (this.askOnDestroy) {
+    if (this.askOnDestroy()) {
       this.onSubmit();
     }
   }
@@ -128,7 +120,7 @@ export class FormComponent
   }
 
   public isValid(): boolean {
-    return this.form.valid && !this.loader;
+    return this.form.valid && !this.loader();
   }
 
   public toFormGroup(inputs: InputBase<any>[]): FormGroup {

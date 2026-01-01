@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { FilePicker, PickedFile } from "@capawesome/capacitor-file-picker";
@@ -20,14 +20,11 @@ export type Feature = "take-pic" | "upload-pic" | "upload-file";
   imports: [ActionButtonComponent, ButtonComponent],
 })
 export class UploadComponent {
-  @Input()
-  features: Feature[] = [];
+  features = input<Feature[]>([]);
 
-  @Input()
-  canSelectMultipleFiles: boolean = false;
+  canSelectMultipleFiles = input<boolean>(false);
 
-  @Input()
-  showInActionButton: boolean = true;
+  showInActionButton = input<boolean>(true);
 
   @Output()
   filesPicked = new EventEmitter<FileStructure[]>();
@@ -63,7 +60,7 @@ export class UploadComponent {
   }
 
   private _haveFeature(feature: Feature) {
-    return this.features.includes(feature);
+    return this.features().includes(feature);
   }
 
   private async _takePic() {
@@ -92,7 +89,7 @@ export class UploadComponent {
   private async _uploadFile() {
     // todo move into a capacitor filesystem service
     const pickFiles = await FilePicker.pickFiles({
-      multiple: this.canSelectMultipleFiles,
+      multiple: this.canSelectMultipleFiles(),
       types: [
         // pdf
         "application/pdf",

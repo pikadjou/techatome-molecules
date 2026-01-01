@@ -2,10 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
   OnDestroy,
   SimpleChanges,
   ViewChild,
+  input,
 } from "@angular/core";
 
 import {
@@ -24,15 +24,13 @@ export abstract class BaseChartComponent<
   TLabel = unknown
 > implements AfterViewInit, OnDestroy
 {
-  @Input()
-  labels!: TLabel[];
+  labels = input.required<TLabel[]>();
 
-  @Input()
-  datasets!: ChartDataset<ChartType, TData>[];
+  datasets = input.required<ChartDataset<ChartType, TData>[]>();
 
-  @Input() chartOptions: ChartConfiguration["options"] = {};
+  chartOptions = input<ChartConfiguration["options"]>({});
 
-  @Input() chartHeight?: number;
+  chartHeight = input<number>();
 
   @ViewChild("chartCanvas") chartCanvas!: ElementRef;
 
@@ -68,10 +66,10 @@ export abstract class BaseChartComponent<
   public createChart() {
     this.chart = new Chart(this.chartCanvas.nativeElement.getContext("2d"), {
       type: this.type,
-      options: this.chartOptions,
+      options: this.chartOptions(),
       data: {
-        labels: this.labels,
-        datasets: this.datasets,
+        labels: this.labels(),
+        datasets: this.datasets(),
       },
     });
   }
@@ -81,8 +79,8 @@ export abstract class BaseChartComponent<
       return;
     }
 
-    this.chart.data.labels = this.labels;
-    this.chart.data.datasets = this.datasets;
+    this.chart.data.labels = this.labels();
+    this.chart.data.datasets = this.datasets();
 
     this.chart?.update();
   }

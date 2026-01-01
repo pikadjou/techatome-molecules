@@ -1,6 +1,6 @@
 import { NgIf, NgFor, NgClass, NgTemplateOutlet } from "@angular/common";
 import { LocalIconComponent } from "@ta/icons";
-import { Component, Input, TemplateRef } from "@angular/core";
+import { Component, input, TemplateRef } from "@angular/core";
 
 import { InputBase, InputDynamic } from "@ta/form-model";
 import { TranslatePipe } from "@ta/translation";
@@ -23,11 +23,14 @@ import { TaBaseComponent } from "@ta/utils";
   ],
 })
 export class DynamicComponent extends TaBaseComponent {
-  @Input()
-  public inputsTemplate!: TemplateRef<any>;
+  inputsTemplate = input.required<TemplateRef<any>>();
 
-  @Input()
-  input!: InputDynamic;
+  inputModel = input.required<InputDynamic>({ alias: 'input' });
+
+  // Getter for backward compatibility
+  get input(): InputDynamic {
+    return this.inputModel();
+  }
 
   constructor() {
     super();

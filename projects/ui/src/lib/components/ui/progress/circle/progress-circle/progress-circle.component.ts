@@ -1,5 +1,5 @@
 import { DecimalPipe, NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -16,24 +16,24 @@ export class ProgressCircleComponent {
   /**
    * Progress in percentage
    */
-  @Input() progress: number = 50;
+  progress = input<number>(50);
 
   /**
    * Title located above
    */
-  @Input() upTitle?: string;
+  upTitle = input<string | undefined>(undefined);
 
   /**
    * Title located below
    */
-  @Input() downTitle?: string;
+  downTitle = input<string | undefined>(undefined);
 
   get circumference() {
     return 2 * Math.PI * 45;
   }
 
   get canDisplayText() {
-    return !Number.isNaN(this.progress);
+    return !Number.isNaN(this.progress());
   }
 
   constructor() {

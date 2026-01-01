@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { Subject } from "rxjs";
 
@@ -34,11 +34,9 @@ import { ActiveFilterTag } from "../types";
   ],
 })
 export class FiltersContainerComponent extends TaBaseComponent {
-  @Input()
-  form: InputBase<any>[] = [];
+  form = input<InputBase<any>[]>([]);
 
-  @Input()
-  activeFilter: ActiveFilterTag[] = [];
+  activeFilter = input<ActiveFilterTag[]>([]);
 
   @Output()
   filtersSelected = new EventEmitter<any>();

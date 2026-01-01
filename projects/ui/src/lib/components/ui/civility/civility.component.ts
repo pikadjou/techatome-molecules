@@ -1,6 +1,6 @@
 import { NgIf } from "@angular/common";
 import { MaterialIconComponent } from "@ta/icons";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { Civility } from "@ta/utils";
 
@@ -15,13 +15,12 @@ export class CivilityComponent {
   /**
    * Define the civility to display
    */
-  @Input()
-  civility!: Civility | null;
+  civility = input.required<Civility | null>();
 
   constructor() {}
 
   public getIcon(): string {
-    switch (this.civility) {
+    switch (this.civility()) {
       case Civility.Unknown:
         return "";
       case Civility.Dear:

@@ -1,5 +1,5 @@
 import { NgIf, NgTemplateOutlet } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -24,17 +24,13 @@ import { TaTranslationMenu } from "../../translation.service";
   ],
 })
 export class QuickActionsComponent {
-  @Input()
-  tabSelection: string | null = null;
+  tabSelection = input<string | null>(null);
 
-  @Input()
-  menu!: Menu;
+  menu = input.required<Menu>();
 
-  @Input()
-  public elementPerPage: number = 3.5;
+  elementPerPage = input<number>(3.5);
 
-  @Input()
-  canDeselect: boolean = false;
+  canDeselect = input<boolean>(false);
 
   @Output()
   tabSelected = new EventEmitter<string | null>();
@@ -54,7 +50,7 @@ export class QuickActionsComponent {
   }
 
   private _selectedValue(newSelection: string): string | null {
-    if (this.canDeselect && this.tabSelection === newSelection) return null;
+    if (this.canDeselect() && this.tabSelection() === newSelection) return null;
 
     return newSelection;
   }

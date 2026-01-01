@@ -2,10 +2,10 @@ import { NgIf } from "@angular/common";
 import {
   Component,
   EventEmitter,
-  Input,
   Output,
   TemplateRef,
   ViewChild,
+  input,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
@@ -32,16 +32,13 @@ import { SearchHistoryDisplayerComponent } from "./search-history-displayer/sear
   ],
 })
 export class SearchDisplayerComponent extends TaBaseComponent {
-  @Input()
-  container: "button" | "link" = "button";
+  container = input<"button" | "link">("button");
 
-  @Input()
-  placeholder: string = "";
+  placeholder = input<string>("");
 
-  @Input()
-  searchHistory?: {
+  searchHistory = input<{
     type: string;
-  };
+  }>();
 
   @Output()
   valueCompleted = new EventEmitter();
@@ -58,7 +55,7 @@ export class SearchDisplayerComponent extends TaBaseComponent {
   }
 
   public openDialog() {
-    if (!this.searchHistory?.type) {
+    if (!this.searchHistory()?.type) {
       return;
     }
     this._bottomSheet.open<

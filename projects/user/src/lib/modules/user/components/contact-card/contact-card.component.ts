@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import {
@@ -30,11 +30,10 @@ import { User } from "../../services/users/dto/user";
   ],
 })
 export class ContactCardComponent extends TaBaseComponent {
-  @Input()
-  userId: string = "";
+  userId = input<string>("");
 
   get user$() {
-    return this._usersService.user.get$(this.userId);
+    return this._usersService.user.get$(this.userId());
   }
 
   constructor(private _usersService: TaUsersService) {
@@ -56,7 +55,7 @@ export class ContactCardComponent extends TaBaseComponent {
 
   private _fetch() {
     this.requestState.asked();
-    this._usersService.fetchUser$(this.userId).subscribe({
+    this._usersService.fetchUser$(this.userId()).subscribe({
       complete: () => this.requestState.completed(),
       error: (error: HttpErrorResponse) => {
         this.requestState.onError(error.status, error.statusText);

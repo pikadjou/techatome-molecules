@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { InputBase } from "@ta/form-model";
 
@@ -14,15 +14,15 @@ import { InputErrorComponent } from "./input-error/input-error.component";
   imports: [FormLabelComponent, InputErrorComponent, NgClass, NgStyle],
 })
 export class InputLayoutComponent {
-  @Input() input!: InputBase<any>;
+  inputModel = input.required<InputBase<any>>({ alias: 'input' });
 
-  @Input() width: string = "100%";
-  @Input() height: string = "100%";
+  width = input<string>("100%");
+  height = input<string>("100%");
 
   get containerStyles(): { [key: string]: string } {
     return {
-      width: this.width,
-      height: this.height,
+      width: this.width(),
+      height: this.height(),
     };
   }
 }

@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TaSizes } from "@ta/styles";
 
@@ -13,12 +13,9 @@ import { BulletComponent } from "../bullet/bullet.component";
   imports: [NgIf, BulletComponent],
 })
 export class NewComponent {
-  @Input()
-  visible: boolean = false;
+  visible = input<boolean>(false);
 
-  @Input()
-  isRelative: boolean = false;
+  isRelative = input<boolean>(false);
 
-  @Input()
-  size: TaSizes = "md";
+  size = input<TaSizes>("md");
 }

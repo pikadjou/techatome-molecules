@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -22,17 +22,16 @@ export const criticityLabel = (criticity: CriticityStatus) =>
   imports: [TranslateModule, BadgeComponent],
 })
 export class CriticityComponent {
-  @Input()
-  criticity!: number | CriticityStatus;
+  criticity = input.required<number | CriticityStatus>();
 
   constructor() {
     TaTranslationUI.getInstance();
   }
   public label() {
-    return criticityLabel(this.criticity);
+    return criticityLabel(this.criticity());
   }
   public type() {
-    switch (this.criticity) {
+    switch (this.criticity()) {
       case CriticityStatus.P1:
         return "danger";
       case CriticityStatus.P2:

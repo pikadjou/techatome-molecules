@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "ta-layout-side-cta",
@@ -7,8 +7,7 @@ import { Component, Input } from "@angular/core";
   standalone: true,
 })
 export class LayoutSideCtaComponent {
-  @Input()
-  background: boolean = true;
+  background = input<boolean>(true);
 
   constructor() {}
 }

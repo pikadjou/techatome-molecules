@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, Input, Optional, TemplateRef } from "@angular/core";
+import { Component, Inject, input, Optional, TemplateRef } from "@angular/core";
 
 import { MENU_MAX_HEIGHT, MENU_TEMPLATE } from "../overlay.service";
 
@@ -14,7 +14,7 @@ import { MENU_MAX_HEIGHT, MENU_TEMPLATE } from "../overlay.service";
   imports: [CommonModule],
 })
 export class TaDefaultPanelComponent {
-  @Input() template?: TemplateRef<any>;
+  template = input<TemplateRef<any> | undefined>(undefined);
 
   constructor(
     @Optional() @Inject(MENU_TEMPLATE) public templateRef: TemplateRef<any>,

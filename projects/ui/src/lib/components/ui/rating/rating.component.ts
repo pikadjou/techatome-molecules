@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 
 import { TextComponent } from '../text/text.component';
 
@@ -14,44 +14,37 @@ export class RatingComponent {
   /**
    * Current rating value (supports decimals for partial stars)
    */
-  @Input()
-  value: number = 0;
+  value = input<number>(0);
 
   /**
    * Maximum number of stars
    */
-  @Input()
-  max: number = 5;
+  max = input<number>(5);
 
   /**
    * Size of the stars in pixels
    */
-  @Input()
-  size: number = 24;
+  size = input<number>(24);
 
   /**
    * Color of filled stars
    */
-  @Input()
-  color: string = '#fbbf24';
+  color = input<string>('#fbbf24');
 
   /**
    * Color of empty stars
    */
-  @Input()
-  emptyColor: string = '#d1d5db';
+  emptyColor = input<string>('#d1d5db');
 
   /**
    * Read-only mode (no click interactions)
    */
-  @Input()
-  readonly: boolean = false;
+  readonly = input<boolean>(false);
 
   /**
    * Show hover effect
    */
-  @Input()
-  showHover: boolean = true;
+  showHover = input<boolean>(true);
 
   /**
    * Emits the new rating value when a star is clicked
@@ -68,14 +61,14 @@ export class RatingComponent {
   public hoveredRating: number | null = null;
 
   get stars() {
-    return Array.from({ length: this.max }, (_, i) => i + 1);
+    return Array.from({ length: this.max() }, (_, i) => i + 1);
   }
 
   /**
    * Get fill percentage for a star (0-100)
    */
   public getStarFillPercentage(star: number): number {
-    const effectiveValue = this.hoveredRating ?? this.value;
+    const effectiveValue = this.hoveredRating ?? this.value();
 
     if (effectiveValue >= star) {
       return 100;
@@ -89,8 +82,7 @@ export class RatingComponent {
    * Handle star click
    */
   public onStarClick(star: number): void {
-    if (!this.readonly) {
-      this.value = star;
+    if (!this.readonly()) {
       this.ratingChange.emit(star);
     }
   }
@@ -99,7 +91,7 @@ export class RatingComponent {
    * Handle star hover
    */
   public onStarHover(star: number): void {
-    if (!this.readonly && this.showHover) {
+    if (!this.readonly() && this.showHover()) {
       this.hoveredRating = star;
       this.hoverChange.emit(star);
     }
@@ -110,8 +102,8 @@ export class RatingComponent {
    */
   public onMouseLeave(): void {
     this.hoveredRating = null;
-    if (!this.readonly && this.showHover) {
-      this.hoverChange.emit(this.value);
+    if (!this.readonly() && this.showHover()) {
+      this.hoverChange.emit(this.value());
     }
   }
 
@@ -119,6 +111,6 @@ export class RatingComponent {
    * Get cursor style
    */
   public getCursorStyle(): string {
-    return this.readonly ? 'default' : 'pointer';
+    return this.readonly() ? 'default' : 'pointer';
   }
 }

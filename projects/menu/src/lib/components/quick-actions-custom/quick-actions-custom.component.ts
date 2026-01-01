@@ -2,7 +2,7 @@ import { NgIf } from "@angular/common";
 import {
   Component,
   EventEmitter,
-  Input,
+  input,
   Output,
   TemplateRef,
 } from "@angular/core";
@@ -17,20 +17,15 @@ import { SwiperData, SwiperComponent } from "@ta/ui";
   imports: [NgIf, SwiperComponent],
 })
 export class QuickActionsCustomComponent {
-  @Input()
-  public elementPerPage: number = 3.5;
+  elementPerPage = input<number>(3.5);
 
-  @Input()
-  public swipeTemplate!: TemplateRef<any>;
-  @Input()
-  public slidesPerGroup: number = 1;
+  swipeTemplate = input.required<TemplateRef<any>>();
+  slidesPerGroup = input<number>(1);
 
-  @Input()
-  public isFreeMode: boolean = true;
+  isFreeMode = input<boolean>(true);
 
   @Output()
   public onSlideChanged = new EventEmitter<number>();
 
-  @Input()
-  public elements!: SwiperData[];
+  elements = input.required<SwiperData[]>();
 }

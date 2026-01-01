@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { OutputBlockData } from "@editorjs/editorjs";
 
@@ -23,8 +23,7 @@ import { SafePipe, TaBaseComponent } from "@ta/utils";
   ],
 })
 export class BlockTextComponent extends TaBaseComponent {
-  @Input()
-  blocks!: OutputBlockData[];
+  blocks = input.required<OutputBlockData[]>();
 
   readonly ENotificationCode = ENotificationCode;
 }

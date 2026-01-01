@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
@@ -25,20 +25,31 @@ export abstract class TaAbstractInputComponent<
   extends TaBaseComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input()
-  input!: C;
+  inputModel = input.required<C>({ alias: 'input' });
 
-  @Input()
-  matcher!: ErrorStateMatcher;
+  matcher = input<ErrorStateMatcher>(new ErrorStateMatcher());
 
-  @Input()
-  standalone = false;
+  standaloneMode = input<boolean>(false, { alias: 'standalone' });
 
-  @Input()
-  onFocus!: Observable<void>;
+  onFocusObs = input<Observable<void>>({ alias: 'onFocus' });
 
   @Output()
   valueChanged = new EventEmitter<V>();
+
+  // Getter for backward compatibility with subclasses
+  get input(): C {
+    return this.inputModel();
+  }
+
+  // Getter for backward compatibility
+  get standalone(): boolean {
+    return this.standaloneMode();
+  }
+
+  // Getter for backward compatibility
+  get onFocus(): Observable<void> | undefined {
+    return this.onFocusObs();
+  }
 
   @ViewChild("focusedElement", { read: ElementRef })
   focusedElement!: ElementRef;
@@ -50,9 +61,6 @@ export abstract class TaAbstractInputComponent<
   }
 
   ngOnInit() {
-    if (this.matcher === null) {
-      this.matcher = new ErrorStateMatcher();
-    }
     if (this.standalone) {
       this.input.createFormControl();
     }

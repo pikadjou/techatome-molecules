@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -24,32 +24,28 @@ import { TaTranslationUI } from "../../../../translation.service";
   ],
 })
 export class ProgressBarDataComponent {
-  @Input()
-  current?: number;
+  current = input<number | undefined>(undefined);
 
-  @Input()
-  max?: number;
+  max = input<number | undefined>(undefined);
 
-  @Input()
-  title!: string;
+  title = input.required<string>();
 
-  @Input()
-  titleIcon?: string;
+  titleIcon = input<string | undefined>(undefined);
 
   /**
    * @deprecated
    */
-  @Input()
-  description?: string;
+  description = input<string | undefined>(undefined);
 
-  @Input()
-  rightText?: { text: string; colorClass?: string };
+  rightText = input<{ text: string; colorClass?: string } | undefined>(undefined);
 
   get progressValue() {
-    if ((this.current || this.current === 0) && (this.max || this.max === 0))
-      return `${this.current}/${this.max}`;
+    const currentVal = this.current();
+    const maxVal = this.max();
+    if ((currentVal || currentVal === 0) && (maxVal || maxVal === 0))
+      return `${currentVal}/${maxVal}`;
 
-    return (this.current ?? this.max)?.toString() ?? "";
+    return (currentVal ?? maxVal)?.toString() ?? "";
   }
 
   constructor() {

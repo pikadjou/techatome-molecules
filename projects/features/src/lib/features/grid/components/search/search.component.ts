@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 
 import { TextBoxComponent } from '@ta/form-input';
 import { InputTextBox } from '@ta/form-model';
@@ -16,8 +16,7 @@ import { TaAbstractGridComponent } from '../abstract.component';
   styleUrl: './search.component.scss',
 })
 export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
-  @Input()
-  outOfBox = false;
+  outOfBox = input<boolean>(false);
 
   public input = new InputTextBox();
 
@@ -35,7 +34,7 @@ export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
         value: value.trim(),
       },
     ];
-    if (this.outOfBox) {
+    if (this.outOfBox()) {
       this._session.setFilter(this.gridId(), filters);
     } else {
       this.grid.filters?.apply(filters);

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "ta-logo",
@@ -10,30 +10,27 @@ export class LogoComponent {
   /**
    * If set, logo white or black version will be taken
    */
-  @Input()
-  color?: "white" | "black";
+  color = input<"white" | "black" | undefined>(undefined);
 
   /**
    * If set, logo oneline version will be taken
    */
-  @Input()
-  type?: "oneline";
+  type = input<"oneline" | undefined>(undefined);
 
   /**
    * Set the logo width in %
    */
-  @Input()
-  widthPercentage?: number = 100;
+  widthPercentage = input<number>(100);
 
   get imageWidth(): string {
-    return this.widthPercentage + "%";
+    return this.widthPercentage() + "%";
   }
 
   constructor() {}
 
   public getImagePath(): string {
-    return `assets/partners/logo/logo${this.type ? `-${this.type}` : ""}${
-      this.color ? `-${this.color}` : ""
+    return `assets/partners/logo/logo${this.type() ? `-${this.type()}` : ""}${
+      this.color() ? `-${this.color()}` : ""
     }.png`;
   }
 }

@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
@@ -80,17 +80,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   ],
 })
 export class InputsComponent extends TaBaseComponent {
-  @Input()
-  input!: InputBase<any>;
+  inputModel = input.required<InputBase<any>>({ alias: 'input' });
 
-  @Input()
-  standalone = false;
+  standaloneMode = input<boolean>(false, { alias: 'standalone' });
 
-  @Input()
-  onFocus!: Observable<void>;
+  onFocusObs = input<Observable<void>>({ alias: 'onFocus' });
 
-  @Input()
-  space = true;
+  space = input<boolean>(true);
 
   matcher = new MyErrorStateMatcher();
 }

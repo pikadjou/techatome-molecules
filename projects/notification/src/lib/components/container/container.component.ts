@@ -3,7 +3,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import {
   Component,
   EventEmitter,
-  Input,
+  input,
   OnInit,
   Output,
   TemplateRef,
@@ -55,29 +55,25 @@ import { UserTaggedInConversationComponent } from "../items/item/template/user-t
   ],
 })
 export class ContainerComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  filters: NotificationFilter = null;
+  filters = input<NotificationFilter>(null);
 
-  @Input()
-  templates: {
+  templates = input<{
     paymentStatus: TemplateRef<any>;
     projectStatus: TemplateRef<any>;
-  } | null = null;
+  } | null>(null);
 
-  @Input()
-  services: {
+  services = input<{
     getProjects$: (ids: string[]) => Observable<{ id: string; name: string }[]>;
-  } | null = null;
+  } | null>(null);
 
-  @Input()
-  routing: { [index in RoutingType]: (data: any) => void } | null = null;
+  routing = input<{ [index in RoutingType]: (data: any) => void } | null>(null);
 
   @Output()
   nbChanged: EventEmitter<number> = new EventEmitter();
 
   get notifications$() {
     return this._notificationDataService.list
-      .get$(this._notificationDataService.computeKey(this.filters))
+      .get$(this._notificationDataService.computeKey(this.filters()))
       .pipe(tap((list) => this.nbChanged.emit(list.length)));
   }
   constructor(
@@ -91,7 +87,7 @@ export class ContainerComponent extends TaBaseComponent implements OnInit {
     this.requestState.asked();
     this._registerSubscription(
       this._notificationDataService
-        .fetchNotifications$(this.filters)
+        .fetchNotifications$(this.filters())
         .subscribe({
           complete: () => this.requestState.completed(),
           error: (error: HttpErrorResponse) => {
@@ -100,15 +96,18 @@ export class ContainerComponent extends TaBaseComponent implements OnInit {
         })
     );
 
-    if (this.templates) {
-      this._sharedService.paymentStatusTemplate = this.templates?.paymentStatus;
-      this._sharedService.projectStatusTemplate = this.templates?.projectStatus;
+    const templatesVal = this.templates();
+    if (templatesVal) {
+      this._sharedService.paymentStatusTemplate = templatesVal.paymentStatus;
+      this._sharedService.projectStatusTemplate = templatesVal.projectStatus;
     }
-    if (this.services) {
-      this._sharedService.getProjects$ = this.services.getProjects$;
+    const servicesVal = this.services();
+    if (servicesVal) {
+      this._sharedService.getProjects$ = servicesVal.getProjects$;
     }
-    if (this.routing) {
-      this._sharedService.routing = this.routing;
+    const routingVal = this.routing();
+    if (routingVal) {
+      this._sharedService.routing = routingVal;
     }
   }
 }

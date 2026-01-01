@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, input } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
 
@@ -39,11 +39,9 @@ import {
   imports: [FilesDisplayComponent],
 })
 export class DocumentsComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  document$!: Observable<Document[]>;
+  document$ = input.required<Observable<Document[]>>();
 
-  @Input()
-  canAddFile!: boolean;
+  canAddFile = input.required<boolean>();
 
   @Output()
   filesSaved = new EventEmitter();
@@ -128,7 +126,7 @@ export class DocumentsComponent extends TaBaseComponent implements OnInit {
   }
 
   private _filteredDocuments$(filter: string) {
-    return this.document$.pipe(
+    return this.document$().pipe(
       map((documents) =>
         documents.filter((document) => {
           if (filter === "all") return true;

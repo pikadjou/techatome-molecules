@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { Component, input, ViewChild } from "@angular/core";
 
 import { InputDropdown } from "@ta/form-model";
 import { FontIconComponent } from "@ta/icons";
@@ -25,7 +25,7 @@ export class DropdownComponent extends TaAbstractInputComponent<
   InputDropdown<any>,
   any
 > {
-  @Input() space = true;
+  space = input<boolean>(true);
 
   @ViewChild(TaOverlayPanelComponent) overlayPanelRef!: TaOverlayPanelComponent;
 

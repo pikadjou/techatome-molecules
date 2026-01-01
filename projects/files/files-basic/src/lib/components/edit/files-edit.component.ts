@@ -3,11 +3,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
+  input,
 } from "@angular/core";
 
 import { NgIf, NgFor, NgClass } from "@angular/common";
@@ -44,11 +44,9 @@ export class FileEditComponent
   extends TaBaseComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input()
-  imagePath!: string;
+  imagePath = input.required<string>();
 
-  @Input()
-  saveImage$!: Observable<null>;
+  saveImage$ = input.required<Observable<null>>();
 
   @Output()
   savedImage: EventEmitter<Blob> = new EventEmitter();
@@ -109,9 +107,10 @@ export class FileEditComponent
   }
 
   ngOnInit() {
-    if (this.saveImage$) {
+    const saveImage = this.saveImage$();
+    if (saveImage) {
       this._registerSubscription(
-        this.saveImage$.subscribe(() => {
+        saveImage.subscribe(() => {
           this.onSaveClick();
         })
       );
@@ -245,7 +244,7 @@ export class FileEditComponent
       usageStatistics: false,
     });
     const crop = await this.tuiImageEditor.loadImageFromURL(
-      this.imagePath,
+      this.imagePath(),
       "default"
     );
     this._canvasSize = determineNewSize(

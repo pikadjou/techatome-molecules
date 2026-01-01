@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { Observable } from "rxjs";
 
@@ -17,11 +17,9 @@ import { TaBaseComponent } from "@ta/utils";
   imports: [NgIf, ButtonComponent, FormComponent, TranslatePipe],
 })
 export class FiltersFormComponent extends TaBaseComponent {
-  @Input()
-  form: InputBase<any>[] = [];
+  form = input<InputBase<any>[]>([]);
 
-  @Input()
-  askValidation$!: Observable<null>;
+  askValidation$ = input.required<Observable<null>>();
 
   @Output()
   filtersSelected = new EventEmitter<any>();

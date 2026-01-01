@@ -1,5 +1,5 @@
 import { DatePipe, NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 import { differenceInCalendarDays } from "date-fns";
@@ -14,17 +14,15 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [NgIf, TranslateModule, DatePipe],
 })
 export class TimeAgoComponent {
-  @Input()
-  date!: string;
+  date = input.required<string>();
 
-  @Input()
-  withHours: boolean = false;
+  withHours = input<boolean>(false);
 
   get absDays() {
     return Math.abs(this.days);
   }
   get days() {
-    return differenceInCalendarDays(new Date(this.date), new Date());
+    return differenceInCalendarDays(new Date(this.date()), new Date());
   }
   public key() {
     const diffDays = this.days;

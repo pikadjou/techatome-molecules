@@ -3,7 +3,7 @@ import {
   AfterViewChecked,
   Component,
   ElementRef,
-  Input,
+  input,
   ViewChild,
   inject,
 } from "@angular/core";
@@ -24,8 +24,7 @@ export class LayoutWithBottomNavComponent
   extends TaBaseComponent
   implements AfterViewChecked
 {
-  @Input()
-  type!: string;
+  type = input.required<string>();
 
   @ViewChild("bottomNavContainer")
   private _bottomNav!: ElementRef<HTMLDivElement>;

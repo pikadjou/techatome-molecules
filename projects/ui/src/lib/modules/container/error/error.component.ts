@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -14,11 +14,9 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [NgIf, TranslateModule, PictureInfoMessageComponent],
 })
 export class ErrorComponent {
-  @Input()
-  message = "";
+  message = input<string>("");
 
-  @Input()
-  code = 200;
+  code = input<number>(200);
 
   constructor() {
     TaTranslationUI.getInstance();

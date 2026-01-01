@@ -1,5 +1,5 @@
 import { NgFor, NgTemplateOutlet } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TitleComponent } from "@ta/ui";
 import {
@@ -23,8 +23,7 @@ import { TextComponent } from "../text/text.component";
   ],
 })
 export class RichTextComponent {
-  @Input()
-  richText!: RichText;
+  richText = input.required<RichText>();
 
   public readonly typeToken!: { childrenText: RichTextChildren[] };
 }

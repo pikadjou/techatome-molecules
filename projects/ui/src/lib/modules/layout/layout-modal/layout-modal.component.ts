@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, input, OnInit } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -28,11 +28,9 @@ export type ModalStyle = "full" | "big" | "classic" | "small";
   ],
 })
 export class LayoutModalComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  style: ModalStyle = "classic";
+  style = input<ModalStyle>("classic");
 
-  @Input()
-  title: string = "";
+  title = input<string>("");
 
   constructor(public dialogRef: MatDialogRef<any>) {
     super();
@@ -40,7 +38,7 @@ export class LayoutModalComponent extends TaBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dialogRef.addPanelClass(this.style + "-modal");
+    this.dialogRef.addPanelClass(this.style() + "-modal");
   }
 
   public close() {

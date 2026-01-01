@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -27,24 +27,20 @@ export class BadgeComponent {
   /**
    * Text to display in badge
    */
-  @Input()
-  value!: string;
+  value = input.required<string>();
 
   /**
    * Style of badge
    */
-  @Input()
-  type: BadgeType = "primary";
+  type = input<BadgeType>("primary");
 
   /**
    * @deprecated
    * showClickOption
    */
-  @Input()
-  showClickOption = false;
+  showClickOption = input<boolean>(false);
 
-  @Input()
-  icon?: string;
+  icon = input<string | undefined>(undefined);
 
   @Output()
   clickAction = new EventEmitter();
@@ -54,7 +50,7 @@ export class BadgeComponent {
   }
 
   public getClass(): string {
-    return `badge-${this.type}`;
+    return `badge-${this.type()}`;
   }
 
   public click() {

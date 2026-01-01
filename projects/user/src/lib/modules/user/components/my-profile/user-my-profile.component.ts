@@ -1,6 +1,6 @@
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { TranslatePipe } from "@ta/translation";
 import {
@@ -43,8 +43,7 @@ import { User } from "../../services/users/dto/user";
   ],
 })
 export class UserMyProfileComponent extends TaBaseComponent {
-  @Input()
-  canModify: boolean = true;
+  canModify = input<boolean>(true);
 
   @Output()
   modifyAction = new EventEmitter();

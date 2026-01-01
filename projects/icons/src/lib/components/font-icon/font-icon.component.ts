@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 import { TaSizes } from '@ta/styles';
@@ -12,9 +12,7 @@ import { TaSizes } from '@ta/styles';
   imports: [NgClass, MatIconModule],
 })
 export class FontIconComponent {
-  @Input()
-  public name!: string;
+  public name = input.required<string>();
 
-  @Input()
-  public type: TaSizes = 'md';
+  public type = input<TaSizes>('md');
 }

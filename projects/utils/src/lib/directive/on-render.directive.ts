@@ -1,16 +1,16 @@
 import {
   Directive,
   EventEmitter,
-  Input,
   Output,
   SimpleChanges,
+  input,
 } from "@angular/core";
 
 @Directive({
   selector: "[TaOnRender]",
 })
 export class OnRenderDirective {
-  @Input() onRender!: boolean;
+  onRender = input.required<boolean>();
 
   @Output() rendered = new EventEmitter();
 

@@ -1,5 +1,5 @@
 import { NgFor, AsyncPipe } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { Observable } from "rxjs";
 
@@ -14,6 +14,5 @@ import { UserLogoComponent } from "../user-logo/user-logo.component";
   imports: [NgFor, AsyncPipe, UserLogoComponent],
 })
 export class UsersListComponent {
-  @Input()
-  users!: Observable<UserLogoData[]>;
+  users = input.required<Observable<UserLogoData[]>>();
 }

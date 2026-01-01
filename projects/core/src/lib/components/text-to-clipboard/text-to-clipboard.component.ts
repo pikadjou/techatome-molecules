@@ -1,4 +1,4 @@
-import { Component, Input, inject } from "@angular/core";
+import { Component, inject, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { ENotificationCode, LAZY_SERVICE_TOKEN } from "@ta/notification";
@@ -12,8 +12,7 @@ import { TaBaseComponent, copyTextToClipboard } from "@ta/utils";
   imports: [FontIconComponent],
 })
 export class TextToClipboardComponent extends TaBaseComponent {
-  @Input()
-  value!: string;
+  value = input.required<string>();
 
   protected _notificationService = inject(LAZY_SERVICE_TOKEN);
 
@@ -32,7 +31,7 @@ export class TextToClipboardComponent extends TaBaseComponent {
     };
 
     await copyTextToClipboard(
-      this.value,
+      this.value(),
       successNotification,
       errorNotification
     );

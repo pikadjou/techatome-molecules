@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { LocalIconComponent } from "@ta/icons";
 import { TaIconType } from "@ta/icons";
@@ -13,14 +13,12 @@ import { extractExtension } from "@ta/utils";
   imports: [LocalIconComponent],
 })
 export class FileImageComponent {
-  @Input()
-  fileName!: string;
+  fileName = input.required<string>();
 
-  @Input()
-  size: TaSizes = "sm";
+  size = input<TaSizes>("sm");
 
   get extIcon(): TaIconType {
-    const ext = extractExtension(this.fileName);
+    const ext = extractExtension(this.fileName());
 
     switch (ext) {
       case "docx":

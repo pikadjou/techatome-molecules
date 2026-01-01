@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, inject, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, input } from '@angular/core';
 
 import { ColMetaData, Preset } from '../../models/types';
 import { TaGridSessionService } from '../../services/grid-session.services';
@@ -18,11 +18,9 @@ export class TaGridContainerComponent<T = unknown>
 {
   initialData = input<T[]>();
 
-  @Input()
-  colsMetaData: ColMetaData<any>[] = [];
+  colsMetaData = input<ColMetaData<any>[]>([]);
 
-  @Input()
-  preset?: Preset[];
+  preset = input<Preset[]>();
 
   @ViewChild('table', { static: true }) tableElement!: ElementRef;
 
@@ -34,10 +32,10 @@ export class TaGridContainerComponent<T = unknown>
 
     this._grid.init({
       elementRef: this.tableElement,
-      colsMetaData: this.colsMetaData,
+      colsMetaData: this.colsMetaData(),
       initialFilter: raw ?? [],
       data: this.initialData(),
-      preset: this.preset,
+      preset: this.preset(),
       // services: {
       //   getData$: params => this._service.getData$<any>(this.model, params),
       // },

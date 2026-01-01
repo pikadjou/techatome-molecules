@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { ColorType, TaSizes } from '@ta/styles';
 
@@ -11,20 +11,17 @@ import { ColorType, TaSizes } from '@ta/styles';
   imports: [NgClass],
 })
 export class ProgressComponent {
-  @Input()
-  size: TaSizes = 'md';
+  size = input<TaSizes>('md');
 
-  @Input()
-  type: ColorType = 'default';
+  type = input<ColorType>('default');
 
-  @Input()
-  value: number = 0;
+  value = input<number>(0);
 
   public getClass(): string {
-    return `progress-${this.type} ${this.size}`;
+    return `progress-${this.type()} ${this.size()}`;
   }
 
   public getProgressStyle() {
-    return { width: `${Math.max(0, Math.min(100, this.value))}%` };
+    return { width: `${Math.max(0, Math.min(100, this.value()))}%` };
   }
 }

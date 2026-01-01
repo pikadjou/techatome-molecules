@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { InputTextBox } from '@ta/form-model';
@@ -16,8 +16,7 @@ import { TextareaComponent } from '../textarea/textarea.component';
   imports: [FontIconComponent, ReactiveFormsModule, TextareaComponent, InputLayoutComponent],
 })
 export class TextBoxComponent extends TaAbstractInputComponent<InputTextBox, string> implements OnInit {
-  @Input()
-  space = true;
+  space = input<boolean>(true);
 
   public hide = false;
 

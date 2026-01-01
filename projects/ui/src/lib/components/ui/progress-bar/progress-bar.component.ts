@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "ta-progress-bar",
@@ -7,6 +7,6 @@ import { Component, Input } from "@angular/core";
   standalone: true,
 })
 export class ProgressBarComponent {
-  @Input() current!: number;
-  @Input() max!: number;
+  current = input.required<number>();
+  max = input.required<number>();
 }

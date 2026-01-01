@@ -1,5 +1,5 @@
 import { NgFor } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { BadgeComponent } from "@ta/ui";
 import { TaBaseComponent } from "@ta/utils";
@@ -14,8 +14,7 @@ import { ActiveFilterTag } from "../types";
   imports: [NgFor, BadgeComponent],
 })
 export class FiltersTagComponent extends TaBaseComponent {
-  @Input()
-  activeFilter: ActiveFilterTag[] = [];
+  activeFilter = input<ActiveFilterTag[]>([]);
 
   @Output()
   removedFilter = new EventEmitter<ActiveFilterTag>();

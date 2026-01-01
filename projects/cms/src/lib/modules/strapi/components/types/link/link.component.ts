@@ -1,5 +1,5 @@
 import { NgFor } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { LinkComponent as UiLinkComponent } from "@ta/ui";
 import { RichParagraphLink } from "../../../services/dto/types/rich-text";
@@ -13,10 +13,9 @@ import { TextComponent } from "../text/text.component";
   imports: [NgFor, UiLinkComponent, TextComponent],
 })
 export class LinkComponent {
-  @Input()
-  link!: RichParagraphLink;
+  link = input.required<RichParagraphLink>();
 
   public goTo() {
-    window.open(this.link.url);
+    window.open(this.link().url);
   }
 }

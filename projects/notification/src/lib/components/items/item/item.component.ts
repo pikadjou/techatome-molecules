@@ -1,5 +1,5 @@
 import { NotificationDto } from "../../../services/dto/notification";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { TimeAgoComponent } from "@ta/ui";
 
 @Component({
@@ -10,6 +10,5 @@ import { TimeAgoComponent } from "@ta/ui";
   imports: [TimeAgoComponent],
 })
 export class ItemComponent {
-  @Input()
-  notification!: NotificationDto;
+  notification = input.required<NotificationDto>();
 }

@@ -4,7 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  input,
   Output,
   TemplateRef,
   ViewChild,
@@ -29,23 +29,17 @@ export interface SwiperData {
   imports: [CommonModule],
 })
 export class SwiperComponent {
-  @Input()
-  public swipeTemplate!: TemplateRef<any>;
+  swipeTemplate = input.required<TemplateRef<any>>();
 
-  @Input()
-  public slides!: SwiperData[];
+  slides = input.required<SwiperData[]>();
 
-  @Input()
-  public slidesPerPage: number = 3.5;
+  slidesPerPage = input<number>(3.5);
 
-  @Input()
-  public slidesPerGroup: number = 1;
+  slidesPerGroup = input<number>(1);
 
-  @Input()
-  public isFreeMode: boolean = true;
+  isFreeMode = input<boolean>(true);
 
-  @Input()
-  public startAt: number = 1;
+  startAt = input<number>(1);
 
   @Output()
   public onSlideChanged = new EventEmitter<number>();
@@ -56,8 +50,8 @@ export class SwiperComponent {
   constructor() {}
 
   ngAfterViewInit() {
-    if (this.startAt) {
-      this.swiperContainer.nativeElement.swiper.slideTo(this.startAt);
+    if (this.startAt()) {
+      this.swiperContainer.nativeElement.swiper.slideTo(this.startAt());
     }
   }
 

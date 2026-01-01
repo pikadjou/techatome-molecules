@@ -3,7 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  Input,
+  input,
   OnChanges,
   OnInit,
   Output,
@@ -38,25 +38,20 @@ export class EditFieldComponent
   extends TaBaseComponent
   implements OnInit, OnChanges
 {
-  @Input()
-  getInput!: () => InputBase<any>;
+  getInput = input.required<() => InputBase<any>>();
 
-  @Input()
-  changeEditMode$: Observable<boolean> | null = null;
+  changeEditMode$ = input<Observable<boolean> | null>(null);
 
-  @Input()
-  isLoading: boolean = false;
+  isLoading = input<boolean>(false);
 
-  @Input()
-  withBorder: boolean = true;
+  withBorder = input<boolean>(true);
 
-  @Input()
-  disabled: boolean = false;
+  disabled = input<boolean>(false);
 
   @Output()
   newValue: EventEmitter<unknown> = new EventEmitter();
 
-  readonly onFocus = new BehaviorSubject<void>(undefined);
+  readonly onFocusBehavior = new BehaviorSubject<void>(undefined);
   readonly renderInput = signal<InputBase<null> | null>(null);
   public editMode = signal(false);
 
@@ -81,9 +76,10 @@ export class EditFieldComponent
     super();
   }
   ngOnInit() {
-    if (this.changeEditMode$) {
+    const changeEditMode = this.changeEditMode$();
+    if (changeEditMode) {
       this._registerSubscription(
-        this.changeEditMode$.subscribe((value) => this.editMode.set(value))
+        changeEditMode.subscribe((value) => this.editMode.set(value))
       );
     }
     this._setInput();
@@ -104,7 +100,7 @@ export class EditFieldComponent
     this.editMode.set(!this.editMode());
 
     if (this.editMode()) {
-      this.onFocus.next();
+      this.onFocusBehavior.next();
     }
   }
 
@@ -119,6 +115,6 @@ export class EditFieldComponent
   }
 
   private _setInput() {
-    this.renderInput.set(this.getInput());
+    this.renderInput.set(this.getInput()());
   }
 }

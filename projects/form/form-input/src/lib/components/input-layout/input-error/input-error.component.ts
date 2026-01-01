@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { InputBase } from "@ta/form-model";
 import { TranslatePipe } from "@ta/translation";
@@ -11,5 +11,5 @@ import { TranslatePipe } from "@ta/translation";
   imports: [TranslatePipe],
 })
 export class InputErrorComponent {
-  @Input() input!: InputBase<any>;
+  input = input.required<InputBase<any>>();
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { FontIconComponent, LocalIconComponent } from "@ta/icons";
 import { TaIconType } from "@ta/icons";
@@ -35,7 +35,7 @@ import { EFileExtension, FileData } from "@ta/utils";
   ],
 })
 export class FileCardComponent {
-  @Input() file!: FileData;
+  file = input.required<FileData>();
 
   @Output()
   fileSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
@@ -45,7 +45,7 @@ export class FileCardComponent {
     new EventEmitter<FileData>();
 
   get localIcon() {
-    switch (this.file.fileExtension) {
+    switch (this.file().fileExtension) {
       case EFileExtension.PDF:
         return TaIconType.Pdf;
       case EFileExtension.Word:
@@ -60,26 +60,26 @@ export class FileCardComponent {
   }
 
   get fileType(): string | null {
-    return this.file.fileMetaData?.fileType?.translatedValue || null;
+    return this.file().fileMetaData?.fileType?.translatedValue || null;
   }
 
   get userTrigram(): string | null {
-    return this.file.fileMetaData?.owner?.naming?.trigram || null;
+    return this.file().fileMetaData?.owner?.naming?.trigram || null;
   }
 
   get fileSize(): number | null {
-    return this.file.fileMetaData?.fileSize || null;
+    return this.file().fileMetaData?.fileSize || null;
   }
 
   get fileName(): string | null {
-    return this.file.fileMetaData?.fileName || null;
+    return this.file().fileMetaData?.fileName || null;
   }
 
   public onHeaderClicked() {
-    this.moreInformationSelected.emit(this.file);
+    this.moreInformationSelected.emit(this.file());
   }
 
   public onBodyClicked() {
-    this.fileSelected.emit(this.file);
+    this.fileSelected.emit(this.file());
   }
 }

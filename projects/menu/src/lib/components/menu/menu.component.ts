@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TaBaseComponent } from "@ta/utils";
 
@@ -14,20 +14,18 @@ import { MenuItemComponent } from "./item/menu-item.component";
   imports: [NgClass, AsyncPipe, MenuItemComponent],
 })
 export class MenuComponent extends TaBaseComponent {
-  @Input()
-  menu!: Menu;
+  menu = input.required<Menu>();
 
-  @Input()
-  container!: "second" | "overflow" | "main" | "panel";
+  container = input.required<"second" | "overflow" | "main" | "panel">();
 
   get containerCss() {
-    switch (this.container) {
+    switch (this.container()) {
       case "overflow":
         return "overflow vertical";
       case "second":
-        return "second " + this.menu.direction;
+        return "second " + this.menu().direction;
       case "main":
-        return "main-nav " + this.menu.direction;
+        return "main-nav " + this.menu().direction;
       default:
         return "";
     }

@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TaSizes } from "@ta/styles";
 
@@ -11,24 +11,20 @@ import { TaSizes } from "@ta/styles";
   imports: [NgClass],
 })
 export class NotificationBadgeComponent {
-  @Input()
-  number!: number;
+  number = input.required<number>();
 
-  @Input()
-  fontSize: TaSizes = "xs";
+  fontSize = input<TaSizes>("xs");
 
-  @Input()
-  style?: string | undefined;
+  style = input<string | undefined>(undefined);
 
-  @Input()
-  relative: boolean = false;
+  relative = input<boolean>(false);
 
   public getClass() {
     const css: { [index: string]: boolean } = {};
 
-    css[`bgc-${this.style ?? "semantic-token-info"}`] = true;
+    css[`bgc-${this.style() ?? "semantic-token-info"}`] = true;
 
-    if (this.relative) {
+    if (this.relative()) {
       css["relative"] = true;
     }
 

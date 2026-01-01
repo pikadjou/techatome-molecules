@@ -1,5 +1,5 @@
 import { ENotificationLevel } from "../../../../services/dto/level";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { FontIconComponent } from "@ta/icons";
 
 @Component({
@@ -10,9 +10,7 @@ import { FontIconComponent } from "@ta/icons";
   imports: [FontIconComponent],
 })
 export class IconComponent {
-  @Input()
-  level!: ENotificationLevel;
+  level = input.required<ENotificationLevel>();
 
-  @Input()
-  icon!: string;
+  icon = input.required<string>();
 }

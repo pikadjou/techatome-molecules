@@ -2,7 +2,7 @@ import {
   Component,
   EventEmitter,
   HostListener,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
@@ -36,17 +36,13 @@ export class SearchFieldComponent
   extends TaAbstractInputComponent<InputTextBox | InputNumber>
   implements OnInit, OnDestroy
 {
-  @Input()
-  isOpen: boolean = false;
+  isOpen = input<boolean>(false);
 
-  @Input()
-  placeholder: string = "";
+  placeholder = input<string>("");
 
-  @Input()
-  space = true;
+  space = input<boolean>(true);
 
-  @Input()
-  type: TaSizes = "sm";
+  type = input<TaSizes>("sm");
 
   @Output()
   valueCompleted = new EventEmitter();
@@ -59,7 +55,7 @@ export class SearchFieldComponent
   }
   override ngOnInit() {
     super.ngOnInit();
-    this.isDeployed = this.isOpen;
+    this.isDeployed = this.isOpen();
     if (this.input.value) {
       this.isDeployed = true;
     }
@@ -80,7 +76,7 @@ export class SearchFieldComponent
       this.valueCompleted.emit(this.input.value);
       return;
     }
-    if (!this.isOpen) {
+    if (!this.isOpen()) {
       this.isDeployed = false;
     }
   }
@@ -91,7 +87,7 @@ export class SearchFieldComponent
 
   public focusOut() {
     this.focusTextBox = false;
-    if (!this.isOpen) {
+    if (!this.isOpen()) {
       this.isDeployed = !!this.input.value;
     }
   }

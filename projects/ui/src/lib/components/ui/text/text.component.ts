@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { ColorType, TaSizes } from '@ta/styles';
 
@@ -15,24 +15,21 @@ export class TextComponent {
    *
    * Add small class to text
    */
-  @Input()
-  size: TaSizes = 'md';
+  size = input<TaSizes>('md');
 
   /**
    *
    * Add bold class to text
    */
-  @Input()
-  isBold: boolean = false;
+  isBold = input<boolean>(false);
 
   /**
    *
    * Add bold class to text
    */
-  @Input()
-  color: ColorType = 'default';
+  color = input<ColorType>('default');
 
   public getColorClass() {
-    return `text-color-text-${this.color}`;
+    return `text-color-text-${this.color()}`;
   }
 }

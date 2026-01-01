@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -16,17 +16,15 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [NgIf, FontIconComponent, TranslateModule],
 })
 export class MegaoctetComponent {
-  @Input()
-  octet!: number;
+  octet = input.required<number>();
 
-  @Input()
-  icon: boolean = false;
+  icon = input<boolean>(false);
 
   constructor() {
     TaTranslationUI.getInstance();
   }
 
   get megaoctet() {
-    return roundToDecimal(octetsToMo(this.octet), 2);
+    return roundToDecimal(octetsToMo(this.octet()), 2);
   }
 }

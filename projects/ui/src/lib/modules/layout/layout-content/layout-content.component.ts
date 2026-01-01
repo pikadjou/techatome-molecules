@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "ta-layout-content",
@@ -7,8 +7,7 @@ import { Component, Input } from "@angular/core";
   standalone: true,
 })
 export class LayoutContentComponent {
-  @Input()
-  autoHeight: boolean = false;
+  autoHeight = input<boolean>(false);
 
   constructor() {}
 }

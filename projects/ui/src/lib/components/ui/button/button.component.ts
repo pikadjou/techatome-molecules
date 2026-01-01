@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaState } from "@ta/styles";
@@ -16,35 +16,29 @@ export class ButtonComponent {
   /**
    * Is button type
    */
-  @Input()
-  state: TaState = "classic";
+  state = input<TaState>("classic");
 
   /**
    * Indicate the button type
    */
-  @Input()
-  type: "primary" | "secondary" | "tertiary" | "danger" = "primary";
+  type = input<"primary" | "secondary" | "tertiary" | "danger">("primary");
 
-  @Input()
-  size: "small" | "medium" | "large" = "medium";
+  size = input<"small" | "medium" | "large">("medium");
 
-  @Input()
-  icon: string | null = null;
+  icon = input<string | null>(null);
   /**
    * Class - Add custom classes separates by space
    * Outline - Draw a border around the button when true
    * Rounded - Make button rounded when true
    * Circular - Make button circular when true
    */
-  @Input()
-  options: {
+  options = input<{
     class?: string;
     circular?: boolean | "big" | "small";
     border?: boolean;
-  } | null = null;
+  } | null>(null);
 
-  @Input()
-  stopPropagationActivation = true;
+  stopPropagationActivation = input<boolean>(true);
 
   /**
    * Event emitted when button is clicked
@@ -55,7 +49,7 @@ export class ButtonComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state === "classic") {
+    if (this.state() === "classic") {
       this.action.emit();
     }
   }
@@ -63,23 +57,23 @@ export class ButtonComponent {
   public getClass() {
     const css: { [index: string]: boolean } = {};
 
-    css[this.state] = true;
-    css[this.size] = true;
-    css[this.type] = true;
+    css[this.state()] = true;
+    css[this.size()] = true;
+    css[this.type()] = true;
 
-    if (this.options?.circular === true) {
+    if (this.options()?.circular === true) {
       css["circular"] = true;
     }
-    if (this.options?.circular === "big") {
+    if (this.options()?.circular === "big") {
       css["circular big"] = true;
     }
-    if (this.options?.circular === "small") {
+    if (this.options()?.circular === "small") {
       css["circular small"] = true;
     }
-    if (this.options?.class) {
-      css[this.options.class] = true;
+    if (this.options()?.class) {
+      css[this.options()!.class!] = true;
     }
-    if (this.options?.border === false) {
+    if (this.options()?.border === false) {
       css["no-border"] = true;
     }
 

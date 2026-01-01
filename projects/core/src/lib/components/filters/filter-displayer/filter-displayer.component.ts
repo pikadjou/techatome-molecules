@@ -2,10 +2,10 @@ import { NgIf } from "@angular/common";
 import {
   Component,
   EventEmitter,
-  Input,
   Output,
   TemplateRef,
   ViewChild,
+  input,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
@@ -34,14 +34,11 @@ import { FilterContainerComponent } from "../filter-container/filter-container.c
   ],
 })
 export class FilterDisplayerComponent extends TaBaseComponent {
-  @Input()
-  form: InputBase<any>[] = [];
+  form = input<InputBase<any>[]>([]);
 
-  @Input()
-  iconType: string = "filter";
+  iconType = input<string>("filter");
 
-  @Input()
-  container: "button" | "link" = "button";
+  container = input<"button" | "link">("button");
 
   @Output()
   filtersSelected = new EventEmitter<any>();

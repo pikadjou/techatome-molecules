@@ -3,12 +3,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   Renderer2,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
+  input,
 } from '@angular/core';
 
 import { TitleComponent } from '@ta/ui';
@@ -25,8 +25,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class TaGridComponent<T extends { id: number }> extends TaAbstractGridComponent<T> {
-  @Input()
-  cardTemplate!: TemplateRef<{ items: T[] }>;
+  cardTemplate = input.required<TemplateRef<{ items: T[] }>>();
 
   @Output()
   rowClicked = new EventEmitter<T>();

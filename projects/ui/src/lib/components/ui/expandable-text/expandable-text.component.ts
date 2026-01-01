@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, ElementRef, Input, ViewChild } from "@angular/core";
+import { Component, ElementRef, input, ViewChild } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -13,8 +13,7 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [NgIf, TranslateModule],
 })
 export class ExpandableTextComponent {
-  @Input()
-  height: number = 100;
+  height = input<number>(100);
 
   public showFullText: boolean = false;
   public showButton: boolean = true;
@@ -28,14 +27,14 @@ export class ExpandableTextComponent {
 
   get textHeight() {
     if (this._myText) {
-      if (this._myText.nativeElement.offsetHeight < this.height) {
+      if (this._myText.nativeElement.offsetHeight < this.height()) {
         return "auto";
       }
     }
     if (this.showFullText) {
       return "auto";
     }
-    return `${this.height}px`;
+    return `${this.height()}px`;
   }
 
   get hasFixedHeight() {
@@ -44,7 +43,7 @@ export class ExpandableTextComponent {
 
   get hasTooBigText() {
     if (this._myText) {
-      return this._myText.nativeElement.offsetHeight > this.height;
+      return this._myText.nativeElement.offsetHeight > this.height();
     }
     return true;
   }

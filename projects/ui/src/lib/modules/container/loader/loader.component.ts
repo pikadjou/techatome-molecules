@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { TaSizes } from "@ta/styles";
@@ -21,23 +21,15 @@ export type LoaderSize = "sm" | "md" | "lg";
   imports: [NgClass, MatProgressSpinnerModule, PlaceholderComponent],
 })
 export class LoaderComponent {
-  @Input()
-  isLoading = false;
+  isLoading = input<boolean>(true);
 
-  @Input()
-  skeleton: PlaceholderConfig | null = null;
+  skeleton = input<PlaceholderConfig | null>(null);
 
-  @Input()
-  size: TaSizes = "lg";
+  size = input<TaSizes>("lg");
 
-  @Input()
-  text: string = "container.loading.light-message";
-
-  constructor() {
-    this.isLoading = true;
-  }
+  text = input<string>("container.loading.light-message");
 
   public getPlaceholder(): Placeholder {
-    return getPlaceholderConfig(this.skeleton || "default");
+    return getPlaceholderConfig(this.skeleton() || "default");
   }
 }

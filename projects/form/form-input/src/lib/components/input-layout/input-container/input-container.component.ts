@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { InputBase } from "@ta/form-model";
 
@@ -9,5 +9,5 @@ import { InputBase } from "@ta/form-model";
   standalone: true,
 })
 export class InputContainerComponent {
-  @Input() input!: InputBase<any>;
+  input = input.required<InputBase<any>>();
 }

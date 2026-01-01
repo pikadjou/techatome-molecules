@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { ColorType, TaSizes } from "@ta/styles";
 
@@ -11,13 +11,11 @@ import { ColorType, TaSizes } from "@ta/styles";
   imports: [NgClass],
 })
 export class BulletComponent {
-  @Input()
-  size: TaSizes = "sm";
+  size = input<TaSizes>("sm");
 
-  @Input()
-  type: ColorType | "notif" = "default";
+  type = input<ColorType | "notif">("default");
 
   public getClass(): string {
-    return `bullet-${this.type} ${this.size}`;
+    return `bullet-${this.type()} ${this.size()}`;
   }
 }

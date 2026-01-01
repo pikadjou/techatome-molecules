@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { ColorType, TaSizes } from "@ta/styles";
 
@@ -11,13 +11,11 @@ import { ColorType, TaSizes } from "@ta/styles";
   imports: [NgClass],
 })
 export class LabelComponent {
-  @Input()
-  size: TaSizes = "md";
+  size = input<TaSizes>("md");
 
-  @Input()
-  type: ColorType = "default";
+  type = input<ColorType>("default");
 
   public getClass(): string {
-    return `label-${this.type} ${this.size}`;
+    return `label-${this.type()} ${this.size()}`;
   }
 }

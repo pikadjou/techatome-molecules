@@ -1,5 +1,5 @@
 import { NgFor } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { ValidatorFn, Validators } from "@angular/forms";
 
 import { TranslatePipe } from "@ta/translation";
@@ -12,11 +12,9 @@ import { TranslatePipe } from "@ta/translation";
   imports: [NgFor, TranslatePipe],
 })
 export class FormLabelComponent {
-  @Input()
-  input!: { label: string; validators: ValidatorFn[] };
+  inputModel = input.required<{ label: string; validators: ValidatorFn[] }>({ alias: 'input' });
 
-  @Input()
-  withMarginBottom: boolean = true;
+  withMarginBottom = input<boolean>(true);
 
   public readonly validators = Validators;
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { BaseChartComponent } from "./base-chart/base-chart.component";
 
@@ -10,8 +10,7 @@ import { BaseChartComponent } from "./base-chart/base-chart.component";
   imports: [],
 })
 export class TaChartPieComponent extends BaseChartComponent<"pie"> {
-  @Input()
-  radius?: number;
+  radius = input<number>();
 
   constructor() {
     super();

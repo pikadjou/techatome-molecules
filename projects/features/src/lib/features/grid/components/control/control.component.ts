@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -18,12 +18,11 @@ import { TaGridFormComponent } from '../form/form.component';
   imports: [MatIcon, AsyncPipe, MatMenuModule],
 })
 export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
-  @Input()
-  show: { switchView?: boolean; filters?: boolean; preset?: boolean } = {
+  show = input<{ switchView?: boolean; filters?: boolean; preset?: boolean }>({
     switchView: true,
     filters: true,
     preset: true,
-  };
+  });
 
   readonly dialog = inject(MatDialog);
 
@@ -33,7 +32,7 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   public override ngOnInit() {
     super.ngOnInit();
-    if (this.breakpoints.isMobile && this.show.switchView) {
+    if (this.breakpoints.isMobile && this.show().switchView) {
       this.switchView('card');
     }
   }

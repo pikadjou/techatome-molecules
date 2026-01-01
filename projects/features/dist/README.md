@@ -1,64 +1,206 @@
-# Features
+# @ta/features
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+Advanced grid feature library for Angular applications with pagination, filtering, search, and sorting capabilities.
 
-## Code scaffolding
+## Overview
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+`@ta/features` provides a powerful and flexible grid system built on top of Tabulator Tables. It includes components for displaying data in both grid and card views, with built-in support for pagination, filtering, search, and advanced column management.
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation
 
 ```bash
-ng generate --help
+npm install @ta/features
+# or
+yarn add @ta/features
 ```
 
-## Building
+### Peer Dependencies
 
-To build the library, run:
+This package requires:
+- `@angular/common` ^19.2.0
+- `@angular/core` ^19.2.0
+- `tabulator-tables` ^6.3.1
 
-```bash
-ng build features
+## Components
+
+### TaGridComponent
+
+The main grid component for displaying data in a table format with Tabulator integration.
+
+**Selector:** `ta-grid`
+
+**Inputs:**
+- `cardTemplate: TemplateRef<{ items: T[] }>` - Template for card view mode
+
+**Outputs:**
+- `rowClicked: EventEmitter<T>` - Emits when a row is clicked
+
+**Example:**
+```typescript
+import { Component } from '@angular/core';
+import { TaGridComponent } from '@ta/features';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [TaGridComponent],
+  template: `
+    <ta-grid
+      [cardTemplate]="cardTemplate"
+      (rowClicked)="onRowClick($event)">
+    </ta-grid>
+
+    <ng-template #cardTemplate let-items="items">
+      <div *ngFor="let item of items">
+        {{ item.name }}
+      </div>
+    </ng-template>
+  `
+})
+export class ExampleComponent {
+  onRowClick(row: any) {
+    console.log('Row clicked:', row);
+  }
+}
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+### TaGridContainerComponent
 
-### Publishing the Library
+Container component that wraps the grid with data management and session persistence.
 
-Once the project is built, you can publish your library by following these steps:
+**Selector:** `ta-grid-container`
 
-1. Navigate to the `dist` directory:
+**Inputs:**
+- `initialData: T[]` - Initial data to display in the grid
+- `colsMetaData: ColMetaData<T>[]` - Column metadata configuration
+- `preset?: Preset[]` - Predefined filter presets
 
-   ```bash
-   cd dist/features
-   ```
+**Example:**
+```typescript
+import { Component } from '@angular/core';
+import { TaGridContainerComponent, ColMetaData, ParameterType } from '@ta/features';
 
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  active: boolean;
+}
 
-## Running unit tests
+@Component({
+  selector: 'app-users',
+  standalone: true,
+  imports: [TaGridContainerComponent],
+  template: `
+    <ta-grid-container
+      [initialData]="users"
+      [colsMetaData]="columns"
+      [preset]="presets">
+    </ta-grid-container>
+  `
+})
+export class UsersComponent {
+  users: User[] = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', active: true },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', active: false }
+  ];
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+  columns: ColMetaData<User>[] = [
+    { name: 'id', type: ParameterType.Number },
+    { name: 'name', type: ParameterType.String, isSearchField: true },
+    { name: 'email', type: ParameterType.String, isSearchField: true },
+    { name: 'active', type: ParameterType.Boolean }
+  ];
 
-```bash
-ng test
+  presets = [
+    { name: 'Active Users', filters: [{ field: 'active', type: '=', value: true }] }
+  ];
+}
 ```
 
-## Running end-to-end tests
+### Other Components
 
-For end-to-end (e2e) testing, run:
+- **TaGridFormComponent** (`ta-grid-form`) - Form component for grid filtering with dynamic field generation
+- **TaGridSearchComponent** (`ta-grid-search`) - Search component with autocomplete functionality
+- **TaGridTagsComponent** (`ta-grid-tags`) - Display active filters as removable tags
+- **TaGridControlComponent** (`ta-grid-control`) - Control component for view switching
+- **PaginationComponent** (`ta-pagination`) - Pagination controls
 
-```bash
-ng e2e
+## Type System
+
+### ParameterType
+
+```typescript
+enum ParameterType {
+  Unknown,
+  String,
+  Number,
+  Boolean,
+  DateTime,
+  Enum,
+  Relation,
+}
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### ColMetaData
 
-## Additional Resources
+```typescript
+interface ColMetaData<T = unknown> {
+  name: keyof T;
+  type: ParameterType;
+  isSearchField?: boolean;
+  notDisplayable?: boolean;
+  showOnSearch?: boolean;
+  multivalues?: boolean;
+  enumValues?: string[];
+  dataSearch$?: (search?: string) => Observable<InputChoicesOption[]>;
+  manyToOneOptions?: {
+    field: string;
+    model: string;
+    data$: (id: number[]) => Observable<string[]>;
+  };
+}
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Advanced Features
+
+### Column Filters
+
+- **String columns**: Text search, exact match, contains, starts with, ends with
+- **Number columns**: Equals, greater than, less than, between
+- **Boolean columns**: True/false toggle
+- **DateTime columns**: Date range, before/after
+- **Enum columns**: Dropdown selection
+- **Relation columns**: Remote data search with autocomplete
+
+### Session Persistence
+
+Grid state (filters, sorting, pagination) is automatically persisted and restored.
+
+### Presets
+
+```typescript
+const presets: Preset[] = [
+  {
+    name: 'Recent Active',
+    filters: [
+      { field: 'active', type: '=', value: true },
+      { field: 'createdAt', type: '>', value: '2024-01-01' }
+    ]
+  }
+];
+```
+
+## Dependencies
+
+- `@ta/ui` - UI components
+- `@ta/form-basic` - Basic form components
+- `@ta/form-model` - Form models
+- `@ta/form-input` - Input components
+- `@ta/translation` - Translation support
+- `@ta/utils` - Utility functions
+- `@ta/server` - Server communication
+
+## License
+
+MIT

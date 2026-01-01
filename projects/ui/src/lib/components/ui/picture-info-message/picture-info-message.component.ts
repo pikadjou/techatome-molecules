@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -26,13 +26,13 @@ import { TypedMessageComponent } from "../typed-message/typed-message.component"
   ],
 })
 export class PictureInfoMessageComponent {
-  @Input() icon?: TaIconType | string;
-  @Input() iconSize?: TaSizes | "xl";
-  @Input() text?: string;
-  @Input() type?: MessageLevel = "info";
+  icon = input<TaIconType | string | undefined>(undefined);
+  iconSize = input<TaSizes | "xl" | undefined>(undefined);
+  text = input<string | undefined>(undefined);
+  type = input<MessageLevel | undefined>("info");
 
   get displayedText() {
-    return this.text ?? "";
+    return this.text() ?? "";
   }
 
   public isFontIcon(icon: TaIconType | string): boolean {

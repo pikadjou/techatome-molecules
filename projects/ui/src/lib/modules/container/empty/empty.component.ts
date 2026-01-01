@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TaIconType } from "@ta/icons";
 import { TaSizes } from "@ta/styles";
@@ -15,15 +15,15 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [PictureInfoMessageComponent],
 })
 export class EmptyComponent {
-  @Input() isEmpty: boolean = true;
-  @Input() isLight: boolean = true;
-  @Input() showMessage: boolean = true;
+  isEmpty = input<boolean>(true);
+  isLight = input<boolean>(true);
+  showMessage = input<boolean>(true);
 
-  @Input() text?: string = "ui.container.empty.light-message";
-  @Input() type?: MessageLevel = "info";
+  text = input<string>("ui.container.empty.light-message");
+  type = input<MessageLevel>("info");
 
-  @Input() icon?: TaIconType | string = "ghost";
-  @Input() iconSize?: TaSizes | "xl" = "lg";
+  icon = input<TaIconType | string>("ghost");
+  iconSize = input<TaSizes | "xl">("lg");
 
   constructor() {
     TaTranslationUI.getInstance();

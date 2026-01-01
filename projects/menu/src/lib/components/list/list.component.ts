@@ -1,5 +1,5 @@
 import { NgIf, NgFor } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import {
@@ -26,6 +26,5 @@ import { Menu } from "../../models/menu/menu";
   ],
 })
 export class ListComponent {
-  @Input()
-  menu!: Menu<MenuIcon>;
+  menu = input.required<Menu<MenuIcon>>();
 }

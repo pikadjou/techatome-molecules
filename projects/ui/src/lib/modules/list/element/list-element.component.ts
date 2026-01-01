@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 @Component({
   selector: "ta-list-element",
@@ -7,11 +7,9 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   standalone: true,
 })
 export class ListElementComponent {
-  @Input()
-  withSeparator: boolean = true;
+  withSeparator = input<boolean>(true);
 
-  @Input()
-  flexColumn: boolean = false;
+  flexColumn = input<boolean>(false);
 
   @Output()
   action = new EventEmitter();

@@ -1,5 +1,5 @@
 import { AsyncPipe } from "@angular/common";
-import { Component, Input, inject } from "@angular/core";
+import { Component, inject, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaIconType } from "@ta/icons";
@@ -21,17 +21,13 @@ import {
   imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe],
 })
 export class GuardComponent extends TaAbstractComponent {
-  @Input()
-  level?: Level;
+  level = input<Level>();
 
-  @Input()
-  feature?: string;
+  feature = input<string>();
 
-  @Input()
-  role?: string;
+  role = input<string>();
 
-  @Input()
-  canDisplayErrorMessage: boolean = true;
+  canDisplayErrorMessage = input<boolean>(true);
 
   private readonly _permissionsService = inject(TaPermissionsService);
   get noAccessIcon() {
@@ -43,13 +39,13 @@ export class GuardComponent extends TaAbstractComponent {
   }
 
   public isGuardValid$() {
-    if (this.role) {
-      return this._permissionsService.hasRole$(this.role);
+    if (this.role()) {
+      return this._permissionsService.hasRole$(this.role()!);
     }
 
     return this._permissionsService.canAccess$(
-      this.feature ?? "",
-      this.level ?? "authorize"
+      this.feature() ?? "",
+      this.level() ?? "authorize"
     );
   }
 

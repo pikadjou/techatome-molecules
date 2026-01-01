@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { FontIconComponent, LocalIconComponent } from "@ta/icons";
 import { EmptyComponent } from "@ta/ui";
@@ -30,11 +30,9 @@ import { FileCardComponent } from "./card/file/file-card.component";
   ],
 })
 export class FileListComponent extends TaBaseComponent {
-  @Input()
-  files: FileData[] = [];
+  files = input<FileData[]>([]);
 
-  @Input()
-  canDeleteFile: boolean = false;
+  canDeleteFile = input<boolean>(false);
 
   @Output()
   fileSelected = new EventEmitter<FileData & { index: number }>();
@@ -51,7 +49,8 @@ export class FileListComponent extends TaBaseComponent {
   }
 
   public canDisplayFileType(fileType: FileType): boolean {
-    if (this.files && this.files[0]) return this.files[0].type === fileType;
+    const filesValue = this.files();
+    if (filesValue && filesValue[0]) return filesValue[0].type === fileType;
 
     return false;
   }

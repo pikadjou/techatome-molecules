@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 
 import { NewComponent } from '../../components/ui/new/new.component';
 
@@ -11,23 +11,17 @@ import { NewComponent } from '../../components/ui/new/new.component';
   imports: [NgClass, NewComponent],
 })
 export class CardComponent {
-  @Input()
-  highlight: boolean = false;
+  highlight = input<boolean>(false);
 
-  @Input()
-  shadow: boolean = true;
+  shadow = input<boolean>(true);
 
-  @Input()
-  fullHeight: boolean = false;
+  fullHeight = input<boolean>(false);
 
-  @Input()
-  noContent: boolean = false;
+  noContent = input<boolean>(false);
 
-  @Input()
-  directionCard: 'vertical' | 'horizontal' | null = null;
+  directionCard = input<'vertical' | 'horizontal' | null>(null);
 
-  @Input()
-  isNew: boolean = false;
+  isNew = input<boolean>(false);
 
   @Output()
   click: EventEmitter<any> = new EventEmitter<any>();

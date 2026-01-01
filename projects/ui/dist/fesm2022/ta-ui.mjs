@@ -1104,14 +1104,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class UserLogoComponent {
     constructor() {
+        this.user = input.required();
         /**
          * Size of user logo desired
          */
-        this.size = "lg";
-        this.defaultType = "font";
+        this.size = 'lg';
+        this.defaultType = 'font';
         this._trigram = (name) => {
             if (!name)
-                return "";
+                return '';
             if (name.length < 4)
                 return name;
             return (name[0] + name[2] + name[3]).toUpperCase();
@@ -1122,30 +1123,28 @@ class UserLogoComponent {
             return this.forcedSize;
         }
         switch (this.size) {
-            case "sm":
+            case 'sm':
                 return 16;
-            case "md":
+            case 'md':
                 return 24;
-            case "lg":
+            case 'lg':
                 return 48;
-            case "xl":
+            case 'xl':
                 return 70;
             default:
                 return 48;
         }
     }
     getTrigram() {
-        return this._trigram(this.user?.firstname);
+        return this._trigram(this.user().firstname);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UserLogoComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: UserLogoComponent, isStandalone: true, selector: "ta-user-logo", inputs: { user: "user", size: "size", forcedSize: "forcedSize", defaultType: "defaultType" }, ngImport: i0, template: "@if (this.user?.picture) {\n<div class=\"img-container\">\n  <img\n    [src]=\"this.user?.picture\"\n    [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n    class=\"user-image\"\n  />\n</div>\n} @else if (this.defaultType === 'trigram') {\n<ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n<div\n  class=\"profile-icon\"\n  [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n>\n  <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n</div>\n}\n", styles: [".user-image{border-radius:100%;border:1px solid var(--ta-border-tertiary)}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"], dependencies: [{ kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TrigramComponent, selector: "ta-trigram", inputs: ["value", "size"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: UserLogoComponent, isStandalone: true, selector: "ta-user-logo", inputs: { user: { classPropertyName: "user", publicName: "user", isSignal: true, isRequired: true, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: false, isRequired: false, transformFunction: null }, forcedSize: { classPropertyName: "forcedSize", publicName: "forcedSize", isSignal: false, isRequired: false, transformFunction: null }, defaultType: { classPropertyName: "defaultType", publicName: "defaultType", isSignal: false, isRequired: false, transformFunction: null } }, ngImport: i0, template: "@if (this.user().picture) {\n  <div class=\"img-container\">\n    <img\n      [src]=\"this.user().picture\"\n      [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n      class=\"user-image\"\n    />\n  </div>\n} @else if (this.defaultType === 'trigram') {\n  <ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n  <div class=\"profile-icon\" [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\">\n    <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n  </div>\n}\n", styles: [".user-image{border-radius:100%;border:1px solid var(--ta-border-tertiary)}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"], dependencies: [{ kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TrigramComponent, selector: "ta-trigram", inputs: ["value", "size"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UserLogoComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-user-logo", standalone: true, imports: [NgStyle, FontIconComponent, TrigramComponent], template: "@if (this.user?.picture) {\n<div class=\"img-container\">\n  <img\n    [src]=\"this.user?.picture\"\n    [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n    class=\"user-image\"\n  />\n</div>\n} @else if (this.defaultType === 'trigram') {\n<ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n<div\n  class=\"profile-icon\"\n  [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n>\n  <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n</div>\n}\n", styles: [".user-image{border-radius:100%;border:1px solid var(--ta-border-tertiary)}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"] }]
-        }], propDecorators: { user: [{
-                type: Input
-            }], size: [{
+            args: [{ selector: 'ta-user-logo', standalone: true, imports: [NgStyle, FontIconComponent, TrigramComponent], template: "@if (this.user().picture) {\n  <div class=\"img-container\">\n    <img\n      [src]=\"this.user().picture\"\n      [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\"\n      class=\"user-image\"\n    />\n  </div>\n} @else if (this.defaultType === 'trigram') {\n  <ta-trigram [value]=\"this.getTrigram()\" [size]=\"this.sizeValue\"></ta-trigram>\n} @else if (this.defaultType === 'font') {\n  <div class=\"profile-icon\" [ngStyle]=\"{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }\">\n    <ta-font-icon name=\"profil-picture\" [type]=\"this.size ?? 'lg'\"></ta-font-icon>\n  </div>\n}\n", styles: [".user-image{border-radius:100%;border:1px solid var(--ta-border-tertiary)}.img-container{display:flex;justify-content:center;align-items:center}.profile-icon{display:flex;justify-content:center;align-items:center;border-radius:50%;background-color:var(--ta-brand-200);overflow:hidden}.profile-icon ta-font-icon{color:var(--ta-brand-700)}\n"] }]
+        }], propDecorators: { size: [{
                 type: Input
             }], forcedSize: [{
                 type: Input

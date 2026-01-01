@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -24,11 +24,9 @@ import { TaTranslationLayout } from "../translation.service";
   ],
 })
 export class LayoutFullPanelComponent extends TaBaseComponent {
-  @Input()
-  width = "400px";
+  width = input<string>("400px");
 
-  @Input()
-  title: string = "";
+  title = input<string>("");
 
   @Output()
   closeEvent = new EventEmitter();

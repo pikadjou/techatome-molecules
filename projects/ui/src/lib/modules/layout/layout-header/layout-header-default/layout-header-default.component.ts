@@ -2,7 +2,7 @@ import { NgIf } from "@angular/common";
 import {
   Component,
   EventEmitter,
-  Input,
+  input,
   Output,
   TemplateRef,
 } from "@angular/core";
@@ -23,14 +23,11 @@ import { TaTranslationLayout } from "../../translation.service";
   imports: [NgIf, FontIconComponent, TranslateModule, MatMenuModule],
 })
 export class LayoutHeaderDefaultComponent extends TaBaseComponent {
-  @Input()
-  showBack: boolean = true;
+  showBack = input<boolean>(true);
 
-  @Input()
-  menuTemplate?: TemplateRef<any>;
+  menuTemplate = input<TemplateRef<any> | undefined>(undefined);
 
-  @Input()
-  title?: string;
+  title = input<string | undefined>(undefined);
 
   @Output()
   backEvent = new EventEmitter();

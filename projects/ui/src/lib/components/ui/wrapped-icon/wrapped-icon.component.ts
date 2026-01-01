@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { ColorType, TaSizes } from "@ta/styles";
 import { FontIconComponent } from "@ta/icons";
@@ -12,16 +12,13 @@ import { FontIconComponent } from "@ta/icons";
   imports: [NgClass, FontIconComponent],
 })
 export class WrappedIconComponent {
-  @Input()
-  size: TaSizes = "md";
+  size = input<TaSizes>("md");
 
-  @Input()
-  type: ColorType = "default";
+  type = input<ColorType>("default");
 
-  @Input({ required: true })
-  icon!: string;
+  icon = input.required<string>();
 
   public getClass(): string {
-    return `wrapped-icon-${this.type} ${this.size}`;
+    return `wrapped-icon-${this.type()} ${this.size()}`;
   }
 }

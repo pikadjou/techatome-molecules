@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -15,8 +15,7 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [TranslatePipe, TranslateModule],
 })
 export class BannerComponent extends TaBaseComponent {
-  @Input()
-  message!: string;
+  message = input.required<string>();
 
   constructor() {
     super();

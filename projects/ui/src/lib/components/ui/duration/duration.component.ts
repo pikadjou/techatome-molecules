@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, input, OnInit } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 import { Duration, intervalToDuration } from "date-fns";
@@ -15,11 +15,9 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [TranslateModule, PluralTranslatePipe],
 })
 export class DurationComponent implements OnInit {
-  @Input()
-  startDate: number | string = Date.now();
+  startDate = input<number | string>(Date.now());
 
-  @Input()
-  endDate: number | string = Date.now();
+  endDate = input<number | string>(Date.now());
 
   public interval: Duration | null = null;
 
@@ -28,11 +26,11 @@ export class DurationComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.startDate && this.endDate) {
+    if (this.startDate() && this.endDate()) {
       try {
         this.interval = intervalToDuration({
-          start: new Date(this.startDate),
-          end: new Date(this.endDate),
+          start: new Date(this.startDate()),
+          end: new Date(this.endDate()),
         });
       } catch (error) {
         console.error("Invalid date format:", error);

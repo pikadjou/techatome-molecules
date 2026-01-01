@@ -2,7 +2,7 @@ import { NgIf } from "@angular/common";
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  Input,
+  input,
   TemplateRef,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
@@ -32,17 +32,14 @@ interface UserLogoNaming {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutHeaderLogoComponent extends TaBaseComponent {
-  @Input()
-  profile: {
+  profile = input<{
     template: TemplateRef<any>;
     user: { profilePictureUrl?: string; naming: UserLogoNaming | null };
-  } | null = null;
+  } | null>(null);
 
-  @Input()
-  notificationTemplate: TemplateRef<any> | null = null;
+  notificationTemplate = input<TemplateRef<any> | null>(null);
 
-  @Input()
-  askClosing$: Observable<null> | undefined;
+  askClosing$ = input<Observable<null> | undefined>(undefined);
 
   constructor(private _modal: MatDialog) {
     super();
@@ -52,15 +49,15 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
     profilePictureUrl?: string;
     naming: UserLogoNaming | null;
   } {
-    if (!this.profile) {
+    if (!this.profile()) {
       return {
         naming: null,
         profilePictureUrl: "",
       };
     }
     return {
-      naming: this.profile.user.naming,
-      profilePictureUrl: this.profile.user.profilePictureUrl,
+      naming: this.profile()!.user.naming,
+      profilePictureUrl: this.profile()!.user.profilePictureUrl,
     };
   }
 
@@ -68,30 +65,30 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
     this._router.navigateByUrl("/");
   }
   public openProfile() {
-    if (!this.profile?.template) {
+    if (!this.profile()?.template) {
       return;
     }
     this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
       TemplateModalContainer,
       {
         data: {
-          template: this.profile?.template,
-          askClosing$: this.askClosing$,
+          template: this.profile()?.template,
+          askClosing$: this.askClosing$(),
         },
       }
     );
   }
 
   public openNotification() {
-    if (!this.notificationTemplate) {
+    if (!this.notificationTemplate()) {
       return;
     }
     this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
       TemplateModalContainer,
       {
         data: {
-          template: this.notificationTemplate,
-          askClosing$: this.askClosing$,
+          template: this.notificationTemplate()!,
+          askClosing$: this.askClosing$(),
         },
       }
     );

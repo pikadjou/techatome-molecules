@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
 import { TaSizes } from "@ta/styles";
@@ -20,20 +20,17 @@ export class LocalIconComponent {
   /**
    * Icon to display
    */
-  @Input()
-  public type!: TaIconType | string | null;
+  public type = input.required<TaIconType | string | null>();
 
   /**
    * Size of the icon
    */
-  @Input()
-  public size: TaSizes | "xl" = "xs";
+  public size = input<TaSizes | "xl">("xs");
 
   /**
    * If set to true, icon will have a rotation animation
    */
-  @Input()
-  public rotation = false;
+  public rotation = input<boolean>(false);
 
   constructor(
     private _iconService: TaIconsService,
@@ -42,23 +39,23 @@ export class LocalIconComponent {
 
   public getSvgIcon() {
     return this._sanitizer.bypassSecurityTrustHtml(
-      this._iconService.getIcon(this.type as TaIconType)
+      this._iconService.getIcon(this.type() as TaIconType)
     );
   }
   public getSize(): string {
-    if (this.size === "xs") {
+    if (this.size() === "xs") {
       return "28px";
     }
-    if (this.size === "sm") {
+    if (this.size() === "sm") {
       return "35px";
     }
-    if (this.size === "md") {
+    if (this.size() === "md") {
       return "50px";
     }
-    if (this.size === "lg") {
+    if (this.size() === "lg") {
       return "120px";
     }
-    if (this.size === "xl") {
+    if (this.size() === "xl") {
       return "120px";
     }
 

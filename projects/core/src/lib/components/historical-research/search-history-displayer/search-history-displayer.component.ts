@@ -3,9 +3,9 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   ViewChild,
+  input,
 } from "@angular/core";
 import { Validators } from "@angular/forms";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
@@ -46,16 +46,13 @@ import {
   ],
 })
 export class SearchHistoryDisplayerComponent {
-  @Input()
-  searchHistory?: {
+  searchHistory = input<{
     type: string;
-  };
+  }>();
 
-  @Input()
-  placeholder: string = "";
+  placeholder = input<string>("");
 
-  @Input()
-  isDropDown: boolean = false;
+  isDropDown = input<boolean>(false);
 
   @Output()
   valueCompleted = new EventEmitter();
@@ -69,9 +66,10 @@ export class SearchHistoryDisplayerComponent {
     return this.searchField?.nativeElement.offsetWidth;
   }
   get listRecentSearches() {
-    if (this.searchHistory?.type) {
+    const searchHistoryValue = this.searchHistory();
+    if (searchHistoryValue?.type) {
       const storedSearches: { research: string }[] = this._getFromLocalStorage(
-        this.searchHistory?.type
+        searchHistoryValue.type
       );
       const searches: string[] = storedSearches.map((obj) => obj.research);
       return searches;
@@ -84,7 +82,8 @@ export class SearchHistoryDisplayerComponent {
   });
 
   public searchCompleted(search: string) {
-    if (this.searchHistory?.type) {
+    const searchHistoryValue = this.searchHistory();
+    if (searchHistoryValue?.type) {
       this._saveInLocalStorage(search);
     }
     this.input.value = "";
@@ -98,9 +97,10 @@ export class SearchHistoryDisplayerComponent {
   }
 
   private _saveInLocalStorage(searchValue: string) {
-    if (this.searchHistory?.type) {
+    const searchHistoryValue = this.searchHistory();
+    if (searchHistoryValue?.type) {
       let storedSearches: { research: string; storageTime: Date }[] =
-        this._getFromLocalStorage(this.searchHistory?.type);
+        this._getFromLocalStorage(searchHistoryValue.type);
       const search = storedSearches.find((s) => s.research === searchValue);
       if (search) {
         search.storageTime = new Date();
@@ -112,7 +112,7 @@ export class SearchHistoryDisplayerComponent {
       }
       this.orderAndSelect(storedSearches);
       LocalStorage.set(
-        "search-" + this.searchHistory?.type || "",
+        "search-" + searchHistoryValue.type || "",
         JSON.stringify(storedSearches.slice(0, 5))
       );
     }

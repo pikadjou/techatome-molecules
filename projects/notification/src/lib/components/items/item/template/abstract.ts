@@ -1,4 +1,4 @@
-import { Component, Input, inject } from "@angular/core";
+import { Component, input, inject } from "@angular/core";
 
 import { KeyValue } from "@ta/server";
 
@@ -8,8 +8,7 @@ import { TaNotificationSharedService } from "../../../../services/shared.service
 
 @Component({ template: "" })
 export abstract class AbstractNotificationTemplateComponent {
-  @Input()
-  notification!: NotificationDto;
+  notification = input.required<NotificationDto>();
 
   public sharedService = inject(TaNotificationSharedService);
   public dataService = inject(TaNotificationDataService);

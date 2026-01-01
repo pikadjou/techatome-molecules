@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
+import { Component, Inject, OnInit, Optional, input } from "@angular/core";
 
 import { TENANT_CONFIG_TOKEN, TenantConfig } from "@ta/server";
 import {
@@ -30,11 +30,10 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
   ],
 })
 export class CmsComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  contentType!: string;
+  contentType = input.required<string>();
 
   get content$() {
-    return this.cmsService.cmsContents.get$(this.contentType);
+    return this.cmsService.cmsContents.get$(this.contentType());
   }
   constructor(
     public cmsService: TaCmsService,
@@ -47,7 +46,7 @@ export class CmsComponent extends TaBaseComponent implements OnInit {
     const tenantId = this.tenantConfig.tenantId ?? 0;
     this.requestState.asked();
     this.cmsService
-      .fetchCmsContents$(this.contentType, tenantId.toString())
+      .fetchCmsContents$(this.contentType(), tenantId.toString())
       .subscribe({
         complete: () => this.requestState.completed(),
         error: (error: HttpErrorResponse) => {

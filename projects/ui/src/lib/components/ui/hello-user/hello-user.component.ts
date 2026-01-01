@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 import { TaSizes } from "@ta/styles";
@@ -16,13 +16,13 @@ import { UserLogoComponent } from "../user-logo/user-logo.component";
   imports: [NgIf, TranslateModule, UserLogoComponent],
 })
 export class HelloUserComponent {
-  @Input() title?: string;
-  @Input() userInfo?: {
+  title = input<string | undefined>(undefined);
+  userInfo = input<{
     profilePictureUrl?: string;
     naming: UserLogoNaming | null;
-  };
-  @Input() bulletSize: TaSizes = "lg";
-  @Input() footer?: string;
+  } | undefined>(undefined);
+  bulletSize = input<TaSizes>("lg");
+  footer = input<string | undefined>(undefined);
 
   constructor() {
     CamTranslationUI.getInstance();

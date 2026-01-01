@@ -3,11 +3,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   OnInit,
   Output,
   ViewChild,
   inject,
+  input,
 } from "@angular/core";
 
 import Delimiter from "@editorjs/delimiter";
@@ -46,29 +46,22 @@ export class EditorInputComponent
   extends TaBaseComponent
   implements OnInit, AfterViewInit
 {
-  @Input()
-  initValue?: WysiswgBlockData[] | null;
+  initValue = input<WysiswgBlockData[] | null>();
 
-  @Input()
-  setNewValue$?: Observable<{
+  setNewValue$ = input<Observable<{
     blocks: WysiswgBlockData[] | string | null;
     saveAfter?: boolean;
-  }>;
+  }>>();
 
-  @Input()
-  requestSave$?: Observable<void>;
+  requestSave$ = input<Observable<void>>();
 
-  @Input()
-  clear$?: Observable<void>;
+  clear$ = input<Observable<void>>();
 
-  @Input()
-  users: { id: string; name: string }[] = [];
+  users = input<{ id: string; name: string }[]>([]);
 
-  @Input()
-  saveOnChange = false;
+  saveOnChange = input<boolean>(false);
 
-  @Input()
-  maxHeight = false;
+  maxHeight = input<boolean>(false);
 
   @Output()
   changed = new EventEmitter<{ blocks: WysiswgBlockData[] }>();
@@ -98,23 +91,26 @@ export class EditorInputComponent
   }
 
   ngOnInit() {
-    if (this.requestSave$) {
+    const requestSave = this.requestSave$();
+    if (requestSave) {
       this._registerSubscription(
-        this.requestSave$?.subscribe({
+        requestSave.subscribe({
           next: () => this.save(),
         })
       );
     }
-    if (this.clear$) {
+    const clear = this.clear$();
+    if (clear) {
       this._registerSubscription(
-        this.clear$?.subscribe({
+        clear.subscribe({
           next: () => this.editorInstance?.clear(),
         })
       );
     }
-    if (this.setNewValue$) {
+    const setNewValue = this.setNewValue$();
+    if (setNewValue) {
       this._registerSubscription(
-        this.setNewValue$?.subscribe({
+        setNewValue.subscribe({
           next: ({ blocks, saveAfter }) => {
             this._saveAfter = saveAfter ?? false;
             if (this.editorInstance && blocks) {
@@ -155,7 +151,7 @@ export class EditorInputComponent
     return new EditorJS({
       holder: this.editorjs.nativeElement,
       minHeight: 100,
-      data: { blocks: this.initValue },
+      data: { blocks: this.initValue() },
       placeholder: translations["placeholder"],
       tools: {
         header: Header,
@@ -184,7 +180,7 @@ export class EditorInputComponent
         mention: {
           class: TagTool,
           config: {
-            users: this.users,
+            users: this.users(),
           },
         },
       },
@@ -214,7 +210,7 @@ export class EditorInputComponent
       }
       this.changed.emit({ blocks: data.blocks });
     }
-    if (this.saveOnChange) {
+    if (this.saveOnChange()) {
       this.save();
     }
     if (this._saveAfter) {

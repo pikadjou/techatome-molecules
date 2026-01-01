@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -21,17 +21,13 @@ export interface DualButtonInput {
   imports: [NgClass, FontIconComponent, TranslateModule],
 })
 export class DualButtonComponent {
-  @Input()
-  isFull = false;
+  isFull = input<boolean>(false);
 
-  @Input()
-  first!: DualButtonInput;
+  first = input.required<DualButtonInput>();
 
-  @Input()
-  second!: DualButtonInput;
+  second = input.required<DualButtonInput>();
 
-  @Input()
-  type: "primary" | "secondary" = "primary";
+  type = input<"primary" | "secondary">("primary");
 
   constructor() {
     TaTranslationUI.getInstance();
@@ -40,7 +36,7 @@ export class DualButtonComponent {
   public getClass() {
     const css: { [index: string]: boolean } = {};
 
-    css[this.type] = true;
+    css[this.type()] = true;
 
     return css;
   }

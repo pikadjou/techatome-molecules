@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
+import { Component, EventEmitter, input, Output, inject, effect } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -20,16 +20,11 @@ import { openErrorModal } from "../../error-box/error-box.component";
   imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule],
 })
 export class NotificationInlineComponent extends TaBaseComponent {
-  @Input() set message(value: string) {
-    this._message = value;
-    this.showMessage = !!value;
-  }
+  messageInput = input<string>("", { alias: "message" });
 
-  @Input()
-  code: ENotificationCode = ENotificationCode.information;
+  code = input<ENotificationCode>(ENotificationCode.information);
 
-  @Input()
-  showClose = true;
+  showClose = input<boolean>(true);
 
   @Output()
   askClose: EventEmitter<null> = new EventEmitter();
@@ -39,26 +34,27 @@ export class NotificationInlineComponent extends TaBaseComponent {
   public showMessage = false;
 
   get message(): string {
-    return this._message;
+    return this.messageInput();
   }
   get isError(): boolean {
-    return this.code === ENotificationCode.error;
+    return this.code() === ENotificationCode.error;
   }
   get isWarning(): boolean {
-    return this.code === ENotificationCode.warning;
+    return this.code() === ENotificationCode.warning;
   }
   get isInformation(): boolean {
-    return this.code === ENotificationCode.information;
+    return this.code() === ENotificationCode.information;
   }
   get isSuccess(): boolean {
-    return this.code === ENotificationCode.success;
+    return this.code() === ENotificationCode.success;
   }
-
-  private _message!: string;
 
   constructor() {
     super();
     TaTranslationNotification.getInstance();
+    effect(() => {
+      this.showMessage = !!this.messageInput();
+    });
   }
 
   public close = () => {

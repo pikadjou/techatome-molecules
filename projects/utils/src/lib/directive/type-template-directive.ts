@@ -1,8 +1,8 @@
-import { Directive, Input, TemplateRef } from "@angular/core";
+import { Directive, TemplateRef, input } from "@angular/core";
 
 @Directive({ selector: "ng-template[typedTemplate]", standalone: true })
 export class TypedTemplateDirective<TypeToken> {
-  @Input() typedTemplate!: TypeToken;
+  typedTemplate = input.required<TypeToken>();
 
   // @ts-ignore
   constructor(private contentTemplate: TemplateRef<TypeToken>) {}

@@ -1,5 +1,5 @@
 import { NgIf, DatePipe } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "ta-hour-date-line",
@@ -12,10 +12,10 @@ export class HourDateLineComponent {
   /**
    * Start date
    */
-  @Input() startDate!: Date | null;
+  startDate = input.required<Date | null>();
 
   /**
    * End date
    */
-  @Input() endDate!: Date | null;
+  endDate = input.required<Date | null>();
 }

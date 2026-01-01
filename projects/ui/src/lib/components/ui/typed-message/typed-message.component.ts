@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -15,11 +15,11 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [FontIconComponent, TranslateModule],
 })
 export class TypedMessageComponent {
-  @Input() text!: string;
-  @Input() type!: MessageLevel;
+  text = input.required<string>();
+  type = input.required<MessageLevel>();
 
   get icon() {
-    switch (this.type) {
+    switch (this.type()) {
       case "danger":
         return "error_outline";
       case "success":

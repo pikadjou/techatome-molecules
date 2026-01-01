@@ -5,7 +5,7 @@ import {
   ContentChild,
   ElementRef,
   EventEmitter,
-  Input,
+  input,
   Output,
   TemplateRef,
   ViewChild,
@@ -35,9 +35,9 @@ export class TaOverlayPanelComponent
   @ViewChild("triggerHost", { static: true })
   triggerHostRef!: ElementRef<HTMLElement>;
 
-  @Input() panelConfig!: OverlayMenuConfig;
+  panelConfig = input.required<OverlayMenuConfig>();
 
-  @Input() position: "default" | "right" = "default";
+  position = input<"default" | "right">("default");
 
   @Output() closed = new EventEmitter<void>();
 
@@ -48,7 +48,8 @@ export class TaOverlayPanelComponent
   }
 
   ngAfterViewInit(): void {
-    if (!this.panelConfig) {
+    const config = this.panelConfig();
+    if (!config) {
       console.log("Missing panelConfig");
       return;
     }
@@ -61,8 +62,8 @@ export class TaOverlayPanelComponent
       return;
     }
 
-    if (this.position === "right") {
-      this.panelConfig.positions = [
+    if (this.position() === "right") {
+      config.positions = [
         {
           // Position à droite du déclencheur
           originX: "end",
@@ -81,8 +82,8 @@ export class TaOverlayPanelComponent
     }
 
     this._configWithDefaults = {
-      ...this.panelConfig,
-      menuComponent: this.panelConfig.menuComponent ?? TaDefaultPanelComponent,
+      ...config,
+      menuComponent: config.menuComponent ?? TaDefaultPanelComponent,
       triggerElement: this.triggerHostRef?.nativeElement,
       template: this.contentTpl,
     };

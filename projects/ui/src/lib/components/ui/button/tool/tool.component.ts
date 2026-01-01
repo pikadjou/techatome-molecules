@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaSizes, TaState } from "@ta/styles";
@@ -13,23 +13,17 @@ import { StopPropagationDirective } from "@ta/utils";
   imports: [NgIf, NgClass, FontIconComponent, StopPropagationDirective],
 })
 export class ButtonToolComponent {
-  @Input()
-  state: TaState = "classic";
+  state = input<TaState>("classic");
 
-  @Input()
-  type: "primary" = "primary";
+  type = input<"primary">("primary");
 
-  @Input()
-  size: TaSizes = "md";
+  size = input<TaSizes>("md");
 
-  @Input()
-  icon: string | null = null;
+  icon = input<string | null>(null);
 
-  @Input()
-  stopPropagationActivation = true;
+  stopPropagationActivation = input<boolean>(true);
 
-  @Input()
-  readonly: boolean = false;
+  readonly = input<boolean>(false);
 
   /**
    * Event emitted when button is clicked
@@ -40,7 +34,7 @@ export class ButtonToolComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state === "classic") {
+    if (this.state() === "classic") {
       this.action.emit();
     }
   }
@@ -48,9 +42,9 @@ export class ButtonToolComponent {
   public getClass() {
     const css: { [index: string]: boolean } = {};
 
-    css[this.state] = true;
-    css[this.size] = true;
-    css[this.type] = true;
+    css[this.state()] = true;
+    css[this.size()] = true;
+    css[this.type()] = true;
 
     return css;
   }

@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, Input, input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 
@@ -15,16 +15,15 @@ export class TitleComponent {
    * Title level
    * Higher value means lower title size
    */
-  @Input()
-  level: 1 | 2 | 3 | 4 | 5 | 6 = 1;
+  level = input<1 | 2 | 3 | 4 | 5 | 6>(1);
 
   /**
    * Title theme
    * If set to true, title will be themed with CSS
    */
-  @Input() isTheme: boolean = false;
+  isTheme = input<boolean>(false);
 
-  @Input() isBold: boolean = false;
+  isBold = input<boolean>(false);
 
   icon = input<string>();
 

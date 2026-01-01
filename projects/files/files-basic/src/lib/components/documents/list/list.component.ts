@@ -3,12 +3,12 @@ import { HttpErrorResponse } from "@angular/common/http";
 import {
   Component,
   EventEmitter,
-  Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
   inject,
+  input,
 } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -53,20 +53,15 @@ export class DocumentsListComponent
   extends TaBaseComponent
   implements OnInit, OnChanges
 {
-  @Input()
-  documentsIds!: string[];
+  documentsIds = input.required<string[]>();
 
-  @Input()
-  emptyMessage: string = "";
+  emptyMessage = input<string>("");
 
-  @Input()
-  actions: "delete" | "select" | "" = "";
+  actions = input<"delete" | "select" | "">("");
 
-  @Input()
-  defaultSelected: string[] = [];
+  defaultSelected = input<string[]>([]);
 
-  @Input()
-  readonly: boolean = false;
+  readonly = input<boolean>(false);
 
   @Output()
   remove = new EventEmitter<string>();
@@ -80,7 +75,7 @@ export class DocumentsListComponent
   public FileType = FileType;
 
   get documents$() {
-    return this._documentsService.getDocuments$(this.documentsIds);
+    return this._documentsService.getDocuments$(this.documentsIds());
   }
 
   ngOnInit() {
@@ -118,10 +113,10 @@ export class DocumentsListComponent
 
   private _fetch() {
     this.requestState.asked();
-    this._documentsService.fetchDocuments$(this.documentsIds).subscribe({
+    this._documentsService.fetchDocuments$(this.documentsIds()).subscribe({
       next: (documents) => {
         this._checkedFiles = documents.filter((doc) =>
-          this.defaultSelected.includes(doc.id)
+          this.defaultSelected().includes(doc.id)
         );
       },
       complete: () => this.requestState.completed(),

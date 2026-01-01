@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { ColorType } from "@ta/styles";
@@ -23,18 +23,18 @@ export interface BenefitConfig {
   imports: [NgClass, FontIconComponent, TextComponent],
 })
 export class BenefitItemComponent {
-  @Input() type: ColorType = "success";
-  @Input() text: string = "";
+  type = input<ColorType>("success");
+  text = input<string>("");
 
   protected config!: BenefitConfig;
   protected isInitialized = false;
 
   public cssClasses() {
-    return [this.type];
+    return [this.type()];
   }
 
   public icon() {
-    switch (this.type) {
+    switch (this.type()) {
       case "success":
         return "check";
       case "warning":

@@ -1,6 +1,6 @@
 import { NgIf, NgFor } from "@angular/common";
 import { FontIconComponent } from "@ta/icons";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 
 import { UserLogoNaming } from "../public-api";
@@ -26,29 +26,23 @@ import { CamTranslationUI } from "../../../translation.service";
   ],
 })
 export class UiProfileDisplayComponent {
-  @Input()
-  label!: string;
+  label = input.required<string>();
 
-  @Input()
-  userLogo?: {
+  userLogo = input<{
     userInfo: { profilePictureUrl?: string; naming: UserLogoNaming };
     size?: number;
-  };
+  } | undefined>(undefined);
 
-  @Input()
-  ctas?:
-    | {
+  ctas = input<{
         icon?: string;
         label?: string;
         callback: () => void;
-      }[]
-    | null;
+      }[] | null | undefined>(undefined);
 
-  @Input()
-  sideIcon?: {
+  sideIcon = input<{
     icon: string;
     callback: () => void;
-  };
+  } | undefined>(undefined);
 
   constructor() {
     CamTranslationUI.getInstance();

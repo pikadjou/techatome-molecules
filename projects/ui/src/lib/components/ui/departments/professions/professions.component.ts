@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TaSizes } from "@ta/styles";
 
@@ -16,22 +16,20 @@ export class DepartmentProfessionsComponent {
   /**
    * List of professions to display
    */
-  @Input()
-  professions!: string[];
+  professions = input.required<string[]>();
 
   /**
    * font-size
    */
-  @Input()
-  fontSize: TaSizes = "xs";
+  fontSize = input<TaSizes>("xs");
 
-  @Input() maxVisible?: number;
+  maxVisible = input<number | undefined>(undefined);
 
   get visibleProfessions() {
-    if (this.maxVisible) {
-      return this.professions.slice(0, this.maxVisible);
+    if (this.maxVisible()) {
+      return this.professions().slice(0, this.maxVisible());
     }
-    return this.professions;
+    return this.professions();
   }
 
   constructor() {}

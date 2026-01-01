@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, Input, TemplateRef } from "@angular/core";
+import { Component, input, TemplateRef } from "@angular/core";
 
 import { InputPanel } from "@ta/form-model";
 import { TranslatePipe } from "@ta/translation";
@@ -20,10 +20,9 @@ import { TaBaseComponent } from "@ta/utils";
   ],
 })
 export class PanelComponent extends TaBaseComponent {
-  @Input()
-  public inputsTemplate!: TemplateRef<any>;
+  inputsTemplate = input.required<TemplateRef<any>>();
 
-  @Input() panel!: InputPanel;
+  panel = input.required<InputPanel>();
 
   constructor() {
     super();

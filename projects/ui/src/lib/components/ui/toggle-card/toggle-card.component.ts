@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 
 @Component({
   selector: "ta-toggle-card",
@@ -9,27 +9,22 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   imports: [NgClass],
 })
 export class ToggleCardComponent {
-  @Input()
-  title: string = "";
+  title = input<string>("");
 
-  @Input()
-  description?: string;
+  description = input<string | undefined>(undefined);
 
-  @Input()
-  icon?: string;
+  icon = input<string | undefined>(undefined);
 
-  @Input()
-  isActive: boolean = false;
+  isActive = input<boolean>(false);
 
-  @Input()
-  disabled: boolean = false;
+  disabled = input<boolean>(false);
 
   @Output()
   toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public onToggle() {
-    if (!this.disabled) {
-      this.toggle.emit(!this.isActive);
+    if (!this.disabled()) {
+      this.toggle.emit(!this.isActive());
     }
   }
 }

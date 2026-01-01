@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -19,28 +19,26 @@ export class BooleanIconComponent {
   /**
    * Boolean value to display (can be null or undefined for unknown state)
    */
-  @Input()
-  value: boolean | null | undefined;
+  value = input<boolean | null | undefined>(undefined);
 
   /**
    * Size of the icon
    */
-  @Input()
-  size: TaSizes = "md";
+  size = input<TaSizes>("md");
 
   constructor() {
     TaTranslationUI.getInstance();
   }
 
   public getIconName(): string {
-    return this.value ? "task_alt" : "cancel";
+    return this.value() ? "task_alt" : "cancel";
   }
 
   public getClass(): string {
-    return `boolean-icon-${this.value ? "success" : "error"} ${this.size}`;
+    return `boolean-icon-${this.value() ? "success" : "error"} ${this.size()}`;
   }
 
   public isNullValue(): boolean {
-    return this.value === null || this.value === undefined;
+    return this.value() === null || this.value() === undefined;
   }
 }

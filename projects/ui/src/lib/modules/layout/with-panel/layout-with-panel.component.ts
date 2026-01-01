@@ -2,7 +2,7 @@ import { NgClass } from "@angular/common";
 import {
   AfterViewInit,
   Component,
-  Input,
+  input,
   OnChanges,
   SimpleChanges,
   ViewChild,
@@ -17,8 +17,7 @@ import { MatDrawer, MatDrawerContainer } from "@angular/material/sidenav";
   imports: [NgClass, MatDrawer, MatDrawerContainer],
 })
 export class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
-  @Input()
-  open!: boolean;
+  open = input.required<boolean>();
 
   @ViewChild("drawer") drawer: MatDrawer | null = null;
 
@@ -32,7 +31,7 @@ export class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
   }
 
   public manageDrawer() {
-    if (this.open === true) {
+    if (this.open() === true) {
       this.drawer?.open();
     } else {
       this.drawer?.close();

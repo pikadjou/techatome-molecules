@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, Input, TemplateRef, inject } from "@angular/core";
+import { Component, input, TemplateRef, inject } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 
 import { TaSharedMenuService } from "@ta/services";
@@ -23,17 +23,13 @@ import { MenuComponent } from "../menu/menu.component";
   ],
 })
 export class MainMenuComponent extends TaBaseComponent {
-  @Input()
-  menuMain!: Menu;
+  menuMain = input.required<Menu>();
 
-  @Input()
-  menuUser!: Menu;
+  menuUser = input.required<Menu>();
 
-  @Input()
-  userMenuTemplate?: TemplateRef<any>;
+  userMenuTemplate = input<TemplateRef<any>>();
 
-  @Input()
-  direction: "horizontal" | "vertical" = "vertical";
+  direction = input<"horizontal" | "vertical">("vertical");
 
   public sharedMenu = inject(TaSharedMenuService);
 

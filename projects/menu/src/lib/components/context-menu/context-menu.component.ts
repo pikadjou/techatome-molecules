@@ -1,5 +1,5 @@
 import { AsyncPipe, NgFor, NgIf } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -35,8 +35,7 @@ import { TaTranslationMenu } from "../../translation.service";
   ],
 })
 export class ContextMenuComponent extends TaBaseComponent {
-  @Input()
-  menu!: Menu;
+  menu = input.required<Menu>();
 
   constructor() {
     super();

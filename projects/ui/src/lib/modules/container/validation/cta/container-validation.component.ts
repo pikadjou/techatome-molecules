@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, input, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import { TaBaseComponent } from "@ta/utils";
@@ -11,8 +11,7 @@ import { openModal } from "../common-modal";
   standalone: true,
 })
 export class ContainerValidationComponent extends TaBaseComponent {
-  @Input()
-  disabled = false;
+  disabled = input<boolean>(false);
 
   @Output()
   validated = new EventEmitter();
@@ -22,7 +21,7 @@ export class ContainerValidationComponent extends TaBaseComponent {
   }
 
   openModal(): void {
-    if (this.disabled) {
+    if (this.disabled()) {
       return;
     }
 

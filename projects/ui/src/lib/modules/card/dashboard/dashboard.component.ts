@@ -1,5 +1,5 @@
 import { FontIconComponent } from "@ta/icons";
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { TextComponent } from "../../../components/ui/text/text.component";
 import { TitleComponent } from "../../../components/ui/title/title.component";
 import { CardComponent } from "../card.component";
@@ -19,6 +19,5 @@ import { CardContentComponent } from "../content/card-content.component";
   ],
 })
 export class DashboardCardComponent {
-  @Input()
-  icon!: string;
+  icon = input.required<string>();
 }
