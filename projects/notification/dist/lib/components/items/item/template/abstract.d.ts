@@ -3,7 +3,7 @@ import { NotificationDto } from "../../../../services/dto/notification";
 import { TaNotificationSharedService } from "../../../../services/shared.service";
 import * as i0 from "@angular/core";
 export declare abstract class AbstractNotificationTemplateComponent {
-    notification: NotificationDto;
+    notification: import("@angular/core").InputSignal<NotificationDto>;
     sharedService: TaNotificationSharedService;
     dataService: TaNotificationDataService;
     goTo(): void;
@@ -13,5 +13,5 @@ export declare abstract class AbstractNotificationTemplateComponent {
     extractContext(key: string): string;
     extractredirectContext(key: string): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<AbstractNotificationTemplateComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<AbstractNotificationTemplateComponent, "ng-component", never, { "notification": { "alias": "notification"; "required": false; }; }, {}, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<AbstractNotificationTemplateComponent, "ng-component", never, { "notification": { "alias": "notification"; "required": true; "isSignal": true; }; }, {}, never, never, false, never>;
 }

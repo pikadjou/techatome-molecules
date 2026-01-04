@@ -1,10 +1,10 @@
-<ta-loader [isLoading]="this.isLoading">
+<ta-loader [isLoading]="this.isLoading()">
   @let input = this.renderInput(); @if (!this.editMode()) {
   <div
     class="value-container"
-    [ngClass]="{ 'no-border': !this.withBorder }"
-    [class.is-disabled]="this.disabled"
-    (click)="!this.disabled ? this.toggleEditMode() : null"
+    [ngClass]="{ 'no-border': !this.withBorder() }"
+    [class.is-disabled]="this.disabled()"
+    (click)="!this.disabled() ? this.toggleEditMode() : null"
     appStopPropagation
   >
     <ng-content></ng-content>
@@ -16,7 +16,7 @@
       appStopPropagation
       [input]="input"
       [standalone]="true"
-      [onFocus]="this.onFocus"
+      [onFocus]="this.onFocusBehavior"
     ></ta-inputs>
   </div>
   }

@@ -5,21 +5,21 @@ export declare class BadgeComponent {
     /**
      * Text to display in badge
      */
-    value: string;
+    value: import("@angular/core").InputSignal<string>;
     /**
      * Style of badge
      */
-    type: BadgeType;
+    type: import("@angular/core").InputSignal<BadgeType>;
     /**
      * @deprecated
      * showClickOption
      */
-    showClickOption: boolean;
-    icon?: string;
+    showClickOption: import("@angular/core").InputSignal<boolean>;
+    icon: import("@angular/core").InputSignal<string | undefined>;
     clickAction: EventEmitter<any>;
     constructor();
     getClass(): string;
     click(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<BadgeComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<BadgeComponent, "ta-badge", never, { "value": { "alias": "value"; "required": false; }; "type": { "alias": "type"; "required": false; }; "showClickOption": { "alias": "showClickOption"; "required": false; }; "icon": { "alias": "icon"; "required": false; }; }, { "clickAction": "clickAction"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BadgeComponent, "ta-badge", never, { "value": { "alias": "value"; "required": true; "isSignal": true; }; "type": { "alias": "type"; "required": false; "isSignal": true; }; "showClickOption": { "alias": "showClickOption"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; }, { "clickAction": "clickAction"; }, never, never, true, never>;
 }

@@ -3,11 +3,11 @@ import { MatMenuTrigger } from "@angular/material/menu";
 import { InputTextBox } from "@ta/form-model";
 import * as i0 from "@angular/core";
 export declare class SearchHistoryDisplayerComponent {
-    searchHistory?: {
+    searchHistory: import("@angular/core").InputSignal<{
         type: string;
-    };
-    placeholder: string;
-    isDropDown: boolean;
+    } | undefined>;
+    placeholder: import("@angular/core").InputSignal<string>;
+    isDropDown: import("@angular/core").InputSignal<boolean>;
     valueCompleted: EventEmitter<any>;
     searchField: ElementRef | null;
     searchTrigger: MatMenuTrigger | null;
@@ -19,5 +19,5 @@ export declare class SearchHistoryDisplayerComponent {
     private _saveInLocalStorage;
     private orderAndSelect;
     static ɵfac: i0.ɵɵFactoryDeclaration<SearchHistoryDisplayerComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<SearchHistoryDisplayerComponent, "ta-search-history-displayer", never, { "searchHistory": { "alias": "searchHistory"; "required": false; }; "placeholder": { "alias": "placeholder"; "required": false; }; "isDropDown": { "alias": "isDropDown"; "required": false; }; }, { "valueCompleted": "valueCompleted"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SearchHistoryDisplayerComponent, "ta-search-history-displayer", never, { "searchHistory": { "alias": "searchHistory"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "isDropDown": { "alias": "isDropDown"; "required": false; "isSignal": true; }; }, { "valueCompleted": "valueCompleted"; }, never, never, true, never>;
 }

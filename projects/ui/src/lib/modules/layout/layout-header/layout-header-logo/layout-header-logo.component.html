@@ -1,10 +1,6 @@
 <div class="icons row align-items-center">
   <div class="image col-2">
-    <ta-user-logo
-      [userInfo]="this.userInfo()"
-      size="lg"
-      (click)="this.openProfile()"
-    ></ta-user-logo>
+    <ta-user-logo [userInfo]="this.userInfo()" size="lg" (click)="this.openProfile()"></ta-user-logo>
   </div>
 
   <div class="title col-8">
@@ -22,13 +18,13 @@
 </div>
 
 <mat-menu #showNotificationTemplate="matMenu">
-  @if (this.notificationTemplate) {
-  <ng-template *ngTemplateOutlet="this.notificationTemplate"></ng-template>
+  @if (this.notificationTemplate()) {
+    <ng-template *ngTemplateOutlet="this.notificationTemplate()"></ng-template>
   }
 </mat-menu>
 
 <mat-menu #showProfileTemplate="matMenu">
-  @if (this.profile) {
-  <ng-template *ngTemplateOutlet="this.profile.template"></ng-template>
+  @if (this.profile()) {
+    <ng-template *ngTemplateOutlet="this.profile().template"></ng-template>
   }
 </mat-menu>

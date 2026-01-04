@@ -7,8 +7,8 @@ export interface ExpansionPanelInput {
     context?: object;
 }
 export declare class TaExpansionPanelComponent extends TaBaseComponent {
-    templates: ExpansionPanelInput[];
+    templates: import("@angular/core").InputSignal<ExpansionPanelInput[]>;
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<TaExpansionPanelComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaExpansionPanelComponent, "ta-expansion-panel", never, { "templates": { "alias": "templates"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaExpansionPanelComponent, "ta-expansion-panel", never, { "templates": { "alias": "templates"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

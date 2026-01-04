@@ -1,12 +1,15 @@
 import * as i0 from '@angular/core';
-import { ViewChild, Input, Component } from '@angular/core';
+import { input, ViewChild, Component } from '@angular/core';
 import Chart from 'chart.js/auto';
 import deepEqual from 'fast-deep-equal';
 
 class BaseChartComponent {
     // readonly id = 'MyChart' + Math.random();
     constructor() {
-        this.chartOptions = {};
+        this.labels = input.required();
+        this.datasets = input.required();
+        this.chartOptions = input({});
+        this.chartHeight = input();
         this.chart = null;
     }
     ngAfterViewInit() {
@@ -25,10 +28,10 @@ class BaseChartComponent {
     createChart() {
         this.chart = new Chart(this.chartCanvas.nativeElement.getContext("2d"), {
             type: this.type,
-            options: this.chartOptions,
+            options: this.chartOptions(),
             data: {
-                labels: this.labels,
-                datasets: this.datasets,
+                labels: this.labels(),
+                datasets: this.datasets(),
             },
         });
     }
@@ -36,25 +39,17 @@ class BaseChartComponent {
         if (!this.chart) {
             return;
         }
-        this.chart.data.labels = this.labels;
-        this.chart.data.datasets = this.datasets;
+        this.chart.data.labels = this.labels();
+        this.chart.data.datasets = this.datasets();
         this.chart?.update();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: BaseChartComponent, selector: "ng-component", inputs: { labels: "labels", datasets: "datasets", chartOptions: "chartOptions", chartHeight: "chartHeight" }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BaseChartComponent, selector: "ng-component", inputs: { labels: { classPropertyName: "labels", publicName: "labels", isSignal: true, isRequired: true, transformFunction: null }, datasets: { classPropertyName: "datasets", publicName: "datasets", isSignal: true, isRequired: true, transformFunction: null }, chartOptions: { classPropertyName: "chartOptions", publicName: "chartOptions", isSignal: true, isRequired: false, transformFunction: null }, chartHeight: { classPropertyName: "chartHeight", publicName: "chartHeight", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, decorators: [{
             type: Component,
             args: [{ template: "" }]
-        }], ctorParameters: () => [], propDecorators: { labels: [{
-                type: Input
-            }], datasets: [{
-                type: Input
-            }], chartOptions: [{
-                type: Input
-            }], chartHeight: [{
-                type: Input
-            }], chartCanvas: [{
+        }], ctorParameters: () => [], propDecorators: { chartCanvas: [{
                 type: ViewChild,
                 args: ["chartCanvas"]
             }] } });
@@ -114,17 +109,16 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class TaChartPieComponent extends BaseChartComponent {
     constructor() {
         super();
+        this.radius = input();
         this.type = "pie";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartPieComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaChartPieComponent, isStandalone: true, selector: "ta-pie-chart", inputs: { radius: "radius" }, usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaChartPieComponent, isStandalone: true, selector: "ta-pie-chart", inputs: { radius: { classPropertyName: "radius", publicName: "radius", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaChartPieComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-pie-chart", standalone: true, imports: [], template: "<div class=\"chart-container\" [style.height.px]=\"this.chartHeight\">\n  <!-- <canvas [attr.id]=\"this.id\"></canvas> -->\n  <canvas #chartCanvas></canvas>\n</div>\n" }]
-        }], ctorParameters: () => [], propDecorators: { radius: [{
-                type: Input
-            }] } });
+        }], ctorParameters: () => [] });
 
 const ChartColors = {
     blue900: "#1f2245",

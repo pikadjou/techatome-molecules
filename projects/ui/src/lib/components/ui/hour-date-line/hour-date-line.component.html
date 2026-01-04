@@ -1,15 +1,15 @@
 <div class="hour-date-line-container">
-  @if (this.startDate) {
+  @if (this.startDate()) {
   <span class="label date mr-space-xs">
-    {{ this.startDate | date : "shortDate" }}
+    {{ this.startDate() | date : "shortDate" }}
   </span>
   }
 
   <span class="label hour">
-    @if (this.startDate) {
-    <span>{{ this.startDate | date : "HH:mm" }}</span>
-    } - @if (this.endDate) {
-    <span>{{ this.endDate | date : "HH:mm" }}</span>
+    @if (this.startDate()) {
+    <span>{{ this.startDate() | date : "HH:mm" }}</span>
+    } - @if (this.endDate()) {
+    <span>{{ this.endDate() | date : "HH:mm" }}</span>
     }
   </span>
 </div>

@@ -6,11 +6,14 @@ import { InputBase } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare abstract class TaAbstractInputComponent<C extends InputBase<any>, V = unknown> extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
-    input: C;
-    matcher: ErrorStateMatcher;
-    standalone: boolean;
-    onFocus: Observable<void>;
+    inputModel: import("@angular/core").InputSignal<C>;
+    matcher: import("@angular/core").InputSignal<ErrorStateMatcher>;
+    standaloneMode: import("@angular/core").InputSignal<boolean>;
+    onFocusObs: import("@angular/core").InputSignal<Observable<void> | undefined>;
     valueChanged: EventEmitter<V>;
+    get input(): C;
+    get standalone(): boolean;
+    get onFocus(): Observable<void> | undefined;
     focusedElement: ElementRef;
     readonly validators: typeof Validators;
     constructor();
@@ -19,5 +22,5 @@ export declare abstract class TaAbstractInputComponent<C extends InputBase<any>,
     ngOnDestroy(): void;
     onChange(value: V): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaAbstractInputComponent<any, any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractInputComponent<any, any>, "ng-component", never, { "input": { "alias": "input"; "required": false; }; "matcher": { "alias": "matcher"; "required": false; }; "standalone": { "alias": "standalone"; "required": false; }; "onFocus": { "alias": "onFocus"; "required": false; }; }, { "valueChanged": "valueChanged"; }, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractInputComponent<any, any>, "ng-component", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "matcher": { "alias": "matcher"; "required": false; "isSignal": true; }; "standaloneMode": { "alias": "standalone"; "required": false; "isSignal": true; }; "onFocusObs": { "alias": "onFocus"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; }, never, never, false, never>;
 }

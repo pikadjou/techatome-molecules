@@ -1,7 +1,7 @@
 import {
   Component,
   inject,
-  Input,
+  input,
   output,
   ChangeDetectionStrategy,
 } from "@angular/core";
@@ -37,7 +37,7 @@ import { DatePipe } from "@angular/common";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListComponent {
-  @Input({ required: true }) categories: Category[] = [];
+  categories = input.required<Category[]>();
 
   readonly categorySelected = output<string>();
   readonly categoryEdit = output<Category>();

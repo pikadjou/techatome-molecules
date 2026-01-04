@@ -5,8 +5,8 @@ import { TaBaseComponent } from "@ta/utils";
 import { ActiveFilterTag } from "../types";
 import * as i0 from "@angular/core";
 export declare class FiltersContainerComponent extends TaBaseComponent {
-    form: InputBase<any>[];
-    activeFilter: ActiveFilterTag[];
+    form: import("@angular/core").InputSignal<InputBase<any>[]>;
+    activeFilter: import("@angular/core").InputSignal<ActiveFilterTag[]>;
     filtersSelected: EventEmitter<any>;
     removedFilter: EventEmitter<ActiveFilterTag>;
     isFilterOpen: boolean;
@@ -15,5 +15,5 @@ export declare class FiltersContainerComponent extends TaBaseComponent {
     toggleFilter(): void;
     apply(data: any): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<FiltersContainerComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FiltersContainerComponent, "ta-filters-container", never, { "form": { "alias": "form"; "required": false; }; "activeFilter": { "alias": "activeFilter"; "required": false; }; }, { "filtersSelected": "filtersSelected"; "removedFilter": "removedFilter"; }, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FiltersContainerComponent, "ta-filters-container", never, { "form": { "alias": "form"; "required": false; "isSignal": true; }; "activeFilter": { "alias": "activeFilter"; "required": false; "isSignal": true; }; }, { "filtersSelected": "filtersSelected"; "removedFilter": "removedFilter"; }, never, ["*"], true, never>;
 }

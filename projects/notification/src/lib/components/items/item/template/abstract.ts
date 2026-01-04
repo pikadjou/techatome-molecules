@@ -14,11 +14,11 @@ export abstract class AbstractNotificationTemplateComponent {
   public dataService = inject(TaNotificationDataService);
 
   public goTo() {
-    this.dataService.isRead$(this.notification.id).subscribe();
+    this.dataService.isRead$(this.notification().id).subscribe();
   }
 
   public getTranslation() {
-    return (<KeyValue[]>this.notification.context).reduce<{
+    return (<KeyValue[]>this.notification().context).reduce<{
       [index: string]: string | number;
     }>((acc, item) => {
       acc[item.key as string] = item.value;
@@ -28,14 +28,14 @@ export abstract class AbstractNotificationTemplateComponent {
 
   public extractContext(key: string) {
     return (
-      (<KeyValue[]>this.notification.context).find((item) => item.key === key)
+      (<KeyValue[]>this.notification().context).find((item) => item.key === key)
         ?.value ?? ""
     );
   }
 
   public extractredirectContext(key: string) {
     return (
-      (<KeyValue[]>this.notification.redirectContext).find(
+      (<KeyValue[]>this.notification().redirectContext).find(
         (item) => item.key === key
       )?.value ?? ""
     );

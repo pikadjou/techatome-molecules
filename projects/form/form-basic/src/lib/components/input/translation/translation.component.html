@@ -24,7 +24,7 @@
     (input) {
     <div [ngClass]="input.class">
       <ng-container
-        [ngTemplateOutlet]="this.inputsTemplate"
+        [ngTemplateOutlet]="this.inputsTemplate()"
         [ngTemplateOutletContext]="{
               input: input,
             }"

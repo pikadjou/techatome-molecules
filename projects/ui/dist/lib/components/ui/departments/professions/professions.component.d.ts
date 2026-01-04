@@ -4,14 +4,14 @@ export declare class DepartmentProfessionsComponent {
     /**
      * List of professions to display
      */
-    professions: string[];
+    professions: import("@angular/core").InputSignal<string[]>;
     /**
      * font-size
      */
-    fontSize: TaSizes;
-    maxVisible?: number;
+    fontSize: import("@angular/core").InputSignal<TaSizes>;
+    maxVisible: import("@angular/core").InputSignal<number | undefined>;
     get visibleProfessions(): string[];
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<DepartmentProfessionsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<DepartmentProfessionsComponent, "ta-department-professions", never, { "professions": { "alias": "professions"; "required": false; }; "fontSize": { "alias": "fontSize"; "required": false; }; "maxVisible": { "alias": "maxVisible"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DepartmentProfessionsComponent, "ta-department-professions", never, { "professions": { "alias": "professions"; "required": true; "isSignal": true; }; "fontSize": { "alias": "fontSize"; "required": false; "isSignal": true; }; "maxVisible": { "alias": "maxVisible"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

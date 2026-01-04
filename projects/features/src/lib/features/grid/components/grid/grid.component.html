@@ -9,14 +9,14 @@
         <ta-title [level]="3">{{ group.key }}</ta-title>
         <div class="py-space-md">
           <ng-template
-            [ngTemplateOutlet]="this.cardTemplate"
+            [ngTemplateOutlet]="this.cardTemplate()"
             [ngTemplateOutletContext]="{ items: group.data }"
           ></ng-template>
         </div>
       }
     } @else {
       <ng-template
-        [ngTemplateOutlet]="this.cardTemplate"
+        [ngTemplateOutlet]="this.cardTemplate()"
         [ngTemplateOutletContext]="{ items: this.data }"
       ></ng-template>
     }

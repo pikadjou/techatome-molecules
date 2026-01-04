@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Directive, input, effect, TemplateRef, ViewContainerRef } from "@angular/core";
 
 interface LetContext<T> {
   ngLet: T;
@@ -14,18 +14,20 @@ export class LetDirective<T> {
 
   private _hasView: boolean = false;
 
+  ngLet = input<T>();
+
   constructor(
     private _viewContainer: ViewContainerRef,
     private _templateRef: TemplateRef<LetContext<T>>
-  ) {}
-
-  @Input()
-  set ngLet(value: T) {
-    this._context.$implicit = this._context.ngLet = value;
-    if (!this._hasView) {
-      this._viewContainer.createEmbeddedView(this._templateRef, this._context);
-      this._hasView = true;
-    }
+  ) {
+    effect(() => {
+      const value = this.ngLet();
+      this._context.$implicit = this._context.ngLet = value as T;
+      if (!this._hasView) {
+        this._viewContainer.createEmbeddedView(this._templateRef, this._context);
+        this._hasView = true;
+      }
+    });
   }
 
   /** @internal */

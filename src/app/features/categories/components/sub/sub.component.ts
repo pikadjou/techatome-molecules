@@ -1,7 +1,7 @@
 import {
   Component,
   inject,
-  Input,
+  input,
   OnChanges,
   signal,
   ChangeDetectionStrategy,
@@ -57,8 +57,7 @@ import { ErrorHandlerService } from "../../../../services/shared/error-handler.s
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubComponent extends TaBaseComponent implements OnChanges {
-  @Input()
-  public id!: string;
+  id = input.required<string>();
 
   private readonly _notificationService = inject(TaNotificationService);
   private readonly _errorHandler = inject(ErrorHandlerService);
@@ -115,7 +114,7 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
   }
   public delete() {
     this.requestState.asked();
-    this.categoriesService.deleteCategory$(this.id).subscribe({
+    this.categoriesService.deleteCategory$(this.id()).subscribe({
       complete: () => {
         this.requestState.completed();
         this._errorHandler.handleSuccess({
@@ -123,7 +122,7 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
           entity: "category",
         });
         this.selected(
-          this.categoriesService.category.get(this.id)?.parent?.documentId ??
+          this.categoriesService.category.get(this.id())?.parent?.documentId ??
             null
         );
       },
@@ -132,7 +131,7 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
         this._errorHandler.handleError(error, {
           operation: "delete",
           entity: "category",
-          id: this.id,
+          id: this.id(),
         });
       },
     });
@@ -153,9 +152,9 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
   private _fetch() {
     this.requestState.asked();
     combineLatest({
-      category: this.categoriesService.fetchCategory$(this.id),
-      categories: this.categoriesService.fetchSubCategories$(this.id),
-      documents: this.documentsService.fetchDocuments$(this.id),
+      category: this.categoriesService.fetchCategory$(this.id()),
+      categories: this.categoriesService.fetchSubCategories$(this.id()),
+      documents: this.documentsService.fetchDocuments$(this.id()),
     }).subscribe({
       next: (data) => {
         this.category.set(data.category);
@@ -168,7 +167,7 @@ export class SubComponent extends TaBaseComponent implements OnChanges {
         this._errorHandler.handleError(error, {
           operation: "fetch",
           entity: "category",
-          id: this.id,
+          id: this.id(),
         });
       },
     });

@@ -4,8 +4,8 @@ export declare class DepartmentIconListComponent {
     /**
      * List of departments object to display
      */
-    departments: Department[];
-    withName: boolean;
+    departments: import("@angular/core").InputSignal<Department[]>;
+    withName: import("@angular/core").InputSignal<boolean>;
     static ɵfac: i0.ɵɵFactoryDeclaration<DepartmentIconListComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<DepartmentIconListComponent, "ta-department-icon-list", never, { "departments": { "alias": "departments"; "required": false; }; "withName": { "alias": "withName"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DepartmentIconListComponent, "ta-department-icon-list", never, { "departments": { "alias": "departments"; "required": true; "isSignal": true; }; "withName": { "alias": "withName"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

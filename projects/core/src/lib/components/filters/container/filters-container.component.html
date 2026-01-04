@@ -1,8 +1,8 @@
 <div class="space-between p-space-sm">
-  @if (this.activeFilter) {
+  @if (this.activeFilter()) {
   <div>
     <ta-filters-tag
-      [activeFilter]="this.activeFilter"
+      [activeFilter]="this.activeFilter()"
       (removedFilter)="this.removedFilter.emit($event)"
     ></ta-filters-tag>
   </div>
@@ -20,7 +20,7 @@
     <ta-layout-panel>
       <div class="p-space-sm">
         <ta-filters-form
-          [form]="this.form"
+          [form]="this.form()"
           [askValidation$]="this.askValidation$"
           (filtersSelected)="this.apply($event)"
         ></ta-filters-form>

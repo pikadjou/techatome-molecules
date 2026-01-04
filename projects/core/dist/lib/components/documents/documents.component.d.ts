@@ -9,8 +9,8 @@ import * as i0 from "@angular/core";
 export declare class DocumentsComponent extends TaBaseComponent implements OnInit {
     private _bottomSheet;
     private _dialog;
-    document$: Observable<Document[]>;
-    canAddFile: boolean;
+    document$: import("@angular/core").InputSignal<Observable<Document[]>>;
+    canAddFile: import("@angular/core").InputSignal<boolean>;
     filesSaved: EventEmitter<any>;
     filesDeleted: EventEmitter<any>;
     menu: Menu;
@@ -31,5 +31,5 @@ export declare class DocumentsComponent extends TaBaseComponent implements OnIni
     private _deleteDocument;
     private _updateMenu;
     static ɵfac: i0.ɵɵFactoryDeclaration<DocumentsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<DocumentsComponent, "ta-documents", never, { "document$": { "alias": "document$"; "required": false; }; "canAddFile": { "alias": "canAddFile"; "required": false; }; }, { "filesSaved": "filesSaved"; "filesDeleted": "filesDeleted"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DocumentsComponent, "ta-documents", never, { "document$": { "alias": "document$"; "required": true; "isSignal": true; }; "canAddFile": { "alias": "canAddFile"; "required": true; "isSignal": true; }; }, { "filesSaved": "filesSaved"; "filesDeleted": "filesDeleted"; }, never, never, true, never>;
 }

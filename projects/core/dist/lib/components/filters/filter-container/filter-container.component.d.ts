@@ -4,7 +4,7 @@ import { InputBase } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class FilterContainerComponent extends TaBaseComponent implements OnInit {
-    form: InputBase<any>[];
+    form: import("@angular/core").InputSignal<InputBase<any>[]>;
     filtersSelected: EventEmitter<any>;
     isFilterOpen: boolean;
     askValidation$: Subject<null>;
@@ -15,5 +15,5 @@ export declare class FilterContainerComponent extends TaBaseComponent implements
     clear(): void;
     validate(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<FilterContainerComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FilterContainerComponent, "ta-filter-container", never, { "form": { "alias": "form"; "required": false; }; }, { "filtersSelected": "filtersSelected"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FilterContainerComponent, "ta-filter-container", never, { "form": { "alias": "form"; "required": false; "isSignal": true; }; }, { "filtersSelected": "filtersSelected"; }, never, never, true, never>;
 }

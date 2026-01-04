@@ -1,8 +1,8 @@
-@if (this.mobileDetection) { @if (this.container === 'button') {
+@if (this.mobileDetection) { @if (this.container() === 'button') {
 <ta-button [options]="{ circular: true }" (action)="this.openDialog()">
   <ta-font-icon [name]="'search'"></ta-font-icon>
 </ta-button>
-} @else if (this.container === 'link') {
+} @else if (this.container() === 'link') {
 <div (click)="this.openDialog()">
   <ta-font-icon [name]="'search'"></ta-font-icon>
 </div>
@@ -15,8 +15,8 @@
 
 <ng-template #searchTemplate let-options="options">
   <ta-search-history-displayer
-    [placeholder]="this.placeholder"
-    [searchHistory]="this.searchHistory"
+    [placeholder]="this.placeholder()"
+    [searchHistory]="this.searchHistory()"
     [isDropDown]="options.isDropDown"
     (valueCompleted)="this.action($event)"
   ></ta-search-history-displayer>

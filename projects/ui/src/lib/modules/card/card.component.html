@@ -1,20 +1,20 @@
 <div
   class="card flex-column"
   [ngClass]="{
-    'card-shadow': this.shadow,
-    'highlight': this.highlight,
-    'full-height': this.fullHeight,
-    'no-card-border': this.noContent,
+    'card-shadow': this.shadow(),
+    'highlight': this.highlight(),
+    'full-height': this.fullHeight(),
+    'no-card-border': this.noContent(),
   }"
   [class.hover]="this.hasHandler"
   (click)="this.clickTrigger()"
 >
-  <ta-new [visible]="this.isNew"></ta-new>
+  <ta-new [visible]="this.isNew()"></ta-new>
   <div
     class="responsive-content"
     [ngClass]="{
-      'horizontal-card': this.directionCard === 'horizontal',
-      'vertical-card': this.directionCard === 'vertical',
+      'horizontal-card': this.directionCard() === 'horizontal',
+      'vertical-card': this.directionCard() === 'vertical',
     }"
   >
     <div class="img-container">

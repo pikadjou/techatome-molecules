@@ -1,7 +1,7 @@
 <ng-container
   [ngTemplateOutlet]="inputsTemplate"
   [ngTemplateOutletContext]="{
-    input: this.input,
+    input: this.inputModel(),
     matcher: this.matcher,
   }"
 ></ng-container>
@@ -12,50 +12,50 @@
       <ta-input-textbox
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
-        [space]="this.space"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
+        [space]="this.space()"
       ></ta-input-textbox>
     }
     @case ('textarea') {
       <ta-input-textarea
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-textarea>
     }
     @case ('dropdown') {
       <ta-input-dropdown
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
-        [space]="this.space"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
+        [space]="this.space()"
       ></ta-input-dropdown>
     }
     @case ('datePicker') {
       <ta-input-date-picker
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-date-picker>
     }
     @case ('timePicker') {
       <ta-input-time-picker
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-time-picker>
     }
     @case ('radio') {
       <ta-input-radio
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-radio>
     }
     @case ('dynamic') {
@@ -65,16 +65,16 @@
       <ta-input-checkbox
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-checkbox>
     }
     @case ('toggle') {
       <ta-input-toggle
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-toggle>
     }
     @case ('panel') {
@@ -87,72 +87,72 @@
       <ta-input-switch
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-switch>
     }
     @case ('images') {
       <ta-input-images
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-images>
     }
     @case ('logo') {
       <ta-input-logo
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-logo>
     }
     @case ('image') {
       <ta-input-image
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-image>
     }
     @case ('schema') {
       <ta-input-schema
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-schema>
     }
     @case ('upload') {
       <ta-input-upload
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-upload>
     }
     @case ('slider') {
       <ta-input-slider
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-slider>
     }
     @case ('choices') {
       <ta-input-choices
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-choices>
     }
     @case ('wysiswyg') {
       <ta-input-wysiswyg
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-wysiswyg>
     }
     @case ('translation') {
@@ -162,40 +162,40 @@
       <ta-input-phone
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-phone>
     }
     @case ('address') {
       <ta-input-address
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-address>
     }
     @case ('culture') {
       <ta-input-culture
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-culture>
     }
     @case ('component') {
       <ta-input-component
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-component>
     }
     @case ('rating') {
       <ta-input-rating
         [input]="input"
         [matcher]="matcher"
-        [onFocus]="this.onFocus"
-        [standalone]="this.standalone"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
       ></ta-input-rating>
     }
   }

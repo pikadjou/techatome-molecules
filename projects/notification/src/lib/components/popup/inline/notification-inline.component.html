@@ -20,7 +20,7 @@
       }
     </div>
   </div>
-  @if (this.showClose) {
+  @if (this.showClose()) {
   <span class="close" (click)="this.close()">
     <ta-font-icon name="close"></ta-font-icon>
   </span>

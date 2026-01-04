@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { HostListener, Input, Directive, EventEmitter, Output, Pipe, NgModule, inject, signal, Component, Injectable, InjectionToken } from '@angular/core';
+import { input, HostListener, Directive, effect, EventEmitter, Output, Pipe, NgModule, inject, signal, Component, Injectable, InjectionToken } from '@angular/core';
 import * as i1 from '@angular/platform-browser';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
@@ -14,17 +14,17 @@ import { BehaviorSubject } from 'rxjs';
 
 class StopPropagationDirective {
     constructor() {
-        this.stopPropagationActivation = true;
+        this.stopPropagationActivation = input(true);
     }
     onClick(event) {
-        if (event && this.stopPropagationActivation) {
+        if (event && this.stopPropagationActivation()) {
             event.stopPropagation();
             event.preventDefault();
         }
         return false;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: StopPropagationDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.14", type: StopPropagationDirective, isStandalone: true, selector: "[appStopPropagation]", inputs: { stopPropagationActivation: "stopPropagationActivation" }, host: { listeners: { "click": "onClick($event)" } }, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: StopPropagationDirective, isStandalone: true, selector: "[appStopPropagation]", inputs: { stopPropagationActivation: { classPropertyName: "stopPropagationActivation", publicName: "stopPropagationActivation", isSignal: true, isRequired: false, transformFunction: null } }, host: { listeners: { "click": "onClick($event)" } }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: StopPropagationDirective, decorators: [{
             type: Directive,
@@ -32,9 +32,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     selector: "[appStopPropagation]",
                     standalone: true,
                 }]
-        }], propDecorators: { stopPropagationActivation: [{
-                type: Input
-            }], onClick: [{
+        }], propDecorators: { onClick: [{
                 type: HostListener,
                 args: ["click", ["$event"]]
             }] } });
@@ -43,19 +41,18 @@ class TypedTemplateDirective {
     // @ts-ignore
     constructor(contentTemplate) {
         this.contentTemplate = contentTemplate;
+        this.typedTemplate = input.required();
     }
     static ngTemplateContextGuard(dir, ctx) {
         return true;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TypedTemplateDirective, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.14", type: TypedTemplateDirective, isStandalone: true, selector: "ng-template[typedTemplate]", inputs: { typedTemplate: "typedTemplate" }, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: TypedTemplateDirective, isStandalone: true, selector: "ng-template[typedTemplate]", inputs: { typedTemplate: { classPropertyName: "typedTemplate", publicName: "typedTemplate", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TypedTemplateDirective, decorators: [{
             type: Directive,
             args: [{ selector: "ng-template[typedTemplate]", standalone: true }]
-        }], ctorParameters: () => [{ type: i0.TemplateRef }], propDecorators: { typedTemplate: [{
-                type: Input
-            }] } });
+        }], ctorParameters: () => [{ type: i0.TemplateRef }] });
 
 class LetDirective {
     constructor(_viewContainer, _templateRef) {
@@ -63,13 +60,15 @@ class LetDirective {
         this._templateRef = _templateRef;
         this._context = { ngLet: null, $implicit: null };
         this._hasView = false;
-    }
-    set ngLet(value) {
-        this._context.$implicit = this._context.ngLet = value;
-        if (!this._hasView) {
-            this._viewContainer.createEmbeddedView(this._templateRef, this._context);
-            this._hasView = true;
-        }
+        this.ngLet = input();
+        effect(() => {
+            const value = this.ngLet();
+            this._context.$implicit = this._context.ngLet = value;
+            if (!this._hasView) {
+                this._viewContainer.createEmbeddedView(this._templateRef, this._context);
+                this._hasView = true;
+            }
+        });
     }
     /**
      * Asserts the correct type of the context for the template that `NgLet` will render.
@@ -81,7 +80,7 @@ class LetDirective {
         return true;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LetDirective, deps: [{ token: i0.ViewContainerRef }, { token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.14", type: LetDirective, selector: "[ngLet]", inputs: { ngLet: "ngLet" }, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: LetDirective, selector: "[ngLet]", inputs: { ngLet: { classPropertyName: "ngLet", publicName: "ngLet", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LetDirective, decorators: [{
             type: Directive,
@@ -89,12 +88,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     // eslint-disable-next-line @angular-eslint/directive-selector
                     selector: "[ngLet]",
                 }]
-        }], ctorParameters: () => [{ type: i0.ViewContainerRef }, { type: i0.TemplateRef }], propDecorators: { ngLet: [{
-                type: Input
-            }] } });
+        }], ctorParameters: () => [{ type: i0.ViewContainerRef }, { type: i0.TemplateRef }] });
 
 class OnRenderDirective {
     constructor() {
+        this.onRender = input.required();
         this.rendered = new EventEmitter();
     }
     ngOnChanges(changes) {
@@ -103,16 +101,14 @@ class OnRenderDirective {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OnRenderDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.14", type: OnRenderDirective, selector: "[TaOnRender]", inputs: { onRender: "onRender" }, outputs: { rendered: "rendered" }, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: OnRenderDirective, selector: "[TaOnRender]", inputs: { onRender: { classPropertyName: "onRender", publicName: "onRender", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { rendered: "rendered" }, usesOnChanges: true, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OnRenderDirective, decorators: [{
             type: Directive,
             args: [{
                     selector: "[TaOnRender]",
                 }]
-        }], propDecorators: { onRender: [{
-                type: Input
-            }], rendered: [{
+        }], propDecorators: { rendered: [{
                 type: Output
             }] } });
 

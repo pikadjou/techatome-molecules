@@ -1,15 +1,15 @@
-<div class="navigation-container" [class]="this.container">
+<div class="navigation-container" [class]="this.container()">
   <div class="list">
-    @if (this.swiper) {
+    @if (this.swiper()) {
       <ta-swiper-light
-        [items]="this.menu.elements"
+        [items]="this.menu().elements"
         [template]="template"
         [forced]="true"
         [swiperClasses]="this.getSpaceClass()"
       ></ta-swiper-light>
     } @else {
-      <div class="element-list" [ngClass]="this.menu.direction + ' ' + this.getSpaceClass()">
-        @for (element of this.menu.elements; track element) {
+      <div class="element-list" [ngClass]="this.menu().direction + ' ' + this.getSpaceClass()">
+        @for (element of this.menu().elements; track element) {
           @let visible = element.visible$ | async;
           @if (visible) {
             <div class="element">

@@ -1,4 +1,4 @@
-@if (this.showInActionButton) {
+@if (this.showInActionButton()) {
 <ta-action-button [actions]="this.addActions"> </ta-action-button>
 } @else { @for (action of this.addActions; track action) {
 <ta-button (action)="action.callback()">

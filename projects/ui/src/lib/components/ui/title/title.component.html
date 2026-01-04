@@ -1,25 +1,25 @@
-@switch (this.level) { @case (1) {
-<h1 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+@switch (this.level()) { @case (1) {
+<h1 [ngClass]="{ 'theme-title': this.isTheme(), bold: this.isBold() }">
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </h1>
 } @case (2) {
-<h2 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+<h2 [ngClass]="{ 'theme-title': this.isTheme(), bold: this.isBold() }">
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </h2>
 } @case (3) {
-<h3 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+<h3 [ngClass]="{ 'theme-title': this.isTheme(), bold: this.isBold() }">
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </h3>
 } @case (4) {
-<h4 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+<h4 [ngClass]="{ 'theme-title': this.isTheme(), bold: this.isBold() }">
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </h4>
 } @case (5) {
-<h5 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+<h5 [ngClass]="{ 'theme-title': this.isTheme(), bold: this.isBold() }">
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </h5>
 } @case (6) {
-<h6 [ngClass]="{ 'theme-title': this.isTheme, bold: this.isBold }">
+<h6 [ngClass]="{ 'theme-title': this.isTheme(), bold: this.isBold() }">
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </h6>
 } }

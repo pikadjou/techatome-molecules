@@ -4,11 +4,11 @@ import { DocumentDto, FileType } from "@ta/services";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class DocumentsListComponent extends TaBaseComponent implements OnInit, OnChanges {
-    documentsIds: string[];
-    emptyMessage: string;
-    actions: "delete" | "select" | "";
-    defaultSelected: string[];
-    readonly: boolean;
+    documentsIds: import("@angular/core").InputSignal<string[]>;
+    emptyMessage: import("@angular/core").InputSignal<string>;
+    actions: import("@angular/core").InputSignal<"" | "select" | "delete">;
+    defaultSelected: import("@angular/core").InputSignal<string[]>;
+    readonly: import("@angular/core").InputSignal<boolean>;
     remove: EventEmitter<string>;
     checkedFilesChanged: EventEmitter<InputUploadValue[]>;
     private readonly _documentsService;
@@ -23,5 +23,5 @@ export declare class DocumentsListComponent extends TaBaseComponent implements O
     check(doc: DocumentDto): void;
     private _fetch;
     static ɵfac: i0.ɵɵFactoryDeclaration<DocumentsListComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<DocumentsListComponent, "ta-documents-list", never, { "documentsIds": { "alias": "documentsIds"; "required": false; }; "emptyMessage": { "alias": "emptyMessage"; "required": false; }; "actions": { "alias": "actions"; "required": false; }; "defaultSelected": { "alias": "defaultSelected"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; }, { "remove": "remove"; "checkedFilesChanged": "checkedFilesChanged"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DocumentsListComponent, "ta-documents-list", never, { "documentsIds": { "alias": "documentsIds"; "required": true; "isSignal": true; }; "emptyMessage": { "alias": "emptyMessage"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "defaultSelected": { "alias": "defaultSelected"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; }, { "remove": "remove"; "checkedFilesChanged": "checkedFilesChanged"; }, never, never, true, never>;
 }

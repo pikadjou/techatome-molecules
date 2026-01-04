@@ -2,7 +2,7 @@
   <ta-layout-side-content>
     <div class="m-space-sm">
       <ta-form
-        [inputs]="this.form"
+        [inputs]="this.form()"
         [canDisplayButton]="false"
         [askValidation$]="this.askValidation$"
         (valid)="this.apply($event)"

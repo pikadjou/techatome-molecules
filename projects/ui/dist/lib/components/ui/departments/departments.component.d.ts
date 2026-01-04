@@ -4,11 +4,11 @@ export declare class DepartmentsComponent {
     /**
      * List of departments object to display
      */
-    departments: Department[];
+    departments: import("@angular/core").InputSignal<Department[]>;
     /**
      * List of professions to display
      */
-    professions: string[];
+    professions: import("@angular/core").InputSignal<string[]>;
     static ɵfac: i0.ɵɵFactoryDeclaration<DepartmentsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<DepartmentsComponent, "ta-departments", never, { "departments": { "alias": "departments"; "required": false; }; "professions": { "alias": "professions"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DepartmentsComponent, "ta-departments", never, { "departments": { "alias": "departments"; "required": true; "isSignal": true; }; "professions": { "alias": "professions"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

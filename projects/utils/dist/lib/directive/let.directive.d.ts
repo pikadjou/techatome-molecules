@@ -9,8 +9,8 @@ export declare class LetDirective<T> {
     private _templateRef;
     private _context;
     private _hasView;
+    ngLet: import("@angular/core").InputSignal<T | undefined>;
     constructor(_viewContainer: ViewContainerRef, _templateRef: TemplateRef<LetContext<T>>);
-    set ngLet(value: T);
     /** @internal */
     static ngLetUseIfTypeGuard: void;
     /**
@@ -30,6 +30,6 @@ export declare class LetDirective<T> {
      */
     static ngTemplateContextGuard<T>(dir: LetDirective<T>, ctx: any): ctx is LetContext<Exclude<T, false | 0 | "" | null | undefined>>;
     static ɵfac: i0.ɵɵFactoryDeclaration<LetDirective<any>, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<LetDirective<any>, "[ngLet]", never, { "ngLet": { "alias": "ngLet"; "required": false; }; }, {}, never, never, false, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<LetDirective<any>, "[ngLet]", never, { "ngLet": { "alias": "ngLet"; "required": false; "isSignal": true; }; }, {}, never, never, false, never>;
 }
 export {};

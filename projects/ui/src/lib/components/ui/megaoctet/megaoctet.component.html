@@ -1,5 +1,5 @@
 <div class="flex-row align-items-center">
-  @if (this.icon) {
+  @if (this.icon()) {
   <ta-font-icon name="database" size="xs"></ta-font-icon>
   }
   <span>{{ "ui.megaoctet" | translate : { size: this.megaoctet } }}</span>

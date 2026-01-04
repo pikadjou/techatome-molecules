@@ -4,31 +4,31 @@ export declare class RatingComponent {
     /**
      * Current rating value (supports decimals for partial stars)
      */
-    value: number;
+    value: import("@angular/core").InputSignal<number>;
     /**
      * Maximum number of stars
      */
-    max: number;
+    max: import("@angular/core").InputSignal<number>;
     /**
      * Size of the stars in pixels
      */
-    size: number;
+    size: import("@angular/core").InputSignal<number>;
     /**
      * Color of filled stars
      */
-    color: string;
+    color: import("@angular/core").InputSignal<string>;
     /**
      * Color of empty stars
      */
-    emptyColor: string;
+    emptyColor: import("@angular/core").InputSignal<string>;
     /**
      * Read-only mode (no click interactions)
      */
-    readonly: boolean;
+    readonly: import("@angular/core").InputSignal<boolean>;
     /**
      * Show hover effect
      */
-    showHover: boolean;
+    showHover: import("@angular/core").InputSignal<boolean>;
     /**
      * Emits the new rating value when a star is clicked
      */
@@ -60,5 +60,5 @@ export declare class RatingComponent {
      */
     getCursorStyle(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<RatingComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<RatingComponent, "ta-rating", never, { "value": { "alias": "value"; "required": false; }; "max": { "alias": "max"; "required": false; }; "size": { "alias": "size"; "required": false; }; "color": { "alias": "color"; "required": false; }; "emptyColor": { "alias": "emptyColor"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; "showHover": { "alias": "showHover"; "required": false; }; }, { "ratingChange": "ratingChange"; "hoverChange": "hoverChange"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<RatingComponent, "ta-rating", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "emptyColor": { "alias": "emptyColor"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "showHover": { "alias": "showHover"; "required": false; "isSignal": true; }; }, { "ratingChange": "ratingChange"; "hoverChange": "hoverChange"; }, never, never, true, never>;
 }

@@ -1,15 +1,15 @@
 <button
-  [disabled]="this.readonly"
+  [disabled]="this.readonly()"
   appStopPropagation
-  [stopPropagationActivation]="this.stopPropagationActivation"
+  [stopPropagationActivation]="this.stopPropagationActivation()"
   type="button"
   class="button pointer"
   [ngClass]="this.getClass()"
   (click)="this.handleClick()"
 >
   <div class="flex-row g-space-sm align-c enter">
-    @if (this.icon) {
-    <ta-font-icon [name]="this.icon" [type]="this.size"></ta-font-icon>
+    @if (this.icon()) {
+    <ta-font-icon [name]="this.icon()!" [type]="this.size()"></ta-font-icon>
     }
   </div>
 </button>

@@ -5,10 +5,10 @@ import { NotificationFilter } from "../../services/queries";
 import * as i0 from "@angular/core";
 export declare class BulletComponent extends TaBaseComponent implements OnInit {
     private _notificationDataService;
-    filters: NotificationFilter;
+    filters: import("@angular/core").InputSignal<NotificationFilter>;
     get number$(): import("rxjs").Observable<number>;
     constructor(_notificationDataService: TaNotificationDataService);
     ngOnInit(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<BulletComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<BulletComponent, "ta-notification-bullet", never, { "filters": { "alias": "filters"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BulletComponent, "ta-notification-bullet", never, { "filters": { "alias": "filters"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

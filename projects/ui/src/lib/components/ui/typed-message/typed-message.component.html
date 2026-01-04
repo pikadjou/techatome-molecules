@@ -1,4 +1,4 @@
-<div class="alert alert-{{ this.type }}" role="alert">
-  <ta-font-icon [type]="'md'">{{ this.icon }}</ta-font-icon>
-  <span class="text">{{ this.text | translate }}</span>
+<div class="alert alert-{{ this.type() }}" role="alert">
+  <ta-font-icon [type]="'md'" [name]="this.icon"></ta-font-icon>
+  <span class="text">{{ this.text() | translate }}</span>
 </div>

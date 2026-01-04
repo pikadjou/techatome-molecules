@@ -1,6 +1,6 @@
 import { NgFor, NgTemplateOutlet, AsyncPipe, NgIf, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Input, Component, inject, LOCALE_ID, Injectable, Optional, Inject, EventEmitter, Output, NgModule } from '@angular/core';
+import { input, Component, inject, LOCALE_ID, Injectable, Optional, Inject, EventEmitter, Output, NgModule } from '@angular/core';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService, HandleComplexRequest, TENANT_CONFIG_TOKEN } from '@ta/server';
 import { LinkComponent as LinkComponent$1, TitleComponent, LoaderComponent, ErrorComponent, EmptyComponent, TaUiModule, TaContainerModule } from '@ta/ui';
 import { TaBaseComponent, isNonNullable, TaDirectivePipeModule } from '@ta/utils';
@@ -10,33 +10,38 @@ import { InputCheckBox } from '@ta/form-model';
 import { TaLazyTranslationService } from '@ta/translation';
 
 class TextComponent {
+    constructor() {
+        this.text = input.required();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TextComponent, isStandalone: true, selector: "ta-rich-paragraph-text", inputs: { text: "text" }, ngImport: i0, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TextComponent, isStandalone: true, selector: "ta-rich-paragraph-text", inputs: { text: { classPropertyName: "text", publicName: "text", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<span\n  [class.is-bold]=\"text().bold\"\n  [class.is-underline]=\"text().underline\"\n  [class.is-italic]=\"text().italic\"\n>\n  {{ text().text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-rich-paragraph-text", standalone: true, template: "<span\n  [class.is-bold]=\"text.bold\"\n  [class.is-underline]=\"text.underline\"\n  [class.is-italic]=\"text.italic\"\n>\n  {{ text.text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }]
-        }], propDecorators: { text: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-rich-paragraph-text", standalone: true, template: "<span\n  [class.is-bold]=\"text().bold\"\n  [class.is-underline]=\"text().underline\"\n  [class.is-italic]=\"text().italic\"\n>\n  {{ text().text }}\n</span>\n", styles: [".is-bold{font-weight:var(--ta-font-body-md-bold-weight)}.is-underline{text-decoration:underline}.is-italic{font-style:italic}\n"] }]
+        }] });
 
 class LinkComponent {
+    constructor() {
+        this.link = input.required();
+    }
     goTo() {
-        window.open(this.link.url);
+        window.open(this.link().url);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LinkComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: LinkComponent, isStandalone: true, selector: "ta-rich-paragraph-link", inputs: { link: "link" }, ngImport: i0, template: "@for (entity of this.link.children; track entity) {\n<ta-link (action)=\"this.goTo()\">\n  @switch (entity.type) { @case ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } }\n</ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"], dependencies: [{ kind: "component", type: LinkComponent$1, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: LinkComponent, isStandalone: true, selector: "ta-rich-paragraph-link", inputs: { link: { classPropertyName: "link", publicName: "link", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "@for (entity of this.link().children; track entity) {\n<ta-link (action)=\"this.goTo()\">\n  @switch (entity.type) { @case ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } }\n</ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"], dependencies: [{ kind: "component", type: LinkComponent$1, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LinkComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-rich-paragraph-link", standalone: true, imports: [NgFor, LinkComponent$1, TextComponent], template: "@for (entity of this.link.children; track entity) {\n<ta-link (action)=\"this.goTo()\">\n  @switch (entity.type) { @case ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } }\n</ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"] }]
-        }], propDecorators: { link: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-rich-paragraph-link", standalone: true, imports: [NgFor, LinkComponent$1, TextComponent], template: "@for (entity of this.link().children; track entity) {\n<ta-link (action)=\"this.goTo()\">\n  @switch (entity.type) { @case ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } }\n</ta-link>\n}\n", styles: ["ta-link{display:inline-block}\n"] }]
+        }] });
 
 class RichTextComponent {
+    constructor() {
+        this.richText = input.required();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RichTextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: RichTextComponent, isStandalone: true, selector: "ta-rich-text", inputs: { richText: "richText" }, ngImport: i0, template: "@for (rich of this.richText; track rich) { @switch (rich.type) { @case\n('heading') {\n<ta-title [level]=\"rich.level\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</ta-title>\n} @case ('paragraph') {\n<div class=\"paragraph\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</div>\n} } }\n\n<ng-template\n  #textTemplate\n  let-childrenText=\"childrenText\"\n  [typedTemplate]=\"this.typeToken\"\n>\n  @for (entity of childrenText; track entity) { @switch (entity.type) { @case\n  ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } @case ('link') {\n  <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n  } } }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"], dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }, { kind: "component", type: LinkComponent, selector: "ta-rich-paragraph-link", inputs: ["link"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: RichTextComponent, isStandalone: true, selector: "ta-rich-text", inputs: { richText: { classPropertyName: "richText", publicName: "richText", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "@for (rich of this.richText(); track rich) { @switch (rich.type) { @case\n('heading') {\n<ta-title [level]=\"rich.level\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</ta-title>\n} @case ('paragraph') {\n<div class=\"paragraph\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</div>\n} } }\n\n<ng-template\n  #textTemplate\n  let-childrenText=\"childrenText\"\n  [typedTemplate]=\"this.typeToken\"\n>\n  @for (entity of childrenText; track entity) { @switch (entity.type) { @case\n  ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } @case ('link') {\n  <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n  } } }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"], dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-rich-paragraph-text", inputs: ["text"] }, { kind: "component", type: LinkComponent, selector: "ta-rich-paragraph-link", inputs: ["link"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RichTextComponent, decorators: [{
             type: Component,
@@ -46,10 +51,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         TitleComponent,
                         TextComponent,
                         LinkComponent,
-                    ], template: "@for (rich of this.richText; track rich) { @switch (rich.type) { @case\n('heading') {\n<ta-title [level]=\"rich.level\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</ta-title>\n} @case ('paragraph') {\n<div class=\"paragraph\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</div>\n} } }\n\n<ng-template\n  #textTemplate\n  let-childrenText=\"childrenText\"\n  [typedTemplate]=\"this.typeToken\"\n>\n  @for (entity of childrenText; track entity) { @switch (entity.type) { @case\n  ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } @case ('link') {\n  <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n  } } }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"] }]
-        }], propDecorators: { richText: [{
-                type: Input
-            }] } });
+                    ], template: "@for (rich of this.richText(); track rich) { @switch (rich.type) { @case\n('heading') {\n<ta-title [level]=\"rich.level\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</ta-title>\n} @case ('paragraph') {\n<div class=\"paragraph\">\n  <ng-container\n    *ngTemplateOutlet=\"textTemplate; context: { childrenText: rich.children }\"\n  ></ng-container>\n</div>\n} } }\n\n<ng-template\n  #textTemplate\n  let-childrenText=\"childrenText\"\n  [typedTemplate]=\"this.typeToken\"\n>\n  @for (entity of childrenText; track entity) { @switch (entity.type) { @case\n  ('text') {\n  <ta-rich-paragraph-text [text]=\"$any(entity)\"></ta-rich-paragraph-text>\n  } @case ('link') {\n  <ta-rich-paragraph-link [link]=\"$any(entity)\"></ta-rich-paragraph-link>\n  } } }\n</ng-template>\n", styles: [".paragraph{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);margin:var(--ta-space-md) 0}\n"] }]
+        }] });
 
 const props$1 = ["Title", "Description", "Tenant", "Type"];
 const cmsProps = new GraphSchema(props$1.concat(baseStrapiProps));
@@ -127,18 +130,19 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class CmsComponent extends TaBaseComponent {
     get content$() {
-        return this.cmsService.cmsContents.get$(this.contentType);
+        return this.cmsService.cmsContents.get$(this.contentType());
     }
     constructor(cmsService, tenantConfig) {
         super();
         this.cmsService = cmsService;
         this.tenantConfig = tenantConfig;
+        this.contentType = input.required();
     }
     ngOnInit() {
         const tenantId = this.tenantConfig.tenantId ?? 0;
         this.requestState.asked();
         this.cmsService
-            .fetchCmsContents$(this.contentType, tenantId.toString())
+            .fetchCmsContents$(this.contentType(), tenantId.toString())
             .subscribe({
             complete: () => this.requestState.completed(),
             error: (error) => {
@@ -147,7 +151,7 @@ class CmsComponent extends TaBaseComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CmsComponent, deps: [{ token: TaCmsService }, { token: TENANT_CONFIG_TOKEN, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: CmsComponent, isStandalone: true, selector: "ta-cms", inputs: { contentType: "contentType" }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <ta-error\n    [message]=\"this.requestState.getErrorMessage()\"\n    [code]=\"this.requestState.getErrorStatus()\"\n  >\n    <ta-empty [isEmpty]=\"!content\">\n      @if (content) {\n      <ta-title>\n        {{ content.Title }}\n      </ta-title>\n\n      <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n      }\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: CmsComponent, isStandalone: true, selector: "ta-cms", inputs: { contentType: { classPropertyName: "contentType", publicName: "contentType", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.content$ | async; as content) {\n<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <ta-error\n    [message]=\"this.requestState.getErrorMessage()\"\n    [code]=\"this.requestState.getErrorStatus()\"\n  >\n    <ta-empty [isEmpty]=\"!content\">\n      @if (content) {\n      <ta-title>\n        {{ content.Title }}\n      </ta-title>\n\n      <ta-rich-text [richText]=\"content.Description\"></ta-rich-text>\n      }\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: RichTextComponent, selector: "ta-rich-text", inputs: ["richText"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CmsComponent, decorators: [{
             type: Component,
@@ -165,9 +169,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }, {
                     type: Inject,
                     args: [TENANT_CONFIG_TOKEN]
-                }] }], propDecorators: { contentType: [{
-                type: Input
-            }] } });
+                }] }] });
 
 class TaSaleService extends TaBaseStrapiService {
     constructor() {

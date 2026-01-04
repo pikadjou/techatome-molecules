@@ -1,7 +1,7 @@
-@if (this.isLoading) { @if (!this.skeleton) {
+@if (this.isLoading()) { @if (!this.skeleton()) {
 <div class="loader">
   <div class="content">
-    <div [ngClass]="'spinner ' + this.size">
+    <div [ngClass]="'spinner ' + this.size()">
       <svg
         class="svg"
         xmlns="http://www.w3.org/2000/svg"
@@ -116,8 +116,8 @@
         </g>
       </svg>
     </div>
-    @if (this.text) {
-    <p class="text">{{ this.text }}</p>
+    @if (this.text()) {
+    <p class="text">{{ this.text() }}</p>
     }
   </div>
 </div>

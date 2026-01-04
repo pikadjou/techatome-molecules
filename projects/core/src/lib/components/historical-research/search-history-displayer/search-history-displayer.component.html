@@ -5,7 +5,7 @@
       value="core.historical-research.last-searches"
     >
       <ta-empty
-        [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown"
+        [isEmpty]="!this.listRecentSearches?.length && !this.isDropDown()"
       >
         <ta-list-container class="list-container">
           @for (search of this.listRecentSearches; track search) {
@@ -27,11 +27,11 @@
 <ta-search-field
   #searchField
   [isOpen]="true"
-  [placeholder]="this.placeholder"
+  [placeholder]="this.placeholder()"
   [input]="this.input"
   (valueCompleted)="this.searchCompleted($event)"
   [matMenuTriggerFor]="
-    this.searchHistory?.type && this.isDropDown === true ? menu : null
+    this.searchHistory()?.type && this.isDropDown() === true ? menu : null
   "
 ></ta-search-field>
 
@@ -45,7 +45,7 @@
   </div>
 </mat-menu>
 
-@if (menuTemplate && this.searchHistory?.type && this.isDropDown === false) {
+@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {
 <ng-container
   *ngTemplateOutlet="menuTemplate; context: { element: menu }"
 ></ng-container>

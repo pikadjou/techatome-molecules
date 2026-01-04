@@ -1,6 +1,6 @@
 import {
   Component,
-  Input,
+  input,
   output,
   ChangeDetectionStrategy,
 } from "@angular/core";
@@ -34,7 +34,7 @@ import { DatePipe, SlicePipe } from "@angular/common";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentListComponent {
-  @Input({ required: true }) documents: Document[] = [];
+  documents = input.required<Document[]>();
 
   readonly documentSelected = output<string>();
 

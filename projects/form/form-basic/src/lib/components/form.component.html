@@ -1,6 +1,6 @@
 <div class="form-container">
   <form (ngSubmit)="onSubmit()" [formGroup]="this.form">
-    @for (input of this.inputs; track trackByKey($index, input)) {
+    @for (input of this.inputs(); track trackByKey($index, input)) {
     <div>
       @if (input.visible$ | async) {
       <ta-inputs [input]="input"></ta-inputs>
@@ -9,19 +9,19 @@
     }
     <div>
       <ta-notification-inline
-        [message]="this.error.message"
-        [code]="this.error.status"
+        [message]="this.error().message"
+        [code]="this.error().status"
         class="my-space-sm"
       >
         <div class="justify-end">
-          <ta-loader [isLoading]="this.loader">
-            @if (this.canDisplayButton && this.buttonTitle) {
+          <ta-loader [isLoading]="this.loader()">
+            @if (this.canDisplayButton() && this.buttonTitle()) {
             <ta-button
               (action)="this.onSubmit()"
               [state]="!this.isValid() ? 'disabled' : 'classic'"
               icon="check-line"
             >
-              {{ this.buttonTitle | translate }}
+              {{ this.buttonTitle() | translate }}
             </ta-button>
             }
           </ta-loader>

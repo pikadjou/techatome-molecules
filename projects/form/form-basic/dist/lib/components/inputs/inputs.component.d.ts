@@ -8,11 +8,11 @@ export declare class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean;
 }
 export declare class InputsComponent extends TaBaseComponent {
-    input: InputBase<any>;
-    standalone: boolean;
-    onFocus: Observable<void>;
-    space: boolean;
+    inputModel: import("@angular/core").InputSignal<InputBase<any>>;
+    standaloneMode: import("@angular/core").InputSignal<boolean>;
+    onFocusObs: import("@angular/core").InputSignal<Observable<void> | undefined>;
+    space: import("@angular/core").InputSignal<boolean>;
     matcher: MyErrorStateMatcher;
     static ɵfac: i0.ɵɵFactoryDeclaration<InputsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<InputsComponent, "ta-inputs", never, { "input": { "alias": "input"; "required": false; }; "standalone": { "alias": "standalone"; "required": false; }; "onFocus": { "alias": "onFocus"; "required": false; }; "space": { "alias": "space"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<InputsComponent, "ta-inputs", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "standaloneMode": { "alias": "standalone"; "required": false; "isSignal": true; }; "onFocusObs": { "alias": "onFocus"; "required": false; "isSignal": true; }; "space": { "alias": "space"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

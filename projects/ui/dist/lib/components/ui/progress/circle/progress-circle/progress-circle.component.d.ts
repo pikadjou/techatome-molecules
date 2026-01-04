@@ -3,18 +3,18 @@ export declare class ProgressCircleComponent {
     /**
      * Progress in percentage
      */
-    progress: number;
+    progress: import("@angular/core").InputSignal<number>;
     /**
      * Title located above
      */
-    upTitle?: string;
+    upTitle: import("@angular/core").InputSignal<string | undefined>;
     /**
      * Title located below
      */
-    downTitle?: string;
+    downTitle: import("@angular/core").InputSignal<string | undefined>;
     get circumference(): number;
     get canDisplayText(): boolean;
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<ProgressCircleComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ProgressCircleComponent, "ta-progress-circle", never, { "progress": { "alias": "progress"; "required": false; }; "upTitle": { "alias": "upTitle"; "required": false; }; "downTitle": { "alias": "downTitle"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ProgressCircleComponent, "ta-progress-circle", never, { "progress": { "alias": "progress"; "required": false; "isSignal": true; }; "upTitle": { "alias": "upTitle"; "required": false; "isSignal": true; }; "downTitle": { "alias": "downTitle"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

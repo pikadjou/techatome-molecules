@@ -31,7 +31,7 @@ export abstract class TaAbstractInputComponent<
 
   standaloneMode = input<boolean>(false, { alias: 'standalone' });
 
-  onFocusObs = input<Observable<void>>({ alias: 'onFocus' });
+  onFocusObs = input<Observable<void> | undefined>(undefined, { alias: 'onFocus' });
 
   @Output()
   valueChanged = new EventEmitter<V>();

@@ -1,15 +1,15 @@
-@if (this.icon) {
+@if (this.icon(); as iconValue) {
 <div class="card">
-  @if (this.isLocalIcon(this.icon)) {
+  @if (this.isLocalIcon(iconValue)) {
   <ta-local-icon
-    [type]="this.icon"
-    [size]="this.iconSize ?? 'md'"
+    [type]="iconValue"
+    [size]="this.iconSize() ?? 'md'"
   ></ta-local-icon>
-  } @else if (this.isFontIcon(this.icon)) {
+  } @else if (this.isFontIcon(iconValue)) {
   <ta-font-icon
     class="font-icon"
-    [name]="this.getFontIcon(this.icon)"
-    [type]="this.iconSize ?? 'md'"
+    [name]="this.getFontIcon(iconValue)"
+    [type]="this.iconSize() ?? 'md'"
   ></ta-font-icon>
   }
 
@@ -18,6 +18,6 @@
 } @else {
 <ta-typed-message
   [text]="this.displayedText"
-  [type]="this.type ?? 'info'"
+  [type]="this.type() ?? 'info'"
 ></ta-typed-message>
 }

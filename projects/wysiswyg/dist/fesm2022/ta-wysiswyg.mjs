@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Input, Component, EventEmitter, inject, ViewChild, Output, NgModule } from '@angular/core';
+import { input, Component, EventEmitter, inject, ViewChild, Output, NgModule } from '@angular/core';
 import { ENotificationCode, NotificationInlineComponent, TaNotificationModule } from '@ta/notification';
 import { TitleComponent, TextComponent, ToastComponent, TaUiModule } from '@ta/ui';
 import { TaBaseComponent, SafePipe, isNotEmptyObject, isNonNullable } from '@ta/utils';
@@ -20,10 +20,11 @@ import { CommonModule } from '@angular/common';
 class BlockTextComponent extends TaBaseComponent {
     constructor() {
         super(...arguments);
+        this.blocks = input.required();
         this.ENotificationCode = ENotificationCode;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BlockTextComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: BlockTextComponent, isStandalone: true, selector: "ta-cms-editor-blocks", inputs: { blocks: "blocks" }, usesInheritance: true, ngImport: i0, template: "@for (block of this.blocks; track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n", styles: [""], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "pipe", type: SafePipe, name: "safe" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: BlockTextComponent, isStandalone: true, selector: "ta-cms-editor-blocks", inputs: { blocks: { classPropertyName: "blocks", publicName: "blocks", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@for (block of this.blocks(); track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n", styles: [""], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "pipe", type: SafePipe, name: "safe" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BlockTextComponent, decorators: [{
             type: Component,
@@ -33,10 +34,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         TitleComponent,
                         TextComponent,
                         ToastComponent,
-                    ], template: "@for (block of this.blocks; track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n" }]
-        }], propDecorators: { blocks: [{
-                type: Input
-            }] } });
+                    ], template: "@for (block of this.blocks(); track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n" }]
+        }] });
 
 class TagTool {
     static get isInline() {
@@ -539,9 +538,13 @@ var nl$1 = /*#__PURE__*/Object.freeze({
 class EditorInputComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.users = [];
-        this.saveOnChange = false;
-        this.maxHeight = false;
+        this.initValue = input();
+        this.setNewValue$ = input();
+        this.requestSave$ = input();
+        this.clear$ = input();
+        this.users = input([]);
+        this.saveOnChange = input(false);
+        this.maxHeight = input(false);
         this.changed = new EventEmitter();
         this.saved = new EventEmitter();
         this.translationService = inject(TaTranslationService);
@@ -571,7 +574,7 @@ class EditorInputComponent extends TaBaseComponent {
                 }
                 this.changed.emit({ blocks: data.blocks });
             }
-            if (this.saveOnChange) {
+            if (this.saveOnChange()) {
                 this.save();
             }
             if (this._saveAfter) {
@@ -581,18 +584,21 @@ class EditorInputComponent extends TaBaseComponent {
         };
     }
     ngOnInit() {
-        if (this.requestSave$) {
-            this._registerSubscription(this.requestSave$?.subscribe({
+        const requestSave = this.requestSave$();
+        if (requestSave) {
+            this._registerSubscription(requestSave.subscribe({
                 next: () => this.save(),
             }));
         }
-        if (this.clear$) {
-            this._registerSubscription(this.clear$?.subscribe({
+        const clear = this.clear$();
+        if (clear) {
+            this._registerSubscription(clear.subscribe({
                 next: () => this.editorInstance?.clear(),
             }));
         }
-        if (this.setNewValue$) {
-            this._registerSubscription(this.setNewValue$?.subscribe({
+        const setNewValue = this.setNewValue$();
+        if (setNewValue) {
+            this._registerSubscription(setNewValue.subscribe({
                 next: ({ blocks, saveAfter }) => {
                     this._saveAfter = saveAfter ?? false;
                     if (this.editorInstance && blocks) {
@@ -630,7 +636,7 @@ class EditorInputComponent extends TaBaseComponent {
         return new EditorJS({
             holder: this.editorjs.nativeElement,
             minHeight: 100,
-            data: { blocks: this.initValue },
+            data: { blocks: this.initValue() },
             placeholder: translations["placeholder"],
             tools: {
                 header: Header,
@@ -658,7 +664,7 @@ class EditorInputComponent extends TaBaseComponent {
                 mention: {
                     class: TagTool,
                     config: {
-                        users: this.users,
+                        users: this.users(),
                     },
                 },
             },
@@ -715,26 +721,12 @@ class EditorInputComponent extends TaBaseComponent {
         return [...html.matchAll(regex)].map((match) => match[1]);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: "initValue", setNewValue$: "setNewValue$", requestSave$: "requestSave$", clear$: "clear$", users: "users", saveOnChange: "saveOnChange", maxHeight: "maxHeight" }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-cms-editor-input", standalone: true, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { initValue: [{
-                type: Input
-            }], setNewValue$: [{
-                type: Input
-            }], requestSave$: [{
-                type: Input
-            }], clear$: [{
-                type: Input
-            }], users: [{
-                type: Input
-            }], saveOnChange: [{
-                type: Input
-            }], maxHeight: [{
-                type: Input
-            }], changed: [{
+        }], ctorParameters: () => [], propDecorators: { changed: [{
                 type: Output
             }], saved: [{
                 type: Output

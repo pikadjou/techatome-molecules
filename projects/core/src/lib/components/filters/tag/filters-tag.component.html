@@ -1,5 +1,5 @@
 <div>
-  @for (filter of this.activeFilter; track trackById($index, filter)) {
+  @for (filter of this.activeFilter(); track trackById($index, filter)) {
   <span class="badge-container">
     <ta-badge
       [value]="filter.name"

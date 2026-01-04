@@ -1,7 +1,7 @@
 <div class="circle-progress-bar">
-  @if (this.upTitle) {
+  @if (this.upTitle()) {
   <div class="title">
-    {{ this.upTitle | translate }}
+    {{ this.upTitle() ?? '' | translate }}
   </div>
   }
 
@@ -14,7 +14,7 @@
       cy="50"
       r="45"
       [attr.stroke-dasharray]="this.circumference"
-      [attr.stroke-dashoffset]="this.circumference * (1 - this.progress / 100)"
+      [attr.stroke-dashoffset]="this.circumference * (1 - this.progress() / 100)"
     ></circle>
 
     @if (this.canDisplayText) {
@@ -25,14 +25,14 @@
       dominant-baseline="middle"
       text-anchor="middle"
     >
-      {{ this.progress | number : "1.0-0" }}%
+      {{ this.progress() | number : "1.0-0" }}%
     </text>
     }
   </svg>
 
-  @if (this.downTitle) {
+  @if (this.downTitle()) {
   <div class="title">
-    {{ this.downTitle | translate }}
+    {{ this.downTitle() ?? '' | translate }}
   </div>
   }
 </div>

@@ -1,10 +1,10 @@
 <div
   class="toggle-container"
   [ngClass]="this.containerCss"
-  [class.switch-container]="this.container === 'switch'"
+  [class.switch-container]="this.container() === 'switch'"
 >
   <ta-swiper-light
-    [items]="this.menu.elements"
+    [items]="this.menu().elements"
     [template]="template"
     [forced]="true"
     swiperClasses="g-space-lg pt-space-md"

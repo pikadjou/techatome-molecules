@@ -5,18 +5,18 @@ export declare class TextComponent {
      *
      * Add small class to text
      */
-    size: TaSizes;
+    size: import("@angular/core").InputSignal<TaSizes>;
     /**
      *
      * Add bold class to text
      */
-    isBold: boolean;
+    isBold: import("@angular/core").InputSignal<boolean>;
     /**
      *
      * Add bold class to text
      */
-    color: ColorType;
+    color: import("@angular/core").InputSignal<ColorType>;
     getColorClass(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<TextComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TextComponent, "ta-text", never, { "size": { "alias": "size"; "required": false; }; "isBold": { "alias": "isBold"; "required": false; }; "color": { "alias": "color"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TextComponent, "ta-text", never, { "size": { "alias": "size"; "required": false; "isSignal": true; }; "isBold": { "alias": "isBold"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
 }

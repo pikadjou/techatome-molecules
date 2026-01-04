@@ -12,7 +12,7 @@
             [userLogo]="this.userLogo$() | async"
             (click)="this.navigateToProfile()"
           ></ta-inline-profile-data>
-          @if (this.isEditable) {
+          @if (this.isEditable()) {
           <div class="my-space-md">
             <ta-button
               (action)="this.navigateToEditProfile()"
@@ -34,17 +34,17 @@
       </ta-empty>
     </ta-error>
   </ta-loader>
-  @if (this.profileMenu) {
+  @if (this.profileMenu()) {
   <div class="bdp-b color-border-primary pt-space-xs">
     <ta-menu
-      [menu]="this.profileMenu"
+      [menu]="this.profileMenu()!"
       [style]="'dark'"
       [container]="'overflow'"
     ></ta-menu>
   </div>
   } @let disconnectionMenu = this.disconnectionMenu(); @if (disconnectionMenu) {
   <div class="bdp-b pt-space-xs">
-    <ta-menu [menu]="disconnectionMenu" [style]="'dark'"></ta-menu>
+    <ta-menu [menu]="disconnectionMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
   </div>
   }
   <div class="ta-c">

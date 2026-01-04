@@ -5,13 +5,13 @@ export declare class TaGridComponent<T extends {
     id: number;
 }> extends TaAbstractGridComponent<T> {
     private renderer;
-    cardTemplate: TemplateRef<{
+    cardTemplate: import("@angular/core").InputSignal<TemplateRef<{
         items: T[];
-    }>;
+    }>>;
     rowClicked: EventEmitter<T>;
     tableElement: ElementRef;
     constructor(renderer: Renderer2);
     ngAfterViewInit(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridComponent<any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridComponent<any>, "ta-grid", never, { "cardTemplate": { "alias": "cardTemplate"; "required": false; }; }, { "rowClicked": "rowClicked"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridComponent<any>, "ta-grid", never, { "cardTemplate": { "alias": "cardTemplate"; "required": true; "isSignal": true; }; }, { "rowClicked": "rowClicked"; }, never, never, true, never>;
 }

@@ -1,6 +1,6 @@
-@if (this.withName) {
+@if (this.withName()) {
 <div class="departements-container text-truncate">
-  @for (department of this.departments; track department; let last = $last) {
+  @for (department of this.departments(); track department; let last = $last) {
   <div class="department">
     <div class="img-container align-center">
       @if (department.iconPath) {
@@ -13,7 +13,7 @@
 </div>
 } @else {
 <div class="departements-container">
-  @for (department of this.departments; track department) {
+  @for (department of this.departments(); track department) {
   <div class="department">
     <div class="img-container align-center">
       @if (department.iconPath) {

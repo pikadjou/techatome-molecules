@@ -24,12 +24,12 @@ export class ContactInformationComponent {
   /**
    * Material icon to display
    */
-  icon = input.required<string>();
+  icon = input<string>();
 
   /**
    * Local icon to display
    */
-  localIcon = input.required<TaIconType>();
+  localIcon = input<TaIconType>();
 
   constructor() {
     TaTranslationUI.getInstance();

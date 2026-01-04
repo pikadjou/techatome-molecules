@@ -1,9 +1,9 @@
-<ta-form-label [input]="this.input"></ta-form-label>
+<ta-form-label [input]="this.inputModel()"></ta-form-label>
 
 <div
   class="input-layout-container"
   [ngClass]="[
-    this.input.formControl?.invalid && this.input.formControl?.touched
+    this.inputModel().formControl?.invalid && this.inputModel().formControl?.touched
       ? 'error'
       : ''
   ]"
@@ -11,4 +11,4 @@
 >
   <ng-content></ng-content>
 </div>
-<ta-input-error [input]="this.input"></ta-input-error>
+<ta-input-error [input]="this.inputModel()"></ta-input-error>

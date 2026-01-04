@@ -25,7 +25,7 @@ export class InvoicePaymentStatusChangedComponent extends AbstractNotificationTe
   public template = this.sharedService.paymentStatusTemplate;
   get paymentStatus() {
     return (
-      (<KeyValue[]>this.notification.context).find(
+      (<KeyValue[]>this.notification().context).find(
         (item) => item.key === "PaymentStatus"
       )?.value ?? 0
     );

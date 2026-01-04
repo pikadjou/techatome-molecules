@@ -3,7 +3,7 @@ import { TaSharedMenuService } from "@ta/services";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class LayoutWithBottomNavComponent extends TaBaseComponent implements AfterViewChecked {
-    type: string;
+    type: import("@angular/core").InputSignal<string>;
     private _bottomNav;
     private _layoutContent;
     sharedMenu: TaSharedMenuService;
@@ -11,5 +11,5 @@ export declare class LayoutWithBottomNavComponent extends TaBaseComponent implem
     constructor();
     ngAfterViewChecked(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutWithBottomNavComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutWithBottomNavComponent, "ta-layout-with-bottom-nav", never, { "type": { "alias": "type"; "required": false; }; }, {}, never, ["*", "ta-layout-nav"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutWithBottomNavComponent, "ta-layout-with-bottom-nav", never, { "type": { "alias": "type"; "required": true; "isSignal": true; }; }, {}, never, ["*", "ta-layout-nav"], true, never>;
 }

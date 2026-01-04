@@ -5,8 +5,8 @@ import { MenuIcon } from "../../models/menu/item/icon";
 import { Menu } from "../../models/menu/menu";
 import * as i0 from "@angular/core";
 export declare class ToggleNavigationComponent implements OnInit {
-    menu: Menu;
-    container: "tab" | "switch";
+    menu: import("@angular/core").InputSignal<Menu<MenuBase>>;
+    container: import("@angular/core").InputSignal<"tab" | "switch">;
     activeKey: string;
     readonly typeItem: {
         item: MenuBase | MenuAction | MenuIcon;
@@ -23,5 +23,5 @@ export declare class ToggleNavigationComponent implements OnInit {
     callback(item: MenuBase): void;
     isActive(item: MenuBase): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<ToggleNavigationComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ToggleNavigationComponent, "ta-toggle-navigation", never, { "menu": { "alias": "menu"; "required": false; }; "container": { "alias": "container"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ToggleNavigationComponent, "ta-toggle-navigation", never, { "menu": { "alias": "menu"; "required": true; "isSignal": true; }; "container": { "alias": "container"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

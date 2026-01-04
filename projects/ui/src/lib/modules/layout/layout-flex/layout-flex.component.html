@@ -1,120 +1,118 @@
 @if (this.breakpoints.isTablette$ | async) {
-<div class="mobile-control full-width">
-  <div class="space-between">
-    <ta-button
-      (action)="this.toggle('center')"
-      type="secondary"
-      [options]="{ circular: 'small' }"
-    >
-      <ta-font-icon name="mail" size="sm"></ta-font-icon>
-    </ta-button>
-    <ta-button
-      (action)="this.toggle('right')"
-      type="secondary"
-      [options]="{ circular: 'small' }"
-    >
-      <ta-font-icon name="task-todo" size="sm"></ta-font-icon>
-    </ta-button>
+  <div class="mobile-control full-width">
+    <div class="space-between">
+      <ta-button (action)="this.toggle('center')" type="secondary" [options]="{ circular: 'small' }">
+        <ta-font-icon name="mail" size="sm"></ta-font-icon>
+      </ta-button>
+      <ta-button (action)="this.toggle('right')" type="secondary" [options]="{ circular: 'small' }">
+        <ta-font-icon name="task-todo" size="sm"></ta-font-icon>
+      </ta-button>
+    </div>
   </div>
-</div>
 }
 <div class="flex-container">
   <div class="main">
     <div class="left">
-      @if (this.allowClose) {
-      <div class="control">
-        @if (this.has('left')) {
-        <ng-content select="[header-left]"></ng-content>
-        }
-        <ta-button
-          (action)="this.toggle('left')"
-          [style]="'secondary'"
-          [options]="{ circular: 'small' }"
-          [state]="this.state('left')"
-        >
+      @if (this.allowClose()) {
+        <div class="control">
           @if (this.has('left')) {
-          <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
-          } @else {
-          <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
+            <ng-content select="[header-left]"></ng-content>
           }
-        </ta-button>
-      </div>
-      } @if (this.has('left')) {
-      <div class="content">
-        <ng-template [ngTemplateOutlet]="leftTemplate"></ng-template>
-      </div>
+          <ta-button
+            (action)="this.toggle('left')"
+            [style]="'secondary'"
+            [options]="{ circular: 'small' }"
+            [state]="this.state('left')"
+          >
+            @if (this.has('left')) {
+              <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
+            } @else {
+              <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
+            }
+          </ta-button>
+        </div>
+      }
+      @if (this.has('left')) {
+        <div class="content">
+          <ng-template [ngTemplateOutlet]="leftTemplate"></ng-template>
+        </div>
       }
     </div>
 
     <div class="center">
-      @if (this.allowClose) {
-      <div class="control">
-        @if (this.has('center')) {
-        <ng-content select="[header-center]"></ng-content>
-        }
-        <ta-button
-          (action)="this.toggle('center')"
-          [style]="'secondary'"
-          [options]="{ circular: 'small' }"
-          [state]="this.state('center')"
-        >
+      @if (this.allowClose()) {
+        <div class="control">
           @if (this.has('center')) {
-          <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
-          } @else {
-          <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
+            <ng-content select="[header-center]"></ng-content>
           }
-        </ta-button>
-      </div>
-      } @if (this.has('center') && !(this.breakpoints.isTablette$ | async)) {
-      <div class="content">
-        <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
-      </div>
+          <ta-button
+            (action)="this.toggle('center')"
+            [style]="'secondary'"
+            [options]="{ circular: 'small' }"
+            [state]="this.state('center')"
+          >
+            @if (this.has('center')) {
+              <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
+            } @else {
+              <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
+            }
+          </ta-button>
+        </div>
+      }
+      @if (this.has('center') && !(this.breakpoints.isTablette$ | async)) {
+        <div class="content">
+          <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
+        </div>
       }
     </div>
   </div>
 
   @if (!(this.breakpoints.isTablette$ | async)) {
-  <div class="second">
-    <div class="right">
-      @if (this.allowClose) {
-      <div class="control">
-        @if (this.has('right')) {
-        <ng-content select="[header-right]"></ng-content>
+    <div class="second">
+      <div class="right">
+        @if (this.allowClose()) {
+          <div class="control">
+            @if (this.has('right')) {
+              <ng-content select="[header-right]"></ng-content>
+            }
+            <ta-button
+              (action)="this.toggle('right')"
+              [style]="'secondary'"
+              [options]="{ circular: 'small' }"
+              [state]="this.state('right')"
+            >
+              @if (this.has('right')) {
+                <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
+              } @else {
+                <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
+              }
+            </ta-button>
+          </div>
         }
-        <ta-button
-          (action)="this.toggle('right')"
-          [style]="'secondary'"
-          [options]="{ circular: 'small' }"
-          [state]="this.state('right')"
-        >
-          @if (this.has('right')) {
-          <ta-font-icon name="expand-horizontal" size="sm"></ta-font-icon>
-          } @else {
-          <ta-font-icon name="collapse-horizontal" size="sm"></ta-font-icon>
-          }
-        </ta-button>
+        @if (this.has('right')) {
+          <div class="content">
+            <ng-template [ngTemplateOutlet]="rightTemplate"></ng-template>
+          </div>
+        }
       </div>
-      } @if (this.has('right')) {
-      <div class="content">
-        <ng-template [ngTemplateOutlet]="rightTemplate"></ng-template>
-      </div>
-      }
     </div>
-  </div>
   }
 </div>
 
-@if (this.breakpoints.isTablette$ | async) { @if (this.has('center')) {
-<ta-layout-full-panel (closeEvent)="this.toggle('center')" width="100%">
-  <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
-</ta-layout-full-panel>
-} @if (this.has('right')) {
-<ta-layout-full-panel (closeEvent)="this.toggle('right')">
-  <div class="full-width">
-    <ng-template [ngTemplateOutlet]="rightTemplate"></ng-template>
-  </div>
-</ta-layout-full-panel>
-} }
+@if (this.breakpoints.isTablette$ | async) {
+  @if (this.has('center')) {
+    <ta-layout-full-panel (closeEvent)="this.toggle('center')" width="100%">
+      <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
+    </ta-layout-full-panel>
+  }
+  @if (this.has('right')) {
+    <ta-layout-full-panel (closeEvent)="this.toggle('right')">
+      <div class="full-width">
+        <ng-template [ngTemplateOutlet]="rightTemplate"></ng-template>
+      </div>
+    </ta-layout-full-panel>
+  }
+}
 
 <ng-template #leftTemplate>
   <ng-content select="[left]"></ng-content>

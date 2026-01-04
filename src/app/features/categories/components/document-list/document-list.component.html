@@ -1,5 +1,5 @@
 <div class="documents-grid">
-  @for (document of documents; track trackByDocument($index, document)) {
+  @for (document of documents(); track trackByDocument($index, document)) {
   <ta-card
     class="document-card"
     (click)="onDocumentClick(document)"

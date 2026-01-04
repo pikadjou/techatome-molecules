@@ -4,11 +4,11 @@
       "core.filter.clear" | translate
     }}</ta-button>
   </div>
-  @if (this.form) {
+  @if (this.form()) {
   <ta-form
-    [inputs]="this.form"
+    [inputs]="this.form()"
     [canDisplayButton]="false"
-    [askValidation$]="this.askValidation$"
+    [askValidation$]="this.askValidation$()"
     (valid)="this.apply($event)"
   >
   </ta-form>

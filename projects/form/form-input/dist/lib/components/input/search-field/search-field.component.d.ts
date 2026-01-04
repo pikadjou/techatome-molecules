@@ -4,10 +4,10 @@ import { TaSizes } from "@ta/styles";
 import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class SearchFieldComponent extends TaAbstractInputComponent<InputTextBox | InputNumber> implements OnInit, OnDestroy {
-    isOpen: boolean;
-    placeholder: string;
-    space: boolean;
-    type: TaSizes;
+    isOpen: import("@angular/core").InputSignal<boolean>;
+    placeholder: import("@angular/core").InputSignal<string>;
+    space: import("@angular/core").InputSignal<boolean>;
+    type: import("@angular/core").InputSignal<TaSizes>;
     valueCompleted: EventEmitter<any>;
     isDeployed: boolean;
     focusTextBox: boolean;
@@ -19,5 +19,5 @@ export declare class SearchFieldComponent extends TaAbstractInputComponent<Input
     focusOut(): void;
     keyPress: (event: KeyboardEvent) => void;
     static ɵfac: i0.ɵɵFactoryDeclaration<SearchFieldComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<SearchFieldComponent, "ta-search-field", never, { "isOpen": { "alias": "isOpen"; "required": false; }; "placeholder": { "alias": "placeholder"; "required": false; }; "space": { "alias": "space"; "required": false; }; "type": { "alias": "type"; "required": false; }; }, { "valueCompleted": "valueCompleted"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SearchFieldComponent, "ta-search-field", never, { "isOpen": { "alias": "isOpen"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "space": { "alias": "space"; "required": false; "isSignal": true; }; "type": { "alias": "type"; "required": false; "isSignal": true; }; }, { "valueCompleted": "valueCompleted"; }, never, never, true, never>;
 }

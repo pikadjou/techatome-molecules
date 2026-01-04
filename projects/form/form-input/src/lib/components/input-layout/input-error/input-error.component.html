@@ -1,26 +1,26 @@
-@if(this.input.formControl?.invalid && this.input.formControl?.touched) {
+@if(this.input().formControl?.invalid && this.input().formControl?.touched) {
 <div class="error-message">
-  @if(this.input.formControl?.hasError('message')) {
+  @if(this.input().formControl?.hasError('message')) {
   <small class="form-text text-danger">
-    {{ this.input.formControl?.getError("message") }}
+    {{ this.input().formControl?.getError("message") }}
   </small>
-  } @else if(this.input.formControl?.hasError('minlength')) {
+  } @else if(this.input().formControl?.hasError('minlength')) {
   <small class="form-text text-danger">
     {{ "form.text-box.minimum-length" | translate }}
   </small>
-  } @else if(this.input.formControl?.hasError('type')) {
+  } @else if(this.input().formControl?.hasError('type')) {
   <div class="error">
     <small class="form-text text-danger">
       {{ "form.text-box.error-occured" | translate }}
     </small>
   </div>
-  } @else if(this.input.formControl?.hasError('required')) {
+  } @else if(this.input().formControl?.hasError('required')) {
   <small class="form-text text-danger">
     {{ "form.text-box.is-mandatory" | translate }}
   </small>
-  } @else if(this.input.formControl?.errors?.['minlength']) {
+  } @else if(this.input().formControl?.errors?.['minlength']) {
   <span>{{ "form.layout.input-too-short" | translate }}</span>
-  } @else if(this.input.formControl?.hasError('validatePhoneNumber')) {
+  } @else if(this.input().formControl?.hasError('validatePhoneNumber')) {
   <span>{{ "form.phone.placeholder" | translate }} </span>
   }
 </div>

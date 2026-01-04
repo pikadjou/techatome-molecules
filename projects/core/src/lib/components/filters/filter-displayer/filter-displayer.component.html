@@ -1,10 +1,10 @@
-@if (this.container === 'button') {
+@if (this.container() === 'button') {
 <ta-button [options]="{ circular: true }" (action)="this.open()">
-  <ta-font-icon [name]="this.iconType"></ta-font-icon>
+  <ta-font-icon [name]="this.iconType()"></ta-font-icon>
 </ta-button>
-} @else if (this.container === 'link') {
+} @else if (this.container() === 'link') {
 <div (click)="this.open()">
-  <ta-font-icon [name]="this.iconType"></ta-font-icon>
+  <ta-font-icon [name]="this.iconType()"></ta-font-icon>
 </div>
 } @if (!this.mobileDetection) { @if (this.isFilterOpen) {
 <ta-layout-full-panel (closeEvent)="this.close()">
@@ -15,7 +15,7 @@
 <ng-template #filterTemplate>
   <ta-filter-container
     class="flex-full"
-    [form]="this.form"
+    [form]="this.form()"
     (filtersSelected)="this.selected($event)"
   ></ta-filter-container>
 </ng-template>

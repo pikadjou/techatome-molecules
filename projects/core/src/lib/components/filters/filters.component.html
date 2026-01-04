@@ -13,7 +13,7 @@
 <div class="list">
   <ta-layout-with-panel [open]="this.isFilterOpen">
     <ta-layout-panel>
-      <ta-filters-form></ta-filters-form>
+      <ta-filters-form [askValidation$]="this.askValidation$"></ta-filters-form>
     </ta-layout-panel>
     <ta-layout-content>
       <ng-content></ng-content>

@@ -10,15 +10,15 @@ interface UserLogoNaming {
 }
 export declare class LayoutHeaderLogoComponent extends TaBaseComponent {
     private _modal;
-    profile: {
+    profile: import("@angular/core").InputSignal<{
         template: TemplateRef<any>;
         user: {
             profilePictureUrl?: string;
             naming: UserLogoNaming | null;
         };
-    } | null;
-    notificationTemplate: TemplateRef<any> | null;
-    askClosing$: Observable<null> | undefined;
+    } | null>;
+    notificationTemplate: import("@angular/core").InputSignal<TemplateRef<any> | null>;
+    askClosing$: import("@angular/core").InputSignal<Observable<null> | undefined>;
     constructor(_modal: MatDialog);
     userInfo(): {
         profilePictureUrl?: string;
@@ -28,6 +28,6 @@ export declare class LayoutHeaderLogoComponent extends TaBaseComponent {
     openProfile(): void;
     openNotification(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutHeaderLogoComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutHeaderLogoComponent, "ta-layout-header-logo", never, { "profile": { "alias": "profile"; "required": false; }; "notificationTemplate": { "alias": "notificationTemplate"; "required": false; }; "askClosing$": { "alias": "askClosing$"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutHeaderLogoComponent, "ta-layout-header-logo", never, { "profile": { "alias": "profile"; "required": false; "isSignal": true; }; "notificationTemplate": { "alias": "notificationTemplate"; "required": false; "isSignal": true; }; "askClosing$": { "alias": "askClosing$"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }
 export {};

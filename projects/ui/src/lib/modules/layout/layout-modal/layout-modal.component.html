@@ -2,7 +2,7 @@
   <ta-layout-header>
     <div class="header flex-row justify-content-between">
       <ta-title [level]="3" [isBold]="true">{{
-        this.title | translate
+        this.title() | translate
       }}</ta-title>
       @if(!this.dialogRef.disableClose) {
       <div (click)="this.close()">

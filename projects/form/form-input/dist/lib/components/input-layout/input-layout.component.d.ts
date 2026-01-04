@@ -1,12 +1,12 @@
 import { InputBase } from "@ta/form-model";
 import * as i0 from "@angular/core";
 export declare class InputLayoutComponent {
-    input: InputBase<any>;
-    width: string;
-    height: string;
+    inputModel: import("@angular/core").InputSignal<InputBase<any>>;
+    width: import("@angular/core").InputSignal<string>;
+    height: import("@angular/core").InputSignal<string>;
     get containerStyles(): {
         [key: string]: string;
     };
     static ɵfac: i0.ɵɵFactoryDeclaration<InputLayoutComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<InputLayoutComponent, "ta-input-layout", never, { "input": { "alias": "input"; "required": false; }; "width": { "alias": "width"; "required": false; }; "height": { "alias": "height"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<InputLayoutComponent, "ta-input-layout", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "width": { "alias": "width"; "required": false; "isSignal": true; }; "height": { "alias": "height"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
 }

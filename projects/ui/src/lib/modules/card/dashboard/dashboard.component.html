@@ -1,15 +1,11 @@
 <ta-card [fullHeight]="true">
   <ta-card-content class="flex-full">
     <div class="background">
-      <ta-font-icon [name]="this.icon" type="big"></ta-font-icon>
+      <ta-font-icon [name]="this.icon()" type="big"></ta-font-icon>
     </div>
     <div class="dashboard-content flex-full">
       <div class="icon-container">
-        <ta-font-icon
-          class="icon-color-icon-brand-primary"
-          [name]="this.icon"
-          type="lg"
-        ></ta-font-icon>
+        <ta-font-icon class="icon-color-icon-brand-primary" [name]="this.icon()" type="lg"></ta-font-icon>
       </div>
       <div class="flex-column g-space-md flex-full">
         <div class="title">

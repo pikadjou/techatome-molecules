@@ -1,10 +1,10 @@
-@if (this.visible) {
+@if (this.visible()) {
 <div
   class="bullet"
-  [class.is-relative]="this.isRelative"
-  [class.is-absolute]="!this.isRelative"
-  [class]="this.size"
+  [class.is-relative]="this.isRelative()"
+  [class.is-absolute]="!this.isRelative()"
+  [class]="this.size()"
 >
-  <ta-bullet type="new" [size]="this.size"></ta-bullet>
+  <ta-bullet type="new" [size]="this.size()"></ta-bullet>
 </div>
 }

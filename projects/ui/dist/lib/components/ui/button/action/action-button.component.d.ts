@@ -4,12 +4,12 @@ export declare class ActionButtonComponent {
     /**
      * List of action available
      */
-    actions: ActionButtonData[];
+    actions: import("@angular/core").InputSignal<ActionButtonData[]>;
     isFontIcon(action: ActionButtonData): boolean;
     getFontIcon(action: ActionButtonData): string;
     isLocalIcon(action: ActionButtonData): boolean;
     isOpen: boolean;
     openBullet(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ActionButtonComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ActionButtonComponent, "ta-action-button", never, { "actions": { "alias": "actions"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ActionButtonComponent, "ta-action-button", never, { "actions": { "alias": "actions"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

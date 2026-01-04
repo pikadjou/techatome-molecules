@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { EventEmitter, ElementRef, ViewChild, Output, Input, Component, inject, HostListener, importProvidersFrom, Injectable, NgModule } from '@angular/core';
+import { input, EventEmitter, ElementRef, ViewChild, Output, Component, inject, HostListener, importProvidersFrom, Injectable, NgModule } from '@angular/core';
 import * as i1 from '@angular/forms';
 import { Validators, FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
@@ -46,16 +46,28 @@ import { MatSliderModule } from '@angular/material/slider';
 import { TaMenuModule } from '@ta/menu';
 
 class TaAbstractInputComponent extends TaBaseComponent {
+    // Getter for backward compatibility with subclasses
+    get input() {
+        return this.inputModel();
+    }
+    // Getter for backward compatibility
+    get standalone() {
+        return this.standaloneMode();
+    }
+    // Getter for backward compatibility
+    get onFocus() {
+        return this.onFocusObs();
+    }
     constructor() {
         super();
-        this.standalone = false;
+        this.inputModel = input.required({ alias: 'input' });
+        this.matcher = input(new ErrorStateMatcher());
+        this.standaloneMode = input(false, { alias: 'standalone' });
+        this.onFocusObs = input(undefined, { alias: 'onFocus' });
         this.valueChanged = new EventEmitter();
         this.validators = Validators;
     }
     ngOnInit() {
-        if (this.matcher === null) {
-            this.matcher = new ErrorStateMatcher();
-        }
         if (this.standalone) {
             this.input.createFormControl();
         }
@@ -85,20 +97,12 @@ class TaAbstractInputComponent extends TaBaseComponent {
         this.valueChanged.emit(value);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaAbstractInputComponent, selector: "ng-component", inputs: { input: "input", matcher: "matcher", standalone: "standalone", onFocus: "onFocus" }, outputs: { valueChanged: "valueChanged" }, viewQueries: [{ propertyName: "focusedElement", first: true, predicate: ["focusedElement"], descendants: true, read: ElementRef }], usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaAbstractInputComponent, selector: "ng-component", inputs: { inputModel: { classPropertyName: "inputModel", publicName: "input", isSignal: true, isRequired: true, transformFunction: null }, matcher: { classPropertyName: "matcher", publicName: "matcher", isSignal: true, isRequired: false, transformFunction: null }, standaloneMode: { classPropertyName: "standaloneMode", publicName: "standalone", isSignal: true, isRequired: false, transformFunction: null }, onFocusObs: { classPropertyName: "onFocusObs", publicName: "onFocus", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueChanged: "valueChanged" }, viewQueries: [{ propertyName: "focusedElement", first: true, predicate: ["focusedElement"], descendants: true, read: ElementRef }], usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractInputComponent, decorators: [{
             type: Component,
             args: [{ template: "" }]
-        }], ctorParameters: () => [], propDecorators: { input: [{
-                type: Input
-            }], matcher: [{
-                type: Input
-            }], standalone: [{
-                type: Input
-            }], onFocus: [{
-                type: Input
-            }], valueChanged: [{
+        }], ctorParameters: () => [], propDecorators: { valueChanged: [{
                 type: Output
             }], focusedElement: [{
                 type: ViewChild,
@@ -107,20 +111,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class FormLabelComponent {
     constructor() {
-        this.withMarginBottom = true;
+        this.inputModel = input.required({ alias: 'input' });
+        this.withMarginBottom = input(true);
         this.validators = Validators;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FormLabelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FormLabelComponent, isStandalone: true, selector: "ta-form-label", inputs: { input: "input", withMarginBottom: "withMarginBottom" }, ngImport: i0, template: "@if(this.input.label) {\n<label class=\"form-label\" [class.mb-space-sm]=\"this.withMarginBottom\">\n  {{ input.label | translate }}\n  @for (validator of this.input.validators; track validator) {\n  <span>\n    @if(validator === validators.required) {\n    <span> * </span>\n    }\n  </span>\n  }\n</label>\n}\n", styles: [".form-label{display:block;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-brand-primary)}\n"], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FormLabelComponent, isStandalone: true, selector: "ta-form-label", inputs: { inputModel: { classPropertyName: "inputModel", publicName: "input", isSignal: true, isRequired: true, transformFunction: null }, withMarginBottom: { classPropertyName: "withMarginBottom", publicName: "withMarginBottom", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "@if(this.inputModel().label) {\n<label class=\"form-label\" [class.mb-space-sm]=\"this.withMarginBottom()\">\n  {{ this.inputModel().label | translate }}\n  @for (validator of this.inputModel().validators; track validator) {\n  <span>\n    @if(validator === validators.required) {\n    <span> * </span>\n    }\n  </span>\n  }\n</label>\n}\n", styles: [".form-label{display:block;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-brand-primary)}\n"], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FormLabelComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-form-label", standalone: true, imports: [NgFor, TranslatePipe], template: "@if(this.input.label) {\n<label class=\"form-label\" [class.mb-space-sm]=\"this.withMarginBottom\">\n  {{ input.label | translate }}\n  @for (validator of this.input.validators; track validator) {\n  <span>\n    @if(validator === validators.required) {\n    <span> * </span>\n    }\n  </span>\n  }\n</label>\n}\n", styles: [".form-label{display:block;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-brand-primary)}\n"] }]
-        }], propDecorators: { input: [{
-                type: Input
-            }], withMarginBottom: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-form-label", standalone: true, imports: [NgFor, TranslatePipe], template: "@if(this.inputModel().label) {\n<label class=\"form-label\" [class.mb-space-sm]=\"this.withMarginBottom()\">\n  {{ this.inputModel().label | translate }}\n  @for (validator of this.inputModel().validators; track validator) {\n  <span>\n    @if(validator === validators.required) {\n    <span> * </span>\n    }\n  </span>\n  }\n</label>\n}\n", styles: [".form-label{display:block;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-brand-primary)}\n"] }]
+        }] });
 
 class CheckboxComponent extends TaAbstractInputComponent {
     constructor() {
@@ -150,40 +151,36 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         }], ctorParameters: () => [] });
 
 class InputErrorComponent {
+    constructor() {
+        this.input = input.required();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputErrorComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputErrorComponent, isStandalone: true, selector: "ta-input-error", inputs: { input: "input" }, ngImport: i0, template: "@if(this.input.formControl?.invalid && this.input.formControl?.touched) {\n<div class=\"error-message\">\n  @if(this.input.formControl?.hasError('message')) {\n  <small class=\"form-text text-danger\">\n    {{ this.input.formControl?.getError(\"message\") }}\n  </small>\n  } @else if(this.input.formControl?.hasError('minlength')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.minimum-length\" | translate }}\n  </small>\n  } @else if(this.input.formControl?.hasError('type')) {\n  <div class=\"error\">\n    <small class=\"form-text text-danger\">\n      {{ \"form.text-box.error-occured\" | translate }}\n    </small>\n  </div>\n  } @else if(this.input.formControl?.hasError('required')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.is-mandatory\" | translate }}\n  </small>\n  } @else if(this.input.formControl?.errors?.['minlength']) {\n  <span>{{ \"form.layout.input-too-short\" | translate }}</span>\n  } @else if(this.input.formControl?.hasError('validatePhoneNumber')) {\n  <span>{{ \"form.phone.placeholder\" | translate }} </span>\n  }\n</div>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputErrorComponent, isStandalone: true, selector: "ta-input-error", inputs: { input: { classPropertyName: "input", publicName: "input", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "@if(this.input().formControl?.invalid && this.input().formControl?.touched) {\n<div class=\"error-message\">\n  @if(this.input().formControl?.hasError('message')) {\n  <small class=\"form-text text-danger\">\n    {{ this.input().formControl?.getError(\"message\") }}\n  </small>\n  } @else if(this.input().formControl?.hasError('minlength')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.minimum-length\" | translate }}\n  </small>\n  } @else if(this.input().formControl?.hasError('type')) {\n  <div class=\"error\">\n    <small class=\"form-text text-danger\">\n      {{ \"form.text-box.error-occured\" | translate }}\n    </small>\n  </div>\n  } @else if(this.input().formControl?.hasError('required')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.is-mandatory\" | translate }}\n  </small>\n  } @else if(this.input().formControl?.errors?.['minlength']) {\n  <span>{{ \"form.layout.input-too-short\" | translate }}</span>\n  } @else if(this.input().formControl?.hasError('validatePhoneNumber')) {\n  <span>{{ \"form.phone.placeholder\" | translate }} </span>\n  }\n</div>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputErrorComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-error", standalone: true, imports: [TranslatePipe], template: "@if(this.input.formControl?.invalid && this.input.formControl?.touched) {\n<div class=\"error-message\">\n  @if(this.input.formControl?.hasError('message')) {\n  <small class=\"form-text text-danger\">\n    {{ this.input.formControl?.getError(\"message\") }}\n  </small>\n  } @else if(this.input.formControl?.hasError('minlength')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.minimum-length\" | translate }}\n  </small>\n  } @else if(this.input.formControl?.hasError('type')) {\n  <div class=\"error\">\n    <small class=\"form-text text-danger\">\n      {{ \"form.text-box.error-occured\" | translate }}\n    </small>\n  </div>\n  } @else if(this.input.formControl?.hasError('required')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.is-mandatory\" | translate }}\n  </small>\n  } @else if(this.input.formControl?.errors?.['minlength']) {\n  <span>{{ \"form.layout.input-too-short\" | translate }}</span>\n  } @else if(this.input.formControl?.hasError('validatePhoneNumber')) {\n  <span>{{ \"form.phone.placeholder\" | translate }} </span>\n  }\n</div>\n}\n" }]
-        }], propDecorators: { input: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-input-error", standalone: true, imports: [TranslatePipe], template: "@if(this.input().formControl?.invalid && this.input().formControl?.touched) {\n<div class=\"error-message\">\n  @if(this.input().formControl?.hasError('message')) {\n  <small class=\"form-text text-danger\">\n    {{ this.input().formControl?.getError(\"message\") }}\n  </small>\n  } @else if(this.input().formControl?.hasError('minlength')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.minimum-length\" | translate }}\n  </small>\n  } @else if(this.input().formControl?.hasError('type')) {\n  <div class=\"error\">\n    <small class=\"form-text text-danger\">\n      {{ \"form.text-box.error-occured\" | translate }}\n    </small>\n  </div>\n  } @else if(this.input().formControl?.hasError('required')) {\n  <small class=\"form-text text-danger\">\n    {{ \"form.text-box.is-mandatory\" | translate }}\n  </small>\n  } @else if(this.input().formControl?.errors?.['minlength']) {\n  <span>{{ \"form.layout.input-too-short\" | translate }}</span>\n  } @else if(this.input().formControl?.hasError('validatePhoneNumber')) {\n  <span>{{ \"form.phone.placeholder\" | translate }} </span>\n  }\n</div>\n}\n" }]
+        }] });
 
 class InputLayoutComponent {
     constructor() {
-        this.width = "100%";
-        this.height = "100%";
+        this.inputModel = input.required({ alias: 'input' });
+        this.width = input("100%");
+        this.height = input("100%");
     }
     get containerStyles() {
         return {
-            width: this.width,
-            height: this.height,
+            width: this.width(),
+            height: this.height(),
         };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputLayoutComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputLayoutComponent, isStandalone: true, selector: "ta-input-layout", inputs: { input: "input", width: "width", height: "height" }, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div\n  class=\"input-layout-container\"\n  [ngClass]=\"[\n    this.input.formControl?.invalid && this.input.formControl?.touched\n      ? 'error'\n      : ''\n  ]\"\n  [ngStyle]=\"this.containerStyles\"\n>\n  <ng-content></ng-content>\n</div>\n<ta-input-error [input]=\"this.input\"></ta-input-error>\n", styles: [".input-layout-container{width:100%;display:flex;flex-direction:column}.error-message{color:var(--ta-semantic-red-dark);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);margin-top:var(--ta-space-xs)}:host ::ng-deep .form-control{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);border-radius:var(--ta-radius-rounded);padding:var(--ta-space-sm) var(--ta-space-md);outline:none;border:1px solid;border-color:var(--ta-neutral-300);background-color:var(--ta-neutral-white);width:100%;cursor:pointer;box-sizing:border-box;min-height:40px}:host ::ng-deep .form-control:hover:not(:disabled){border-color:var(--ta-border-brand-primary)}:host ::ng-deep .form-control:focus:not(:disabled){border-color:var(--ta-border-brand)}:host ::ng-deep .form-control:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}:host ::ng-deep .form-control:disabled{border-color:var(--ta-neutral-300)}\n"], dependencies: [{ kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: InputErrorComponent, selector: "ta-input-error", inputs: ["input"] }, { kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: InputLayoutComponent, isStandalone: true, selector: "ta-input-layout", inputs: { inputModel: { classPropertyName: "inputModel", publicName: "input", isSignal: true, isRequired: true, transformFunction: null }, width: { classPropertyName: "width", publicName: "width", isSignal: true, isRequired: false, transformFunction: null }, height: { classPropertyName: "height", publicName: "height", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "<ta-form-label [input]=\"this.inputModel()\"></ta-form-label>\n\n<div\n  class=\"input-layout-container\"\n  [ngClass]=\"[\n    this.inputModel().formControl?.invalid && this.inputModel().formControl?.touched\n      ? 'error'\n      : ''\n  ]\"\n  [ngStyle]=\"this.containerStyles\"\n>\n  <ng-content></ng-content>\n</div>\n<ta-input-error [input]=\"this.inputModel()\"></ta-input-error>\n", styles: [".input-layout-container{width:100%;display:flex;flex-direction:column}.error-message{color:var(--ta-semantic-red-dark);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);margin-top:var(--ta-space-xs)}:host ::ng-deep .form-control{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);border-radius:var(--ta-radius-rounded);padding:var(--ta-space-sm) var(--ta-space-md);outline:none;border:1px solid;border-color:var(--ta-neutral-300);background-color:var(--ta-neutral-white);width:100%;cursor:pointer;box-sizing:border-box;min-height:40px}:host ::ng-deep .form-control:hover:not(:disabled){border-color:var(--ta-border-brand-primary)}:host ::ng-deep .form-control:focus:not(:disabled){border-color:var(--ta-border-brand)}:host ::ng-deep .form-control:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}:host ::ng-deep .form-control:disabled{border-color:var(--ta-neutral-300)}\n"], dependencies: [{ kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: InputErrorComponent, selector: "ta-input-error", inputs: ["input"] }, { kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputLayoutComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-layout", standalone: true, imports: [FormLabelComponent, InputErrorComponent, NgClass, NgStyle], template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div\n  class=\"input-layout-container\"\n  [ngClass]=\"[\n    this.input.formControl?.invalid && this.input.formControl?.touched\n      ? 'error'\n      : ''\n  ]\"\n  [ngStyle]=\"this.containerStyles\"\n>\n  <ng-content></ng-content>\n</div>\n<ta-input-error [input]=\"this.input\"></ta-input-error>\n", styles: [".input-layout-container{width:100%;display:flex;flex-direction:column}.error-message{color:var(--ta-semantic-red-dark);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);margin-top:var(--ta-space-xs)}:host ::ng-deep .form-control{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);border-radius:var(--ta-radius-rounded);padding:var(--ta-space-sm) var(--ta-space-md);outline:none;border:1px solid;border-color:var(--ta-neutral-300);background-color:var(--ta-neutral-white);width:100%;cursor:pointer;box-sizing:border-box;min-height:40px}:host ::ng-deep .form-control:hover:not(:disabled){border-color:var(--ta-border-brand-primary)}:host ::ng-deep .form-control:focus:not(:disabled){border-color:var(--ta-border-brand)}:host ::ng-deep .form-control:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}:host ::ng-deep .form-control:disabled{border-color:var(--ta-neutral-300)}\n"] }]
-        }], propDecorators: { input: [{
-                type: Input
-            }], width: [{
-                type: Input
-            }], height: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-input-layout", standalone: true, imports: [FormLabelComponent, InputErrorComponent, NgClass, NgStyle], template: "<ta-form-label [input]=\"this.inputModel()\"></ta-form-label>\n\n<div\n  class=\"input-layout-container\"\n  [ngClass]=\"[\n    this.inputModel().formControl?.invalid && this.inputModel().formControl?.touched\n      ? 'error'\n      : ''\n  ]\"\n  [ngStyle]=\"this.containerStyles\"\n>\n  <ng-content></ng-content>\n</div>\n<ta-input-error [input]=\"this.inputModel()\"></ta-input-error>\n", styles: [".input-layout-container{width:100%;display:flex;flex-direction:column}.error-message{color:var(--ta-semantic-red-dark);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);margin-top:var(--ta-space-xs)}:host ::ng-deep .form-control{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);border-radius:var(--ta-radius-rounded);padding:var(--ta-space-sm) var(--ta-space-md);outline:none;border:1px solid;border-color:var(--ta-neutral-300);background-color:var(--ta-neutral-white);width:100%;cursor:pointer;box-sizing:border-box;min-height:40px}:host ::ng-deep .form-control:hover:not(:disabled){border-color:var(--ta-border-brand-primary)}:host ::ng-deep .form-control:focus:not(:disabled){border-color:var(--ta-border-brand)}:host ::ng-deep .form-control:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}:host ::ng-deep .form-control:disabled{border-color:var(--ta-neutral-300)}\n"] }]
+        }] });
 
 class DatePickerComponent extends TaAbstractInputComponent {
     constructor() {
@@ -231,7 +228,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class DropdownComponent extends TaAbstractInputComponent {
     constructor() {
         super(...arguments);
-        this.space = true;
+        this.space = input(true);
         this.optionsList = [];
         this.filteredOptions = [];
     }
@@ -285,7 +282,7 @@ class DropdownComponent extends TaAbstractInputComponent {
                 : this.optionsList;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DropdownComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: DropdownComponent, isStandalone: true, selector: "ta-input-dropdown", inputs: { space: "space" }, viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: TaOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input) {\n<ta-overlay-panel\n  [panelConfig]=\"{ matchTriggerWidth: true }\"\n  (closed)=\"this.onOverlayClosed()\"\n>\n  <ng-template #panelTrigger>\n    <ta-input-layout [input]=\"this.input\">\n      <div\n        #focusedElement\n        class=\"custom-dropdown-button form-control\"\n        [class.disabled]=\"this.input.disabled\"\n      >\n        <span class=\"selected-value align-center g-space-xs\">\n          @if (!this.input.multiple) { @if (this.input.value) {\n          <span>\n            {{ this.getOptionName(this.input.value) | translate }}\n          </span>\n          } @else {\n          {{ \"form.input.dropdown.novalue\" | translate }}\n          } } @else if (this.input.multiple) { @for (value of this.input.value;\n          track value) {\n          <ta-label size=\"sm\" class=\"d-flex\">\n            {{ this.getOptionName(value) | translate }}\n          </ta-label>\n          } }\n        </span>\n        <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n      </div>\n    </ta-input-layout>\n  </ng-template>\n\n  <ng-template #panelContent>\n    <div class=\"custom-menu\">\n      @if (this.input.withSearch) {\n      <input\n        class=\"input-search\"\n        type=\"search\"\n        placeholder=\"Rechercher...\"\n        (input)=\"this.onSearchChange($event)\"\n      />\n      } @for (opt of this.filteredOptions; track opt.id) {\n      <button\n        [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n        (click)=\"this.selectOption(opt.id, $event)\"\n        [class.selected]=\"this.isSelected(opt.id)\"\n        [class.disabled]=\"opt.disabled\"\n        class=\"dropdown-option space-between\"\n      >\n        {{ opt.name | translate }}\n        @if (this.isSelected(opt.id)) {\n        <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n        }\n      </button>\n      }\n    </div>\n  </ng-template>\n</ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: DropdownComponent, isStandalone: true, selector: "ta-input-dropdown", inputs: { space: { classPropertyName: "space", publicName: "space", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: TaOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input) {\n<ta-overlay-panel\n  [panelConfig]=\"{ matchTriggerWidth: true }\"\n  (closed)=\"this.onOverlayClosed()\"\n>\n  <ng-template #panelTrigger>\n    <ta-input-layout [input]=\"this.input\">\n      <div\n        #focusedElement\n        class=\"custom-dropdown-button form-control\"\n        [class.disabled]=\"this.input.disabled\"\n      >\n        <span class=\"selected-value align-center g-space-xs\">\n          @if (!this.input.multiple) { @if (this.input.value) {\n          <span>\n            {{ this.getOptionName(this.input.value) | translate }}\n          </span>\n          } @else {\n          {{ \"form.input.dropdown.novalue\" | translate }}\n          } } @else if (this.input.multiple) { @for (value of this.input.value;\n          track value) {\n          <ta-label size=\"sm\" class=\"d-flex\">\n            {{ this.getOptionName(value) | translate }}\n          </ta-label>\n          } }\n        </span>\n        <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n      </div>\n    </ta-input-layout>\n  </ng-template>\n\n  <ng-template #panelContent>\n    <div class=\"custom-menu\">\n      @if (this.input.withSearch) {\n      <input\n        class=\"input-search\"\n        type=\"search\"\n        placeholder=\"Rechercher...\"\n        (input)=\"this.onSearchChange($event)\"\n      />\n      } @for (opt of this.filteredOptions; track opt.id) {\n      <button\n        [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n        (click)=\"this.selectOption(opt.id, $event)\"\n        [class.selected]=\"this.isSelected(opt.id)\"\n        [class.disabled]=\"opt.disabled\"\n        class=\"dropdown-option space-between\"\n      >\n        {{ opt.name | translate }}\n        @if (this.isSelected(opt.id)) {\n        <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n        }\n      </button>\n      }\n    </div>\n  </ng-template>\n</ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DropdownComponent, decorators: [{
             type: Component,
@@ -296,9 +293,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         TranslatePipe,
                         InputLayoutComponent,
                     ], template: "@if (this.input) {\n<ta-overlay-panel\n  [panelConfig]=\"{ matchTriggerWidth: true }\"\n  (closed)=\"this.onOverlayClosed()\"\n>\n  <ng-template #panelTrigger>\n    <ta-input-layout [input]=\"this.input\">\n      <div\n        #focusedElement\n        class=\"custom-dropdown-button form-control\"\n        [class.disabled]=\"this.input.disabled\"\n      >\n        <span class=\"selected-value align-center g-space-xs\">\n          @if (!this.input.multiple) { @if (this.input.value) {\n          <span>\n            {{ this.getOptionName(this.input.value) | translate }}\n          </span>\n          } @else {\n          {{ \"form.input.dropdown.novalue\" | translate }}\n          } } @else if (this.input.multiple) { @for (value of this.input.value;\n          track value) {\n          <ta-label size=\"sm\" class=\"d-flex\">\n            {{ this.getOptionName(value) | translate }}\n          </ta-label>\n          } }\n        </span>\n        <ta-font-icon name=\"arrow-big-bottom\" type=\"sm\"></ta-font-icon>\n      </div>\n    </ta-input-layout>\n  </ng-template>\n\n  <ng-template #panelContent>\n    <div class=\"custom-menu\">\n      @if (this.input.withSearch) {\n      <input\n        class=\"input-search\"\n        type=\"search\"\n        placeholder=\"Rechercher...\"\n        (input)=\"this.onSearchChange($event)\"\n      />\n      } @for (opt of this.filteredOptions; track opt.id) {\n      <button\n        [attr.cdkMenuItem]=\"!this.input.multiple ? '' : null\"\n        (click)=\"this.selectOption(opt.id, $event)\"\n        [class.selected]=\"this.isSelected(opt.id)\"\n        [class.disabled]=\"opt.disabled\"\n        class=\"dropdown-option space-between\"\n      >\n        {{ opt.name | translate }}\n        @if (this.isSelected(opt.id)) {\n        <ta-font-icon class=\"checkmark\" name=\"check-line\"></ta-font-icon>\n        }\n      </button>\n      }\n    </div>\n  </ng-template>\n</ta-overlay-panel>\n}\n", styles: [".custom-dropdown-button{text-align:left;display:flex;justify-content:space-between;align-items:center}.custom-dropdown-button.disabled{border-color:var(--ta-neutral-300);pointer-events:none}button .selected-value{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.custom-menu{padding:0}.input-search{width:100%;display:flex;flex-direction:column;padding:10px;border:none;outline:none}.input-search:focus{border:none;outline:none;box-shadow:none}.dropdown-option{display:flex;align-items:center;padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border:none;background:transparent;cursor:pointer;width:100%}.dropdown-option .checkmark{margin-left:var(--ta-space-sm);color:var(--ta-border-brand)}.dropdown-option:hover{background-color:var(--ta-neutral-100)}.dropdown-option.disabled{color:var(--ta-neutral-500);cursor:not-allowed}\n"] }]
-        }], propDecorators: { space: [{
-                type: Input
-            }], overlayPanelRef: [{
+        }], propDecorators: { overlayPanelRef: [{
                 type: ViewChild,
                 args: [TaOverlayPanelComponent]
             }] } });
@@ -400,7 +395,7 @@ class TextBoxComponent extends TaAbstractInputComponent {
     }
     constructor() {
         super();
-        this.space = true;
+        this.space = input(true);
         this.hide = false;
     }
     ngOnInit() {
@@ -414,14 +409,12 @@ class TextBoxComponent extends TaAbstractInputComponent {
             this.input.iconClicked();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextBoxComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TextBoxComponent, isStandalone: true, selector: "ta-input-textbox", inputs: { space: "space" }, usesInheritance: true, ngImport: i0, template: "@if (this.input.type === 'textarea') {\n<ta-input-textarea\n  [input]=\"this.input\"\n  [matcher]=\"this.matcher\"\n></ta-input-textarea>\n} @else {\n<ta-input-layout [input]=\"this.input\">\n  <div>\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      [type]=\"this.isPassword && !this.hide ? 'text' : this.input.type\"\n      (keyup)=\"this.onChange(box.value)\"\n    />\n    @if (this.isPassword) {\n    <span class=\"toggle-icon\" (click)=\"this.hide = !this.hide\">\n      <ta-font-icon name=\"eye\"></ta-font-icon>\n    </span>\n    }\n  </div>\n</ta-input-layout>\n}\n", styles: [".form-control{box-sizing:border-box}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: TextareaComponent, selector: "ta-input-textarea" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TextBoxComponent, isStandalone: true, selector: "ta-input-textbox", inputs: { space: { classPropertyName: "space", publicName: "space", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.input.type === 'textarea') {\n<ta-input-textarea\n  [input]=\"this.input\"\n  [matcher]=\"this.matcher()\"\n></ta-input-textarea>\n} @else {\n<ta-input-layout [input]=\"this.input\">\n  <div>\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      [type]=\"this.isPassword && !this.hide ? 'text' : this.input.type\"\n      (keyup)=\"this.onChange(box.value)\"\n    />\n    @if (this.isPassword) {\n    <span class=\"toggle-icon\" (click)=\"this.hide = !this.hide\">\n      <ta-font-icon name=\"eye\"></ta-font-icon>\n    </span>\n    }\n  </div>\n</ta-input-layout>\n}\n", styles: [".form-control{box-sizing:border-box}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: TextareaComponent, selector: "ta-input-textarea" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextBoxComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-textbox', standalone: true, imports: [FontIconComponent, ReactiveFormsModule, TextareaComponent, InputLayoutComponent], template: "@if (this.input.type === 'textarea') {\n<ta-input-textarea\n  [input]=\"this.input\"\n  [matcher]=\"this.matcher\"\n></ta-input-textarea>\n} @else {\n<ta-input-layout [input]=\"this.input\">\n  <div>\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      [type]=\"this.isPassword && !this.hide ? 'text' : this.input.type\"\n      (keyup)=\"this.onChange(box.value)\"\n    />\n    @if (this.isPassword) {\n    <span class=\"toggle-icon\" (click)=\"this.hide = !this.hide\">\n      <ta-font-icon name=\"eye\"></ta-font-icon>\n    </span>\n    }\n  </div>\n</ta-input-layout>\n}\n", styles: [".form-control{box-sizing:border-box}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { space: [{
-                type: Input
-            }] } });
+            args: [{ selector: 'ta-input-textbox', standalone: true, imports: [FontIconComponent, ReactiveFormsModule, TextareaComponent, InputLayoutComponent], template: "@if (this.input.type === 'textarea') {\n<ta-input-textarea\n  [input]=\"this.input\"\n  [matcher]=\"this.matcher()\"\n></ta-input-textarea>\n} @else {\n<ta-input-layout [input]=\"this.input\">\n  <div>\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      [type]=\"this.isPassword && !this.hide ? 'text' : this.input.type\"\n      (keyup)=\"this.onChange(box.value)\"\n    />\n    @if (this.isPassword) {\n    <span class=\"toggle-icon\" (click)=\"this.hide = !this.hide\">\n      <ta-font-icon name=\"eye\"></ta-font-icon>\n    </span>\n    }\n  </div>\n</ta-input-layout>\n}\n", styles: [".form-control{box-sizing:border-box}\n"] }]
+        }], ctorParameters: () => [] });
 
 class SwitchComponent extends TaAbstractInputComponent {
     constructor() {
@@ -638,10 +631,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class SearchFieldComponent extends TaAbstractInputComponent {
     constructor() {
         super();
-        this.isOpen = false;
-        this.placeholder = "";
-        this.space = true;
-        this.type = "sm";
+        this.isOpen = input(false);
+        this.placeholder = input("");
+        this.space = input(true);
+        this.type = input("sm");
         this.valueCompleted = new EventEmitter();
         this.isDeployed = false;
         this.focusTextBox = false;
@@ -653,7 +646,7 @@ class SearchFieldComponent extends TaAbstractInputComponent {
     }
     ngOnInit() {
         super.ngOnInit();
-        this.isDeployed = this.isOpen;
+        this.isDeployed = this.isOpen();
         if (this.input.value) {
             this.isDeployed = true;
         }
@@ -672,7 +665,7 @@ class SearchFieldComponent extends TaAbstractInputComponent {
             this.valueCompleted.emit(this.input.value);
             return;
         }
-        if (!this.isOpen) {
+        if (!this.isOpen()) {
             this.isDeployed = false;
         }
     }
@@ -681,12 +674,12 @@ class SearchFieldComponent extends TaAbstractInputComponent {
     }
     focusOut() {
         this.focusTextBox = false;
-        if (!this.isOpen) {
+        if (!this.isOpen()) {
             this.isDeployed = !!this.input.value;
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchFieldComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: SearchFieldComponent, isStandalone: true, selector: "ta-search-field", inputs: { isOpen: "isOpen", placeholder: "placeholder", space: "space", type: "type" }, outputs: { valueCompleted: "valueCompleted" }, host: { listeners: { "window:keyup": "keyPress($event)" } }, usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <div\n    class=\"input-group\"\n    [class.isDeployed]=\"this.isDeployed\"\n    [class.focus]=\"this.focusTextBox\"\n  >\n    <div class=\"search-div\" appStopPropagation (click)=\"this.iconClicked()\">\n      <div class=\"action\">\n        <ta-font-icon name=\"search\" size=\"xs\"></ta-font-icon>\n      </div>\n    </div>\n    <div class=\"inner-div\" [hidden]=\"!this.isDeployed\">\n      <div class=\"search-input-container\">\n        <input\n          type=\"text\"\n          class=\"form-control\"\n          #focusedElement\n          [placeholder]=\"this.placeholder | translate\"\n          [value]=\"this.input.value\"\n          [formControl]=\"$any(this.input.formControl)\"\n          [readonly]=\"this.input.disabled\"\n          (blur)=\"this.focusOut()\"\n          (focus)=\"this.focus()\"\n        />\n      </div>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".input-group{flex-wrap:nowrap;display:flex;align-items:center;padding:var(--ta-space-sm);gap:var(--ta-space-sm);box-sizing:border-box}.input-group .inner-div{flex-grow:1}.input-group.focus ta-font-icon{color:var(--ta-icon-brand-primary)}.input-group.disabled{color:var(--ta-text-tertiary)}.input-group.disabled ta-font-icon{color:var(--ta-icon-tertiary)}.search-input-container{width:100%}.form-control{width:90%}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: SearchFieldComponent, isStandalone: true, selector: "ta-search-field", inputs: { isOpen: { classPropertyName: "isOpen", publicName: "isOpen", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, space: { classPropertyName: "space", publicName: "space", isSignal: true, isRequired: false, transformFunction: null }, type: { classPropertyName: "type", publicName: "type", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueCompleted: "valueCompleted" }, host: { listeners: { "window:keyup": "keyPress($event)" } }, usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <div\n    class=\"input-group\"\n    [class.isDeployed]=\"this.isDeployed\"\n    [class.focus]=\"this.focusTextBox\"\n  >\n    <div class=\"search-div\" appStopPropagation (click)=\"this.iconClicked()\">\n      <div class=\"action\">\n        <ta-font-icon name=\"search\" size=\"xs\"></ta-font-icon>\n      </div>\n    </div>\n    <div class=\"inner-div\" [hidden]=\"!this.isDeployed\">\n      <div class=\"search-input-container\">\n        <input\n          type=\"text\"\n          class=\"form-control\"\n          #focusedElement\n          [placeholder]=\"this.placeholder() | translate\"\n          [value]=\"this.input.value\"\n          [formControl]=\"$any(this.input.formControl)\"\n          [readonly]=\"this.input.disabled\"\n          (blur)=\"this.focusOut()\"\n          (focus)=\"this.focus()\"\n        />\n      </div>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".input-group{flex-wrap:nowrap;display:flex;align-items:center;padding:var(--ta-space-sm);gap:var(--ta-space-sm);box-sizing:border-box}.input-group .inner-div{flex-grow:1}.input-group.focus ta-font-icon{color:var(--ta-icon-brand-primary)}.input-group.disabled{color:var(--ta-text-tertiary)}.input-group.disabled ta-font-icon{color:var(--ta-icon-tertiary)}.search-input-container{width:100%}.form-control{width:90%}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchFieldComponent, decorators: [{
             type: Component,
@@ -696,16 +689,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ReactiveFormsModule,
                         TranslateModule,
                         InputLayoutComponent,
-                    ], template: "<ta-input-layout [input]=\"this.input\">\n  <div\n    class=\"input-group\"\n    [class.isDeployed]=\"this.isDeployed\"\n    [class.focus]=\"this.focusTextBox\"\n  >\n    <div class=\"search-div\" appStopPropagation (click)=\"this.iconClicked()\">\n      <div class=\"action\">\n        <ta-font-icon name=\"search\" size=\"xs\"></ta-font-icon>\n      </div>\n    </div>\n    <div class=\"inner-div\" [hidden]=\"!this.isDeployed\">\n      <div class=\"search-input-container\">\n        <input\n          type=\"text\"\n          class=\"form-control\"\n          #focusedElement\n          [placeholder]=\"this.placeholder | translate\"\n          [value]=\"this.input.value\"\n          [formControl]=\"$any(this.input.formControl)\"\n          [readonly]=\"this.input.disabled\"\n          (blur)=\"this.focusOut()\"\n          (focus)=\"this.focus()\"\n        />\n      </div>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".input-group{flex-wrap:nowrap;display:flex;align-items:center;padding:var(--ta-space-sm);gap:var(--ta-space-sm);box-sizing:border-box}.input-group .inner-div{flex-grow:1}.input-group.focus ta-font-icon{color:var(--ta-icon-brand-primary)}.input-group.disabled{color:var(--ta-text-tertiary)}.input-group.disabled ta-font-icon{color:var(--ta-icon-tertiary)}.search-input-container{width:100%}.form-control{width:90%}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { isOpen: [{
-                type: Input
-            }], placeholder: [{
-                type: Input
-            }], space: [{
-                type: Input
-            }], type: [{
-                type: Input
-            }], valueCompleted: [{
+                    ], template: "<ta-input-layout [input]=\"this.input\">\n  <div\n    class=\"input-group\"\n    [class.isDeployed]=\"this.isDeployed\"\n    [class.focus]=\"this.focusTextBox\"\n  >\n    <div class=\"search-div\" appStopPropagation (click)=\"this.iconClicked()\">\n      <div class=\"action\">\n        <ta-font-icon name=\"search\" size=\"xs\"></ta-font-icon>\n      </div>\n    </div>\n    <div class=\"inner-div\" [hidden]=\"!this.isDeployed\">\n      <div class=\"search-input-container\">\n        <input\n          type=\"text\"\n          class=\"form-control\"\n          #focusedElement\n          [placeholder]=\"this.placeholder() | translate\"\n          [value]=\"this.input.value\"\n          [formControl]=\"$any(this.input.formControl)\"\n          [readonly]=\"this.input.disabled\"\n          (blur)=\"this.focusOut()\"\n          (focus)=\"this.focus()\"\n        />\n      </div>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".input-group{flex-wrap:nowrap;display:flex;align-items:center;padding:var(--ta-space-sm);gap:var(--ta-space-sm);box-sizing:border-box}.input-group .inner-div{flex-grow:1}.input-group.focus ta-font-icon{color:var(--ta-icon-brand-primary)}.input-group.disabled{color:var(--ta-text-tertiary)}.input-group.disabled ta-font-icon{color:var(--ta-icon-tertiary)}.search-input-container{width:100%}.form-control{width:90%}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { valueCompleted: [{
                 type: Output
             }], keyPress: [{
                 type: HostListener,
@@ -1102,15 +1087,16 @@ const provideForm = () => [
 ];
 
 class InputContainerComponent {
+    constructor() {
+        this.input = input.required();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputContainerComponent, isStandalone: true, selector: "ta-input-container", inputs: { input: "input" }, ngImport: i0, template: "<div class=\"input-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".input-container{border:1px solid var(--ta-neutral-300);border-radius:10px;padding:15px}.input-container:hover:not(:disabled){border-color:var(--ta-neutral-500)}.input-container:focus:not(:disabled){border-color:var(--ta-border-brand)}.input-container:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}.input-container:disabled{border-color:var(--ta-neutral-300)}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: InputContainerComponent, isStandalone: true, selector: "ta-input-container", inputs: { input: { classPropertyName: "input", publicName: "input", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<div class=\"input-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".input-container{border:1px solid var(--ta-neutral-300);border-radius:10px;padding:15px}.input-container:hover:not(:disabled){border-color:var(--ta-neutral-500)}.input-container:focus:not(:disabled){border-color:var(--ta-border-brand)}.input-container:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}.input-container:disabled{border-color:var(--ta-neutral-300)}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputContainerComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-input-container", standalone: true, template: "<div class=\"input-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".input-container{border:1px solid var(--ta-neutral-300);border-radius:10px;padding:15px}.input-container:hover:not(:disabled){border-color:var(--ta-neutral-500)}.input-container:focus:not(:disabled){border-color:var(--ta-border-brand)}.input-container:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}.input-container:disabled{border-color:var(--ta-neutral-300)}\n"] }]
-        }], propDecorators: { input: [{
-                type: Input
-            }] } });
+        }] });
 
 class TaTranslationInput extends TaLazyTranslationService {
     constructor() {

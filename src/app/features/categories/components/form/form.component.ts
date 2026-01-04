@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, signal } from "@angular/core";
+import { Component, inject, input, OnInit, signal } from "@angular/core";
 import { InputBase } from "@ta/form-model";
 import { TaFormComponent } from "@ta/form-basic";
 import { FormCategoriesService } from "../../../../services/categories/form.service";
@@ -18,8 +18,7 @@ import { ECategoriesRoute } from "../../categories.routes";
   styleUrl: "./form.component.scss",
 })
 export class FormComponent extends TaBaseComponent implements OnInit {
-  @Input()
-  id!: string | null;
+  id = input.required<string | null>();
 
   public form = signal<InputBase<any>[]>([]);
 
@@ -37,8 +36,8 @@ export class FormComponent extends TaBaseComponent implements OnInit {
       data as CategoryFormData & { parent?: string }
     );
 
-    const obs = this.id
-      ? this._categoriesService.updateCategory$(this.id, cat)
+    const obs = this.id()
+      ? this._categoriesService.updateCategory$(this.id()!, cat)
       : this._categoriesService.addCategory$(cat);
     obs.subscribe({
       next: (cat) => {
@@ -66,11 +65,11 @@ export class FormComponent extends TaBaseComponent implements OnInit {
   }
   private _fetch() {
     const parentId = this._getSnapshotQueryParams("parentId");
-    if (!this.id) {
+    if (!this.id()) {
       this.form.set(this._formCategoriesService.getFormCategory(parentId));
       return;
     }
-    this._categoriesService.fetchCategory$(this.id).subscribe({
+    this._categoriesService.fetchCategory$(this.id()!).subscribe({
       next: (category) => {
         this.form.set(
           this._formCategoriesService.getFormCategory(parentId, category)

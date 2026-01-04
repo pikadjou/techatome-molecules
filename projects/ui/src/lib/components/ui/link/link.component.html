@@ -2,14 +2,14 @@
   class="link pointer"
   [ngClass]="this.getClass()"
   (click)="this.handleClick()"
-  [class.align-center]="this.icon"
-  [class.bold]="this.bold"
+  [class.align-center]="this.icon()"
+  [class.bold]="this.bold()"
 >
   <div class="flex-row g-space-sm">
-    @if (this.icon) {
-    <ta-font-icon [name]="this.icon"></ta-font-icon>
+    @if (this.icon(); as iconValue) {
+    <ta-font-icon [name]="iconValue"></ta-font-icon>
     }
-    <div class="content" [class.underline]="this.underline">
+    <div class="content" [class.underline]="this.underline()">
       <ng-content></ng-content>
     </div>
   </div>

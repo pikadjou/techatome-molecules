@@ -3,7 +3,7 @@ import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 type Panel = "left" | "right" | "center";
 export declare class LayoutFlexComponent extends TaBaseComponent {
-    allowClose: boolean;
+    allowClose: import("@angular/core").InputSignal<boolean>;
     constructor();
     view: Panel[];
     state(panel: Panel): TaState;
@@ -11,6 +11,6 @@ export declare class LayoutFlexComponent extends TaBaseComponent {
     has(panel: Panel): boolean;
     toggle(panel: Panel): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutFlexComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutFlexComponent, "ta-layout-flex", never, { "allowClose": { "alias": "allowClose"; "required": false; }; }, {}, never, ["[header-left]", "[header-center]", "[header-right]", "[left]", "[center]", "[right]"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutFlexComponent, "ta-layout-flex", never, { "allowClose": { "alias": "allowClose"; "required": false; "isSignal": true; }; }, {}, never, ["[header-left]", "[header-center]", "[header-right]", "[left]", "[center]", "[right]"], true, never>;
 }
 export {};

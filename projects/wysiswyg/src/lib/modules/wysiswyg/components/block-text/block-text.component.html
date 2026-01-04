@@ -1,4 +1,4 @@
-@for (block of this.blocks; track block.id) { @switch (block.type) { @case
+@for (block of this.blocks(); track block.id) { @switch (block.type) { @case
 ('header') {
 <ta-title [level]="block.data.level">
   {{ block.data.text }}

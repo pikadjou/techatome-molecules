@@ -2,14 +2,14 @@
   <div class="img-container">
     <img
       [src]="this.user().picture"
-      [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }"
+      [ngStyle]="{ 'width.px': this.sizeValue ?? 48, 'height.px': this.sizeValue ?? 48 }"
       class="user-image"
     />
   </div>
-} @else if (this.defaultType === 'trigram') {
-  <ta-trigram [value]="this.getTrigram()" [size]="this.sizeValue"></ta-trigram>
-} @else if (this.defaultType === 'font') {
-  <div class="profile-icon" [ngStyle]="{ 'width.px': this.sizeValue, 'height.px': this.sizeValue }">
-    <ta-font-icon name="profil-picture" [type]="this.size ?? 'lg'"></ta-font-icon>
+} @else if (this.defaultType() === 'trigram') {
+  <ta-trigram [value]="this.getTrigram()" [size]="this.sizeValue ?? 48"></ta-trigram>
+} @else if (this.defaultType() === 'font') {
+  <div class="profile-icon" [ngStyle]="{ 'width.px': this.sizeValue ?? 48, 'height.px': this.sizeValue ?? 48 }">
+    <ta-font-icon name="profil-picture" [type]="this.size() ?? 'lg'"></ta-font-icon>
   </div>
 }

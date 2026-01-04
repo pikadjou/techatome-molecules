@@ -1,12 +1,12 @@
 import { ValidatorFn, Validators } from "@angular/forms";
 import * as i0 from "@angular/core";
 export declare class FormLabelComponent {
-    input: {
+    inputModel: import("@angular/core").InputSignal<{
         label: string;
         validators: ValidatorFn[];
-    };
-    withMarginBottom: boolean;
+    }>;
+    withMarginBottom: import("@angular/core").InputSignal<boolean>;
     readonly validators: typeof Validators;
     static ɵfac: i0.ɵɵFactoryDeclaration<FormLabelComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FormLabelComponent, "ta-form-label", never, { "input": { "alias": "input"; "required": false; }; "withMarginBottom": { "alias": "withMarginBottom"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FormLabelComponent, "ta-form-label", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "withMarginBottom": { "alias": "withMarginBottom"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

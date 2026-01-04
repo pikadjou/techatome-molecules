@@ -1,5 +1,5 @@
 <div class="flex-row g-space-xs">
-  @for (user of this.users | async; track user.firstname + ' ' + user.lastname)
+  @for (user of this.users() | async; track user.firstname + ' ' + user.lastname)
   {
   <ta-user-logo
     [user]="user"

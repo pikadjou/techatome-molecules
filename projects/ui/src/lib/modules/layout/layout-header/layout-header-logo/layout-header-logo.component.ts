@@ -72,7 +72,7 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
       TemplateModalContainer,
       {
         data: {
-          template: this.profile()?.template,
+          template: this.profile()!.template,
           askClosing$: this.askClosing$(),
         },
       }

@@ -1,4 +1,4 @@
-@if (this.message === '') {
+@if (this.message() === '') {
 <ng-content></ng-content>
 } @else {
 <ta-picture-info-message
@@ -8,5 +8,5 @@
   text="container.error.title"
 >
 </ta-picture-info-message>
-<p>{{ this.message | translate }}</p>
+<p>{{ this.message() | translate }}</p>
 }

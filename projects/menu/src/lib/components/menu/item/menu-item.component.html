@@ -1,13 +1,13 @@
 @if (!this.hasChild()) {
-<ng-container [style.cursor]="this.item.callback ? 'pointer' : 'default'">
+<ng-container [style.cursor]="this.item().callback ? 'pointer' : 'default'">
   @if (this.getLink()) {
   <a
     class="link"
     [ngClass]="this.getStyleType()"
     routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: this.item.exact }"
+    [routerLinkActiveOptions]="{ exact: this.item().exact }"
     [routerLink]="[this.getLink()]"
-    [replaceUrl]="this.item.replaceUrl"
+    [replaceUrl]="this.item().replaceUrl"
   >
     <ng-template [ngTemplateOutlet]="Item"></ng-template>
   </a>
@@ -24,38 +24,38 @@
 }
 
 <ng-template #Item [typedTemplate]="this.typeToken">
-  <div class="item pointer" [class.disable]="item.disabled">
+  <div class="item pointer" [class.disable]="this.item().disabled">
     <div class="icon">
       @if (this.hasFontIcon()) {
       <span class="icon-material">
         <ta-font-icon
           [name]="this.getFontIcon()"
           size="xs"
-          [ngClass]="item.iconsColor"
+          [ngClass]="this.item().iconsColor"
         ></ta-font-icon>
       </span>
       }
     </div>
 
-    <div class="title">{{ item.label | translate }}</div>
+    <div class="title">{{ this.item().label | translate }}</div>
 
     <div class="badge-container d-flex">
-      @if (item.options?.notificationBadge?.label) {
+      @if (this.item().options?.notificationBadge?.label) {
       <ta-notification-badge
-        [number]="item.options?.notificationBadge?.label || 0"
+        [number]="this.item().options?.notificationBadge?.label || 0"
         [style]="'brand-700'"
         fontSize="xs"
         [relative]="true"
       ></ta-notification-badge>
-      } @let extraTemplate = item.options?.extraTemplate; @if (extraTemplate) {
+      } @let extraTemplate = this.item().options?.extraTemplate; @if (extraTemplate) {
       <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
       }
     </div>
-    @if (item.endingIcon) {
+    @if (this.item().endingIcon) {
     <div class="ending-icon-container">
       <ta-font-icon
-        [name]="item.endingIcon"
-        [ngClass]="item.iconsColor"
+        [name]="this.item().endingIcon!"
+        [ngClass]="this.item().iconsColor"
       ></ta-font-icon>
     </div>
     } @let template = this.getTemplate(); @if (template) {

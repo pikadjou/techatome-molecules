@@ -7,12 +7,12 @@ export interface SwiperData {
     key: string;
 }
 export declare class SwiperComponent {
-    swipeTemplate: TemplateRef<any>;
-    slides: SwiperData[];
-    slidesPerPage: number;
-    slidesPerGroup: number;
-    isFreeMode: boolean;
-    startAt: number;
+    swipeTemplate: import("@angular/core").InputSignal<TemplateRef<any>>;
+    slides: import("@angular/core").InputSignal<SwiperData[]>;
+    slidesPerPage: import("@angular/core").InputSignal<number>;
+    slidesPerGroup: import("@angular/core").InputSignal<number>;
+    isFreeMode: import("@angular/core").InputSignal<boolean>;
+    startAt: import("@angular/core").InputSignal<number>;
     onSlideChanged: EventEmitter<number>;
     swiperContainer: ElementRef<{
         swiper: Swiper;
@@ -22,5 +22,5 @@ export declare class SwiperComponent {
     trackByKey(_: any, item: SwiperData): string;
     slideChanged($event: any): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<SwiperComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<SwiperComponent, "ta-swiper", never, { "swipeTemplate": { "alias": "swipeTemplate"; "required": false; }; "slides": { "alias": "slides"; "required": false; }; "slidesPerPage": { "alias": "slidesPerPage"; "required": false; }; "slidesPerGroup": { "alias": "slidesPerGroup"; "required": false; }; "isFreeMode": { "alias": "isFreeMode"; "required": false; }; "startAt": { "alias": "startAt"; "required": false; }; }, { "onSlideChanged": "onSlideChanged"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SwiperComponent, "ta-swiper", never, { "swipeTemplate": { "alias": "swipeTemplate"; "required": true; "isSignal": true; }; "slides": { "alias": "slides"; "required": true; "isSignal": true; }; "slidesPerPage": { "alias": "slidesPerPage"; "required": false; "isSignal": true; }; "slidesPerGroup": { "alias": "slidesPerGroup"; "required": false; "isSignal": true; }; "isFreeMode": { "alias": "isFreeMode"; "required": false; "isSignal": true; }; "startAt": { "alias": "startAt"; "required": false; "isSignal": true; }; }, { "onSlideChanged": "onSlideChanged"; }, never, never, true, never>;
 }

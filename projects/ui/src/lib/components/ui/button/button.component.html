@@ -1,14 +1,14 @@
 <button
   appStopPropagation
-  [stopPropagationActivation]="this.stopPropagationActivation"
+  [stopPropagationActivation]="this.stopPropagationActivation()"
   type="button"
   class="button pointer"
   [ngClass]="this.getClass()"
   (click)="handleClick()"
 >
   <div class="flex-row g-space-sm align-center">
-    @if (this.icon) {
-    <ta-font-icon [name]="this.icon"></ta-font-icon>
+    @if (this.icon()) {
+    <ta-font-icon [name]="this.icon()!"></ta-font-icon>
     }
     <ng-content></ng-content>
   </div>

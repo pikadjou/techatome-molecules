@@ -6,10 +6,10 @@
   ></div>
 
   <div class="items">
-    @for (action of actions; track action) {
+    @for (action of actions(); track action) {
     <div
       class="item"
-      (click)="this.action.callback()"
+      (click)="action.callback()"
       [ngClass]="{ show: this.isOpen }"
     >
       @if (this.isFontIcon(action)) {

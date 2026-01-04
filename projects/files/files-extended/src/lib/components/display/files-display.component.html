@@ -1,13 +1,13 @@
 <div class="toggle-navigation">
   <ta-toggle-navigation
-    [menu]="this.menu"
+    [menu]="this.menu()"
     [container]="'tab'"
   ></ta-toggle-navigation>
 </div>
 
 @if (this.canDisplayTempsFiles) {
 <div>
-  <ta-files-list [files]="this.tempFiles"></ta-files-list>
+  <ta-files-list [files]="this.tempFiles()"></ta-files-list>
   <hr />
 </div>
 }
@@ -19,7 +19,7 @@
   >
     <div class="list">
       <ta-files-list
-        [files]="(this.files$ | async) || []"
+        [files]="(this.files$() | async) || []"
         (fileSelected)="this.fileSelected.emit($event)"
         (moreInformationSelected)="this.moreInformationSelected.emit($event)"
       >
@@ -28,7 +28,7 @@
   </ta-error>
 </ta-loader>
 
-@if (this.canAddFile === true) {
+@if (this.canAddFile() === true) {
 <div class="floating-add">
   <ta-files-upload
     [features]="this.getFeature()"

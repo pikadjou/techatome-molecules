@@ -6,10 +6,10 @@ import * as i0 from "@angular/core";
 export declare class CmsComponent extends TaBaseComponent implements OnInit {
     cmsService: TaCmsService;
     private tenantConfig;
-    contentType: string;
+    contentType: import("@angular/core").InputSignal<string>;
     get content$(): import("rxjs").Observable<import("../../services/dto/cms").Cms>;
     constructor(cmsService: TaCmsService, tenantConfig: TenantConfig);
     ngOnInit(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<CmsComponent, [null, { optional: true; }]>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<CmsComponent, "ta-cms", never, { "contentType": { "alias": "contentType"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CmsComponent, "ta-cms", never, { "contentType": { "alias": "contentType"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

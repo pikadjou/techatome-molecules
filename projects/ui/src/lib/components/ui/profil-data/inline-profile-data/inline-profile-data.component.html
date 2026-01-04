@@ -1,21 +1,21 @@
 <div class="align-center">
-  @if (this.userLogo) {
+  @if (this.userLogo(); as userLogoData) {
   <div class="mr-space-xs">
     <ta-user-logo
-      [user]="this.userLogo.user"
-      [size]="this.userLogo.size"
+      [user]="userLogoData.user"
+      [size]="userLogoData.size || 'md'"
     ></ta-user-logo>
   </div>
   }
 
   <div class="text">
-    @if (this.profile.title?.second) {
+    @if (this.profile().title?.second) {
     <div class="text">
-      {{ this.profile.title?.second }}
+      {{ this.profile().title?.second }}
     </div>
-    } @if (this.profile.email) {
+    } @if (this.profile().email) {
     <div class="mail">
-      {{ this.profile.email }}
+      {{ this.profile().email }}
     </div>
     }
   </div>

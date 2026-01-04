@@ -4,15 +4,15 @@ export declare class BooleanIconComponent {
     /**
      * Boolean value to display (can be null or undefined for unknown state)
      */
-    value: boolean | null | undefined;
+    value: import("@angular/core").InputSignal<boolean | null | undefined>;
     /**
      * Size of the icon
      */
-    size: TaSizes;
+    size: import("@angular/core").InputSignal<TaSizes>;
     constructor();
     getIconName(): string;
     getClass(): string;
     isNullValue(): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<BooleanIconComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<BooleanIconComponent, "ta-boolean-icon", never, { "value": { "alias": "value"; "required": false; }; "size": { "alias": "size"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BooleanIconComponent, "ta-boolean-icon", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

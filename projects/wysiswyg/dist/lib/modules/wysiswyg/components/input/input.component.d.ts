@@ -10,19 +10,19 @@ export type EditorInputSavedData = {
     tags: string[];
 };
 export declare class EditorInputComponent extends TaBaseComponent implements OnInit, AfterViewInit {
-    initValue?: WysiswgBlockData[] | null;
-    setNewValue$?: Observable<{
+    initValue: import("@angular/core").InputSignal<WysiswgBlockData<string, any>[] | null | undefined>;
+    setNewValue$: import("@angular/core").InputSignal<Observable<{
         blocks: WysiswgBlockData[] | string | null;
-        saveAfter?: boolean;
-    }>;
-    requestSave$?: Observable<void>;
-    clear$?: Observable<void>;
-    users: {
+        saveAfter?: boolean | undefined;
+    }> | undefined>;
+    requestSave$: import("@angular/core").InputSignal<Observable<void> | undefined>;
+    clear$: import("@angular/core").InputSignal<Observable<void> | undefined>;
+    users: import("@angular/core").InputSignal<{
         id: string;
         name: string;
-    }[];
-    saveOnChange: boolean;
-    maxHeight: boolean;
+    }[]>;
+    saveOnChange: import("@angular/core").InputSignal<boolean>;
+    maxHeight: import("@angular/core").InputSignal<boolean>;
     changed: EventEmitter<{
         blocks: WysiswgBlockData[];
     }>;
@@ -56,5 +56,5 @@ export declare class EditorInputComponent extends TaBaseComponent implements OnI
     private _extractWithColorTokenStyles;
     private _extractTags;
     static ɵfac: i0.ɵɵFactoryDeclaration<EditorInputComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<EditorInputComponent, "ta-cms-editor-input", never, { "initValue": { "alias": "initValue"; "required": false; }; "setNewValue$": { "alias": "setNewValue$"; "required": false; }; "requestSave$": { "alias": "requestSave$"; "required": false; }; "clear$": { "alias": "clear$"; "required": false; }; "users": { "alias": "users"; "required": false; }; "saveOnChange": { "alias": "saveOnChange"; "required": false; }; "maxHeight": { "alias": "maxHeight"; "required": false; }; }, { "changed": "changed"; "saved": "saved"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<EditorInputComponent, "ta-cms-editor-input", never, { "initValue": { "alias": "initValue"; "required": false; "isSignal": true; }; "setNewValue$": { "alias": "setNewValue$"; "required": false; "isSignal": true; }; "requestSave$": { "alias": "requestSave$"; "required": false; "isSignal": true; }; "clear$": { "alias": "clear$"; "required": false; "isSignal": true; }; "users": { "alias": "users"; "required": false; "isSignal": true; }; "saveOnChange": { "alias": "saveOnChange"; "required": false; "isSignal": true; }; "maxHeight": { "alias": "maxHeight"; "required": false; "isSignal": true; }; }, { "changed": "changed"; "saved": "saved"; }, never, never, true, never>;
 }

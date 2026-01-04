@@ -7,8 +7,8 @@ import * as i0 from "@angular/core";
 type Selection = "line" | "shape" | "text" | "";
 type ShapeSelection = "rect" | "triangle" | "circle" | "line" | "";
 export declare class FileEditComponent extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
-    imagePath: string;
-    saveImage$: Observable<null>;
+    imagePath: import("@angular/core").InputSignal<string>;
+    saveImage$: import("@angular/core").InputSignal<Observable<null>>;
     savedImage: EventEmitter<Blob>;
     tuiImageEditor: ImageEditor;
     selection: Selection;
@@ -48,6 +48,6 @@ export declare class FileEditComponent extends TaBaseComponent implements OnInit
     private _reflow;
     private _getSettings;
     static ɵfac: i0.ɵɵFactoryDeclaration<FileEditComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FileEditComponent, "ta-files-edit", never, { "imagePath": { "alias": "imagePath"; "required": false; }; "saveImage$": { "alias": "saveImage$"; "required": false; }; }, { "savedImage": "savedImage"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FileEditComponent, "ta-files-edit", never, { "imagePath": { "alias": "imagePath"; "required": true; "isSignal": true; }; "saveImage$": { "alias": "saveImage$"; "required": true; "isSignal": true; }; }, { "savedImage": "savedImage"; }, never, never, true, never>;
 }
 export {};

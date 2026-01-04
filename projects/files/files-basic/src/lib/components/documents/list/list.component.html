@@ -8,15 +8,15 @@
   >
     <ta-empty
       [isEmpty]="!documents || documents.length === 0"
-      [text]="this.emptyMessage"
-      [showMessage]="!!this.emptyMessage"
+      [text]="this.emptyMessage()"
+      [showMessage]="!!this.emptyMessage()"
     >
       <div class="list flex-column g-space-sm">
         @for (doc of documents; track doc) {
         <div>
           <ng-container
             *ngTemplateOutlet="
-              this.actions !== 'select' ? defaultTemplate : selectTemplate;
+              this.actions() !== 'select' ? defaultTemplate : selectTemplate;
               context: { doc: doc }
             "
           ></ng-container>
@@ -42,19 +42,19 @@
       </div>
     </div>
     <div class="cta align-content-center">
-      @if (this.actions === 'select') {
+      @if (this.actions() === 'select') {
       <input
-        [disabled]="this.readonly"
+        [disabled]="this.readonly()"
         type="checkbox"
         [checked]="this.isChecked(doc)"
         (click)="this.check(doc)"
       />
-      } @else if (this.actions === 'delete') {
+      } @else if (this.actions() === 'delete') {
       <ta-button-tool
         (action)="this.removeDocument(doc)"
         icon="delete"
         [size]="'sm'"
-        [readonly]="this.readonly"
+        [readonly]="this.readonly()"
       ></ta-button-tool>
       }
     </div>
@@ -90,9 +90,9 @@
       </div>
     </div>
     <div class="button align-content-center">
-      @if (this.actions === 'select') {
+      @if (this.actions() === 'select') {
       <input type="checkbox" [checked]="this.isChecked(doc)" />
-      } @else if (this.actions === 'delete') {
+      } @else if (this.actions() === 'delete') {
       <ta-button-tool
         (action)="this.removeDocument(doc)"
         icon="delete"

@@ -1,5 +1,5 @@
 <div class="categories-grid">
-  @for (category of categories; track trackByCategory($index, category)) {
+  @for (category of categories(); track trackByCategory($index, category)) {
   <ta-card
     class="category-card fade-in"
     (click)="onCategoryClick(category)"
@@ -81,7 +81,7 @@
       </div>
     </ta-card-content>
   </ta-card>
-  } @if (categories.length === 0) {
+  } @if (categories().length === 0) {
   <div class="empty-state">
     <mat-icon class="empty-icon">folder_open</mat-icon>
     <ta-title [level]="3">Aucune catégorie</ta-title>

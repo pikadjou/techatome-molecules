@@ -15,7 +15,7 @@
           type="text"
           class="form-control"
           #focusedElement
-          [placeholder]="this.placeholder | translate"
+          [placeholder]="this.placeholder() | translate"
           [value]="this.input.value"
           [formControl]="$any(this.input.formControl)"
           [readonly]="this.input.disabled"

@@ -1,4 +1,4 @@
-@for (rich of this.richText; track rich) { @switch (rich.type) { @case
+@for (rich of this.richText(); track rich) { @switch (rich.type) { @case
 ('heading') {
 <ta-title [level]="rich.level">
   <ng-container

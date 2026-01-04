@@ -9,8 +9,8 @@ import { MenuPanel } from "../../../models/menu/item/panel";
 import * as i0 from "@angular/core";
 export declare class MenuItemComponent extends TaBaseComponent implements OnInit {
     modal: MatDialog;
-    item: MenuIcon | MenuAction | MenuBase | MenuPanel;
-    styleType: String;
+    item: import("@angular/core").InputSignal<MenuBase | MenuIcon | MenuAction | MenuPanel>;
+    styleType: import("@angular/core").InputSignal<String>;
     triggerMenu: MatMenuTrigger;
     readonly typeToken: MenuIcon | MenuAction | MenuBase | MenuPanel;
     isOpen: boolean;
@@ -28,5 +28,5 @@ export declare class MenuItemComponent extends TaBaseComponent implements OnInit
     executeCallback(): void;
     getLink(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<MenuItemComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MenuItemComponent, "ta-menu-item", never, { "item": { "alias": "item"; "required": false; }; "styleType": { "alias": "styleType"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MenuItemComponent, "ta-menu-item", never, { "item": { "alias": "item"; "required": true; "isSignal": true; }; "styleType": { "alias": "styleType"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

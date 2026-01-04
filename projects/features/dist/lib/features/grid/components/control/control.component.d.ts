@@ -4,11 +4,11 @@ import { Preset, ViewType } from '../../models/types';
 import { TaAbstractGridComponent } from '../abstract.component';
 import * as i0 from "@angular/core";
 export declare class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
-    show: {
-        switchView?: boolean;
-        filters?: boolean;
-        preset?: boolean;
-    };
+    show: import("@angular/core").InputSignal<{
+        switchView?: boolean | undefined;
+        filters?: boolean | undefined;
+        preset?: boolean | undefined;
+    }>;
     readonly dialog: MatDialog;
     constructor();
     ngOnInit(): void;
@@ -16,7 +16,7 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     openFilters(): void;
     setPreset(preset: Preset): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridControlComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridControlComponent, "ta-grid-control", never, { "show": { "alias": "show"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridControlComponent, "ta-grid-control", never, { "show": { "alias": "show"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }
 interface FiltersModalData {
     gridId: string;

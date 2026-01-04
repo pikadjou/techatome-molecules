@@ -4,8 +4,9 @@ import { Menu } from "@ta/menu";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class InputTranslationComponent extends TaBaseComponent implements OnInit {
-    input: InputTranslation;
-    inputsTemplate: TemplateRef<any>;
+    inputModel: import("@angular/core").InputSignal<InputTranslation>;
+    inputsTemplate: import("@angular/core").InputSignal<TemplateRef<any>>;
+    get input(): InputTranslation;
     cultureList: {
         value: number;
         name: string;
@@ -24,5 +25,5 @@ export declare class InputTranslationComponent extends TaBaseComponent implement
     trackInputByFn(_: number, input: InputBase<any>): string;
     private _renderMenu;
     static ɵfac: i0.ɵɵFactoryDeclaration<InputTranslationComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<InputTranslationComponent, "ta-input-translation", never, { "input": { "alias": "input"; "required": false; }; "inputsTemplate": { "alias": "inputsTemplate"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<InputTranslationComponent, "ta-input-translation", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "inputsTemplate": { "alias": "inputsTemplate"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

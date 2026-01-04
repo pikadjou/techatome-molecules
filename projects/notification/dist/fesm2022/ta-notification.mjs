@@ -1,6 +1,6 @@
 import { JsonPipe, NgClass, NgFor, NgTemplateOutlet, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, InjectionToken, inject, Component, EventEmitter, Output, Input, NgModule } from '@angular/core';
+import { Injectable, InjectionToken, inject, Component, input, EventEmitter, effect, Output, NgModule } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ButtonComponent, ExpandableTextComponent, LayoutModalComponent, TextComponent, TitleComponent, LinkComponent, ToastComponent, TimeAgoComponent, EmptyComponent, ErrorComponent, LoaderComponent, BulletComponent as BulletComponent$1, TaUiModule, TaContainerModule } from '@ta/ui';
 import { TaBaseModal, copyTextToClipboard, TaBaseComponent, isNonNullable, getUniqueArray, TaDirectivePipeModule } from '@ta/utils';
@@ -115,29 +115,26 @@ function openErrorModal(dialog) {
 }
 
 class NotificationInlineComponent extends TaBaseComponent {
-    set message(value) {
-        this._message = value;
-        this.showMessage = !!value;
-    }
     get message() {
-        return this._message;
+        return this.messageInput();
     }
     get isError() {
-        return this.code === ENotificationCode.error;
+        return this.code() === ENotificationCode.error;
     }
     get isWarning() {
-        return this.code === ENotificationCode.warning;
+        return this.code() === ENotificationCode.warning;
     }
     get isInformation() {
-        return this.code === ENotificationCode.information;
+        return this.code() === ENotificationCode.information;
     }
     get isSuccess() {
-        return this.code === ENotificationCode.success;
+        return this.code() === ENotificationCode.success;
     }
     constructor() {
         super();
-        this.code = ENotificationCode.information;
-        this.showClose = true;
+        this.messageInput = input("", { alias: "message" });
+        this.code = input(ENotificationCode.information);
+        this.showClose = input(true);
         this.askClose = new EventEmitter();
         this._matDialog = inject(MatDialog);
         this.showMessage = false;
@@ -145,6 +142,9 @@ class NotificationInlineComponent extends TaBaseComponent {
             this.askClose.emit();
         };
         TaTranslationNotification.getInstance();
+        effect(() => {
+            this.showMessage = !!this.messageInput();
+        });
     }
     getIcon() {
         if (this.isError) {
@@ -179,18 +179,12 @@ class NotificationInlineComponent extends TaBaseComponent {
         openErrorModal(this._matDialog);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationInlineComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationInlineComponent, isStandalone: true, selector: "ta-notification-inline", inputs: { message: "message", code: "code", showClose: "showClose" }, outputs: { askClose: "askClose" }, usesInheritance: true, ngImport: i0, template: "@if (this.showMessage) {\n<div class=\"notification-container\">\n  <div class=\"text\">\n    <div class=\"label\" [ngClass]=\"this.getTypeClass()\">\n      <ta-font-icon\n        class=\"mr-space-xs\"\n        [name]=\"this.getIcon()\"\n        type=\"md\"\n      ></ta-font-icon>\n      @if (!this.message) { @switch (true) { @case (this.isError) {\n      {{ \"notification.inline.label.error\" | translate }}\n      } @case (this.isWarning) {\n      {{ \"notification.inline.label.warning\" | translate }}\n      } @case (this.isInformation) {\n      {{ \"notification.inline.label.info\" | translate }}\n      } @case (this.isSuccess) {\n      {{ \"notification.inline.label.success\" | translate }}\n      } } } @else {\n      {{ this.message | translate }}\n      }\n    </div>\n  </div>\n  @if (this.showClose) {\n  <span class=\"close\" (click)=\"this.close()\">\n    <ta-font-icon name=\"close\"></ta-font-icon>\n  </span>\n  }\n</div>\n} @else {\n<ng-content></ng-content>\n} @if (this.isError) {\n<ta-link\n  size=\"sm\"\n  class=\"color-semantic-orange-dark flex-end\"\n  (action)=\"this.openErrorBox()\"\n  >Open</ta-link\n>\n}\n", styles: [".notification-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.wrapper{padding:var(--ta-space-sm)}.icon{display:flex;align-items:center}.text .label{display:flex;justify-content:flex-start;align-items:flex-start}.text .label.success{color:var(--ta-semantic-token-success)}.text .label.danger{color:var(--ta-semantic-token-alert)}.text .label.warning{color:var(--ta-semantic-token-warning)}.text .label.info{color:var(--ta-semantic-token-link)}.close{position:absolute;top:0;right:0;width:auto;padding:5px;cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationInlineComponent, isStandalone: true, selector: "ta-notification-inline", inputs: { messageInput: { classPropertyName: "messageInput", publicName: "message", isSignal: true, isRequired: false, transformFunction: null }, code: { classPropertyName: "code", publicName: "code", isSignal: true, isRequired: false, transformFunction: null }, showClose: { classPropertyName: "showClose", publicName: "showClose", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { askClose: "askClose" }, usesInheritance: true, ngImport: i0, template: "@if (this.showMessage) {\n<div class=\"notification-container\">\n  <div class=\"text\">\n    <div class=\"label\" [ngClass]=\"this.getTypeClass()\">\n      <ta-font-icon\n        class=\"mr-space-xs\"\n        [name]=\"this.getIcon()\"\n        type=\"md\"\n      ></ta-font-icon>\n      @if (!this.message) { @switch (true) { @case (this.isError) {\n      {{ \"notification.inline.label.error\" | translate }}\n      } @case (this.isWarning) {\n      {{ \"notification.inline.label.warning\" | translate }}\n      } @case (this.isInformation) {\n      {{ \"notification.inline.label.info\" | translate }}\n      } @case (this.isSuccess) {\n      {{ \"notification.inline.label.success\" | translate }}\n      } } } @else {\n      {{ this.message | translate }}\n      }\n    </div>\n  </div>\n  @if (this.showClose()) {\n  <span class=\"close\" (click)=\"this.close()\">\n    <ta-font-icon name=\"close\"></ta-font-icon>\n  </span>\n  }\n</div>\n} @else {\n<ng-content></ng-content>\n} @if (this.isError) {\n<ta-link\n  size=\"sm\"\n  class=\"color-semantic-orange-dark flex-end\"\n  (action)=\"this.openErrorBox()\"\n  >Open</ta-link\n>\n}\n", styles: [".notification-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.wrapper{padding:var(--ta-space-sm)}.icon{display:flex;align-items:center}.text .label{display:flex;justify-content:flex-start;align-items:flex-start}.text .label.success{color:var(--ta-semantic-token-success)}.text .label.danger{color:var(--ta-semantic-token-alert)}.text .label.warning{color:var(--ta-semantic-token-warning)}.text .label.info{color:var(--ta-semantic-token-link)}.close{position:absolute;top:0;right:0;width:auto;padding:5px;cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationInlineComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-inline", standalone: true, imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule], template: "@if (this.showMessage) {\n<div class=\"notification-container\">\n  <div class=\"text\">\n    <div class=\"label\" [ngClass]=\"this.getTypeClass()\">\n      <ta-font-icon\n        class=\"mr-space-xs\"\n        [name]=\"this.getIcon()\"\n        type=\"md\"\n      ></ta-font-icon>\n      @if (!this.message) { @switch (true) { @case (this.isError) {\n      {{ \"notification.inline.label.error\" | translate }}\n      } @case (this.isWarning) {\n      {{ \"notification.inline.label.warning\" | translate }}\n      } @case (this.isInformation) {\n      {{ \"notification.inline.label.info\" | translate }}\n      } @case (this.isSuccess) {\n      {{ \"notification.inline.label.success\" | translate }}\n      } } } @else {\n      {{ this.message | translate }}\n      }\n    </div>\n  </div>\n  @if (this.showClose) {\n  <span class=\"close\" (click)=\"this.close()\">\n    <ta-font-icon name=\"close\"></ta-font-icon>\n  </span>\n  }\n</div>\n} @else {\n<ng-content></ng-content>\n} @if (this.isError) {\n<ta-link\n  size=\"sm\"\n  class=\"color-semantic-orange-dark flex-end\"\n  (action)=\"this.openErrorBox()\"\n  >Open</ta-link\n>\n}\n", styles: [".notification-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.wrapper{padding:var(--ta-space-sm)}.icon{display:flex;align-items:center}.text .label{display:flex;justify-content:flex-start;align-items:flex-start}.text .label.success{color:var(--ta-semantic-token-success)}.text .label.danger{color:var(--ta-semantic-token-alert)}.text .label.warning{color:var(--ta-semantic-token-warning)}.text .label.info{color:var(--ta-semantic-token-link)}.close{position:absolute;top:0;right:0;width:auto;padding:5px;cursor:pointer}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { message: [{
-                type: Input
-            }], code: [{
-                type: Input
-            }], showClose: [{
-                type: Input
-            }], askClose: [{
+            args: [{ selector: "ta-notification-inline", standalone: true, imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule], template: "@if (this.showMessage) {\n<div class=\"notification-container\">\n  <div class=\"text\">\n    <div class=\"label\" [ngClass]=\"this.getTypeClass()\">\n      <ta-font-icon\n        class=\"mr-space-xs\"\n        [name]=\"this.getIcon()\"\n        type=\"md\"\n      ></ta-font-icon>\n      @if (!this.message) { @switch (true) { @case (this.isError) {\n      {{ \"notification.inline.label.error\" | translate }}\n      } @case (this.isWarning) {\n      {{ \"notification.inline.label.warning\" | translate }}\n      } @case (this.isInformation) {\n      {{ \"notification.inline.label.info\" | translate }}\n      } @case (this.isSuccess) {\n      {{ \"notification.inline.label.success\" | translate }}\n      } } } @else {\n      {{ this.message | translate }}\n      }\n    </div>\n  </div>\n  @if (this.showClose()) {\n  <span class=\"close\" (click)=\"this.close()\">\n    <ta-font-icon name=\"close\"></ta-font-icon>\n  </span>\n  }\n</div>\n} @else {\n<ng-content></ng-content>\n} @if (this.isError) {\n<ta-link\n  size=\"sm\"\n  class=\"color-semantic-orange-dark flex-end\"\n  (action)=\"this.openErrorBox()\"\n  >Open</ta-link\n>\n}\n", styles: [".notification-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.wrapper{padding:var(--ta-space-sm)}.icon{display:flex;align-items:center}.text .label{display:flex;justify-content:flex-start;align-items:flex-start}.text .label.success{color:var(--ta-semantic-token-success)}.text .label.danger{color:var(--ta-semantic-token-alert)}.text .label.warning{color:var(--ta-semantic-token-warning)}.text .label.info{color:var(--ta-semantic-token-link)}.close{position:absolute;top:0;right:0;width:auto;padding:5px;cursor:pointer}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { askClose: [{
                 type: Output
             }] } });
 
@@ -373,58 +367,58 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class AbstractNotificationTemplateComponent {
     constructor() {
+        this.notification = input.required();
         this.sharedService = inject(TaNotificationSharedService);
         this.dataService = inject(TaNotificationDataService);
     }
     goTo() {
-        this.dataService.isRead$(this.notification.id).subscribe();
+        this.dataService.isRead$(this.notification().id).subscribe();
     }
     getTranslation() {
-        return this.notification.context.reduce((acc, item) => {
+        return this.notification().context.reduce((acc, item) => {
             acc[item.key] = item.value;
             return acc;
         }, {});
     }
     extractContext(key) {
-        return (this.notification.context.find((item) => item.key === key)
+        return (this.notification().context.find((item) => item.key === key)
             ?.value ?? "");
     }
     extractredirectContext(key) {
-        return (this.notification.redirectContext.find((item) => item.key === key)?.value ?? "");
+        return (this.notification().redirectContext.find((item) => item.key === key)?.value ?? "");
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AbstractNotificationTemplateComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: AbstractNotificationTemplateComponent, selector: "ng-component", inputs: { notification: "notification" }, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: AbstractNotificationTemplateComponent, selector: "ng-component", inputs: { notification: { classPropertyName: "notification", publicName: "notification", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AbstractNotificationTemplateComponent, decorators: [{
             type: Component,
             args: [{ template: "" }]
-        }], propDecorators: { notification: [{
-                type: Input
-            }] } });
+        }] });
 
 class IconComponent {
+    constructor() {
+        this.level = input.required();
+        this.icon = input.required();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: IconComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: IconComponent, isStandalone: true, selector: "ta-notification-item-icon", inputs: { level: "level", icon: "icon" }, ngImport: i0, template: "<div class=\"icon-container\">\n  <ta-font-icon [name]=\"this.icon\"></ta-font-icon>\n</div>\n", styles: [".icon-container{padding:var(--ta-space-md);border-radius:var(--ta-radius-full);background-color:var(--ta-surface-hover-secondary);color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: IconComponent, isStandalone: true, selector: "ta-notification-item-icon", inputs: { level: { classPropertyName: "level", publicName: "level", isSignal: true, isRequired: true, transformFunction: null }, icon: { classPropertyName: "icon", publicName: "icon", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<div class=\"icon-container\">\n  <ta-font-icon [name]=\"this.icon()\"></ta-font-icon>\n</div>\n", styles: [".icon-container{padding:var(--ta-space-md);border-radius:var(--ta-radius-full);background-color:var(--ta-surface-hover-secondary);color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: IconComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-item-icon", standalone: true, imports: [FontIconComponent], template: "<div class=\"icon-container\">\n  <ta-font-icon [name]=\"this.icon\"></ta-font-icon>\n</div>\n", styles: [".icon-container{padding:var(--ta-space-md);border-radius:var(--ta-radius-full);background-color:var(--ta-surface-hover-secondary);color:var(--ta-icon-brand-primary)}\n"] }]
-        }], propDecorators: { level: [{
-                type: Input
-            }], icon: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-notification-item-icon", standalone: true, imports: [FontIconComponent], template: "<div class=\"icon-container\">\n  <ta-font-icon [name]=\"this.icon()\"></ta-font-icon>\n</div>\n", styles: [".icon-container{padding:var(--ta-space-md);border-radius:var(--ta-radius-full);background-color:var(--ta-surface-hover-secondary);color:var(--ta-icon-brand-primary)}\n"] }]
+        }] });
 
 class ItemComponent {
+    constructor() {
+        this.notification = input.required();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ItemComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ItemComponent, isStandalone: true, selector: "ta-notification-item", inputs: { notification: "notification" }, ngImport: i0, template: "<div class=\"item-container\" [class.new]=\"this.notification.isNew\">\n  <div>\n    <ng-content select=\"ta-notification-item-icon\"></ng-content>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"space-between\">\n      <div class=\"tenant-name\">{{ this.notification.tenantName }}</div>\n\n      <div class=\"extra-info\">\n        <ta-time-ago [date]=\"this.notification.date\"></ta-time-ago>\n      </div>\n    </div>\n    <div class=\"title\">\n      <ng-content select=\"ta-notification-item-title\"></ng-content>\n    </div>\n    <div class=\"cta-container space-between\">\n      <div class=\"info\">\n        <div>\n          <ng-content select=\"ta-notification-item-info\"></ng-content>\n        </div>\n        <div class=\"project-name\">\n          {{ this.notification.project?.name }}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n", styles: [".item-container{display:flex;flex-direction:row;gap:var(--ta-space-md);padding:var(--ta-space-lg)}.item-container:hover,.item-container.new{background-color:var(--ta-surface-brand-tertiary)}.item-container .tenant-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-brand-primary)}.item-container .title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}.item-container .info{display:flex;flex-direction:row}.item-container .info .project-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary)}.item-container .extra-info{font-size:var(--ta-font-key-xs-default-size);font-weight:var(--ta-font-key-xs-default-weight);color:var(--ta-text-tertiary)}\n"], dependencies: [{ kind: "component", type: TimeAgoComponent, selector: "ta-time-ago", inputs: ["date", "withHours"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: ItemComponent, isStandalone: true, selector: "ta-notification-item", inputs: { notification: { classPropertyName: "notification", publicName: "notification", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<div class=\"item-container\" [class.new]=\"this.notification().isNew\">\n  <div>\n    <ng-content select=\"ta-notification-item-icon\"></ng-content>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"space-between\">\n      <div class=\"tenant-name\">{{ this.notification().tenantName }}</div>\n\n      <div class=\"extra-info\">\n        <ta-time-ago [date]=\"this.notification().date\"></ta-time-ago>\n      </div>\n    </div>\n    <div class=\"title\">\n      <ng-content select=\"ta-notification-item-title\"></ng-content>\n    </div>\n    <div class=\"cta-container space-between\">\n      <div class=\"info\">\n        <div>\n          <ng-content select=\"ta-notification-item-info\"></ng-content>\n        </div>\n        <div class=\"project-name\">\n          {{ this.notification().project?.name }}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n", styles: [".item-container{display:flex;flex-direction:row;gap:var(--ta-space-md);padding:var(--ta-space-lg)}.item-container:hover,.item-container.new{background-color:var(--ta-surface-brand-tertiary)}.item-container .tenant-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-brand-primary)}.item-container .title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}.item-container .info{display:flex;flex-direction:row}.item-container .info .project-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary)}.item-container .extra-info{font-size:var(--ta-font-key-xs-default-size);font-weight:var(--ta-font-key-xs-default-weight);color:var(--ta-text-tertiary)}\n"], dependencies: [{ kind: "component", type: TimeAgoComponent, selector: "ta-time-ago", inputs: ["date", "withHours"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ItemComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-item", standalone: true, imports: [TimeAgoComponent], template: "<div class=\"item-container\" [class.new]=\"this.notification.isNew\">\n  <div>\n    <ng-content select=\"ta-notification-item-icon\"></ng-content>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"space-between\">\n      <div class=\"tenant-name\">{{ this.notification.tenantName }}</div>\n\n      <div class=\"extra-info\">\n        <ta-time-ago [date]=\"this.notification.date\"></ta-time-ago>\n      </div>\n    </div>\n    <div class=\"title\">\n      <ng-content select=\"ta-notification-item-title\"></ng-content>\n    </div>\n    <div class=\"cta-container space-between\">\n      <div class=\"info\">\n        <div>\n          <ng-content select=\"ta-notification-item-info\"></ng-content>\n        </div>\n        <div class=\"project-name\">\n          {{ this.notification.project?.name }}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n", styles: [".item-container{display:flex;flex-direction:row;gap:var(--ta-space-md);padding:var(--ta-space-lg)}.item-container:hover,.item-container.new{background-color:var(--ta-surface-brand-tertiary)}.item-container .tenant-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-brand-primary)}.item-container .title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}.item-container .info{display:flex;flex-direction:row}.item-container .info .project-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary)}.item-container .extra-info{font-size:var(--ta-font-key-xs-default-size);font-weight:var(--ta-font-key-xs-default-weight);color:var(--ta-text-tertiary)}\n"] }]
-        }], propDecorators: { notification: [{
-                type: Input
-            }] } });
+            args: [{ selector: "ta-notification-item", standalone: true, imports: [TimeAgoComponent], template: "<div class=\"item-container\" [class.new]=\"this.notification().isNew\">\n  <div>\n    <ng-content select=\"ta-notification-item-icon\"></ng-content>\n  </div>\n  <div class=\"full-width\">\n    <div class=\"space-between\">\n      <div class=\"tenant-name\">{{ this.notification().tenantName }}</div>\n\n      <div class=\"extra-info\">\n        <ta-time-ago [date]=\"this.notification().date\"></ta-time-ago>\n      </div>\n    </div>\n    <div class=\"title\">\n      <ng-content select=\"ta-notification-item-title\"></ng-content>\n    </div>\n    <div class=\"cta-container space-between\">\n      <div class=\"info\">\n        <div>\n          <ng-content select=\"ta-notification-item-info\"></ng-content>\n        </div>\n        <div class=\"project-name\">\n          {{ this.notification().project?.name }}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n", styles: [".item-container{display:flex;flex-direction:row;gap:var(--ta-space-md);padding:var(--ta-space-lg)}.item-container:hover,.item-container.new{background-color:var(--ta-surface-brand-tertiary)}.item-container .tenant-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-brand-primary)}.item-container .title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}.item-container .info{display:flex;flex-direction:row}.item-container .info .project-name{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary)}.item-container .extra-info{font-size:var(--ta-font-key-xs-default-size);font-weight:var(--ta-font-key-xs-default-weight);color:var(--ta-text-tertiary)}\n"] }]
+        }] });
 
 class NotificationTitleComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationTitleComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
@@ -441,7 +435,7 @@ class InvoicePaymentStatusChangedComponent extends AbstractNotificationTemplateC
         this.template = this.sharedService.paymentStatusTemplate;
     }
     get paymentStatus() {
-        return (this.notification.context.find((item) => item.key === "PaymentStatus")?.value ?? 0);
+        return (this.notification().context.find((item) => item.key === "PaymentStatus")?.value ?? 0);
     }
     goTo() {
         if (!this.sharedService.routing || !this.sharedService.routing.invoice) {
@@ -454,7 +448,7 @@ class InvoicePaymentStatusChangedComponent extends AbstractNotificationTemplateC
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InvoicePaymentStatusChangedComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InvoicePaymentStatusChangedComponent, isStandalone: true, selector: "ta-invoice-payment-status-changed", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.invoice-payment-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.paymentStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InvoicePaymentStatusChangedComponent, isStandalone: true, selector: "ta-invoice-payment-status-changed", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.invoice-payment-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.paymentStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InvoicePaymentStatusChangedComponent, decorators: [{
             type: Component,
@@ -465,7 +459,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         NgTemplateOutlet,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.invoice-payment-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.paymentStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.invoice-payment-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.paymentStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class NewInvoiceComponent extends AbstractNotificationTemplateComponent {
@@ -480,7 +474,7 @@ class NewInvoiceComponent extends AbstractNotificationTemplateComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NewInvoiceComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: NewInvoiceComponent, isStandalone: true, selector: "ta-new-invoice", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-invoice.title\" | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: NewInvoiceComponent, isStandalone: true, selector: "ta-new-invoice", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-invoice.title\" | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NewInvoiceComponent, decorators: [{
             type: Component,
@@ -489,7 +483,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-invoice.title\" | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-invoice.title\" | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"bills\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class NewQuotationVersionComponent extends AbstractNotificationTemplateComponent {
@@ -506,7 +500,7 @@ class NewQuotationVersionComponent extends AbstractNotificationTemplateComponent
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NewQuotationVersionComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: NewQuotationVersionComponent, isStandalone: true, selector: "ta-new-quotation-version", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-quotation-version.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"article-line\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: NewQuotationVersionComponent, isStandalone: true, selector: "ta-new-quotation-version", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-quotation-version.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"article-line\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NewQuotationVersionComponent, decorators: [{
             type: Component,
@@ -515,7 +509,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-quotation-version.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"article-line\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.new-quotation-version.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"article-line\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class ProjectStatusChangedComponent extends AbstractNotificationTemplateComponent {
@@ -536,7 +530,7 @@ class ProjectStatusChangedComponent extends AbstractNotificationTemplateComponen
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ProjectStatusChangedComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ProjectStatusChangedComponent, isStandalone: true, selector: "ta-notification-project-status-changed", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.project-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"d-flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.projectStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"projects\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ProjectStatusChangedComponent, isStandalone: true, selector: "ta-notification-project-status-changed", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.project-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"d-flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.projectStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"projects\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ProjectStatusChangedComponent, decorators: [{
             type: Component,
@@ -547,7 +541,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         NgTemplateOutlet,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.project-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"d-flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.projectStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"projects\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    <div class=\"flex-row g-space-sm\">\n      {{\n        \"notification.items.project-status-changed.title\"\n          | translate : this.getTranslation()\n      }}\n      <div class=\"d-flex\">\n        @if (this.template) {\n        <ng-container\n          [ngTemplateOutlet]=\"this.template\"\n          [ngTemplateOutletContext]=\"{\n              data: this.projectStatus,\n            }\"\n        ></ng-container>\n        }\n      </div>\n    </div>\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"projects\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class TaskAssignedComponent extends AbstractNotificationTemplateComponent {
@@ -561,7 +555,7 @@ class TaskAssignedComponent extends AbstractNotificationTemplateComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaskAssignedComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaskAssignedComponent, isStandalone: true, selector: "ta-task-assigned", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaskAssignedComponent, isStandalone: true, selector: "ta-task-assigned", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaskAssignedComponent, decorators: [{
             type: Component,
@@ -570,7 +564,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class TaskDueTodayComponent extends AbstractNotificationTemplateComponent {
@@ -584,7 +578,7 @@ class TaskDueTodayComponent extends AbstractNotificationTemplateComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaskDueTodayComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaskDueTodayComponent, isStandalone: true, selector: "ta-task-due-today", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaskDueTodayComponent, isStandalone: true, selector: "ta-task-due-today", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaskDueTodayComponent, decorators: [{
             type: Component,
@@ -593,7 +587,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class TaskNewActivityComponent extends AbstractNotificationTemplateComponent {
@@ -607,7 +601,7 @@ class TaskNewActivityComponent extends AbstractNotificationTemplateComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaskNewActivityComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaskNewActivityComponent, isStandalone: true, selector: "ta-task-new-activity", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-new-activity.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaskNewActivityComponent, isStandalone: true, selector: "ta-task-new-activity", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-new-activity.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaskNewActivityComponent, decorators: [{
             type: Component,
@@ -616,7 +610,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-new-activity.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.task-new-activity.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class ToDoAssignedComponent extends AbstractNotificationTemplateComponent {
@@ -630,7 +624,7 @@ class ToDoAssignedComponent extends AbstractNotificationTemplateComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ToDoAssignedComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ToDoAssignedComponent, isStandalone: true, selector: "ta-to-do-assigned", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ToDoAssignedComponent, isStandalone: true, selector: "ta-to-do-assigned", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ToDoAssignedComponent, decorators: [{
             type: Component,
@@ -639,7 +633,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-assigned.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class ToDoDueTodayComponent extends AbstractNotificationTemplateComponent {
@@ -653,7 +647,7 @@ class ToDoDueTodayComponent extends AbstractNotificationTemplateComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ToDoDueTodayComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ToDoDueTodayComponent, isStandalone: true, selector: "ta-to-do-due-today", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ToDoDueTodayComponent, isStandalone: true, selector: "ta-to-do-due-today", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ToDoDueTodayComponent, decorators: [{
             type: Component,
@@ -662,7 +656,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.to-do-due-today.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class UserTaggedInConversationComponent extends AbstractNotificationTemplateComponent {
@@ -676,7 +670,7 @@ class UserTaggedInConversationComponent extends AbstractNotificationTemplateComp
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UserTaggedInConversationComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: UserTaggedInConversationComponent, isStandalone: true, selector: "ta-user-tagged-in-conversation", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.user-tagged-in-conversation.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: UserTaggedInConversationComponent, isStandalone: true, selector: "ta-user-tagged-in-conversation", usesInheritance: true, ngImport: i0, template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.user-tagged-in-conversation.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n", styles: [""], dependencies: [{ kind: "component", type: IconComponent, selector: "ta-notification-item-icon", inputs: ["level", "icon"] }, { kind: "component", type: ItemComponent, selector: "ta-notification-item", inputs: ["notification"] }, { kind: "component", type: NotificationTitleComponent, selector: "ta-notification-item-title" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UserTaggedInConversationComponent, decorators: [{
             type: Component,
@@ -685,48 +679,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ItemComponent,
                         NotificationTitleComponent,
                         TranslateModule,
-                    ], template: "<ta-notification-item [notification]=\"this.notification\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.user-tagged-in-conversation.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
+                    ], template: "<ta-notification-item [notification]=\"this.notification()\" (click)=\"this.goTo()\">\n  <ta-notification-item-title>\n    {{\n      \"notification.items.user-tagged-in-conversation.title\"\n        | translate : this.getTranslation()\n    }}\n  </ta-notification-item-title>\n  <ta-notification-item-icon [level]=\"this.notification().level\" icon=\"tasks\"></ta-notification-item-icon>\n</ta-notification-item>\n" }]
         }] });
 
 class ContainerComponent extends TaBaseComponent {
     get notifications$() {
         return this._notificationDataService.list
-            .get$(this._notificationDataService.computeKey(this.filters))
+            .get$(this._notificationDataService.computeKey(this.filters()))
             .pipe(tap$1((list) => this.nbChanged.emit(list.length)));
     }
     constructor(_notificationDataService, _sharedService) {
         super();
         this._notificationDataService = _notificationDataService;
         this._sharedService = _sharedService;
-        this.filters = null;
-        this.templates = null;
-        this.services = null;
-        this.routing = null;
+        this.filters = input(null);
+        this.templates = input(null);
+        this.services = input(null);
+        this.routing = input(null);
         this.nbChanged = new EventEmitter();
     }
     ngOnInit() {
         this.requestState.asked();
         this._registerSubscription(this._notificationDataService
-            .fetchNotifications$(this.filters)
+            .fetchNotifications$(this.filters())
             .subscribe({
             complete: () => this.requestState.completed(),
             error: (error) => {
                 this.requestState.onError(error.status, error.statusText);
             },
         }));
-        if (this.templates) {
-            this._sharedService.paymentStatusTemplate = this.templates?.paymentStatus;
-            this._sharedService.projectStatusTemplate = this.templates?.projectStatus;
+        const templatesVal = this.templates();
+        if (templatesVal) {
+            this._sharedService.paymentStatusTemplate = templatesVal.paymentStatus;
+            this._sharedService.projectStatusTemplate = templatesVal.projectStatus;
         }
-        if (this.services) {
-            this._sharedService.getProjects$ = this.services.getProjects$;
+        const servicesVal = this.services();
+        if (servicesVal) {
+            this._sharedService.getProjects$ = servicesVal.getProjects$;
         }
-        if (this.routing) {
-            this._sharedService.routing = this.routing;
+        const routingVal = this.routing();
+        if (routingVal) {
+            this._sharedService.routing = routingVal;
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ContainerComponent, deps: [{ token: TaNotificationDataService }, { token: TaNotificationSharedService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ContainerComponent, isStandalone: true, selector: "ta-notification-container", inputs: { filters: "filters", templates: "templates", services: "services", routing: "routing" }, outputs: { nbChanged: "nbChanged" }, usesInheritance: true, ngImport: i0, template: "<ta-loader\n  [isLoading]=\"this.requestState.isLoading()\"\n  *ngLet=\"this.notifications$ | async as notifications\"\n>\n  <ta-error\n    [message]=\"this.requestState.getErrorMessage()\"\n    [code]=\"this.requestState.getErrorStatus()\"\n  >\n    <ta-empty\n      [isEmpty]=\"!notifications || notifications.length === 0\"\n      icon=\"ghost\"\n      [isLight]=\"false\"\n      text=\"notification.empty\"\n    >\n      <div class=\"notification-container\">\n        @for (notif of this.notifications; track notif) {\n        <div class=\"item-container c-pointer\">\n          @switch (notif.type) { @case ('ProjectStatusChanged') {\n          <ta-notification-project-status-changed\n            [notification]=\"notif\"\n          ></ta-notification-project-status-changed>\n          } @case ('NewQuotationVersion') {\n          <ta-new-quotation-version\n            [notification]=\"notif\"\n          ></ta-new-quotation-version>\n          } @case ('NewInvoice') {\n          <ta-new-invoice [notification]=\"notif\"></ta-new-invoice>\n          } @case ('InvoicePaymentStatusChanged') {\n          <ta-invoice-payment-status-changed\n            [notification]=\"notif\"\n          ></ta-invoice-payment-status-changed>\n          } @case ('TaskAssigned') {\n          <ta-task-assigned [notification]=\"notif\"></ta-task-assigned>\n          } @case ('ToDoAssigned') {\n          <ta-to-do-assigned [notification]=\"notif\"></ta-to-do-assigned>\n          } @case ('TaskDueToday') {\n          <ta-task-due-today [notification]=\"notif\"></ta-task-due-today>\n          } @case ('ToDoDueToday') {\n          <ta-to-do-due-today [notification]=\"notif\"></ta-to-do-due-today>\n          } @case ('TaskNewActivity') {\n          <ta-task-new-activity [notification]=\"notif\"></ta-task-new-activity>\n          } @case ('UserTaggedInConversation') {\n          <ta-user-tagged-in-conversation\n            [notification]=\"notif\"\n          ></ta-user-tagged-in-conversation>\n          } }\n        </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".item-container{border-bottom:1px solid var(--ta-border-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: InvoicePaymentStatusChangedComponent, selector: "ta-invoice-payment-status-changed" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: NewInvoiceComponent, selector: "ta-new-invoice" }, { kind: "component", type: NewQuotationVersionComponent, selector: "ta-new-quotation-version" }, { kind: "component", type: ProjectStatusChangedComponent, selector: "ta-notification-project-status-changed" }, { kind: "component", type: TaskAssignedComponent, selector: "ta-task-assigned" }, { kind: "component", type: TaskDueTodayComponent, selector: "ta-task-due-today" }, { kind: "component", type: TaskNewActivityComponent, selector: "ta-task-new-activity" }, { kind: "component", type: ToDoAssignedComponent, selector: "ta-to-do-assigned" }, { kind: "component", type: ToDoDueTodayComponent, selector: "ta-to-do-due-today" }, { kind: "component", type: UserTaggedInConversationComponent, selector: "ta-user-tagged-in-conversation" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ContainerComponent, isStandalone: true, selector: "ta-notification-container", inputs: { filters: { classPropertyName: "filters", publicName: "filters", isSignal: true, isRequired: false, transformFunction: null }, templates: { classPropertyName: "templates", publicName: "templates", isSignal: true, isRequired: false, transformFunction: null }, services: { classPropertyName: "services", publicName: "services", isSignal: true, isRequired: false, transformFunction: null }, routing: { classPropertyName: "routing", publicName: "routing", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { nbChanged: "nbChanged" }, usesInheritance: true, ngImport: i0, template: "<ta-loader\n  [isLoading]=\"this.requestState.isLoading()\"\n  *ngLet=\"this.notifications$ | async as notifications\"\n>\n  <ta-error\n    [message]=\"this.requestState.getErrorMessage()\"\n    [code]=\"this.requestState.getErrorStatus()\"\n  >\n    <ta-empty\n      [isEmpty]=\"!notifications || notifications.length === 0\"\n      icon=\"ghost\"\n      [isLight]=\"false\"\n      text=\"notification.empty\"\n    >\n      <div class=\"notification-container\">\n        @for (notif of this.notifications; track notif) {\n        <div class=\"item-container c-pointer\">\n          @switch (notif.type) { @case ('ProjectStatusChanged') {\n          <ta-notification-project-status-changed\n            [notification]=\"notif\"\n          ></ta-notification-project-status-changed>\n          } @case ('NewQuotationVersion') {\n          <ta-new-quotation-version\n            [notification]=\"notif\"\n          ></ta-new-quotation-version>\n          } @case ('NewInvoice') {\n          <ta-new-invoice [notification]=\"notif\"></ta-new-invoice>\n          } @case ('InvoicePaymentStatusChanged') {\n          <ta-invoice-payment-status-changed\n            [notification]=\"notif\"\n          ></ta-invoice-payment-status-changed>\n          } @case ('TaskAssigned') {\n          <ta-task-assigned [notification]=\"notif\"></ta-task-assigned>\n          } @case ('ToDoAssigned') {\n          <ta-to-do-assigned [notification]=\"notif\"></ta-to-do-assigned>\n          } @case ('TaskDueToday') {\n          <ta-task-due-today [notification]=\"notif\"></ta-task-due-today>\n          } @case ('ToDoDueToday') {\n          <ta-to-do-due-today [notification]=\"notif\"></ta-to-do-due-today>\n          } @case ('TaskNewActivity') {\n          <ta-task-new-activity [notification]=\"notif\"></ta-task-new-activity>\n          } @case ('UserTaggedInConversation') {\n          <ta-user-tagged-in-conversation\n            [notification]=\"notif\"\n          ></ta-user-tagged-in-conversation>\n          } }\n        </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".item-container{border-bottom:1px solid var(--ta-border-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: InvoicePaymentStatusChangedComponent, selector: "ta-invoice-payment-status-changed" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: NewInvoiceComponent, selector: "ta-new-invoice" }, { kind: "component", type: NewQuotationVersionComponent, selector: "ta-new-quotation-version" }, { kind: "component", type: ProjectStatusChangedComponent, selector: "ta-notification-project-status-changed" }, { kind: "component", type: TaskAssignedComponent, selector: "ta-task-assigned" }, { kind: "component", type: TaskDueTodayComponent, selector: "ta-task-due-today" }, { kind: "component", type: TaskNewActivityComponent, selector: "ta-task-new-activity" }, { kind: "component", type: ToDoAssignedComponent, selector: "ta-to-do-assigned" }, { kind: "component", type: ToDoDueTodayComponent, selector: "ta-to-do-due-today" }, { kind: "component", type: UserTaggedInConversationComponent, selector: "ta-user-tagged-in-conversation" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ContainerComponent, decorators: [{
             type: Component,
@@ -747,31 +744,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ToDoDueTodayComponent,
                         UserTaggedInConversationComponent,
                     ], template: "<ta-loader\n  [isLoading]=\"this.requestState.isLoading()\"\n  *ngLet=\"this.notifications$ | async as notifications\"\n>\n  <ta-error\n    [message]=\"this.requestState.getErrorMessage()\"\n    [code]=\"this.requestState.getErrorStatus()\"\n  >\n    <ta-empty\n      [isEmpty]=\"!notifications || notifications.length === 0\"\n      icon=\"ghost\"\n      [isLight]=\"false\"\n      text=\"notification.empty\"\n    >\n      <div class=\"notification-container\">\n        @for (notif of this.notifications; track notif) {\n        <div class=\"item-container c-pointer\">\n          @switch (notif.type) { @case ('ProjectStatusChanged') {\n          <ta-notification-project-status-changed\n            [notification]=\"notif\"\n          ></ta-notification-project-status-changed>\n          } @case ('NewQuotationVersion') {\n          <ta-new-quotation-version\n            [notification]=\"notif\"\n          ></ta-new-quotation-version>\n          } @case ('NewInvoice') {\n          <ta-new-invoice [notification]=\"notif\"></ta-new-invoice>\n          } @case ('InvoicePaymentStatusChanged') {\n          <ta-invoice-payment-status-changed\n            [notification]=\"notif\"\n          ></ta-invoice-payment-status-changed>\n          } @case ('TaskAssigned') {\n          <ta-task-assigned [notification]=\"notif\"></ta-task-assigned>\n          } @case ('ToDoAssigned') {\n          <ta-to-do-assigned [notification]=\"notif\"></ta-to-do-assigned>\n          } @case ('TaskDueToday') {\n          <ta-task-due-today [notification]=\"notif\"></ta-task-due-today>\n          } @case ('ToDoDueToday') {\n          <ta-to-do-due-today [notification]=\"notif\"></ta-to-do-due-today>\n          } @case ('TaskNewActivity') {\n          <ta-task-new-activity [notification]=\"notif\"></ta-task-new-activity>\n          } @case ('UserTaggedInConversation') {\n          <ta-user-tagged-in-conversation\n            [notification]=\"notif\"\n          ></ta-user-tagged-in-conversation>\n          } }\n        </div>\n        }\n      </div>\n    </ta-empty>\n  </ta-error>\n</ta-loader>\n", styles: [".item-container{border-bottom:1px solid var(--ta-border-primary)}\n"] }]
-        }], ctorParameters: () => [{ type: TaNotificationDataService }, { type: TaNotificationSharedService }], propDecorators: { filters: [{
-                type: Input
-            }], templates: [{
-                type: Input
-            }], services: [{
-                type: Input
-            }], routing: [{
-                type: Input
-            }], nbChanged: [{
+        }], ctorParameters: () => [{ type: TaNotificationDataService }, { type: TaNotificationSharedService }], propDecorators: { nbChanged: [{
                 type: Output
             }] } });
 
 class BulletComponent extends TaBaseComponent {
     get number$() {
-        return this._notificationDataService.count.get$(this._notificationDataService.computeKey(this.filters));
+        return this._notificationDataService.count.get$(this._notificationDataService.computeKey(this.filters()));
     }
     constructor(_notificationDataService) {
         super();
         this._notificationDataService = _notificationDataService;
-        this.filters = null;
+        this.filters = input(null);
     }
     ngOnInit() {
         this.requestState.asked();
         this._notificationDataService
-            .fetchNumberOfNotifications$(this.filters)
+            .fetchNumberOfNotifications$(this.filters())
             .subscribe({
             complete: () => this.requestState.completed(),
             error: (error) => {
@@ -780,14 +769,12 @@ class BulletComponent extends TaBaseComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BulletComponent, deps: [{ token: TaNotificationDataService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: BulletComponent, isStandalone: true, selector: "ta-notification-bullet", inputs: { filters: "filters" }, usesInheritance: true, ngImport: i0, template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: BulletComponent$1, selector: "ta-bullet", inputs: ["size", "type"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BulletComponent, isStandalone: true, selector: "ta-notification-bullet", inputs: { filters: { classPropertyName: "filters", publicName: "filters", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: BulletComponent$1, selector: "ta-bullet", inputs: ["size", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BulletComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-notification-bullet", standalone: true, imports: [AsyncPipe, BulletComponent$1], template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n" }]
-        }], ctorParameters: () => [{ type: TaNotificationDataService }], propDecorators: { filters: [{
-                type: Input
-            }] } });
+        }], ctorParameters: () => [{ type: TaNotificationDataService }] });
 
 class ItemInfoComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ItemInfoComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }

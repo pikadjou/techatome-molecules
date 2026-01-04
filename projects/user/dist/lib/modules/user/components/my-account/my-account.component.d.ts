@@ -6,9 +6,9 @@ import { UserLogoData } from "@ta/ui";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class MyAccountComponent extends TaBaseComponent implements OnInit {
-    profileMenu: Menu | null;
-    appVersion: string | null;
-    isEditable: boolean;
+    profileMenu: import("@angular/core").InputSignal<Menu<import("@ta/menu").MenuBase> | null>;
+    appVersion: import("@angular/core").InputSignal<string | null>;
+    isEditable: import("@angular/core").InputSignal<boolean>;
     navigateEvent: EventEmitter<any>;
     navigateEditEvent: EventEmitter<any>;
     private _userService;
@@ -31,5 +31,5 @@ export declare class MyAccountComponent extends TaBaseComponent implements OnIni
     getDisconnectionMenu(): Menu<MenuIcon>;
     navigateToEditProfile(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MyAccountComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MyAccountComponent, "ta-my-account", never, { "profileMenu": { "alias": "profileMenu"; "required": false; }; "appVersion": { "alias": "appVersion"; "required": false; }; "isEditable": { "alias": "isEditable"; "required": false; }; }, { "navigateEvent": "navigateEvent"; "navigateEditEvent": "navigateEditEvent"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MyAccountComponent, "ta-my-account", never, { "profileMenu": { "alias": "profileMenu"; "required": false; "isSignal": true; }; "appVersion": { "alias": "appVersion"; "required": false; "isSignal": true; }; "isEditable": { "alias": "isEditable"; "required": false; "isSignal": true; }; }, { "navigateEvent": "navigateEvent"; "navigateEditEvent": "navigateEditEvent"; }, never, never, true, never>;
 }

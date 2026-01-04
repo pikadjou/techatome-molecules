@@ -84,7 +84,7 @@ export class InputsComponent extends TaBaseComponent {
 
   standaloneMode = input<boolean>(false, { alias: 'standalone' });
 
-  onFocusObs = input<Observable<void>>({ alias: 'onFocus' });
+  onFocusObs = input<Observable<void> | undefined>(undefined, { alias: 'onFocus' });
 
   space = input<boolean>(true);
 

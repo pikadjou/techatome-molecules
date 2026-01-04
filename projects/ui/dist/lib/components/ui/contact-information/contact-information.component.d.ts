@@ -4,16 +4,16 @@ export declare class ContactInformationComponent {
     /**
      * Text to display
      */
-    value: string | null;
+    value: import("@angular/core").InputSignal<string | null>;
     /**
      * Material icon to display
      */
-    icon: string;
+    icon: import("@angular/core").InputSignal<string | undefined>;
     /**
      * Local icon to display
      */
-    localIcon: TaIconType;
+    localIcon: import("@angular/core").InputSignal<TaIconType | undefined>;
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<ContactInformationComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ContactInformationComponent, "ta-contact-information", never, { "value": { "alias": "value"; "required": false; }; "icon": { "alias": "icon"; "required": false; }; "localIcon": { "alias": "localIcon"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ContactInformationComponent, "ta-contact-information", never, { "value": { "alias": "value"; "required": true; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "localIcon": { "alias": "localIcon"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
 }

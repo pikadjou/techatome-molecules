@@ -1,10 +1,10 @@
-@if (this.menu) {
+@if (this.menu()) {
 <div class="tabs my-space-2">
   <div class="menu-tab">
     <ta-swiper
-      [slidesPerPage]="this.elementPerPage"
+      [slidesPerPage]="this.elementPerPage()"
       [swipeTemplate]="swipeTemplate"
-      [slides]="this.menu.elements"
+      [slides]="this.menu().elements"
     ></ta-swiper>
   </div>
 </div>
@@ -13,7 +13,7 @@
 <ng-template #swipeTemplate let-element="element" [typedTemplate]="typeToken">
   <div
     class="menu-item"
-    [class.active]="this.tabSelection === element.key"
+    [class.active]="this.tabSelection() === element.key"
     [class.disabled]="element.disabled === true"
     (click)="this.onQuickActionSelected(element)"
   >

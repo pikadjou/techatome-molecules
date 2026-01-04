@@ -1,6 +1,6 @@
 import { NgIf, NgFor, NgTemplateOutlet, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { EventEmitter, Output, Input, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, inject, NgModule, importProvidersFrom } from '@angular/core';
+import { input, EventEmitter, Output, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, inject, NgModule, importProvidersFrom } from '@angular/core';
 import { Subject, combineLatest, of } from 'rxjs';
 import { FontIconComponent, TaIconsModule } from '@ta/icons';
 import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent, LayoutModalComponent, openModal, TaLayoutModule, TaUiModule, TaCardModule, TaContainerModule, TaListModule } from '@ta/ui';
@@ -31,7 +31,8 @@ export { GoogleTagManagerService as TaGoogleTagManagerService } from '@edumetz16
 class FiltersFormComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.form = [];
+        this.form = input([]);
+        this.askValidation$ = input.required();
         this.filtersSelected = new EventEmitter();
     }
     apply(data) {
@@ -41,45 +42,39 @@ class FiltersFormComponent extends TaBaseComponent {
         this.filtersSelected.emit(null);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersFormComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FiltersFormComponent, isStandalone: true, selector: "ta-filters-form", inputs: { form: "form", askValidation$: "askValidation$" }, outputs: { filtersSelected: "filtersSelected" }, usesInheritance: true, ngImport: i0, template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">{{\n      \"core.filter.clear\" | translate\n    }}</ta-button>\n  </div>\n  @if (this.form) {\n  <ta-form\n    [inputs]=\"this.form\"\n    [canDisplayButton]=\"false\"\n    [askValidation$]=\"this.askValidation$\"\n    (valid)=\"this.apply($event)\"\n  >\n  </ta-form>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FiltersFormComponent, isStandalone: true, selector: "ta-filters-form", inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null }, askValidation$: { classPropertyName: "askValidation$", publicName: "askValidation$", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { filtersSelected: "filtersSelected" }, usesInheritance: true, ngImport: i0, template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">{{\n      \"core.filter.clear\" | translate\n    }}</ta-button>\n  </div>\n  @if (this.form()) {\n  <ta-form\n    [inputs]=\"this.form()\"\n    [canDisplayButton]=\"false\"\n    [askValidation$]=\"this.askValidation$()\"\n    (valid)=\"this.apply($event)\"\n  >\n  </ta-form>\n  }\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersFormComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-filters-form", standalone: true, imports: [NgIf, ButtonComponent, FormComponent, TranslatePipe], template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">{{\n      \"core.filter.clear\" | translate\n    }}</ta-button>\n  </div>\n  @if (this.form) {\n  <ta-form\n    [inputs]=\"this.form\"\n    [canDisplayButton]=\"false\"\n    [askValidation$]=\"this.askValidation$\"\n    (valid)=\"this.apply($event)\"\n  >\n  </ta-form>\n  }\n</div>\n" }]
-        }], ctorParameters: () => [], propDecorators: { form: [{
-                type: Input
-            }], askValidation$: [{
-                type: Input
-            }], filtersSelected: [{
+            args: [{ selector: "ta-filters-form", standalone: true, imports: [NgIf, ButtonComponent, FormComponent, TranslatePipe], template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">{{\n      \"core.filter.clear\" | translate\n    }}</ta-button>\n  </div>\n  @if (this.form()) {\n  <ta-form\n    [inputs]=\"this.form()\"\n    [canDisplayButton]=\"false\"\n    [askValidation$]=\"this.askValidation$()\"\n    (valid)=\"this.apply($event)\"\n  >\n  </ta-form>\n  }\n</div>\n" }]
+        }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
                 type: Output
             }] } });
 
 class FiltersTagComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.activeFilter = [];
+        this.activeFilter = input([]);
         this.removedFilter = new EventEmitter();
     }
     remove(filter) {
         this.removedFilter.emit(filter);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersTagComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FiltersTagComponent, isStandalone: true, selector: "ta-filters-tag", inputs: { activeFilter: "activeFilter" }, outputs: { removedFilter: "removedFilter" }, usesInheritance: true, ngImport: i0, template: "<div>\n  @for (filter of this.activeFilter; track trackById($index, filter)) {\n  <span class=\"badge-container\">\n    <ta-badge\n      [value]=\"filter.name\"\n      type=\"info\"\n      icon=\"close\"\n      (clickAction)=\"this.remove(filter)\"\n    ></ta-badge>\n  </span>\n  }\n</div>\n", styles: [".badge-container{padding-right:var(--ta-space-sm);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.badge-container ta-badge{display:inline-block}\n"], dependencies: [{ kind: "component", type: BadgeComponent, selector: "ta-badge", inputs: ["value", "type", "showClickOption", "icon"], outputs: ["clickAction"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FiltersTagComponent, isStandalone: true, selector: "ta-filters-tag", inputs: { activeFilter: { classPropertyName: "activeFilter", publicName: "activeFilter", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { removedFilter: "removedFilter" }, usesInheritance: true, ngImport: i0, template: "<div>\n  @for (filter of this.activeFilter(); track trackById($index, filter)) {\n  <span class=\"badge-container\">\n    <ta-badge\n      [value]=\"filter.name\"\n      type=\"info\"\n      icon=\"close\"\n      (clickAction)=\"this.remove(filter)\"\n    ></ta-badge>\n  </span>\n  }\n</div>\n", styles: [".badge-container{padding-right:var(--ta-space-sm);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.badge-container ta-badge{display:inline-block}\n"], dependencies: [{ kind: "component", type: BadgeComponent, selector: "ta-badge", inputs: ["value", "type", "showClickOption", "icon"], outputs: ["clickAction"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersTagComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-filters-tag", standalone: true, imports: [NgFor, BadgeComponent], template: "<div>\n  @for (filter of this.activeFilter; track trackById($index, filter)) {\n  <span class=\"badge-container\">\n    <ta-badge\n      [value]=\"filter.name\"\n      type=\"info\"\n      icon=\"close\"\n      (clickAction)=\"this.remove(filter)\"\n    ></ta-badge>\n  </span>\n  }\n</div>\n", styles: [".badge-container{padding-right:var(--ta-space-sm);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.badge-container ta-badge{display:inline-block}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { activeFilter: [{
-                type: Input
-            }], removedFilter: [{
+            args: [{ selector: "ta-filters-tag", standalone: true, imports: [NgFor, BadgeComponent], template: "<div>\n  @for (filter of this.activeFilter(); track trackById($index, filter)) {\n  <span class=\"badge-container\">\n    <ta-badge\n      [value]=\"filter.name\"\n      type=\"info\"\n      icon=\"close\"\n      (clickAction)=\"this.remove(filter)\"\n    ></ta-badge>\n  </span>\n  }\n</div>\n", styles: [".badge-container{padding-right:var(--ta-space-sm);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.badge-container ta-badge{display:inline-block}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { removedFilter: [{
                 type: Output
             }] } });
 
 class FiltersContainerComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.form = [];
-        this.activeFilter = [];
+        this.form = input([]);
+        this.activeFilter = input([]);
         this.filtersSelected = new EventEmitter();
         this.removedFilter = new EventEmitter();
         this.isFilterOpen = false;
@@ -95,7 +90,7 @@ class FiltersContainerComponent extends TaBaseComponent {
         this.filtersSelected.emit(data);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FiltersContainerComponent, isStandalone: true, selector: "ta-filters-container", inputs: { form: "form", activeFilter: "activeFilter" }, outputs: { filtersSelected: "filtersSelected", removedFilter: "removedFilter" }, usesInheritance: true, ngImport: i0, template: "<div class=\"space-between p-space-sm\">\n  @if (this.activeFilter) {\n  <div>\n    <ta-filters-tag\n      [activeFilter]=\"this.activeFilter\"\n      (removedFilter)=\"this.removedFilter.emit($event)\"\n    ></ta-filters-tag>\n  </div>\n  }\n  <div>\n    <ta-link (action)=\"this.toggleFilter()\">\n      <ta-font-icon\n        [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n      ></ta-font-icon>\n    </ta-link>\n  </div>\n</div>\n<div>\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <div class=\"p-space-sm\">\n        <ta-filters-form\n          [form]=\"this.form\"\n          [askValidation$]=\"this.askValidation$\"\n          (filtersSelected)=\"this.apply($event)\"\n        ></ta-filters-form>\n      </div>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LayoutWithPanelComponent, selector: "ta-layout-with-panel", inputs: ["open"] }, { kind: "component", type: LayoutPanelComponent, selector: "ta-layout-panel" }, { kind: "component", type: FiltersFormComponent, selector: "ta-filters-form", inputs: ["form", "askValidation$"], outputs: ["filtersSelected"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }, { kind: "component", type: FiltersTagComponent, selector: "ta-filters-tag", inputs: ["activeFilter"], outputs: ["removedFilter"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FiltersContainerComponent, isStandalone: true, selector: "ta-filters-container", inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null }, activeFilter: { classPropertyName: "activeFilter", publicName: "activeFilter", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { filtersSelected: "filtersSelected", removedFilter: "removedFilter" }, usesInheritance: true, ngImport: i0, template: "<div class=\"space-between p-space-sm\">\n  @if (this.activeFilter()) {\n  <div>\n    <ta-filters-tag\n      [activeFilter]=\"this.activeFilter()\"\n      (removedFilter)=\"this.removedFilter.emit($event)\"\n    ></ta-filters-tag>\n  </div>\n  }\n  <div>\n    <ta-link (action)=\"this.toggleFilter()\">\n      <ta-font-icon\n        [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n      ></ta-font-icon>\n    </ta-link>\n  </div>\n</div>\n<div>\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <div class=\"p-space-sm\">\n        <ta-filters-form\n          [form]=\"this.form()\"\n          [askValidation$]=\"this.askValidation$\"\n          (filtersSelected)=\"this.apply($event)\"\n        ></ta-filters-form>\n      </div>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LayoutWithPanelComponent, selector: "ta-layout-with-panel", inputs: ["open"] }, { kind: "component", type: LayoutPanelComponent, selector: "ta-layout-panel" }, { kind: "component", type: FiltersFormComponent, selector: "ta-filters-form", inputs: ["form", "askValidation$"], outputs: ["filtersSelected"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }, { kind: "component", type: FiltersTagComponent, selector: "ta-filters-tag", inputs: ["activeFilter"], outputs: ["removedFilter"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersContainerComponent, decorators: [{
             type: Component,
@@ -108,12 +103,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         LayoutContentComponent,
                         FiltersTagComponent,
                         LinkComponent,
-                    ], template: "<div class=\"space-between p-space-sm\">\n  @if (this.activeFilter) {\n  <div>\n    <ta-filters-tag\n      [activeFilter]=\"this.activeFilter\"\n      (removedFilter)=\"this.removedFilter.emit($event)\"\n    ></ta-filters-tag>\n  </div>\n  }\n  <div>\n    <ta-link (action)=\"this.toggleFilter()\">\n      <ta-font-icon\n        [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n      ></ta-font-icon>\n    </ta-link>\n  </div>\n</div>\n<div>\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <div class=\"p-space-sm\">\n        <ta-filters-form\n          [form]=\"this.form\"\n          [askValidation$]=\"this.askValidation$\"\n          (filtersSelected)=\"this.apply($event)\"\n        ></ta-filters-form>\n      </div>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n" }]
-        }], ctorParameters: () => [], propDecorators: { form: [{
-                type: Input
-            }], activeFilter: [{
-                type: Input
-            }], filtersSelected: [{
+                    ], template: "<div class=\"space-between p-space-sm\">\n  @if (this.activeFilter()) {\n  <div>\n    <ta-filters-tag\n      [activeFilter]=\"this.activeFilter()\"\n      (removedFilter)=\"this.removedFilter.emit($event)\"\n    ></ta-filters-tag>\n  </div>\n  }\n  <div>\n    <ta-link (action)=\"this.toggleFilter()\">\n      <ta-font-icon\n        [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n      ></ta-font-icon>\n    </ta-link>\n  </div>\n</div>\n<div>\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <div class=\"p-space-sm\">\n        <ta-filters-form\n          [form]=\"this.form()\"\n          [askValidation$]=\"this.askValidation$\"\n          (filtersSelected)=\"this.apply($event)\"\n        ></ta-filters-form>\n      </div>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n" }]
+        }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
                 type: Output
             }], removedFilter: [{
                 type: Output
@@ -122,7 +113,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class FilterContainerComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.form = [];
+        this.form = input([]);
         this.filtersSelected = new EventEmitter();
         this.isFilterOpen = false;
         this.askValidation$ = new Subject();
@@ -143,7 +134,7 @@ class FilterContainerComponent extends TaBaseComponent {
         this.askValidation$.next(null);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: FilterContainerComponent, isStandalone: true, selector: "ta-filter-container", inputs: { form: "form" }, outputs: { filtersSelected: "filtersSelected" }, usesInheritance: true, ngImport: i0, template: "<ta-layout-side class=\"d-flex full-width\">\n  <ta-layout-side-content>\n    <div class=\"m-space-sm\">\n      <ta-form\n        [inputs]=\"this.form\"\n        [canDisplayButton]=\"false\"\n        [askValidation$]=\"this.askValidation$\"\n        (valid)=\"this.apply($event)\"\n      ></ta-form>\n    </div>\n  </ta-layout-side-content>\n  <ta-layout-side-cta>\n    <div class=\"align-center space-between\">\n      <div class=\"pr-space-md\">\n        <div class=\"align-center g-space-xs link\">\n          <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n          <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n            {{ \"core.filter.clear\" | translate }}\n          </ta-link>\n        </div>\n      </div>\n      <div>\n        <ta-button (action)=\"this.validate()\">\n          <div class=\"align-center m-space-xs\">\n            <ta-font-icon name=\"check-line\"></ta-font-icon>\n            {{ \"core.filter.validate\" | translate }}\n          </div>\n        </ta-button>\n      </div>\n    </div>\n  </ta-layout-side-cta>\n</ta-layout-side>\n", styles: [".link{color:var(--ta-text-secondary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LayoutSideComponent, selector: "ta-layout-side" }, { kind: "component", type: LayoutSideContentComponent, selector: "ta-layout-side-content" }, { kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: LayoutSideCtaComponent, selector: "ta-layout-side-cta", inputs: ["background"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: FilterContainerComponent, isStandalone: true, selector: "ta-filter-container", inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { filtersSelected: "filtersSelected" }, usesInheritance: true, ngImport: i0, template: "<ta-layout-side class=\"d-flex full-width\">\n  <ta-layout-side-content>\n    <div class=\"m-space-sm\">\n      <ta-form\n        [inputs]=\"this.form()\"\n        [canDisplayButton]=\"false\"\n        [askValidation$]=\"this.askValidation$\"\n        (valid)=\"this.apply($event)\"\n      ></ta-form>\n    </div>\n  </ta-layout-side-content>\n  <ta-layout-side-cta>\n    <div class=\"align-center space-between\">\n      <div class=\"pr-space-md\">\n        <div class=\"align-center g-space-xs link\">\n          <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n          <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n            {{ \"core.filter.clear\" | translate }}\n          </ta-link>\n        </div>\n      </div>\n      <div>\n        <ta-button (action)=\"this.validate()\">\n          <div class=\"align-center m-space-xs\">\n            <ta-font-icon name=\"check-line\"></ta-font-icon>\n            {{ \"core.filter.validate\" | translate }}\n          </div>\n        </ta-button>\n      </div>\n    </div>\n  </ta-layout-side-cta>\n</ta-layout-side>\n", styles: [".link{color:var(--ta-text-secondary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LayoutSideComponent, selector: "ta-layout-side" }, { kind: "component", type: LayoutSideContentComponent, selector: "ta-layout-side-content" }, { kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: LayoutSideCtaComponent, selector: "ta-layout-side-cta", inputs: ["background"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterContainerComponent, decorators: [{
             type: Component,
@@ -156,10 +147,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         LayoutSideCtaComponent,
                         ButtonComponent,
                         TranslatePipe,
-                    ], template: "<ta-layout-side class=\"d-flex full-width\">\n  <ta-layout-side-content>\n    <div class=\"m-space-sm\">\n      <ta-form\n        [inputs]=\"this.form\"\n        [canDisplayButton]=\"false\"\n        [askValidation$]=\"this.askValidation$\"\n        (valid)=\"this.apply($event)\"\n      ></ta-form>\n    </div>\n  </ta-layout-side-content>\n  <ta-layout-side-cta>\n    <div class=\"align-center space-between\">\n      <div class=\"pr-space-md\">\n        <div class=\"align-center g-space-xs link\">\n          <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n          <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n            {{ \"core.filter.clear\" | translate }}\n          </ta-link>\n        </div>\n      </div>\n      <div>\n        <ta-button (action)=\"this.validate()\">\n          <div class=\"align-center m-space-xs\">\n            <ta-font-icon name=\"check-line\"></ta-font-icon>\n            {{ \"core.filter.validate\" | translate }}\n          </div>\n        </ta-button>\n      </div>\n    </div>\n  </ta-layout-side-cta>\n</ta-layout-side>\n", styles: [".link{color:var(--ta-text-secondary)}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { form: [{
-                type: Input
-            }], filtersSelected: [{
+                    ], template: "<ta-layout-side class=\"d-flex full-width\">\n  <ta-layout-side-content>\n    <div class=\"m-space-sm\">\n      <ta-form\n        [inputs]=\"this.form()\"\n        [canDisplayButton]=\"false\"\n        [askValidation$]=\"this.askValidation$\"\n        (valid)=\"this.apply($event)\"\n      ></ta-form>\n    </div>\n  </ta-layout-side-content>\n  <ta-layout-side-cta>\n    <div class=\"align-center space-between\">\n      <div class=\"pr-space-md\">\n        <div class=\"align-center g-space-xs link\">\n          <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n          <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n            {{ \"core.filter.clear\" | translate }}\n          </ta-link>\n        </div>\n      </div>\n      <div>\n        <ta-button (action)=\"this.validate()\">\n          <div class=\"align-center m-space-xs\">\n            <ta-font-icon name=\"check-line\"></ta-font-icon>\n            {{ \"core.filter.validate\" | translate }}\n          </div>\n        </ta-button>\n      </div>\n    </div>\n  </ta-layout-side-cta>\n</ta-layout-side>\n", styles: [".link{color:var(--ta-text-secondary)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
                 type: Output
             }] } });
 
@@ -190,9 +179,9 @@ class FilterDisplayerComponent extends TaBaseComponent {
     constructor(_bottomSheet) {
         super();
         this._bottomSheet = _bottomSheet;
-        this.form = [];
-        this.iconType = "filter";
-        this.container = "button";
+        this.form = input([]);
+        this.iconType = input("filter");
+        this.container = input("button");
         this.filtersSelected = new EventEmitter();
         this._isFilterOpen = false;
     }
@@ -207,7 +196,7 @@ class FilterDisplayerComponent extends TaBaseComponent {
         this.isFilterOpen = false;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterDisplayerComponent, deps: [{ token: i1.MatBottomSheet }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilterDisplayerComponent, isStandalone: true, selector: "ta-filter-displayer", inputs: { form: "form", iconType: "iconType", container: "container" }, outputs: { filtersSelected: "filtersSelected" }, viewQueries: [{ propertyName: "filterTemplate", first: true, predicate: ["filterTemplate"], descendants: true, read: TemplateRef }], usesInheritance: true, ngImport: i0, template: "@if (this.container === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType\"></ta-font-icon>\n</ta-button>\n} @else if (this.container === 'link') {\n<div (click)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType\"></ta-font-icon>\n</div>\n} @if (!this.mobileDetection) { @if (this.isFilterOpen) {\n<ta-layout-full-panel (closeEvent)=\"this.close()\">\n  <ng-template [ngTemplateOutlet]=\"filterTemplate\"></ng-template>\n</ta-layout-full-panel>\n} }\n\n<ng-template #filterTemplate>\n  <ta-filter-container\n    class=\"flex-full\"\n    [form]=\"this.form\"\n    (filtersSelected)=\"this.selected($event)\"\n  ></ta-filter-container>\n</ng-template>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LayoutFullPanelComponent, selector: "ta-layout-full-panel", inputs: ["width", "title"], outputs: ["closeEvent"] }, { kind: "component", type: FilterContainerComponent, selector: "ta-filter-container", inputs: ["form"], outputs: ["filtersSelected"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilterDisplayerComponent, isStandalone: true, selector: "ta-filter-displayer", inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null }, iconType: { classPropertyName: "iconType", publicName: "iconType", isSignal: true, isRequired: false, transformFunction: null }, container: { classPropertyName: "container", publicName: "container", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { filtersSelected: "filtersSelected" }, viewQueries: [{ propertyName: "filterTemplate", first: true, predicate: ["filterTemplate"], descendants: true, read: TemplateRef }], usesInheritance: true, ngImport: i0, template: "@if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</div>\n} @if (!this.mobileDetection) { @if (this.isFilterOpen) {\n<ta-layout-full-panel (closeEvent)=\"this.close()\">\n  <ng-template [ngTemplateOutlet]=\"filterTemplate\"></ng-template>\n</ta-layout-full-panel>\n} }\n\n<ng-template #filterTemplate>\n  <ta-filter-container\n    class=\"flex-full\"\n    [form]=\"this.form()\"\n    (filtersSelected)=\"this.selected($event)\"\n  ></ta-filter-container>\n</ng-template>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LayoutFullPanelComponent, selector: "ta-layout-full-panel", inputs: ["width", "title"], outputs: ["closeEvent"] }, { kind: "component", type: FilterContainerComponent, selector: "ta-filter-container", inputs: ["form"], outputs: ["filtersSelected"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterDisplayerComponent, decorators: [{
             type: Component,
@@ -217,14 +206,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         LayoutFullPanelComponent,
                         FilterContainerComponent,
                         ButtonComponent,
-                    ], template: "@if (this.container === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType\"></ta-font-icon>\n</ta-button>\n} @else if (this.container === 'link') {\n<div (click)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType\"></ta-font-icon>\n</div>\n} @if (!this.mobileDetection) { @if (this.isFilterOpen) {\n<ta-layout-full-panel (closeEvent)=\"this.close()\">\n  <ng-template [ngTemplateOutlet]=\"filterTemplate\"></ng-template>\n</ta-layout-full-panel>\n} }\n\n<ng-template #filterTemplate>\n  <ta-filter-container\n    class=\"flex-full\"\n    [form]=\"this.form\"\n    (filtersSelected)=\"this.selected($event)\"\n  ></ta-filter-container>\n</ng-template>\n" }]
-        }], ctorParameters: () => [{ type: i1.MatBottomSheet }], propDecorators: { form: [{
-                type: Input
-            }], iconType: [{
-                type: Input
-            }], container: [{
-                type: Input
-            }], filtersSelected: [{
+                    ], template: "@if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</div>\n} @if (!this.mobileDetection) { @if (this.isFilterOpen) {\n<ta-layout-full-panel (closeEvent)=\"this.close()\">\n  <ng-template [ngTemplateOutlet]=\"filterTemplate\"></ng-template>\n</ta-layout-full-panel>\n} }\n\n<ng-template #filterTemplate>\n  <ta-filter-container\n    class=\"flex-full\"\n    [form]=\"this.form()\"\n    (filtersSelected)=\"this.selected($event)\"\n  ></ta-filter-container>\n</ng-template>\n" }]
+        }], ctorParameters: () => [{ type: i1.MatBottomSheet }], propDecorators: { filtersSelected: [{
                 type: Output
             }], filterTemplate: [{
                 type: ViewChild,
@@ -233,8 +216,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class SearchHistoryDisplayerComponent {
     constructor() {
-        this.placeholder = "";
-        this.isDropDown = false;
+        this.searchHistory = input();
+        this.placeholder = input("");
+        this.isDropDown = input(false);
         this.valueCompleted = new EventEmitter();
         this.searchField = null;
         this.searchTrigger = null;
@@ -246,15 +230,17 @@ class SearchHistoryDisplayerComponent {
         return this.searchField?.nativeElement.offsetWidth;
     }
     get listRecentSearches() {
-        if (this.searchHistory?.type) {
-            const storedSearches = this._getFromLocalStorage(this.searchHistory?.type);
+        const searchHistoryValue = this.searchHistory();
+        if (searchHistoryValue?.type) {
+            const storedSearches = this._getFromLocalStorage(searchHistoryValue.type);
             const searches = storedSearches.map((obj) => obj.research);
             return searches;
         }
         return null;
     }
     searchCompleted(search) {
-        if (this.searchHistory?.type) {
+        const searchHistoryValue = this.searchHistory();
+        if (searchHistoryValue?.type) {
             this._saveInLocalStorage(search);
         }
         this.input.value = "";
@@ -266,8 +252,9 @@ class SearchHistoryDisplayerComponent {
         return JSON.parse(LocalStorage.get("search-" + type) || "[]");
     }
     _saveInLocalStorage(searchValue) {
-        if (this.searchHistory?.type) {
-            let storedSearches = this._getFromLocalStorage(this.searchHistory?.type);
+        const searchHistoryValue = this.searchHistory();
+        if (searchHistoryValue?.type) {
+            let storedSearches = this._getFromLocalStorage(searchHistoryValue.type);
             const search = storedSearches.find((s) => s.research === searchValue);
             if (search) {
                 search.storageTime = new Date();
@@ -279,7 +266,7 @@ class SearchHistoryDisplayerComponent {
                 });
             }
             this.orderAndSelect(storedSearches);
-            LocalStorage.set("search-" + this.searchHistory?.type || "", JSON.stringify(storedSearches.slice(0, 5)));
+            LocalStorage.set("search-" + searchHistoryValue.type || "", JSON.stringify(storedSearches.slice(0, 5)));
         }
     }
     orderAndSelect(items) {
@@ -290,7 +277,7 @@ class SearchHistoryDisplayerComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchHistoryDisplayerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchHistoryDisplayerComponent, isStandalone: true, selector: "ta-search-history-displayer", inputs: { searchHistory: "searchHistory", placeholder: "placeholder", isDropDown: "isDropDown" }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchField", first: true, predicate: ["searchField"], descendants: true, read: ElementRef }, { propertyName: "searchTrigger", first: true, predicate: ["searchField"], descendants: true, read: MatMenuTrigger }], ngImport: i0, template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory?.type && this.isDropDown === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory?.type && this.isDropDown === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ContactInformationComponent, selector: "ta-contact-information", inputs: ["value", "icon", "localIcon"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ListContainerComponent, selector: "ta-list-container" }, { kind: "component", type: ListElementComponent, selector: "ta-list-element", inputs: ["withSeparator", "flexColumn"], outputs: ["action"] }, { kind: "component", type: ListTitleComponent, selector: "ta-list-title" }, { kind: "component", type: ListTagComponent, selector: "ta-list-tag" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: MatMenu, selector: "mat-menu", inputs: ["backdropClass", "aria-label", "aria-labelledby", "aria-describedby", "xPosition", "yPosition", "overlapTrigger", "hasBackdrop", "class", "classList"], outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "directive", type: MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", inputs: ["mat-menu-trigger-for", "matMenuTriggerFor", "matMenuTriggerData", "matMenuTriggerRestoreFocus"], outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchHistoryDisplayerComponent, isStandalone: true, selector: "ta-search-history-displayer", inputs: { searchHistory: { classPropertyName: "searchHistory", publicName: "searchHistory", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, isDropDown: { classPropertyName: "isDropDown", publicName: "isDropDown", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchField", first: true, predicate: ["searchField"], descendants: true, read: ElementRef }, { propertyName: "searchTrigger", first: true, predicate: ["searchField"], descendants: true, read: MatMenuTrigger }], ngImport: i0, template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown()\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory()?.type && this.isDropDown() === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ContactInformationComponent, selector: "ta-contact-information", inputs: ["value", "icon", "localIcon"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ListContainerComponent, selector: "ta-list-container" }, { kind: "component", type: ListElementComponent, selector: "ta-list-element", inputs: ["withSeparator", "flexColumn"], outputs: ["action"] }, { kind: "component", type: ListTitleComponent, selector: "ta-list-title" }, { kind: "component", type: ListTagComponent, selector: "ta-list-tag" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: MatMenu, selector: "mat-menu", inputs: ["backdropClass", "aria-label", "aria-labelledby", "aria-describedby", "xPosition", "yPosition", "overlapTrigger", "hasBackdrop", "class", "classList"], outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "directive", type: MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", inputs: ["mat-menu-trigger-for", "matMenuTriggerFor", "matMenuTriggerData", "matMenuTriggerRestoreFocus"], outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchHistoryDisplayerComponent, decorators: [{
             type: Component,
@@ -308,14 +295,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         MatMenu,
                         MatMenuTrigger,
                         NgTemplateOutlet,
-                    ], template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory?.type && this.isDropDown === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory?.type && this.isDropDown === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n" }]
-        }], propDecorators: { searchHistory: [{
-                type: Input
-            }], placeholder: [{
-                type: Input
-            }], isDropDown: [{
-                type: Input
-            }], valueCompleted: [{
+                    ], template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown()\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory()?.type && this.isDropDown() === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n" }]
+        }], propDecorators: { valueCompleted: [{
                 type: Output
             }], searchField: [{
                 type: ViewChild,
@@ -332,12 +313,13 @@ class SearchDisplayerComponent extends TaBaseComponent {
     constructor(_bottomSheet) {
         super();
         this._bottomSheet = _bottomSheet;
-        this.container = "button";
-        this.placeholder = "";
+        this.container = input("button");
+        this.placeholder = input("");
+        this.searchHistory = input();
         this.valueCompleted = new EventEmitter();
     }
     openDialog() {
-        if (!this.searchHistory?.type) {
+        if (!this.searchHistory()?.type) {
             return;
         }
         this._bottomSheet.open(BottomSheetTemplateGenericComponent, {
@@ -356,7 +338,7 @@ class SearchDisplayerComponent extends TaBaseComponent {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchDisplayerComponent, deps: [{ token: i1.MatBottomSheet }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchDisplayerComponent, isStandalone: true, selector: "ta-search-displayer", inputs: { container: "container", placeholder: "placeholder", searchHistory: "searchHistory" }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchTemplate", first: true, predicate: ["searchTemplate"], descendants: true, read: TemplateRef }], usesInheritance: true, ngImport: i0, template: "@if (this.mobileDetection) { @if (this.container === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</ta-button>\n} @else if (this.container === 'link') {\n<div (click)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</div>\n} } @if (!this.mobileDetection) {\n<ng-template\n  [ngTemplateOutlet]=\"searchTemplate\"\n  [ngTemplateOutletContext]=\"{ options: { isDropDown: true } }\"\n></ng-template>\n}\n\n<ng-template #searchTemplate let-options=\"options\">\n  <ta-search-history-displayer\n    [placeholder]=\"this.placeholder\"\n    [searchHistory]=\"this.searchHistory\"\n    [isDropDown]=\"options.isDropDown\"\n    (valueCompleted)=\"this.action($event)\"\n  ></ta-search-history-displayer>\n</ng-template>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: SearchHistoryDisplayerComponent, selector: "ta-search-history-displayer", inputs: ["searchHistory", "placeholder", "isDropDown"], outputs: ["valueCompleted"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchDisplayerComponent, isStandalone: true, selector: "ta-search-displayer", inputs: { container: { classPropertyName: "container", publicName: "container", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, searchHistory: { classPropertyName: "searchHistory", publicName: "searchHistory", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchTemplate", first: true, predicate: ["searchTemplate"], descendants: true, read: TemplateRef }], usesInheritance: true, ngImport: i0, template: "@if (this.mobileDetection) { @if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</div>\n} } @if (!this.mobileDetection) {\n<ng-template\n  [ngTemplateOutlet]=\"searchTemplate\"\n  [ngTemplateOutletContext]=\"{ options: { isDropDown: true } }\"\n></ng-template>\n}\n\n<ng-template #searchTemplate let-options=\"options\">\n  <ta-search-history-displayer\n    [placeholder]=\"this.placeholder()\"\n    [searchHistory]=\"this.searchHistory()\"\n    [isDropDown]=\"options.isDropDown\"\n    (valueCompleted)=\"this.action($event)\"\n  ></ta-search-history-displayer>\n</ng-template>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: SearchHistoryDisplayerComponent, selector: "ta-search-history-displayer", inputs: ["searchHistory", "placeholder", "isDropDown"], outputs: ["valueCompleted"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchDisplayerComponent, decorators: [{
             type: Component,
@@ -365,14 +347,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         FontIconComponent,
                         SearchHistoryDisplayerComponent,
                         ButtonComponent,
-                    ], template: "@if (this.mobileDetection) { @if (this.container === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</ta-button>\n} @else if (this.container === 'link') {\n<div (click)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</div>\n} } @if (!this.mobileDetection) {\n<ng-template\n  [ngTemplateOutlet]=\"searchTemplate\"\n  [ngTemplateOutletContext]=\"{ options: { isDropDown: true } }\"\n></ng-template>\n}\n\n<ng-template #searchTemplate let-options=\"options\">\n  <ta-search-history-displayer\n    [placeholder]=\"this.placeholder\"\n    [searchHistory]=\"this.searchHistory\"\n    [isDropDown]=\"options.isDropDown\"\n    (valueCompleted)=\"this.action($event)\"\n  ></ta-search-history-displayer>\n</ng-template>\n" }]
-        }], ctorParameters: () => [{ type: i1.MatBottomSheet }], propDecorators: { container: [{
-                type: Input
-            }], placeholder: [{
-                type: Input
-            }], searchHistory: [{
-                type: Input
-            }], valueCompleted: [{
+                    ], template: "@if (this.mobileDetection) { @if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</div>\n} } @if (!this.mobileDetection) {\n<ng-template\n  [ngTemplateOutlet]=\"searchTemplate\"\n  [ngTemplateOutletContext]=\"{ options: { isDropDown: true } }\"\n></ng-template>\n}\n\n<ng-template #searchTemplate let-options=\"options\">\n  <ta-search-history-displayer\n    [placeholder]=\"this.placeholder()\"\n    [searchHistory]=\"this.searchHistory()\"\n    [isDropDown]=\"options.isDropDown\"\n    (valueCompleted)=\"this.action($event)\"\n  ></ta-search-history-displayer>\n</ng-template>\n" }]
+        }], ctorParameters: () => [{ type: i1.MatBottomSheet }], propDecorators: { valueCompleted: [{
                 type: Output
             }], searchTemplate: [{
                 type: ViewChild,
@@ -685,6 +661,8 @@ class DocumentsComponent extends TaBaseComponent {
         super();
         this._bottomSheet = _bottomSheet;
         this._dialog = _dialog;
+        this.document$ = input.required();
+        this.canAddFile = input.required();
         this.filesSaved = new EventEmitter();
         this.filesDeleted = new EventEmitter();
         this.filterHelper = new FilterHelper([
@@ -740,7 +718,7 @@ class DocumentsComponent extends TaBaseComponent {
         })));
     }
     _filteredDocuments$(filter) {
-        return this.document$.pipe(map((documents) => documents.filter((document) => {
+        return this.document$().pipe(map((documents) => documents.filter((document) => {
             if (filter === "all")
                 return true;
             if (filter === "mine" && document.isOwner)
@@ -807,16 +785,12 @@ class DocumentsComponent extends TaBaseComponent {
         this.menu = this.filterHelper.getMenu();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DocumentsComponent, deps: [{ token: i1.MatBottomSheet }, { token: i2$1.MatDialog }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: DocumentsComponent, isStandalone: true, selector: "ta-documents", inputs: { document$: "document$", canAddFile: "canAddFile" }, outputs: { filesSaved: "filesSaved", filesDeleted: "filesDeleted" }, usesInheritance: true, ngImport: i0, template: "<ta-files-display\n  [files$]=\"this.getDocs$()\"\n  [menu]=\"this.menu\"\n  [canAddFile]=\"this.canAddFile\"\n  fileType=\"Document\"\n  (fileSelected)=\"this.downloadDocument($event)\"\n  (moreInformationSelected)=\"this.openBottomSheet($event)\"\n  (fileUploading)=\"this.uploadDocuments($event)\"\n>\n</ta-files-display>\n", styles: [":host ::ng-deep app-card .card{border-radius:10px}\n"], dependencies: [{ kind: "component", type: FilesDisplayComponent, selector: "ta-files-display", inputs: ["files$", "menu", "canAddFile", "tempFiles", "fileType"], outputs: ["fileSelected", "moreInformationSelected", "fileUploading"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: DocumentsComponent, isStandalone: true, selector: "ta-documents", inputs: { document$: { classPropertyName: "document$", publicName: "document$", isSignal: true, isRequired: true, transformFunction: null }, canAddFile: { classPropertyName: "canAddFile", publicName: "canAddFile", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { filesSaved: "filesSaved", filesDeleted: "filesDeleted" }, usesInheritance: true, ngImport: i0, template: "<ta-files-display\n  [files$]=\"this.getDocs$()\"\n  [menu]=\"this.menu\"\n  [canAddFile]=\"this.canAddFile()\"\n  [tempFiles]=\"[]\"\n  fileType=\"Document\"\n  (fileSelected)=\"this.downloadDocument($event)\"\n  (moreInformationSelected)=\"this.openBottomSheet($event)\"\n  (fileUploading)=\"this.uploadDocuments($event)\"\n>\n</ta-files-display>\n", styles: [":host ::ng-deep app-card .card{border-radius:10px}\n"], dependencies: [{ kind: "component", type: FilesDisplayComponent, selector: "ta-files-display", inputs: ["files$", "menu", "canAddFile", "tempFiles", "fileType"], outputs: ["fileSelected", "moreInformationSelected", "fileUploading"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DocumentsComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-documents", standalone: true, imports: [FilesDisplayComponent], template: "<ta-files-display\n  [files$]=\"this.getDocs$()\"\n  [menu]=\"this.menu\"\n  [canAddFile]=\"this.canAddFile\"\n  fileType=\"Document\"\n  (fileSelected)=\"this.downloadDocument($event)\"\n  (moreInformationSelected)=\"this.openBottomSheet($event)\"\n  (fileUploading)=\"this.uploadDocuments($event)\"\n>\n</ta-files-display>\n", styles: [":host ::ng-deep app-card .card{border-radius:10px}\n"] }]
-        }], ctorParameters: () => [{ type: i1.MatBottomSheet }, { type: i2$1.MatDialog }], propDecorators: { document$: [{
-                type: Input
-            }], canAddFile: [{
-                type: Input
-            }], filesSaved: [{
+            args: [{ selector: "ta-documents", standalone: true, imports: [FilesDisplayComponent], template: "<ta-files-display\n  [files$]=\"this.getDocs$()\"\n  [menu]=\"this.menu\"\n  [canAddFile]=\"this.canAddFile()\"\n  [tempFiles]=\"[]\"\n  fileType=\"Document\"\n  (fileSelected)=\"this.downloadDocument($event)\"\n  (moreInformationSelected)=\"this.openBottomSheet($event)\"\n  (fileUploading)=\"this.uploadDocuments($event)\"\n>\n</ta-files-display>\n", styles: [":host ::ng-deep app-card .card{border-radius:10px}\n"] }]
+        }], ctorParameters: () => [{ type: i1.MatBottomSheet }, { type: i2$1.MatDialog }], propDecorators: { filesSaved: [{
                 type: Output
             }], filesDeleted: [{
                 type: Output
@@ -834,7 +808,7 @@ class FiltersComponent {
         this.isFilterOpen = !this.isFilterOpen;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: FiltersComponent, isStandalone: true, selector: "ta-filters", ngImport: i0, template: "<div class=\"container p-space-xs\">\n  <div class=\"row align-items-center\">\n    <div class=\"col-10 pt-space-0\">list of tag</div>\n    <div class=\"col-2\">\n      <ta-link (action)=\"this.changeFilterOpen()\">\n        <ta-font-icon\n          [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n        ></ta-font-icon>\n      </ta-link>\n    </div>\n  </div>\n</div>\n<div class=\"list\">\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <ta-filters-form></ta-filters-form>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LayoutWithPanelComponent, selector: "ta-layout-with-panel", inputs: ["open"] }, { kind: "component", type: LayoutPanelComponent, selector: "ta-layout-panel" }, { kind: "component", type: FiltersFormComponent, selector: "ta-filters-form", inputs: ["form", "askValidation$"], outputs: ["filtersSelected"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: FiltersComponent, isStandalone: true, selector: "ta-filters", ngImport: i0, template: "<div class=\"container p-space-xs\">\n  <div class=\"row align-items-center\">\n    <div class=\"col-10 pt-space-0\">list of tag</div>\n    <div class=\"col-2\">\n      <ta-link (action)=\"this.changeFilterOpen()\">\n        <ta-font-icon\n          [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n        ></ta-font-icon>\n      </ta-link>\n    </div>\n  </div>\n</div>\n<div class=\"list\">\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <ta-filters-form [askValidation$]=\"this.askValidation$\"></ta-filters-form>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LayoutWithPanelComponent, selector: "ta-layout-with-panel", inputs: ["open"] }, { kind: "component", type: LayoutPanelComponent, selector: "ta-layout-panel" }, { kind: "component", type: FiltersFormComponent, selector: "ta-filters-form", inputs: ["form", "askValidation$"], outputs: ["filtersSelected"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersComponent, decorators: [{
             type: Component,
@@ -845,12 +819,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         LayoutPanelComponent,
                         FiltersFormComponent,
                         LayoutContentComponent,
-                    ], template: "<div class=\"container p-space-xs\">\n  <div class=\"row align-items-center\">\n    <div class=\"col-10 pt-space-0\">list of tag</div>\n    <div class=\"col-2\">\n      <ta-link (action)=\"this.changeFilterOpen()\">\n        <ta-font-icon\n          [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n        ></ta-font-icon>\n      </ta-link>\n    </div>\n  </div>\n</div>\n<div class=\"list\">\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <ta-filters-form></ta-filters-form>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n" }]
+                    ], template: "<div class=\"container p-space-xs\">\n  <div class=\"row align-items-center\">\n    <div class=\"col-10 pt-space-0\">list of tag</div>\n    <div class=\"col-2\">\n      <ta-link (action)=\"this.changeFilterOpen()\">\n        <ta-font-icon\n          [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n        ></ta-font-icon>\n      </ta-link>\n    </div>\n  </div>\n</div>\n<div class=\"list\">\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <ta-filters-form [askValidation$]=\"this.askValidation$\"></ta-filters-form>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n" }]
         }] });
 
 class TextToClipboardComponent extends TaBaseComponent {
     constructor() {
         super(...arguments);
+        this.value = input.required();
         this._notificationService = inject(LAZY_SERVICE_TOKEN);
         this.copyContent = async () => {
             const successNotification = (message) => {
@@ -859,18 +834,16 @@ class TextToClipboardComponent extends TaBaseComponent {
             const errorNotification = (message) => {
                 this._notificationService.addNotification(message, ENotificationCode.error);
             };
-            await copyTextToClipboard(this.value, successNotification, errorNotification);
+            await copyTextToClipboard(this.value(), successNotification, errorNotification);
         };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextToClipboardComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TextToClipboardComponent, isStandalone: true, selector: "ta-text-to-clipboard", inputs: { value: "value" }, usesInheritance: true, ngImport: i0, template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TextToClipboardComponent, isStandalone: true, selector: "ta-text-to-clipboard", inputs: { value: { classPropertyName: "value", publicName: "value", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextToClipboardComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-text-to-clipboard", standalone: true, imports: [FontIconComponent], template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n" }]
-        }], propDecorators: { value: [{
-                type: Input
-            }] } });
+        }] });
 
 class TaTranslationCore extends TaLazyTranslationService {
     constructor() {
