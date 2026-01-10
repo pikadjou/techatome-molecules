@@ -1,10 +1,7 @@
 @let profile = this.profile$ | async;
 <div class="mx-space-sm" appStopPropagation>
   <ta-loader [isLoading]="this.requestState.isLoading()">
-    <ta-error
-      [message]="this.requestState.getErrorMessage()"
-      [code]="this.requestState.getErrorStatus()"
-    >
+    <ta-error [message]="this.requestState.getErrorMessage()" [code]="this.requestState.getErrorStatus()">
       <ta-empty [isEmpty]="!profile">
         <div class="p-space-sm bdp-b color-border-primary">
           <ta-inline-profile-data
@@ -13,41 +10,33 @@
             (click)="this.navigateToProfile()"
           ></ta-inline-profile-data>
           @if (this.isEditable()) {
-          <div class="my-space-md">
-            <ta-button
-              (action)="this.navigateToEditProfile()"
-              [style]="'secondary'"
-            >
-              <div class="align-center button-content">
-                <ta-font-icon
-                  name="modify"
-                  class="mr-space-xs modify-icon"
-                ></ta-font-icon>
-                <div class="text">
-                  {{ "user.modify" | translate }}
+            <div class="my-space-md">
+              <ta-button (action)="this.navigateToEditProfile()" [style]="'secondary'">
+                <div class="align-center button-content">
+                  <ta-font-icon name="modify" class="mr-space-xs modify-icon"></ta-font-icon>
+                  <div class="text">
+                    {{ 'user.modify' | translate }}
+                  </div>
                 </div>
-              </div>
-            </ta-button>
-          </div>
+              </ta-button>
+            </div>
           }
         </div>
       </ta-empty>
     </ta-error>
   </ta-loader>
   @if (this.profileMenu()) {
-  <div class="bdp-b color-border-primary pt-space-xs">
-    <ta-menu
-      [menu]="this.profileMenu()!"
-      [style]="'dark'"
-      [container]="'overflow'"
-    ></ta-menu>
-  </div>
-  } @let disconnectionMenu = this.disconnectionMenu(); @if (disconnectionMenu) {
-  <div class="bdp-b pt-space-xs">
-    <ta-menu [menu]="disconnectionMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
-  </div>
+    <div class="bdp-b color-border-primary pt-space-xs">
+      <ta-menu [menu]="this.profileMenu()!" [style]="'dark'" [container]="'overflow'"></ta-menu>
+    </div>
+  }
+  @let disconnectionMenu = this.disconnectionMenu();
+  @if (disconnectionMenu) {
+    <div class="bdp-b pt-space-xs">
+      <ta-menu [menu]="disconnectionMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
+    </div>
   }
   <div class="ta-c">
-    <small>{{ this.appVersion }}</small>
+    <small>{{ this.appVersion() }}</small>
   </div>
 </div>

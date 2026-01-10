@@ -34,4 +34,4 @@ export interface GraphMutationPayload {
     mutation: TypedDocumentNode<unknown, unknown>;
     variables: any;
 }
-export declare function createQuery<T>(name: string, input: GraphQueryInput<T>): GraphPayload;
+export declare function createQuery<T>(name: string, input?: GraphQueryInput<T>): GraphPayload;

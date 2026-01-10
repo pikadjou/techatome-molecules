@@ -1,8 +1,0 @@
-<ta-notification-item [notification]="this.notification()" (click)="this.goTo()">
-  <ta-notification-item-title>
-    {{
-      "notification.items.new-invoice.title" | translate : this.getTranslation()
-    }}
-  </ta-notification-item-title>
-  <ta-notification-item-icon [level]="this.notification().level" icon="bills"></ta-notification-item-icon>
-</ta-notification-item>

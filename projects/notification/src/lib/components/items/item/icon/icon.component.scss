@@ -1,9 +1,0 @@
-@use "ta/utils/mixins/common";
-
-.icon-container {
-  padding: common.get-var(space, md);
-  border-radius: common.get-var(radius, full);
-
-  background-color: common.get-var(surface, hover, secondary);
-  color: common.get-var(icon, brand, primary);
-}
