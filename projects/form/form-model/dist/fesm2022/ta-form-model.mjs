@@ -477,6 +477,7 @@ var EAddressValues;
 (function (EAddressValues) {
     EAddressValues["street"] = "street";
     EAddressValues["number"] = "number";
+    EAddressValues["floor"] = "floor";
     EAddressValues["city"] = "city";
     EAddressValues["zipCode"] = "zipCode";
     EAddressValues["country"] = "country";
@@ -488,40 +489,46 @@ class InputAddress extends InputBase {
         super.value = data;
         this.street.value = data?.street ?? null;
         this.number.value = data?.number ?? null;
+        this.floor.value = data?.floor ?? null;
         this.country.value = data?.country ?? null;
         this.city.value = data?.city ?? null;
         this.zipCode.value = data?.zipCode ?? null;
     }
     constructor(options = {}) {
         super(options);
-        this.controlType = "address";
+        this.controlType = 'address';
         this.street = new InputTextBox({
             key: EAddressValues.street,
-            label: "street",
+            label: 'street',
         });
         this.number = new InputTextBox({
             key: EAddressValues.number,
-            label: "number",
+            label: 'number',
+        });
+        this.floor = new InputTextBox({
+            key: EAddressValues.floor,
+            label: 'floor',
         });
         this.city = new InputTextBox({
             key: EAddressValues.city,
-            label: "city",
+            label: 'city',
         });
         this.country = new InputTextBox({
             key: EAddressValues.country,
-            label: "country",
+            label: 'country',
         });
         this.zipCode = new InputTextBox({
             key: EAddressValues.zipCode,
-            label: "zipCode",
+            label: 'zipCode',
         });
-        this.type = "address";
+        this.type = 'address';
         this.value = this._value();
     }
     updateValue() {
         const data = {
             street: this.street.value,
             number: this.number.value,
+            floor: this.floor.value,
             city: this.city.value,
             zipCode: this.zipCode.value,
             country: this.country.value,
@@ -529,6 +536,16 @@ class InputAddress extends InputBase {
             latitude: null,
         };
         this.value = data;
+    }
+    static formatAddressForm(data) {
+        return {
+            street: data[EAddressValues.street],
+            number: data[EAddressValues.number],
+            floor: data[EAddressValues.floor],
+            city: data[EAddressValues.city],
+            zipCode: data[EAddressValues.zipCode],
+            country: data[EAddressValues.country],
+        };
     }
 }
 

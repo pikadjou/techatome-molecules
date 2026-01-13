@@ -1,8 +1,9 @@
-import { IInputBase, InputBase } from "./base";
-import { InputTextBox } from "./textbox";
+import { IInputBase, InputBase } from './base';
+import { InputTextBox } from './textbox';
 export declare enum EAddressValues {
     street = "street",
     number = "number",
+    floor = "floor",
     city = "city",
     zipCode = "zipCode",
     country = "country",
@@ -12,6 +13,7 @@ export declare enum EAddressValues {
 export interface IAddressValue {
     street: string | null;
     number: string | null;
+    floor: string | null;
     city: string | null;
     zipCode: string | null;
     country: string | null;
@@ -25,9 +27,18 @@ export declare class InputAddress extends InputBase<Partial<IAddressValue>> {
     set value(data: Partial<IAddressValue> | null);
     street: InputTextBox<string>;
     number: InputTextBox<string>;
+    floor: InputTextBox<string>;
     city: InputTextBox<string>;
     country: InputTextBox<string>;
     zipCode: InputTextBox<string>;
     constructor(options?: IInputAddress);
     updateValue(): void;
+    static formatAddressForm(data: any): {
+        street: any;
+        number: any;
+        floor: any;
+        city: any;
+        zipCode: any;
+        country: any;
+    };
 }

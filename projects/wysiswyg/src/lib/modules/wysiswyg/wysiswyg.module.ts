@@ -1,12 +1,11 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { TaNotificationModule } from "@ta/notification";
-import { TaUiModule } from "@ta/ui";
-import { SafePipe } from "@ta/utils";
+import { TaUiModule } from '@ta/ui';
+import { SafePipe } from '@ta/utils';
 
-import { BlockTextComponent } from "./components/block-text/block-text.component";
-import { EditorInputComponent } from "./components/input/input.component";
+import { BlockTextComponent } from './components/block-text/block-text.component';
+import { EditorInputComponent } from './components/input/input.component';
 
 /**
  * @deprecated Use standalone components instead.
@@ -21,14 +20,7 @@ import { EditorInputComponent } from "./components/input/input.component";
  */
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    TaUiModule,
-    TaNotificationModule,
-    SafePipe,
-    BlockTextComponent,
-    EditorInputComponent,
-  ],
+  imports: [CommonModule, TaUiModule, SafePipe, BlockTextComponent, EditorInputComponent],
   exports: [BlockTextComponent, EditorInputComponent],
 })
 export class TaWysiswygModule {}

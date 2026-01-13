@@ -1,6 +1,6 @@
 import * as i0 from '@angular/core';
 import { input, Component, EventEmitter, inject, ViewChild, Output, NgModule } from '@angular/core';
-import { ENotificationCode, NotificationInlineComponent, TaNotificationModule } from '@ta/notification';
+import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TitleComponent, TextComponent, ToastComponent, TaUiModule } from '@ta/ui';
 import { TaBaseComponent, SafePipe, isNotEmptyObject, isNonNullable } from '@ta/utils';
 import Delimiter from '@editorjs/delimiter';
@@ -753,29 +753,14 @@ const convertBlocksToHtml = (blocks) => {
  */
 class TaWysiswygModule {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule,
-            TaUiModule,
-            TaNotificationModule,
-            SafePipe,
-            BlockTextComponent,
-            EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule,
-            TaUiModule,
-            TaNotificationModule,
-            BlockTextComponent] }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, SafePipe, BlockTextComponent, EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, BlockTextComponent] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: [],
-                    imports: [
-                        CommonModule,
-                        TaUiModule,
-                        TaNotificationModule,
-                        SafePipe,
-                        BlockTextComponent,
-                        EditorInputComponent,
-                    ],
+                    imports: [CommonModule, TaUiModule, SafePipe, BlockTextComponent, EditorInputComponent],
                     exports: [BlockTextComponent, EditorInputComponent],
                 }]
         }] });

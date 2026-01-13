@@ -12,16 +12,23 @@
 ></mat-google-maps-autocomplete> -->
 
 <div class="grid g-space-sm">
-  <div class="two-thirds">
+  <div class="one-half">
     <ta-input-textbox
       [input]="this.input.street"
       [standalone]="true"
       (valueChanged)="this.dispatchNewValue()"
     ></ta-input-textbox>
   </div>
-  <div class="one-third">
+  <div class="one-fourth">
     <ta-input-textbox
       [input]="this.input.number"
+      [standalone]="true"
+      (valueChanged)="this.dispatchNewValue()"
+    ></ta-input-textbox>
+  </div>
+  <div class="one-fourth">
+    <ta-input-textbox
+      [input]="this.input.floor"
       [standalone]="true"
       (valueChanged)="this.dispatchNewValue()"
     ></ta-input-textbox>
