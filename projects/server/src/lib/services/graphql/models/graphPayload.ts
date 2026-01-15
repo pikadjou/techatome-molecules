@@ -17,7 +17,7 @@ export type GraphReponsePaged<T> = {
 };
 
 export type OrderType<T> = {
-  [index in keyof T]: 'ASC' | 'DESC';
+  [index in keyof Partial<T>]: 'ASC' | 'DESC';
 };
 
 export type WhereType<T> = {
