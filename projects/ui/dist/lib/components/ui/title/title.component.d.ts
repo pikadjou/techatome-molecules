@@ -4,7 +4,7 @@ export declare class TitleComponent {
      * Title level
      * Higher value means lower title size
      */
-    level: import("@angular/core").InputSignal<2 | 1 | 3 | 4 | 5 | 6>;
+    level: import("@angular/core").InputSignal<3 | 4 | 6 | 5 | 2 | 1>;
     /**
      * Title theme
      * If set to true, title will be themed with CSS

@@ -1,15 +1,15 @@
 {
-  "button.submit": "Soumettre",
-  "button.cancel": "Annuler",
-  "button.confirm": "Confirmer",
-  "button.close": "Fermer",
-  "dialog.title": "Dialogue",
-  "dialog.confirmClose": "Êtes-vous sûr de vouloir fermer ?",
-  "table.noData": "Aucune donnée disponible",
-  "table.loading": "Chargement...",
   "boolean-icon.not-communicated": "Non communiqué",
+  "button.cancel": "Annuler",
+  "button.close": "Fermer",
+  "button.confirm": "Confirmer",
+  "button.submit": "Soumettre",
+  "container.empty.light-message": "Aucun élément à afficher",
+  "container.loading.light-message": "Chargement en cours...",
   "container.validation.modal.cta.cancel": "Annuler",
   "container.validation.modal.cta.ok": "OK",
+  "dialog.confirmClose": "Êtes-vous sûr de vouloir fermer ?",
+  "dialog.title": "Dialogue",
   "duration.less-than-one": "Moins d'un",
   "layout.notfound.content": "La page que vous recherchez n'existe pas",
   "layout.notfound.cta": "Retour à l'accueil",
@@ -19,5 +19,6 @@
   "pwa.install": "Installer",
   "pwa.no-more": "Ne plus afficher",
   "pwa.title": "Installer l'application",
-  "container.empty.light-message": "Aucun élément à afficher"
+  "table.loading": "Chargement...",
+  "table.noData": "Aucune donnée disponible"
 }

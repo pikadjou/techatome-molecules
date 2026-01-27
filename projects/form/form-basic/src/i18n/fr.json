@@ -1,9 +1,10 @@
 {
-  "field.required": "Ce champ est requis",
   "field.invalid": "Valeur invalide",
+  "field.required": "Ce champ est requis",
+  "save": "Enregistrer",
   "validation.email": "Email invalide",
-  "validation.min": "Valeur minimale : {{min}}",
   "validation.max": "Valeur maximale : {{max}}",
-  "validation.minLength": "Longueur minimale : {{minLength}} caractères",
-  "validation.maxLength": "Longueur maximale : {{maxLength}} caractères"
+  "validation.maxLength": "Longueur maximale : {{maxLength}} caractères",
+  "validation.min": "Valeur minimale : {{min}}",
+  "validation.minLength": "Longueur minimale : {{minLength}} caractères"
 }

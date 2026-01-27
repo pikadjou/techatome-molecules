@@ -1,17 +1,17 @@
-import { DatePipe, NgIf } from "@angular/common";
-import { Component, input } from "@angular/core";
+import { DatePipe } from '@angular/common';
+import { Component, input } from '@angular/core';
 
-import { TranslateModule } from "@ngx-translate/core";
-import { differenceInCalendarDays } from "date-fns";
+import { TranslateModule } from '@ngx-translate/core';
+import { differenceInCalendarDays } from 'date-fns';
 
-import { TaTranslationUI } from "../../../translation.service";
+import { TaTranslationUI } from '../../../translation.service';
 
 @Component({
-  selector: "ta-time-ago",
-  templateUrl: "./time-ago.component.html",
-  styleUrls: ["./time-ago.component.scss"],
+  selector: 'ta-time-ago',
+  templateUrl: './time-ago.component.html',
+  styleUrls: ['./time-ago.component.scss'],
   standalone: true,
-  imports: [NgIf, TranslateModule, DatePipe],
+  imports: [TranslateModule, DatePipe],
 })
 export class TimeAgoComponent {
   date = input.required<string>();
@@ -32,21 +32,24 @@ export class TimeAgoComponent {
 
   private _getTranslationKey(diffDays: number): string {
     if (diffDays === 0) {
-      return "ui.common.today";
+      return 'ui.common.today';
     }
     if (diffDays === -1) {
-      return "ui.common.yesterday";
+      return 'ui.common.yesterday';
     }
     if (diffDays === 1) {
-      return "ui.common.tomorrow";
+      return 'ui.common.tomorrow';
     }
     if (diffDays < -1 && diffDays >= -3) {
-      return "ui.common.above";
+      return 'ui.common.above';
     }
     if (diffDays > 1 && diffDays <= 3) {
-      return "ui.common.ahead";
+      return 'ui.common.ahead';
     }
-    return "ui.common.to-date";
+    if (this.withHours()) {
+      return 'ui.common.to-date-with-hours';
+    }
+    return 'ui.common.to-date';
   }
 
   constructor() {

@@ -1,12 +1,12 @@
 import { NgClass, NgTemplateOutlet, NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Component, input, EventEmitter, Output, signal, HostListener, Injectable, NgModule } from '@angular/core';
+import { Injectable, Component, input, EventEmitter, Output, signal, HostListener, NgModule } from '@angular/core';
 import * as i1$1 from '@angular/forms';
 import { ReactiveFormsModule, FormGroup, FormsModule } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
 import { distinctUntilChanged, BehaviorSubject } from 'rxjs';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
-import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
+import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
 import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent, TaContainerModule, TaUiModule } from '@ta/ui';
 import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective, TaDirectivePipeModule } from '@ta/utils';
 import { TaAbstractInputComponent, TextBoxComponent, FormLabelComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent, TaFormInputsModule } from '@ta/form-input';
@@ -19,6 +19,20 @@ import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
 import { Menu, MenuBase, ToggleNavigationComponent, TaMenuModule } from '@ta/menu';
 import { MatNativeDateModule, ShowOnDirtyErrorStateMatcher, ErrorStateMatcher } from '@angular/material/core';
+
+class TaTranslationForm extends TaLazyTranslationService {
+    constructor() {
+        super("form");
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationForm, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationForm, providedIn: "root" }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationForm, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: "root",
+                }]
+        }], ctorParameters: () => [] });
 
 class InputAddressComponent extends TaAbstractInputComponent {
     constructor() {
@@ -259,13 +273,14 @@ class FormComponent extends TaBaseComponent {
         this.askValidation$ = input();
         this.askOnDestroy = input();
         this.loader = input(false);
-        this.error = input({ status: ENotificationCode.none, message: "" });
+        this.error = input({ status: ENotificationCode.none, message: '' });
         this.border = input(true);
         this.canDisplayButton = input(true);
-        this.buttonTitle = input("form.save");
+        this.buttonTitle = input('form.save');
         this.onLive = input(false);
         this.valid = new EventEmitter();
         this.isFormValid = new EventEmitter();
+        TaTranslationForm.getInstance();
     }
     ngOnInit() {
         this.form = this.toFormGroup(this.inputs());
@@ -277,17 +292,17 @@ class FormComponent extends TaBaseComponent {
         }
         const askValidation = this.askValidation$();
         if (askValidation) {
-            this._registerSubscription(askValidation.subscribe((_) => this.onSubmit()));
+            this._registerSubscription(askValidation.subscribe(_ => this.onSubmit()));
         }
     }
     ngOnChanges(simpleChanges) {
-        if (simpleChanges["inputs"] && !simpleChanges["inputs"].firstChange) {
+        if (simpleChanges['inputs'] && !simpleChanges['inputs'].firstChange) {
             this.form = this.toFormGroup(this.inputs());
         }
     }
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.inputs().forEach((inputItem) => {
+        this.inputs().forEach(inputItem => {
             inputItem.destroy();
         });
         if (this.askOnDestroy()) {
@@ -308,7 +323,7 @@ class FormComponent extends TaBaseComponent {
         if (inputs === null || inputs.length === 0) {
             return group;
         }
-        inputs.forEach((input) => {
+        inputs.forEach(input => {
             input.createFormControl(group);
         });
         return group;
@@ -318,7 +333,7 @@ class FormComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FormComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-form", standalone: true, imports: [
+            args: [{ selector: 'ta-form', standalone: true, imports: [
                         AsyncPipe,
                         ReactiveFormsModule,
                         NotificationInlineComponent,
@@ -411,20 +426,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: HostListener,
                 args: ["document:click", ["$event.target"]]
             }] } });
-
-class TaTranslationForm extends TaLazyTranslationService {
-    constructor() {
-        super("form");
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationForm, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationForm, providedIn: "root" }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationForm, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: () => [] });
 
 /**
  * @deprecated Use standalone components instead.
