@@ -1,11 +1,18 @@
 {
-  "user.clientnumber": "Numéro de client",
-  "user.guard.content": "Vous n'avez pas accès à cette ressource",
-  "user.infos": "Informations",
-  "user.language": "Langue",
-  "user.login": "Se connecter",
-  "user.logout": "Se déconnecter",
-  "user.modify": "Modifier",
-  "user.params": "Paramètres",
-  "user.tenantlisttitle": "Liste des locataires"
+  "account": "Compte",
+  "clientnumber": "Numéro de client",
+  "guard.content": "Vous n'avez pas accès à cette ressource",
+  "infos": "Informations",
+  "language": "Langue",
+  "login": "Connexion",
+  "logout": "Se déconnecter",
+  "modify": "Modifier",
+  "params": "Paramètres",
+  "password.change": "Changer le mot de passe",
+  "password.forgot": "Mot de passe oublié",
+  "password.reset": "Réinitialiser le mot de passe",
+  "profile": "Profil",
+  "register": "Inscription",
+  "settings": "Paramètres",
+  "tenantlisttitle": "Liste des locataires"
 }

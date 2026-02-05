@@ -1,22 +1,22 @@
-import { Component, input, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, OnInit, input } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
-import { FontIconComponent } from "@ta/icons";
-import { TaBaseComponent } from "@ta/utils";
+import { FontIconComponent } from '@ta/icons';
+import { TaBaseComponent } from '@ta/utils';
 
-import { TitleComponent } from "../../../components/ui/title/title.component";
-import { LayoutContentComponent } from "../layout-content/layout-content.component";
-import { LayoutHeaderComponent } from "../layout-header/layout-header.component";
-import { LayoutTitleComponent } from "../layout-title/layout-title.component";
-import { TaTranslationLayout } from "../translation.service";
+import { TitleComponent } from '../../../components/ui/title/title.component';
+import { TaTranslationUI } from '../../../translation.service';
+import { LayoutContentComponent } from '../layout-content/layout-content.component';
+import { LayoutHeaderComponent } from '../layout-header/layout-header.component';
+import { LayoutTitleComponent } from '../layout-title/layout-title.component';
 
-export type ModalStyle = "full" | "big" | "classic" | "small";
+export type ModalStyle = 'full' | 'big' | 'classic' | 'small';
 @Component({
-  selector: "ta-layout-modal",
-  templateUrl: "./layout-modal.component.html",
-  styleUrls: ["./layout-modal.component.scss"],
+  selector: 'ta-layout-modal',
+  templateUrl: './layout-modal.component.html',
+  styleUrls: ['./layout-modal.component.scss'],
   standalone: true,
   imports: [
     FontIconComponent,
@@ -28,17 +28,17 @@ export type ModalStyle = "full" | "big" | "classic" | "small";
   ],
 })
 export class LayoutModalComponent extends TaBaseComponent implements OnInit {
-  style = input<ModalStyle>("classic");
+  style = input<ModalStyle>('classic');
 
-  title = input<string>("");
+  title = input<string>('');
 
   constructor(public dialogRef: MatDialogRef<any>) {
     super();
-    TaTranslationLayout.getInstance();
+    TaTranslationUI.getInstance();
   }
 
   ngOnInit() {
-    this.dialogRef.addPanelClass(this.style() + "-modal");
+    this.dialogRef.addPanelClass(this.style() + '-modal');
   }
 
   public close() {

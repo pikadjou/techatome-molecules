@@ -1,11 +1,18 @@
 {
-  "user.clientnumber": "Client number",
-  "user.guard.content": "You don't have access to this resource",
-  "user.infos": "Information",
-  "user.language": "Language",
-  "user.login": "Log in",
-  "user.logout": "Log out",
-  "user.modify": "Modify",
-  "user.params": "Settings",
-  "user.tenantlisttitle": "Tenant list"
+  "account": "Account",
+  "clientnumber": "Client number",
+  "guard.content": "You don't have access to this resource",
+  "infos": "Information",
+  "language": "Language",
+  "login": "Login",
+  "logout": "Logout",
+  "modify": "Modify",
+  "params": "Settings",
+  "password.change": "Change password",
+  "password.forgot": "Forgot password",
+  "password.reset": "Reset password",
+  "profile": "Profile",
+  "register": "Register",
+  "settings": "Settings",
+  "tenantlisttitle": "Tenant list"
 }

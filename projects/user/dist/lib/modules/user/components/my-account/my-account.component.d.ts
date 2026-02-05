@@ -1,9 +1,9 @@
-import { EventEmitter, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { Menu, MenuIcon } from "@ta/menu";
-import { TaSizes } from "@ta/styles";
-import { UserLogoData } from "@ta/ui";
-import { TaBaseComponent } from "@ta/utils";
+import { EventEmitter, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Menu, MenuIcon } from '@ta/menu';
+import { TaSizes } from '@ta/styles';
+import { UserLogoData } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class MyAccountComponent extends TaBaseComponent implements OnInit {
     profileMenu: import("@angular/core").InputSignal<Menu<import("@ta/menu").MenuBase> | null>;

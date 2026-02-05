@@ -1,6 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import * as i0 from "@angular/core";
 export declare class RatingComponent {
+    constructor();
     /**
      * Current rating value (supports decimals for partial stars)
      */

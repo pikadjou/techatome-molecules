@@ -7,6 +7,7 @@ export declare class LoaderComponent {
     skeleton: import("@angular/core").InputSignal<PlaceholderConfig | null>;
     size: import("@angular/core").InputSignal<TaSizes>;
     text: import("@angular/core").InputSignal<string>;
+    constructor();
     getPlaceholder(): Placeholder;
     static ɵfac: i0.ɵɵFactoryDeclaration<LoaderComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<LoaderComponent, "ta-loader", never, { "isLoading": { "alias": "isLoading"; "required": false; "isSignal": true; }; "skeleton": { "alias": "skeleton"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "text": { "alias": "text"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;

@@ -1,14 +1,14 @@
 // @use 'ta/external/bootstrap';
 
-@use "ta/settings/colors";
-@use "ta/settings/borders";
-@use "ta/settings/shadows";
-@use "ta/settings/fonts";
-@use "ta/settings/spaces";
-@use "ta/settings/components";
-@use "ta/settings/flex";
-@use "ta/settings/grids";
-@use "ta/settings/transitions";
+@use 'ta/settings/colors';
+@use 'ta/settings/borders';
+@use 'ta/settings/shadows';
+@use 'ta/settings/fonts';
+@use 'ta/settings/spaces';
+@use 'ta/settings/components';
+@use 'ta/settings/flex';
+@use 'ta/settings/grids';
+@use 'ta/settings/transitions';
 
 @mixin generate() {
   @include colors.generateColors();

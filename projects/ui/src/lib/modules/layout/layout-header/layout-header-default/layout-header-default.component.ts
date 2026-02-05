@@ -1,24 +1,18 @@
-import { NgIf } from "@angular/common";
-import {
-  Component,
-  EventEmitter,
-  input,
-  Output,
-  TemplateRef,
-} from "@angular/core";
-import { MatMenuModule } from "@angular/material/menu";
+import { NgIf } from '@angular/common';
+import { Component, EventEmitter, Output, TemplateRef, input } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
-import { FontIconComponent } from "@ta/icons";
-import { TaBaseComponent } from "@ta/utils";
+import { FontIconComponent } from '@ta/icons';
+import { TaBaseComponent } from '@ta/utils';
 
-import { TaTranslationLayout } from "../../translation.service";
+import { TaTranslationUI } from '../../../../translation.service';
 
 @Component({
-  selector: "ta-layout-header-default",
-  templateUrl: "./layout-header-default.component.html",
-  styleUrls: ["./layout-header-default.component.scss"],
+  selector: 'ta-layout-header-default',
+  templateUrl: './layout-header-default.component.html',
+  styleUrls: ['./layout-header-default.component.scss'],
   standalone: true,
   imports: [NgIf, FontIconComponent, TranslateModule, MatMenuModule],
 })
@@ -34,7 +28,7 @@ export class LayoutHeaderDefaultComponent extends TaBaseComponent {
 
   constructor() {
     super();
-    TaTranslationLayout.getInstance();
+    TaTranslationUI.getInstance();
   }
 
   public showBackAction() {

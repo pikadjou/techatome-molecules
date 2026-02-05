@@ -1,128 +1,225 @@
-@if (this.isLoading()) { @if (!this.skeleton()) {
-<div class="loader">
-  <div class="content">
-    <div [ngClass]="'spinner ' + this.size()">
-      <svg
-        class="svg"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 32 32"
-        fill="none"
-      >
-        <!-- Définitions pour l'animation -->
-        <defs>
-          <clipPath id="fillClip">
-            <rect class="fill-rect" x="0" y="32" width="32" height="32" />
-          </clipPath>
-        </defs>
+@if (this.isLoading()) {
+  @if (!this.skeleton()) {
+    <div class="loader">
+      <div class="content">
+        <div [ngClass]="'spinner ' + this.size()">
+          <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" fill="none">
+            <!-- Plan d'appartement vu du dessus -->
 
-        <!-- Contour de la maison -->
-        <g class="outline">
-          <!-- Toit -->
-          <path
-            d="M16 4L6 12v2h2v12h6v-8h4v8h6V14h2v-2L16 4z"
-            stroke="currentColor"
-            stroke-width="2"
-            fill="none"
-            stroke-linejoin="round"
-          />
-          <!-- Porte -->
-          <rect
-            x="13"
-            y="20"
-            width="6"
-            height="6"
-            stroke="currentColor"
-            stroke-width="1.5"
-            fill="none"
-          />
-          <!-- Poignée de porte -->
-          <circle cx="17.5" cy="23" r="0.5" fill="currentColor" />
-          <!-- Fenêtres -->
-          <rect
-            x="9"
-            y="16"
-            width="3"
-            height="3"
-            stroke="currentColor"
-            stroke-width="1.5"
-            fill="none"
-          />
-          <rect
-            x="20"
-            y="16"
-            width="3"
-            height="3"
-            stroke="currentColor"
-            stroke-width="1.5"
-            fill="none"
-          />
-          <!-- Cheminée -->
-          <rect
-            x="21"
-            y="8"
-            width="2"
-            height="4"
-            stroke="currentColor"
-            stroke-width="1.5"
-            fill="none"
-          />
-        </g>
+            <!-- Murs extérieurs -->
+            <g class="walls-outer">
+              <path class="wall wall-1" d="M10 10 H90" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              <path class="wall wall-2" d="M90 10 V70" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              <path class="wall wall-3" d="M90 70 H10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              <path class="wall wall-4" d="M10 70 V10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            </g>
 
-        <!-- Remplissage progressif -->
-        <g class="fill" clip-path="url(#fillClip)">
-          <!-- Corps de la maison -->
-          <path d="M8 14h16v12H8V14z" fill="currentColor" opacity="0.7" />
-          <!-- Toit rempli -->
-          <path
-            d="M16 4L6 12v2h20v-2L16 4z"
-            fill="currentColor"
-            opacity="0.8"
-          />
-          <!-- Porte remplie -->
-          <rect
-            x="13"
-            y="20"
-            width="6"
-            height="6"
-            fill="currentColor"
-            opacity="0.6"
-          />
-          <!-- Fenêtres remplies -->
-          <rect
-            x="9"
-            y="16"
-            width="3"
-            height="3"
-            fill="currentColor"
-            opacity="0.5"
-          />
-          <rect
-            x="20"
-            y="16"
-            width="3"
-            height="3"
-            fill="currentColor"
-            opacity="0.5"
-          />
-          <!-- Cheminée remplie -->
-          <rect
-            x="21"
-            y="8"
-            width="2"
-            height="4"
-            fill="currentColor"
-            opacity="0.6"
-          />
-        </g>
-      </svg>
+            <!-- Murs intérieurs -->
+            <g class="walls-inner">
+              <!-- Séparation salon/cuisine -->
+              <path class="wall wall-5" d="M55 10 V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <!-- Séparation chambre -->
+              <path class="wall wall-6" d="M55 45 V70" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <!-- Couloir horizontal -->
+              <path class="wall wall-7" d="M10 45 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <!-- Salle de bain -->
+              <path class="wall wall-8" d="M40 45 V70" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </g>
+
+            <!-- Portes (ouvertures) -->
+            <g class="doors">
+              <path
+                class="door door-1"
+                d="M40 35 Q48 35 48 43"
+                stroke="currentColor"
+                stroke-width="1"
+                fill="none"
+                opacity="0.5"
+              />
+              <path
+                class="door door-2"
+                d="M55 55 Q47 55 47 63"
+                stroke="currentColor"
+                stroke-width="1"
+                fill="none"
+                opacity="0.5"
+              />
+            </g>
+
+            <!-- Meubles Salon -->
+            <g class="furniture salon">
+              <!-- Canapé -->
+              <rect
+                class="furniture-item item-1"
+                x="15"
+                y="15"
+                width="18"
+                height="8"
+                rx="1"
+                fill="currentColor"
+                opacity="0.3"
+              />
+              <!-- Table basse -->
+              <rect
+                class="furniture-item item-2"
+                x="20"
+                y="26"
+                width="8"
+                height="5"
+                rx="0.5"
+                fill="currentColor"
+                opacity="0.25"
+              />
+              <!-- TV -->
+              <rect
+                class="furniture-item item-3"
+                x="15"
+                y="38"
+                width="12"
+                height="2"
+                fill="currentColor"
+                opacity="0.4"
+              />
+            </g>
+
+            <!-- Meubles Cuisine -->
+            <g class="furniture kitchen">
+              <!-- Plan de travail en L -->
+              <path class="furniture-item item-4" d="M60 12 H88 V18 H66 V30 H60 Z" fill="currentColor" opacity="0.25" />
+              <!-- Îlot central -->
+              <rect
+                class="furniture-item item-5"
+                x="70"
+                y="24"
+                width="10"
+                height="6"
+                rx="0.5"
+                fill="currentColor"
+                opacity="0.2"
+              />
+              <!-- Évier (cercle) -->
+              <circle class="furniture-item item-6" cx="75" cy="15" r="2" fill="currentColor" opacity="0.35" />
+            </g>
+
+            <!-- Meubles Chambre -->
+            <g class="furniture bedroom">
+              <!-- Lit -->
+              <rect
+                class="furniture-item item-7"
+                x="62"
+                y="50"
+                width="14"
+                height="18"
+                rx="1"
+                fill="currentColor"
+                opacity="0.3"
+              />
+              <!-- Oreillers -->
+              <rect
+                class="furniture-item item-8"
+                x="64"
+                y="51"
+                width="4"
+                height="3"
+                rx="0.5"
+                fill="currentColor"
+                opacity="0.4"
+              />
+              <rect
+                class="furniture-item item-8"
+                x="70"
+                y="51"
+                width="4"
+                height="3"
+                rx="0.5"
+                fill="currentColor"
+                opacity="0.4"
+              />
+              <!-- Table de nuit -->
+              <rect
+                class="furniture-item item-9"
+                x="80"
+                y="55"
+                width="6"
+                height="6"
+                rx="0.5"
+                fill="currentColor"
+                opacity="0.2"
+              />
+            </g>
+
+            <!-- Salle de bain -->
+            <g class="furniture bathroom">
+              <!-- Baignoire -->
+              <rect
+                class="furniture-item item-10"
+                x="12"
+                y="50"
+                width="8"
+                height="16"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1"
+                fill="currentColor"
+                opacity="0.15"
+              />
+              <!-- Lavabo -->
+              <circle class="furniture-item item-11" cx="32" cy="55" r="3" fill="currentColor" opacity="0.25" />
+              <!-- WC -->
+              <ellipse
+                class="furniture-item item-12"
+                cx="32"
+                cy="65"
+                rx="2.5"
+                ry="3"
+                fill="currentColor"
+                opacity="0.25"
+              />
+            </g>
+
+            <!-- Fenêtres (traits sur murs extérieurs) -->
+            <g class="windows">
+              <line
+                class="window"
+                x1="25"
+                y1="10"
+                x2="40"
+                y2="10"
+                stroke="currentColor"
+                stroke-width="1"
+                opacity="0.6"
+              />
+              <line
+                class="window"
+                x1="65"
+                y1="10"
+                x2="80"
+                y2="10"
+                stroke="currentColor"
+                stroke-width="1"
+                opacity="0.6"
+              />
+              <line
+                class="window"
+                x1="90"
+                y1="55"
+                x2="90"
+                y2="65"
+                stroke="currentColor"
+                stroke-width="1"
+                opacity="0.6"
+              />
+            </g>
+          </svg>
+        </div>
+        @if (this.text()) {
+          <p class="text">{{ this.text() | translate }}</p>
+        }
+      </div>
     </div>
-    @if (this.text()) {
-    <p class="text">{{ this.text() }}</p>
-    }
-  </div>
-</div>
+  } @else {
+    <ta-placeholder [placeholder]="this.getPlaceholder()"></ta-placeholder>
+  }
 } @else {
-<ta-placeholder [placeholder]="this.getPlaceholder()"></ta-placeholder>
-} } @else {
-<ng-content></ng-content>
+  <ng-content></ng-content>
 }

@@ -6,7 +6,7 @@ import { BehaviorSubject, filter, map, switchMap, distinct, tap } from 'rxjs';
 import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
 import * as i1 from '@angular/router';
 import { GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest, Logger } from '@ta/server';
-import { TranslatePipe, TaTranslationService } from '@ta/translation';
+import { TranslatePipe, TaLazyTranslationService, TaTranslationService } from '@ta/translation';
 import { CardComponent, CardContentComponent, ButtonComponent, LoaderComponent, ErrorComponent, EmptyComponent, InlineProfileDataComponent, ListTagComponent, ListContainerComponent, ListElementComponent, ListTitleComponent } from '@ta/ui';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { FontIconComponent, TaIconType } from '@ta/icons';
@@ -338,6 +338,20 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
+class TaTranslationUser extends TaLazyTranslationService {
+    constructor() {
+        super("user");
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationUser, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationUser, providedIn: "root" }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationUser, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: "root",
+                }]
+        }], ctorParameters: () => [] });
+
 class MyAccountComponent extends TaBaseComponent {
     constructor() {
         super();
@@ -349,27 +363,28 @@ class MyAccountComponent extends TaBaseComponent {
         this._userService = inject(TA_USER_SERVICE);
         this._authService = inject(TA_AUTH_TOKEN);
         this.disconnectionMenu = signal(null);
-        this.userLogo$ = signal(this._userService.userProfile.get$().pipe(map((up) => {
+        this.userLogo$ = signal(this._userService.userProfile.get$().pipe(map(up => {
             if (!up) {
                 return null;
             }
             return {
                 user: {
                     picture: up.picture,
-                    lastname: up.lastname ?? "",
-                    firstname: up.firstname ?? "",
+                    lastname: up.lastname ?? '',
+                    firstname: up.firstname ?? '',
                 },
-                size: "lg",
+                size: 'lg',
             };
         })));
+        TaTranslationUser.getInstance();
     }
     get profile$() {
-        return this._userService.userProfile.get$().pipe(map((data) => {
+        return this._userService.userProfile.get$().pipe(map(data => {
             return {
                 title: {
                     second: data?.firstname || data?.lastname,
                 },
-                email: data?.email || "",
+                email: data?.email || '',
             };
         }));
     }
@@ -385,18 +400,18 @@ class MyAccountComponent extends TaBaseComponent {
     getDisconnectionMenu() {
         const menu = [
             new MenuIcon({
-                key: "logout",
-                label: "user.logout",
+                key: 'logout',
+                label: 'user.logout',
                 order: 4,
-                style: "dark",
-                icon: "logout",
-                iconsColor: "icon-color-icon-tertiary",
+                style: 'dark',
+                icon: 'logout',
+                iconsColor: 'icon-color-icon-tertiary',
                 callback: () => this.disconnect(),
             }),
         ];
         return new Menu({
             elements: menu.sort((a, b) => a.order - b.order),
-            direction: "vertical",
+            direction: 'vertical',
         });
     }
     navigateToEditProfile() {
@@ -407,7 +422,7 @@ class MyAccountComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MyAccountComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-my-account", standalone: true, imports: [
+            args: [{ selector: 'ta-my-account', standalone: true, imports: [
                         AsyncPipe,
                         FontIconComponent,
                         StopPropagationDirective,

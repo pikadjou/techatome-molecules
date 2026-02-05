@@ -1,6 +1,9 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, input, Output } from '@angular/core';
 
+import { TranslateModule } from '@ngx-translate/core';
+
+import { TaTranslationUI } from '../../../translation.service';
 import { TextComponent } from '../text/text.component';
 
 @Component({
@@ -8,9 +11,12 @@ import { TextComponent } from '../text/text.component';
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss'],
   standalone: true,
-  imports: [NgClass, NgStyle, TextComponent],
+  imports: [NgClass, NgStyle, TextComponent, TranslateModule],
 })
 export class RatingComponent {
+  constructor() {
+    TaTranslationUI.getInstance();
+  }
   /**
    * Current rating value (supports decimals for partial stars)
    */
