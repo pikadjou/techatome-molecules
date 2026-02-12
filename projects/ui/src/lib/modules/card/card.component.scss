@@ -5,6 +5,9 @@
 
 $spacing: common.get-var(components, card, padding);
 
+:host {
+  @include flex.flex-full();
+}
 .card {
   &.hover {
     cursor: pointer;
@@ -21,7 +24,7 @@ $spacing: common.get-var(components, card, padding);
   background-color: common.get-var(components, card, background);
   color: common.get-var(components, card, color);
   border: 1px solid common.get-var(components, card, border);
-
+  width: 100%;
   @include fonts.fontSizeBody(md);
 
   &.full-height {

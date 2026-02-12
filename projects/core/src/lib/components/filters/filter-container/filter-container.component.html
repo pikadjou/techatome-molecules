@@ -1,4 +1,4 @@
-<ta-layout-side class="d-flex full-width">
+<ta-layout-side class="flex-full">
   <ta-layout-side-content>
     <div class="m-space-sm">
       <ta-form
@@ -15,7 +15,7 @@
         <div class="align-center g-space-xs link">
           <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
           <ta-link class="c-pointer" (action)="this.clear()">
-            {{ "core.filter.clear" | translate }}
+            {{ 'core.filter.clear' | translate }}
           </ta-link>
         </div>
       </div>
@@ -23,7 +23,7 @@
         <ta-button (action)="this.validate()">
           <div class="align-center m-space-xs">
             <ta-font-icon name="check-line"></ta-font-icon>
-            {{ "core.filter.validate" | translate }}
+            {{ 'core.filter.validate' | translate }}
           </div>
         </ta-button>
       </div>

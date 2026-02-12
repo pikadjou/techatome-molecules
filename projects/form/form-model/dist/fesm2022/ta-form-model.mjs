@@ -323,9 +323,9 @@ class InputFactory {
 class InputChoices extends InputDropdown {
     constructor(options = {}) {
         super(options);
-        this.controlType = "choices";
+        this.controlType = 'choices';
         this.onlyTemplate = options.onlyTemplate;
-        this.advancedSearch$ = options["advancedSearch$"] || null;
+        this.advancedSearch$ = options['advancedSearch$'] || null;
         this.choiceTemplate = options.choiceTemplate;
         this.showNullableFields = options.showNullableFields ?? false;
     }

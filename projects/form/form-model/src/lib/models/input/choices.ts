@@ -1,8 +1,8 @@
-import { TemplateRef } from "@angular/core";
+import { TemplateRef } from '@angular/core';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
-import { IInputDropdown, InputDropdown } from "./dropdown";
+import { IInputDropdown, InputDropdown } from './dropdown';
 
 export type InputChoicesOption = {
   id: string;
@@ -11,6 +11,21 @@ export type InputChoicesOption = {
   data: any;
 };
 
+export interface IInputChoicesListTemplate<T> {
+  data: {
+    items: {
+      id: string;
+      name: string;
+      disabled?: boolean;
+      data: T;
+    }[];
+    isselected: (option: { id: string }) => boolean;
+    select: (option: { id: string }) => void;
+    search: string | null;
+    refresh: () => void;
+    values: string[];
+  };
+}
 export interface IInputChoices extends IInputDropdown<string[]> {
   onlyTemplate?: boolean;
   options$?: Observable<InputChoicesOption[]>;
@@ -22,13 +37,11 @@ export interface IInputChoices extends IInputDropdown<string[]> {
   showNullableFields?: boolean;
 }
 export class InputChoices extends InputDropdown<string[]> {
-  override controlType = "choices";
+  override controlType = 'choices';
   override options$!: Observable<InputChoicesOption[]>;
 
   public onlyTemplate?: boolean;
-  public advancedSearch$:
-    | ((search?: string) => Observable<InputChoicesOption[]>)
-    | null;
+  public advancedSearch$: ((search?: string) => Observable<InputChoicesOption[]>) | null;
   public choiceTemplate?: {
     one?: TemplateRef<any>;
     list?: TemplateRef<any>;
@@ -39,7 +52,7 @@ export class InputChoices extends InputDropdown<string[]> {
     super(options);
 
     this.onlyTemplate = options.onlyTemplate;
-    this.advancedSearch$ = options["advancedSearch$"] || null;
+    this.advancedSearch$ = options['advancedSearch$'] || null;
     this.choiceTemplate = options.choiceTemplate;
     this.showNullableFields = options.showNullableFields ?? false;
   }

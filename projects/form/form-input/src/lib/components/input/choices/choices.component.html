@@ -1,175 +1,168 @@
 @if (this.input.onlyTemplate !== true) {
-<ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
-  <ng-template #panelTrigger>
-    <ta-input-layout [input]="this.input">
-      <div class="form-control" #focusedElement>
-        <div class="input-group d-flex full-width">
-          <input
-            type="hidden"
-            [formControl]="$any(this.input.formControl)"
-            [value]="this.input.value"
-          />
+  <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
+    <ng-template #panelTrigger>
+      <ta-input-layout [input]="this.input">
+        <div class="form-control" #focusedElement>
+          <div class="input-group flex-full">
+            <input type="hidden" [formControl]="$any(this.input.formControl)" [value]="this.input.value" />
 
-          <div class="flex-start g-space-xs">
-            @for (value of this.input.value; track value) {
-            <ta-label size="sm" class="d-flex">
-              {{ (getName$(value) | async) ?? "" | translate }}
-            </ta-label>
+            <div class="flex-start g-space-xs">
+              @for (value of this.input.value; track value) {
+                <ta-label size="sm" class="d-flex">
+                  {{ (getName$(value) | async) ?? '' | translate }}
+                </ta-label>
+              }
+            </div>
+            @if (this.input.message) {
+              <div class="message">
+                <small class="form-text text-muted">
+                  <span>{{ this.input.message }}</span>
+                </small>
+              </div>
             }
           </div>
-          @if (this.input.message) {
-          <div class="message">
-            <small class="form-text text-muted">
-              <span>{{ this.input.message }}</span>
-            </small>
-          </div>
-          }
         </div>
-      </div>
-    </ta-input-layout>
-  </ng-template>
-  <ng-template #panelContent>
-    <ng-template [ngTemplateOutlet]="choicesTemplate"></ng-template>
-  </ng-template>
-</ta-overlay-panel>
+      </ta-input-layout>
+    </ng-template>
+    <ng-template #panelContent>
+      <ng-template [ngTemplateOutlet]="choicesTemplate"></ng-template>
+    </ng-template>
+  </ta-overlay-panel>
 } @else {
-<div class="only-template">
-  <ng-template [ngTemplateOutlet]="choicesTemplate"></ng-template>
-</div>
+  <div class="only-template">
+    <ng-template [ngTemplateOutlet]="choicesTemplate"></ng-template>
+  </div>
 }
 
 <ng-template #choicesTemplate>
   <div appStopPropagation class="flex-column g-space-sm">
-    @if (!this.input.choiceTemplate) { @if (this.input.withSearch) {
-    <ta-search-field
-      [isOpen]="true"
-      [input]="this.inputSearch"
-      [onFocus]="this.searchFocus"
-      [standalone]="true"
-      class="m-space-sm"
-    ></ta-search-field>
-    }
+    @if (!this.input.choiceTemplate) {
+      @if (this.input.withSearch) {
+        <ta-search-field
+          [isOpen]="true"
+          [input]="this.inputSearch"
+          [onFocus]="this.searchFocus"
+          [standalone]="true"
+          class="m-space-sm"
+        ></ta-search-field>
+      }
 
-    <ta-layout-side
-      class="d-flex full-width choices-wrapper"
-      style="min-height: 300px; max-height: 400px"
-    >
-      <ta-layout-side-content>
-        <ta-loader [isLoading]="this.requestState.isLoading()">
-          <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
-            @if (this.input.showNullableFields) {
-            <div class="p-space-sm">
-              <ta-input-checkbox
-                [input]="this.inputNullable"
-                [standalone]="true"
-                (valueChanged)="this.selectNullable($event)"
-              ></ta-input-checkbox>
-            </div>
-            } @for (option of this.filteredOptions$ | async; track option) {
-            <div
-              class="flex-row pointer m-space-sm p-space-sm"
-              [class.is-selected]="this.isSelected(option)"
-              (click)="this.select(option)"
-            >
-              <ta-text>{{ option.name }}</ta-text>
-            </div>
-            }
-          </ta-empty>
-        </ta-loader>
-      </ta-layout-side-content>
-      <ta-layout-side-cta>
-        <div class="align-center space-between">
-          <div class="pr-space-md">
-            <div class="align-center g-space-xs link">
-              <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
-              <ta-link class="c-pointer" (action)="this.clear()">
-                {{ "core.filter.clear" | translate }}
-              </ta-link>
-            </div>
-          </div>
-          <div>
-            @if (this.input.onlyTemplate !== true) {
-            <ta-button (action)="this.close()">
-              <div class="align-center m-space-xs">
-                <ta-font-icon name="check-line"></ta-font-icon>
-                {{ "form.validate" | translate }}
+      <ta-layout-side class="flex-full choices-wrapper" style="min-height: 300px; max-height: 400px">
+        <ta-layout-side-content>
+          <ta-loader [isLoading]="this.requestState.isLoading()">
+            <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
+              @if (this.input.showNullableFields) {
+                <div class="p-space-sm">
+                  <ta-input-checkbox
+                    [input]="this.inputNullable"
+                    [standalone]="true"
+                    (valueChanged)="this.selectNullable($event)"
+                  ></ta-input-checkbox>
+                </div>
+              }
+              @for (option of this.filteredOptions$ | async; track option) {
+                <div
+                  class="flex-row pointer m-space-sm p-space-sm"
+                  [class.is-selected]="this.isSelected(option)"
+                  (click)="this.select(option)"
+                >
+                  <ta-text>{{ option.name }}</ta-text>
+                </div>
+              }
+            </ta-empty>
+          </ta-loader>
+        </ta-layout-side-content>
+        <ta-layout-side-cta>
+          <div class="align-center space-between">
+            <div class="pr-space-md">
+              <div class="align-center g-space-xs link">
+                <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
+                <ta-link class="c-pointer" (action)="this.clear()">
+                  {{ 'input.button.clear' | translate }}
+                </ta-link>
               </div>
-            </ta-button>
-            }
-          </div>
-        </div>
-      </ta-layout-side-cta>
-    </ta-layout-side>
-    } @else if (this.input.choiceTemplate && this.filteredOptions$) { @if
-    (this.input.withSearch) {
-    <ta-search-field
-      [isOpen]="true"
-      [input]="this.inputSearch"
-      [onFocus]="this.searchFocus"
-      class="m-space-sm"
-      [standalone]="true"
-    ></ta-search-field>
-    }
-    <ta-layout-side
-      class="d-flex full-width"
-      style="min-height: 300px; max-height: 400px"
-    >
-      <ta-layout-side-content>
-        <ta-loader [isLoading]="this.requestState.isLoading()">
-          @if (this.input.choiceTemplate.one) {
-          <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
-            @for (option of this.filteredOptions$ | async; track option) {
-            <div
-              class="flex-row pointer m-space-sm p-space-sm"
-              [class.is-selected]="this.isSelected(option)"
-              (click)="this.select(option)"
-            >
-              <ng-template
-                [ngTemplateOutlet]="this.input.choiceTemplate.one"
-                [ngTemplateOutletContext]="{ item: option.data }"
-              ></ng-template>
             </div>
-            }
-          </ta-empty>
-          } @else if (this.input.choiceTemplate.list) {
-          <ng-template
-            [ngTemplateOutlet]="this.input.choiceTemplate.list"
-            [ngTemplateOutletContext]="{
+            <div>
+              @if (this.input.onlyTemplate !== true) {
+                <ta-button (action)="this.close()">
+                  <div class="align-center m-space-xs">
+                    <ta-font-icon name="check-line"></ta-font-icon>
+                    {{ 'input.button.select' | translate }}
+                  </div>
+                </ta-button>
+              }
+            </div>
+          </div>
+        </ta-layout-side-cta>
+      </ta-layout-side>
+    } @else if (this.input.choiceTemplate && this.filteredOptions$) {
+      @if (this.input.withSearch) {
+        <ta-search-field
+          [isOpen]="true"
+          [input]="this.inputSearch"
+          [onFocus]="this.searchFocus"
+          class="m-space-sm"
+          [standalone]="true"
+        ></ta-search-field>
+      }
+      <ta-layout-side class="flex-full" style="min-height: 300px; max-height: 400px">
+        <ta-layout-side-content>
+          <ta-loader [isLoading]="this.requestState.isLoading()">
+            @if (this.input.choiceTemplate.one) {
+              <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
+                @for (option of this.filteredOptions$ | async; track option) {
+                  <div
+                    class="flex-row pointer m-space-sm p-space-sm"
+                    [class.is-selected]="this.isSelected(option)"
+                    (click)="this.select(option)"
+                  >
+                    <ng-template
+                      [ngTemplateOutlet]="this.input.choiceTemplate.one"
+                      [ngTemplateOutletContext]="{ item: option.data }"
+                    ></ng-template>
+                  </div>
+                }
+              </ta-empty>
+            } @else if (this.input.choiceTemplate.list) {
+              <ng-template
+                [ngTemplateOutlet]="this.input.choiceTemplate.list"
+                [ngTemplateOutletContext]="{
                   data: {
                     items: this.filteredOptions$ | async,
                     isselected: this.isSelected,
                     select: this.select,
                     search: this.inputSearch.value,
                     refresh: this.refresh,
+                    values: this.input.value,
                   },
                 }"
-          ></ng-template>
-          }
-        </ta-loader>
-      </ta-layout-side-content>
-      <ta-layout-side-cta>
-        <div class="align-center space-between">
-          <div class="pr-space-md">
-            <div class="align-center g-space-xs link">
-              <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
-              <ta-link class="c-pointer" (action)="this.clear()">
-                {{ "core.filter.clear" | translate }}
-              </ta-link>
+              ></ng-template>
+            }
+          </ta-loader>
+        </ta-layout-side-content>
+        <ta-layout-side-cta>
+          <div class="align-center space-between">
+            <div class="pr-space-md">
+              <div class="align-center g-space-xs link">
+                <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
+                <ta-link class="c-pointer" (action)="this.clear()">
+                  {{ 'core.filter.clear' | translate }}
+                </ta-link>
+              </div>
+            </div>
+            <div>
+              @if (this.input.onlyTemplate !== true) {
+                <ta-button (action)="this.close()">
+                  <div class="align-center m-space-xs">
+                    <ta-font-icon name="check-line"></ta-font-icon>
+                    {{ 'form.validate' | translate }}
+                  </div>
+                </ta-button>
+              }
             </div>
           </div>
-          <div>
-            @if (this.input.onlyTemplate !== true) {
-            <ta-button (action)="this.close()">
-              <div class="align-center m-space-xs">
-                <ta-font-icon name="check-line"></ta-font-icon>
-                {{ "form.validate" | translate }}
-              </div>
-            </ta-button>
-            }
-          </div>
-        </div>
-      </ta-layout-side-cta>
-    </ta-layout-side>
+        </ta-layout-side-cta>
+      </ta-layout-side>
     }
   </div>
 </ng-template>

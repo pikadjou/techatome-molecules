@@ -1,12 +1,31 @@
-import { TemplateRef } from "@angular/core";
-import { Observable } from "rxjs";
-import { IInputDropdown, InputDropdown } from "./dropdown";
+import { TemplateRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IInputDropdown, InputDropdown } from './dropdown';
 export type InputChoicesOption = {
     id: string;
     name: string;
     disabled?: boolean;
     data: any;
 };
+export interface IInputChoicesListTemplate<T> {
+    data: {
+        items: {
+            id: string;
+            name: string;
+            disabled?: boolean;
+            data: T;
+        }[];
+        isselected: (option: {
+            id: string;
+        }) => boolean;
+        select: (option: {
+            id: string;
+        }) => void;
+        search: string | null;
+        refresh: () => void;
+        values: string[];
+    };
+}
 export interface IInputChoices extends IInputDropdown<string[]> {
     onlyTemplate?: boolean;
     options$?: Observable<InputChoicesOption[]>;

@@ -1,0 +1,5 @@
+@use 'ta/utils/mixins/flex';
+
+:host {
+  @include flex.flex-full();
+}

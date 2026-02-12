@@ -1,6 +1,10 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
 
+:host {
+  display: block;
+  width: 100%;
+}
 .loader {
   @include flex.flex-column();
   @include flex.align-center();

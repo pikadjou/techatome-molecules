@@ -1,7 +1,7 @@
-import { BehaviorSubject, Observable } from "rxjs";
-import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from "@ta/form-model";
-import { TaOverlayPanelComponent } from "@ta/ui";
-import { TaAbstractInputComponent } from "../../abstract.component";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
+import { TaOverlayPanelComponent } from '@ta/ui';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class InputChoicesComponent extends TaAbstractInputComponent<InputChoices> {
     overlayPanelRef: TaOverlayPanelComponent;

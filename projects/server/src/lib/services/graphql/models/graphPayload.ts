@@ -25,7 +25,7 @@ export type WhereType<T> = {
     | WhereType<T[index]>
     | WhereType<T>[]
     | {
-        [op: string]: string | string[] | number | boolean | Date | null;
+        [op: string]: WhereType<T[index]> | string | string[] | number | boolean | Date | null;
       };
 };
 export interface GraphQueryInput<T = any> {
