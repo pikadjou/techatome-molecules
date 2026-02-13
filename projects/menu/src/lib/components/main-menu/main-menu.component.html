@@ -1,20 +1,33 @@
-<div class="main-nav-container">
-  <div class="max-container">
-    <div class="main-nav align-center" [ngClass]="this.direction()">
-      <div class="logo">
-        <ta-logo class="small"></ta-logo>
+@if (this.breakpoints.isMobile) {
+  <!-- Mobile layout with custom panel -->
+  @if (this.isPanelOpen) {
+    <div class="mobile-backdrop" (click)="this.closeMobilePanel()"></div>
+  }
+  <div class="mobile-panel" [ngClass]="{ open: this.isPanelOpen }">
+    <div class="mobile-panel-content">
+      <div class="mobile-panel-header">
         <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
+        <ta-font-icon name="close" class="close-icon" (click)="this.closeMobilePanel()"></ta-font-icon>
       </div>
-      <div class="menu-nav">
+      <div class="mobile-menu-nav">
         <ta-menu class="menu" [menu]="this.menuMain()" [container]="'main'"></ta-menu>
       </div>
-      <div>
-        @if (this.menuUser()) {
-          <div class="user-nav">
-            <div class="sep"></div>
-            <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
-          </div>
-        }
+      @if (this.menuUser()) {
+        <div class="mobile-user-nav">
+          <div class="sep"></div>
+          <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="main-nav-container">
+    <div class="max-container">
+      <div class="main-nav align-center mobile-nav">
+        <ta-font-icon name="menu" class="hamburger-icon" (click)="this.toggleMobilePanel()"></ta-font-icon>
+        <div class="logo">
+          <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
+        </div>
         @if (this.userMenuTemplate()) {
           <div class="user-template">
             <ng-template [ngTemplateOutlet]="this.userMenuTemplate() ?? null"></ng-template>
@@ -23,4 +36,31 @@
       </div>
     </div>
   </div>
-</div>
+} @else {
+  <!-- Desktop layout -->
+  <div class="main-nav-container">
+    <div class="max-container">
+      <div class="main-nav align-center" [ngClass]="this.direction()">
+        <div class="logo">
+          <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
+        </div>
+        <div class="menu-nav">
+          <ta-menu class="menu" [menu]="this.menuMain()" [container]="'main'"></ta-menu>
+        </div>
+        <div>
+          @if (this.menuUser()) {
+            <div class="user-nav">
+              <div class="sep"></div>
+              <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
+            </div>
+          }
+          @if (this.userMenuTemplate()) {
+            <div class="user-template">
+              <ng-template [ngTemplateOutlet]="this.userMenuTemplate() ?? null"></ng-template>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

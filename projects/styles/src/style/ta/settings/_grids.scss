@@ -6,13 +6,15 @@
 @use 'ta/utils/mixins/grid';
 
 @mixin generateGrids() {
-  .grid {
-    display: grid;
+  .grid-responsive {
+    @include grid.grid-responsive-base();
   }
 
   .grid {
     @include grid.grid-base();
-
+  }
+  .grid,
+  .grid-responsive {
     .full {
       @include grid.full();
     }
@@ -43,7 +45,7 @@
 
     // Generate responsive grid classes for each breakpoint
     @each $col-size, $size in vars.$grid-breakpoints {
-      @include mediaQueriesRanges.to($col-size) {
+      @include mediaQueriesRanges.to($size) {
         .#{$col-size}-full {
           @include grid.full();
         }
@@ -74,6 +76,9 @@
       }
     }
   }
+  .grid-full {
+    @include grid.grid-full();
+  }
   .grid-one-half {
     @include grid.grid-one-half();
   }
@@ -91,7 +96,7 @@
   @each $col-size, $size in vars.$grid-breakpoints {
     @include mediaQueriesRanges.to($size) {
       .grid-#{$col-size}-full {
-        @include grid.full();
+        @include grid.grid-full();
       }
       .grid-#{$col-size}-one-half {
         @include grid.grid-one-half();

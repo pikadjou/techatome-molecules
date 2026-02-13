@@ -1,8 +1,8 @@
-import { EventEmitter } from "@angular/core";
-import { Observable } from "rxjs";
-import { Menu } from "@ta/menu";
-import { FileData, FileStructure, FileType, TaBaseComponent } from "@ta/utils";
-import { Feature } from "../upload/files-upload.component";
+import { EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Menu } from '@ta/menu';
+import { FileData, FileStructure, FileType, TaBaseComponent } from '@ta/utils';
+import { Feature } from '../upload/files-upload.component';
 import * as i0 from "@angular/core";
 export declare class FilesDisplayComponent extends TaBaseComponent {
     files$: import("@angular/core").InputSignal<Observable<FileData<any>[]>>;

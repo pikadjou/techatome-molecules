@@ -1,3 +1,16 @@
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/mediaQueriesRanges';
+
+@mixin grid-responsive-base() {
+  @include mediaQueriesRanges.to-key(tablette) {
+    @include flex.flex-start();
+    flex-wrap: nowrap;
+  }
+  @include mediaQueriesRanges.from-key(tablette) {
+    @include grid-base();
+  }
+}
+
 @mixin grid-base() {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -26,6 +39,12 @@
   grid-column: span 12;
 }
 
+@mixin grid-full() {
+  @include grid-base();
+  > * {
+    @include full();
+  }
+}
 @mixin grid-one-half() {
   @include grid-base();
   > * {

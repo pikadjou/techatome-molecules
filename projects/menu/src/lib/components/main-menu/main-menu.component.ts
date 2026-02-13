@@ -2,6 +2,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, TemplateRef, inject, input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { FontIconComponent } from '@ta/icons';
 import { TaSharedMenuService } from '@ta/services';
 import { LogoComponent } from '@ta/ui';
 import { TaBaseComponent } from '@ta/utils';
@@ -14,7 +15,7 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss'],
   standalone: true,
-  imports: [NgClass, LogoComponent, MenuComponent, MatExpansionModule, NgTemplateOutlet],
+  imports: [NgClass, LogoComponent, MenuComponent, MatExpansionModule, NgTemplateOutlet, FontIconComponent],
 })
 export class MainMenuComponent extends TaBaseComponent {
   menuMain = input.required<Menu>();
@@ -27,7 +28,17 @@ export class MainMenuComponent extends TaBaseComponent {
 
   public sharedMenu = inject(TaSharedMenuService);
 
+  public isPanelOpen = false;
+
   public toggleView() {
     this.sharedMenu.isMinimized$.next(!this.sharedMenu.isMinimized$.getValue());
+  }
+
+  public toggleMobilePanel() {
+    this.isPanelOpen = !this.isPanelOpen;
+  }
+
+  public closeMobilePanel() {
+    this.isPanelOpen = false;
   }
 }

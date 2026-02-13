@@ -1,7 +1,7 @@
-import { OnInit, TemplateRef } from "@angular/core";
-import { InputBase, InputTranslation } from "@ta/form-model";
-import { Menu } from "@ta/menu";
-import { TaBaseComponent } from "@ta/utils";
+import { OnInit, TemplateRef } from '@angular/core';
+import { InputBase, InputTranslation } from '@ta/form-model';
+import { Menu } from '@ta/menu';
+import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class InputTranslationComponent extends TaBaseComponent implements OnInit {
     inputModel: import("@angular/core").InputSignal<InputTranslation>;

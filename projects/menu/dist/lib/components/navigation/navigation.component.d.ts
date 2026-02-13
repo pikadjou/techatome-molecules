@@ -8,7 +8,7 @@ import { Menu, MenuIcon } from '../../models/public-api';
 import * as i0 from "@angular/core";
 export declare class NavigationComponent extends TaAbstractComponent implements OnInit {
     menu: import("@angular/core").InputSignal<Menu<MenuBase>>;
-    container: import("@angular/core").InputSignal<"tab" | "tags" | "submenu">;
+    container: import("@angular/core").InputSignal<"tags" | "tab" | "submenu">;
     swiper: import("@angular/core").InputSignal<boolean>;
     options: import("@angular/core").InputSignal<{
         spaceElement?: TaSizes | null | undefined;

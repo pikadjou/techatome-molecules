@@ -9,14 +9,11 @@ import * as i7 from "@ta/translation";
 import * as i8 from "./components/menu/menu.component";
 import * as i9 from "./components/menu/item/menu-item.component";
 import * as i10 from "./components/bottom-sheet/templates/basic/bottom-sheet-template-basic.component";
-import * as i11 from "./components/quick-actions/quick-actions.component";
-import * as i12 from "./components/quick-actions-custom/quick-actions-custom.component";
-import * as i13 from "./components/toggle-navigation/toggle-navigation.component";
-import * as i14 from "./components/context-menu/context-menu.component";
-import * as i15 from "./components/bottom-sheet/templates/generic/bottom-sheet-template-generic.component";
-import * as i16 from "./components/main-menu/main-menu.component";
-import * as i17 from "./components/list/list.component";
-import * as i18 from "./components/navigation/navigation.component";
+import * as i11 from "./components/context-menu/context-menu.component";
+import * as i12 from "./components/bottom-sheet/templates/generic/bottom-sheet-template-generic.component";
+import * as i13 from "./components/main-menu/main-menu.component";
+import * as i14 from "./components/list/list.component";
+import * as i15 from "./components/navigation/navigation.component";
 /**
  * @deprecated Use standalone components instead.
  * This module will be removed in a future version.
@@ -30,6 +27,6 @@ import * as i18 from "./components/navigation/navigation.component";
  */
 export declare class TaMenuModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<TaMenuModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<TaMenuModule, never, [typeof i1.TaUiModule, typeof i1.TaSwiperModule, typeof i1.TaContainerModule, typeof i2.TaDirectivePipeModule, typeof i1.TaLayoutModule, typeof i1.TaListModule, typeof i3.CommonModule, typeof i4.RouterModule, typeof i5.TaIconsModule, typeof i6.MatMenuModule, typeof i7.TranslatePipe, typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.QuickActionsComponent, typeof i12.QuickActionsCustomComponent, typeof i13.ToggleNavigationComponent, typeof i14.ContextMenuComponent, typeof i15.BottomSheetTemplateGenericComponent, typeof i16.MainMenuComponent, typeof i17.ListComponent, typeof i18.NavigationComponent], [typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.QuickActionsComponent, typeof i12.QuickActionsCustomComponent, typeof i13.ToggleNavigationComponent, typeof i14.ContextMenuComponent, typeof i15.BottomSheetTemplateGenericComponent, typeof i16.MainMenuComponent, typeof i18.NavigationComponent]>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<TaMenuModule, never, [typeof i1.TaUiModule, typeof i1.TaContainerModule, typeof i2.TaDirectivePipeModule, typeof i1.TaLayoutModule, typeof i1.TaListModule, typeof i3.CommonModule, typeof i4.RouterModule, typeof i5.TaIconsModule, typeof i6.MatMenuModule, typeof i7.TranslatePipe, typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.ContextMenuComponent, typeof i12.BottomSheetTemplateGenericComponent, typeof i13.MainMenuComponent, typeof i14.ListComponent, typeof i15.NavigationComponent], [typeof i8.MenuComponent, typeof i9.MenuItemComponent, typeof i10.BottomSheetTemplateBasicComponent, typeof i11.ContextMenuComponent, typeof i12.BottomSheetTemplateGenericComponent, typeof i13.MainMenuComponent, typeof i15.NavigationComponent]>;
     static ɵinj: i0.ɵɵInjectorDeclaration<TaMenuModule>;
 }

@@ -9,7 +9,10 @@ export declare class MainMenuComponent extends TaBaseComponent {
     userMenuTemplate: import("@angular/core").InputSignal<TemplateRef<any> | undefined>;
     direction: import("@angular/core").InputSignal<"horizontal" | "vertical">;
     sharedMenu: TaSharedMenuService;
+    isPanelOpen: boolean;
     toggleView(): void;
+    toggleMobilePanel(): void;
+    closeMobilePanel(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MainMenuComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<MainMenuComponent, "ta-main-menu", never, { "menuMain": { "alias": "menuMain"; "required": true; "isSignal": true; }; "menuUser": { "alias": "menuUser"; "required": false; "isSignal": true; }; "userMenuTemplate": { "alias": "userMenuTemplate"; "required": false; "isSignal": true; }; "direction": { "alias": "direction"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

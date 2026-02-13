@@ -16,7 +16,6 @@
     "@ta/translation": "^0.0.0",
     "@ta/ui": "^0.0.0",
     "@ta/utils": "^0.0.0",
-    "swiper": "^9.1.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

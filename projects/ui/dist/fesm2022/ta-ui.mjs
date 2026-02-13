@@ -1,7 +1,7 @@
-import * as i1$4 from '@angular/common';
+import * as i1$5 from '@angular/common';
 import { NgClass, NgIf, NgFor, DatePipe, DecimalPipe, NgTemplateOutlet, NgStyle, AsyncPipe, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, input, EventEmitter, Output, Component, ViewChild, NgModule, Inject, CUSTOM_ELEMENTS_SCHEMA, inject, ViewEncapsulation, InjectionToken, Injector, Optional, ContentChild } from '@angular/core';
+import { Injectable, input, EventEmitter, Output, Component, ViewChild, NgModule, ViewEncapsulation, CUSTOM_ELEMENTS_SCHEMA, Inject, inject, InjectionToken, Injector, Optional, ContentChild } from '@angular/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import * as i1$3 from '@angular/material/dialog';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,7 +23,7 @@ import { combineLatest, startWith, map, Subject } from 'rxjs';
 import { TaSharedMenuService } from '@ta/services';
 import { MatDrawer, MatDrawerContainer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import * as i1$5 from '@angular/cdk/overlay';
+import * as i1$4 from '@angular/cdk/overlay';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TaBaseService } from '@ta/server';
@@ -953,11 +953,11 @@ class TextComponent {
         return `text-color-text-${this.color()}`;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TextComponent, isStandalone: true, selector: "ta-text", inputs: { size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, isBold: { classPropertyName: "isBold", publicName: "isBold", isSignal: true, isRequired: false, transformFunction: null }, color: { classPropertyName: "color", publicName: "color", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "<div\n  class=\"text\"\n  [class.bold]=\"this.isBold\"\n  [ngClass]=\"this.size + ' ' + this.getColorClass()\"\n>\n  <ng-content></ng-content>\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.lg{font-size:var(--ta-font-key-lg-default-size);font-weight:var(--ta-font-key-lg-default-weight)}.bold{font-weight:var(--ta-font-body-md-bold-weight)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TextComponent, isStandalone: true, selector: "ta-text", inputs: { size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, isBold: { classPropertyName: "isBold", publicName: "isBold", isSignal: true, isRequired: false, transformFunction: null }, color: { classPropertyName: "color", publicName: "color", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "<div class=\"text\" [class.bold]=\"this.isBold()\" [ngClass]=\"this.size() + ' ' + this.getColorClass()\">\n  <ng-content></ng-content>\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.lg{font-size:var(--ta-font-key-lg-default-size);font-weight:var(--ta-font-key-lg-default-weight)}.bold{font-weight:var(--ta-font-body-md-bold-weight)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TextComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-text', standalone: true, imports: [NgClass], template: "<div\n  class=\"text\"\n  [class.bold]=\"this.isBold\"\n  [ngClass]=\"this.size + ' ' + this.getColorClass()\"\n>\n  <ng-content></ng-content>\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.lg{font-size:var(--ta-font-key-lg-default-size);font-weight:var(--ta-font-key-lg-default-weight)}.bold{font-weight:var(--ta-font-body-md-bold-weight)}\n"] }]
+            args: [{ selector: 'ta-text', standalone: true, imports: [NgClass], template: "<div class=\"text\" [class.bold]=\"this.isBold()\" [ngClass]=\"this.size() + ' ' + this.getColorClass()\">\n  <ng-content></ng-content>\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.lg{font-size:var(--ta-font-key-lg-default-size);font-weight:var(--ta-font-key-lg-default-weight)}.bold{font-weight:var(--ta-font-body-md-bold-weight)}\n"] }]
         }] });
 
 class TimeAgoComponent {
@@ -1596,6 +1596,15 @@ class AddressComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AddressComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-address", standalone: true, template: "<div>\n  {{ this.address().street }} {{ this.address().number }},\n  {{ this.address().zipCode }} {{ this.address().city }},\n  {{ this.address().contry }}\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.bold{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}\n"] }]
+        }] });
+
+class SwiperComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwiperComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: SwiperComponent, isStandalone: true, selector: "ta-swiper", ngImport: i0, template: "<div class=\"swiper-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".swiper-container{overflow-x:auto;overflow-y:hidden;white-space:nowrap;scroll-behavior:smooth}@media screen and (max-width: 768px){.swiper-container{width:calc(100vw - 20px)}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }], encapsulation: i0.ViewEncapsulation.None }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwiperComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-swiper', standalone: true, schemas: [CUSTOM_ELEMENTS_SCHEMA], encapsulation: ViewEncapsulation.None, imports: [CommonModule], template: "<div class=\"swiper-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".swiper-container{overflow-x:auto;overflow-y:hidden;white-space:nowrap;scroll-behavior:smooth}@media screen and (max-width: 768px){.swiper-container{width:calc(100vw - 20px)}}\n"] }]
         }] });
 
 /**
@@ -2265,67 +2274,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }] });
 
-class SwiperComponent {
-    constructor() {
-        this.swipeTemplate = input.required();
-        this.slides = input.required();
-        this.slidesPerPage = input(3.5);
-        this.slidesPerGroup = input(1);
-        this.isFreeMode = input(true);
-        this.startAt = input(1);
-        this.onSlideChanged = new EventEmitter();
-    }
-    ngAfterViewInit() {
-        if (this.startAt()) {
-            this.swiperContainer.nativeElement.swiper.slideTo(this.startAt());
-        }
-    }
-    trackByKey(_, item) {
-        return item.key;
-    }
-    slideChanged($event) {
-        if ($event.detail)
-            this.onSlideChanged.emit($event.detail[0].activeIndex);
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwiperComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SwiperComponent, isStandalone: true, selector: "ta-swiper", inputs: { swipeTemplate: { classPropertyName: "swipeTemplate", publicName: "swipeTemplate", isSignal: true, isRequired: true, transformFunction: null }, slides: { classPropertyName: "slides", publicName: "slides", isSignal: true, isRequired: true, transformFunction: null }, slidesPerPage: { classPropertyName: "slidesPerPage", publicName: "slidesPerPage", isSignal: true, isRequired: false, transformFunction: null }, slidesPerGroup: { classPropertyName: "slidesPerGroup", publicName: "slidesPerGroup", isSignal: true, isRequired: false, transformFunction: null }, isFreeMode: { classPropertyName: "isFreeMode", publicName: "isFreeMode", isSignal: true, isRequired: false, transformFunction: null }, startAt: { classPropertyName: "startAt", publicName: "startAt", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { onSlideChanged: "onSlideChanged" }, viewQueries: [{ propertyName: "swiperContainer", first: true, predicate: ["swiperContainer"], descendants: true }], ngImport: i0, template: "<swiper-container\n  #swiperContainer\n  [attr.slides-per-view]=\"this.slidesPerPage()\"\n  (transitionend)=\"this.slideChanged($event)\"\n  [attr.free-mode]=\"this.isFreeMode()\"\n  [attr.slides-per-group]=\"this.slidesPerGroup()\"\n  [attr.zoom]=\"true\"\n  [attr.pagination]=\"{\n    type: 'bullets',\n  }\"\n  watch-slides-progress=\"true\"\n  init=\"true\"\n  class=\"w-full\"\n  active-index=\"3\"\n>\n  @for (element of this.slides(); track this.trackByKey($index, element)) { @if\n  (element.visible$ | async) {\n  <swiper-slide>\n    <ng-container\n      [ngTemplateOutlet]=\"this.swipeTemplate()\"\n      [ngTemplateOutletContext]=\"{\n        element: element\n      }\"\n    >\n    </ng-container>\n  </swiper-slide>\n  } }\n</swiper-container>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: i1$4.AsyncPipe, name: "async" }], encapsulation: i0.ViewEncapsulation.None }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwiperComponent, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-swiper", standalone: true, schemas: [CUSTOM_ELEMENTS_SCHEMA], encapsulation: ViewEncapsulation.None, imports: [CommonModule], template: "<swiper-container\n  #swiperContainer\n  [attr.slides-per-view]=\"this.slidesPerPage()\"\n  (transitionend)=\"this.slideChanged($event)\"\n  [attr.free-mode]=\"this.isFreeMode()\"\n  [attr.slides-per-group]=\"this.slidesPerGroup()\"\n  [attr.zoom]=\"true\"\n  [attr.pagination]=\"{\n    type: 'bullets',\n  }\"\n  watch-slides-progress=\"true\"\n  init=\"true\"\n  class=\"w-full\"\n  active-index=\"3\"\n>\n  @for (element of this.slides(); track this.trackByKey($index, element)) { @if\n  (element.visible$ | async) {\n  <swiper-slide>\n    <ng-container\n      [ngTemplateOutlet]=\"this.swipeTemplate()\"\n      [ngTemplateOutletContext]=\"{\n        element: element\n      }\"\n    >\n    </ng-container>\n  </swiper-slide>\n  } }\n</swiper-container>\n" }]
-        }], ctorParameters: () => [], propDecorators: { onSlideChanged: [{
-                type: Output
-            }], swiperContainer: [{
-                type: ViewChild,
-                args: ["swiperContainer", { static: false }]
-            }] } });
-
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaSwiperModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { SwiperComponent } from '@ta/library-name';
- */
-class TaSwiperModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSwiperModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaSwiperModule, imports: [SwiperComponent], exports: [SwiperComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSwiperModule, imports: [SwiperComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSwiperModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [SwiperComponent],
-                    exports: [SwiperComponent],
-                    providers: [],
-                }]
-        }] });
-
 class ValidationModal {
     get title() {
         return this.data?.title ?? "validation.modal.title";
@@ -2987,7 +2935,7 @@ class OverlayService extends TaBaseService {
             this._onCloseCallback = undefined;
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OverlayService, deps: [{ token: i1$5.Overlay }, { token: i0.Injector }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OverlayService, deps: [{ token: i1$4.Overlay }, { token: i0.Injector }], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OverlayService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OverlayService, decorators: [{
@@ -2995,7 +2943,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{
                     providedIn: "root",
                 }]
-        }], ctorParameters: () => [{ type: i1$5.Overlay }, { type: i0.Injector }] });
+        }], ctorParameters: () => [{ type: i1$4.Overlay }, { type: i0.Injector }] });
 
 class TaDefaultPanelComponent {
     constructor(templateRef, maxHeight) {
@@ -3004,7 +2952,7 @@ class TaDefaultPanelComponent {
         this.template = input(undefined);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDefaultPanelComponent, deps: [{ token: MENU_TEMPLATE, optional: true }, { token: MENU_MAX_HEIGHT, optional: true }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaDefaultPanelComponent, isStandalone: true, selector: "ta-default-panel", inputs: { template: { classPropertyName: "template", publicName: "template", isSignal: true, isRequired: false, transformFunction: null } }, host: { styleAttribute: "display: block; width: 100%;" }, ngImport: i0, template: "<div class=\"menu-panel\" [style.max-height.px]=\"this.maxHeight\">\n  @if (this.templateRef) {\n  <ng-container *ngTemplateOutlet=\"this.templateRef\"></ng-container>\n  } @else {\n  <ng-template>\n    Ceci est le template par defaut. Il faut renseigner un template.\n  </ng-template>\n  }\n</div>\n", styles: [".menu-panel{width:100%;box-sizing:border-box;background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-md);overflow-y:auto}.custom-panel-header{flex:0 0 auto;padding:var(--ta-space-md);border-bottom:1px solid var(--ta-neutral-200)}.custom-panel-content{flex:1 1 auto;overflow-y:auto;padding:var(--ta-space-md)}.custom-panel-cta{flex:0 0 auto;padding:var(--ta-space-md);border-top:1px solid var(--ta-neutral-200);background:var(--ta-neutral-white)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaDefaultPanelComponent, isStandalone: true, selector: "ta-default-panel", inputs: { template: { classPropertyName: "template", publicName: "template", isSignal: true, isRequired: false, transformFunction: null } }, host: { styleAttribute: "display: block; width: 100%;" }, ngImport: i0, template: "<div class=\"menu-panel\" [style.max-height.px]=\"this.maxHeight\">\n  @if (this.templateRef) {\n  <ng-container *ngTemplateOutlet=\"this.templateRef\"></ng-container>\n  } @else {\n  <ng-template>\n    Ceci est le template par defaut. Il faut renseigner un template.\n  </ng-template>\n  }\n</div>\n", styles: [".menu-panel{width:100%;box-sizing:border-box;background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-md);overflow-y:auto}.custom-panel-header{flex:0 0 auto;padding:var(--ta-space-md);border-bottom:1px solid var(--ta-neutral-200)}.custom-panel-content{flex:1 1 auto;overflow-y:auto;padding:var(--ta-space-md)}.custom-panel-cta{flex:0 0 auto;padding:var(--ta-space-md);border-top:1px solid var(--ta-neutral-200);background:var(--ta-neutral-white)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$5.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDefaultPanelComponent, decorators: [{
             type: Component,
@@ -3090,7 +3038,7 @@ class TaOverlayPanelComponent extends TaBaseComponent {
         this.overlayService.closeMenu();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaOverlayPanelComponent, deps: [{ token: OverlayService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: { classPropertyName: "panelConfig", publicName: "panelConfig", isSignal: true, isRequired: true, transformFunction: null }, position: { classPropertyName: "position", publicName: "position", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-fill\" #triggerHost (click)=\"this.open()\">\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$4.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: { classPropertyName: "panelConfig", publicName: "panelConfig", isSignal: true, isRequired: true, transformFunction: null }, position: { classPropertyName: "position", publicName: "position", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-fill\" #triggerHost (click)=\"this.open()\">\n  <ng-container *ngTemplateOutlet=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$5.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaOverlayPanelComponent, decorators: [{
             type: Component,
@@ -3116,5 +3064,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, ProgressComponent, PwaComponent, RatingComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaSwiperModule, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, WrappedIconComponent, criticityLabel, openModal };
+export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, ProgressComponent, PwaComponent, RatingComponent, SwiperComponent, SwiperLightComponent, TaCardModule, TaContainerModule, TaDefaultPanelComponent, TaExpansionPanelComponent, TaLayoutModule, TaListModule, TaOverlayPanelComponent, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TaUiModule, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, WrappedIconComponent, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

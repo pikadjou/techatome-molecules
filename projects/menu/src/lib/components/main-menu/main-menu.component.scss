@@ -1,28 +1,25 @@
 @use 'ta/utils/mixins/flex';
 @use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
 
+// Desktop layout
 .main-nav-container {
   padding: common.get-var(space, sm);
-
   border-radius: 3px 3px 0px 0px;
-
   background-color: common.get-var(neutral, white);
-
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+
 .main-nav {
   @include flex.space-between();
 
   &.vertical {
     flex-direction: row;
   }
-  .logo {
-    @media screen and (max-width: 575px) {
-      display: none;
-    }
 
+  .logo {
     @media screen and (min-width: 576px) {
       width: 48px;
       .small {
@@ -55,14 +52,100 @@
       }
     }
   }
-  .user-nav {
-    @media screen and (max-width: 575px) {
-      display: none;
-    }
 
+  .user-nav {
     .sep {
       border-bottom: 1px solid common.get-var(surface, brand, primary);
       margin: common.get-var(space, sm);
     }
+  }
+}
+
+// Mobile layout
+.mobile-nav {
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+
+  .logo {
+    flex: 1;
+    .oneline {
+      display: block;
+      max-width: 120px;
+    }
+  }
+}
+
+.hamburger-icon {
+  cursor: pointer;
+  color: common.get-var(text, primary);
+  @include fonts.fontSizeBody(lg);
+}
+
+// Custom panel
+.mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+.mobile-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background-color: common.get-var(neutral, white);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.mobile-panel-content {
+  @include flex.flex-column();
+  height: 100%;
+  padding: common.get-var(space, md);
+}
+
+.mobile-panel-header {
+  @include flex.space-between();
+  @include flex.align-center();
+  padding-bottom: common.get-var(space, md);
+  border-bottom: 1px solid common.get-var(border, secondary);
+  margin-bottom: common.get-var(space, md);
+
+  .close-icon {
+    cursor: pointer;
+    color: common.get-var(text, secondary);
+  }
+}
+
+.mobile-menu-nav {
+  flex: 1;
+}
+
+.mobile-user-nav {
+  .sep {
+    border-bottom: 1px solid common.get-var(surface, brand, primary);
+    margin: common.get-var(space, sm) 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

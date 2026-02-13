@@ -1,18 +1,18 @@
-import { NgIf, NgFor, NgClass, NgTemplateOutlet } from "@angular/common";
-import { FontIconComponent } from "@ta/icons";
-import { Component, input, OnInit, TemplateRef } from "@angular/core";
-import { MatMenuModule } from "@angular/material/menu";
+import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component, OnInit, TemplateRef, input } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 
-import { InputBase, InputTranslation } from "@ta/form-model";
-import { Menu, MenuBase, ToggleNavigationComponent } from "@ta/menu";
-import { TranslatePipe } from "@ta/translation";
-import { TitleComponent, LinkComponent, ButtonComponent } from "@ta/ui";
-import { TaBaseComponent, Culture, extractEnum } from "@ta/utils";
+import { InputBase, InputTranslation } from '@ta/form-model';
+import { FontIconComponent } from '@ta/icons';
+import { Menu, MenuBase } from '@ta/menu';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent, LinkComponent, TitleComponent } from '@ta/ui';
+import { Culture, TaBaseComponent, extractEnum } from '@ta/utils';
 
 @Component({
-  selector: "ta-input-translation",
-  templateUrl: "./translation.component.html",
-  styleUrls: ["./translation.component.scss"],
+  selector: 'ta-input-translation',
+  templateUrl: './translation.component.html',
+  styleUrls: ['./translation.component.scss'],
   standalone: true,
   imports: [
     NgIf,
@@ -21,17 +21,13 @@ import { TaBaseComponent, Culture, extractEnum } from "@ta/utils";
     NgTemplateOutlet,
     FontIconComponent,
     MatMenuModule,
-    ToggleNavigationComponent,
     TitleComponent,
     LinkComponent,
     ButtonComponent,
     TranslatePipe,
   ],
 })
-export class InputTranslationComponent
-  extends TaBaseComponent
-  implements OnInit
-{
+export class InputTranslationComponent extends TaBaseComponent implements OnInit {
   inputModel = input.required<InputTranslation>({ alias: 'input' });
   inputsTemplate = input.required<TemplateRef<any>>();
 
@@ -93,7 +89,7 @@ export class InputTranslationComponent
   private _renderMenu() {
     this.cultureMenu = new Menu({
       elements: this.getKeys().map(
-        (cul) =>
+        cul =>
           new MenuBase({
             key: cul,
             label: cul,
@@ -102,7 +98,7 @@ export class InputTranslationComponent
             callback: () => this.changeSelection(cul),
           })
       ),
-      direction: "horizontal",
+      direction: 'horizontal',
     });
   }
 }

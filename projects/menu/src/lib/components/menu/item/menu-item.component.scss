@@ -18,8 +18,6 @@
 }
 
 @mixin menu-item-vertical() {
-  padding: common.get-var(space, md) common.get-var(space, md);
-
   .icon,
   .title {
     @include fonts.fontSizeBody(md);
