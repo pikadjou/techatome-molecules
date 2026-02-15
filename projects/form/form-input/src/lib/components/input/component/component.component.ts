@@ -6,8 +6,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Subject } from 'rxjs';
 
 import { InputComponent } from '@ta/form-model';
-import { TaIconsModule } from '@ta/icons';
-import { TaLayoutModule, TaUiModule } from '@ta/ui';
+import { FontIconComponent } from '@ta/icons';
+import { LayoutModalComponent } from '@ta/ui';
 import { TaBaseModal } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
@@ -16,7 +16,7 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
 @Component({
   selector: 'ta-input-component',
   standalone: true,
-  imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule],
+  imports: [InputLayoutComponent, ReactiveFormsModule, FontIconComponent],
   templateUrl: './component.component.html',
   styleUrl: './component.component.scss',
 })
@@ -38,7 +38,7 @@ type TemplateModalData = {
 @Component({
   selector: '',
   standalone: true,
-  imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule],
+  imports: [NgTemplateOutlet, LayoutModalComponent],
   templateUrl: './modal.html',
 })
 export class TemplateModal extends TaBaseModal {

@@ -1,34 +1,21 @@
-import { NgFor, NgIf } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
-import {
-  AfterViewInit,
-  Component,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-  signal,
-} from "@angular/core";
-import {
-  GoogleMap,
-  GoogleMapsModule,
-  MapInfoWindow,
-  MapMarker,
-} from "@angular/google-maps";
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren, signal } from '@angular/core';
+import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { MarkerClusterer } from '@googlemaps/markerclusterer';
 
-import { markers } from "../../mock";
+import { markers } from '../../mock';
 
 @Component({
-  selector: "ta-google-maps",
+  selector: 'ta-google-maps',
   standalone: true,
-  imports: [GoogleMapsModule, NgIf, NgFor],
-  templateUrl: "./map.component.html",
-  styleUrl: "./map.component.scss",
+  imports: [GoogleMapsModule],
+  templateUrl: './map.component.html',
+  styleUrl: './map.component.scss',
 })
 export class MapComponent implements AfterViewInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
-  @ViewChild("map") map!: GoogleMap;
+  @ViewChild('map') map!: GoogleMap;
   @ViewChildren(MapMarker) mapMarkers!: QueryList<MapMarker>;
 
   readonly options: google.maps.MapOptions = {
@@ -38,7 +25,7 @@ export class MapComponent implements AfterViewInit {
 
   routeSummary: any = null;
   routeDetails = signal<any[]>([]);
-  readonly markers = markers.map((marker) => ({
+  readonly markers = markers.map(marker => ({
     ...marker,
     ...{
       options: {
@@ -46,10 +33,10 @@ export class MapComponent implements AfterViewInit {
         icon: {
           path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
           scale: 8,
-          fillColor: "#FF0000",
+          fillColor: '#FF0000',
           fillOpacity: 1,
           strokeWeight: 1,
-          strokeColor: "#ffffff",
+          strokeColor: '#ffffff',
         },
       },
     },
@@ -67,14 +54,14 @@ export class MapComponent implements AfterViewInit {
   ngAfterViewInit() {
     const bounds = new google.maps.LatLngBounds();
 
-    this.mapMarkers.forEach((marker) => {
+    this.mapMarkers.forEach(marker => {
       bounds.extend(marker.getPosition() ?? { lat: 0, lng: 0 });
     });
 
     this.map.fitBounds(bounds, { top: 50, bottom: 50, left: 50, right: 50 });
 
     new MarkerClusterer({
-      markers: this.mapMarkers.map((m) => m.marker!),
+      markers: this.mapMarkers.map(m => m.marker!),
       map: this.map.googleMap!,
     });
 
@@ -100,7 +87,7 @@ export class MapComponent implements AfterViewInit {
     this.directionsRenderer.setMap(this.map.googleMap!);
 
     const [origin, ...rest] = this.selectedPoints;
-    const destination = rest.pop(); // last point
+    const destination: any = rest.pop(); // last point
 
     directionsService.route(
       {
@@ -113,7 +100,7 @@ export class MapComponent implements AfterViewInit {
         if (status === google.maps.DirectionsStatus.OK && result) {
           this.directionsRenderer.setDirections(result);
         } else {
-          console.error("Erreur de calcul de l’itinéraire :", status);
+          console.error('Erreur de calcul de l’itinéraire :', status);
         }
       }
     );
@@ -136,37 +123,32 @@ export class MapComponent implements AfterViewInit {
           latLng: { latitude: destination?.lat, longitude: destination?.lng },
         },
       },
-      intermediates: rest.map((p) => ({
+      intermediates: rest.map(p => ({
         location: { latLng: { latitude: p.lat, longitude: p.lng } },
       })),
-      travelMode: "DRIVE",
+      travelMode: 'DRIVE',
       optimizeWaypointOrder: true,
-      languageCode: "fr-FR",
+      languageCode: 'fr-FR',
       computeAlternativeRoutes: false,
     };
 
-    const key = "AIzaSyDxd03WdDtISHBrM_6rCYS426grfl_bK8Y";
+    const key = 'AIzaSyDxd03WdDtISHBrM_6rCYS426grfl_bK8Y';
     this.http
-      .post(
-        `https://routes.googleapis.com/directions/v2:computeRoutes?key=${key}`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Goog-FieldMask": "*",
-          },
-        }
-      )
+      .post(`https://routes.googleapis.com/directions/v2:computeRoutes?key=${key}`, body, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-FieldMask': '*',
+        },
+      })
       .subscribe({
         next: (response: any) => {
           const route = response.routes[0];
           const polyline = route.polyline.encodedPolyline;
 
-          const decodedPath =
-            google.maps.geometry.encoding.decodePath(polyline);
+          const decodedPath = google.maps.geometry.encoding.decodePath(polyline);
           const routePolyline = new google.maps.Polyline({
             path: decodedPath,
-            strokeColor: "red",
+            strokeColor: 'red',
             strokeOpacity: 0.8,
             strokeWeight: 5,
           });
@@ -191,8 +173,8 @@ export class MapComponent implements AfterViewInit {
             duration,
           };
         },
-        error: (err) => {
-          console.error("Erreur Routes API :", err);
+        error: err => {
+          console.error('Erreur Routes API :', err);
         },
       });
   }
@@ -201,8 +183,6 @@ export class MapComponent implements AfterViewInit {
     const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
     if (!match) return isoDuration;
     const [, hours, minutes] = match;
-    return `${hours ? hours + " h " : ""}${
-      minutes ? minutes + " min" : ""
-    }`.trim();
+    return `${hours ? hours + ' h ' : ''}${minutes ? minutes + ' min' : ''}`.trim();
   }
 }

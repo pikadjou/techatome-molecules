@@ -1,16 +1,16 @@
-import { NgClass, NgTemplateOutlet, AsyncPipe, NgIf, NgFor, NgStyle, CommonModule } from '@angular/common';
+import { NgClass, NgTemplateOutlet, AsyncPipe, NgIf, NgFor, NgStyle } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, input, ViewChild, Component, inject, Inject, NgModule } from '@angular/core';
-import { TaBaseComponent, TypedTemplateDirective, TaAbstractComponent, isNonNullable, TaDirectivePipeModule } from '@ta/utils';
+import { Injectable, input, ViewChild, Component, inject, Inject } from '@angular/core';
+import { TaBaseComponent, TypedTemplateDirective, TaAbstractComponent, isNonNullable } from '@ta/utils';
 import * as i3 from '@angular/material/menu';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import * as i1$1 from '@angular/router';
 import { RouterModule } from '@angular/router';
 import * as i2 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FontIconComponent, LocalIconComponent, TaIconsModule } from '@ta/icons';
-import { TemplateModalContainer, NotificationBadgeComponent, LogoComponent, ContainerValidationComponent, LabelComponent, SwiperLightComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, TaUiModule, TaContainerModule, TaLayoutModule, TaListModule } from '@ta/ui';
-import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+import { TemplateModalContainer, NotificationBadgeComponent, LogoComponent, ContainerValidationComponent, LabelComponent, SwiperLightComponent } from '@ta/ui';
+import { TaLazyTranslationService } from '@ta/translation';
 import * as i1 from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TaSharedMenuService } from '@ta/services';
@@ -585,115 +585,6 @@ class FilterHelper {
     }
 }
 
-class ListComponent {
-    constructor() {
-        this.menu = input.required();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ListComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ListComponent, isStandalone: true, selector: "ta-list", inputs: { menu: { classPropertyName: "menu", publicName: "menu", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<ta-list-container class=\"content\">\n  @for (item of this.menu().elements; track item) {\n  <ta-list-element>\n    <ta-list-title>\n      <div>\n        @if (item.icon) {\n        <ta-font-icon [name]=\"$any(item.icon)\"></ta-font-icon>\n        }\n        {{ item.label }}\n      </div>\n    </ta-list-title>\n  </ta-list-element>\n  }\n</ta-list-container>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ListContainerComponent, selector: "ta-list-container" }, { kind: "component", type: ListElementComponent, selector: "ta-list-element", inputs: ["withSeparator", "flexColumn"], outputs: ["action"] }, { kind: "component", type: ListTitleComponent, selector: "ta-list-title" }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ListComponent, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-list", standalone: true, imports: [
-                        NgIf,
-                        NgFor,
-                        FontIconComponent,
-                        ListContainerComponent,
-                        ListElementComponent,
-                        ListTitleComponent,
-                    ], template: "<ta-list-container class=\"content\">\n  @for (item of this.menu().elements; track item) {\n  <ta-list-element>\n    <ta-list-title>\n      <div>\n        @if (item.icon) {\n        <ta-font-icon [name]=\"$any(item.icon)\"></ta-font-icon>\n        }\n        {{ item.label }}\n      </div>\n    </ta-list-title>\n  </ta-list-element>\n  }\n</ta-list-container>\n" }]
-        }] });
-
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaMenuModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { MenuComponent, MenuItemComponent, BottomSheetTemplateBasicComponent } from '@ta/library-name';
- */
-class TaMenuModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
-            TaContainerModule,
-            TaDirectivePipeModule,
-            TaLayoutModule,
-            TaListModule,
-            CommonModule,
-            RouterModule,
-            TaIconsModule,
-            MatMenuModule,
-            TranslatePipe,
-            MenuComponent,
-            MenuItemComponent,
-            BottomSheetTemplateBasicComponent,
-            ContextMenuComponent,
-            BottomSheetTemplateGenericComponent,
-            MainMenuComponent,
-            ListComponent,
-            NavigationComponent], exports: [MenuComponent,
-            MenuItemComponent,
-            BottomSheetTemplateBasicComponent,
-            ContextMenuComponent,
-            BottomSheetTemplateGenericComponent,
-            MainMenuComponent,
-            NavigationComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, imports: [TaUiModule,
-            TaContainerModule,
-            TaDirectivePipeModule,
-            TaLayoutModule,
-            TaListModule,
-            CommonModule,
-            RouterModule,
-            TaIconsModule,
-            MatMenuModule,
-            MenuComponent,
-            MenuItemComponent,
-            BottomSheetTemplateBasicComponent,
-            ContextMenuComponent,
-            MainMenuComponent,
-            ListComponent,
-            NavigationComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaMenuModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        TaUiModule,
-                        TaContainerModule,
-                        TaDirectivePipeModule,
-                        TaLayoutModule,
-                        TaListModule,
-                        CommonModule,
-                        RouterModule,
-                        TaIconsModule,
-                        MatMenuModule,
-                        TranslatePipe,
-                        MenuComponent,
-                        MenuItemComponent,
-                        BottomSheetTemplateBasicComponent,
-                        ContextMenuComponent,
-                        BottomSheetTemplateGenericComponent,
-                        MainMenuComponent,
-                        ListComponent,
-                        NavigationComponent,
-                    ],
-                    exports: [
-                        MenuComponent,
-                        MenuItemComponent,
-                        BottomSheetTemplateBasicComponent,
-                        ContextMenuComponent,
-                        BottomSheetTemplateGenericComponent,
-                        MainMenuComponent,
-                        NavigationComponent,
-                    ],
-                }]
-        }] });
-
 /*
  * Public API Surface of menu
  */
@@ -702,5 +593,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { BottomSheetTemplateBasicComponent, BottomSheetTemplateGenericComponent, ContextMenuComponent, FilterHelper, MainMenuComponent, Menu, MenuBase, MenuComponent, MenuIcon, MenuItemComponent, MenuPanel, NavigationComponent, TaMainRoute, TaMenuModule, TaRoutes, TaRoutesCore };
+export { BottomSheetTemplateBasicComponent, BottomSheetTemplateGenericComponent, ContextMenuComponent, FilterHelper, MainMenuComponent, Menu, MenuBase, MenuComponent, MenuIcon, MenuItemComponent, MenuPanel, NavigationComponent, TaMainRoute, TaRoutes, TaRoutesCore };
 //# sourceMappingURL=ta-menu.mjs.map

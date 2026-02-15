@@ -1,94 +1,8 @@
-import { compare, isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 import * as i0 from '@angular/core';
 import { Injectable } from '@angular/core';
-import { map, filter, tap } from 'rxjs/operators';
-import { BehaviorSubject, map as map$1, filter as filter$1 } from 'rxjs';
-import { TaBaseService, Request, GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, HandleSimpleRequest, HandleComplexRequest } from '@ta/server';
-
-const sortByTranslatedValue = (translated) => {
-    return translated.sort((a, b) => compare(a.translatedValue || "", b.translatedValue || "", true));
-};
-
-const apiRoutes$1 = {
-    GetWontDoReasons: {
-        type: "GET",
-        url: "{ApiUrl}/wontdoreason",
-    },
-    GetWorkerJustifications: {
-        type: "GET",
-        url: "{ApiUrl}/workerjustifications",
-    },
-    GetIncidentTypes: {
-        type: "GET",
-        url: "{ApiUrl}/incidenttypes",
-    },
-    GetAbandonReasons: {
-        type: "GET",
-        url: "{ApiUrl}/abandonreasons",
-    },
-    GetFileTypes: {
-        type: "GET",
-        url: "{ApiUrl}/FileTypes",
-    },
-};
-class TaEnumerationService extends TaBaseService {
-    constructor() {
-        super(apiRoutes$1);
-        this.getAbandonReasons$ = new BehaviorSubject([]);
-        this.wontDoReasons$ = new BehaviorSubject([]);
-        this.incidentTypes$ = new BehaviorSubject([]);
-        this.workerJustifications$ = new BehaviorSubject([]);
-        this._getFileTypes$ = new BehaviorSubject({});
-        this.getFileTypes = (id) => (fileTypeId) => {
-            return this._getFileTypes$
-                .getValue()[id].find((document) => document.id === fileTypeId);
-        };
-        this.getFileTypes$ = (id) => this._getFileTypes$.pipe(map((data) => data[id]), filter((myData) => !!myData), map((fileTypes) => sortByTranslatedValue(fileTypes)));
-    }
-    fetchWontDoReasons$() {
-        return this._serverService
-            .request(new Request({ type: "GetWontDoReasons", content: {}, cacheTime: 60 }))
-            .pipe(filter((data) => !!data), tap((data) => {
-            this.wontDoReasons$.next(data);
-        }));
-    }
-    fetchWorkerJustifications$() {
-        return this._serverService
-            .request(new Request({
-            type: "GetWorkerJustifications",
-            content: {},
-            cacheTime: 60,
-        }))
-            .pipe(filter((data) => !!data), tap((data) => {
-            this.workerJustifications$.next(data);
-        }));
-    }
-    fetchIncidentTypes$() {
-        return this._serverService
-            .request(new Request({ type: "GetIncidentTypes", content: {}, cacheTime: 60 }))
-            .pipe(filter((data) => !!data), tap((data) => {
-            this.incidentTypes$.next(data);
-        }));
-    }
-    fetchAbandonReasons() {
-        return this._serverService
-            .request(new Request({ type: "GetAbandonReasons", cacheTime: -1 }))
-            .pipe(filter((myData) => !!myData), map((reasons) => sortByTranslatedValue(reasons)), tap((reasons) => this.getAbandonReasons$.next(reasons)));
-    }
-    fetchFileTypes() {
-        return this._serverService
-            .request(new Request({ type: "GetFileTypes", cacheTime: -1 }))
-            .pipe(filter((myData) => !!myData), map((fileTypes) => sortByTranslatedValue(fileTypes)));
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaEnumerationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaEnumerationService, providedIn: "root" }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaEnumerationService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: () => [] });
+import { BehaviorSubject, map, filter } from 'rxjs';
+import { GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, TaBaseService, HandleSimpleRequest, HandleComplexRequest, Request } from '@ta/server';
+import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
 
 const isMinimizedKey = "isMinimizedMenu";
 class TaSharedMenuService {
@@ -246,7 +160,7 @@ class TaProjectsService extends TaBaseService {
     getProjectsLightInfo$(ids) {
         return this._graphService
             .fetchPagedQueryList(GET_LIGHT_PROJECTS(ids), "projects", graphEndpoint$1.clientName)
-            .pipe(map$1((data) => data.items ?? []));
+            .pipe(map((data) => data.items ?? []));
     }
     fetchProjectsByContact$(contactId) {
         return this.projectByContact.fetch(contactId, this._graphService
@@ -254,12 +168,12 @@ class TaProjectsService extends TaBaseService {
               ${projectProps.get("id")}
               ${projectProps.get("name")}
             `), "projects", graphEndpoint$1.clientName)
-            .pipe(map$1((data) => data.items ?? [])));
+            .pipe(map((data) => data.items ?? [])));
     }
     fetchProjects$() {
         return this.projects.fetch(this._graphService
             .fetchPagedQueryList(GET_MY_PROJECTS(), "projects", graphEndpoint$1.clientName)
-            .pipe(map$1((data) => data.items)));
+            .pipe(map((data) => data.items)));
     }
     fetchProject$(id) {
         return this.project.fetch(id, this._graphService.fetchQuery(GET_PROJECT_BY_ID(id), "projectById", graphEndpoint$1.clientName));
@@ -344,12 +258,12 @@ class TaDocumentsService extends TaBaseService {
     getDocuments$(ids) {
         return this.documents
             .get$()
-            .pipe(map$1((list) => list?.filter((doc) => ids.includes(doc.id))));
+            .pipe(map((list) => list?.filter((doc) => ids.includes(doc.id))));
     }
     fetchDocuments$(ids) {
         return this.documents.fetch(this._graphService
             .fetchPagedQueryList(GET_DOCUMENTS({ ids }), "documents", graphEndpoint.clientName)
-            .pipe(map$1((data) => data.items ?? []), filter$1(isNonNullable), map$1((list) => [...(list ?? []), ...(this.documents.get() ?? [])]), map$1((list) => keepUniqueObjectByProperty(list, (item) => item.id))));
+            .pipe(map((data) => data.items ?? []), filter(isNonNullable), map((list) => [...(list ?? []), ...(this.documents.get() ?? [])]), map((list) => keepUniqueObjectByProperty(list, (item) => item.id))));
     }
     addDocument$(doc) {
         const formData = new FormData();
@@ -379,5 +293,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, TaDocumentsService, TaEnumerationService, TaProjectsService, TaSharedMenuService, documentProps, projectProps, sortByTranslatedValue };
+export { FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, TaDocumentsService, TaProjectsService, TaSharedMenuService, documentProps, projectProps };
 //# sourceMappingURL=ta-services.mjs.map

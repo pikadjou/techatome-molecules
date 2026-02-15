@@ -1,7 +1,7 @@
 import * as i0 from '@angular/core';
-import { input, Component, EventEmitter, inject, ViewChild, Output, NgModule } from '@angular/core';
+import { input, Component, EventEmitter, inject, ViewChild, Output } from '@angular/core';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
-import { TitleComponent, TextComponent, ToastComponent, TaUiModule } from '@ta/ui';
+import { TitleComponent, TextComponent, ToastComponent } from '@ta/ui';
 import { TaBaseComponent, SafePipe, isNotEmptyObject, isNonNullable } from '@ta/utils';
 import Delimiter from '@editorjs/delimiter';
 import EditorJS from '@editorjs/editorjs';
@@ -15,7 +15,6 @@ import { firstValueFrom } from 'rxjs';
 import { TaDocumentsService } from '@ta/services';
 import { TaTranslationService } from '@ta/translation';
 import edjsHTML from 'editorjs-html';
-import { CommonModule } from '@angular/common';
 
 class BlockTextComponent extends TaBaseComponent {
     constructor() {
@@ -740,31 +739,6 @@ const convertBlocksToHtml = (blocks) => {
     return edjsParser.parse({ blocks }).join(" ");
 };
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaWysiswygModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { BlockTextComponent, EditorInputComponent } from '@ta/library-name';
- */
-class TaWysiswygModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, SafePipe, BlockTextComponent, EditorInputComponent], exports: [BlockTextComponent, EditorInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, imports: [CommonModule, TaUiModule, BlockTextComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaWysiswygModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [CommonModule, TaUiModule, SafePipe, BlockTextComponent, EditorInputComponent],
-                    exports: [BlockTextComponent, EditorInputComponent],
-                }]
-        }] });
-
 /*
  * Public API Surface of cms
  */
@@ -777,5 +751,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { BlockTextComponent, EditorInputComponent, TaWysiswygModule, convertBlocksToHtml };
+export { BlockTextComponent, EditorInputComponent, convertBlocksToHtml };
 //# sourceMappingURL=ta-wysiswyg.mjs.map

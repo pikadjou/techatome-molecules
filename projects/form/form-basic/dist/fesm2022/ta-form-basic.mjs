@@ -1,24 +1,23 @@
-import { NgClass, NgTemplateOutlet, NgIf, NgFor, AsyncPipe, CommonModule } from '@angular/common';
+import { NgClass, NgTemplateOutlet, NgIf, NgFor, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, Component, input, EventEmitter, Output, signal, HostListener, NgModule } from '@angular/core';
+import { Injectable, Component, input, EventEmitter, Output, signal, HostListener } from '@angular/core';
 import * as i1$1 from '@angular/forms';
-import { ReactiveFormsModule, FormGroup, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
 import { distinctUntilChanged, BehaviorSubject } from 'rxjs';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent, TaContainerModule, TaUiModule } from '@ta/ui';
-import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective, TaDirectivePipeModule } from '@ta/utils';
-import { TaAbstractInputComponent, TextBoxComponent, FormLabelComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent, TaFormInputsModule } from '@ta/form-input';
+import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent } from '@ta/ui';
+import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
+import { TaAbstractInputComponent, TextBoxComponent, FormLabelComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LocalIconComponent, FontIconComponent, TaIconsModule } from '@ta/icons';
+import { LocalIconComponent, FontIconComponent } from '@ta/icons';
 import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
-import { Menu, MenuBase, TaMenuModule } from '@ta/menu';
-import { MatNativeDateModule, ShowOnDirtyErrorStateMatcher, ErrorStateMatcher } from '@angular/material/core';
+import { Menu, MenuBase } from '@ta/menu';
 
 class TaTranslationForm extends TaLazyTranslationService {
     constructor() {
@@ -426,84 +425,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 args: ["document:click", ["$event.target"]]
             }] } });
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaFormModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { FormComponent, MatNativeDateModule, EditFieldComponent } from '@ta/library-name';
- */
-class TaFormModule {
-    constructor() {
-        TaTranslationForm.getInstance();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, imports: [TaContainerModule,
-            TaDirectivePipeModule,
-            TaFormInputsModule,
-            TaUiModule,
-            CommonModule,
-            FormsModule,
-            ReactiveFormsModule,
-            TaIconsModule,
-            TaMenuModule,
-            MatMenuModule,
-            TranslatePipe,
-            FormComponent,
-            InputsComponent,
-            PanelComponent,
-            DynamicComponent,
-            EditFieldComponent,
-            InputTranslationComponent], exports: [FormComponent, MatNativeDateModule, EditFieldComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }], imports: [TaContainerModule,
-            TaDirectivePipeModule,
-            TaFormInputsModule,
-            TaUiModule,
-            CommonModule,
-            FormsModule,
-            ReactiveFormsModule,
-            TaIconsModule,
-            TaMenuModule,
-            MatMenuModule,
-            FormComponent,
-            InputsComponent,
-            PanelComponent,
-            DynamicComponent,
-            EditFieldComponent,
-            InputTranslationComponent, MatNativeDateModule] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    imports: [
-                        TaContainerModule,
-                        TaDirectivePipeModule,
-                        TaFormInputsModule,
-                        TaUiModule,
-                        CommonModule,
-                        FormsModule,
-                        ReactiveFormsModule,
-                        TaIconsModule,
-                        TaMenuModule,
-                        MatMenuModule,
-                        TranslatePipe,
-                        FormComponent,
-                        InputsComponent,
-                        PanelComponent,
-                        DynamicComponent,
-                        EditFieldComponent,
-                        InputTranslationComponent,
-                    ],
-                    providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
-                    declarations: [],
-                    exports: [FormComponent, MatNativeDateModule, EditFieldComponent],
-                }]
-        }], ctorParameters: () => [] });
-
 /*
  * Public API Surface of form-basic
  */
@@ -512,5 +433,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { EditFieldComponent, FormComponent, InputsComponent, MyErrorStateMatcher, TaFormModule };
+export { EditFieldComponent, FormComponent, InputsComponent, MyErrorStateMatcher };
 //# sourceMappingURL=ta-form-basic.mjs.map

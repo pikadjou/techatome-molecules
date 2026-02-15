@@ -1,13 +1,12 @@
-import { NgFor, NgTemplateOutlet, AsyncPipe, NgIf, CommonModule } from '@angular/common';
+import { NgFor, NgTemplateOutlet, AsyncPipe, NgIf } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, Component, inject, LOCALE_ID, Injectable, Optional, Inject, EventEmitter, Output, NgModule } from '@angular/core';
+import { input, Component, inject, LOCALE_ID, Injectable, Optional, Inject, EventEmitter, Output } from '@angular/core';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService, HandleComplexRequest, TENANT_CONFIG_TOKEN } from '@ta/server';
-import { LinkComponent as LinkComponent$1, TitleComponent, LoaderComponent, ErrorComponent, EmptyComponent, TaUiModule, TaContainerModule } from '@ta/ui';
-import { TaBaseComponent, isNonNullable, TaDirectivePipeModule } from '@ta/utils';
+import { LinkComponent as LinkComponent$1, TitleComponent, LoaderComponent, ErrorComponent, EmptyComponent } from '@ta/ui';
+import { TaBaseComponent, isNonNullable } from '@ta/utils';
 import { map, of, filter } from 'rxjs';
-import { ToggleComponent, TaFormInputsModule } from '@ta/form-input';
+import { ToggleComponent } from '@ta/form-input';
 import { InputCheckBox } from '@ta/form-model';
-import { TaLazyTranslationService } from '@ta/translation';
 
 class TextComponent {
     constructor() {
@@ -246,76 +245,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }] } });
 
-class TaTranslationStrapi extends TaLazyTranslationService {
-    constructor() {
-        super("strapi");
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationStrapi, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationStrapi, providedIn: "root" }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationStrapi, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: () => [] });
-
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaStrapiModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { CmsComponent, SaleComponent } from '@ta/library-name';
- */
-class TaStrapiModule {
-    constructor() {
-        TaTranslationStrapi.getInstance();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
-            TaUiModule,
-            TaDirectivePipeModule,
-            TaContainerModule,
-            TaFormInputsModule,
-            CmsComponent,
-            RichTextComponent,
-            LinkComponent,
-            TextComponent,
-            SaleComponent], exports: [CmsComponent, SaleComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, imports: [CommonModule,
-            TaUiModule,
-            TaDirectivePipeModule,
-            TaContainerModule,
-            TaFormInputsModule,
-            CmsComponent,
-            RichTextComponent,
-            LinkComponent,
-            SaleComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        CommonModule,
-                        TaUiModule,
-                        TaDirectivePipeModule,
-                        TaContainerModule,
-                        TaFormInputsModule,
-                        CmsComponent,
-                        RichTextComponent,
-                        LinkComponent,
-                        TextComponent,
-                        SaleComponent,
-                    ],
-                    exports: [CmsComponent, SaleComponent],
-                }]
-        }], ctorParameters: () => [] });
-
 /*
  * Public API Surface of cms
  */
@@ -328,5 +257,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CmsComponent, SaleComponent, TaCmsService, TaStrapiModule };
+export { CmsComponent, SaleComponent, TaCmsService };
 //# sourceMappingURL=ta-cms.mjs.map

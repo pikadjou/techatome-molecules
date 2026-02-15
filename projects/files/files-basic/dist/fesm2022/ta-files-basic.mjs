@@ -1,10 +1,10 @@
 import * as i1$1 from '@angular/common';
 import { NgIf, NgFor, NgClass, CommonModule, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Output, Component, ViewChild, Input, inject, signal, NgModule } from '@angular/core';
-import { TaIconType, FontIconComponent, LocalIconComponent, MaterialIconComponent, TaIconsModule } from '@ta/icons';
-import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent, EmptyComponent, LoaderComponent, ButtonComponent, MegaoctetComponent, TextComponent, LayoutModalComponent, ButtonToolComponent, ErrorComponent, LinkComponent, TimeAgoComponent, TaUiModule, TaCardModule, TaContainerModule } from '@ta/ui';
-import { EFileExtension, TaBaseComponent, SafePipe, StopPropagationDirective, isLight, getBlobImage, determineNewSize, TaAbstractComponent, getFileExtension, downloadFile, TaBaseModal, TaDirectivePipeModule } from '@ta/utils';
+import { input, EventEmitter, Output, Component, ViewChild, Input, inject, signal } from '@angular/core';
+import { TaIconType, FontIconComponent, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
+import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent, EmptyComponent, LoaderComponent, ButtonComponent, MegaoctetComponent, TextComponent, LayoutModalComponent, ButtonToolComponent, ErrorComponent, LinkComponent, TimeAgoComponent } from '@ta/ui';
+import { EFileExtension, TaBaseComponent, SafePipe, StopPropagationDirective, isLight, getBlobImage, determineNewSize, TaAbstractComponent, getFileExtension, downloadFile, TaBaseModal } from '@ta/utils';
 import { InputSlider } from '@ta/form-model';
 import ImageEditor from 'tui-image-editor';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,7 +13,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import * as i1 from 'ngx-doc-viewer';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { TaDocumentsService, FileType } from '@ta/services';
-import { TranslatePipe } from '@ta/translation';
 
 class FileCardComponent {
     constructor() {
@@ -550,64 +549,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }] } });
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaFilesBasicModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { FileListComponent, FileEditComponent, DocumentsListComponent } from '@ta/library-name';
- */
-class TaFilesBasicModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
-            TaDirectivePipeModule,
-            TaUiModule,
-            TaCardModule,
-            TaContainerModule,
-            TaIconsModule,
-            TranslatePipe,
-            SafePipe,
-            FileListComponent,
-            FileCardComponent,
-            FileEditComponent,
-            DocumentsListComponent], exports: [FileListComponent, FileEditComponent, DocumentsListComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, imports: [CommonModule,
-            TaDirectivePipeModule,
-            TaUiModule,
-            TaCardModule,
-            TaContainerModule,
-            TaIconsModule,
-            FileListComponent,
-            FileCardComponent,
-            FileEditComponent,
-            DocumentsListComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesBasicModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        CommonModule,
-                        TaDirectivePipeModule,
-                        TaUiModule,
-                        TaCardModule,
-                        TaContainerModule,
-                        TaIconsModule,
-                        TranslatePipe,
-                        SafePipe,
-                        FileListComponent,
-                        FileCardComponent,
-                        FileEditComponent,
-                        DocumentsListComponent,
-                    ],
-                    exports: [FileListComponent, FileEditComponent, DocumentsListComponent],
-                }]
-        }] });
-
 /*
  * Public API Surface of files-basic
  */
@@ -616,5 +557,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { DocumentsListComponent, ExcelViewerComponent, FileEditComponent, FileListComponent, FilesPreviewComponent, ImageViewerComponent, PdfViewerComponent, PreviewModal, TaFilesBasicModule, WordViewerComponent };
+export { DocumentsListComponent, ExcelViewerComponent, FileEditComponent, FileListComponent, FilesPreviewComponent, ImageViewerComponent, PdfViewerComponent, PreviewModal, WordViewerComponent };
 //# sourceMappingURL=ta-files-basic.mjs.map

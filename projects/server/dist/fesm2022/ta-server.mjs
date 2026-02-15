@@ -1,17 +1,16 @@
-import { isNonNullable, capitalizeFirstLetter, ObjectKeys, isURL, newId } from '@ta/utils';
-import { BehaviorSubject, filter, tap, map, Subject, switchMap, catchError, throwError, take, of, share } from 'rxjs';
-import * as i1 from '@angular/common/http';
-import { HttpHeaders, HttpClient, HttpResponse, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import * as i0 from '@angular/core';
-import { InjectionToken, Inject, Optional, Injectable, signal, inject, importProvidersFrom, NgModule } from '@angular/core';
-import { gql, ApolloLink, InMemoryCache, ApolloClient } from '@apollo/client/core';
-import { print } from 'graphql';
-import * as i1$1 from 'apollo-angular/http';
 import * as i2 from 'apollo-angular';
 import { ApolloModule } from 'apollo-angular';
 export { gql as Apollo_gql } from 'apollo-angular';
+import { isNonNullable, capitalizeFirstLetter, ObjectKeys, isURL, newId } from '@ta/utils';
+import { BehaviorSubject, filter, tap, map, Subject, switchMap, catchError, throwError, take, of, share } from 'rxjs';
+import * as i1 from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import * as i0 from '@angular/core';
+import { InjectionToken, Inject, Optional, Injectable, signal, inject, importProvidersFrom } from '@angular/core';
+import { gql, ApolloLink, InMemoryCache, ApolloClient } from '@apollo/client/core';
+import { print } from 'graphql';
+import * as i1$1 from 'apollo-angular/http';
 import { differenceInMinutes } from 'date-fns';
-import { CommonModule } from '@angular/common';
 
 class GraphSchema {
     constructor(_fields) {
@@ -878,62 +877,6 @@ const provideStrapi = (data) => [
     },
 ];
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaServerModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { ApolloModule } from '@ta/library-name';
- */
-class TaServerModule {
-    static forRoot(graphQlConfig) {
-        return {
-            ngModule: TaServerModule,
-            providers: [
-                {
-                    provide: GRAPHQL_SERVER_CONFIG,
-                    useValue: graphQlConfig,
-                },
-                {
-                    provide: HTTP_INTERCEPTORS,
-                    useClass: TenantInterceptor,
-                    multi: true,
-                },
-            ],
-        };
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaServerModule, imports: [CommonModule, HttpClientModule, ApolloModule], exports: [ApolloModule] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerModule, providers: [
-            TaGraphService,
-            {
-                provide: HTTP_INTERCEPTORS,
-                useClass: CacheInterceptor,
-                multi: true,
-            },
-        ], imports: [CommonModule, HttpClientModule, ApolloModule, ApolloModule] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [CommonModule, HttpClientModule, ApolloModule],
-                    exports: [ApolloModule],
-                    providers: [
-                        TaGraphService,
-                        {
-                            provide: HTTP_INTERCEPTORS,
-                            useClass: CacheInterceptor,
-                            multi: true,
-                        },
-                    ],
-                }]
-        }] });
-
 /*
  * Public API Surface of server
  */
@@ -942,5 +885,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerModule, TaServerSevice, TaStrapiService, baseStrapiProps, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, baseStrapiProps, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map

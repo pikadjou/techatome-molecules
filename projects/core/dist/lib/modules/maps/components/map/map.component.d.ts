@@ -1,10 +1,7 @@
-/// <reference types="googlemaps" />
 /// <reference types="google.maps" />
-/// <reference types="googlemaps" />
-/// <reference types="googlemaps" />
-import { HttpClient } from "@angular/common/http";
-import { AfterViewInit, QueryList } from "@angular/core";
-import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, QueryList } from '@angular/core';
+import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import * as i0 from "@angular/core";
 export declare class MapComponent implements AfterViewInit {
     private http;

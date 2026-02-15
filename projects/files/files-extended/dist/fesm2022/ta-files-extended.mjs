@@ -1,19 +1,15 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Output, Component, Injectable, NgModule } from '@angular/core';
-import { FileListComponent, TaFilesBasicModule } from '@ta/files-basic';
-import { NavigationComponent, TaMenuModule } from '@ta/menu';
-import { ActionButtonComponent, ButtonComponent, LoaderComponent, ErrorComponent, TaContainerModule, TaUiModule, TaCardModule } from '@ta/ui';
-import { pathToFile, pickImages, TaBaseComponent, TaDirectivePipeModule } from '@ta/utils';
+import { input, EventEmitter, Output, Component, Injectable } from '@angular/core';
+import { FileListComponent } from '@ta/files-basic';
+import { NavigationComponent } from '@ta/menu';
+import { ActionButtonComponent, ButtonComponent, LoaderComponent, ErrorComponent } from '@ta/ui';
+import { pathToFile, pickImages, TaBaseComponent } from '@ta/utils';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { InputPanel, InputDropdown, InputTextarea } from '@ta/form-model';
-import { TaFormModule } from '@ta/form-basic';
-import { TaFormInputsModule } from '@ta/form-input';
-import { TaIconsModule } from '@ta/icons';
-import { TaEnumerationService } from '@ta/services';
 
 class UploadComponent {
     constructor() {
@@ -201,67 +197,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaFilesExtendedModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { FilesDisplayComponent, UploadComponent, TaFilesBasicModule } from '@ta/library-name';
- */
-class TaFilesExtendedModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, imports: [TaContainerModule,
-            TaDirectivePipeModule,
-            TaFormModule,
-            TaUiModule,
-            TaCardModule,
-            CommonModule,
-            TaFormInputsModule,
-            TaFilesBasicModule,
-            TaIconsModule,
-            TaMenuModule,
-            FilesDisplayComponent,
-            UploadComponent], exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, providers: [TaEnumerationService, UploadDocumentFormService], imports: [TaContainerModule,
-            TaDirectivePipeModule,
-            TaFormModule,
-            TaUiModule,
-            TaCardModule,
-            CommonModule,
-            TaFormInputsModule,
-            TaFilesBasicModule,
-            TaIconsModule,
-            TaMenuModule,
-            FilesDisplayComponent,
-            UploadComponent, TaFilesBasicModule] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFilesExtendedModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        TaContainerModule,
-                        TaDirectivePipeModule,
-                        TaFormModule,
-                        TaUiModule,
-                        TaCardModule,
-                        CommonModule,
-                        TaFormInputsModule,
-                        TaFilesBasicModule,
-                        TaIconsModule,
-                        TaMenuModule,
-                        FilesDisplayComponent,
-                        UploadComponent,
-                    ],
-                    exports: [FilesDisplayComponent, UploadComponent, TaFilesBasicModule],
-                    providers: [TaEnumerationService, UploadDocumentFormService],
-                }]
-        }] });
-
 /*
  * Public API Surface of files
  */
@@ -270,5 +205,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { FilesDisplayComponent, TaFilesExtendedModule, UploadComponent, UploadDocumentFormService };
+export { FilesDisplayComponent, UploadComponent, UploadDocumentFormService };
 //# sourceMappingURL=ta-files-extended.mjs.map

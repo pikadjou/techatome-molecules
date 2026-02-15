@@ -2,8 +2,6 @@
  * Common component
  */
 
-export * from './ui.module';
-
 export * from './tree/public-api';
 
 export * from './badge/badge.component';

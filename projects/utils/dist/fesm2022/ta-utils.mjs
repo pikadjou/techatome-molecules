@@ -1,7 +1,7 @@
 import * as i0 from '@angular/core';
-import { input, HostListener, Directive, effect, EventEmitter, Output, Pipe, NgModule, inject, signal, Component, Injectable, InjectionToken } from '@angular/core';
+import { input, HostListener, Directive, effect, EventEmitter, Output, Pipe, inject, signal, Component, Injectable, InjectionToken } from '@angular/core';
 import * as i1 from '@angular/platform-browser';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { TaIconType } from '@ta/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -204,54 +204,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             type: Pipe,
             args: [{ name: "safe", standalone: true }]
         }], ctorParameters: () => [{ type: i1.DomSanitizer }] });
-
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaDirectivePipeModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { FileSizePipe, JoinPipe, LetDirective } from '@ta/library-name';
- */
-class TaDirectivePipeModule {
-    constructor() { }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, declarations: [FileSizePipe, LetDirective, OnRenderDirective], imports: [CommonModule,
-            SafePipe,
-            PluralTranslatePipe,
-            StopPropagationDirective,
-            JoinPipe,
-            TypedTemplateDirective], exports: [FileSizePipe,
-            LetDirective,
-            PluralTranslatePipe,
-            StopPropagationDirective,
-            OnRenderDirective] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, imports: [CommonModule] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaDirectivePipeModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [FileSizePipe, LetDirective, OnRenderDirective],
-                    imports: [
-                        CommonModule,
-                        SafePipe,
-                        PluralTranslatePipe,
-                        StopPropagationDirective,
-                        JoinPipe,
-                        TypedTemplateDirective,
-                    ],
-                    exports: [
-                        FileSizePipe,
-                        LetDirective,
-                        PluralTranslatePipe,
-                        StopPropagationDirective,
-                        OnRenderDirective,
-                    ],
-                }]
-        }], ctorParameters: () => [] });
 
 var EFileExtension;
 (function (EFileExtension) {
@@ -1066,5 +1018,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaBaseComponent, TaBaseModal, TaBasePage, TaDirectivePipeModule, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaBaseComponent, TaBaseModal, TaBasePage, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map

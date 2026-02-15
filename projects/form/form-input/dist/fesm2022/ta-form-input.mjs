@@ -1,11 +1,11 @@
 import * as i0 from '@angular/core';
-import { input, EventEmitter, ElementRef, ViewChild, Output, Component, inject, HostListener, Injectable, importProvidersFrom, NgModule } from '@angular/core';
+import { input, EventEmitter, ElementRef, ViewChild, Output, Component, inject, HostListener, Injectable, importProvidersFrom } from '@angular/core';
 import * as i1 from '@angular/forms';
-import { Validators, FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { delay, combineLatest, Subject, BehaviorSubject, of, take, startWith, filter, map, debounceTime, tap, concatMap } from 'rxjs';
-import { TaBaseComponent, pickImages, isNonNullable, TaBaseModal, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, downloadFile, TaDirectivePipeModule } from '@ta/utils';
-import { NgFor, NgClass, NgStyle, AsyncPipe, NgIf, NgTemplateOutlet, CommonModule } from '@angular/common';
+import { TaBaseComponent, pickImages, isNonNullable, TaBaseModal, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, downloadFile } from '@ta/utils';
+import { NgFor, NgClass, NgStyle, AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
 import * as i2 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -14,36 +14,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import * as i4 from '@angular/material/input';
 import { MatInputModule } from '@angular/material/input';
 import { isEqual } from 'date-fns';
-import * as i2$2 from '@ta/icons';
-import { FontIconComponent, LocalIconComponent, TaIconsModule } from '@ta/icons';
-import * as i3$2 from '@ta/ui';
-import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, RatingComponent as RatingComponent$1, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, TaLayoutModule, TaUiModule, TaListModule, TaContainerModule, TaCardModule } from '@ta/ui';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
+import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, RatingComponent as RatingComponent$1, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, LayoutModalComponent } from '@ta/ui';
 import * as i3$1 from 'ngx-material-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TaDocumentsService } from '@ta/services';
-import { FileEditComponent, FileListComponent, TaFilesBasicModule } from '@ta/files-basic';
+import { FileEditComponent, FileListComponent } from '@ta/files-basic';
 import * as i1$1 from '@angular/material/dialog';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as i1$2 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputTextBox, InputCheckBox } from '@ta/form-model';
-import { EditorInputComponent, TaWysiswygModule } from '@ta/wysiswyg';
+import { EditorInputComponent } from '@ta/wysiswyg';
 import intlTelInput from 'intl-tel-input';
 import * as i2$1 from '@angular/material/progress-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
-import * as i1$3 from '@angular-material-extensions/google-maps-autocomplete';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import { CdkMenuModule, PARENT_OR_NEW_MENU_STACK_PROVIDER } from '@angular/cdk/menu';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSliderModule } from '@angular/material/slider';
-import { TaMenuModule } from '@ta/menu';
 
 class TaAbstractInputComponent extends TaBaseComponent {
     // Getter for backward compatibility with subclasses
@@ -1061,11 +1048,11 @@ class ComponentInputComponent extends TaAbstractInputComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: TaIconsModule }, { kind: "component", type: i2$2.FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
+            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, FontIconComponent], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
         }] });
 class TemplateModal extends TaBaseModal {
     constructor() {
@@ -1082,270 +1069,16 @@ class TemplateModal extends TaBaseModal {
         this.dialogRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TemplateModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TemplateModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "ngmodule", type: TaLayoutModule }, { kind: "component", type: i3$2.LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }, { kind: "ngmodule", type: TaUiModule }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TemplateModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TemplateModal, decorators: [{
             type: Component,
-            args: [{ selector: '', standalone: true, imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n" }]
+            args: [{ selector: '', standalone: true, imports: [NgTemplateOutlet, LayoutModalComponent], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n" }]
         }], ctorParameters: () => [] });
 
 const provideForm = () => [
     importProvidersFrom(MatGoogleMapsAutocompleteModule.forRoot("AIzaSyA4s5KmUyZ8uvXiWA3RMmKoNoKTxIh9nO8")),
 ];
-
-class InputContainerComponent {
-    constructor() {
-        this.input = input.required();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: InputContainerComponent, isStandalone: true, selector: "ta-input-container", inputs: { input: { classPropertyName: "input", publicName: "input", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<div class=\"input-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".input-container{border:1px solid var(--ta-neutral-300);border-radius:10px;padding:15px}.input-container:hover:not(:disabled){border-color:var(--ta-neutral-500)}.input-container:focus:not(:disabled){border-color:var(--ta-border-brand)}.input-container:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}.input-container:disabled{border-color:var(--ta-neutral-300)}\n"] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputContainerComponent, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-input-container", standalone: true, template: "<div class=\"input-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".input-container{border:1px solid var(--ta-neutral-300);border-radius:10px;padding:15px}.input-container:hover:not(:disabled){border-color:var(--ta-neutral-500)}.input-container:focus:not(:disabled){border-color:var(--ta-border-brand)}.input-container:required:not(:disabled){border-color:var(--ta-semantic-red-dark)}.input-container:disabled{border-color:var(--ta-neutral-300)}\n"] }]
-        }] });
-
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaFormInputsModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { CheckboxComponent, ColorPickerComponent, DatePickerComponent } from '@ta/library-name';
- */
-class TaFormInputsModule {
-    constructor() {
-        TaTranslationInput.getInstance();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, imports: [FormLabelComponent,
-            InputLayoutComponent,
-            InputErrorComponent,
-            TaDirectivePipeModule,
-            TaUiModule,
-            TaLayoutModule,
-            CommonModule,
-            FormsModule,
-            MatAutocompleteModule,
-            MatCheckboxModule,
-            MatDatepickerModule,
-            MatFormFieldModule,
-            MatInputModule,
-            MatNativeDateModule,
-            MatProgressSpinnerModule,
-            MatRadioModule,
-            MatSelectModule,
-            MatSliderModule,
-            MatSlideToggleModule,
-            ReactiveFormsModule,
-            NgxMaterialTimepickerModule,
-            TaFilesBasicModule,
-            TaIconsModule,
-            TaListModule,
-            TaContainerModule,
-            TaMenuModule,
-            MatMenuModule,
-            TaWysiswygModule,
-            TaCardModule,
-            MatProgressBarModule, i1$3.MatGoogleMapsAutocompleteModule, CdkMenuModule,
-            TranslatePipe,
-            ComponentInputComponent,
-            TaOverlayPanelComponent,
-            CheckboxComponent,
-            ColorPickerComponent,
-            DatePickerComponent,
-            DropdownComponent,
-            LabelComponent,
-            RadioComponent,
-            SearchFieldComponent,
-            SliderComponent,
-            SwitchComponent,
-            TextareaComponent,
-            TextBoxComponent,
-            TimePickerComponent,
-            ToggleComponent,
-            InputImagesComponent,
-            InputSchemaComponent,
-            InputSchemaModal,
-            InputImageComponent,
-            InputChoicesComponent,
-            WysiswygComponent,
-            UploadComponent,
-            InputPhoneComponent,
-            CultureComponent,
-            InputContainerComponent], exports: [CheckboxComponent,
-            ColorPickerComponent,
-            DatePickerComponent,
-            DropdownComponent,
-            LabelComponent,
-            RadioComponent,
-            SearchFieldComponent,
-            SliderComponent,
-            SwitchComponent,
-            TextareaComponent,
-            TextBoxComponent,
-            TimePickerComponent,
-            ToggleComponent,
-            InputImagesComponent,
-            InputSchemaComponent,
-            InputImageComponent,
-            InputChoicesComponent,
-            WysiswygComponent,
-            UploadComponent,
-            CultureComponent,
-            InputPhoneComponent,
-            ComponentInputComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, providers: [
-            { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-            PARENT_OR_NEW_MENU_STACK_PROVIDER,
-        ], imports: [TaDirectivePipeModule,
-            TaUiModule,
-            TaLayoutModule,
-            CommonModule,
-            FormsModule,
-            MatAutocompleteModule,
-            MatCheckboxModule,
-            MatDatepickerModule,
-            MatFormFieldModule,
-            MatInputModule,
-            MatNativeDateModule,
-            MatProgressSpinnerModule,
-            MatRadioModule,
-            MatSelectModule,
-            MatSliderModule,
-            MatSlideToggleModule,
-            ReactiveFormsModule,
-            NgxMaterialTimepickerModule,
-            TaFilesBasicModule,
-            TaIconsModule,
-            TaListModule,
-            TaContainerModule,
-            TaMenuModule,
-            MatMenuModule,
-            TaWysiswygModule,
-            TaCardModule,
-            MatProgressBarModule,
-            MatGoogleMapsAutocompleteModule.forRoot(""),
-            CdkMenuModule,
-            ComponentInputComponent,
-            TaOverlayPanelComponent,
-            DatePickerComponent,
-            DropdownComponent,
-            RadioComponent,
-            SearchFieldComponent,
-            SliderComponent,
-            SwitchComponent,
-            TextareaComponent,
-            TextBoxComponent,
-            TimePickerComponent,
-            ToggleComponent,
-            InputImagesComponent,
-            InputSchemaComponent,
-            InputSchemaModal,
-            InputImageComponent,
-            InputChoicesComponent,
-            WysiswygComponent,
-            UploadComponent,
-            InputPhoneComponent,
-            CultureComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFormInputsModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        FormLabelComponent,
-                        InputLayoutComponent,
-                        InputErrorComponent,
-                        TaDirectivePipeModule,
-                        TaUiModule,
-                        TaLayoutModule,
-                        CommonModule,
-                        FormsModule,
-                        MatAutocompleteModule,
-                        MatCheckboxModule,
-                        MatDatepickerModule,
-                        MatFormFieldModule,
-                        MatInputModule,
-                        MatNativeDateModule,
-                        MatProgressSpinnerModule,
-                        MatRadioModule,
-                        MatSelectModule,
-                        MatSliderModule,
-                        MatSlideToggleModule,
-                        ReactiveFormsModule,
-                        NgxMaterialTimepickerModule,
-                        TaFilesBasicModule,
-                        TaIconsModule,
-                        TaListModule,
-                        TaContainerModule,
-                        TaMenuModule,
-                        MatMenuModule,
-                        TaWysiswygModule,
-                        TaCardModule,
-                        MatProgressBarModule,
-                        MatGoogleMapsAutocompleteModule.forRoot(""),
-                        CdkMenuModule,
-                        TranslatePipe,
-                        ComponentInputComponent,
-                        TaOverlayPanelComponent,
-                        CheckboxComponent,
-                        ColorPickerComponent,
-                        DatePickerComponent,
-                        DropdownComponent,
-                        LabelComponent,
-                        RadioComponent,
-                        SearchFieldComponent,
-                        SliderComponent,
-                        SwitchComponent,
-                        TextareaComponent,
-                        TextBoxComponent,
-                        TimePickerComponent,
-                        ToggleComponent,
-                        InputImagesComponent,
-                        InputSchemaComponent,
-                        InputSchemaModal,
-                        InputImageComponent,
-                        InputChoicesComponent,
-                        WysiswygComponent,
-                        UploadComponent,
-                        InputPhoneComponent,
-                        CultureComponent,
-                        InputContainerComponent,
-                    ],
-                    exports: [
-                        CheckboxComponent,
-                        ColorPickerComponent,
-                        DatePickerComponent,
-                        DropdownComponent,
-                        LabelComponent,
-                        RadioComponent,
-                        SearchFieldComponent,
-                        SliderComponent,
-                        SwitchComponent,
-                        TextareaComponent,
-                        TextBoxComponent,
-                        TimePickerComponent,
-                        ToggleComponent,
-                        InputImagesComponent,
-                        InputSchemaComponent,
-                        InputImageComponent,
-                        InputChoicesComponent,
-                        WysiswygComponent,
-                        UploadComponent,
-                        CultureComponent,
-                        InputPhoneComponent,
-                        ComponentInputComponent,
-                    ],
-                    providers: [
-                        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-                        PARENT_OR_NEW_MENU_STACK_PROVIDER,
-                    ],
-                }]
-        }], ctorParameters: () => [] });
 
 /*
  * Public API Surface of form
@@ -1355,5 +1088,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, FormLabelComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, RatingComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaAbstractInputComponent, TaFormInputsModule, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent, provideForm };
+export { CheckboxComponent, ColorPickerComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, FormLabelComponent, InputChoicesComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, InputPhoneComponent, InputSchemaComponent, LabelComponent, RadioComponent, RatingComponent, SearchFieldComponent, SliderComponent, SwitchComponent, TaAbstractInputComponent, TemplateModal, TextBoxComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, WysiswygComponent, provideForm };
 //# sourceMappingURL=ta-form-input.mjs.map

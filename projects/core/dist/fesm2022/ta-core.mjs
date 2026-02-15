@@ -1,32 +1,26 @@
-import { NgIf, NgFor, NgTemplateOutlet, CommonModule } from '@angular/common';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Output, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, inject, NgModule, importProvidersFrom } from '@angular/core';
-import { Subject, combineLatest, of } from 'rxjs';
-import { FontIconComponent, TaIconsModule } from '@ta/icons';
-import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent, LayoutModalComponent, openModal, TaLayoutModule, TaUiModule, TaCardModule, TaContainerModule, TaListModule } from '@ta/ui';
-import { TaBaseComponent, downloadFile, getFileExtension, copyTextToClipboard, TaDirectivePipeModule } from '@ta/utils';
-import { FormComponent, TaFormModule } from '@ta/form-basic';
-import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
-import { BottomSheetTemplateGenericComponent, FilterHelper, BottomSheetTemplateBasicComponent } from '@ta/menu';
+import { input, EventEmitter, Output, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, importProvidersFrom, inject } from '@angular/core';
+import { Subject } from 'rxjs';
+import { FontIconComponent } from '@ta/icons';
+import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent } from '@ta/ui';
+import { TaBaseComponent, copyTextToClipboard } from '@ta/utils';
+import { FormComponent } from '@ta/form-basic';
+import { TranslatePipe } from '@ta/translation';
+import { BottomSheetTemplateGenericComponent } from '@ta/menu';
 import * as i1 from '@angular/material/bottom-sheet';
 import { Validators } from '@angular/forms';
-import { MatMenu, MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { LocalStorage } from 'storage-manager-js';
-import { SearchFieldComponent, TaFormInputsModule } from '@ta/form-input';
+import { SearchFieldComponent } from '@ta/form-input';
 import { InputTextBox } from '@ta/form-model';
 import * as i2 from '@angular/google-maps';
 import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import * as i1$1 from '@angular/common/http';
-import * as i2$1 from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
-import * as i3 from '@ta/files-extended';
-import { FilesDisplayComponent, TaFilesExtendedModule } from '@ta/files-extended';
-import { map } from 'rxjs/operators';
-import * as i1$2 from '@ta/services';
-import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
 import { GoogleTagManagerModule } from '@edumetz16/angular-google-tag-manager';
 export { GoogleTagManagerService as TaGoogleTagManagerService } from '@edumetz16/angular-google-tag-manager';
+import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
 
 class FiltersFormComponent extends TaBaseComponent {
     constructor() {
@@ -470,7 +464,7 @@ class MapComponent {
         };
         this.routeSummary = null;
         this.routeDetails = signal([]);
-        this.markers = markers.map((marker) => ({
+        this.markers = markers.map(marker => ({
             ...marker,
             ...{
                 options: {
@@ -478,10 +472,10 @@ class MapComponent {
                     icon: {
                         path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
                         scale: 8,
-                        fillColor: "#FF0000",
+                        fillColor: '#FF0000',
                         fillOpacity: 1,
                         strokeWeight: 1,
-                        strokeColor: "#ffffff",
+                        strokeColor: '#ffffff',
                     },
                 },
             },
@@ -495,12 +489,12 @@ class MapComponent {
     }
     ngAfterViewInit() {
         const bounds = new google.maps.LatLngBounds();
-        this.mapMarkers.forEach((marker) => {
+        this.mapMarkers.forEach(marker => {
             bounds.extend(marker.getPosition() ?? { lat: 0, lng: 0 });
         });
         this.map.fitBounds(bounds, { top: 50, bottom: 50, left: 50, right: 50 });
         new MarkerClusterer({
-            markers: this.mapMarkers.map((m) => m.marker),
+            markers: this.mapMarkers.map(m => m.marker),
             map: this.map.googleMap,
         });
         this.renderRouteWithRoutesApi();
@@ -533,7 +527,7 @@ class MapComponent {
                 this.directionsRenderer.setDirections(result);
             }
             else {
-                console.error("Erreur de calcul de l’itinéraire :", status);
+                console.error('Erreur de calcul de l’itinéraire :', status);
             }
         });
     }
@@ -553,20 +547,20 @@ class MapComponent {
                     latLng: { latitude: destination?.lat, longitude: destination?.lng },
                 },
             },
-            intermediates: rest.map((p) => ({
+            intermediates: rest.map(p => ({
                 location: { latLng: { latitude: p.lat, longitude: p.lng } },
             })),
-            travelMode: "DRIVE",
+            travelMode: 'DRIVE',
             optimizeWaypointOrder: true,
-            languageCode: "fr-FR",
+            languageCode: 'fr-FR',
             computeAlternativeRoutes: false,
         };
-        const key = "AIzaSyDxd03WdDtISHBrM_6rCYS426grfl_bK8Y";
+        const key = 'AIzaSyDxd03WdDtISHBrM_6rCYS426grfl_bK8Y';
         this.http
             .post(`https://routes.googleapis.com/directions/v2:computeRoutes?key=${key}`, body, {
             headers: {
-                "Content-Type": "application/json",
-                "X-Goog-FieldMask": "*",
+                'Content-Type': 'application/json',
+                'X-Goog-FieldMask': '*',
             },
         })
             .subscribe({
@@ -576,7 +570,7 @@ class MapComponent {
                 const decodedPath = google.maps.geometry.encoding.decodePath(polyline);
                 const routePolyline = new google.maps.Polyline({
                     path: decodedPath,
-                    strokeColor: "red",
+                    strokeColor: 'red',
                     strokeOpacity: 0.8,
                     strokeWeight: 5,
                 });
@@ -595,8 +589,8 @@ class MapComponent {
                     duration,
                 };
             },
-            error: (err) => {
-                console.error("Erreur Routes API :", err);
+            error: err => {
+                console.error('Erreur Routes API :', err);
             },
         });
     }
@@ -605,222 +599,30 @@ class MapComponent {
         if (!match)
             return isoDuration;
         const [, hours, minutes] = match;
-        return `${hours ? hours + " h " : ""}${minutes ? minutes + " min" : ""}`.trim();
+        return `${hours ? hours + ' h ' : ''}${minutes ? minutes + ' min' : ''}`.trim();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MapComponent, deps: [{ token: i1$1.HttpClient }], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: MapComponent, isStandalone: true, selector: "ta-google-maps", viewQueries: [{ propertyName: "infoWindow", first: true, predicate: MapInfoWindow, descendants: true }, { propertyName: "map", first: true, predicate: ["map"], descendants: true }, { propertyName: "mapMarkers", predicate: MapMarker, descendants: true }], ngImport: i0, template: "<google-map #map [options]=\"this.options\">\n  @for (marker of this.markers; track marker.position) {\n  <map-marker\n    #mapMarker=\"mapMarker\"\n    [position]=\"marker.position\"\n    [title]=\"marker.title\"\n    [options]=\"marker.options\"\n    (mapClick)=\"this.openInfoWindow(mapMarker)\"\n  ></map-marker>\n  }\n\n  <map-info-window>\n    {{ this.selectedMarker()?.getTitle() }}\n  </map-info-window>\n</google-map>\n\n@if (this.routeSummary) {\n<div>\n  <h3>R\u00E9sum\u00E9 du trajet</h3>\n  <p>\n    Distance : {{ this.routeSummary.distanceKm }} km<br />\n    Dur\u00E9e estim\u00E9e : {{ this.routeSummary.duration }}\n  </p>\n</div>\n} @if (routeDetails().length > 0) {\n<div>\n  <h3>D\u00E9tails du trajet</h3>\n  <ul>\n    @for (step of routeDetails(); track step) {\n    <li>\n      {{ step.instruction }} \u2014 {{ step.distance }} m \u2014 {{ step.duration }}\n    </li>\n    }\n  </ul>\n</div>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: GoogleMapsModule }, { kind: "component", type: i2.GoogleMap, selector: "google-map", inputs: ["height", "width", "mapId", "mapTypeId", "center", "zoom", "options"], outputs: ["mapInitialized", "authFailure", "boundsChanged", "centerChanged", "mapClick", "mapDblclick", "mapDrag", "mapDragend", "mapDragstart", "headingChanged", "idle", "maptypeidChanged", "mapMousemove", "mapMouseout", "mapMouseover", "projectionChanged", "mapRightclick", "tilesloaded", "tiltChanged", "zoomChanged"], exportAs: ["googleMap"] }, { kind: "directive", type: i2.MapInfoWindow, selector: "map-info-window", inputs: ["options", "position"], outputs: ["closeclick", "contentChanged", "domready", "positionChanged", "zindexChanged", "infoWindowInitialized"], exportAs: ["mapInfoWindow"] }, { kind: "directive", type: i2.MapMarker, selector: "map-marker", inputs: ["title", "position", "label", "clickable", "options", "icon", "visible"], outputs: ["animationChanged", "mapClick", "clickableChanged", "cursorChanged", "mapDblclick", "mapDrag", "mapDragend", "draggableChanged", "mapDragstart", "flatChanged", "iconChanged", "mapMousedown", "mapMouseout", "mapMouseover", "mapMouseup", "positionChanged", "mapRightclick", "shapeChanged", "titleChanged", "visibleChanged", "zindexChanged", "markerInitialized"], exportAs: ["mapMarker"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MapComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-google-maps", standalone: true, imports: [GoogleMapsModule, NgIf, NgFor], template: "<google-map #map [options]=\"this.options\">\n  @for (marker of this.markers; track marker.position) {\n  <map-marker\n    #mapMarker=\"mapMarker\"\n    [position]=\"marker.position\"\n    [title]=\"marker.title\"\n    [options]=\"marker.options\"\n    (mapClick)=\"this.openInfoWindow(mapMarker)\"\n  ></map-marker>\n  }\n\n  <map-info-window>\n    {{ this.selectedMarker()?.getTitle() }}\n  </map-info-window>\n</google-map>\n\n@if (this.routeSummary) {\n<div>\n  <h3>R\u00E9sum\u00E9 du trajet</h3>\n  <p>\n    Distance : {{ this.routeSummary.distanceKm }} km<br />\n    Dur\u00E9e estim\u00E9e : {{ this.routeSummary.duration }}\n  </p>\n</div>\n} @if (routeDetails().length > 0) {\n<div>\n  <h3>D\u00E9tails du trajet</h3>\n  <ul>\n    @for (step of routeDetails(); track step) {\n    <li>\n      {{ step.instruction }} \u2014 {{ step.distance }} m \u2014 {{ step.duration }}\n    </li>\n    }\n  </ul>\n</div>\n}\n" }]
+            args: [{ selector: 'ta-google-maps', standalone: true, imports: [GoogleMapsModule], template: "<google-map #map [options]=\"this.options\">\n  @for (marker of this.markers; track marker.position) {\n  <map-marker\n    #mapMarker=\"mapMarker\"\n    [position]=\"marker.position\"\n    [title]=\"marker.title\"\n    [options]=\"marker.options\"\n    (mapClick)=\"this.openInfoWindow(mapMarker)\"\n  ></map-marker>\n  }\n\n  <map-info-window>\n    {{ this.selectedMarker()?.getTitle() }}\n  </map-info-window>\n</google-map>\n\n@if (this.routeSummary) {\n<div>\n  <h3>R\u00E9sum\u00E9 du trajet</h3>\n  <p>\n    Distance : {{ this.routeSummary.distanceKm }} km<br />\n    Dur\u00E9e estim\u00E9e : {{ this.routeSummary.duration }}\n  </p>\n</div>\n} @if (routeDetails().length > 0) {\n<div>\n  <h3>D\u00E9tails du trajet</h3>\n  <ul>\n    @for (step of routeDetails(); track step) {\n    <li>\n      {{ step.instruction }} \u2014 {{ step.distance }} m \u2014 {{ step.duration }}\n    </li>\n    }\n  </ul>\n</div>\n}\n" }]
         }], ctorParameters: () => [{ type: i1$1.HttpClient }], propDecorators: { infoWindow: [{
                 type: ViewChild,
                 args: [MapInfoWindow]
             }], map: [{
                 type: ViewChild,
-                args: ["map"]
+                args: ['map']
             }], mapMarkers: [{
                 type: ViewChildren,
                 args: [MapMarker]
             }] } });
 
-class UploadDocumentModal {
-    get fileTypes$() {
-        return this._enumTypeService.fetchFileTypes();
-    }
-    constructor(_enumTypeService, dialogRef, _form) {
-        this._enumTypeService = _enumTypeService;
-        this.dialogRef = dialogRef;
-        this._form = _form;
-        this.form = [];
-        this.error = { status: 0, message: "" };
-        this.loader = false;
-        this.onSaveClick = (values) => {
-            this.dialogRef.close({
-                description: values.description,
-                documentTypeId: Number(values.documentType),
-            });
-        };
-    }
-    ngOnInit() {
-        this.form = this._form.getGroupForm({
-            description: "",
-            documentTypes$: this.fileTypes$,
-        });
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentModal, deps: [{ token: i1$2.TaEnumerationService }, { token: i2$1.MatDialogRef }, { token: i3.UploadDocumentFormService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: UploadDocumentModal, isStandalone: true, selector: "ta-upload-document", ngImport: i0, template: "<ta-layout-modal>\n  @if (this.form.length > 0) {\n  <ta-form\n    class=\"form\"\n    [inputs]=\"this.form\"\n    [error]=\"this.error\"\n    [loader]=\"this.loader\"\n    (valid)=\"this.onSaveClick($any($event))\"\n  >\n  </ta-form>\n  }\n</ta-layout-modal>\n", styles: [".form{padding:10px}\n"], dependencies: [{ kind: "component", type: LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }, { kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentModal, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-upload-document", standalone: true, imports: [NgIf, LayoutModalComponent, FormComponent], template: "<ta-layout-modal>\n  @if (this.form.length > 0) {\n  <ta-form\n    class=\"form\"\n    [inputs]=\"this.form\"\n    [error]=\"this.error\"\n    [loader]=\"this.loader\"\n    (valid)=\"this.onSaveClick($any($event))\"\n  >\n  </ta-form>\n  }\n</ta-layout-modal>\n", styles: [".form{padding:10px}\n"] }]
-        }], ctorParameters: () => [{ type: i1$2.TaEnumerationService }, { type: i2$1.MatDialogRef }, { type: i3.UploadDocumentFormService }] });
-
-class DocumentsComponent extends TaBaseComponent {
-    constructor(_bottomSheet, _dialog) {
-        super();
-        this._bottomSheet = _bottomSheet;
-        this._dialog = _dialog;
-        this.document$ = input.required();
-        this.canAddFile = input.required();
-        this.filesSaved = new EventEmitter();
-        this.filesDeleted = new EventEmitter();
-        this.filterHelper = new FilterHelper([
-            { label: "documents.mine", defaultOpen: false },
-            { label: "documents.all", defaultOpen: true },
-        ]);
-        this.menu = this.filterHelper.getMenu();
-    }
-    ngOnInit() {
-        this._registerSubscription(combineLatest({
-            all: this._filteredDocuments$("all"),
-            mine: this._filteredDocuments$("mine"),
-        }).subscribe((data) => {
-            this._updateMenu({ all: data.all.length, mine: data.mine.length });
-        }));
-    }
-    uploadDocuments(files) {
-        this._openUploadWorkflow(files[0].file);
-    }
-    downloadDocument(fileData) {
-        downloadFile(fileData.url);
-        this._bottomSheet.dismiss(true);
-    }
-    openBottomSheet(fileData) {
-        const bottomSheetData = [
-            {
-                label: "documents.download",
-                icon: "download",
-                action: () => this.downloadDocument(fileData),
-            },
-            {
-                label: "documents.delete",
-                icon: "delete",
-                action: () => this._proposeDeleteDocument(fileData),
-            },
-        ];
-        this._bottomSheet.open(BottomSheetTemplateBasicComponent, {
-            data: {
-                orientation: "horizontal",
-                menu$: of(bottomSheetData),
-            },
-        });
-    }
-    getDocs$() {
-        return this._filteredDocuments$(this.filterHelper.filter).pipe(map((documents) => documents.map((document) => {
-            return {
-                id: document.id,
-                url: document.url,
-                type: "Document",
-                fileMetaData: document.fileMetadata,
-                fileExtension: getFileExtension(document.url),
-            };
-        })));
-    }
-    _filteredDocuments$(filter) {
-        return this.document$().pipe(map((documents) => documents.filter((document) => {
-            if (filter === "all")
-                return true;
-            if (filter === "mine" && document.isOwner)
-                return true;
-            return false;
-        })));
-    }
-    _saveDocument(file, fileMetadata) {
-        this.requestState.asked();
-        this.filesSaved.emit({ file, fileMetadata });
-    }
-    _openUploadWorkflow(file) {
-        this._registerSubscription(this._dialog
-            .open(UploadDocumentModal, {
-            panelClass: "full-screen-modal",
-            data: {
-                file,
-            },
-        })
-            .afterClosed()
-            .subscribe((result) => {
-            if (!result) {
-                return;
-            }
-            this._saveDocument(file, {
-                description: result.description,
-                fileType: {
-                    id: result.documentTypeId,
-                    translatedValue: "",
-                },
-            });
-        }));
-    }
-    _proposeDeleteDocument(fileData) {
-        this._registerSubscription(openModal(this._dialog).subscribe((result) => {
-            if (result) {
-                this._deleteDocument(fileData);
-            }
-        }));
-        this._bottomSheet.dismiss(true);
-    }
-    _deleteDocument(fileData) {
-        this.filesDeleted.emit(fileData);
-    }
-    _updateMenu(data) {
-        this.filterHelper.updateMenuDatas([
-            {
-                key: "documents.mine",
-                options: {
-                    notificationBadge: {
-                        label: data.mine,
-                    },
-                },
-            },
-            {
-                key: "documents.all",
-                options: {
-                    notificationBadge: {
-                        label: data.all,
-                    },
-                },
-            },
-        ]);
-        this.menu = this.filterHelper.getMenu();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DocumentsComponent, deps: [{ token: i1.MatBottomSheet }, { token: i2$1.MatDialog }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: DocumentsComponent, isStandalone: true, selector: "ta-documents", inputs: { document$: { classPropertyName: "document$", publicName: "document$", isSignal: true, isRequired: true, transformFunction: null }, canAddFile: { classPropertyName: "canAddFile", publicName: "canAddFile", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { filesSaved: "filesSaved", filesDeleted: "filesDeleted" }, usesInheritance: true, ngImport: i0, template: "<ta-files-display\n  [files$]=\"this.getDocs$()\"\n  [menu]=\"this.menu\"\n  [canAddFile]=\"this.canAddFile()\"\n  [tempFiles]=\"[]\"\n  fileType=\"Document\"\n  (fileSelected)=\"this.downloadDocument($event)\"\n  (moreInformationSelected)=\"this.openBottomSheet($event)\"\n  (fileUploading)=\"this.uploadDocuments($event)\"\n>\n</ta-files-display>\n", styles: [":host ::ng-deep app-card .card{border-radius:10px}\n"], dependencies: [{ kind: "component", type: FilesDisplayComponent, selector: "ta-files-display", inputs: ["files$", "menu", "canAddFile", "tempFiles", "fileType"], outputs: ["fileSelected", "moreInformationSelected", "fileUploading"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DocumentsComponent, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-documents", standalone: true, imports: [FilesDisplayComponent], template: "<ta-files-display\n  [files$]=\"this.getDocs$()\"\n  [menu]=\"this.menu\"\n  [canAddFile]=\"this.canAddFile()\"\n  [tempFiles]=\"[]\"\n  fileType=\"Document\"\n  (fileSelected)=\"this.downloadDocument($event)\"\n  (moreInformationSelected)=\"this.openBottomSheet($event)\"\n  (fileUploading)=\"this.uploadDocuments($event)\"\n>\n</ta-files-display>\n", styles: [":host ::ng-deep app-card .card{border-radius:10px}\n"] }]
-        }], ctorParameters: () => [{ type: i1.MatBottomSheet }, { type: i2$1.MatDialog }], propDecorators: { filesSaved: [{
-                type: Output
-            }], filesDeleted: [{
-                type: Output
-            }] } });
-
-class FiltersComponent {
-    constructor() {
-        this.isFilterOpen = false;
-        this.askValidation$ = new Subject();
-    }
-    changeFilterOpen() {
-        if (this.isFilterOpen) {
-            this.askValidation$.next(null);
-        }
-        this.isFilterOpen = !this.isFilterOpen;
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: FiltersComponent, isStandalone: true, selector: "ta-filters", ngImport: i0, template: "<div class=\"container p-space-xs\">\n  <div class=\"row align-items-center\">\n    <div class=\"col-10 pt-space-0\">list of tag</div>\n    <div class=\"col-2\">\n      <ta-link (action)=\"this.changeFilterOpen()\">\n        <ta-font-icon\n          [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n        ></ta-font-icon>\n      </ta-link>\n    </div>\n  </div>\n</div>\n<div class=\"list\">\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <ta-filters-form [askValidation$]=\"this.askValidation$\"></ta-filters-form>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: LayoutWithPanelComponent, selector: "ta-layout-with-panel", inputs: ["open"] }, { kind: "component", type: LayoutPanelComponent, selector: "ta-layout-panel" }, { kind: "component", type: FiltersFormComponent, selector: "ta-filters-form", inputs: ["form", "askValidation$"], outputs: ["filtersSelected"] }, { kind: "component", type: LayoutContentComponent, selector: "ta-layout-content", inputs: ["autoHeight"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersComponent, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-filters", standalone: true, imports: [
-                        FontIconComponent,
-                        LinkComponent,
-                        LayoutWithPanelComponent,
-                        LayoutPanelComponent,
-                        FiltersFormComponent,
-                        LayoutContentComponent,
-                    ], template: "<div class=\"container p-space-xs\">\n  <div class=\"row align-items-center\">\n    <div class=\"col-10 pt-space-0\">list of tag</div>\n    <div class=\"col-2\">\n      <ta-link (action)=\"this.changeFilterOpen()\">\n        <ta-font-icon\n          [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n        ></ta-font-icon>\n      </ta-link>\n    </div>\n  </div>\n</div>\n<div class=\"list\">\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <ta-filters-form [askValidation$]=\"this.askValidation$\"></ta-filters-form>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n" }]
-        }] });
+const provideGTM = (config) => [
+    importProvidersFrom(GoogleTagManagerModule.forRoot({
+        id: config.gtmId,
+    })),
+];
 
 class TextToClipboardComponent extends TaBaseComponent {
     constructor() {
@@ -845,143 +647,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ selector: "ta-text-to-clipboard", standalone: true, imports: [FontIconComponent], template: "<div (click)=\"this.copyContent()\">\n  <ta-font-icon name=\"copy\" type=\"sm\"></ta-font-icon>\n</div>\n" }]
         }] });
 
-class TaTranslationCore extends TaLazyTranslationService {
-    constructor() {
-        super("core");
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationCore, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationCore, providedIn: "root" }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationCore, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: () => [] });
-
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaCoreModule } from '@ta/library-name';
- *
- * // Import the standalone components directly:
- * import { FiltersContainerComponent, DocumentsComponent, CallTemplateComponent } from '@ta/library-name';
- */
-class TaCoreModule {
-    constructor() {
-        TaTranslationCore.getInstance();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
-            TaLayoutModule,
-            TaUiModule,
-            TaFormModule,
-            TaIconsModule,
-            TaDirectivePipeModule,
-            TaCardModule,
-            TaFilesExtendedModule,
-            TaFormInputsModule,
-            TaContainerModule,
-            TaListModule,
-            MatMenuModule,
-            MatDialogModule,
-            TranslatePipe,
-            FiltersComponent,
-            FiltersContainerComponent,
-            FiltersFormComponent,
-            FiltersTagComponent,
-            DocumentsComponent,
-            UploadDocumentModal,
-            FilterContainerComponent,
-            SearchHistoryDisplayerComponent,
-            SearchDisplayerComponent,
-            FilterDisplayerComponent,
-            TextToClipboardComponent], exports: [FiltersContainerComponent,
-            DocumentsComponent,
-            FilterContainerComponent,
-            SearchDisplayerComponent,
-            SearchHistoryDisplayerComponent,
-            FilterDisplayerComponent,
-            FiltersTagComponent,
-            TextToClipboardComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, imports: [CommonModule,
-            TaLayoutModule,
-            TaUiModule,
-            TaFormModule,
-            TaIconsModule,
-            TaDirectivePipeModule,
-            TaCardModule,
-            TaFilesExtendedModule,
-            TaFormInputsModule,
-            TaContainerModule,
-            TaListModule,
-            MatMenuModule,
-            MatDialogModule,
-            FiltersComponent,
-            FiltersContainerComponent,
-            FiltersFormComponent,
-            FiltersTagComponent,
-            DocumentsComponent,
-            UploadDocumentModal,
-            FilterContainerComponent,
-            SearchHistoryDisplayerComponent,
-            SearchDisplayerComponent,
-            FilterDisplayerComponent,
-            TextToClipboardComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCoreModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        CommonModule,
-                        TaLayoutModule,
-                        TaUiModule,
-                        TaFormModule,
-                        TaIconsModule,
-                        TaDirectivePipeModule,
-                        TaCardModule,
-                        TaFilesExtendedModule,
-                        TaFormInputsModule,
-                        TaContainerModule,
-                        TaListModule,
-                        MatMenuModule,
-                        MatDialogModule,
-                        TranslatePipe,
-                        FiltersComponent,
-                        FiltersContainerComponent,
-                        FiltersFormComponent,
-                        FiltersTagComponent,
-                        DocumentsComponent,
-                        UploadDocumentModal,
-                        FilterContainerComponent,
-                        SearchHistoryDisplayerComponent,
-                        SearchDisplayerComponent,
-                        FilterDisplayerComponent,
-                        TextToClipboardComponent,
-                    ],
-                    exports: [
-                        FiltersContainerComponent,
-                        DocumentsComponent,
-                        FilterContainerComponent,
-                        SearchDisplayerComponent,
-                        SearchHistoryDisplayerComponent,
-                        FilterDisplayerComponent,
-                        FiltersTagComponent,
-                        TextToClipboardComponent,
-                    ],
-                }]
-        }], ctorParameters: () => [] });
-
-const provideGTM = (config) => [
-    importProvidersFrom(GoogleTagManagerModule.forRoot({
-        id: config.gtmId,
-    })),
-];
-
 /*
  * Public API Surface of core
  */
@@ -990,5 +655,5 @@ const provideGTM = (config) => [
  * Generated bundle index. Do not edit.
  */
 
-export { DocumentsComponent, FilterContainerComponent, FilterDisplayerComponent, FiltersContainerComponent, FiltersTagComponent, MapComponent, SearchDisplayerComponent, SearchHistoryDisplayerComponent, TaCoreModule, TextToClipboardComponent, UploadDocumentModal, initializeGoogleMaps, provideGTM, provideGoogleMaps };
+export { FilterContainerComponent, FilterDisplayerComponent, FiltersContainerComponent, FiltersTagComponent, MapComponent, SearchDisplayerComponent, SearchHistoryDisplayerComponent, TextToClipboardComponent, initializeGoogleMaps, provideGTM, provideGoogleMaps };
 //# sourceMappingURL=ta-core.mjs.map

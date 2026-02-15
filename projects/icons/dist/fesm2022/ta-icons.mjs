@@ -1,6 +1,6 @@
-import { NgClass, CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, input, Component, NgModule } from '@angular/core';
+import { Injectable, input, Component } from '@angular/core';
 import * as i2 from '@angular/platform-browser';
 import * as i1 from '@angular/material/icon';
 import { MatIconModule } from '@angular/material/icon';
@@ -317,42 +317,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Common component
  */
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- *
- * @example
- * // Instead of importing the module:
- * // import { TaIconsModule } from '@ta/icons';
- *
- * // Import the standalone components directly:
- * import { FontIconComponent, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
- */
-class TaIconsModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaIconsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaIconsModule, imports: [CommonModule,
-            LocalIconComponent,
-            MaterialIconComponent,
-            FontIconComponent], exports: [LocalIconComponent, MaterialIconComponent, FontIconComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaIconsModule, providers: [TaIconsService], imports: [CommonModule,
-            MaterialIconComponent,
-            FontIconComponent] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaIconsModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [
-                        CommonModule,
-                        LocalIconComponent,
-                        MaterialIconComponent,
-                        FontIconComponent,
-                    ],
-                    exports: [LocalIconComponent, MaterialIconComponent, FontIconComponent],
-                    providers: [TaIconsService],
-                }]
-        }] });
-
 const isFontIcon = (icon) => {
     return typeof icon === "string";
 };
@@ -374,5 +338,5 @@ const isLocalIcon = (icon) => {
  * Generated bundle index. Do not edit.
  */
 
-export { FontIconComponent, LocalIconComponent, MaterialIconComponent, TaIconType, TaIconsModule, TaIconsService, getFontIcon, isFontIcon, isLocalIcon };
+export { FontIconComponent, LocalIconComponent, MaterialIconComponent, TaIconType, TaIconsService, getFontIcon, isFontIcon, isLocalIcon };
 //# sourceMappingURL=ta-icons.mjs.map

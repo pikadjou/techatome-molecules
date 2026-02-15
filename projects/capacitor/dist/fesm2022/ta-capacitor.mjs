@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, Inject, NgModule, importProvidersFrom } from '@angular/core';
+import { Injectable, Inject, importProvidersFrom } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
 import { Device } from '@capacitor/device';
 import { BehaviorSubject } from 'rxjs';
@@ -148,24 +148,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     args: [PWA_CONFIG_KEY]
                 }] }] });
 
-/**
- * @deprecated Use standalone components instead.
- * This module will be removed in a future version.
- */
-class TaCapacitorModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCapacitorModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: TaCapacitorModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCapacitorModule }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaCapacitorModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [],
-                    exports: [],
-                }]
-        }] });
-
 const providePwa = (data) => [
     importProvidersFrom(ApolloModule),
     {
@@ -182,5 +164,5 @@ const providePwa = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { PWA_CONFIG_KEY, TaCapacitorModule, TaDeviceInfoService, TaDeviceNetworkService, TaDevicePositionService, TaPwaService, providePwa };
+export { PWA_CONFIG_KEY, TaDeviceInfoService, TaDeviceNetworkService, TaDevicePositionService, TaPwaService, providePwa };
 //# sourceMappingURL=ta-capacitor.mjs.map
