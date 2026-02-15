@@ -31,6 +31,10 @@ export declare class RatingComponent {
      */
     showHover: import("@angular/core").InputSignal<boolean>;
     /**
+     * Show hover effect
+     */
+    containerClass: import("@angular/core").InputSignal<string>;
+    /**
      * Emits the new rating value when a star is clicked
      */
     ratingChange: EventEmitter<number>;
@@ -61,5 +65,5 @@ export declare class RatingComponent {
      */
     getCursorStyle(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<RatingComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<RatingComponent, "ta-rating", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "emptyColor": { "alias": "emptyColor"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "showHover": { "alias": "showHover"; "required": false; "isSignal": true; }; }, { "ratingChange": "ratingChange"; "hoverChange": "hoverChange"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<RatingComponent, "ta-rating", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "emptyColor": { "alias": "emptyColor"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "showHover": { "alias": "showHover"; "required": false; "isSignal": true; }; "containerClass": { "alias": "containerClass"; "required": false; "isSignal": true; }; }, { "ratingChange": "ratingChange"; "hoverChange": "hoverChange"; }, never, never, true, never>;
 }

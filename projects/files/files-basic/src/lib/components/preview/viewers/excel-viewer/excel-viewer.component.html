@@ -1,0 +1,10 @@
+<ta-loader [isLoading]="this.requestState.isLoading()">
+  @if (file) {
+    <ngx-doc-viewer
+      [url]="file.url"
+      viewer="office"
+      style="width: 100%; height: 100%"
+      (loaded)="this.requestState.completed()"
+    ></ngx-doc-viewer>
+  }
+</ta-loader>

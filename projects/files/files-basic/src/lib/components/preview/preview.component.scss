@@ -1,0 +1,28 @@
+@use 'ta/utils/mixins/common';
+
+.slide-container {
+  height: 100%;
+}
+.header {
+  border-bottom: 1px solid common.get-var(neutral, 300);
+  padding-bottom: common.get-var(space, md);
+}
+
+.body {
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  ta-image-viewer,
+  ta-pdf-viewer,
+  ta-word-viewer,
+  ta-excel-viewer {
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+}
+
+.footer {
+  border-top: 1px solid common.get-var(neutral, 300);
+  padding: common.get-var(space, md);
+}

@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -52,6 +52,10 @@ export class RatingComponent {
    */
   showHover = input<boolean>(true);
 
+  /**
+   * Show hover effect
+   */
+  containerClass = input<string>('flex-row');
   /**
    * Emits the new rating value when a star is clicked
    */

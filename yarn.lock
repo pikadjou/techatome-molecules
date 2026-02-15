@@ -8530,6 +8530,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+"docviewhelper@>= 0.0.1":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/docviewhelper/-/docviewhelper-0.0.2.tgz#acd4d7ed8394e5136668c79488fd82107c894203"
+  integrity sha512-4ETJdDT//5Q8qcEGY9UjYo6dZiFzn3CHXAoSli4w35uehVdkKschIoRjG3exesc5jyVc9Zrch3oZKZR/5i4ZQQ==
+
 dom-accessibility-api@^0.5.9:
   version "0.5.16"
   resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.5.16.tgz#5a7429e6066eb3664d911e33fb0e45de8eb08453"
@@ -13251,6 +13256,14 @@ ng-packagr@^18.2.1:
     sass "^1.69.5"
   optionalDependencies:
     rollup "^4.18.0"
+
+ngx-doc-viewer@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-doc-viewer/-/ngx-doc-viewer-15.0.1.tgz#fec826ecfdb90318324c6c6ace3614e15087f5a9"
+  integrity sha512-8FtA79/cIQUVagSU+IAno00VKzkfs/ep3p4rzsa7RXCbEGzXhbtCFOaqzuJN18PTaV0h9q3gpCcs2YRQ9ppSQw==
+  dependencies:
+    docviewhelper ">= 0.0.1"
+    tslib "^2.3.0"
 
 ngx-material-timepicker@^13.1.0:
   version "13.1.1"

@@ -1,0 +1,22 @@
+import { Component, Input } from '@angular/core';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { LoaderComponent } from '@ta/ui';
+import { TaAbstractComponent } from '@ta/utils';
+import * as i0 from "@angular/core";
+import * as i1 from "ngx-doc-viewer";
+export class PdfViewerComponent extends TaAbstractComponent {
+    constructor() {
+        super();
+        // this.requestState.asked();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PdfViewerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: PdfViewerComponent, isStandalone: true, selector: "ta-pdf-viewer", inputs: { file: "file" }, usesInheritance: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <ngx-doc-viewer\n    [url]=\"file.url\"\n    viewer=\"pdf\"\n    style=\"width: 100%; height: 100%\"\n    (loaded)=\"this.requestState.completed()\"\n  ></ngx-doc-viewer>\n</ta-loader>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: NgxDocViewerModule }, { kind: "component", type: i1.NgxDocViewerComponent, selector: "ngx-doc-viewer", inputs: ["url", "queryParams", "viewerUrl", "googleCheckInterval", "googleMaxChecks", "disableContent", "googleCheckContentLoaded", "viewer", "overrideLocalhost"], outputs: ["loaded"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PdfViewerComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-pdf-viewer', standalone: true, imports: [NgxDocViewerModule, LoaderComponent], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <ngx-doc-viewer\n    [url]=\"file.url\"\n    viewer=\"pdf\"\n    style=\"width: 100%; height: 100%\"\n    (loaded)=\"this.requestState.completed()\"\n  ></ngx-doc-viewer>\n</ta-loader>\n" }]
+        }], ctorParameters: () => [], propDecorators: { file: [{
+                type: Input,
+                args: [{ required: true }]
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicGRmLXZpZXdlci5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudHMvcHJldmlldy92aWV3ZXJzL3BkZi12aWV3ZXIvcGRmLXZpZXdlci5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudHMvcHJldmlldy92aWV3ZXJzL3BkZi12aWV3ZXIvcGRmLXZpZXdlci5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUVqRCxPQUFPLEVBQUUsa0JBQWtCLEVBQUUsTUFBTSxnQkFBZ0IsQ0FBQztBQUVwRCxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sUUFBUSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLFdBQVcsQ0FBQzs7O0FBV2hELE1BQU0sT0FBTyxrQkFBbUIsU0FBUSxtQkFBbUI7SUFHekQ7UUFDRSxLQUFLLEVBQUUsQ0FBQztRQUNSLDZCQUE2QjtJQUMvQixDQUFDOytHQU5VLGtCQUFrQjttR0FBbEIsa0JBQWtCLDBIQ2hCL0IseVBBUUEseURETVksa0JBQWtCLDJTQUFFLGVBQWU7OzRGQUVsQyxrQkFBa0I7a0JBUDlCLFNBQVM7K0JBQ0UsZUFBZSxjQUdiLElBQUksV0FDUCxDQUFDLGtCQUFrQixFQUFFLGVBQWUsQ0FBQzt3REFHbkIsSUFBSTtzQkFBOUIsS0FBSzt1QkFBQyxFQUFFLFFBQVEsRUFBRSxJQUFJLEVBQUUiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIElucHV0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbmltcG9ydCB7IE5neERvY1ZpZXdlck1vZHVsZSB9IGZyb20gJ25neC1kb2Mtdmlld2VyJztcblxuaW1wb3J0IHsgTG9hZGVyQ29tcG9uZW50IH0gZnJvbSAnQHRhL3VpJztcbmltcG9ydCB7IFRhQWJzdHJhY3RDb21wb25lbnQgfSBmcm9tICdAdGEvdXRpbHMnO1xuXG5pbXBvcnQgeyBQcmV2aWV3RG9jdW1lbnREdG8gfSBmcm9tICcuLi8uLi90eXBlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAndGEtcGRmLXZpZXdlcicsXG4gIHRlbXBsYXRlVXJsOiAnLi9wZGYtdmlld2VyLmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vcGRmLXZpZXdlci5jb21wb25lbnQuc2NzcyddLFxuICBzdGFuZGFsb25lOiB0cnVlLFxuICBpbXBvcnRzOiBbTmd4RG9jVmlld2VyTW9kdWxlLCBMb2FkZXJDb21wb25lbnRdLFxufSlcbmV4cG9ydCBjbGFzcyBQZGZWaWV3ZXJDb21wb25lbnQgZXh0ZW5kcyBUYUFic3RyYWN0Q29tcG9uZW50IHtcbiAgQElucHV0KHsgcmVxdWlyZWQ6IHRydWUgfSkgZmlsZSE6IFByZXZpZXdEb2N1bWVudER0bztcblxuICBjb25zdHJ1Y3RvcigpIHtcbiAgICBzdXBlcigpO1xuICAgIC8vIHRoaXMucmVxdWVzdFN0YXRlLmFza2VkKCk7XG4gIH1cbn1cbiIsIjx0YS1sb2FkZXIgW2lzTG9hZGluZ109XCJ0aGlzLnJlcXVlc3RTdGF0ZS5pc0xvYWRpbmcoKVwiPlxuICA8bmd4LWRvYy12aWV3ZXJcbiAgICBbdXJsXT1cImZpbGUudXJsXCJcbiAgICB2aWV3ZXI9XCJwZGZcIlxuICAgIHN0eWxlPVwid2lkdGg6IDEwMCU7IGhlaWdodDogMTAwJVwiXG4gICAgKGxvYWRlZCk9XCJ0aGlzLnJlcXVlc3RTdGF0ZS5jb21wbGV0ZWQoKVwiXG4gID48L25neC1kb2Mtdmlld2VyPlxuPC90YS1sb2FkZXI+XG4iXX0=

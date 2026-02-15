@@ -1,6 +1,6 @@
-import { EventEmitter, OnInit } from "@angular/core";
-import { TaPwaService } from "@ta/capacitor";
-import { TaBaseComponent } from "@ta/utils";
+import { EventEmitter, OnInit } from '@angular/core';
+import { TaPwaService } from '@ta/capacitor';
+import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class PwaComponent extends TaBaseComponent implements OnInit {
     private _pwa;

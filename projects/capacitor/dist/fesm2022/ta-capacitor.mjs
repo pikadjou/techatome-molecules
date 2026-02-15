@@ -1,11 +1,12 @@
 import * as i0 from '@angular/core';
-import { Injectable, Inject, NgModule } from '@angular/core';
+import { Injectable, Inject, NgModule, importProvidersFrom } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
 import { Device } from '@capacitor/device';
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '@capacitor/network';
 import { Logger } from '@ta/server';
 import { Geolocation } from '@capacitor/geolocation';
+import { ApolloModule } from 'apollo-angular';
 
 class TaDeviceInfoService {
     constructor() {
@@ -165,6 +166,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }] });
 
+const providePwa = (data) => [
+    importProvidersFrom(ApolloModule),
+    {
+        provide: PWA_CONFIG_KEY,
+        useValue: data,
+    },
+];
+
 /*
  * Public API Surface of capacitor
  */
@@ -173,5 +182,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { PWA_CONFIG_KEY, TaCapacitorModule, TaDeviceInfoService, TaDeviceNetworkService, TaDevicePositionService, TaPwaService };
+export { PWA_CONFIG_KEY, TaCapacitorModule, TaDeviceInfoService, TaDeviceNetworkService, TaDevicePositionService, TaPwaService, providePwa };
 //# sourceMappingURL=ta-capacitor.mjs.map

@@ -358,7 +358,7 @@ class RatingComponent extends TaAbstractInputComponent {
         this.onChange(value);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RatingComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: RatingComponent, isStandalone: true, selector: "ta-input-rating", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <ta-rating\n    [value]=\"this.input.value || 0\"\n    [max]=\"this.input.max\"\n    [size]=\"this.input.size\"\n    [readonly]=\"this.input.readonly || this.input.formControl?.disabled || false\"\n    [showHover]=\"!this.input.readonly\"\n    (ratingChange)=\"this.onRatingChange($event)\"\n  >\n  </ta-rating>\n</ta-input-layout>\n", styles: [":host{display:block}:host ta-rating{display:inline-block}\n"], dependencies: [{ kind: "ngmodule", type: ReactiveFormsModule }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "component", type: RatingComponent$1, selector: "ta-rating", inputs: ["value", "max", "size", "color", "emptyColor", "readonly", "showHover"], outputs: ["ratingChange", "hoverChange"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: RatingComponent, isStandalone: true, selector: "ta-input-rating", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <ta-rating\n    [value]=\"this.input.value || 0\"\n    [max]=\"this.input.max\"\n    [size]=\"this.input.size\"\n    [readonly]=\"this.input.readonly || this.input.formControl?.disabled || false\"\n    [showHover]=\"!this.input.readonly\"\n    (ratingChange)=\"this.onRatingChange($event)\"\n  >\n  </ta-rating>\n</ta-input-layout>\n", styles: [":host{display:block}:host ta-rating{display:inline-block}\n"], dependencies: [{ kind: "ngmodule", type: ReactiveFormsModule }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "component", type: RatingComponent$1, selector: "ta-rating", inputs: ["value", "max", "size", "color", "emptyColor", "readonly", "showHover", "containerClass"], outputs: ["ratingChange", "hoverChange"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RatingComponent, decorators: [{
             type: Component,
@@ -1065,7 +1065,7 @@ class ComponentInputComponent extends TaAbstractInputComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-component", standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
+            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
         }] });
 class TemplateModal extends TaBaseModal {
     constructor() {
@@ -1073,9 +1073,8 @@ class TemplateModal extends TaBaseModal {
         this.dialogRef = inject((MatDialogRef));
         this.data = inject(MAT_DIALOG_DATA);
         this.selectedValue$ = new Subject();
-        this.dialogRef.addPanelClass("classic-modal");
         this._registerSubscription(this.selectedValue$.subscribe({
-            next: (value) => this.select(value),
+            next: value => this.select(value),
         }));
     }
     select(value) {
@@ -1087,7 +1086,7 @@ class TemplateModal extends TaBaseModal {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TemplateModal, decorators: [{
             type: Component,
-            args: [{ selector: "", standalone: true, imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n" }]
+            args: [{ selector: '', standalone: true, imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule], template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n" }]
         }], ctorParameters: () => [] });
 
 const provideForm = () => [

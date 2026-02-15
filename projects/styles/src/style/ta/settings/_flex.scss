@@ -1,4 +1,6 @@
+@use 'ta/vars';
 @use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/mediaQueriesRanges';
 
 @mixin generateFlex() {
   .flex {
@@ -42,5 +44,50 @@
   }
   .flex-fill {
     @include flex.flex-fill();
+  }
+
+  // Generate responsive flex classes for each breakpoint
+  @each $col-size, $size in vars.$grid-breakpoints {
+    @include mediaQueriesRanges.to($size) {
+      .#{$col-size}-flex {
+        @include flex.flex();
+      }
+      .#{$col-size}-space-between {
+        @include flex.space-between();
+      }
+      .#{$col-size}-space-around {
+        @include flex.space-around();
+      }
+      .#{$col-size}-flex-start {
+        @include flex.flex-start();
+      }
+      .#{$col-size}-justify-center {
+        @include flex.justify-center();
+      }
+      .#{$col-size}-justify-end {
+        @include flex.justify-end();
+      }
+      .#{$col-size}-align-center {
+        @include flex.align-center();
+      }
+      .#{$col-size}-align-end {
+        @include flex.align-end();
+      }
+      .#{$col-size}-full-width {
+        @include flex.full-width();
+      }
+      .#{$col-size}-flex-row {
+        @include flex.flex-row();
+      }
+      .#{$col-size}-flex-column {
+        @include flex.flex-column();
+      }
+      .#{$col-size}-flex-full {
+        @include flex.flex-full();
+      }
+      .#{$col-size}-flex-fill {
+        @include flex.flex-fill();
+      }
+    }
   }
 }

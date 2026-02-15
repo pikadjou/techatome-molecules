@@ -1275,7 +1275,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- update d'icone, changement dans la gestion d'image du cam-empty ([b30f174](https://dev.azure.com/commits/b30f174d65d6876513792c69d0eb8b6ba7e92cc0))
+- update d'icone, changement dans la gestion d'image du ta-empty ([b30f174](https://dev.azure.com/commits/b30f174d65d6876513792c69d0eb8b6ba7e92cc0))
 
 # [2.0.0](https://dev.azure.com/compare/v1.3.0-beta.36...v2.0.0) (2024-05-13)
 
@@ -1285,7 +1285,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- update d'icone, changement dans la gestion d'image du cam-empty ([b30f174](https://dev.azure.com/commits/b30f174d65d6876513792c69d0eb8b6ba7e92cc0))
+- update d'icone, changement dans la gestion d'image du ta-empty ([b30f174](https://dev.azure.com/commits/b30f174d65d6876513792c69d0eb8b6ba7e92cc0))
 
 # [1.3.0-beta.36](https://dev.azure.com/compare/v1.3.0-beta.35...v1.3.0-beta.36) (2024-05-13)
 

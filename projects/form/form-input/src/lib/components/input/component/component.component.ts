@@ -1,28 +1,24 @@
-import { NgTemplateOutlet } from "@angular/common";
-import { Component, inject } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from "@angular/material/dialog";
+import { NgTemplateOutlet } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs';
 
-import { InputComponent } from "@ta/form-model";
-import { TaIconsModule } from "@ta/icons";
-import { TaLayoutModule, TaUiModule } from "@ta/ui";
-import { TaBaseModal } from "@ta/utils";
+import { InputComponent } from '@ta/form-model';
+import { TaIconsModule } from '@ta/icons';
+import { TaLayoutModule, TaUiModule } from '@ta/ui';
+import { TaBaseModal } from '@ta/utils';
 
-import { TaAbstractInputComponent } from "../../abstract.component";
-import { InputLayoutComponent } from "../../input-layout/input-layout.component";
+import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
-  selector: "ta-input-component",
+  selector: 'ta-input-component',
   standalone: true,
   imports: [InputLayoutComponent, ReactiveFormsModule, TaIconsModule],
-  templateUrl: "./component.component.html",
-  styleUrl: "./component.component.scss",
+  templateUrl: './component.component.html',
+  styleUrl: './component.component.scss',
 })
 export class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
   readonly dialog = inject(MatDialog);
@@ -40,10 +36,10 @@ type TemplateModalData = {
   input: InputComponent;
 };
 @Component({
-  selector: "",
+  selector: '',
   standalone: true,
   imports: [NgTemplateOutlet, TaLayoutModule, TaUiModule],
-  templateUrl: "./modal.html",
+  templateUrl: './modal.html',
 })
 export class TemplateModal extends TaBaseModal {
   readonly dialogRef = inject(MatDialogRef<TemplateModal>);
@@ -54,11 +50,9 @@ export class TemplateModal extends TaBaseModal {
   constructor() {
     super();
 
-    this.dialogRef.addPanelClass("classic-modal");
-
     this._registerSubscription(
       this.selectedValue$.subscribe({
-        next: (value) => this.select(value),
+        next: value => this.select(value),
       })
     );
   }
