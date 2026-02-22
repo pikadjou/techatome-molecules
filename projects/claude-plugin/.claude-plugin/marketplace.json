@@ -1,0 +1,21 @@
+{
+  "description": "Techatome monorepo assistant — slash-commands, agents, hooks and skills for Angular @ta/* libraries and TechAtome application patterns",
+  "name": "techatome-claude-plugin",
+  "owner": {
+    "name": "Techatome",
+    "email": "dev@techatome.be"
+  },
+  "plugins": [
+    {
+      "author": {
+        "email": "dev@techatome.be",
+        "name": "Techatome"
+      },
+      "category": "development",
+      "description": "Techatome monorepo assistant — slash-commands, agents, hooks and skills for Angular @ta/* libraries and Techatome application patterns. Includes 25 library commands, 3 specialized agents, a conventions hook, and a patterns skill.",
+      "name": "techatome",
+      "source": "./",
+      "version": "1.0.0"
+    }
+  ]
+}

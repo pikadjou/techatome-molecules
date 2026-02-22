@@ -1,12 +1,12 @@
-import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Output, Component, TemplateRef, ViewChild, ElementRef, Injectable, APP_INITIALIZER, signal, ViewChildren, importProvidersFrom, inject } from '@angular/core';
+import { Injectable, input, EventEmitter, Output, Component, TemplateRef, ViewChild, ElementRef, APP_INITIALIZER, signal, ViewChildren, importProvidersFrom, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FontIconComponent } from '@ta/icons';
 import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent } from '@ta/ui';
 import { TaBaseComponent, copyTextToClipboard } from '@ta/utils';
 import { FormComponent } from '@ta/form-basic';
-import { TranslatePipe } from '@ta/translation';
+import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
 import { BottomSheetTemplateGenericComponent } from '@ta/menu';
 import * as i1 from '@angular/material/bottom-sheet';
 import { Validators } from '@angular/forms';
@@ -22,12 +22,27 @@ import { GoogleTagManagerModule } from '@edumetz16/angular-google-tag-manager';
 export { GoogleTagManagerService as TaGoogleTagManagerService } from '@edumetz16/angular-google-tag-manager';
 import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
 
+class TaTranslationCore extends TaLazyTranslationService {
+    constructor() {
+        super("core");
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationCore, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationCore, providedIn: "root" }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationCore, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: "root",
+                }]
+        }], ctorParameters: () => [] });
+
 class FiltersFormComponent extends TaBaseComponent {
     constructor() {
         super();
         this.form = input([]);
         this.askValidation$ = input.required();
         this.filtersSelected = new EventEmitter();
+        TaTranslationCore.getInstance();
     }
     apply(data) {
         this.filtersSelected.emit(data);
@@ -40,7 +55,7 @@ class FiltersFormComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersFormComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-filters-form", standalone: true, imports: [NgIf, ButtonComponent, FormComponent, TranslatePipe], template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">\n      {{ 'core.filter.clear' | translate }}\n    </ta-button>\n  </div>\n  @if (this.form()) {\n    <ta-form\n      [inputs]=\"this.form()\"\n      [canDisplayButton]=\"false\"\n      [askValidation$]=\"this.askValidation$()\"\n      (valid)=\"this.apply($event)\"\n    >\n    </ta-form>\n  }\n</div>\n" }]
+            args: [{ selector: 'ta-filters-form', standalone: true, imports: [ButtonComponent, FormComponent, TranslatePipe], template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">\n      {{ 'core.filter.clear' | translate }}\n    </ta-button>\n  </div>\n  @if (this.form()) {\n    <ta-form\n      [inputs]=\"this.form()\"\n      [canDisplayButton]=\"false\"\n      [askValidation$]=\"this.askValidation$()\"\n      (valid)=\"this.apply($event)\"\n    >\n    </ta-form>\n  }\n</div>\n" }]
         }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
                 type: Output
             }] } });
@@ -112,10 +127,11 @@ class FilterContainerComponent extends TaBaseComponent {
         this.isFilterOpen = false;
         this.askValidation$ = new Subject();
         this.askClear$ = new Subject();
+        TaTranslationCore.getInstance();
     }
     ngOnInit() {
         if (this.askClear$) {
-            this._registerSubscription(this.askClear$.subscribe((_) => this.clear()));
+            this._registerSubscription(this.askClear$.subscribe(_ => this.clear()));
         }
     }
     apply(data) {
@@ -132,7 +148,7 @@ class FilterContainerComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterContainerComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-filter-container", standalone: true, imports: [
+            args: [{ selector: 'ta-filter-container', standalone: true, imports: [
                         FontIconComponent,
                         LinkComponent,
                         LayoutSideComponent,

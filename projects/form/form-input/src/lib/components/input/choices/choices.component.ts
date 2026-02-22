@@ -72,7 +72,7 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
 
   public inputSearch = new InputTextBox();
   public inputNullable = new InputCheckBox({
-    label: 'form.input.choices.nullable.label',
+    label: 'input.choices.nullable.label',
   });
 
   public filteredOptions$: Observable<

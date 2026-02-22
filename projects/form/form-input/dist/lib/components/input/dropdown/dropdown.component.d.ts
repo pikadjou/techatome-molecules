@@ -1,6 +1,6 @@
-import { InputDropdown } from "@ta/form-model";
-import { TaOverlayPanelComponent } from "@ta/ui";
-import { TaAbstractInputComponent } from "../../abstract.component";
+import { InputDropdown } from '@ta/form-model';
+import { TaOverlayPanelComponent } from '@ta/ui';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
     space: import("@angular/core").InputSignal<boolean>;
@@ -15,6 +15,7 @@ export declare class DropdownComponent extends TaAbstractInputComponent<InputDro
         name: string;
         disabled?: boolean;
     }[];
+    constructor();
     ngOnInit(): void;
     getOptionName(id: any): string;
     onMenuSelect(selectedId: any): void;

@@ -1,8 +1,23 @@
 {
-  "placeholder.text": "Saisir du texte...",
-  "placeholder.number": "Saisir un nombre...",
-  "placeholder.date": "Sélectionner une date...",
-  "placeholder.select": "Sélectionner une option...",
   "button.clear": "Effacer",
-  "button.select": "Sélectionner"
+  "button.select": "Sélectionner",
+  "dropdown.novalue": "Pas de valeur",
+  "filter.clear": "Effacer",
+  "logo.add": "Ajouter un logo",
+  "logo.modal.cancel": "Annuler",
+  "logo.modal.choose": "Choisir un fichier",
+  "logo.modal.clear": "Effacer la sélection",
+  "logo.modal.confirm": "Confirmer",
+  "logo.modal.current-alt": "Logo actuel",
+  "logo.modal.current-description": "Sélection actuelle",
+  "logo.modal.title": "Sélectionner un logo",
+  "logo.modify": "Modifier",
+  "logo.remove": "Supprimer",
+  "placeholder.date": "Sélectionner une date...",
+  "placeholder.number": "Saisir un nombre...",
+  "placeholder.select": "Sélectionner une option...",
+  "placeholder.text": "Saisir du texte...",
+  "upload.add": "Ajouter un document",
+  "upload.confirm": "Confirmer",
+  "upload.dragndrop": "Glissez ou placez vos fichiers ici"
 }

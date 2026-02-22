@@ -1,0 +1,16 @@
+{
+  "description": "techatome code quality hooks — warns about sort-keys violations and missing this. in templates when editing Angular files",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/techatome_conventions_hook.py"
+          }
+        ],
+        "matcher": "Edit|Write|MultiEdit"
+      }
+    ]
+  }
+}

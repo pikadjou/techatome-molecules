@@ -1,0 +1,8 @@
+{
+  "author": {
+    "name": "Techatome",
+    "email": "dev@techatome.be"
+  },
+  "description": "Techatome monorepo assistant — slash-commands, agents and hooks for Angular @ta/* libraries and Techatome application patterns",
+  "name": "techatome-claude-plugin"
+}

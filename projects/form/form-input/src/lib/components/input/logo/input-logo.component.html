@@ -3,22 +3,22 @@
 <div class="flex-column align-center g-space-md">
   <div class="logo-preview-wrapper" (click)="this.openDialog()">
     @if (this.input.value) {
-    <img [src]="this.input.value" class="logo-image" />
-    <div class="logo-overlay">
-      <ta-font-icon name="edit" type="lg"></ta-font-icon>
-      <span>{{ "form.input.logo.modify" | translate }}</span>
-    </div>
+      <img [src]="this.input.value" class="logo-image" />
+      <div class="logo-overlay">
+        <ta-font-icon name="edit" type="lg"></ta-font-icon>
+        <span>{{ 'input.logo.modify' | translate }}</span>
+      </div>
     } @else {
-    <div class="logo-placeholder flex-column align-center justify-center">
-      <ta-font-icon name="image" type="xl"></ta-font-icon>
-      <span>{{ "form.input.logo.add" | translate }}</span>
-    </div>
+      <div class="logo-placeholder flex-column align-center justify-center">
+        <ta-font-icon name="image" type="xl"></ta-font-icon>
+        <span>{{ 'input.logo.add' | translate }}</span>
+      </div>
     }
   </div>
 
   @if (this.input.value) {
-  <ta-button type="secondary" size="small" (action)="this.removeLogo()">
-    {{ "form.input.logo.remove" | translate }}
-  </ta-button>
+    <ta-button type="secondary" size="small" (action)="this.removeLogo()">
+      {{ 'input.logo.remove' | translate }}
+    </ta-button>
   }
 </div>

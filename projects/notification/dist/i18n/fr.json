@@ -1,13 +1,17 @@
 {
-  "type.success": "Succès",
-  "type.error": "Erreur",
-  "type.warning": "Avertissement",
-  "type.info": "Information",
   "action.close": "Fermer",
   "action.dismiss": "Ignorer",
   "action.viewDetails": "Voir les détails",
-  "notification.inline.label.error": "Erreur",
-  "notification.inline.label.info": "Information",
-  "notification.inline.label.success": "Succès",
-  "notification.inline.label.warning": "Avertissement"
+  "common.error": "Erreur",
+  "common.info": "Information",
+  "common.success": "Succès",
+  "common.warning": "Avertissement",
+  "inline.label.error": "Erreur lors du traitement",
+  "inline.label.info": "Information sur l’opération",
+  "inline.label.success": "Action réalisée avec succès",
+  "inline.label.warning": "Avertissement sur l’opération",
+  "type.error": "Erreur",
+  "type.info": "Information",
+  "type.success": "Succès",
+  "type.warning": "Avertissement"
 }

@@ -1,20 +1,21 @@
-import { NgIf } from "@angular/common";
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
-import { FormComponent } from "@ta/form-basic";
-import { InputBase } from "@ta/form-model";
-import { TranslatePipe } from "@ta/translation";
-import { ButtonComponent } from "@ta/ui";
-import { TaBaseComponent } from "@ta/utils";
+import { FormComponent } from '@ta/form-basic';
+import { InputBase } from '@ta/form-model';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
+
+import { TaTranslationCore } from '../../../translation.service';
 
 @Component({
-  selector: "ta-filters-form",
-  templateUrl: "./filters-form.component.html",
-  styleUrls: ["./filters-form.component.scss"],
+  selector: 'ta-filters-form',
+  templateUrl: './filters-form.component.html',
+  styleUrls: ['./filters-form.component.scss'],
   standalone: true,
-  imports: [NgIf, ButtonComponent, FormComponent, TranslatePipe],
+  imports: [ButtonComponent, FormComponent, TranslatePipe],
 })
 export class FiltersFormComponent extends TaBaseComponent {
   form = input<InputBase<any>[]>([]);
@@ -26,6 +27,7 @@ export class FiltersFormComponent extends TaBaseComponent {
 
   constructor() {
     super();
+    TaTranslationCore.getInstance();
   }
 
   public apply(data: any) {

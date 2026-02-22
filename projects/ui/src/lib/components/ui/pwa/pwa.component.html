@@ -1,40 +1,30 @@
 @if (this.isShowed) {
-<div class="pwa-layout">
-  <ta-toast>
-    <div class="pwa-container">
-      <div class="title-container">
-        <div class="mb-space-lg">
-          <ta-logo
-            [widthPercentage]="this.pictureWidth"
-            [type]="'oneline'"
-            color="black"
-          ></ta-logo>
+  <div class="pwa-layout">
+    <ta-toast>
+      <div class="pwa-container">
+        <div class="title-container">
+          <div class="mb-space-lg">
+            <ta-logo [widthPercentage]="this.pictureWidth" [type]="'oneline'"></ta-logo>
+          </div>
+          <ta-title [level]="3" class="mb-space-xs title">{{ 'ui.pwa.title' | translate }}</ta-title>
+          {{ 'ui.pwa.description' | translate }}
         </div>
-        <ta-title [level]="3" class="mb-space-xs title">{{
-          "ui.pwa.title" | translate
-        }}</ta-title>
-        {{ "ui.pwa.description" | translate }}
-      </div>
-      <div class="cta col-auto flex-column g-space-md">
-        <div class="cta-button flex-column g-space-md">
-          <ta-button (action)="this.onYesClick()">
-            <div class="button-content">
-              <ta-font-icon name="download" class="mr-space-xs"></ta-font-icon>
-              {{ "ui.pwa.install" | translate }}
-            </div>
-          </ta-button>
-          <ta-button [style]="'secondary'" (action)="this.onNoClick()">
-            {{ "ui.pwa.cancel" | translate }}
-          </ta-button>
-        </div>
-        <div class="link-container flex-row g-space-sm">
-          <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
-          <ta-link (action)="this.dontAsk()">
-            {{ "ui.pwa.no-more" | translate }}
-          </ta-link>
+        <div class="cta col-auto flex-column g-space-md">
+          <div class="cta-button flex-column g-space-md">
+            <ta-button (action)="this.onYesClick()" icon="download">
+              {{ 'ui.pwa.install' | translate }}
+            </ta-button>
+            <ta-button type="tertiary" (action)="this.onNoClick()">
+              {{ 'ui.pwa.cancel' | translate }}
+            </ta-button>
+          </div>
+          <div class="link-container">
+            <ta-link (action)="this.dontAsk()" icon="close-tool">
+              {{ 'ui.pwa.no-more' | translate }}
+            </ta-link>
+          </div>
         </div>
       </div>
-    </div>
-  </ta-toast>
-</div>
+    </ta-toast>
+  </div>
 }

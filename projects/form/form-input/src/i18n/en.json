@@ -1,8 +1,18 @@
 {
-  "placeholder.text": "Enter text...",
-  "placeholder.number": "Enter a number...",
-  "placeholder.date": "Select a date...",
-  "placeholder.select": "Select an option...",
   "button.clear": "Clear",
-  "button.select": "Select"
+  "button.select": "Select",
+  "logo.add": "Add a logo",
+  "logo.modal.cancel": "Cancel",
+  "logo.modal.choose": "Choose a file",
+  "logo.modal.clear": "Clear selection",
+  "logo.modal.confirm": "Confirm",
+  "logo.modal.current-alt": "Current logo",
+  "logo.modal.current-description": "Current selection",
+  "logo.modal.title": "Select a logo",
+  "logo.modify": "Modify",
+  "logo.remove": "Remove",
+  "placeholder.date": "Select a date...",
+  "placeholder.number": "Enter a number...",
+  "placeholder.select": "Select an option...",
+  "placeholder.text": "Enter text..."
 }

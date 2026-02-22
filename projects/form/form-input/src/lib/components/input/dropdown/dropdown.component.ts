@@ -1,42 +1,37 @@
-import { Component, input, ViewChild } from "@angular/core";
+import { Component, ViewChild, input } from '@angular/core';
 
-import { InputDropdown } from "@ta/form-model";
-import { FontIconComponent } from "@ta/icons";
-import { TranslatePipe } from "@ta/translation";
-import { LabelComponent, TaOverlayPanelComponent } from "@ta/ui";
+import { InputDropdown } from '@ta/form-model';
+import { FontIconComponent } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { LabelComponent, TaOverlayPanelComponent } from '@ta/ui';
 
-import { TaAbstractInputComponent } from "../../abstract.component";
-import { InputLayoutComponent } from "../../input-layout/input-layout.component";
+import { TaTranslationInput } from '../../../translation.service';
+import { TaAbstractInputComponent } from '../../abstract.component';
+import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
-  selector: "ta-input-dropdown",
-  templateUrl: "./dropdown.component.html",
-  styleUrls: ["./dropdown.component.scss"],
+  selector: 'ta-input-dropdown',
+  templateUrl: './dropdown.component.html',
+  styleUrls: ['./dropdown.component.scss'],
   standalone: true,
-  imports: [
-    FontIconComponent,
-    TaOverlayPanelComponent,
-    LabelComponent,
-    TranslatePipe,
-    InputLayoutComponent,
-  ],
+  imports: [FontIconComponent, TaOverlayPanelComponent, LabelComponent, TranslatePipe, InputLayoutComponent],
 })
-export class DropdownComponent extends TaAbstractInputComponent<
-  InputDropdown<any>,
-  any
-> {
+export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
   space = input<boolean>(true);
 
   @ViewChild(TaOverlayPanelComponent) overlayPanelRef!: TaOverlayPanelComponent;
 
   public optionsList: { id: string; name: string; disabled?: boolean }[] = [];
-  public filteredOptions: { id: string; name: string; disabled?: boolean }[] =
-    [];
+  public filteredOptions: { id: string; name: string; disabled?: boolean }[] = [];
 
+  constructor() {
+    super();
+    TaTranslationInput.getInstance();
+  }
   override ngOnInit() {
     super.ngOnInit();
     this._registerSubscription(
-      this.input.options$.subscribe((options) => {
+      this.input.options$.subscribe(options => {
         this.optionsList = options;
         this.filteredOptions = this.optionsList;
       })
@@ -44,8 +39,8 @@ export class DropdownComponent extends TaAbstractInputComponent<
   }
 
   public getOptionName(id: any): string {
-    const found = this.optionsList.find((opt) => opt.id === id);
-    return found ? found.name : "";
+    const found = this.optionsList.find(opt => opt.id === id);
+    return found ? found.name : '';
   }
 
   public onMenuSelect(selectedId: any) {
@@ -69,9 +64,7 @@ export class DropdownComponent extends TaAbstractInputComponent<
 
   public isSelected(id: any): boolean {
     const currentValue = this.input.value;
-    return this.input.multiple
-      ? Array.isArray(currentValue) && currentValue.includes(id)
-      : currentValue === id;
+    return this.input.multiple ? Array.isArray(currentValue) && currentValue.includes(id) : currentValue === id;
   }
 
   public selectOption(id: any, event: MouseEvent): void {
@@ -84,9 +77,7 @@ export class DropdownComponent extends TaAbstractInputComponent<
     const searchTerm = target.value.trim();
     this.filteredOptions =
       searchTerm.length >= 0
-        ? this.optionsList.filter((opt) =>
-            opt.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
+        ? this.optionsList.filter(opt => opt.name.toLowerCase().includes(searchTerm.toLowerCase()))
         : this.optionsList;
   }
 }

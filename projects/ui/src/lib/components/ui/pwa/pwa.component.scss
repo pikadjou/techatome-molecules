@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 .pwa-layout {
   position: fixed;
@@ -32,10 +32,6 @@
 }
 
 .cta {
-  margin: 0px;
-  @media screen and (min-width: 768px) {
-    margin: auto;
-  }
   .cta-button {
     @include flex.flex-row();
 
