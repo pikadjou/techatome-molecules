@@ -3,7 +3,7 @@ import { Injectable, signal, input, inject, Component, EventEmitter, ViewChild, 
 import { FormComponent } from '@ta/form-basic';
 import { TranslatePipe } from '@ta/translation';
 import { TitleComponent, BadgeComponent, TextComponent, ButtonComponent } from '@ta/ui';
-import { of, Subject, BehaviorSubject, firstValueFrom, distinctUntilChanged, filter } from 'rxjs';
+import { of, Subject, BehaviorSubject, firstValueFrom, distinctUntilChanged, filter, map } from 'rxjs';
 import { InputPanel, InputDropdown, InputDatePicker, InputNumber, InputChoices, InputTextBox } from '@ta/form-model';
 import { isNonNullable, getUniqueArray, TaBaseComponent, TypedTemplateDirective } from '@ta/utils';
 import { TabulatorFull } from 'tabulator-tables';
@@ -14,7 +14,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
 import { TextBoxComponent } from '@ta/form-input';
-import { HandleComplexRequest, TaBaseService } from '@ta/server';
+import { HandleComplexRequest, createQuery, TaBaseService } from '@ta/server';
 
 var ParameterType;
 (function (ParameterType) {
@@ -708,6 +708,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }] });
 
+function estateInfo(model, input) {
+    return createQuery(model, { ...input, prefixType: 'Estate' });
+}
 const gridSearchFieldsName = 'search';
 class TaGridViewService extends TaBaseService {
     constructor() {
@@ -729,11 +732,36 @@ class TaGridViewService extends TaBaseService {
         // };
         // const orderParams = ajaxParam.sort.map(s => `${s.field} ${s.dir}`).join(',') ?? '';
         // const groupBy = ajaxParam.groupBy;
-        return of({
-            data: [],
-            last_page: 0,
-            total: 0,
-        });
+        return this._graphService
+            .fetchQueryBuilder(createQuery(model, {
+            props: `
+              'id'
+              'name'
+              'description'
+              'status'
+              'available'
+              'floorArea'
+              'rooms'
+              'bedrooms'
+              'floor'
+              'rent'
+              'serviceCharges'
+              'securityDeposit'
+              'insurance'
+              'createdDate'
+              'updatedDate'
+            `,
+        }), '')
+            .pipe(filter(isNonNullable), map(data => ({
+            data: data,
+            total: data.length,
+            last_page: Math.ceil(data.length / ajaxParam.size),
+        })));
+        // return of({
+        //   data: [],
+        //   last_page: 0,
+        //   total: 0,
+        // });
         // return this._odooService.searchCount$(model, filterParams()).pipe(
         //   mergeMap(count =>
         //     this._odooService
@@ -814,11 +842,12 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
     constructor() {
         super(...arguments);
         this.initialData = input();
+        this.model = input('');
         this.colsMetaData = input([]);
         this.preset = input();
         this._session = inject(TaGridSessionService);
+        this._service = inject(TaGridViewService);
     }
-    //private _service = inject(TaGridViewService);
     ngAfterViewInit() {
         const raw = this._session.getFilter(this.gridId());
         this._grid.init({
@@ -827,16 +856,16 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
             initialFilter: raw ?? [],
             data: this.initialData(),
             preset: this.preset(),
-            // services: {
-            //   getData$: params => this._service.getData$<any>(this.model, params),
-            // },
+            services: {
+                getData$: params => this._service.getData$(this.model(), params),
+            },
         });
     }
     ngOnDestroy() {
         this._grid.destroy();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "tableElement", first: true, predicate: ["table"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div style=\"display: none\">\r\n  <div #table></div>\r\n</div>\r\n\r\n<ng-content></ng-content>\r\n", styles: [""] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "tableElement", first: true, predicate: ["table"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div style=\"display: none\">\r\n  <div #table></div>\r\n</div>\r\n\r\n<ng-content></ng-content>\r\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, decorators: [{
             type: Component,

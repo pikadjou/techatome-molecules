@@ -2,7 +2,7 @@ import * as i0 from '@angular/core';
 import { Injectable, inject, InjectionToken, Component, input, EventEmitter, signal, Output } from '@angular/core';
 import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
-import { BehaviorSubject, filter, map, switchMap, distinct, tap } from 'rxjs';
+import { BehaviorSubject, filter, map, Subject, switchMap, distinct, tap } from 'rxjs';
 import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
 import * as i1 from '@angular/router';
 import { GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest, Logger } from '@ta/server';
@@ -263,24 +263,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
-const TA_AUTH_TOKEN = new InjectionToken("TaAuthService");
+const TA_AUTH_TOKEN = new InjectionToken('TaAuthService');
 class TaAuthService extends TaBaseService {
     constructor(apiRoutes) {
         super(apiRoutes);
         this._permissionsService = inject(TaPermissionsService);
-        this.isAuthenticated$ = this._permissionsService.canAccess$("", "authenticated");
+        this.isAuthenticated$ = this._permissionsService.canAccess$('', 'authenticated');
         this.user$ = new BehaviorSubject(null);
+        this.isLoading$ = new Subject();
+        this.isLoading$.next(true);
         this.user$
-            .pipe(filter((user) => !!user), switchMap(() => this.fetchUserProfile$()))
+            .pipe(filter(user => !!user), switchMap(() => this.fetchUserProfile$()))
             .subscribe();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuthService, deps: "invalid", target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuthService, providedIn: "root" }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuthService, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuthService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: "root",
+                    providedIn: 'root',
                 }]
         }], ctorParameters: () => [{ type: undefined }] });
 
@@ -536,37 +538,39 @@ class TaAuth0Service extends TaAuthService {
         this.auth = inject(AuthService);
         this.userService = inject(TA_USER_SERVICE);
         this.auth.user$
-            .pipe(filter(isNonNullable), distinct((user) => user?.sub), tap((user) => this.user$.next(user || null)), tap((user) => {
-            Logger.LogInfo("user info", user);
+            .pipe(filter(isNonNullable), distinct(user => user?.sub), tap(user => this.user$.next(user || null)), tap(user => {
+            Logger.LogInfo('user info', user);
             if (user) {
                 this._permissionsService.set(null, true);
             }
         }))
             .subscribe();
         this.auth.error$
-            .pipe(tap((errors) => {
-            Logger.LogError("[USERSERVICE] error on authentication", errors);
+            .pipe(tap(errors => {
+            this.isLoading$.next(false);
+            Logger.LogError('[USERSERVICE] error on authentication', errors);
         }))
             .subscribe();
         this.auth.appState$
-            .pipe(tap((state) => {
-            Logger.LogInfo("[USERSERVICE] state", state);
+            .pipe(tap(state => {
+            Logger.LogInfo('[USERSERVICE] state', state);
         }))
             .subscribe();
         this.auth.isAuthenticated$
-            .pipe(tap((isAuthenticated) => {
+            .pipe(tap(isAuthenticated => {
             this._serverService.isAuthenticated = isAuthenticated;
             if (isAuthenticated) {
                 this._permissionsService.setSilentAuthenticated(isAuthenticated);
             }
             else {
                 this._permissionsService.setAuthenticated(isAuthenticated);
+                this.isLoading$.next(false);
             }
         }))
             .subscribe();
     }
     fetchUserProfile$() {
-        return this.userService.fetchUserProfile$();
+        return this.userService.fetchUserProfile$().pipe(tap(() => this.isLoading$.next(false)));
     }
     load() { }
     login() {
@@ -575,22 +579,22 @@ class TaAuth0Service extends TaAuthService {
     signin() {
         this.auth.loginWithRedirect({
             authorizationParams: {
-                screen_hint: "signup",
+                screen_hint: 'signup',
             },
         });
     }
     logout() {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.auth.logout();
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuth0Service, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuth0Service, providedIn: "root" }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuth0Service, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuth0Service, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: "root",
+                    providedIn: 'root',
                 }]
         }], ctorParameters: () => [] });
 

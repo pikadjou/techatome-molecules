@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, inp
 
 import { ColMetaData, Preset } from '../../models/types';
 import { TaGridSessionService } from '../../services/grid-session.services';
-//import { TaGridViewService } from '../../services/grid-view.service';
+import { TaGridViewService } from '../../services/grid-view.service';
 import { TaAbstractGridComponent } from '../abstract.component';
 
 @Component({
@@ -18,6 +18,8 @@ export class TaGridContainerComponent<T = unknown>
 {
   initialData = input<T[]>();
 
+  model = input<string>('');
+
   colsMetaData = input<ColMetaData<any>[]>([]);
 
   preset = input<Preset[]>();
@@ -25,7 +27,7 @@ export class TaGridContainerComponent<T = unknown>
   @ViewChild('table', { static: true }) tableElement!: ElementRef;
 
   private _session = inject(TaGridSessionService);
-  //private _service = inject(TaGridViewService);
+  private _service = inject(TaGridViewService);
 
   ngAfterViewInit() {
     const raw = this._session.getFilter(this.gridId());
@@ -36,9 +38,9 @@ export class TaGridContainerComponent<T = unknown>
       initialFilter: raw ?? [],
       data: this.initialData(),
       preset: this.preset(),
-      // services: {
-      //   getData$: params => this._service.getData$<any>(this.model, params),
-      // },
+      services: {
+        getData$: params => this._service.getData$<T>(this.model(), params),
+      },
     });
   }
 

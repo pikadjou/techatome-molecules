@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
-import { TaBaseService } from '@ta/server';
+import { GraphPayload, GraphQueryInput, TaBaseService } from '@ta/server';
 import { ajaxRequestFuncParams, ajaxResponse } from '../models/types';
 import * as i0 from "@angular/core";
+export declare function estateInfo<T>(model: string, input: GraphQueryInput<T>): GraphPayload;
 export declare const gridSearchFieldsName = "search";
 export declare class TaGridViewService extends TaBaseService {
     constructor();

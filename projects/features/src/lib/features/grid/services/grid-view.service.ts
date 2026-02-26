@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 
-import { TaBaseService } from '@ta/server';
+import { GraphPayload, GraphQueryInput, TaBaseService, createQuery } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
 
 import { ajaxRequestFuncParams, ajaxResponse } from '../models/types';
+
+export function estateInfo<T>(model: string, input: GraphQueryInput<T>): GraphPayload {
+  return createQuery<T>(model, { ...input, prefixType: 'Estate' });
+}
 
 export const gridSearchFieldsName = 'search';
 @Injectable({
@@ -34,11 +39,42 @@ export class TaGridViewService extends TaBaseService {
     // const orderParams = ajaxParam.sort.map(s => `${s.field} ${s.dir}`).join(',') ?? '';
     // const groupBy = ajaxParam.groupBy;
 
-    return of({
-      data: [],
-      last_page: 0,
-      total: 0,
-    });
+    return this._graphService
+      .fetchQueryBuilder<T[]>(
+        createQuery(model, {
+          props: `
+              'id'
+              'name'
+              'description'
+              'status'
+              'available'
+              'floorArea'
+              'rooms'
+              'bedrooms'
+              'floor'
+              'rent'
+              'serviceCharges'
+              'securityDeposit'
+              'insurance'
+              'createdDate'
+              'updatedDate'
+            `,
+        }),
+        ''
+      )
+      .pipe(
+        filter(isNonNullable),
+        map(data => ({
+          data: data,
+          total: data.length,
+          last_page: Math.ceil(data.length / ajaxParam.size),
+        }))
+      );
+    // return of({
+    //   data: [],
+    //   last_page: 0,
+    //   total: 0,
+    // });
     // return this._odooService.searchCount$(model, filterParams()).pipe(
     //   mergeMap(count =>
     //     this._odooService
