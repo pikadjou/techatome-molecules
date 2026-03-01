@@ -14,8 +14,8 @@ export declare class NavigationComponent extends TaAbstractComponent implements 
         spaceElement?: TaSizes | null | undefined;
     }>;
     manuallyChanged$: import("@angular/core").InputSignal<Observable<string> | undefined>;
-    readonly hasFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => boolean;
-    readonly getFontIcon: (item: MenuBase | MenuIcon | Menu<MenuBase>) => string;
+    readonly hasFontIcon: (item: MenuBase | Menu<MenuBase> | MenuIcon) => boolean;
+    readonly getFontIcon: (item: MenuBase | Menu<MenuBase> | MenuIcon) => string;
     readonly typeItem: {
         item: MenuBase | MenuAction | MenuIcon;
     };

@@ -1,4 +1,4 @@
-@if (this.value() !== null && this.value() !== undefined && this.value() > 0) {
+@if (this.value() || !this.readonly()) {
   <div class="align-center g-space-sm" [class]="this.containerClass()">
     <div class="ta-rating-container" (mouseleave)="this.onMouseLeave()" [ngStyle]="{ cursor: this.getCursorStyle() }">
       @for (star of this.stars; track star) {

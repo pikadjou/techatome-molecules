@@ -30,6 +30,9 @@ export class MainMenuComponent extends TaBaseComponent {
 
   public isPanelOpen = false;
 
+  public navigateToHome() {
+    this._router.navigate(['/']);
+  }
   public toggleView() {
     this.sharedMenu.isMinimized$.next(!this.sharedMenu.isMinimized$.getValue());
   }

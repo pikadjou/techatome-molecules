@@ -41,7 +41,7 @@
   <div class="main-nav-container">
     <div class="max-container">
       <div class="main-nav align-center" [ngClass]="this.direction()">
-        <div class="logo">
+        <div class="logo" (click)="this.navigateToHome()">
           <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
         </div>
         <div class="menu-nav">

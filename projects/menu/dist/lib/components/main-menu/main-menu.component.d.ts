@@ -10,6 +10,7 @@ export declare class MainMenuComponent extends TaBaseComponent {
     direction: import("@angular/core").InputSignal<"horizontal" | "vertical">;
     sharedMenu: TaSharedMenuService;
     isPanelOpen: boolean;
+    navigateToHome(): void;
     toggleView(): void;
     toggleMobilePanel(): void;
     closeMobilePanel(): void;
