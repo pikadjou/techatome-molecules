@@ -53,7 +53,12 @@ Question ou tâche : $ARGUMENTS
 
 ### Composants (`lib/modules/user/components/`)
 
-- Composants de gestion des utilisateurs
+- `LoginCardComponent` — carte de connexion
+- `LoginComponent` — page de connexion
+- `SigninComponent` — page d'inscription
+- `MyAccountComponent` — page compte utilisateur
+- `SwitchLanguageCtaComponent` — CTA changement de langue
+- `GuardComponent` (`ta-guard`) — protège ou prévisualise du contenu selon les permissions
 
 ### Auth0
 
@@ -142,6 +147,41 @@ const routes = [
   },
 ];
 ```
+
+### Utiliser GuardComponent (`ta-guard`)
+
+Protège l'affichage d'un bloc de contenu selon les permissions. Deux modes :
+
+**Mode masqué (défaut)** — le contenu est caché et un message d'erreur s'affiche si l'accès est refusé :
+
+```html
+<ta-guard feature="premium-section" level="authenticated">
+  <app-premium-content />
+</ta-guard>
+```
+
+**Mode preview** — le contenu est affiché avec une opacité réduite et un overlay avec boutons "Se connecter" / "S'inscrire" s'affiche par-dessus, pour inciter l'utilisateur à s'authentifier :
+
+```html
+<ta-guard feature="premium-section" level="authenticated" [preview]="true">
+  <app-teaser-content />
+</ta-guard>
+```
+
+#### Inputs de `GuardComponent`
+
+| Input | Type | Défaut | Description |
+|---|---|---|---|
+| `feature` | `string` | — | Clé de feature à vérifier via `PermissionsService` |
+| `level` | `Level` | `'authorize'` | Niveau requis (`'authenticated'`, `'authorize'`, etc.) |
+| `role` | `string` | — | Rôle requis (alternatif à `feature`/`level`) |
+| `canDisplayErrorMessage` | `boolean` | `true` | Affiche le message d'erreur en mode masqué |
+| `preview` | `boolean` | `false` | Active le mode preview avec overlay CTA |
+
+En mode `preview`, quand l'accès est refusé :
+- Le contenu projeté est rendu à **12% d'opacité** (`pointer-events: none`)
+- Un gradient couvre la partie basse du contenu
+- Un overlay positionné en bas affiche un titre, un sous-titre et deux boutons qui redirigent vers `/login` et `/signin`
 
 ### Accéder aux disponibilités
 

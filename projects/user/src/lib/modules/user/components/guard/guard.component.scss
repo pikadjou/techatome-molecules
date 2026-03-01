@@ -1,0 +1,66 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+
+:host {
+  display: block;
+}
+
+.guard {
+  &-content {
+    &--preview {
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+    }
+  }
+
+  &-projected {
+    .guard-content--preview & {
+      opacity: 0.25;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+
+  &-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, common.get-var(surface, secondary) 80%);
+    @include flex.flex-column();
+    align-items: center;
+    justify-content: flex-start;
+    padding: common.get-var(space, xl);
+
+    &-cta {
+      @include flex.flex-column();
+      align-items: center;
+      gap: common.get-var(space, md);
+      text-align: center;
+      max-width: 440px;
+    }
+
+    &-title {
+      @include fonts.fontSizeHeader(h3);
+      color: common.get-var(text, primary);
+      margin: 0;
+    }
+
+    &-subtitle {
+      @include fonts.fontSizeBody(md);
+      color: common.get-var(text, secondary);
+      margin: 0;
+    }
+  }
+
+  &-no-valid {
+    @include flex.flex-column();
+    align-items: center;
+    gap: common.get-var(space, md);
+    padding: common.get-var(space, xl);
+    color: common.get-var(text, secondary);
+  }
+}

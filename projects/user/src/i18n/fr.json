@@ -2,6 +2,8 @@
   "account": "Compte",
   "clientnumber": "Numéro de client",
   "guard.content": "Vous n'avez pas accès à cette ressource",
+  "guard.preview.title": "Envie d'en voir plus ?",
+  "guard.preview.subtitle": "Connectez-vous ou créez un compte gratuitement pour accéder à tout le contenu.",
   "infos": "Informations",
   "language": "Langue",
   "login": "Connexion",

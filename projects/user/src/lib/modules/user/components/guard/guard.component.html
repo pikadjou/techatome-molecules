@@ -1,11 +1,30 @@
 @let isValid = this.isGuardValid$() | async;
 
 <div class="guard">
-  @if (isValid) {
-  <div class="guard-valid">
-    <ng-content></ng-content>
+  @if (isValid || this.preview()) {
+  <div class="guard-content" [class.guard-content--preview]="!isValid && this.preview()">
+    <div class="guard-projected">
+      <ng-content></ng-content>
+    </div>
+
+    @if (!isValid && this.preview()) {
+    <div class="guard-overlay">
+      <div class="guard-overlay-cta">
+        <p class="guard-overlay-title">{{ "user.guard.preview.title" | translate }}</p>
+        <p class="guard-overlay-subtitle">{{ "user.guard.preview.subtitle" | translate }}</p>
+        <div class="flex-row g-space-sm">
+          <ta-button [type]="'secondary'" (action)="this.goToRegister()">
+            {{ "user.register" | translate }}
+          </ta-button>
+          <ta-button (action)="this.goToLogin()">
+            {{ "user.login" | translate }}
+          </ta-button>
+        </div>
+      </div>
+    </div>
+    }
   </div>
-  } @if (!isValid && this.canDisplayErrorMessage()) {
+  } @if (!isValid && !this.preview() && this.canDisplayErrorMessage()) {
   <div class="guard-no-valid ta-c">
     <ta-font-icon name="close-tool" size="md"></ta-font-icon>
     {{ "user.guard.content" | translate }}
