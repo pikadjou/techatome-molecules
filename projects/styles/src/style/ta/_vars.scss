@@ -162,7 +162,7 @@ $surface: map.merge(
       tertiary: map.get($brand, 100),
     ),
     hover: (
-      primary: map.get($brand, 100),
+      primary: map.get($neutral, 200),
       secondary: map.get($second, 800),
     ),
     invert: map.get($brand, 900),
@@ -187,7 +187,7 @@ $border: map.merge(
   (
     primary: map.get($neutral, black),
     secondary: map.get($neutral, 500),
-    tertiary: map.get($neutral, 400),
+    tertiary: map.get($neutral, 300),
     brand: (
       primary: map.get($brand, 900),
       secondary: map.get($second, 600),
@@ -503,6 +503,57 @@ $components: map.merge(
             width: 40px,
           ),
         ),
+    ),
+    label: (
+      // Base
+      radius: map.get($radius, label),
+      padding-vertical: map.get($space, sm),
+      padding-horizontal: map.get($space, md),
+      // Sizes
+      xs: (
+          padding-vertical: map.get($space, xs),
+          padding-horizontal: map.get($space, md),
+        ),
+      sm: (
+        padding-vertical: map.get($space, xs),
+        padding-horizontal: map.get($space, lg),
+      ),
+      lg: (
+        padding-vertical: map.get($space, sm),
+        padding-horizontal: map.get($space, lg),
+      ),
+
+      // Variants
+      default: (
+          color: map.get($text, brand, primary),
+          background: map.get($surface, default),
+          border: map.get($border, brand, primary),
+        ),
+      secondary: (
+        color: map.get($text, body),
+        background: map.get($surface, secondary),
+        border: map.get($neutral, 600),
+      ),
+      success: (
+        color: map.get($neutral, white),
+        background: map.get($surface, success),
+        border: map.get($border, success),
+      ),
+      warning: (
+        color: map.get($neutral, white),
+        background: map.get($surface, warning),
+        border: map.get($semantic, orange),
+      ),
+      alert: (
+        color: map.get($neutral, white),
+        background: map.get($surface, alert),
+        border: map.get($border, alert),
+      ),
+      purple: (
+        color: map.get($semantic, purple-dark),
+        background: map.get($semantic, purple-light),
+        border: map.get($semantic, purple-dark),
+      ),
     ),
     card: (
       // Styles de base .card
