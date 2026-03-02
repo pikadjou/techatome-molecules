@@ -11,15 +11,24 @@
   &.xs {
     padding: common.get-var(space, xs) common.get-var(space, xs);
     border-radius: common.get-var(radius, minimal);
+    ta-font-icon {
+      scale: 0.6;
+    }
   }
 
   &.sm {
     padding: common.get-var(space, sm) common.get-var(space, sm);
     border-radius: common.get-var(radius, rounded);
+    ta-font-icon {
+      scale: 0.8;
+    }
   }
 
   &.lg {
     padding: common.get-var(space, lg) common.get-var(space, lg);
+    ta-font-icon {
+      scale: 1.25;
+    }
   }
 }
 
