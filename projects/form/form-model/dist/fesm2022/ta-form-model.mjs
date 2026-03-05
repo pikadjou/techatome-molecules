@@ -499,27 +499,27 @@ class InputAddress extends InputBase {
         this.controlType = 'address';
         this.street = new InputTextBox({
             key: EAddressValues.street,
-            label: 'street',
+            label: 'form.address.street',
         });
         this.number = new InputTextBox({
             key: EAddressValues.number,
-            label: 'number',
+            label: 'form.address.number',
         });
         this.floor = new InputTextBox({
             key: EAddressValues.floor,
-            label: 'floor',
+            label: 'form.address.floor',
         });
         this.city = new InputTextBox({
             key: EAddressValues.city,
-            label: 'city',
+            label: 'form.address.city',
         });
         this.country = new InputTextBox({
             key: EAddressValues.country,
-            label: 'country',
+            label: 'form.address.country',
         });
         this.zipCode = new InputTextBox({
             key: EAddressValues.zipCode,
-            label: 'zipCode',
+            label: 'form.address.zipCode',
         });
         this.type = 'address';
         this.value = this._value();

@@ -36,6 +36,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class InputAddressComponent extends TaAbstractInputComponent {
     constructor() {
         super();
+        TaTranslationForm.getInstance();
     }
     parseAddress(place) {
         const addressComponents = place.address_components;

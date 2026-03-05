@@ -5,5 +5,11 @@
   "validation.min": "Minimum value: {{min}}",
   "validation.max": "Maximum value: {{max}}",
   "validation.minLength": "Minimum length: {{minLength}} characters",
-  "validation.maxLength": "Maximum length: {{maxLength}} characters"
+  "validation.maxLength": "Maximum length: {{maxLength}} characters",
+  "address.street": "Street",
+  "address.number": "Number",
+  "address.floor": "Floor",
+  "address.city": "City",
+  "address.zipCode": "Postal code",
+  "address.country": "Country"
 }

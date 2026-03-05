@@ -9,6 +9,7 @@ import { MatInputModule } from "@angular/material/input";
 import { InputAddress } from "@ta/form-model";
 import { TaAbstractInputComponent, TextBoxComponent } from "@ta/form-input";
 import { FormLabelComponent } from "@ta/form-input";
+import { TaTranslationForm } from "../../../translation.service";
 
 @Component({
   selector: "ta-input-address",
@@ -28,6 +29,7 @@ import { FormLabelComponent } from "@ta/form-input";
 export class InputAddressComponent extends TaAbstractInputComponent<InputAddress> {
   constructor() {
     super();
+    TaTranslationForm.getInstance();
   }
 
   public parseAddress(place: any) {

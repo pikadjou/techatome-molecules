@@ -1,5 +1,7 @@
 // based on https://github.com/CodyReeves/css-grid-system-library/blob/production/scss/class-creators/_grid.scss
 
+@use 'sass:list';
+@use 'sass:map';
 @use 'ta/vars';
 @use 'ta/settings/common';
 @use 'ta/utils/mixins/mediaQueriesRanges';
@@ -44,7 +46,12 @@
     }
 
     // Generate responsive grid classes for each breakpoint
-    @each $col-size, $size in vars.$grid-breakpoints {
+    // Iterated largest-to-smallest so smaller breakpoints appear later in CSS and win the cascade
+    $bp-keys: map.keys(vars.$grid-breakpoints);
+    $bp-len: list.length($bp-keys);
+    @for $i from $bp-len through 1 {
+      $col-size: list.nth($bp-keys, $i);
+      $size: map.get(vars.$grid-breakpoints, $col-size);
       @include mediaQueriesRanges.to($size) {
         .#{$col-size}-full {
           @include grid.full();
@@ -93,7 +100,12 @@
   }
 
   // Generate responsive standalone grid classes for each breakpoint
-  @each $col-size, $size in vars.$grid-breakpoints {
+  // Iterated largest-to-smallest so smaller breakpoints appear later in CSS and win the cascade
+  $bp-keys: map.keys(vars.$grid-breakpoints);
+  $bp-len: list.length($bp-keys);
+  @for $i from $bp-len through 1 {
+    $col-size: list.nth($bp-keys, $i);
+    $size: map.get(vars.$grid-breakpoints, $col-size);
     @include mediaQueriesRanges.to($size) {
       .grid-#{$col-size}-full {
         @include grid.grid-full();

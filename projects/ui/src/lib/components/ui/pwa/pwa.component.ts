@@ -4,7 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorage } from 'storage-manager-js';
 
 import { TaPwaService } from '@ta/capacitor';
-import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
 
 import { TaTranslationUI } from '../../../translation.service';
@@ -19,15 +18,7 @@ import { ToastComponent } from '../toast/toast.component';
   templateUrl: './pwa.component.html',
   styleUrls: ['./pwa.component.scss'],
   standalone: true,
-  imports: [
-    FontIconComponent,
-    TranslateModule,
-    LinkComponent,
-    TitleComponent,
-    ButtonComponent,
-    LogoComponent,
-    ToastComponent,
-  ],
+  imports: [TranslateModule, LinkComponent, TitleComponent, ButtonComponent, LogoComponent, ToastComponent],
 })
 export class PwaComponent extends TaBaseComponent implements OnInit {
   @Output()
@@ -43,6 +34,7 @@ export class PwaComponent extends TaBaseComponent implements OnInit {
       capability => (this.isShowed = capability && !LocalStorage.get('askForPwaAbility'))
     );
   }
+
   ngOnInit() {
     if (this.breakpoints.isDesktop) {
       this.pictureWidth = 18;

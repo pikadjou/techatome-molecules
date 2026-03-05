@@ -1,10 +1,16 @@
 <div Class="slide-container flex-column g-space-sm">
   <div class="header flex-column g-space-sm">
-    <ta-title [level]="3">{{ this.initial().filename }}</ta-title>
+    @if (this.initial().filename; as filename) {
+      <ta-title [level]="3">{{ filename }}</ta-title>
+    }
 
     <div class="flex-start g-space-sm align-center">
-      <ta-text>{{ this.initial().uploadedDate | date: 'shortDate' }}</ta-text>
-      <ta-megaoctet [octet]="this.initial().size"></ta-megaoctet>
+      @if (this.initial().uploadedDate; as uploadedDate) {
+        <ta-text>{{ uploadedDate | date: 'shortDate' }}</ta-text>
+      }
+      @if (this.initial().size; as size) {
+        <ta-megaoctet [octet]="size"></ta-megaoctet>
+      }
     </div>
   </div>
   <div class="body">

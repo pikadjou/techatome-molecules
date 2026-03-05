@@ -39,32 +39,32 @@ export class InputAddress extends InputBase<Partial<IAddressValue>> {
 
   public street = new InputTextBox({
     key: EAddressValues.street,
-    label: 'street',
+    label: 'form.address.street',
   });
 
   public number = new InputTextBox({
     key: EAddressValues.number,
-    label: 'number',
+    label: 'form.address.number',
   });
 
   public floor = new InputTextBox({
     key: EAddressValues.floor,
-    label: 'floor',
+    label: 'form.address.floor',
   });
 
   public city = new InputTextBox({
     key: EAddressValues.city,
-    label: 'city',
+    label: 'form.address.city',
   });
 
   public country = new InputTextBox({
     key: EAddressValues.country,
-    label: 'country',
+    label: 'form.address.country',
   });
 
   public zipCode = new InputTextBox({
     key: EAddressValues.zipCode,
-    label: 'zipCode',
+    label: 'form.address.zipCode',
   });
 
   constructor(options: IInputAddress = {}) {

@@ -1,6 +1,6 @@
 export type PreviewDocumentDto = {
-  filename: string;
+  filename?: string;
   url: string;
-  uploadedDate: string;
-  size: number;
+  uploadedDate?: string;
+  size?: number;
 };

@@ -25,7 +25,7 @@
     <div class="max-container">
       <div class="main-nav align-center mobile-nav">
         <ta-font-icon name="menu" class="hamburger-icon" (click)="this.toggleMobilePanel()"></ta-font-icon>
-        <div class="logo">
+        <div class="logo" (click)="this.navigateToHome()">
           <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
         </div>
         @if (this.userMenuTemplate()) {
