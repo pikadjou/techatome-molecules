@@ -1,4 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
+import * as i0 from "@angular/core";
 export declare const Breakpoints: {
     XSmall: string;
     Small: string;
@@ -43,4 +44,6 @@ export declare class BreakpointDetection {
     constructor();
     private _isMatched$;
     private _isMatched;
+    static ɵfac: i0.ɵɵFactoryDeclaration<BreakpointDetection, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<BreakpointDetection>;
 }

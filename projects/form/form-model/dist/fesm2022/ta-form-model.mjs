@@ -185,6 +185,8 @@ class InputLabel extends InputBase {
     constructor(options = {}) {
         super(options);
         this.controlType = "label";
+        this.icon = options.icon;
+        this.level = options.level;
     }
     createFormControl(group) { }
 }

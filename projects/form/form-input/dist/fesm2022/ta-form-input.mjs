@@ -15,7 +15,7 @@ import * as i4 from '@angular/material/input';
 import { MatInputModule } from '@angular/material/input';
 import { isEqual } from 'date-fns';
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
-import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, RatingComponent as RatingComponent$1, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, TextComponent, MegaoctetComponent, LayoutModalComponent } from '@ta/ui';
+import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, TitleComponent, TextComponent, RatingComponent as RatingComponent$1, ButtonComponent, UserLogoComponent, LinkComponent, EmptyComponent, LoaderComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, MegaoctetComponent, LayoutModalComponent } from '@ta/ui';
 import * as i3$1 from 'ngx-material-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TaDocumentsService } from '@ta/services';
@@ -297,11 +297,11 @@ class LabelComponent extends TaAbstractInputComponent {
         super();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LabelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: LabelComponent, isStandalone: true, selector: "ta-input-label", usesInheritance: true, ngImport: i0, template: "<span>{{ input.label | translate }}</span>\n", styles: [""], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: LabelComponent, isStandalone: true, selector: "ta-input-label", usesInheritance: true, ngImport: i0, template: "@if(input.level) {\n<ta-title [level]=\"input.level\" [icon]=\"input.icon\">\n  {{ input.label | translate }}\n</ta-title>\n} @else {\n<div class=\"label-text flex-row align-center g-space-sm\">\n  @if(input.icon) {\n  <ta-font-icon [name]=\"input.icon\" />\n  }\n  <ta-text>{{ input.label | translate }}</ta-text>\n</div>\n}\n", styles: [""], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LabelComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-label", standalone: true, imports: [TranslatePipe], template: "<span>{{ input.label | translate }}</span>\n" }]
+            args: [{ selector: "ta-input-label", standalone: true, imports: [TranslatePipe, TitleComponent, TextComponent, FontIconComponent], template: "@if(input.level) {\n<ta-title [level]=\"input.level\" [icon]=\"input.icon\">\n  {{ input.label | translate }}\n</ta-title>\n} @else {\n<div class=\"label-text flex-row align-center g-space-sm\">\n  @if(input.icon) {\n  <ta-font-icon [name]=\"input.icon\" />\n  }\n  <ta-text>{{ input.label | translate }}</ta-text>\n</div>\n}\n" }]
         }], ctorParameters: () => [] });
 
 class RadioComponent extends TaAbstractInputComponent {

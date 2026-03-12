@@ -1,5 +1,5 @@
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
-import { inject } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { map } from "rxjs/operators";
 
@@ -52,6 +52,7 @@ export const Breakpoints = {
   WebLandscape: `(min-width: ${breakpoint_lg}px) and (orientation: landscape)`,
 };
 
+@Injectable({ providedIn: 'root' })
 export class BreakpointDetection {
   public breakpointObserver = inject(BreakpointObserver);
 

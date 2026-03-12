@@ -39,6 +39,10 @@ Tous les types d'input correspondant aux modèles de `@ta/form-model` :
 - Phone, Radio, Schema, Slider, Switch, Textarea, Textbox, TimePicker
 - Wysiswyg, Address, Upload, Translation, Culture, Component
 
+**`Label`** (`ta-input-label`) — comportement conditionnel selon `InputLabel.level` :
+- `level` absent → `<ta-text>` avec `<ta-font-icon>` si `icon` défini
+- `level` défini (1–6) → `<ta-title [level]="..." [icon]="...">` (icon géré nativement)
+
 ### Services
 
 - `InputsTranslationService` — service de traduction du module inputs

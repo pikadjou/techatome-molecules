@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { input, HostListener, Directive, effect, EventEmitter, Output, Pipe, inject, signal, Component, Injectable, InjectionToken } from '@angular/core';
+import { input, HostListener, Directive, effect, EventEmitter, Output, Pipe, inject, Injectable, signal, Component, InjectionToken } from '@angular/core';
 import * as i1 from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
@@ -365,7 +365,13 @@ class BreakpointDetection {
     _isMatched(values) {
         return this.breakpointObserver.isMatched(values);
     }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BreakpointDetection, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BreakpointDetection, providedIn: 'root' }); }
 }
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BreakpointDetection, decorators: [{
+            type: Injectable,
+            args: [{ providedIn: 'root' }]
+        }], ctorParameters: () => [] });
 
 class RequestState {
     constructor() {
@@ -424,7 +430,7 @@ class TaAbstractComponent {
         return this.breakpoints.isDesktop;
     }
     constructor() {
-        this.breakpoints = new BreakpointDetection();
+        this.breakpoints = inject(BreakpointDetection);
         this.requestState = new RequestState();
         this.icon = TaIconType;
         this._subscriberHandler = new SubscriberHandler();

@@ -12,7 +12,7 @@ import { SubscriberHandler } from "../helpers/subscriber/handler";
 
 @Component({ template: "" })
 export abstract class TaAbstractComponent implements OnDestroy {
-  public breakpoints = new BreakpointDetection();
+  public breakpoints = inject(BreakpointDetection);
   public requestState = new RequestState();
 
   public icon: typeof TaIconType = TaIconType;

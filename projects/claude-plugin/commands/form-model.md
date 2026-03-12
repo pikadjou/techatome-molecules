@@ -40,7 +40,7 @@ Question ou tâche : $ARGUMENTS
   - `DynamicInput` — modèle input dynamique
   - `EmailInput` — modèle email
   - `ImagesInput` — modèle images
-  - `LabelInput` — modèle label
+  - `LabelInput` — modèle label (optionnel : `icon?: string`, `level?: 1|2|3|4|5|6`)
   - `NumberInput` — modèle nombre
   - `PanelInput` — modèle panneau
   - `PasswordInput` — modèle mot de passe
@@ -112,6 +112,29 @@ const input = InputFactory.create('textbox', {
   key: 'name',
   label: 'NAME',
 });
+```
+
+### InputLabel — affichage de texte statique dans un formulaire
+
+`InputLabel` affiche du texte non-interactif. Il supporte deux props optionnelles :
+
+- `icon` — nom d'icône à afficher avant le texte (via `ta-font-icon`)
+- `level` — niveau de titre (`1`–`6`) : si défini → rendu `<ta-title>`, sinon → `<ta-text>`
+
+```typescript
+import { InputLabel } from '@ta/form-model';
+
+// Texte simple
+new InputLabel({ key: 'info', label: 'form.info_text' })
+
+// Texte avec icône
+new InputLabel({ key: 'info', label: 'form.info_text', icon: 'info' })
+
+// Titre h2
+new InputLabel({ key: 'section', label: 'form.section_title', level: 2 })
+
+// Titre h3 avec icône
+new InputLabel({ key: 'section', label: 'form.section_title', level: 3, icon: 'star' })
 ```
 
 ## Conventions

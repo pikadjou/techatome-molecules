@@ -44,11 +44,11 @@ $spacing: common.get-var(components, card, padding);
       @include grid.grid-base();
       gap: common.get-var(space, sm);
       .img-container {
-        @include grid.one-sixth();
+        @include grid.one-third();
         order: 0;
       }
       .content-container {
-        @include grid.five-sixths();
+        @include grid.two-thirds();
         order: 1;
       }
     }
