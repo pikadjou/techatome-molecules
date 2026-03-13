@@ -41,7 +41,7 @@ Un assistant contextuel par librairie `@ta/*` + un assistant patterns.
 | `/planning`            | `@ta/planning` — Feature planning                                        |
 | `/project`             | `@ta/project` — Feature project                                          |
 | `/testing`             | `@ta/testing` — Utilitaires de test                                      |
-| `/patterns`            | Bonnes pratiques — routing, forms, menus, layout, AG Grid…               |
+| `/patterns`            | Patterns & conventions — TOC vers le skill `techatome-patterns` (routing, forms, menus, layout, AG Grid…) |
 
 **Usage** : chaque commande accepte un argument libre
 
@@ -64,9 +64,9 @@ Les agents sont invoqués automatiquement par Claude Code via le `Task` tool ou 
 
 ### Skill
 
-| Skill                | Description                                                                                                                                                                            |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `techatome-patterns` | Référence complète des patterns Angular du projet : conventions de code, routing, formulaires, menus, layout, modales, AG Grid, services GraphQL, loading/error/empty, classes de base |
+| Skill                | Description                                                                                                                                                                                         |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `techatome-patterns` | **Source de vérité** pour tous les patterns Angular du projet : composants @ta/* obligatoires, SCSS tokens, conventions de code, routing, formulaires, menus, layout, modales, AG Grid, GraphQL, états. Le command `/patterns` en est le point d'entrée. |
 
 ### Hooks
 

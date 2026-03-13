@@ -1560,3 +1560,557 @@ this._notificationService.addNotification('my.info.key', ENotificationCode.info)
 - [ ] Suffixe de classe : `Page` pour les routes, `Component` pour les réutilisables, `Modal` pour les dialogues
 - [ ] Propriétés/méthodes privées préfixées par `_`
 - [ ] Services injectés : `private readonly`
+
+---
+
+## 13. STRUCTURE D'UNE FEATURE
+
+Toute feature applicative suit l'arborescence suivante (exemple : `categories`).
+
+### Structure de fichiers
+
+```
+src/app/features/<feature>/
+├── <feature>.routes.ts          # Enum routes + TaRoutes + lazy Routes[]
+├── components/                  # Composants réutilisables (sub-components)
+│   ├── list/                    # Affichage de liste (ListComponent)
+│   ├── form/                    # Formulaire (FormComponent)
+│   └── <autre>/                 # Tout sous-composant métier spécifique
+└── pages/                       # Pages (composants chargés par le router)
+    ├── list/                    # Page liste (ListPage)
+    └── form/                    # Page formulaire (FormPage)
+
+src/app/services/<feature>/
+├── dto/
+│   └── <entity>.ts              # Interface + brutProps[] + GraphSchema
+├── form/
+│   ├── dto/
+│   │   └── <Action>Input.ts     # Interfaces de mutation (Create/Update)
+│   └── <feature>-form.service.ts  # Enum champs + getForm() + formatForm()
+├── <feature>.service.ts         # Service principal (TaBaseService, CRUD)
+├── queries.ts                   # Fonctions de query GraphQL
+└── mutation.ts                  # Fonctions de mutation GraphQL
+
+src/app/services/baseDto.ts      # Interface BaseDto partagée (id, createdDate, updatedDate)
+```
+
+### 1. Fichier de routes — `<feature>.routes.ts`
+
+```typescript
+import { Routes } from '@angular/router';
+import { TaRoutes } from '@ta/menu';
+
+// Type pour les paramètres de route spéciaux
+export type FormKey = 'new';
+
+// Enum de toutes les clés de route de la feature
+export enum EMyFeatureRoute {
+  myFeature = 'myFeature',
+  list      = 'list',
+  form      = 'form',
+}
+
+// Enregistrement des routes dans TaRoutes (navigation déclarative)
+TaRoutes.addRoute({
+  key: EMyFeatureRoute.myFeature,
+  url: 'my-feature',
+  children: [
+    { key: EMyFeatureRoute.list, url: 'list/:id' },
+    { key: EMyFeatureRoute.form, url: 'formulaire/:id' },
+  ],
+});
+
+// Routes Angular avec lazy loading
+export const myFeatureRoutes: Routes = [
+  {
+    path: TaRoutes.getUrl([EMyFeatureRoute.myFeature, EMyFeatureRoute.list]),
+    loadComponent: () =>
+      import('./pages/list/list.component').then((c) => c.ListPage),
+  },
+  {
+    path: TaRoutes.getUrl([EMyFeatureRoute.myFeature, EMyFeatureRoute.form]),
+    loadComponent: () =>
+      import('./pages/form/form.component').then((c) => c.FormPage),
+  },
+];
+```
+
+### 2. Pages — `pages/<page>/`
+
+Les pages orchestrent le layout et délèguent l'affichage aux sous-composants.
+
+```typescript
+// pages/list/list.component.ts
+@Component({
+  standalone: true,
+  selector: '',           // ← toujours vide pour une page
+  imports: [ListComponent, LayoutFirstLevelComponent, LayoutTitleComponent, LayoutContentComponent, ButtonComponent],
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.scss',
+})
+export class ListPage extends TaBasePage implements OnInit {
+  public id = signal<string | null>(null);
+
+  ngOnInit() {
+    this._registerSubscription(
+      this._getPathParams<{ id: string }>({ id: '' }).subscribe((params) => {
+        this.id.set(params.id === 'all' ? null : params.id);
+      })
+    );
+  }
+
+  public add(id?: string) {
+    this._router.navigateByUrl(
+      TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>(
+        [EMyFeatureRoute.myFeature, EMyFeatureRoute.form],
+        { id: id ?? 'new' }
+      )
+    );
+  }
+}
+```
+
+```html
+<!-- pages/list/list.component.html -->
+<app-layout-first-level>
+  <app-layout-title>
+    <div class="space-between align-center">
+      {{ 'feature.title' | translate }}
+      <ta-button (action)="this.add()">{{ 'common.add' | translate }}</ta-button>
+    </div>
+  </app-layout-title>
+  <app-layout-content>
+    <div class="p-space-md">
+      <app-my-feature-list></app-my-feature-list>
+    </div>
+  </app-layout-content>
+</app-layout-first-level>
+```
+
+### 3. Composants — `components/<name>/`
+
+Les composants gèrent leur propre chargement et leur état via `requestState`.
+
+```typescript
+// components/list/list.component.ts
+@Component({
+  standalone: true,
+  selector: 'app-my-feature-list',
+  imports: [LoaderComponent, ErrorComponent, EmptyComponent, CardComponent, /* ... */],
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.scss',
+})
+export class ListComponent extends TaBaseComponent {
+  private readonly _myFeatureService = inject(MyFeatureService);
+
+  readonly items$ = signal(this._myFeatureService.items.get$());
+
+  constructor() {
+    super();
+    this._fetch();
+  }
+
+  private _fetch() {
+    this.requestState.asked();
+    this._myFeatureService.fetchItems$().subscribe({
+      complete: () => this.requestState.completed(),
+      error: (error: HttpErrorResponse) =>
+        this.requestState.onError(error.status, error.statusText),
+    });
+  }
+}
+```
+
+```html
+<!-- components/list/list.component.html -->
+@let items = this.items$() | async;
+<ta-loader [isLoading]="this.requestState.isLoading()">
+  <ta-error [message]="this.requestState.error.message" [code]="this.requestState.error.status">
+    <ta-empty [isEmpty]="!items || items.length === 0">
+      <div class="grid">
+        @for (item of items; track item.id) {
+          <ta-card class="g-col-4">
+            <ta-card-header><ta-card-title>{{ item.name }}</ta-card-title></ta-card-header>
+            <ta-card-content>{{ item.description }}</ta-card-content>
+          </ta-card>
+        }
+      </div>
+    </ta-empty>
+  </ta-error>
+</ta-loader>
+```
+
+### 4. Composant formulaire — `components/form/`
+
+```typescript
+// components/form/form.component.ts
+@Component({
+  standalone: true,
+  selector: 'app-my-feature-form',
+  imports: [TaFormComponent],
+  templateUrl: './form.component.html',
+  styleUrl: './form.component.scss',
+})
+export class FormComponent extends TaBaseComponent implements OnInit {
+  id = input.required<string | null>();   // ← signal input obligatoire
+
+  public form = signal<InputBase<any>[]>([]);
+
+  private readonly _notificationService = inject(TaNotificationService);
+  private readonly _formService         = inject(MyFeatureFormService);
+  private readonly _dataService         = inject(MyFeatureService);
+
+  ngOnInit() {
+    this._fetch();
+  }
+
+  public save(data: unknown) {
+    const payload = this._formService.formatForm(data as MyFormData);
+    const obs = this.id()
+      ? this._dataService.update$(this.id()!, payload)
+      : this._dataService.create$(payload);
+
+    obs.subscribe({
+      next: (item) => {
+        this._notificationService.addNotification('notification.common.success', ENotificationCode.success);
+        this._router.navigateByUrl(
+          TaRoutes.getAbsoluteUrl([EMyFeatureRoute.myFeature, EMyFeatureRoute.list], { id: item.id ?? 'all' })
+        );
+      },
+      error: () => {
+        this._notificationService.addNotification('notification.common.error', ENotificationCode.error);
+      },
+    });
+  }
+
+  private _fetch() {
+    if (!this.id()) {
+      this.form.set(this._formService.getForm());
+      return;
+    }
+    this._dataService.fetchOne$(this.id()!).subscribe({
+      next: (item) => this.form.set(this._formService.getForm(item)),
+    });
+  }
+}
+```
+
+### 5. Couche service — `src/app/services/<feature>/`
+
+#### 5.1 DTO de l'entité — `dto/<entity>.ts`
+
+```typescript
+import { GraphSchema } from '@ta/server';
+import { BaseDto } from '../../baseDto';
+
+export interface MyEntity extends BaseDto {
+  // id, createdDate, updatedDate viennent de BaseDto
+  name: string;
+  description: string;
+  relatedEntity?: RelatedEntity;   // relation → interface importée depuis son dto/
+}
+
+// Tableau de toutes les clés (utilisé pour GraphSchema)
+export const myEntityBrutProps: (keyof MyEntity)[] = [
+  'id',
+  'name',
+  'description',
+  'relatedEntity',
+  'createdDate',
+  'updatedDate',
+];
+
+// Instance GraphSchema pour accès type-safe aux champs dans les queries
+export const myEntityProps = new GraphSchema<MyEntity>(myEntityBrutProps);
+
+// Optionnel : composition pré-définie pour les sous-queries imbriquées
+export const myEntityPropsComposition = `
+  ${myEntityProps.get('id')}
+  ${myEntityProps.get('name')}
+  ${myEntityProps.get('description')}
+`;
+```
+
+> `BaseDto` est défini dans `src/app/services/baseDto.ts` :
+> ```typescript
+> export interface BaseDto { id: string; createdDate: string; updatedDate: string; }
+> ```
+
+#### 5.2 DTO de mutation — `form/dto/<Action>Input.ts`
+
+```typescript
+// form/dto/myEntityInput.ts
+export interface CreateMyEntityInput {
+  name: string;
+  description: string;
+  // Uniquement les champs éditables (pas id/createdDate/updatedDate)
+}
+
+export interface UpdateMyEntityInput extends CreateMyEntityInput {
+  myEntityId: string;   // ← identifiant pour l'update
+}
+```
+
+#### 5.3 Queries GraphQL — `queries.ts`
+
+```typescript
+import { GraphPayload, GraphQueryInput, createQuery } from '@ta/server';
+import { MyEntity } from './dto/my-entity';
+
+export function myEntitiesQuery(input: GraphQueryInput<MyEntity>): GraphPayload {
+  return createQuery<MyEntity>('myEntities', { ...input, prefixType: 'MyEntity' });
+}
+
+export function myEntityByOwnerQuery(input: GraphQueryInput<MyEntity>): GraphPayload {
+  return createQuery<MyEntity>('myEntitiesByOwner', { ...input, prefixType: 'MyEntity' });
+}
+```
+
+#### 5.4 Mutations GraphQL — `mutation.ts`
+
+```typescript
+import { Apollo_gql, GraphMutationPayload } from '@ta/server';
+import { myEntityProps } from './dto/my-entity';
+import { CreateMyEntityInput, UpdateMyEntityInput } from './form/dto/myEntityInput';
+
+export function createMyEntity(entity: Partial<CreateMyEntityInput>): GraphMutationPayload {
+  return {
+    mutation: Apollo_gql`
+      mutation CreateMyEntity($entity: CreateMyEntityInput!) {
+        createMyEntity(input: $entity) {
+          ${myEntityProps.get('id')}
+        }
+      }
+    `,
+    variables: { entity },
+  };
+}
+
+export function updateMyEntity(entity: Partial<UpdateMyEntityInput>): GraphMutationPayload {
+  return {
+    mutation: Apollo_gql`
+      mutation UpdateMyEntity($entity: UpdateMyEntityInput!) {
+        updateMyEntity(input: $entity) {
+          ${myEntityProps.get('id')}
+        }
+      }
+    `,
+    variables: { entity },
+  };
+}
+
+export function deleteMyEntity(id: string): GraphMutationPayload {
+  return {
+    mutation: Apollo_gql`
+      mutation DeleteMyEntity($id: ID!) {
+        deleteMyEntity(id: $id) {
+          ${myEntityProps.get('id')}
+        }
+      }
+    `,
+    variables: { id },
+  };
+}
+```
+
+#### 5.5 Service principal — `<feature>.service.ts`
+
+```typescript
+import { Injectable } from '@angular/core';
+import { filter, map, mergeMap } from 'rxjs';
+import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from '@ta/server';
+import { isNonNullable } from '@ta/utils';
+import { MyEntity, myEntityProps } from './dto/my-entity';
+import { CreateMyEntityInput, UpdateMyEntityInput } from './form/dto/myEntityInput';
+import { createMyEntity, deleteMyEntity, updateMyEntity } from './mutation';
+import { myEntitiesQuery } from './queries';
+
+// Fragment de props réutilisable dans plusieurs fetch
+const myEntityDetail = `
+  ${myEntityProps.get('id')}
+  ${myEntityProps.get('name')}
+  ${myEntityProps.get('description')}
+  ${myEntityProps.get('createdDate')}
+  ${myEntityProps.get('updatedDate')}
+`;
+
+const graphEndpoint: GraphEndpoint = {
+  clientName: 'myEntityService',
+  endpoint: '',
+};
+
+@Injectable({ providedIn: 'root' })
+export class MyEntityService extends TaBaseService {
+  // HandleSimpleRequest : liste globale (pas de clé)
+  public myEntities   = new HandleSimpleRequest<MyEntity[]>();
+
+  // HandleComplexRequest : résultats par clé (ex: par id)
+  public myEntityDetail = new HandleComplexRequest<MyEntity>();
+
+  constructor() {
+    super();
+    super.registerRoutes({ graphEndpoint });
+  }
+
+  public fetchMyEntities$() {
+    return this.myEntities.fetch(
+      this._graphService
+        .fetchQueryBuilder<MyEntity[]>(
+          myEntitiesQuery({ props: myEntityDetail }),
+          graphEndpoint.clientName
+        )
+        .pipe(filter(isNonNullable))
+    );
+  }
+
+  public fetchMyEntity$(id: string) {
+    return this.myEntityDetail.fetch(
+      id,                          // ← clé de cache pour HandleComplexRequest
+      this._graphService
+        .fetchQueryBuilder<MyEntity[]>(
+          myEntitiesQuery({
+            props: myEntityDetail,
+            where: { id: { eq: id } },
+          }),
+          graphEndpoint.clientName
+        )
+        .pipe(
+          filter(isNonNullable),
+          map(list => list[0]),
+          filter(isNonNullable)
+        )
+    );
+  }
+
+  public createMyEntity$(entity: Partial<CreateMyEntityInput>) {
+    return this._graphService
+      .mutate<MyEntity>(
+        createMyEntity(entity),
+        'createMyEntity',
+        graphEndpoint.clientName,
+        ['myEntities']            // ← caches Apollo à invalider après mutation
+      )
+      .pipe(
+        filter(isNonNullable),
+        mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))
+      );
+  }
+
+  public updateMyEntity$(id: string, entity: Partial<UpdateMyEntityInput>) {
+    return this._graphService
+      .mutate<MyEntity>(
+        updateMyEntity({ ...entity, myEntityId: id }),
+        'updateMyEntity',
+        graphEndpoint.clientName,
+        ['myEntities']
+      )
+      .pipe(
+        filter(isNonNullable),
+        mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))
+      );
+  }
+
+  public deleteMyEntity$(id: string) {
+    return this._graphService
+      .mutate<unknown>(
+        deleteMyEntity(id),
+        'deleteMyEntity',
+        graphEndpoint.clientName,
+        ['myEntities']
+      )
+      .pipe(
+        filter(isNonNullable),
+        mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))
+      );
+  }
+}
+```
+
+> **`HandleSimpleRequest` vs `HandleComplexRequest`**
+> - `HandleSimpleRequest<T>` : stockage unique (ex: liste globale), pas de clé de cache
+> - `HandleComplexRequest<T>` : stockage par clé (ex: détail par id), prend un `id` en premier argument de `.fetch()`
+
+#### 5.6 Service formulaire — `form/<feature>-form.service.ts`
+
+```typescript
+import { Injectable } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { InputBase, InputPanel, InputTextBox, InputDropdown } from '@ta/form-model';
+import { MyEntity } from '../dto/my-entity';
+import { CreateMyEntityInput } from './dto/myEntityInput';
+
+// Enum des clés de champ — TOUJOURS défini ici, pas dans le composant
+export enum EMyEntityFormFields {
+  name        = 'name',
+  description = 'description',
+  status      = 'status',
+}
+
+@Injectable({ providedIn: 'root' })
+export class MyEntityFormService {
+  // getForm : construit la structure InputBase[] avec les valeurs pré-remplies
+  public getMyEntityForm(entity?: MyEntity | null): InputBase<any>[] {
+    return [
+      new InputPanel({
+        key: 'panel',
+        contentClass: 'flex-column g-space-md',
+        children: [
+          new InputTextBox({
+            key:        EMyEntityFormFields.name,
+            label:      'app.myFeature.form.field.name',
+            validators: [Validators.required],
+            value:      entity?.name,
+          }),
+          new InputTextBox({
+            key:   EMyEntityFormFields.description,
+            label: 'app.myFeature.form.field.description',
+            value: entity?.description,
+          }),
+        ],
+      }),
+    ];
+  }
+
+  // formatForm : transforme la sortie brute du ta-form en payload de mutation
+  public formatMyEntityForm(data: any): Partial<CreateMyEntityInput> {
+    return {
+      name:        data[EMyEntityFormFields.name],
+      description: data[EMyEntityFormFields.description],
+    };
+  }
+}
+```
+
+### 6. Conventions de nommage
+
+| Élément | Convention | Exemple |
+|---|---|---|
+| Classe de page | `<Name>Page` | `ListPage`, `FormPage` |
+| Classe de composant | `<Name>Component` | `ListComponent`, `FormComponent` |
+| Enum de routes | `E<Feature>Route` | `ECategoriesRoute` |
+| Type de param spécial | `FormKey` | `type FormKey = 'new'` |
+| Sélecteur de page | `''` (vide) | `selector: ''` |
+| Sélecteur de composant | `'app-<feature>-<name>'` | `'app-categories-list'` |
+| Service principal | `<Feature>Service` | `EstateService`, `CategoriesService` |
+| Service formulaire | `<Feature>FormService` | `EstateFormService` |
+| DTO entité | `<Entity>` | `Estate`, `Category` |
+| Enum champs form | `E<Entity>FormFields` | `EEstateFormFields` |
+| Input mutation | `Create<Entity>Input` / `Update<Entity>Input` | `CreateEstateInput` |
+| Query builder | `<entities>Query()` | `myEntitiesQuery()`, `estatesInfo()` |
+| Mutation builder | `create<Entity>()` / `update<Entity>()` / `delete<Entity>()` | `createEstate()` |
+
+### 7. Règles importantes
+
+- Les **pages** (`pages/`) étendent `TaBasePage` et ont `selector: ''`
+- Les **composants** (`components/`) étendent `TaBaseComponent` avec un sélecteur `app-`
+- Les services sont dans `src/app/services/<feature>/`, **en dehors** du dossier feature
+- Le fichier `<feature>.routes.ts` enregistre les routes via `TaRoutes.addRoute()` ET exporte `const <feature>Routes`
+- Chaque route utilise `loadComponent` avec lazy import
+- La navigation se fait toujours via `TaRoutes.getAbsoluteUrl()` + l'enum de routes
+- `graphEndpoint.clientName` est une constante locale au fichier `.service.ts`
+- L'enum `E<Entity>FormFields` est défini dans le **form service**, pas dans le composant
+- Après chaque mutation, invalider les caches Apollo + re-fetch via `mergeMap`
+- Les fragments GraphQL réutilisables (ex : `myEntityDetail`) sont des constantes locales au `.service.ts`
+- Les compositions partagées entre services (ex : `addressPropsComposition`) sont exportées depuis leur `dto/`
+
+---
