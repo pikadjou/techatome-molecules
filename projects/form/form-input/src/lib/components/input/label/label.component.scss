@@ -1,0 +1,5 @@
+@use "ta/utils/mixins/common";
+
+.required {
+  color: common.get-var(semantic, red);
+}

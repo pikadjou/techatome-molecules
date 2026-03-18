@@ -1,12 +1,19 @@
 @if(input.level) {
 <ta-title [level]="input.level" [icon]="input.icon">
   {{ input.label | translate }}
+  @if(input.required) {
+  <span class="required"> *</span>
+  }
 </ta-title>
 } @else {
 <div class="label-text flex-row align-center g-space-sm">
   @if(input.icon) {
   <ta-font-icon [name]="input.icon" />
   }
-  <ta-text>{{ input.label | translate }}</ta-text>
+  <ta-text>{{ input.label | translate }}
+    @if(input.required) {
+    <span class="required"> *</span>
+    }
+  </ta-text>
 </div>
 }
