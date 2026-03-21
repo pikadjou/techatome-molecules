@@ -8,6 +8,7 @@ export declare class InputImageComponent extends TaAbstractInputComponent<InputI
         firstname: string;
         lastname: string;
     } | undefined;
+    get isLimitReached(): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<InputImageComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<InputImageComponent, "ta-input-image", never, {}, {}, never, never, true, never>;
 }

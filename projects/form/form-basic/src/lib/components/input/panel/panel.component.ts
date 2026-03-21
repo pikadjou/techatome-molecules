@@ -1,6 +1,7 @@
 import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
 import { Component, input, TemplateRef } from "@angular/core";
 
+import { FontIconComponent } from "@ta/icons";
 import { InputPanel } from "@ta/form-model";
 import { TranslatePipe } from "@ta/translation";
 import { TitleComponent } from "@ta/ui";
@@ -17,6 +18,7 @@ import { TaBaseComponent } from "@ta/utils";
     NgTemplateOutlet,
     TranslatePipe,
     TitleComponent,
+    FontIconComponent,
   ],
 })
 export class PanelComponent extends TaBaseComponent {

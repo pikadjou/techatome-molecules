@@ -4,7 +4,7 @@ import { combineLatest } from "rxjs";
 
 import { InputImages } from "@ta/form-model";
 import { DocumentDto, TaDocumentsService } from "@ta/services";
-import { ButtonComponent } from "@ta/ui";
+import { ButtonComponent, LoaderComponent } from "@ta/ui";
 import { isNonNullable, pickImages } from "@ta/utils";
 
 import { TaAbstractInputComponent } from "../../abstract.component";
@@ -15,7 +15,7 @@ import { FormLabelComponent } from "../../label/label.component";
   templateUrl: "./input-images.component.html",
   styleUrls: ["./input-images.component.scss"],
   standalone: true,
-  imports: [FormLabelComponent, ButtonComponent],
+  imports: [FormLabelComponent, ButtonComponent, LoaderComponent],
 })
 export class InputImagesComponent
   extends TaAbstractInputComponent<InputImages>
@@ -31,6 +31,7 @@ export class InputImagesComponent
     const images = await pickImages();
 
     if (images.length > 0) {
+      this.requestState.asked();
       combineLatest(
         images
           .map((image) => image.file)
@@ -39,6 +40,10 @@ export class InputImagesComponent
       ).subscribe({
         next: (documents) => {
           this.input.value = [...(this.input.value || []), ...documents];
+          this.requestState.completed();
+        },
+        error: () => {
+          this.requestState.completed();
         },
       });
     }

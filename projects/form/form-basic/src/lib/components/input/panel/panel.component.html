@@ -1,8 +1,8 @@
 <div class="flex-column g-space-md" [ngClass]="this.panel().containerClass">
   @if (this.panel().label) {
-  <ta-title [level]="2" class="panel-title">{{
+  <ta-title [level]="this.panel().level" [icon]="this.panel().icon" class="panel-title">{{
     this.panel().label | translate
-  }}</ta-title>
+  }}@if (this.panel().required) {<span class="required"> *</span>}</ta-title>
   }
 
   <div [ngClass]="this.panel().contentClass">

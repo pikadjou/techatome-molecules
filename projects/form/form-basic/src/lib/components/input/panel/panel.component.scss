@@ -24,3 +24,7 @@
     padding-top: 0;
   }
 }
+
+.required {
+  color: common.get-var(semantic, red);
+}

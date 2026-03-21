@@ -24,4 +24,11 @@ export class InputImageComponent extends TaAbstractInputComponent<InputImages> {
       lastname: "",
     }))[0];
   }
+
+  get isLimitReached(): boolean {
+    if (this.input.limit == null) {
+      return false;
+    }
+    return (this.input.value?.length ?? 0) >= this.input.limit;
+  }
 }

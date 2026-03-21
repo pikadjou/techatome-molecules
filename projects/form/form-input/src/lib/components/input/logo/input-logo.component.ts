@@ -7,6 +7,8 @@ import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent } from '@ta/ui';
 import { pickImages } from '@ta/utils';
 
+import { LoaderComponent } from '@ta/ui';
+
 import { TaTranslationInput } from '../../../translation.service';
 import { TaAbstractInputComponent } from '../../abstract.component';
 import { FormLabelComponent } from '../../label/label.component';
@@ -16,7 +18,7 @@ import { FormLabelComponent } from '../../label/label.component';
   templateUrl: './input-logo.component.html',
   styleUrls: ['./input-logo.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, FormLabelComponent, ButtonComponent, TranslatePipe],
+  imports: [FontIconComponent, FormLabelComponent, ButtonComponent, LoaderComponent, TranslatePipe],
 })
 export class InputLogoComponent extends TaAbstractInputComponent<InputLogo> implements OnInit {
   private _documentsService = inject(TaDocumentsService);
@@ -31,15 +33,20 @@ export class InputLogoComponent extends TaAbstractInputComponent<InputLogo> impl
 
     const logoFile = images.length > 0 ? images[0].file : null;
     if (logoFile) {
+      this.requestState.asked();
       this._documentsService.addDocument$({ file: logoFile, description: 'logo' }).subscribe({
         next: document => {
-          this.input.value = document.url;
+          this.input.value = document;
+          this.requestState.completed();
+        },
+        error: () => {
+          this.requestState.completed();
         },
       });
     }
   }
 
   public removeLogo() {
-    this.input.value = '';
+    this.input.value = null;
   }
 }

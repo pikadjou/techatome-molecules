@@ -178,6 +178,7 @@ class InputImages extends InputBase {
             this.fileDeleted = options.onFileDeleted;
         }
         this.removeFile$ = options.removeFile$ || null;
+        this.limit = options.limit ?? null;
     }
 }
 
@@ -197,7 +198,7 @@ class InputLogo extends InputBase {
         super(options);
         this.update = null;
         if (!this.controlType) {
-            this.controlType = "logo";
+            this.controlType = 'logo';
         }
         this.availableFile$ = options.availableFile$ || null;
         if (options.update) {
@@ -229,6 +230,9 @@ class InputPanel extends InputBase {
         this.containerClass = options.containerClass || [];
         this.contentClass = options.contentClass || "";
         this.children = options.children || [];
+        this.icon = options.icon;
+        this.required = options.required;
+        this.level = options.level || 2;
     }
 }
 

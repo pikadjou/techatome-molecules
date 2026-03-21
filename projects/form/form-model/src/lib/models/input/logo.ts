@@ -1,17 +1,18 @@
-import { Picture } from "@ta/services";
-import { FileData, FileStructure } from "@ta/utils";
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
-import { IInputBase, InputBase } from "./base";
+import { DocumentDto, Picture } from '@ta/services';
+import { FileData, FileStructure } from '@ta/utils';
 
-export interface IInputLogo extends IInputBase<string> {
+import { IInputBase, InputBase } from './base';
+
+export interface IInputLogo extends IInputBase<DocumentDto> {
   availableFile$?: Observable<FileData>;
   update?: (data: FileStructure) => Promise<Picture>;
   onFileDeleted?: (FileData: FileData) => void;
   removeFile$?: Observable<FileData>;
 }
 
-export class InputLogo extends InputBase<string> {
+export class InputLogo extends InputBase<DocumentDto> {
   public availableFile$!: Observable<FileData> | null;
   public update: ((data: FileStructure) => Promise<Picture>) | null = null;
   public fileDeleted?: (FileData: FileData) => void;
@@ -20,7 +21,7 @@ export class InputLogo extends InputBase<string> {
   constructor(options: IInputLogo = {}) {
     super(options);
     if (!this.controlType) {
-      this.controlType = "logo";
+      this.controlType = 'logo';
     }
 
     this.availableFile$ = options.availableFile$ || null;

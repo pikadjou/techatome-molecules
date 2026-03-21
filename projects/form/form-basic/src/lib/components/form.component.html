@@ -1,5 +1,5 @@
-<div class="form-container">
-  <form (ngSubmit)="onSubmit()" [formGroup]="this.form" class="flex-column g-space-sm">
+<div class="form-container flex-full">
+  <form (ngSubmit)="onSubmit()" [formGroup]="this.form" class="flex-column g-space-sm flex-full">
     @for (input of this.inputs(); track trackByKey($index, input)) {
       <div>
         @if (input.visible$ | async) {

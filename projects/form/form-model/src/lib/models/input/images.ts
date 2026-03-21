@@ -10,6 +10,7 @@ export interface IInputImages extends IInputBase<DocumentDto[]> {
   update?: (data: FileStructure[]) => Promise<Picture[]>;
   onFileDeleted?: (FileData: FileData) => void;
   removeFile$?: Observable<FileData>;
+  limit?: number | null;
 }
 
 export class InputImages extends InputBase<DocumentDto[]> {
@@ -17,6 +18,7 @@ export class InputImages extends InputBase<DocumentDto[]> {
   public update: ((data: FileStructure[]) => Promise<Picture[]>) | null = null;
   public fileDeleted?: (FileData: FileData) => void;
   public removeFile$: Observable<FileData> | null;
+  public limit: number | null;
 
   constructor(options: IInputImages = {}) {
     super(options);
@@ -33,5 +35,6 @@ export class InputImages extends InputBase<DocumentDto[]> {
       this.fileDeleted = options.onFileDeleted;
     }
     this.removeFile$ = options.removeFile$ || null;
+    this.limit = options.limit ?? null;
   }
 }
