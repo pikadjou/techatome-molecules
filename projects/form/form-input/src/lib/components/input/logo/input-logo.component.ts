@@ -4,10 +4,8 @@ import { InputLogo } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
 import { TaDocumentsService } from '@ta/services';
 import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent } from '@ta/ui';
+import { ButtonComponent, LoaderComponent } from '@ta/ui';
 import { pickImages } from '@ta/utils';
-
-import { LoaderComponent } from '@ta/ui';
 
 import { TaTranslationInput } from '../../../translation.service';
 import { TaAbstractInputComponent } from '../../abstract.component';

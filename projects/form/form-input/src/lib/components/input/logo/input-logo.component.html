@@ -1,26 +1,25 @@
 <ta-form-label [input]="this.input"></ta-form-label>
 
-<div class="flex-column align-center g-space-md">
-  <ta-loader [isLoading]="this.requestState.isLoading()" size="sm">
-    <div class="logo-preview-wrapper" (click)="this.openDialog()">
+<ta-loader [isLoading]="this.requestState.isLoading()" size="sm">
+  <div class="logo-wrapper">
+    <div class="logo-preview" [class.has-value]="!!this.input.value" (click)="this.openDialog()">
       @if (this.input.value) {
         <img [src]="this.input.value?.url" class="logo-image" />
         <div class="logo-overlay">
-          <ta-font-icon name="edit" type="lg"></ta-font-icon>
-          <span>{{ 'input.logo.modify' | translate }}</span>
+          <ta-font-icon name="edit" type="md"></ta-font-icon>
         </div>
       } @else {
-        <div class="logo-placeholder flex-column align-center justify-center">
-          <ta-font-icon name="image" type="xl"></ta-font-icon>
-          <span>{{ 'input.logo.add' | translate }}</span>
+        <div class="logo-placeholder">
+          <ta-font-icon name="add_a_photo" type="lg"></ta-font-icon>
+          <span class="logo-placeholder-text">{{ 'input.logo.add' | translate }}</span>
         </div>
       }
     </div>
-  </ta-loader>
 
-  @if (this.input.value) {
-    <ta-button type="secondary" size="small" (action)="this.removeLogo()">
-      {{ 'input.logo.remove' | translate }}
-    </ta-button>
-  }
-</div>
+    @if (this.input.value) {
+      <ta-button type="danger" size="small" icon="delete" (action)="this.removeLogo()">
+        {{ 'input.logo.remove' | translate }}
+      </ta-button>
+    }
+  </div>
+</ta-loader>
