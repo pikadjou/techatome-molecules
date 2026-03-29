@@ -18,6 +18,9 @@ export declare class NotificationInlineComponent extends TaBaseComponent {
     close: () => void;
     getIcon(): string;
     getTypeClass(): string;
+    getTypeKey(): string;
+    getTypeLabel(): string;
+    getDefaultMessageKey(): string;
     openErrorBox(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<NotificationInlineComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<NotificationInlineComponent, "ta-notification-inline", never, { "messageInput": { "alias": "message"; "required": false; "isSignal": true; }; "code": { "alias": "code"; "required": false; "isSignal": true; }; "showClose": { "alias": "showClose"; "required": false; "isSignal": true; }; }, { "askClose": "askClose"; }, never, ["*"], true, never>;

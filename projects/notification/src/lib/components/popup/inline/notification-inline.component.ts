@@ -1,5 +1,12 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output, inject, effect } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  input,
+  Output,
+  inject,
+  effect,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -73,6 +80,7 @@ export class NotificationInlineComponent extends TaBaseComponent {
     }
     return "help";
   }
+
   public getTypeClass(): string {
     if (this.isError) {
       return "danger";
@@ -85,6 +93,22 @@ export class NotificationInlineComponent extends TaBaseComponent {
     } else {
       return "";
     }
+  }
+
+  public getTypeKey(): string {
+    if (this.isError) return "error";
+    if (this.isWarning) return "warning";
+    if (this.isInformation) return "info";
+    if (this.isSuccess) return "success";
+    return "";
+  }
+
+  public getTypeLabel(): string {
+    return "notification.type." + this.getTypeKey();
+  }
+
+  public getDefaultMessageKey(): string {
+    return "notification.inline.label." + this.getTypeKey();
   }
 
   public openErrorBox() {

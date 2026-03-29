@@ -1,13 +1,15 @@
+@use "ta/utils/mixins/common";
+
 .notification-box_container {
   position: fixed;
   bottom: calc(24px + env(safe-area-inset-bottom));
-  width: 90%;
-  right: 5%;
+  right: common.get-var(space, md);
   z-index: 5000;
+  width: calc(100% - #{common.get-var(space, lg)});
+  max-width: 420px;
 
-  @media (min-width: 768px) {
-    width: auto;
-    min-width: 200px;
-    max-width: 500px;
+  @media (max-width: 575px) {
+    right: common.get-var(space, sm);
+    width: calc(100% - #{common.get-var(space, md)});
   }
 }

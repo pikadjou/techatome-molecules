@@ -1,16 +1,16 @@
-import { JsonPipe, NgClass, NgFor, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, InjectionToken, inject, Component, input, EventEmitter, effect, Output } from '@angular/core';
+import { InjectionToken, Injectable, inject, Component, input, EventEmitter, effect, Output } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { ButtonComponent, ExpandableTextComponent, LayoutModalComponent, TextComponent, TitleComponent, LinkComponent, ToastComponent, BulletComponent as BulletComponent$1 } from '@ta/ui';
-import { TaBaseModal, copyTextToClipboard, TaBaseComponent, isNonNullable, getUniqueArray } from '@ta/utils';
+import { newGuid, TaBaseModal, copyTextToClipboard, TaBaseComponent, isNonNullable, getUniqueArray } from '@ta/utils';
+import { Subject, map, switchMap, of } from 'rxjs';
+import { JsonPipe, NgClass, AsyncPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
+import { ButtonComponent, ExpandableTextComponent, LayoutModalComponent, TextComponent, TitleComponent, LinkComponent, BulletComponent as BulletComponent$1 } from '@ta/ui';
 import { TaLazyTranslationService } from '@ta/translation';
 import { TaServerErrorService, GraphSchema, Apollo_gql, graphQlTake, keyValueProps, graphQlPaginationFields, TaBaseService, HandleComplexRequest } from '@ta/server';
-import { Subject, map, switchMap, of } from 'rxjs';
 
 var ENotificationCode;
 (function (ENotificationCode) {
@@ -21,6 +21,35 @@ var ENotificationCode;
     ENotificationCode[ENotificationCode["success"] = 4] = "success";
 })(ENotificationCode || (ENotificationCode = {}));
 
+const LAZY_SERVICE_TOKEN = new InjectionToken("TaNotificationService");
+class TaNotificationService {
+    constructor() {
+        this.id = Math.random();
+        this.newNotification$ = new Subject();
+        this.removeNotification$ = new Subject();
+    }
+    addNotification(message, code, persistent) {
+        const isPersistent = persistent !== undefined ? persistent : code === ENotificationCode.error;
+        this.newNotification$.next({
+            id: newGuid(),
+            message,
+            code,
+            persistent: isPersistent,
+        });
+    }
+    removeNotification(id) {
+        this.removeNotification$.next(id);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationService, providedIn: "root" }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: "root",
+                }]
+        }], ctorParameters: () => [] });
+
 class TaTranslationNotification extends TaLazyTranslationService {
     constructor() {
         super("notification");
@@ -29,25 +58,6 @@ class TaTranslationNotification extends TaLazyTranslationService {
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationNotification, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationNotification, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: () => [] });
-
-const LAZY_SERVICE_TOKEN = new InjectionToken("TaNotificationService");
-class TaNotificationService {
-    constructor() {
-        this.id = Math.random();
-        this.newNotification$ = new Subject();
-    }
-    addNotification(message, code) {
-        this.newNotification$.next({ message, code });
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationService, providedIn: "root" }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: "root",
@@ -175,41 +185,69 @@ class NotificationInlineComponent extends TaBaseComponent {
             return "";
         }
     }
+    getTypeKey() {
+        if (this.isError)
+            return "error";
+        if (this.isWarning)
+            return "warning";
+        if (this.isInformation)
+            return "info";
+        if (this.isSuccess)
+            return "success";
+        return "";
+    }
+    getTypeLabel() {
+        return "notification.type." + this.getTypeKey();
+    }
+    getDefaultMessageKey() {
+        return "notification.inline.label." + this.getTypeKey();
+    }
     openErrorBox() {
         openErrorModal(this._matDialog);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationInlineComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationInlineComponent, isStandalone: true, selector: "ta-notification-inline", inputs: { messageInput: { classPropertyName: "messageInput", publicName: "message", isSignal: true, isRequired: false, transformFunction: null }, code: { classPropertyName: "code", publicName: "code", isSignal: true, isRequired: false, transformFunction: null }, showClose: { classPropertyName: "showClose", publicName: "showClose", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { askClose: "askClose" }, usesInheritance: true, ngImport: i0, template: "@if (this.showMessage) {\n<div class=\"notification-container\">\n  <div class=\"text\">\n    <div class=\"label\" [ngClass]=\"this.getTypeClass()\">\n      <ta-font-icon\n        class=\"mr-space-xs\"\n        [name]=\"this.getIcon()\"\n        type=\"md\"\n      ></ta-font-icon>\n      @if (!this.message) { @switch (true) { @case (this.isError) {\n      {{ \"notification.inline.label.error\" | translate }}\n      } @case (this.isWarning) {\n      {{ \"notification.inline.label.warning\" | translate }}\n      } @case (this.isInformation) {\n      {{ \"notification.inline.label.info\" | translate }}\n      } @case (this.isSuccess) {\n      {{ \"notification.inline.label.success\" | translate }}\n      } } } @else {\n      {{ this.message | translate }}\n      }\n    </div>\n  </div>\n  @if (this.showClose()) {\n  <span class=\"close\" (click)=\"this.close()\">\n    <ta-font-icon name=\"close\"></ta-font-icon>\n  </span>\n  }\n</div>\n} @else {\n<ng-content></ng-content>\n} @if (this.isError) {\n<ta-link\n  size=\"sm\"\n  class=\"color-semantic-orange-dark flex-end\"\n  (action)=\"this.openErrorBox()\"\n  >Open</ta-link\n>\n}\n", styles: [".notification-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.wrapper{padding:var(--ta-space-sm)}.icon{display:flex;align-items:center}.text .label{display:flex;justify-content:flex-start;align-items:flex-start}.text .label.success{color:var(--ta-semantic-token-success)}.text .label.danger{color:var(--ta-semantic-token-alert)}.text .label.warning{color:var(--ta-semantic-token-warning)}.text .label.info{color:var(--ta-semantic-token-link)}.close{position:absolute;top:0;right:0;width:auto;padding:5px;cursor:pointer}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationInlineComponent, isStandalone: true, selector: "ta-notification-inline", inputs: { messageInput: { classPropertyName: "messageInput", publicName: "message", isSignal: true, isRequired: false, transformFunction: null }, code: { classPropertyName: "code", publicName: "code", isSignal: true, isRequired: false, transformFunction: null }, showClose: { classPropertyName: "showClose", publicName: "showClose", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { askClose: "askClose" }, usesInheritance: true, ngImport: i0, template: "@if (this.showMessage) {\n<div class=\"notification\" [ngClass]=\"this.getTypeClass()\">\n  <div class=\"notification_sidebar\"></div>\n  <div class=\"notification_content\">\n    <div class=\"notification_header\">\n      <div class=\"notification_type\">\n        <ta-font-icon [name]=\"this.getIcon()\" type=\"md\"></ta-font-icon>\n        <span class=\"notification_title\">{{\n          this.getTypeLabel() | translate\n        }}</span>\n      </div>\n      @if (this.showClose()) {\n      <button class=\"notification_close\" (click)=\"this.close()\">\n        <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n      </button>\n      }\n    </div>\n    <div class=\"notification_body\">\n      @if (this.message) {\n      <span class=\"notification_message\">{{\n        this.message | translate\n      }}</span>\n      } @else {\n      <span class=\"notification_message\">{{\n        this.getDefaultMessageKey() | translate\n      }}</span>\n      }\n    </div>\n    @if (this.isError) {\n    <div class=\"notification_footer\">\n      <ta-link size=\"sm\" (action)=\"this.openErrorBox()\">{{\n        \"notification.action.viewDetails\" | translate\n      }}</ta-link>\n    </div>\n    }\n  </div>\n</div>\n} @else {\n<ng-content></ng-content>\n}\n", styles: [".notification{display:flex;overflow:hidden;border-radius:var(--ta-radius-rounded);background-color:var(--ta-surface-primary);box-shadow:0 4px 12px #0000001f}.notification_sidebar{width:4px;flex-shrink:0}.notification_content{display:flex;flex-direction:column;gap:var(--ta-space-xs);padding:var(--ta-space-sm) var(--ta-space-md);flex:1;min-width:0}.notification_header{display:flex;align-items:center;justify-content:space-between;gap:var(--ta-space-sm)}.notification_type{display:flex;align-items:center;gap:var(--ta-space-xs)}.notification_title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:600}.notification_close{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border:none;background:none;cursor:pointer;border-radius:var(--ta-radius-minimal);color:var(--ta-text-secondary);flex-shrink:0;padding:0;transition:background-color .15s ease}.notification_close:hover{background-color:var(--ta-surface-hover)}.notification_body{padding-left:calc(16px + var(--ta-space-xs))}.notification_message{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary);word-break:break-word}.notification_footer{padding-left:calc(16px + var(--ta-space-xs));padding-top:var(--ta-space-xs)}.notification.success .notification_sidebar{background-color:var(--ta-semantic-token-success)}.notification.success .notification_type{color:var(--ta-semantic-token-success)}.notification.danger .notification_sidebar{background-color:var(--ta-semantic-token-alert)}.notification.danger .notification_type{color:var(--ta-semantic-token-alert)}.notification.warning .notification_sidebar{background-color:var(--ta-semantic-token-warning)}.notification.warning .notification_type{color:var(--ta-semantic-token-warning)}.notification.info .notification_sidebar{background-color:var(--ta-semantic-token-link)}.notification.info .notification_type{color:var(--ta-semantic-token-link)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationInlineComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-inline", standalone: true, imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule], template: "@if (this.showMessage) {\n<div class=\"notification-container\">\n  <div class=\"text\">\n    <div class=\"label\" [ngClass]=\"this.getTypeClass()\">\n      <ta-font-icon\n        class=\"mr-space-xs\"\n        [name]=\"this.getIcon()\"\n        type=\"md\"\n      ></ta-font-icon>\n      @if (!this.message) { @switch (true) { @case (this.isError) {\n      {{ \"notification.inline.label.error\" | translate }}\n      } @case (this.isWarning) {\n      {{ \"notification.inline.label.warning\" | translate }}\n      } @case (this.isInformation) {\n      {{ \"notification.inline.label.info\" | translate }}\n      } @case (this.isSuccess) {\n      {{ \"notification.inline.label.success\" | translate }}\n      } } } @else {\n      {{ this.message | translate }}\n      }\n    </div>\n  </div>\n  @if (this.showClose()) {\n  <span class=\"close\" (click)=\"this.close()\">\n    <ta-font-icon name=\"close\"></ta-font-icon>\n  </span>\n  }\n</div>\n} @else {\n<ng-content></ng-content>\n} @if (this.isError) {\n<ta-link\n  size=\"sm\"\n  class=\"color-semantic-orange-dark flex-end\"\n  (action)=\"this.openErrorBox()\"\n  >Open</ta-link\n>\n}\n", styles: [".notification-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.wrapper{padding:var(--ta-space-sm)}.icon{display:flex;align-items:center}.text .label{display:flex;justify-content:flex-start;align-items:flex-start}.text .label.success{color:var(--ta-semantic-token-success)}.text .label.danger{color:var(--ta-semantic-token-alert)}.text .label.warning{color:var(--ta-semantic-token-warning)}.text .label.info{color:var(--ta-semantic-token-link)}.close{position:absolute;top:0;right:0;width:auto;padding:5px;cursor:pointer}\n"] }]
+            args: [{ selector: "ta-notification-inline", standalone: true, imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule], template: "@if (this.showMessage) {\n<div class=\"notification\" [ngClass]=\"this.getTypeClass()\">\n  <div class=\"notification_sidebar\"></div>\n  <div class=\"notification_content\">\n    <div class=\"notification_header\">\n      <div class=\"notification_type\">\n        <ta-font-icon [name]=\"this.getIcon()\" type=\"md\"></ta-font-icon>\n        <span class=\"notification_title\">{{\n          this.getTypeLabel() | translate\n        }}</span>\n      </div>\n      @if (this.showClose()) {\n      <button class=\"notification_close\" (click)=\"this.close()\">\n        <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n      </button>\n      }\n    </div>\n    <div class=\"notification_body\">\n      @if (this.message) {\n      <span class=\"notification_message\">{{\n        this.message | translate\n      }}</span>\n      } @else {\n      <span class=\"notification_message\">{{\n        this.getDefaultMessageKey() | translate\n      }}</span>\n      }\n    </div>\n    @if (this.isError) {\n    <div class=\"notification_footer\">\n      <ta-link size=\"sm\" (action)=\"this.openErrorBox()\">{{\n        \"notification.action.viewDetails\" | translate\n      }}</ta-link>\n    </div>\n    }\n  </div>\n</div>\n} @else {\n<ng-content></ng-content>\n}\n", styles: [".notification{display:flex;overflow:hidden;border-radius:var(--ta-radius-rounded);background-color:var(--ta-surface-primary);box-shadow:0 4px 12px #0000001f}.notification_sidebar{width:4px;flex-shrink:0}.notification_content{display:flex;flex-direction:column;gap:var(--ta-space-xs);padding:var(--ta-space-sm) var(--ta-space-md);flex:1;min-width:0}.notification_header{display:flex;align-items:center;justify-content:space-between;gap:var(--ta-space-sm)}.notification_type{display:flex;align-items:center;gap:var(--ta-space-xs)}.notification_title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:600}.notification_close{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border:none;background:none;cursor:pointer;border-radius:var(--ta-radius-minimal);color:var(--ta-text-secondary);flex-shrink:0;padding:0;transition:background-color .15s ease}.notification_close:hover{background-color:var(--ta-surface-hover)}.notification_body{padding-left:calc(16px + var(--ta-space-xs))}.notification_message{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary);word-break:break-word}.notification_footer{padding-left:calc(16px + var(--ta-space-xs));padding-top:var(--ta-space-xs)}.notification.success .notification_sidebar{background-color:var(--ta-semantic-token-success)}.notification.success .notification_type{color:var(--ta-semantic-token-success)}.notification.danger .notification_sidebar{background-color:var(--ta-semantic-token-alert)}.notification.danger .notification_type{color:var(--ta-semantic-token-alert)}.notification.warning .notification_sidebar{background-color:var(--ta-semantic-token-warning)}.notification.warning .notification_type{color:var(--ta-semantic-token-warning)}.notification.info .notification_sidebar{background-color:var(--ta-semantic-token-link)}.notification.info .notification_type{color:var(--ta-semantic-token-link)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { askClose: [{
                 type: Output
             }] } });
 
+const AUTO_DISMISS_DELAY = 3000;
 class NotificationBoxComponent extends TaBaseComponent {
-    constructor(_notificationService) {
+    constructor() {
         super();
-        this._notificationService = _notificationService;
         this.list = [];
+        this._notificationService = inject(TaNotificationService);
         this._registerSubscription(this._notificationService.newNotification$
             .pipe(tap((notification) => {
             this.list.push(notification);
-        }), tap((notification) => {
-            setTimeout(() => {
-                this.list = this.list.filter((item) => item !== notification);
-            }, 3000);
+            if (!notification.persistent) {
+                setTimeout(() => {
+                    this._remove(notification.id);
+                }, AUTO_DISMISS_DELAY);
+            }
         }))
             .subscribe());
+        this._registerSubscription(this._notificationService.removeNotification$
+            .pipe(tap((id) => this._remove(id)))
+            .subscribe());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBoxComponent, deps: [{ token: TaNotificationService }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationBoxComponent, isStandalone: true, selector: "ta-notification-box", usesInheritance: true, ngImport: i0, template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item) {\n  <div>\n    <ta-toast [code]=\"item.code\">\n      <ta-notification-inline\n        [message]=\"item.message\"\n        [code]=\"item.code\"\n        [showClose]=\"false\"\n      ></ta-notification-inline>\n    </ta-toast>\n  </div>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media (min-width: 768px){.notification-box_container{width:auto;min-width:200px;max-width:500px}}\n"], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "component", type: ToastComponent, selector: "ta-toast", inputs: ["code"] }] }); }
+    dismiss(id) {
+        this._remove(id);
+    }
+    _remove(id) {
+        this.list = this.list.filter((item) => item.id !== id);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBoxComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationBoxComponent, isStandalone: true, selector: "ta-notification-box", usesInheritance: true, ngImport: i0, template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item.id) {\n  <ta-notification-inline\n    [message]=\"item.message\"\n    [code]=\"item.code\"\n    [showClose]=\"item.persistent\"\n    (askClose)=\"this.dismiss(item.id)\"\n  ></ta-notification-inline>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:var(--ta-space-md);z-index:5000;width:calc(100% - var(--ta-space-lg));max-width:420px}@media (max-width: 575px){.notification-box_container{right:var(--ta-space-sm);width:calc(100% - var(--ta-space-md))}}\n"], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBoxComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-box", standalone: true, imports: [NgFor, NotificationInlineComponent, ToastComponent], template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item) {\n  <div>\n    <ta-toast [code]=\"item.code\">\n      <ta-notification-inline\n        [message]=\"item.message\"\n        [code]=\"item.code\"\n        [showClose]=\"false\"\n      ></ta-notification-inline>\n    </ta-toast>\n  </div>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));width:90%;right:5%;z-index:5000}@media (min-width: 768px){.notification-box_container{width:auto;min-width:200px;max-width:500px}}\n"] }]
-        }], ctorParameters: () => [{ type: TaNotificationService }] });
+            args: [{ selector: "ta-notification-box", standalone: true, imports: [NotificationInlineComponent], template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item.id) {\n  <ta-notification-inline\n    [message]=\"item.message\"\n    [code]=\"item.code\"\n    [showClose]=\"item.persistent\"\n    (askClose)=\"this.dismiss(item.id)\"\n  ></ta-notification-inline>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:var(--ta-space-md);z-index:5000;width:calc(100% - var(--ta-space-lg));max-width:420px}@media (max-width: 575px){.notification-box_container{right:var(--ta-space-sm);width:calc(100% - var(--ta-space-md))}}\n"] }]
+        }], ctorParameters: () => [] });
 
 const notificationProps = new GraphSchema([
     "id",

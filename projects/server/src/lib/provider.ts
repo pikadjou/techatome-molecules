@@ -11,12 +11,17 @@ import {
   IRestConfig,
   SERVER_CONFIG_KEY,
 } from "./services/server/api/server.service";
+import {
+  NOTIFICATION_HANDLER_TOKEN,
+  NotificationHandler,
+} from "./services/server/token";
 import { TenantInterceptor } from "./services/server/tenantInterceptor";
 import { IStrapiConfig, STRAPI_SERVER_CONFIG } from "./services/strapi/config";
 
 export const provideServer = (data: {
   graphQlConfig?: IGraphConfig;
   restConfig?: IRestConfig;
+  notificationHandler?: NotificationHandler;
 }): Provider => [
   importProvidersFrom(ApolloModule),
   {
@@ -32,6 +37,14 @@ export const provideServer = (data: {
     useClass: TenantInterceptor,
     multi: true,
   },
+  ...(data.notificationHandler
+    ? [
+        {
+          provide: NOTIFICATION_HANDLER_TOKEN,
+          useValue: data.notificationHandler,
+        },
+      ]
+    : []),
 ];
 
 export const provideStrapi = (data: {

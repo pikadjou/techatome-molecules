@@ -1,26 +1,30 @@
-import { NgFor } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { tap } from "rxjs/operators";
 
-import { ToastComponent } from "@ta/ui";
 import { TaBaseComponent } from "@ta/utils";
 
-import { ENotificationCode } from "../../../enum";
-import { TaNotificationService } from "../../../services/notification.service";
+import {
+  NotificationItem,
+  TaNotificationService,
+} from "../../../services/notification.service";
 import { NotificationInlineComponent } from "../inline/notification-inline.component";
+
+const AUTO_DISMISS_DELAY = 3000;
 
 @Component({
   selector: "ta-notification-box",
   templateUrl: "./notification-box.component.html",
   styleUrls: ["./notification-box.component.scss"],
   standalone: true,
-  imports: [NgFor, NotificationInlineComponent, ToastComponent],
+  imports: [NotificationInlineComponent],
 })
 export class NotificationBoxComponent extends TaBaseComponent {
-  public list: { message: string; code: ENotificationCode }[] = [];
+  public list: NotificationItem[] = [];
 
-  constructor(private _notificationService: TaNotificationService) {
+  private _notificationService = inject(TaNotificationService);
+
+  constructor() {
     super();
 
     this._registerSubscription(
@@ -28,14 +32,29 @@ export class NotificationBoxComponent extends TaBaseComponent {
         .pipe(
           tap((notification) => {
             this.list.push(notification);
-          }),
-          tap((notification) => {
-            setTimeout(() => {
-              this.list = this.list.filter((item) => item !== notification);
-            }, 3000);
+
+            if (!notification.persistent) {
+              setTimeout(() => {
+                this._remove(notification.id);
+              }, AUTO_DISMISS_DELAY);
+            }
           })
         )
         .subscribe()
     );
+
+    this._registerSubscription(
+      this._notificationService.removeNotification$
+        .pipe(tap((id) => this._remove(id)))
+        .subscribe()
+    );
+  }
+
+  public dismiss(id: string) {
+    this._remove(id);
+  }
+
+  private _remove(id: string) {
+    this.list = this.list.filter((item) => item.id !== id);
   }
 }

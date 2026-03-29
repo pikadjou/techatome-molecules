@@ -495,17 +495,40 @@ const graphQlUpdateFields = (object) => {
     return { updatedFields: ObjectKeys(object) };
 };
 
+const TENANT_CONFIG_TOKEN = new InjectionToken("TenantConfig");
+const NOTIFICATION_HANDLER_TOKEN = new InjectionToken("NotificationHandler");
+
+// Matches ENotificationCode.error from @ta/notification
+const NOTIFICATION_CODE_ERROR = 1;
 class TaServerErrorService {
     constructor() {
         this.notifications = signal([]);
+        this._notificationHandler = inject(NOTIFICATION_HANDLER_TOKEN, { optional: true });
     }
     addError(query, error) {
+        const errorsMessage = this._extractErrorMessages(error);
         this.notifications().push({
             query: print("query" in query ? query.query : query.mutation),
             variables: query.variables,
             error,
-            errorsMessage: error.networkError.error.errors,
+            errorsMessage,
         });
+        if (this._notificationHandler) {
+            const message = this._extractUserMessage(error, errorsMessage);
+            this._notificationHandler(message, NOTIFICATION_CODE_ERROR);
+        }
+    }
+    _extractErrorMessages(error) {
+        try {
+            return error.networkError?.error?.errors ?? [];
+        }
+        catch {
+            return [];
+        }
+    }
+    _extractUserMessage(error, errorsMessage) {
+        const firstMessage = errorsMessage?.[0]?.message;
+        return firstMessage ?? error.message ?? "notification.inline.label.error";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerErrorService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaServerErrorService, providedIn: "root" }); }
@@ -818,8 +841,6 @@ const baseStrapiProps = [
     "publishedAt",
 ];
 
-const TENANT_CONFIG_TOKEN = new InjectionToken("TenantConfig");
-
 class TenantInterceptor {
     constructor(tenantConfig, graphQlConfig) {
         this.tenantConfig = tenantConfig;
@@ -868,6 +889,14 @@ const provideServer = (data) => [
         useClass: TenantInterceptor,
         multi: true,
     },
+    ...(data.notificationHandler
+        ? [
+            {
+                provide: NOTIFICATION_HANDLER_TOKEN,
+                useValue: data.notificationHandler,
+            },
+        ]
+        : []),
 ];
 const provideStrapi = (data) => [
     importProvidersFrom(ApolloModule),
@@ -885,5 +914,5 @@ const provideStrapi = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, baseStrapiProps, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, baseStrapiProps, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map

@@ -1,44 +1,114 @@
+@use "ta/utils/mixins/common";
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
 
-.notification-container {
-  position: relative;
-  @include fonts.fontSizeBody(md);
-}
+.notification {
+  display: flex;
+  overflow: hidden;
+  border-radius: common.get-var(radius, rounded);
+  background-color: common.get-var(surface, primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 
-.wrapper {
-  padding: common.get-var(space, sm);
-}
+  &_sidebar {
+    width: 4px;
+    flex-shrink: 0;
+  }
 
-.icon {
-  @include flex.align-center();
-}
-.text {
-  .label {
+  &_content {
+    @include flex.flex-column();
+    gap: common.get-var(space, xs);
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    flex: 1;
+    min-width: 0;
+  }
+
+  &_header {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    &.success {
+    align-items: center;
+    justify-content: space-between;
+    gap: common.get-var(space, sm);
+  }
+
+  &_type {
+    display: flex;
+    align-items: center;
+    gap: common.get-var(space, xs);
+  }
+
+  &_title {
+    @include fonts.fontSizeBody(md);
+    font-weight: 600;
+  }
+
+  &_close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: common.get-var(radius, minimal);
+    color: common.get-var(text, secondary);
+    flex-shrink: 0;
+    padding: 0;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: common.get-var(surface, hover);
+    }
+  }
+
+  &_body {
+    padding-left: calc(16px + #{common.get-var(space, xs)});
+  }
+
+  &_message {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, secondary);
+    word-break: break-word;
+  }
+
+  &_footer {
+    padding-left: calc(16px + #{common.get-var(space, xs)});
+    padding-top: common.get-var(space, xs);
+  }
+
+  // Type variants
+  &.success {
+    .notification_sidebar {
+      background-color: common.get-var(semantic-token, success);
+    }
+    .notification_type {
       color: common.get-var(semantic-token, success);
     }
-    &.danger {
+  }
+
+  &.danger {
+    .notification_sidebar {
+      background-color: common.get-var(semantic-token, alert);
+    }
+    .notification_type {
       color: common.get-var(semantic-token, alert);
     }
-    &.warning {
+  }
+
+  &.warning {
+    .notification_sidebar {
+      background-color: common.get-var(semantic-token, warning);
+    }
+    .notification_type {
       color: common.get-var(semantic-token, warning);
     }
-    &.info {
+  }
+
+  &.info {
+    .notification_sidebar {
+      background-color: common.get-var(semantic-token, link);
+    }
+    .notification_type {
       color: common.get-var(semantic-token, link);
     }
   }
-}
-
-.close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: auto;
-  padding: 5px;
-  cursor: pointer;
 }

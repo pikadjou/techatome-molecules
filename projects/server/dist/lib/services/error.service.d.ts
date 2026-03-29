@@ -10,8 +10,11 @@ export type ServerError = {
 };
 export declare class TaServerErrorService {
     notifications: import("@angular/core").WritableSignal<ServerError[]>;
+    private _notificationHandler;
     constructor();
     addError(query: GraphQueryPayload | GraphMutationPayload, error: ApolloError): void;
+    private _extractErrorMessages;
+    private _extractUserMessage;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaServerErrorService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<TaServerErrorService>;
 }
