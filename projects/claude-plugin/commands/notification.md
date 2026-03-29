@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/notification — toast notifications, ENotificationCode, LAZY_SERVICE_TOKEN
+description: Assistant contextuel @ta/notification — toast notifications, ENotificationCode, NotificationItem, persistent errors, LAZY_SERVICE_TOKEN
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -21,20 +21,12 @@ Question ou tâche : $ARGUMENTS
 
 ### Composants principaux (`lib/components/`)
 
-- `taNotificationBoxComponent` — `ta-notification-box` : boîte de notification popup
-- `taNotificationInlineComponent` — `ta-notification-inline` : notification inline
-- `taContainerComponent` — `ta-container` : conteneur de notifications
-- `taBulletComponent` — `ta-bullet` : indicateur de notification
-- `taErrorBoxComponent` — `ta-error-box` : boîte d'erreur
+- `NotificationBoxComponent` — `ta-notification-box` : conteneur fixe en bas à droite, empile les notifications, gère auto-dismiss et persistance
+- `NotificationInlineComponent` — `ta-notification-inline` : notification individuelle avec barre latérale colorée, titre typé, message, bouton close, lien "Voir détails" pour les erreurs
+- `BulletComponent` — `ta-bullet` : indicateur de compteur de notifications
+- `ErrorBoxModal` — `ta-error-box` : modale de détail des erreurs serveur (query, variables, stack)
 
-### Composants items
-
-- `taItemComponent` — élément de notification individuel
-- `taIconComponent` — icône d'une notification
-- `taInfoComponent` — info d'une notification
-- `taTitleComponent` — titre d'une notification
-
-### Composants templates (notifications métier)
+### Composants items (notifications métier)
 
 - `InvoicePaymentStatusChangedComponent`
 - `NewInvoiceComponent`
@@ -49,95 +41,129 @@ Question ou tâche : $ARGUMENTS
 
 ### Services
 
-- `NotificationService` — service principal de gestion des notifications
-- `DataService` — service de données des notifications
-- `SharedService` — service partagé de notifications
-- `Queries` — queries GraphQL des notifications
+- `TaNotificationService` — service principal de dispatch des notifications
+- `TaNotificationDataService` — service de données (fetch GraphQL)
+- `TaNotificationSharedService` — service de configuration partagée
+- `LAZY_SERVICE_TOKEN` — InjectionToken pour injection lazy
 
-### DTOs et Enums
+### Types et Enums
 
-- `NotificationDto` — DTO de notification
-- `LevelDto` — niveau de notification (info, warning, error, success)
-- `SwitchCasesDto` — switch cases pour les types de notification
-- Enums du module `notification`
+- `NotificationItem` — type complet d'une notification : `{ id, message, code, persistent }`
+- `ENotificationCode` — enum : `none | error | warning | information | success`
+- `NotificationDto` — DTO backend
+- `ENotificationLevel` — niveau de notification backend
 
-### Module et Provider
+## Système de notifications (toast)
 
-- `NotificationModule` — module NgModule (deprecated)
-- `provideNotification()` — provider standalone
-- `NotificationTranslationService` — service de traduction des notifications
+### Architecture
 
-## Patterns d'utilisation
+```
+TaNotificationService.addNotification(message, code, persistent?)
+  → émet sur newNotification$ (Subject<NotificationItem>)
+  → NotificationBoxComponent écoute et affiche
 
-### Configurer les notifications
+TaNotificationService.removeNotification(id)
+  → émet sur removeNotification$ (Subject<string>)
+  → NotificationBoxComponent retire la notification
+```
+
+### NotificationItem
 
 ```typescript
-import { provideNotification } from '@ta/notification';
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideNotification()],
+type NotificationItem = {
+  id: string;           // GUID auto-généré
+  message: string;      // clé de traduction ou texte
+  code: ENotificationCode;
+  persistent: boolean;  // true = reste jusqu'au clic sur close
 };
 ```
 
-### Afficher les notifications dans le template
+### Persistance
+
+- **Erreurs** (`ENotificationCode.error`) : persistantes par défaut — restent affichées jusqu'à fermeture manuelle
+- **Succès / Info / Warning** : auto-dismiss après 3 secondes
+- Le paramètre `persistent` peut être forcé explicitement
+
+### Envoyer une notification
 
 ```typescript
-import { taContainerComponent } from '@ta/notification';
+import { ENotificationCode, TaNotificationService } from '@ta/notification';
+// ou via LAZY_SERVICE_TOKEN pour les modules lazy
 
-@Component({
-  standalone: true,
-  imports: [taContainerComponent],
-  template: `<ta-notification-container />`
-})
+private _notificationService = inject(TaNotificationService);
+
+// Succès (auto-dismiss 3s)
+this._notificationService.addNotification('notification.common.success', ENotificationCode.success);
+
+// Erreur (persistante, reste affichée avec bouton close)
+this._notificationService.addNotification('notification.common.error', ENotificationCode.error);
+
+// Info avec persistance forcée
+this._notificationService.addNotification('my.info.key', ENotificationCode.information, true);
+
+// Retirer une notification par id
+this._notificationService.removeNotification(id);
 ```
 
-### Envoyer une notification depuis un service
+### Afficher le conteneur dans le layout
 
-```typescript
-import { LevelDto, NotificationService } from '@ta/notification';
-
-@Injectable({ providedIn: 'root' })
-export class MyService {
-  private notification = inject(NotificationService);
-
-  showSuccess(message: string) {
-    this.notification.show({ level: LevelDto.Success, message });
-  }
-
-  showError(message: string) {
-    this.notification.show({ level: LevelDto.Error, message });
-  }
-}
+```html
+<!-- Dans le layout principal de l'app -->
+<ta-notification-box></ta-notification-box>
 ```
 
-### Notification inline
+### Design des notifications inline
 
-```typescript
-import { taNotificationInlineComponent } from '@ta/notification';
-
-@Component({
-  standalone: true,
-  imports: [taNotificationInlineComponent],
-  template: `<ta-notification-inline [level]="level" [message]="message" />`
-})
+Structure visuelle :
 ```
+┌──────────────────────────────────────────┐
+│ ██ [icon]  Type label            [x]     │
+│ ██                                       │
+│ ██  Message text                         │
+│ ██                                       │
+│ ██  [Voir détails]        (si erreur)    │
+└──────────────────────────────────────────┘
+```
+
+- Barre latérale colorée (4px) : rouge (error), orange (warning), bleu (info), vert (success)
+- Titre en gras avec icône typée
+- Bouton close toujours visible pour les notifications persistantes
+- Lien "Voir détails" pour les erreurs → ouvre `ErrorBoxModal`
+
+### Inputs de NotificationInlineComponent
+
+| Input | Type | Défaut | Description |
+|-------|------|--------|-------------|
+| `message` | `string` | `""` | Message ou clé de traduction |
+| `code` | `ENotificationCode` | `information` | Type de notification |
+| `showClose` | `boolean` | `true` | Affiche le bouton close |
+
+### Bridge GraphQL → Notifications
+
+Les erreurs GraphQL sont automatiquement envoyées au système de notification via `NOTIFICATION_HANDLER_TOKEN` (voir `/server`). Quand configuré, chaque erreur GraphQL affiche un toast persistant avec le message d'erreur et un lien "Voir détails".
+
+## Traductions (i18n)
+
+Namespace : `notification` (auto-préfixé par `TaLazyTranslationService`)
+
+Fichiers : `projects/notification/src/i18n/{en,fr}.json`
+
+Clés principales :
+- `notification.type.{error,warning,info,success}` — titres
+- `notification.inline.label.{error,warning,info,success}` — messages par défaut
+- `notification.action.{close,dismiss,viewDetails}` — actions
 
 ## Conventions
 
-- Utiliser `provideNotification()` au lieu de `NotificationModule`
-- Les niveaux de notification sont définis dans `LevelDto`
-- Les templates de notification métier sont dans `items/item/template/`
+- Utiliser `ENotificationCode` (pas de nombres ou strings)
 - Les messages passent par le système de traduction
+- Les erreurs sont persistantes par défaut
+- Pour les modules lazy : injecter via `LAZY_SERVICE_TOKEN`
+- `ta-notification-box` doit être présent dans le layout principal
 
 ## Revue de code
 
-- Vérifier que `provideNotification()` est bien dans les providers de l'app
-- Vérifier que `ta-notification-container` est présent dans le layout principal
-- Vérifier l'utilisation des niveaux `LevelDto` (pas de strings hardcodés)
-- Ne pas importer `NotificationModule` dans les nouveaux composants
-
-## Ajout d'un nouveau template de notification
-
-1. Créer dans `projects/notification/src/lib/components/items/item/template/`
-2. Exporter depuis `projects/notification/src/lib/components/public-api.ts`
-3. Enregistrer dans la factory de notification si nécessaire
+- Vérifier que `ta-notification-box` est présent dans le layout principal
+- Vérifier l'utilisation de `ENotificationCode` (pas de valeurs hardcodées)
+- Vérifier que les erreurs GraphQL passent bien par le bridge (NOTIFICATION_HANDLER_TOKEN configuré)
+- Ne pas oublier les deux fichiers i18n (en.json + fr.json)

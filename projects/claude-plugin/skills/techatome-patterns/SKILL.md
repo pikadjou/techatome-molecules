@@ -677,7 +677,8 @@ export class EditComponent extends AbstractPanelFormLayout implements AfterViewI
         this.closeEvent.emit();
       },
       error: () => {
-        this._notificationService.addNotification('app.notification.common.error', ENotificationCode.error);
+        // Les erreurs GraphQL sont auto-dispatched via NOTIFICATION_HANDLER_TOKEN
+        // Pas besoin d'addNotification ici pour les erreurs
         this.requestState.completed();
       },
     });
@@ -1520,19 +1521,62 @@ taAbstractComponent (@ta/utils)
 
 ## 11. NOTIFICATIONS UTILISATEUR
 
-```typescript
-// Depuis n'importe quel composant (AbstractComponent expose _notificationService)
-import { ENotificationCode } from '@ta/notification';
+### API
 
-// Succès
+```typescript
+import { ENotificationCode, TaNotificationService, LAZY_SERVICE_TOKEN } from '@ta/notification';
+
+// Injection (directe ou lazy)
+private _notificationService = inject(TaNotificationService);
+// ou dans un module lazy :
+private _notificationService = inject(LAZY_SERVICE_TOKEN);
+
+// Succès — auto-dismiss après 3s
 this._notificationService.addNotification('notification.common.success', ENotificationCode.success);
 
-// Erreur
+// Erreur — persistante par défaut, reste affichée avec bouton close
 this._notificationService.addNotification('notification.common.error', ENotificationCode.error);
 
-// Info
-this._notificationService.addNotification('my.info.key', ENotificationCode.info);
+// Info avec persistance forcée
+this._notificationService.addNotification('my.info.key', ENotificationCode.information, true);
+
+// Retirer une notification manuellement
+this._notificationService.removeNotification(notificationId);
 ```
+
+### Persistance
+
+- `ENotificationCode.error` → **persistante** par défaut (reste jusqu'au clic sur close)
+- `ENotificationCode.success / warning / information` → **auto-dismiss** après 3s
+- Le 3e paramètre `persistent?: boolean` permet de forcer le comportement
+
+### Bridge GraphQL → Notifications
+
+Les erreurs GraphQL sont **automatiquement** affichées en toast si `NOTIFICATION_HANDLER_TOKEN` est configuré :
+
+```typescript
+// app.config.ts
+import { NOTIFICATION_HANDLER_TOKEN } from '@ta/server';
+import { TaNotificationService } from '@ta/notification';
+
+{
+  provide: NOTIFICATION_HANDLER_TOKEN,
+  useFactory: () => {
+    const notifService = inject(TaNotificationService);
+    return (message: string, code: number) =>
+      notifService.addNotification(message, code);
+  },
+}
+```
+
+Quand une erreur GraphQL survient (`TaGraphService.fetchQuery/mutate/...`), le flux est :
+1. `TaServerErrorService.addError()` stocke l'erreur détaillée
+2. Le handler dispatch un toast persistant avec le message d'erreur
+3. L'utilisateur peut cliquer "Voir détails" → ouvre `ErrorBoxModal` avec query, variables, stack
+
+### Design
+
+Les notifications affichent : barre latérale colorée (4px) + icône + titre typé + message + bouton close (si persistante) + lien "Voir détails" (si erreur).
 
 ---
 
@@ -1778,7 +1822,7 @@ export class FormComponent extends TaBaseComponent implements OnInit {
         );
       },
       error: () => {
-        this._notificationService.addNotification('notification.common.error', ENotificationCode.error);
+        // Les erreurs GraphQL sont auto-dispatched via NOTIFICATION_HANDLER_TOKEN
       },
     });
   }
