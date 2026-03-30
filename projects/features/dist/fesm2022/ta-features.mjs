@@ -1,19 +1,18 @@
 import * as i0 from '@angular/core';
 import { Injectable, signal, input, inject, Component, EventEmitter, ViewChild, Output, ViewEncapsulation } from '@angular/core';
 import { FormComponent } from '@ta/form-basic';
+import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { TitleComponent, BadgeComponent, TextComponent, ButtonComponent } from '@ta/ui';
+import { TitleComponent, ButtonComponent, BadgeComponent, TextComponent, TaOverlayPanelComponent } from '@ta/ui';
 import { of, Subject, BehaviorSubject, firstValueFrom, distinctUntilChanged, filter, map } from 'rxjs';
 import { InputPanel, InputDropdown, InputDatePicker, InputNumber, InputChoices, InputTextBox } from '@ta/form-model';
-import { isNonNullable, getUniqueArray, TaBaseComponent, TypedTemplateDirective } from '@ta/utils';
+import { isNonNullable, getUniqueArray, TaBaseComponent, TypedTemplateDirective, TaBaseModal } from '@ta/utils';
 import { TabulatorFull } from 'tabulator-tables';
 import { format } from 'date-fns';
 import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import * as i1 from '@angular/material/menu';
-import { MatMenuModule } from '@angular/material/menu';
-import { TextBoxComponent } from '@ta/form-input';
+import { SearchFieldComponent } from '@ta/form-input';
 import { HandleComplexRequest, createQuery, TaBaseService } from '@ta/server';
 
 var ParameterType;
@@ -496,6 +495,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class TaGridFormComponent extends TaAbstractGridComponent {
     constructor() {
         super(...arguments);
+        this.showTitle = input(true);
+        this.showReset = input(true);
         this.filtersForm = signal([]);
         this.groupForm = signal([]);
         this._formService = inject((TaGridFormService));
@@ -521,12 +522,16 @@ class TaGridFormComponent extends TaAbstractGridComponent {
         }
         this._grid.setGroupBy(group);
     }
+    reset() {
+        this._grid.filters?.apply([]);
+        this._grid.clearGroupBy();
+    }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaGridFormComponent, isStandalone: true, selector: "ta-grid-form", usesInheritance: true, ngImport: i0, template: "<div>\r\n  <ta-title [level]=\"2\">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>\r\n</div>\r\n\r\n<div class=\"space-between\">\r\n  <div>\r\n    <ta-form\r\n      [inputs]=\"this.filtersForm()\"\r\n      (valid)=\"this.applyFilters($event)\"\r\n      [askOnDestroy]=\"true\"\r\n      [canDisplayButton]=\"false\"\r\n    ></ta-form>\r\n  </div>\r\n  <div>\r\n    <ta-form\r\n      [inputs]=\"this.groupForm()\"\r\n      (valid)=\"this.applyGroup($event)\"\r\n      [askOnDestroy]=\"true\"\r\n      [canDisplayButton]=\"false\"\r\n    ></ta-form>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridFormComponent, isStandalone: true, selector: "ta-grid-form", inputs: { showTitle: { classPropertyName: "showTitle", publicName: "showTitle", isSignal: true, isRequired: false, transformFunction: null }, showReset: { classPropertyName: "showReset", publicName: "showReset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"grid-form\">\n  @if (this.showTitle()) {\n    <div class=\"grid-form__header\">\n      <div class=\"flex-row align-center g-space-sm\">\n        <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n        <ta-title [level]=\"3\">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>\n      </div>\n    </div>\n  }\n\n  <div class=\"grid-form__body\">\n    <div class=\"grid-form__section\">\n      <ta-form\n        [inputs]=\"this.filtersForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    @if (this.groupForm().length > 0) {\n      <div class=\"grid-form__section\">\n        <ta-form\n          [inputs]=\"this.groupForm()\"\n          (valid)=\"this.applyGroup($event)\"\n          [askOnDestroy]=\"true\"\n          [canDisplayButton]=\"false\"\n        ></ta-form>\n      </div>\n    }\n  </div>\n\n  @if (this.showReset()) {\n    <div class=\"grid-form__footer\">\n      <ta-button type=\"secondary\" (action)=\"this.reset()\">\n        {{ 'grid.form.reset' | translate }}\n      </ta-button>\n    </div>\n  }\n</div>\n", styles: [":host{display:block}.grid-form{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__header{padding-bottom:var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.grid-form__header ta-font-icon{color:var(--ta-icon-brand-primary)}.grid-form__body{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__section{padding:var(--ta-space-md);background:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}.grid-form__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding-top:var(--ta-space-sm);border-top:1px solid var(--ta-border-secondary)}\n"], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-form', standalone: true, imports: [FormComponent, TitleComponent, TranslatePipe], template: "<div>\r\n  <ta-title [level]=\"2\">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>\r\n</div>\r\n\r\n<div class=\"space-between\">\r\n  <div>\r\n    <ta-form\r\n      [inputs]=\"this.filtersForm()\"\r\n      (valid)=\"this.applyFilters($event)\"\r\n      [askOnDestroy]=\"true\"\r\n      [canDisplayButton]=\"false\"\r\n    ></ta-form>\r\n  </div>\r\n  <div>\r\n    <ta-form\r\n      [inputs]=\"this.groupForm()\"\r\n      (valid)=\"this.applyGroup($event)\"\r\n      [askOnDestroy]=\"true\"\r\n      [canDisplayButton]=\"false\"\r\n    ></ta-form>\r\n  </div>\r\n</div>\r\n" }]
+            args: [{ selector: 'ta-grid-form', standalone: true, imports: [FormComponent, TitleComponent, TranslatePipe, FontIconComponent, ButtonComponent], template: "<div class=\"grid-form\">\n  @if (this.showTitle()) {\n    <div class=\"grid-form__header\">\n      <div class=\"flex-row align-center g-space-sm\">\n        <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n        <ta-title [level]=\"3\">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>\n      </div>\n    </div>\n  }\n\n  <div class=\"grid-form__body\">\n    <div class=\"grid-form__section\">\n      <ta-form\n        [inputs]=\"this.filtersForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    @if (this.groupForm().length > 0) {\n      <div class=\"grid-form__section\">\n        <ta-form\n          [inputs]=\"this.groupForm()\"\n          (valid)=\"this.applyGroup($event)\"\n          [askOnDestroy]=\"true\"\n          [canDisplayButton]=\"false\"\n        ></ta-form>\n      </div>\n    }\n  </div>\n\n  @if (this.showReset()) {\n    <div class=\"grid-form__footer\">\n      <ta-button type=\"secondary\" (action)=\"this.reset()\">\n        {{ 'grid.form.reset' | translate }}\n      </ta-button>\n    </div>\n  }\n</div>\n", styles: [":host{display:block}.grid-form{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__header{padding-bottom:var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.grid-form__header ta-font-icon{color:var(--ta-icon-brand-primary)}.grid-form__body{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__section{padding:var(--ta-space-md);background:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}.grid-form__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding-top:var(--ta-space-sm);border-top:1px solid var(--ta-border-secondary)}\n"] }]
         }] });
 
 class PaginationComponent extends TaAbstractGridComponent {
@@ -638,7 +643,7 @@ class TaGridControlComponent extends TaAbstractGridComponent {
             filters: true,
             preset: true,
         });
-        this.dialog = inject(MatDialog);
+        this._dialog = inject(MatDialog);
     }
     ngOnInit() {
         super.ngOnInit();
@@ -650,40 +655,69 @@ class TaGridControlComponent extends TaAbstractGridComponent {
         this._grid.switchView(type);
     }
     openFilters() {
-        this.dialog.open(FiltersModal, {
+        this._dialog.open(FiltersModal, {
             data: { gridId: this.gridId() },
+            panelClass: 'grid-filters-modal',
         });
     }
     setPreset(preset) {
         this.grid.filters?.apply(preset.filters);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridControlComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridControlComponent, isStandalone: true, selector: "ta-grid-control", inputs: { show: { classPropertyName: "show", publicName: "show", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\r\n  <div class=\"d-flex\">\r\n    @if (this.show().filters) {\r\n      <div class=\"grid-control-container ml-space-xs c-pointer\">\r\n        <div (click)=\"this.openFilters()\" class=\"trigger\">\r\n          <mat-icon>filter_list</mat-icon>\r\n        </div>\r\n      </div>\r\n    }\r\n    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {\r\n      <div class=\"grid-control-container ml-space-xs c-pointer\">\r\n        <div [matMenuTriggerFor]=\"menu\" class=\"trigger\">\r\n          <mat-icon>visibility</mat-icon>\r\n        </div>\r\n      </div>\r\n      <mat-menu #menu=\"matMenu\">\r\n        @for (preset of this.grid.filters?.preset; track preset.name) {\r\n          <button mat-menu-item (click)=\"this.setPreset(preset)\">\r\n            <span>{{ preset.name }}</span>\r\n          </button>\r\n        }\r\n      </mat-menu>\r\n    }\r\n    @if (this.show().switchView) {\r\n      <div class=\"grid-control-container ml-space-xs c-pointer\">\r\n        <div (click)=\"this.switchView('grid')\" class=\"trigger\" [class.active]=\"this.displayType() === 'grid'\">\r\n          <mat-icon>list</mat-icon>\r\n        </div>\r\n        <div class=\"sep\"></div>\r\n\r\n        <div (click)=\"this.switchView('card')\" class=\"trigger\" [class.active]=\"this.displayType() === 'card'\">\r\n          <mat-icon>grid_view</mat-icon>\r\n        </div>\r\n      </div>\r\n    }\r\n  </div>\r\n}\r\n", styles: [".grid-control-container{display:flex;flex-direction:row;justify-content:space-between;border-radius:8px;border:1px solid var(--ta-brand-400);overflow:hidden}.grid-control-container .trigger{display:flex;align-items:center;padding:var(--ta-space-sm)}.grid-control-container .trigger.active{background:var(--ta-brand-100);color:var(--ta-brand-500)}.grid-control-container .sep{border-left:1px solid var(--ta-brand-400)}\n"], dependencies: [{ kind: "component", type: MatIcon, selector: "mat-icon", inputs: ["color", "inline", "svgIcon", "fontSet", "fontIcon"], exportAs: ["matIcon"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "ngmodule", type: MatMenuModule }, { kind: "component", type: i1.MatMenu, selector: "mat-menu", inputs: ["backdropClass", "aria-label", "aria-labelledby", "aria-describedby", "xPosition", "yPosition", "overlapTrigger", "hasBackdrop", "class", "classList"], outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "component", type: i1.MatMenuItem, selector: "[mat-menu-item]", inputs: ["role", "disabled", "disableRipple"], exportAs: ["matMenuItem"] }, { kind: "directive", type: i1.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", inputs: ["mat-menu-trigger-for", "matMenuTriggerFor", "matMenuTriggerData", "matMenuTriggerRestoreFocus"], outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridControlComponent, isStandalone: true, selector: "ta-grid-control", inputs: { show: { classPropertyName: "show", publicName: "show", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\n  <div class=\"grid-control\">\n    @if (this.show().filters) {\n      <ta-button\n        icon=\"filter\"\n        type=\"secondary\"\n        [options]=\"{ circular: 'small' }\"\n        (action)=\"this.openFilters()\"\n      ></ta-button>\n    }\n\n    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n        <ng-template #panelTrigger>\n          <ta-button type=\"secondary\" icon=\"tune\" [options]=\"{ circular: 'small' }\"></ta-button>\n        </ng-template>\n        <ng-template #panelContent>\n          <div class=\"preset-menu\">\n            @for (preset of this.grid.filters?.preset; track preset.name) {\n              <div class=\"preset-menu__item c-pointer\" (click)=\"this.setPreset(preset)\">\n                {{ preset.name }}\n              </div>\n            }\n          </div>\n        </ng-template>\n      </ta-overlay-panel>\n    }\n\n    @if (this.show().switchView) {\n      <div class=\"grid-control__toggle\">\n        <ta-button\n          icon=\"view_list\"\n          [type]=\"this.displayType() === 'grid' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'grid' }\"\n          (action)=\"this.switchView('grid')\"\n        ></ta-button>\n        <ta-button\n          icon=\"grid_view\"\n          [type]=\"this.displayType() === 'card' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'card' }\"\n          (action)=\"this.switchView('card')\"\n        ></ta-button>\n      </div>\n    }\n  </div>\n}\n", styles: [".grid-control{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.grid-control__toggle{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs)}.preset-menu{display:flex;flex-direction:column;padding:var(--ta-space-xs)}.preset-menu__item{padding:var(--ta-space-sm) var(--ta-space-md);border-radius:var(--ta-radius-minimal);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.preset-menu__item:hover{background:var(--ta-surface-hover)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridControlComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-control', standalone: true, imports: [MatIcon, AsyncPipe, MatMenuModule], template: "@if (this.isReady$ | async) {\r\n  <div class=\"d-flex\">\r\n    @if (this.show().filters) {\r\n      <div class=\"grid-control-container ml-space-xs c-pointer\">\r\n        <div (click)=\"this.openFilters()\" class=\"trigger\">\r\n          <mat-icon>filter_list</mat-icon>\r\n        </div>\r\n      </div>\r\n    }\r\n    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {\r\n      <div class=\"grid-control-container ml-space-xs c-pointer\">\r\n        <div [matMenuTriggerFor]=\"menu\" class=\"trigger\">\r\n          <mat-icon>visibility</mat-icon>\r\n        </div>\r\n      </div>\r\n      <mat-menu #menu=\"matMenu\">\r\n        @for (preset of this.grid.filters?.preset; track preset.name) {\r\n          <button mat-menu-item (click)=\"this.setPreset(preset)\">\r\n            <span>{{ preset.name }}</span>\r\n          </button>\r\n        }\r\n      </mat-menu>\r\n    }\r\n    @if (this.show().switchView) {\r\n      <div class=\"grid-control-container ml-space-xs c-pointer\">\r\n        <div (click)=\"this.switchView('grid')\" class=\"trigger\" [class.active]=\"this.displayType() === 'grid'\">\r\n          <mat-icon>list</mat-icon>\r\n        </div>\r\n        <div class=\"sep\"></div>\r\n\r\n        <div (click)=\"this.switchView('card')\" class=\"trigger\" [class.active]=\"this.displayType() === 'card'\">\r\n          <mat-icon>grid_view</mat-icon>\r\n        </div>\r\n      </div>\r\n    }\r\n  </div>\r\n}\r\n", styles: [".grid-control-container{display:flex;flex-direction:row;justify-content:space-between;border-radius:8px;border:1px solid var(--ta-brand-400);overflow:hidden}.grid-control-container .trigger{display:flex;align-items:center;padding:var(--ta-space-sm)}.grid-control-container .trigger.active{background:var(--ta-brand-100);color:var(--ta-brand-500)}.grid-control-container .sep{border-left:1px solid var(--ta-brand-400)}\n"] }]
+            args: [{ selector: 'ta-grid-control', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent], template: "@if (this.isReady$ | async) {\n  <div class=\"grid-control\">\n    @if (this.show().filters) {\n      <ta-button\n        icon=\"filter\"\n        type=\"secondary\"\n        [options]=\"{ circular: 'small' }\"\n        (action)=\"this.openFilters()\"\n      ></ta-button>\n    }\n\n    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n        <ng-template #panelTrigger>\n          <ta-button type=\"secondary\" icon=\"tune\" [options]=\"{ circular: 'small' }\"></ta-button>\n        </ng-template>\n        <ng-template #panelContent>\n          <div class=\"preset-menu\">\n            @for (preset of this.grid.filters?.preset; track preset.name) {\n              <div class=\"preset-menu__item c-pointer\" (click)=\"this.setPreset(preset)\">\n                {{ preset.name }}\n              </div>\n            }\n          </div>\n        </ng-template>\n      </ta-overlay-panel>\n    }\n\n    @if (this.show().switchView) {\n      <div class=\"grid-control__toggle\">\n        <ta-button\n          icon=\"view_list\"\n          [type]=\"this.displayType() === 'grid' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'grid' }\"\n          (action)=\"this.switchView('grid')\"\n        ></ta-button>\n        <ta-button\n          icon=\"grid_view\"\n          [type]=\"this.displayType() === 'card' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'card' }\"\n          (action)=\"this.switchView('card')\"\n        ></ta-button>\n      </div>\n    }\n  </div>\n}\n", styles: [".grid-control{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.grid-control__toggle{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs)}.preset-menu{display:flex;flex-direction:column;padding:var(--ta-space-xs)}.preset-menu__item{padding:var(--ta-space-sm) var(--ta-space-md);border-radius:var(--ta-radius-minimal);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.preset-menu__item:hover{background:var(--ta-surface-hover)}\n"] }]
         }], ctorParameters: () => [] });
-class FiltersModal {
+class FiltersModal extends TaBaseModal {
     constructor() {
-        this.dialogRef = inject((MatDialogRef));
+        super();
+        this._dialogRef = inject((MatDialogRef));
         this.data = inject(MAT_DIALOG_DATA);
     }
     close() {
-        this.dialogRef.close();
+        this._dialogRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: FiltersModal, isStandalone: true, selector: "ng-component", ngImport: i0, template: '<div class="p-space-md"><ta-grid-form [gridId]="this.data.gridId"></ta-grid-form><ta-button (action)="this.close()">Applied</ta-button></div>', isInline: true, dependencies: [{ kind: "component", type: TaGridFormComponent, selector: "ta-grid-form" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: FiltersModal, isStandalone: true, selector: "ta-grid-filters-modal", usesInheritance: true, ngImport: i0, template: `
+    <div class="filters-modal">
+      <div class="filters-modal__header">
+        <div class="flex-row align-center g-space-sm">
+          <ta-font-icon name="filter" size="sm"></ta-font-icon>
+          <ta-title [level]="3">{{ 'grid.filters.title' | translate }}</ta-title>
+        </div>
+        <ta-font-icon name="close" size="xs" class="c-pointer" (click)="this.close()"></ta-font-icon>
+      </div>
+      <div class="filters-modal__content">
+        <ta-grid-form [gridId]="this.data.gridId" [showTitle]="false"></ta-grid-form>
+      </div>
+      <div class="filters-modal__footer">
+        <ta-button (action)="this.close()">{{ 'grid.filters.apply' | translate }}</ta-button>
+      </div>
+    </div>
+  `, isInline: true, styles: [".filters-modal{display:flex;flex-direction:column;gap:var(--ta-space-md)}.filters-modal__header{flex-direction:row;justify-content:space-between;display:flex;align-items:center;padding:var(--ta-space-md) var(--ta-space-md) var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.filters-modal__header ta-font-icon{color:var(--ta-icon-brand-primary)}.filters-modal__content{padding:0 var(--ta-space-md)}.filters-modal__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding:var(--ta-space-sm) var(--ta-space-md) var(--ta-space-md);border-top:1px solid var(--ta-border-secondary)}\n"], dependencies: [{ kind: "component", type: TaGridFormComponent, selector: "ta-grid-form", inputs: ["showTitle", "showReset"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersModal, decorators: [{
             type: Component,
-            args: [{
-                    selector: '',
-                    template: '<div class="p-space-md"><ta-grid-form [gridId]="this.data.gridId"></ta-grid-form><ta-button (action)="this.close()">Applied</ta-button></div>',
-                    standalone: true,
-                    imports: [TaGridFormComponent, ButtonComponent],
-                }]
-        }] });
+            args: [{ selector: 'ta-grid-filters-modal', template: `
+    <div class="filters-modal">
+      <div class="filters-modal__header">
+        <div class="flex-row align-center g-space-sm">
+          <ta-font-icon name="filter" size="sm"></ta-font-icon>
+          <ta-title [level]="3">{{ 'grid.filters.title' | translate }}</ta-title>
+        </div>
+        <ta-font-icon name="close" size="xs" class="c-pointer" (click)="this.close()"></ta-font-icon>
+      </div>
+      <div class="filters-modal__content">
+        <ta-grid-form [gridId]="this.data.gridId" [showTitle]="false"></ta-grid-form>
+      </div>
+      <div class="filters-modal__footer">
+        <ta-button (action)="this.close()">{{ 'grid.filters.apply' | translate }}</ta-button>
+      </div>
+    </div>
+  `, standalone: true, imports: [TaGridFormComponent, ButtonComponent, FontIconComponent, TitleComponent, TranslatePipe], styles: [".filters-modal{display:flex;flex-direction:column;gap:var(--ta-space-md)}.filters-modal__header{flex-direction:row;justify-content:space-between;display:flex;align-items:center;padding:var(--ta-space-md) var(--ta-space-md) var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.filters-modal__header ta-font-icon{color:var(--ta-icon-brand-primary)}.filters-modal__content{padding:0 var(--ta-space-md)}.filters-modal__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding:var(--ta-space-sm) var(--ta-space-md) var(--ta-space-md);border-top:1px solid var(--ta-border-secondary)}\n"] }]
+        }], ctorParameters: () => [] });
 
 class TaGridSessionService {
     constructor() {
@@ -809,11 +843,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class TaGridSearchComponent extends TaAbstractGridComponent {
     constructor() {
-        super();
+        super(...arguments);
         this.outOfBox = input(false);
-        this.input = new InputTextBox();
+        this.placeholder = input('grid.search.placeholder');
+        this.searchInput = new InputTextBox();
         this._session = inject(TaGridSessionService);
-        this.input.createFormControl();
     }
     valueChanged(value) {
         const filters = [
@@ -830,13 +864,13 @@ class TaGridSearchComponent extends TaAbstractGridComponent {
             this.grid.filters?.apply(filters);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridSearchComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridSearchComponent, isStandalone: true, selector: "ta-grid-search", inputs: { outOfBox: { classPropertyName: "outOfBox", publicName: "outOfBox", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ta-input-textbox [input]=\"this.input\" (valueChanged)=\"this.valueChanged($event)\"></ta-input-textbox>\r\n", styles: [""], dependencies: [{ kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridSearchComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridSearchComponent, isStandalone: true, selector: "ta-grid-search", inputs: { outOfBox: { classPropertyName: "outOfBox", publicName: "outOfBox", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ta-search-field\n  [input]=\"this.searchInput\"\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  (valueCompleted)=\"this.valueChanged($event)\"\n></ta-search-field>\n", styles: [":host{display:block;width:100%}\n"], dependencies: [{ kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridSearchComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-search', standalone: true, imports: [TextBoxComponent], template: "<ta-input-textbox [input]=\"this.input\" (valueChanged)=\"this.valueChanged($event)\"></ta-input-textbox>\r\n" }]
-        }], ctorParameters: () => [] });
+            args: [{ selector: 'ta-grid-search', standalone: true, imports: [SearchFieldComponent], template: "<ta-search-field\n  [input]=\"this.searchInput\"\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  (valueCompleted)=\"this.valueChanged($event)\"\n></ta-search-field>\n", styles: [":host{display:block;width:100%}\n"] }]
+        }] });
 
 class TaGridContainerComponent extends TaAbstractGridComponent {
     constructor() {

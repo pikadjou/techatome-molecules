@@ -1,0 +1,231 @@
+@use 'sass:map';
+@use 'ta/utils/mixins/common';
+
+// ============================================================================
+// Theme API for @ta/styles
+// ============================================================================
+//
+// Usage (partner theme file):
+//
+//   @use 'ta/theme';
+//
+//   // Option 1: Override with automatic token recalculation
+//   $my-theme: theme.build-tokens(
+//     $brand: (900: #002458, 800: #00346f, 700: #0a3d7b, ...),
+//   );
+//   @include theme.apply-theme($my-theme);
+//
+//   // Option 2: Granular override (manual)
+//   @include theme.apply-theme((
+//     brand: (900: #002458),
+//     text: (brand: (primary: #002458)),
+//   ));
+//
+//   // Option 3: Scoped theme
+//   @include theme.apply-theme($my-theme, $selector: '.dark-theme');
+//
+// ============================================================================
+
+/// Default foundation values (mirrored from _vars.scss)
+$_default-brand: (
+  900: #121e38,
+  800: #192e50,
+  700: #1f375d,
+  600: #273f67,
+  500: #2d466f,
+  400: #4c5f81,
+  300: #6a7a95,
+  200: #929fb3,
+  100: #bcc4d2,
+  50: #e5e8ec,
+);
+
+$_default-second: (
+  900: #f26800,
+  800: #f28700,
+  700: #f19800,
+  600: #f1ab00,
+  500: #f0b800,
+  400: #f2c317,
+  300: #f4ce46,
+  200: #f7db7c,
+  100: #fae9b0,
+  50: #fdf7e0,
+);
+
+$_default-neutral: (
+  black: #1f2245,
+  700: #262626,
+  600: #3c3c3c,
+  500: #7d7d7d,
+  400: #a9a9a9,
+  300: #dddddd,
+  200: #f4f7f9,
+  100: #f8f8f8,
+  white: #ffffff,
+);
+
+$_default-semantic: (
+  red-light: transparentize(#e74c3c, 0.5),
+  red: #e74c3c,
+  orange-light: transparentize(#f39c12, 0.5),
+  orange: #f39c12,
+  yellow: #ffd166,
+  green-light: transparentize(#38a172, 0.5),
+  green: #38a172,
+  accent: #e74c3c,
+);
+
+// ============================================================================
+// Public API
+// ============================================================================
+
+/// Generates CSS custom properties that override the default theme values.
+/// Works via CSS cascade: the overrides are emitted after the defaults.
+///
+/// @param {Map} $overrides - Nested map of category: (key: value) pairs.
+///   Supported categories: brand, second, neutral, semantic,
+///   icon, text, surface, semantic-token, border,
+///   space, radius, shadow, font, components
+/// @param {String} $selector [':root'] - CSS selector scope for the overrides.
+@mixin apply-theme($overrides, $selector: ':root') {
+  @if $overrides and length($overrides) > 0 {
+    #{$selector} {
+      @each $category, $values in $overrides {
+        @if $values and length($values) > 0 {
+          $flat: common.flat-map($category, $values);
+          @each $key, $value in $flat {
+            @if $value != null and $value != () {
+              --ta-#{$key}: #{$value};
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Builds a complete override map including derived tokens from foundation colors.
+/// Pass your custom foundation colors, and this function recalculates
+/// all dependent tokens (icon, text, surface, border, semantic-token)
+/// following the same logic as _vars.scss.
+///
+/// @param {Map} $brand [()] - Brand color palette overrides (keys: 900-50)
+/// @param {Map} $second [()] - Secondary color palette overrides (keys: 900-50)
+/// @param {Map} $neutral [()] - Neutral color palette overrides (keys: black, 700-100, white)
+/// @param {Map} $semantic [()] - Semantic color overrides (keys: red, green, orange, etc.)
+/// @return {Map} Complete override map ready for apply-theme()
+@function build-tokens($brand: (), $second: (), $neutral: (), $semantic: ()) {
+  $result: ();
+
+  // Merge provided values with defaults to have complete palettes
+  $b: map.merge($_default-brand, $brand);
+  $sc: map.merge($_default-second, $second);
+  $n: map.merge($_default-neutral, $neutral);
+  $se: map.merge($_default-semantic, $semantic);
+
+  // Add foundation overrides (only what changed)
+  @if length($brand) > 0 {
+    $result: map.set($result, brand, $brand);
+  }
+  @if length($second) > 0 {
+    $result: map.set($result, second, $second);
+  }
+  @if length($neutral) > 0 {
+    $result: map.set($result, neutral, $neutral);
+  }
+  @if length($semantic) > 0 {
+    $result: map.set($result, semantic, $semantic);
+  }
+
+  // Recalculate icon tokens
+  $result: map.set($result, icon, (
+    primary: map.get($n, black),
+    secondary: map.get($n, 500),
+    tertiary: map.get($n, 400),
+    brand: (
+      primary: map.get($b, 900),
+      secondary: map.get($sc, 600),
+    ),
+    invert: (
+      primary: map.get($n, white),
+      secondary: map.get($b, 600),
+    ),
+    disabled: map.get($n, 300),
+    success: map.get($se, green),
+    alert: map.get($se, red),
+  ));
+
+  // Recalculate text tokens
+  $result: map.set($result, text, (
+    primary: map.get($n, black),
+    secondary: map.get($n, 500),
+    tertiary: map.get($n, 400),
+    brand: (
+      primary: map.get($b, 900),
+      secondary: map.get($sc, 800),
+    ),
+    invert: (
+      primary: map.get($n, white),
+      secondary: map.get($n, white),
+    ),
+    body: map.get($n, 600),
+    success: map.get($se, green),
+    warning: map.get($se, orange),
+    alert: map.get($se, red),
+    link: map.get($b, 800),
+  ));
+
+  // Recalculate surface tokens
+  $result: map.set($result, surface, (
+    default: map.get($n, 300),
+    primary: map.get($n, white),
+    secondary: map.get($n, 200),
+    tertiary: map.get($b, 50),
+    brand: (
+      primary: map.get($b, 900),
+      secondary: map.get($sc, 400),
+      tertiary: map.get($b, 100),
+    ),
+    hover: (
+      primary: map.get($n, 200),
+      secondary: map.get($sc, 800),
+    ),
+    invert: map.get($b, 900),
+    success: map.get($se, green),
+    warning: map.get($se, orange),
+    alert: map.get($se, red),
+  ));
+
+  // Recalculate semantic-token
+  $result: map.set($result, semantic-token, (
+    success: map.get($se, green),
+    alert: map.get($se, red),
+    warning: map.get($se, orange),
+    link: map.get($b, 800),
+  ));
+
+  // Recalculate border tokens
+  $result: map.set($result, border, (
+    primary: map.get($n, black),
+    secondary: map.get($n, 500),
+    tertiary: map.get($n, 300),
+    brand: (
+      primary: map.get($b, 900),
+      secondary: map.get($sc, 600),
+    ),
+    hover: (
+      primary: map.get($b, 800),
+      secondary: map.get($b, 300),
+    ),
+    invert: (
+      primary: map.get($n, white),
+      secondary: map.get($sc, 900),
+    ),
+    disabled: map.get($n, 300),
+    success: map.get($se, green),
+    alert: map.get($se, red),
+  ));
+
+  @return $result;
+}

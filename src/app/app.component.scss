@@ -1,63 +1,97 @@
-@use "@ta/styles/utils/mixins/common";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
-.app-layout {
+.shell {
   display: flex;
   height: 100vh;
 }
 
 .sidebar {
-  width: common.get-var("sidebar-width");
-  background: common.get-var("color-surface-secondary");
-  border-right: common.get-var("border-width") solid
-    common.get-var("color-border-primary");
+  width: 220px;
+  flex-shrink: 0;
+  background: common.get-var(surface, secondary);
+  border-right: 1px solid common.get-var(border, primary);
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+}
 
-  .sidebar-header {
-    padding: common.get-var("spacing-md");
-    border-bottom: common.get-var("border-width") solid
-      common.get-var("color-border-primary");
-    background: common.get-var("color-surface-primary");
+.sidebar-header {
+  padding: common.get-var(space, lg) common.get-var(space, md);
+  border-bottom: 1px solid common.get-var(border, primary);
+  @include fonts.fontSizeBody(lg);
+  font-weight: 600;
+  color: common.get-var(text, primary);
+}
 
-    ta-title {
-      margin: 0;
-      color: common.get-var("color-text-primary");
-      font-size: common.get-var("font-size-lg");
-      font-weight: common.get-var("font-weight-semibold");
-    }
+.sidebar-nav {
+  padding: common.get-var(space, sm) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  text-decoration: none;
+  color: common.get-var(text, secondary);
+  @include fonts.fontSizeBody(md);
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: common.get-var(surface, hover);
+    color: common.get-var(text, primary);
   }
 
-  .nav-menu {
-    padding: common.get-var("spacing-md") 0;
+  &.active {
+    background: common.get-var(brand, 50);
+    color: common.get-var(text, brand);
+    font-weight: 600;
+  }
 
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: common.get-var("spacing-sm");
-      padding: common.get-var("spacing-sm") common.get-var("spacing-md");
-      text-decoration: none;
-      color: common.get-var("color-text-secondary");
-      transition: all common.get-var("transition-duration") ease;
-
-      &:hover {
-        background: common.get-var("color-surface-tertiary");
-        color: common.get-var("color-text-primary");
-      }
-
-      &.active {
-        background: common.get-var("color-primary");
-        color: common.get-var("color-text-inverse");
-      }
-
-      .material-icons {
-        font-size: common.get-var("font-size-lg");
-      }
-    }
+  .material-icons {
+    font-size: 20px;
   }
 }
 
-.main-content {
+.content {
   flex: 1;
-  padding: common.get-var("spacing-lg");
-  background: common.get-var("color-surface-primary");
   overflow-y: auto;
+  background: common.get-var(surface, primary);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: common.get-var(space, md);
+  border-top: 1px solid common.get-var(border, tertiary);
+}
+
+.theme-label {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, sm);
+  color: common.get-var(text, secondary);
+  @include fonts.fontSizeBody(sm);
+
+  .material-icons {
+    font-size: 18px;
+  }
+}
+
+.theme-select {
+  flex: 1;
+  padding: common.get-var(space, xs) common.get-var(space, sm);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, minimal);
+  background: common.get-var(surface, primary);
+  color: common.get-var(text, primary);
+  @include fonts.fontSizeBody(sm);
+  cursor: pointer;
+
+  &:focus {
+    outline: 2px solid common.get-var(brand, 500);
+    outline-offset: 1px;
+  }
 }

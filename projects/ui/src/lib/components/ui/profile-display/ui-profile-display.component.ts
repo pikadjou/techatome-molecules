@@ -3,12 +3,11 @@ import { FontIconComponent } from "@ta/icons";
 import { Component, input } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 
-import { UserLogoNaming } from "../public-api";
-import { UserLogoComponent } from "../user-logo/user-logo.component";
+import { UserLogoComponent, UserLogoData } from "../user-logo/user-logo.component";
 import { TitleComponent } from "../title/title.component";
 import { ButtonComponent } from "../button/button.component";
 
-import { CamTranslationUI } from "../../../translation.service";
+import { TaTranslationUI } from "../../../translation.service";
 
 @Component({
   selector: "ta-ui-profile-display",
@@ -29,7 +28,7 @@ export class UiProfileDisplayComponent {
   label = input.required<string>();
 
   userLogo = input<{
-    userInfo: { profilePictureUrl?: string; naming: UserLogoNaming };
+    user: UserLogoData;
     size?: number;
   } | undefined>(undefined);
 
@@ -45,6 +44,6 @@ export class UiProfileDisplayComponent {
   } | undefined>(undefined);
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
   }
 }

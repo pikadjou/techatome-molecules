@@ -469,10 +469,102 @@ color: var(--ta-text-primary);
 - **Partenaires** : les overrides de tokens se font dans `src/partners/[nom]/` — ne pas toucher aux vars de base
 - La **scrollbar** est stylisée globalement via les tokens (`space.sm`, `neutral.100`, `neutral.300`, `surface.brand.primary`)
 
-## 8. REVUE DE CODE
+## 8. THEMING PARTENAIRE
+
+Le système de theming permet aux partenaires de créer leur propre fichier de variables qui override les valeurs par défaut.
+
+### Fichiers clés
+
+| Fichier | Rôle |
+|---------|------|
+| `projects/styles/src/style/ta/_theme.scss` | Module de theming (mixin `apply-theme` + fonction `build-tokens`) |
+| `sass/partners/_theme.scss` | Thème actif (remplacé par `apply-skin.js`) |
+| `partners/{nom}/sass/_theme.scss` | Thème de chaque partenaire |
+| `partners/apply-skin.js` | Script qui copie le thème du partenaire dans `sass/partners/` |
+| `src/styles.scss` | Point d'entrée — importe `partners/theme` après `bases` |
+
+### API de theming
+
+**`apply-theme($overrides, $selector: ':root')`** — Mixin qui génère des CSS custom properties overridant les defaults via la cascade CSS.
+
+**`build-tokens($brand, $second, $neutral, $semantic)`** — Fonction qui recalcule automatiquement tous les tokens dérivés (icon, text, surface, border, semantic-token) à partir des foundations fournies.
+
+### Créer un thème partenaire
+
+1. Créer `partners/{nom}/sass/_theme.scss` :
+
+```scss
+@use 'sass:map';
+@use 'ta/theme';
+
+// build-tokens recalcule automatiquement les tokens (text, surface, icon, border)
+$_theme: map.merge(
+  theme.build-tokens(
+    $brand: (
+      900: #262D36, 800: #2f3742, 700: #3a434e, 600: #47515d, 500: #56616d,
+      400: #6e7884, 300: #8a939d, 200: #adb4bb, 100: #cdd2d7, 50: #ebedef,
+    ),
+    $second: (
+      900: #b45309, 800: #d97706, 700: #e88a08, 600: #f09609, 500: #f59e0b,
+      400: #f7b030, 300: #f9c258, 200: #fbd88a, 100: #fdeabc, 50: #fef7e6,
+    ),
+  ),
+  (
+    // Overrides granulaires de composants (optionnel)
+    components: (
+      button: (
+        secondary: (
+          color: #ffffff,
+          background: #f59e0b,
+          border: #f59e0b,
+        ),
+      ),
+    ),
+  ),
+);
+
+@include theme.apply-theme($_theme);
+```
+
+2. Appliquer le skin : `node partners/apply-skin.js {nom}`
+3. Lancer l'app : `yarn start`
+
+### Catégories d'overrides
+
+Le paramètre `$overrides` de `apply-theme` accepte les catégories suivantes :
+
+| Catégorie | Description | Exemple de clé |
+|-----------|-------------|----------------|
+| `brand` | Palette primaire (900-50) | `brand: (900: #262D36)` |
+| `second` | Palette secondaire (900-50) | `second: (500: #f59e0b)` |
+| `neutral` | Palette neutre | `neutral: (black: #1a1a2e)` |
+| `semantic` | Couleurs sémantiques | `semantic: (green: #22c55e)` |
+| `text` | Tokens de texte | `text: (brand: (primary: #262D36))` |
+| `surface` | Tokens de surface | `surface: (brand: (primary: #262D36))` |
+| `icon` | Tokens d'icône | `icon: (brand: (primary: #262D36))` |
+| `border` | Tokens de bordure | `border: (brand: (primary: #262D36))` |
+| `semantic-token` | Tokens sémantiques | `semantic-token: (link: #2563eb)` |
+| `space` | Espacements | `space: (md: 20px)` |
+| `radius` | Rayons de bordure | `radius: (rounded: 12px)` |
+| `shadow` | Ombres | `shadow: (black: (md: 0 4px 16px rgba(0,0,0,0.2)))` |
+| `font` | Typographie | `font: (family: ('Poppins', sans-serif))` |
+| `components` | Tokens de composants | `components: (button: (secondary: (...)))` |
+
+### Scoped themes
+
+Pour appliquer un thème à un scope CSS spécifique (dark mode, section, etc.) :
+
+```scss
+@include theme.apply-theme($dark-overrides, $selector: '.dark-theme');
+```
+
+---
+
+## 9. REVUE DE CODE
 
 - Aucune couleur hex hardcodée dans un composant — utiliser `common.get-var()` ou les classes `.color-*` / `.bgc-*`
 - Aucun `px` hardcodé pour spacing/radius — utiliser `common.get-var(space, ...)` ou `.p-space-*` / `.m-space-*`
 - Aucun `font-size` inline — utiliser `@include fonts.fontSizeBody()` / `@include fonts.fontSizeKey()`
 - Les media queries utilisent `@include mq.from()` / `@include mq.to()`
 - Import SCSS : `@use "ta/utils/mixins/common"` (pas de `@import` deprecated, pas de `@use ... as *`)
+- Les thèmes partenaires utilisent `apply-theme()` — ne jamais modifier `_vars.scss` directement

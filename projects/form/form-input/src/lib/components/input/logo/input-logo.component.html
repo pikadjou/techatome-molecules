@@ -4,7 +4,7 @@
   <div class="logo-wrapper">
     <div class="logo-preview" [class.has-value]="!!this.input.value" (click)="this.openDialog()">
       @if (this.input.value) {
-        <img [src]="this.input.value?.url" class="logo-image" />
+        <img [src]="this.input.value.url" class="logo-image" />
         <div class="logo-overlay">
           <ta-font-icon name="edit" type="md"></ta-font-icon>
         </div>

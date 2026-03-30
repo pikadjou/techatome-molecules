@@ -1,5 +1,5 @@
 import { HttpHeaders } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, Optional } from "@angular/core";
 
 import { filter, map } from "rxjs";
 
@@ -14,21 +14,25 @@ import { IStrapiConfig, STRAPI_SERVER_CONFIG } from "./config";
 })
 export class TaStrapiService extends TaBaseService {
   constructor(
-    @Inject(STRAPI_SERVER_CONFIG) private _strapiConfig: IStrapiConfig
+    @Optional()
+    @Inject(STRAPI_SERVER_CONFIG)
+    private _strapiConfig: IStrapiConfig | null
   ) {
     super();
 
-    const headers = new HttpHeaders({
-      authorization: `Bearer ${this._strapiConfig.token}`,
-    });
+    if (this._strapiConfig) {
+      const headers = new HttpHeaders({
+        authorization: `Bearer ${this._strapiConfig.token}`,
+      });
 
-    super.registerRoutes({
-      graphEndpoint: {
-        clientName: "strapi",
-        endpoint: this._strapiConfig.url,
-        headers: headers,
-      },
-    });
+      super.registerRoutes({
+        graphEndpoint: {
+          clientName: "strapi",
+          endpoint: this._strapiConfig.url,
+          headers: headers,
+        },
+      });
+    }
   }
 
   public fetchQuery$<T>(payload: GraphQueryPayload, node: string) {

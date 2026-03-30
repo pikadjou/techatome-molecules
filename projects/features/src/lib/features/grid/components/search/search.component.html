@@ -1,1 +1,6 @@
-<ta-input-textbox [input]="this.input" (valueChanged)="this.valueChanged($event)"></ta-input-textbox>
+<ta-search-field
+  [input]="this.searchInput"
+  [isOpen]="true"
+  [placeholder]="this.placeholder()"
+  (valueCompleted)="this.valueChanged($event)"
+></ta-search-field>

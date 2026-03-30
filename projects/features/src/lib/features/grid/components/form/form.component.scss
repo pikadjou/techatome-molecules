@@ -1,0 +1,38 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+
+:host {
+  display: block;
+}
+
+.grid-form {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+
+  &__header {
+    padding-bottom: common.get-var(space, sm);
+    border-bottom: 1px solid common.get-var(border, secondary);
+
+    ta-font-icon {
+      color: common.get-var(icon, brand, primary);
+    }
+  }
+
+  &__body {
+    @include flex.flex-column();
+    gap: common.get-var(space, md);
+  }
+
+  &__section {
+    padding: common.get-var(space, md);
+    background: common.get-var(surface, secondary);
+    border-radius: common.get-var(radius, rounded);
+  }
+
+  &__footer {
+    @include flex.simple-flex();
+    justify-content: flex-end;
+    padding-top: common.get-var(space, sm);
+    border-top: 1px solid common.get-var(border, secondary);
+  }
+}

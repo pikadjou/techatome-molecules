@@ -1,0 +1,391 @@
+<app-page-layout title="Theme Colors">
+  <div class="sections">
+
+    <!-- ======================== -->
+    <!-- FOUNDATIONS              -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Brand</ta-title>
+      <ta-text size="sm">common.get-var(brand, 900..50)</ta-text>
+      <div class="palette-row">
+        <div class="swatch swatch--brand-900"><span>900</span></div>
+        <div class="swatch swatch--brand-800"><span>800</span></div>
+        <div class="swatch swatch--brand-700"><span>700</span></div>
+        <div class="swatch swatch--brand-600"><span>600</span></div>
+        <div class="swatch swatch--brand-500"><span>500</span></div>
+        <div class="swatch swatch--brand-400"><span>400</span></div>
+        <div class="swatch swatch--brand-300"><span>300</span></div>
+        <div class="swatch swatch--brand-200"><span>200</span></div>
+        <div class="swatch swatch--brand-100"><span>100</span></div>
+        <div class="swatch swatch--brand-50"><span>50</span></div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Second</ta-title>
+      <ta-text size="sm">common.get-var(second, 900..50)</ta-text>
+      <div class="palette-row">
+        <div class="swatch swatch--second-900"><span>900</span></div>
+        <div class="swatch swatch--second-800"><span>800</span></div>
+        <div class="swatch swatch--second-700"><span>700</span></div>
+        <div class="swatch swatch--second-600"><span>600</span></div>
+        <div class="swatch swatch--second-500"><span>500</span></div>
+        <div class="swatch swatch--second-400"><span>400</span></div>
+        <div class="swatch swatch--second-300"><span>300</span></div>
+        <div class="swatch swatch--second-200"><span>200</span></div>
+        <div class="swatch swatch--second-100"><span>100</span></div>
+        <div class="swatch swatch--second-50"><span>50</span></div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Neutral</ta-title>
+      <ta-text size="sm">common.get-var(neutral, black..white)</ta-text>
+      <div class="palette-row">
+        <div class="swatch swatch--neutral-black"><span>black</span></div>
+        <div class="swatch swatch--neutral-700"><span>700</span></div>
+        <div class="swatch swatch--neutral-600"><span>600</span></div>
+        <div class="swatch swatch--neutral-500"><span>500</span></div>
+        <div class="swatch swatch--neutral-400"><span>400</span></div>
+        <div class="swatch swatch--neutral-300"><span>300</span></div>
+        <div class="swatch swatch--neutral-200"><span>200</span></div>
+        <div class="swatch swatch--neutral-100"><span>100</span></div>
+        <div class="swatch swatch--neutral-white"><span>white</span></div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Semantic</ta-title>
+      <ta-text size="sm">common.get-var(semantic, red|orange|yellow|green)</ta-text>
+      <div class="palette-row">
+        <div class="swatch swatch--semantic-red"><span>red</span></div>
+        <div class="swatch swatch--semantic-orange"><span>orange</span></div>
+        <div class="swatch swatch--semantic-yellow"><span>yellow</span></div>
+        <div class="swatch swatch--semantic-green"><span>green</span></div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- TOKENS                   -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Text Tokens</ta-title>
+      <ta-text size="sm">common.get-var(text, ...)</ta-text>
+      <div class="token-grid">
+        <div class="token-item">
+          <div class="token-sample text-token--primary">Aa</div>
+          <ta-text size="sm">text, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--secondary">Aa</div>
+          <ta-text size="sm">text, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--tertiary">Aa</div>
+          <ta-text size="sm">text, tertiary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--body">Aa</div>
+          <ta-text size="sm">text, body</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--brand-primary">Aa</div>
+          <ta-text size="sm">text, brand, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--brand-secondary">Aa</div>
+          <ta-text size="sm">text, brand, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--link">Aa</div>
+          <ta-text size="sm">text, link</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--success">Aa</div>
+          <ta-text size="sm">text, success</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--warning">Aa</div>
+          <ta-text size="sm">text, warning</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--alert">Aa</div>
+          <ta-text size="sm">text, alert</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-sample text-token--invert-primary">Aa</div>
+          <ta-text size="sm">text, invert, primary</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Surface Tokens</ta-title>
+      <ta-text size="sm">common.get-var(surface, ...)</ta-text>
+      <div class="token-grid">
+        <div class="token-item">
+          <div class="token-swatch surface-token--default"></div>
+          <ta-text size="sm">surface, default</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--primary"></div>
+          <ta-text size="sm">surface, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--secondary"></div>
+          <ta-text size="sm">surface, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--tertiary"></div>
+          <ta-text size="sm">surface, tertiary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--brand-primary"></div>
+          <ta-text size="sm">surface, brand, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--brand-secondary"></div>
+          <ta-text size="sm">surface, brand, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--brand-tertiary"></div>
+          <ta-text size="sm">surface, brand, tertiary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--hover-primary"></div>
+          <ta-text size="sm">surface, hover, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--hover-secondary"></div>
+          <ta-text size="sm">surface, hover, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--invert"></div>
+          <ta-text size="sm">surface, invert</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--success"></div>
+          <ta-text size="sm">surface, success</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--warning"></div>
+          <ta-text size="sm">surface, warning</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch surface-token--alert"></div>
+          <ta-text size="sm">surface, alert</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Border Tokens</ta-title>
+      <ta-text size="sm">common.get-var(border, ...)</ta-text>
+      <div class="token-grid">
+        <div class="token-item">
+          <div class="token-swatch border-token--primary"></div>
+          <ta-text size="sm">border, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--secondary"></div>
+          <ta-text size="sm">border, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--tertiary"></div>
+          <ta-text size="sm">border, tertiary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--brand-primary"></div>
+          <ta-text size="sm">border, brand, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--brand-secondary"></div>
+          <ta-text size="sm">border, brand, secondary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--hover-primary"></div>
+          <ta-text size="sm">border, hover, primary</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--disabled"></div>
+          <ta-text size="sm">border, disabled</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--success"></div>
+          <ta-text size="sm">border, success</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch border-token--alert"></div>
+          <ta-text size="sm">border, alert</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- SPACING                  -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Spacing</ta-title>
+      <ta-text size="sm">common.get-var(space, ...)</ta-text>
+      <div class="spacing-list">
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">xs (4px)</ta-text>
+          <div class="spacing-bar spacing--xs"></div>
+        </div>
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">sm (8px)</ta-text>
+          <div class="spacing-bar spacing--sm"></div>
+        </div>
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">md (16px)</ta-text>
+          <div class="spacing-bar spacing--md"></div>
+        </div>
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">lg (24px)</ta-text>
+          <div class="spacing-bar spacing--lg"></div>
+        </div>
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">xl (32px)</ta-text>
+          <div class="spacing-bar spacing--xl"></div>
+        </div>
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">xxl (48px)</ta-text>
+          <div class="spacing-bar spacing--xxl"></div>
+        </div>
+        <div class="spacing-item">
+          <ta-text size="sm" [isBold]="true">xxxl (104px)</ta-text>
+          <div class="spacing-bar spacing--xxxl"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- BORDER RADIUS            -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Border Radius</ta-title>
+      <ta-text size="sm">common.get-var(radius, ...)</ta-text>
+      <div class="token-grid">
+        <div class="token-item">
+          <div class="radius-swatch radius--minimal"></div>
+          <ta-text size="sm">minimal (4px)</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="radius-swatch radius--rounded"></div>
+          <ta-text size="sm">rounded (8px)</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="radius-swatch radius--label"></div>
+          <ta-text size="sm">label (16px)</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="radius-swatch radius--full"></div>
+          <ta-text size="sm">full (40px)</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- SHADOWS                  -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Shadows</ta-title>
+      <ta-text size="sm">common.get-var(shadow, ...)</ta-text>
+      <div class="token-grid">
+        <div class="token-item">
+          <div class="shadow-swatch shadow--black-sm"></div>
+          <ta-text size="sm">shadow, black, sm</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="shadow-swatch shadow--black-md"></div>
+          <ta-text size="sm">shadow, black, md</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="shadow-swatch shadow--black-lg"></div>
+          <ta-text size="sm">shadow, black, lg</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="shadow-swatch shadow--brand-sm"></div>
+          <ta-text size="sm">shadow, brand, sm</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="shadow-swatch shadow--brand-md"></div>
+          <ta-text size="sm">shadow, brand, md</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="shadow-swatch shadow--brand-lg"></div>
+          <ta-text size="sm">shadow, brand, lg</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- TYPOGRAPHY               -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Typography</ta-title>
+      <ta-text size="sm">fonts.fontSizeHeader / fontSizeBody / fontSizeKey</ta-text>
+      <div class="typo-list">
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeHeader(h1)</ta-text>
+          <div class="typo-sample typo--h1">Heading 1</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeHeader(h2)</ta-text>
+          <div class="typo-sample typo--h2">Heading 2</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeHeader(h3)</ta-text>
+          <div class="typo-sample typo--h3">Heading 3</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeHeader(h4)</ta-text>
+          <div class="typo-sample typo--h4">Heading 4</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeBody(md)</ta-text>
+          <div class="typo-sample typo--body-md">Body medium</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeBody(sm)</ta-text>
+          <div class="typo-sample typo--body-sm">Body small</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeBody(xs)</ta-text>
+          <div class="typo-sample typo--body-xs">Body extra small</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeKey(xl)</ta-text>
+          <div class="typo-sample typo--key-xl">42</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeKey(lg)</ta-text>
+          <div class="typo-sample typo--key-lg">128</div>
+        </div>
+        <div class="typo-item">
+          <ta-text size="sm">fontSizeKey(md)</ta-text>
+          <div class="typo-sample typo--key-md">256</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- TRANSITIONS              -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Transitions</ta-title>
+      <ta-text size="sm">common.get-var(transition, ...)</ta-text>
+      <div class="token-grid">
+        <div class="token-item">
+          <div class="transition-swatch transition--fast">Hover me</div>
+          <ta-text size="sm">transition, fast</ta-text>
+        </div>
+        <div class="token-item">
+          <div class="transition-swatch transition--slow">Hover me</div>
+          <ta-text size="sm">transition, slow</ta-text>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</app-page-layout>

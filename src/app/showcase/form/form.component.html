@@ -1,0 +1,14 @@
+<app-page-layout title="Form System">
+  <div class="form-showcase">
+    <div class="form-area">
+      <ta-form [inputs]="this.inputs" (valid)="this.onSubmit($event)"></ta-form>
+    </div>
+
+    @if (this.formResult()) {
+    <div class="result-area">
+      <ta-title [level]="3">Form Output</ta-title>
+      <pre>{{ this.formResult() | json }}</pre>
+    </div>
+    }
+  </div>
+</app-page-layout>

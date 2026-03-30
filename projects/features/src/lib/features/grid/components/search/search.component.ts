@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 
-import { TextBoxComponent } from '@ta/form-input';
+import { SearchFieldComponent } from '@ta/form-input';
 import { InputTextBox } from '@ta/form-model';
 
 import { Filter } from '../../models/types';
@@ -11,21 +11,18 @@ import { TaAbstractGridComponent } from '../abstract.component';
 @Component({
   selector: 'ta-grid-search',
   standalone: true,
-  imports: [TextBoxComponent],
+  imports: [SearchFieldComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
 export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
   outOfBox = input<boolean>(false);
+  placeholder = input<string>('grid.search.placeholder');
 
-  public input = new InputTextBox();
+  public searchInput = new InputTextBox();
 
   private _session = inject(TaGridSessionService);
 
-  constructor() {
-    super();
-    this.input.createFormControl();
-  }
   public valueChanged(value: string) {
     const filters: Filter[] = [
       {

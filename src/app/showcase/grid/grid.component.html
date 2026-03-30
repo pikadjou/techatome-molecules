@@ -1,0 +1,47 @@
+<app-page-layout title="Grid Feature">
+  <ta-grid-container
+    [gridId]="this.gridId"
+    [initialData]="this.data"
+    [colsMetaData]="this.cols"
+    [preset]="this.presets"
+  >
+    <div class="grid-toolbar">
+      <ta-grid-search [gridId]="this.gridId"></ta-grid-search>
+      <ta-grid-control
+        [gridId]="this.gridId"
+        [show]="{ switchView: true, filters: true, preset: true }"
+      ></ta-grid-control>
+    </div>
+
+    <ta-grid-form [gridId]="this.gridId"></ta-grid-form>
+    <ta-grid-tags [gridId]="this.gridId"></ta-grid-tags>
+
+    <ta-grid [gridId]="this.gridId" [cardTemplate]="cardTpl" (rowClicked)="this.onRowClick($event)"></ta-grid>
+
+    <ng-template #cardTpl let-items="items">
+      <div class="card-grid">
+        @for (item of items; track item.id) {
+          <div class="product-card" (click)="this.onRowClick(item)">
+            <div class="space-between align-center">
+              <strong>{{ item.name }}</strong>
+              <ta-badge
+                [value]="item.available ? 'In Stock' : 'Out'"
+                [type]="item.available ? 'success' : 'danger'"
+              ></ta-badge>
+            </div>
+            <ta-text size="sm">{{ item.category }} — {{ item.price }} EUR</ta-text>
+          </div>
+        }
+      </div>
+    </ng-template>
+  </ta-grid-container>
+
+  @if (this.selected()) {
+    <div class="detail-panel">
+      <ta-title [level]="3">{{ this.selected()!.name }}</ta-title>
+      <ta-text>Category: {{ this.selected()!.category }}</ta-text>
+      <ta-text>Price: {{ this.selected()!.price }} EUR</ta-text>
+      <ta-text>Stock: {{ this.selected()!.stock }}</ta-text>
+    </div>
+  }
+</app-page-layout>

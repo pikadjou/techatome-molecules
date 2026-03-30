@@ -1,6 +1,7 @@
 {
   "name": "@ta/features",
   "version": "0.0.0",
+  "main": "./dist",
   "scripts": {
     "build": "ng build @ta/features"
   },

@@ -1,35 +1,35 @@
-@if (this.sideIcon) {
+@if (this.sideIcon()) {
 <div class="ta-r">
   <ta-button
     [options]="{ circular: 'small' }"
     [style]="'secondary'"
-    (action)="sideIcon.callback()"
+    (action)="this.sideIcon()?.callback()"
   >
-    <ta-font-icon [name]="this.sideIcon.icon"></ta-font-icon>
+    <ta-font-icon [name]="this.sideIcon()!.icon"></ta-font-icon>
   </ta-button>
 </div>
 }
 
 <div class="profile">
-  @if (this.userLogo) {
+  @if (this.userLogo()) {
   <div class="ta-c">
     <ta-user-logo
       class="justify-center"
-      [userInfo]="this.userLogo.userInfo"
+      [user]="this.userLogo()!.user"
       size="lg"
     ></ta-user-logo>
   </div>
   }
 
   <div class="ta-c mx-a">
-    <ta-title [level]="2">{{ this.label }}</ta-title>
+    <ta-title [level]="2">{{ this.label() }}</ta-title>
   </div>
 
   <ng-content></ng-content>
 
-  @if (this.ctas) {
+  @if (this.ctas()) {
   <div class="align-center justify-content-around pt-space-xxl">
-    @for (cta of this.ctas; track cta) {
+    @for (cta of this.ctas(); track cta) {
     <div>
       <ta-button (action)="cta?.callback()" size="large">
         <div class="align-center">

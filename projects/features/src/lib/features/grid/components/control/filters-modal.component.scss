@@ -1,0 +1,29 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+
+.filters-modal {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+
+  &__header {
+    @include flex.space-between();
+    @include flex.align-center();
+    padding: common.get-var(space, md) common.get-var(space, md) common.get-var(space, sm);
+    border-bottom: 1px solid common.get-var(border, secondary);
+
+    ta-font-icon {
+      color: common.get-var(icon, brand, primary);
+    }
+  }
+
+  &__content {
+    padding: 0 common.get-var(space, md);
+  }
+
+  &__footer {
+    @include flex.simple-flex();
+    justify-content: flex-end;
+    padding: common.get-var(space, sm) common.get-var(space, md) common.get-var(space, md);
+    border-top: 1px solid common.get-var(border, secondary);
+  }
+}

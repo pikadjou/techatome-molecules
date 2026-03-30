@@ -1,0 +1,283 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+}
+
+// ============================
+// Foundation palette swatches
+// ============================
+.palette-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: common.get-var(space, xs);
+}
+
+.swatch {
+  width: 72px;
+  height: 72px;
+  border-radius: common.get-var(radius, rounded);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: common.get-var(space, xs);
+  border: 1px solid common.get-var(border, tertiary);
+
+  span {
+    @include fonts.fontSizeBody(xs);
+    font-weight: 600;
+    color: common.get-var(neutral, white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+// Brand
+.swatch--brand-900 { background-color: common.get-var(brand, 900); }
+.swatch--brand-800 { background-color: common.get-var(brand, 800); }
+.swatch--brand-700 { background-color: common.get-var(brand, 700); }
+.swatch--brand-600 { background-color: common.get-var(brand, 600); }
+.swatch--brand-500 { background-color: common.get-var(brand, 500); }
+.swatch--brand-400 { background-color: common.get-var(brand, 400); }
+.swatch--brand-300 { background-color: common.get-var(brand, 300); }
+.swatch--brand-200 { background-color: common.get-var(brand, 200); }
+.swatch--brand-100 { background-color: common.get-var(brand, 100); }
+.swatch--brand-50  { background-color: common.get-var(brand, 50); span { color: common.get-var(text, primary); text-shadow: none; } }
+
+// Second
+.swatch--second-900 { background-color: common.get-var(second, 900); }
+.swatch--second-800 { background-color: common.get-var(second, 800); }
+.swatch--second-700 { background-color: common.get-var(second, 700); }
+.swatch--second-600 { background-color: common.get-var(second, 600); }
+.swatch--second-500 { background-color: common.get-var(second, 500); }
+.swatch--second-400 { background-color: common.get-var(second, 400); }
+.swatch--second-300 { background-color: common.get-var(second, 300); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--second-200 { background-color: common.get-var(second, 200); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--second-100 { background-color: common.get-var(second, 100); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--second-50  { background-color: common.get-var(second, 50); span { color: common.get-var(text, primary); text-shadow: none; } }
+
+// Neutral
+.swatch--neutral-black { background-color: common.get-var(neutral, black); }
+.swatch--neutral-700   { background-color: common.get-var(neutral, 700); }
+.swatch--neutral-600   { background-color: common.get-var(neutral, 600); }
+.swatch--neutral-500   { background-color: common.get-var(neutral, 500); }
+.swatch--neutral-400   { background-color: common.get-var(neutral, 400); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--neutral-300   { background-color: common.get-var(neutral, 300); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--neutral-200   { background-color: common.get-var(neutral, 200); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--neutral-100   { background-color: common.get-var(neutral, 100); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--neutral-white { background-color: common.get-var(neutral, white); span { color: common.get-var(text, primary); text-shadow: none; } }
+
+// Semantic
+.swatch--semantic-red    { background-color: common.get-var(semantic, red); }
+.swatch--semantic-orange { background-color: common.get-var(semantic, orange); }
+.swatch--semantic-yellow { background-color: common.get-var(semantic, yellow); span { color: common.get-var(text, primary); text-shadow: none; } }
+.swatch--semantic-green  { background-color: common.get-var(semantic, green); }
+
+// ============================
+// Token demos
+// ============================
+.token-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: common.get-var(space, md);
+}
+
+.token-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: common.get-var(space, xs);
+}
+
+// Text tokens
+.token-sample {
+  width: 72px;
+  height: 72px;
+  border-radius: common.get-var(radius, rounded);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include fonts.fontSizeKey(lg);
+  font-weight: 700;
+  background-color: common.get-var(surface, secondary);
+  border: 1px solid common.get-var(border, tertiary);
+}
+
+.text-token--primary         { color: common.get-var(text, primary); }
+.text-token--secondary       { color: common.get-var(text, secondary); }
+.text-token--tertiary        { color: common.get-var(text, tertiary); }
+.text-token--body            { color: common.get-var(text, body); }
+.text-token--brand-primary   { color: common.get-var(text, brand, primary); }
+.text-token--brand-secondary { color: common.get-var(text, brand, secondary); }
+.text-token--link            { color: common.get-var(text, link); }
+.text-token--success         { color: common.get-var(text, success); }
+.text-token--warning         { color: common.get-var(text, warning); }
+.text-token--alert           { color: common.get-var(text, alert); }
+.text-token--invert-primary  {
+  color: common.get-var(text, invert, primary);
+  background-color: common.get-var(surface, brand, primary);
+  border-color: common.get-var(surface, brand, primary);
+}
+
+// Surface tokens
+.token-swatch {
+  width: 72px;
+  height: 72px;
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, tertiary);
+}
+
+.surface-token--default         { background-color: common.get-var(surface, default); }
+.surface-token--primary         { background-color: common.get-var(surface, primary); }
+.surface-token--secondary       { background-color: common.get-var(surface, secondary); }
+.surface-token--tertiary        { background-color: common.get-var(surface, tertiary); }
+.surface-token--brand-primary   { background-color: common.get-var(surface, brand, primary); }
+.surface-token--brand-secondary { background-color: common.get-var(surface, brand, secondary); }
+.surface-token--brand-tertiary  { background-color: common.get-var(surface, brand, tertiary); }
+.surface-token--hover-primary   { background-color: common.get-var(surface, hover, primary); }
+.surface-token--hover-secondary { background-color: common.get-var(surface, hover, secondary); }
+.surface-token--invert          { background-color: common.get-var(surface, invert); }
+.surface-token--success         { background-color: common.get-var(surface, success); }
+.surface-token--warning         { background-color: common.get-var(surface, warning); }
+.surface-token--alert           { background-color: common.get-var(surface, alert); }
+
+// Border tokens
+.border-token--primary        { border: 3px solid common.get-var(border, primary); }
+.border-token--secondary      { border: 3px solid common.get-var(border, secondary); }
+.border-token--tertiary       { border: 3px solid common.get-var(border, tertiary); }
+.border-token--brand-primary  { border: 3px solid common.get-var(border, brand, primary); }
+.border-token--brand-secondary { border: 3px solid common.get-var(border, brand, secondary); }
+.border-token--hover-primary  { border: 3px solid common.get-var(border, hover, primary); }
+.border-token--disabled       { border: 3px solid common.get-var(border, disabled); }
+.border-token--success        { border: 3px solid common.get-var(border, success); }
+.border-token--alert          { border: 3px solid common.get-var(border, alert); }
+
+// ============================
+// Spacing
+// ============================
+.spacing-list {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, sm);
+}
+
+.spacing-item {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, md);
+}
+
+.spacing-bar {
+  height: common.get-var(space, lg);
+  border-radius: common.get-var(radius, minimal);
+  background-color: common.get-var(surface, brand, secondary);
+}
+
+.spacing--xs   { width: common.get-var(space, xs); }
+.spacing--sm   { width: common.get-var(space, sm); }
+.spacing--md   { width: common.get-var(space, md); }
+.spacing--lg   { width: common.get-var(space, lg); }
+.spacing--xl   { width: common.get-var(space, xl); }
+.spacing--xxl  { width: common.get-var(space, xxl); }
+.spacing--xxxl { width: common.get-var(space, xxxl); }
+
+// ============================
+// Border radius
+// ============================
+.radius-swatch {
+  width: 80px;
+  height: 80px;
+  background-color: common.get-var(surface, brand, primary);
+  border: 2px solid common.get-var(border, brand, secondary);
+}
+
+.radius--minimal { border-radius: common.get-var(radius, minimal); }
+.radius--rounded { border-radius: common.get-var(radius, rounded); }
+.radius--label   { border-radius: common.get-var(radius, label); }
+.radius--full    { border-radius: common.get-var(radius, full); }
+
+// ============================
+// Shadows
+// ============================
+.shadow-swatch {
+  width: 100px;
+  height: 80px;
+  border-radius: common.get-var(radius, rounded);
+  background-color: common.get-var(surface, primary);
+}
+
+.shadow--black-sm { box-shadow: common.get-var(shadow, black, sm); }
+.shadow--black-md { box-shadow: common.get-var(shadow, black, md); }
+.shadow--black-lg { box-shadow: common.get-var(shadow, black, lg); }
+.shadow--brand-sm { box-shadow: common.get-var(shadow, brand, sm); }
+.shadow--brand-md { box-shadow: common.get-var(shadow, brand, md); }
+.shadow--brand-lg { box-shadow: common.get-var(shadow, brand, lg); }
+
+// ============================
+// Typography
+// ============================
+.typo-list {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+}
+
+.typo-item {
+  display: flex;
+  align-items: baseline;
+  gap: common.get-var(space, lg);
+}
+
+.typo-sample {
+  color: common.get-var(text, primary);
+}
+
+.typo--h1      { @include fonts.fontSizeHeader(h1); }
+.typo--h2      { @include fonts.fontSizeHeader(h2); }
+.typo--h3      { @include fonts.fontSizeHeader(h3); }
+.typo--h4      { @include fonts.fontSizeHeader(h4); }
+.typo--body-md { @include fonts.fontSizeBody(md); }
+.typo--body-sm { @include fonts.fontSizeBody(sm); }
+.typo--body-xs { @include fonts.fontSizeBody(xs); }
+.typo--key-xl  { @include fonts.fontSizeKey(xl); font-weight: 600; }
+.typo--key-lg  { @include fonts.fontSizeKey(lg); font-weight: 600; }
+.typo--key-md  { @include fonts.fontSizeKey(md); font-weight: 600; }
+
+// ============================
+// Transitions
+// ============================
+.transition-swatch {
+  width: 100px;
+  height: 80px;
+  border-radius: common.get-var(radius, rounded);
+  background-color: common.get-var(surface, secondary);
+  border: 2px solid common.get-var(border, tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, secondary);
+  cursor: pointer;
+
+  &:hover {
+    background-color: common.get-var(surface, brand, secondary);
+    color: common.get-var(text, invert, primary);
+    border-color: common.get-var(border, brand, secondary);
+  }
+}
+
+.transition--fast {
+  transition: all common.get-var(transition, fast) ease-in-out;
+}
+
+.transition--slow {
+  transition: all common.get-var(transition, slow) ease-in-out;
+}

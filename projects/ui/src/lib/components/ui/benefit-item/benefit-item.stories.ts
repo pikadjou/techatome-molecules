@@ -11,7 +11,7 @@ const meta: Meta<BenefitItemComponent> = {
   argTypes: {
     type: {
       control: { type: "select" },
-      options: ["success", "warning", "error"],
+      options: ["success", "warning", "alert"],
     },
     text: {
       control: { type: "text" },
@@ -38,7 +38,7 @@ export const Warning: StoryObj<BenefitItemComponent> = {
 
 export const Error: StoryObj<BenefitItemComponent> = {
   args: {
-    type: "error",
+    type: "alert",
     text: "Accès restreint aux données sensibles",
   },
 };
@@ -49,7 +49,7 @@ export const AllTypes: StoryObj<BenefitItemComponent> = {
       <div style="width: 400px; display: flex; flex-direction: column; gap: 16px;">
         <ta-benefit-item type="success" text="Accès complet aux fonctionnalités"></ta-benefit-item>
         <ta-benefit-item type="warning" text="Certaines fonctionnalités sont limitées"></ta-benefit-item>
-        <ta-benefit-item type="error" text="Accès restreint aux données sensibles"></ta-benefit-item>
+        <ta-benefit-item type="alert" text="Accès restreint aux données sensibles"></ta-benefit-item>
       </div>
     `,
   }),

@@ -1,36 +1,45 @@
 @if (this.isReady$ | async) {
-  <div class="d-flex">
+  <div class="grid-control">
     @if (this.show().filters) {
-      <div class="grid-control-container ml-space-xs c-pointer">
-        <div (click)="this.openFilters()" class="trigger">
-          <mat-icon>filter_list</mat-icon>
-        </div>
-      </div>
+      <ta-button
+        icon="filter"
+        type="secondary"
+        [options]="{ circular: 'small' }"
+        (action)="this.openFilters()"
+      ></ta-button>
     }
-    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {
-      <div class="grid-control-container ml-space-xs c-pointer">
-        <div [matMenuTriggerFor]="menu" class="trigger">
-          <mat-icon>visibility</mat-icon>
-        </div>
-      </div>
-      <mat-menu #menu="matMenu">
-        @for (preset of this.grid.filters?.preset; track preset.name) {
-          <button mat-menu-item (click)="this.setPreset(preset)">
-            <span>{{ preset.name }}</span>
-          </button>
-        }
-      </mat-menu>
-    }
-    @if (this.show().switchView) {
-      <div class="grid-control-container ml-space-xs c-pointer">
-        <div (click)="this.switchView('grid')" class="trigger" [class.active]="this.displayType() === 'grid'">
-          <mat-icon>list</mat-icon>
-        </div>
-        <div class="sep"></div>
 
-        <div (click)="this.switchView('card')" class="trigger" [class.active]="this.displayType() === 'card'">
-          <mat-icon>grid_view</mat-icon>
-        </div>
+    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {
+      <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
+        <ng-template #panelTrigger>
+          <ta-button type="secondary" icon="tune" [options]="{ circular: 'small' }"></ta-button>
+        </ng-template>
+        <ng-template #panelContent>
+          <div class="preset-menu">
+            @for (preset of this.grid.filters?.preset; track preset.name) {
+              <div class="preset-menu__item c-pointer" (click)="this.setPreset(preset)">
+                {{ preset.name }}
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-overlay-panel>
+    }
+
+    @if (this.show().switchView) {
+      <div class="grid-control__toggle">
+        <ta-button
+          icon="view_list"
+          [type]="this.displayType() === 'grid' ? 'primary' : 'tertiary'"
+          [options]="{ circular: 'small', border: this.displayType() !== 'grid' }"
+          (action)="this.switchView('grid')"
+        ></ta-button>
+        <ta-button
+          icon="grid_view"
+          [type]="this.displayType() === 'card' ? 'primary' : 'tertiary'"
+          [options]="{ circular: 'small', border: this.displayType() !== 'card' }"
+          (action)="this.switchView('card')"
+        ></ta-button>
       </div>
     }
   </div>

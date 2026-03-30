@@ -4,9 +4,13 @@ import { Component, input } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { TaSizes } from "@ta/styles";
 
-import { CamTranslationUI } from "../../../translation.service";
-import { UserLogoNaming } from "../user-logo/user-logo.component";
-import { UserLogoComponent } from "../user-logo/user-logo.component";
+import { TaTranslationUI } from "../../../translation.service";
+import { UserLogoComponent, UserLogoData } from "../user-logo/user-logo.component";
+
+export interface UserLogoNaming {
+  firstName?: string;
+  name?: string;
+}
 
 @Component({
   selector: "ta-hello-user",
@@ -25,6 +29,16 @@ export class HelloUserComponent {
   footer = input<string | undefined>(undefined);
 
   constructor() {
-    CamTranslationUI.getInstance();
+    TaTranslationUI.getInstance();
+  }
+
+  public getUserLogoData(): UserLogoData | null {
+    const info = this.userInfo();
+    if (!info?.naming) return null;
+    return {
+      firstname: info.naming.firstName ?? '',
+      lastname: info.naming.name ?? '',
+      picture: info.profilePictureUrl,
+    };
   }
 }

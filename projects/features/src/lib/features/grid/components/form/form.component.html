@@ -1,22 +1,40 @@
-<div>
-  <ta-title [level]="2">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>
-</div>
+<div class="grid-form">
+  @if (this.showTitle()) {
+    <div class="grid-form__header">
+      <div class="flex-row align-center g-space-sm">
+        <ta-font-icon name="filter" size="sm"></ta-font-icon>
+        <ta-title [level]="3">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>
+      </div>
+    </div>
+  }
 
-<div class="space-between">
-  <div>
-    <ta-form
-      [inputs]="this.filtersForm()"
-      (valid)="this.applyFilters($event)"
-      [askOnDestroy]="true"
-      [canDisplayButton]="false"
-    ></ta-form>
+  <div class="grid-form__body">
+    <div class="grid-form__section">
+      <ta-form
+        [inputs]="this.filtersForm()"
+        (valid)="this.applyFilters($event)"
+        [askOnDestroy]="true"
+        [canDisplayButton]="false"
+      ></ta-form>
+    </div>
+
+    @if (this.groupForm().length > 0) {
+      <div class="grid-form__section">
+        <ta-form
+          [inputs]="this.groupForm()"
+          (valid)="this.applyGroup($event)"
+          [askOnDestroy]="true"
+          [canDisplayButton]="false"
+        ></ta-form>
+      </div>
+    }
   </div>
-  <div>
-    <ta-form
-      [inputs]="this.groupForm()"
-      (valid)="this.applyGroup($event)"
-      [askOnDestroy]="true"
-      [canDisplayButton]="false"
-    ></ta-form>
-  </div>
+
+  @if (this.showReset()) {
+    <div class="grid-form__footer">
+      <ta-button type="secondary" (action)="this.reset()">
+        {{ 'grid.form.reset' | translate }}
+      </ta-button>
+    </div>
+  }
 </div>

@@ -6,9 +6,17 @@ import { map } from "rxjs";
 
 import { FileListComponent } from "@ta/files-basic";
 import { DualButtonComponent } from "@ta/ui";
-import { FileData, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
+import { FileData, FileStructure, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
 
-import { DialogData } from "../input-images.component";
+import { Observable } from "rxjs";
+
+export interface DialogData {
+  selection: string[];
+  input: {
+    files$?: Observable<FileData[]>;
+    update?: (files: FileStructure[]) => void;
+  };
+}
 
 @Component({
   selector: "",

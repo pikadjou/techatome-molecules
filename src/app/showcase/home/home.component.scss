@@ -1,0 +1,52 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: common.get-var(space, lg);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, lg);
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, rounded);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-icon {
+  font-size: 32px;
+  color: common.get-var(text, brand);
+}
+
+.card-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xs);
+
+  strong {
+    @include fonts.fontSizeBody(lg);
+    color: common.get-var(text, primary);
+  }
+
+  span {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, secondary);
+  }
+}
+
+.card-arrow {
+  color: common.get-var(text, tertiary);
+}

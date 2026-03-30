@@ -1,10 +1,20 @@
-const fs = require("fs");
+import fs from "fs";
 
 const skin = process.argv[2];
 
 if (!skin) {
-  console.log("no skin");
-  return;
+  console.log("no skin specified, ensuring default partner theme exists");
+  const destDir = "sass/partners";
+  const destFile = `${destDir}/_theme.scss`;
+  if (!fs.existsSync(destFile)) {
+    fs.mkdirSync(destDir, { recursive: true });
+    fs.writeFileSync(
+      destFile,
+      "// Default partner theme - no overrides.\n"
+    );
+    console.log("created default partner theme");
+  }
+  process.exit(0);
 }
 
 /**

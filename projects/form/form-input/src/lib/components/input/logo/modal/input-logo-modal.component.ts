@@ -6,9 +6,17 @@ import { map } from "rxjs";
 import { FontIconComponent } from "@ta/icons";
 import { TranslatePipe } from "@ta/translation";
 import { ButtonComponent, DualButtonComponent, TitleComponent } from "@ta/ui";
-import { FileData, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
+import { FileData, FileStructure, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
 
-import { LogoDialogData } from "../input-logo.component";
+import { Observable } from "rxjs";
+
+export interface LogoDialogData {
+  selection: string | null;
+  input: {
+    availableFile$?: Observable<FileData>;
+    update?: (file: FileStructure) => void;
+  };
+}
 
 @Component({
   selector: "",

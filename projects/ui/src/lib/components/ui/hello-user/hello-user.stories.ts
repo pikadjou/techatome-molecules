@@ -9,7 +9,13 @@ export default {
   render: (args) => ({ props: args }),
   args: {
     title: "Hello",
-    userInfo: __userInfo,
+    userInfo: {
+      profilePictureUrl: __userInfo.picture,
+      naming: {
+        firstName: __userInfo.firstname,
+        name: __userInfo.lastname,
+      },
+    },
   },
 } as Meta<HelloUserComponent>;
 
@@ -17,7 +23,13 @@ export const Basic: StoryObj<HelloUserComponent> = {};
 
 export const Fotter: StoryObj<HelloUserComponent> = {
   args: {
-    userInfo: __userInfo,
+    userInfo: {
+      profilePictureUrl: __userInfo.picture,
+      naming: {
+        firstName: __userInfo.firstname,
+        name: __userInfo.lastname,
+      },
+    },
     footer: "this is a footer",
   },
 };

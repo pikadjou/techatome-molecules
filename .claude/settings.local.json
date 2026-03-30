@@ -2,7 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(find:*)",
-      "Bash(for:*",
+      "Bash(for:*)",
       "Bash(do:*)",
       "Bash(done)",
       "Bash(rg:*)",

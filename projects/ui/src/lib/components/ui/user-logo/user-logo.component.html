@@ -10,6 +10,6 @@
   <ta-trigram [value]="this.getTrigram()" [size]="this.sizeValue ?? 48"></ta-trigram>
 } @else if (this.defaultType() === 'font') {
   <div class="profile-icon" [ngStyle]="{ 'width.px': this.sizeValue ?? 48, 'height.px': this.sizeValue ?? 48 }">
-    <ta-font-icon name="profil-picture" [type]="this.size() ?? 'lg'"></ta-font-icon>
+    <ta-font-icon name="profil-picture" [type]="this.size()"></ta-font-icon>
   </div>
 }

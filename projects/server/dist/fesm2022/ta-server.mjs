@@ -798,16 +798,18 @@ class TaStrapiService extends TaBaseService {
     constructor(_strapiConfig) {
         super();
         this._strapiConfig = _strapiConfig;
-        const headers = new HttpHeaders({
-            authorization: `Bearer ${this._strapiConfig.token}`,
-        });
-        super.registerRoutes({
-            graphEndpoint: {
-                clientName: "strapi",
-                endpoint: this._strapiConfig.url,
-                headers: headers,
-            },
-        });
+        if (this._strapiConfig) {
+            const headers = new HttpHeaders({
+                authorization: `Bearer ${this._strapiConfig.token}`,
+            });
+            super.registerRoutes({
+                graphEndpoint: {
+                    clientName: "strapi",
+                    endpoint: this._strapiConfig.url,
+                    headers: headers,
+                },
+            });
+        }
     }
     fetchQuery$(payload, node) {
         return this._graphService.fetchQuery(payload, node, "strapi").pipe(filter(isNonNullable), map((data) => data));
@@ -815,7 +817,7 @@ class TaStrapiService extends TaBaseService {
     fetchQueryList$(payload, node) {
         return this._graphService.fetchQuery(payload, node, "strapi").pipe(filter(isNonNullable), map((data) => data));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, deps: [{ token: STRAPI_SERVER_CONFIG }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, deps: [{ token: STRAPI_SERVER_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaStrapiService, decorators: [{
@@ -824,6 +826,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     providedIn: "root",
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
+                    type: Optional
+                }, {
                     type: Inject,
                     args: [STRAPI_SERVER_CONFIG]
                 }] }] });

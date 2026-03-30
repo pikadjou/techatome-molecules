@@ -33,7 +33,7 @@ export const __basicForm: InputBase<any>[] = [
         key: "InputDropdown",
         label: "tasks.form.add.type",
         class: "pb-2",
-        options: of([
+        options$: of([
           {
             id: "1",
             name: "number 1",
@@ -78,7 +78,7 @@ export const __TemplateSingleInputDropdownForm = (): InputBase<any> =>
     key: "InputDropdown",
     label: "tasks.form.add.type",
     class: "pb-2",
-    options: of([
+    options$: of([
       {
         id: "1",
         name: "number 1",
@@ -115,7 +115,7 @@ export const __TemplateSingleComplexInputForm = (): InputBase<any> =>
     class: "pb-2",
     withSearch: true,
     multiple: true,
-    options: of([
+    options$: of([
       {
         id: "1",
         name: "dis 1",
@@ -194,7 +194,7 @@ export const __TemplateForm = (
         value: ["coucou", "coucou2"],
         multiple: true,
         withSearch: true,
-        options: undefined,
+        options$: undefined,
         disabled: true,
       }),
       new InputDatePicker({
@@ -212,7 +212,7 @@ export const __TemplateForm = (
       new InputDropdown({
         key: "reason",
         label: "billings.quotations.version.status.refused.reason",
-        options: of([
+        options$: of([
           { id: "123445", name: "coucou1" },
           { id: "123945", name: "coucou2" },
           { id: "123485", name: "coucou3" },
@@ -224,7 +224,7 @@ export const __TemplateForm = (
       new InputDropdown({
         key: "reason",
         label: "billings.quotations.version.status.refused.reason",
-        options: of([
+        options$: of([
           { id: "123445", name: "coucou1" },
           { id: "123945", name: "coucou2" },
           { id: "123485", name: "coucou3" },
@@ -338,7 +338,7 @@ export const __TemplateForm = (
         class: "pb-2",
         withSearch: true,
         multiple: true,
-        options: of([
+        options$: of([
           {
             id: "1",
             name: "dis 1",
@@ -369,7 +369,7 @@ export const __TemplateForm = (
         class: "pb-2",
         withSearch: false,
         multiple: true,
-        options: of([
+        options$: of([
           {
             id: "1",
             name: "dis 1",
@@ -399,7 +399,7 @@ export const __TemplateForm = (
         label: "tasks.form.add.InputChoices-No-multi",
         class: "pb-2",
         multiple: false,
-        options: of([
+        options$: of([
           {
             id: "1",
             name: "dis 1",
@@ -428,7 +428,7 @@ export const __TemplateForm = (
         key: "InputDropdown",
         label: "tasks.form.add.type",
         class: "pb-2",
-        options: of([
+        options$: of([
           {
             id: "1",
             name: "number 1",

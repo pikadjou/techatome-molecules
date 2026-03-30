@@ -1,0 +1,440 @@
+<app-page-layout title="UI Components">
+  <div class="sections">
+    <!-- Titles & Text -->
+    <section>
+      <ta-title [level]="2">Titles &amp; Text</ta-title>
+      <div class="demo-row">
+        <ta-title [level]="1">Heading 1</ta-title>
+        <ta-title [level]="2">Heading 2</ta-title>
+        <ta-title [level]="3">Heading 3</ta-title>
+        <ta-title [level]="4">Heading 4</ta-title>
+      </div>
+      <div class="demo-row">
+        <ta-text>Default text</ta-text>
+        <ta-text size="sm">Small text</ta-text>
+        <ta-text size="lg">Large text</ta-text>
+        <ta-text [isBold]="true">Bold text</ta-text>
+      </div>
+    </section>
+
+    <!-- ===================== -->
+    <!-- BUTTONS - ta-button   -->
+    <!-- ===================== -->
+    <section>
+      <ta-title [level]="2">Button — Types</ta-title>
+      <ta-text size="sm">type: primary | secondary | tertiary | danger</ta-text>
+      <div class="demo-row">
+        <ta-button type="primary">Primary</ta-button>
+        <ta-button type="secondary">Secondary</ta-button>
+        <ta-button type="tertiary">Tertiary</ta-button>
+        <ta-button type="danger">Danger</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — Sizes</ta-title>
+      <ta-text size="sm">size: small | medium | large</ta-text>
+      <div class="demo-row">
+        <ta-button size="small">Small</ta-button>
+        <ta-button size="medium">Medium</ta-button>
+        <ta-button size="large">Large</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — States</ta-title>
+      <ta-text size="sm">state: classic | disabled | inactive</ta-text>
+      <div class="demo-row">
+        <ta-button state="classic">Classic</ta-button>
+        <ta-button state="disabled">Disabled</ta-button>
+        <ta-button state="inactive">Inactive</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — Types × Sizes</ta-title>
+      <ta-text size="sm">Toutes les combinaisons type × size</ta-text>
+      <div class="demo-grid">
+        <div></div>
+        <ta-text [isBold]="true">Small</ta-text>
+        <ta-text [isBold]="true">Medium</ta-text>
+        <ta-text [isBold]="true">Large</ta-text>
+
+        <ta-text [isBold]="true">Primary</ta-text>
+        <ta-button type="primary" size="small">Primary</ta-button>
+        <ta-button type="primary" size="medium">Primary</ta-button>
+        <ta-button type="primary" size="large">Primary</ta-button>
+
+        <ta-text [isBold]="true">Secondary</ta-text>
+        <ta-button type="secondary" size="small">Secondary</ta-button>
+        <ta-button type="secondary" size="medium">Secondary</ta-button>
+        <ta-button type="secondary" size="large">Secondary</ta-button>
+
+        <ta-text [isBold]="true">Tertiary</ta-text>
+        <ta-button type="tertiary" size="small">Tertiary</ta-button>
+        <ta-button type="tertiary" size="medium">Tertiary</ta-button>
+        <ta-button type="tertiary" size="large">Tertiary</ta-button>
+
+        <ta-text [isBold]="true">Danger</ta-text>
+        <ta-button type="danger" size="small">Danger</ta-button>
+        <ta-button type="danger" size="medium">Danger</ta-button>
+        <ta-button type="danger" size="large">Danger</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — Types × States</ta-title>
+      <ta-text size="sm">Toutes les combinaisons type × state</ta-text>
+      <div class="demo-grid">
+        <div></div>
+        <ta-text [isBold]="true">Classic</ta-text>
+        <ta-text [isBold]="true">Disabled</ta-text>
+        <ta-text [isBold]="true">Inactive</ta-text>
+
+        <ta-text [isBold]="true">Primary</ta-text>
+        <ta-button type="primary" state="classic">Classic</ta-button>
+        <ta-button type="primary" state="disabled">Disabled</ta-button>
+        <ta-button type="primary" state="inactive">Inactive</ta-button>
+
+        <ta-text [isBold]="true">Secondary</ta-text>
+        <ta-button type="secondary" state="classic">Classic</ta-button>
+        <ta-button type="secondary" state="disabled">Disabled</ta-button>
+        <ta-button type="secondary" state="inactive">Inactive</ta-button>
+
+        <ta-text [isBold]="true">Tertiary</ta-text>
+        <ta-button type="tertiary" state="classic">Classic</ta-button>
+        <ta-button type="tertiary" state="disabled">Disabled</ta-button>
+        <ta-button type="tertiary" state="inactive">Inactive</ta-button>
+
+        <ta-text [isBold]="true">Danger</ta-text>
+        <ta-button type="danger" state="classic">Classic</ta-button>
+        <ta-button type="danger" state="disabled">Disabled</ta-button>
+        <ta-button type="danger" state="inactive">Inactive</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — With Icons</ta-title>
+      <ta-text size="sm">icon + text content</ta-text>
+      <div class="demo-row">
+        <ta-button icon="add">Add</ta-button>
+        <ta-button icon="edit" type="secondary">Edit</ta-button>
+        <ta-button icon="delete" type="danger">Delete</ta-button>
+        <ta-button icon="save" type="tertiary">Save</ta-button>
+        <ta-button icon="search">Search</ta-button>
+        <ta-button icon="download" type="secondary">Download</ta-button>
+        <ta-button icon="settings">Settings</ta-button>
+        <ta-button icon="favorite" type="danger">Favorite</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — Icon Only (no text)</ta-title>
+      <div class="demo-row">
+        <ta-button icon="add"></ta-button>
+        <ta-button icon="edit" type="secondary"></ta-button>
+        <ta-button icon="delete" type="danger"></ta-button>
+        <ta-button icon="close" type="tertiary"></ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — Circular</ta-title>
+      <ta-text size="sm">options.circular: true | "small" | "big"</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">Small</ta-text>
+          <ta-button icon="add" [options]="{ circular: 'small' }"></ta-button>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Default</ta-text>
+          <ta-button icon="add" [options]="{ circular: true }"></ta-button>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Big</ta-text>
+          <ta-button icon="add" [options]="{ circular: 'big' }"></ta-button>
+        </div>
+      </div>
+      <div class="demo-row">
+        <ta-button icon="edit" type="secondary" [options]="{ circular: true }"></ta-button>
+        <ta-button icon="delete" type="danger" [options]="{ circular: true }"></ta-button>
+        <ta-button icon="close" type="tertiary" [options]="{ circular: true }"></ta-button>
+        <ta-button icon="check" [options]="{ circular: 'big' }"></ta-button>
+        <ta-button icon="settings" type="secondary" [options]="{ circular: 'small' }"></ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — No Border</ta-title>
+      <ta-text size="sm">options.border: false</ta-text>
+      <div class="demo-row">
+        <ta-button [options]="{ border: false }">No Border Primary</ta-button>
+        <ta-button type="secondary" [options]="{ border: false }">No Border Secondary</ta-button>
+        <ta-button type="tertiary" [options]="{ border: false }">No Border Tertiary</ta-button>
+        <ta-button type="danger" [options]="{ border: false }">No Border Danger</ta-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Button — Icons × Sizes</ta-title>
+      <div class="demo-row">
+        <ta-button icon="star" size="small">Small + Icon</ta-button>
+        <ta-button icon="star" size="medium">Medium + Icon</ta-button>
+        <ta-button icon="star" size="large">Large + Icon</ta-button>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- DUAL BUTTON - ta-dual-button   -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Dual Button</ta-title>
+      <ta-text size="sm">Two-button group: type, isFull</ta-text>
+
+      <div class="demo-column">
+        <ta-text size="sm">Primary (default)</ta-text>
+        <ta-dual-button
+          [first]="this.dualFirst"
+          [second]="this.dualSecond"
+        ></ta-dual-button>
+      </div>
+
+      <div class="demo-column">
+        <ta-text size="sm">Secondary</ta-text>
+        <ta-dual-button
+          type="secondary"
+          [first]="this.dualSaveFirst"
+          [second]="this.dualSaveSecond"
+        ></ta-dual-button>
+      </div>
+
+      <div class="demo-column">
+        <ta-text size="sm">Full Width (isFull=true)</ta-text>
+        <ta-dual-button
+          [isFull]="true"
+          [first]="this.dualFirst"
+          [second]="this.dualSecond"
+        ></ta-dual-button>
+      </div>
+
+      <div class="demo-column">
+        <ta-text size="sm">Full Width + Secondary</ta-text>
+        <ta-dual-button
+          type="secondary"
+          [isFull]="true"
+          [first]="this.dualSaveFirst"
+          [second]="this.dualSaveSecond"
+        ></ta-dual-button>
+      </div>
+    </section>
+
+    <!-- ================================== -->
+    <!-- ACTION BUTTON - ta-action-button   -->
+    <!-- ================================== -->
+    <section>
+      <ta-title [level]="2">Action Button</ta-title>
+      <ta-text size="sm">Single action (direct click) vs multiple actions (dropdown)</ta-text>
+
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">Single action</ta-text>
+          <ta-action-button [actions]="this.singleAction"></ta-action-button>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Multiple actions (dropdown)</ta-text>
+          <ta-action-button [actions]="this.multipleActions"></ta-action-button>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Material icons</ta-text>
+          <ta-action-button [actions]="this.materialActions"></ta-action-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================== -->
+    <!-- TOOL BUTTON - ta-button-tool           -->
+    <!-- ====================================== -->
+    <section>
+      <ta-title [level]="2">Tool Button — Sizes</ta-title>
+      <ta-text size="sm">size: xs | sm | md | lg | xl | xxl</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">xs</ta-text>
+          <ta-button-tool icon="settings" size="xs"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">sm</ta-text>
+          <ta-button-tool icon="settings" size="sm"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">md</ta-text>
+          <ta-button-tool icon="settings" size="md"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">lg</ta-text>
+          <ta-button-tool icon="settings" size="lg"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">xl</ta-text>
+          <ta-button-tool icon="settings" size="xl"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">xxl</ta-text>
+          <ta-button-tool icon="settings" size="xxl"></ta-button-tool>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Tool Button — States</ta-title>
+      <ta-text size="sm">state: classic | disabled | inactive + readonly</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">Classic</ta-text>
+          <ta-button-tool icon="edit" state="classic" size="lg"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Disabled</ta-text>
+          <ta-button-tool icon="edit" state="disabled" size="lg"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Inactive</ta-text>
+          <ta-button-tool icon="edit" state="inactive" size="lg"></ta-button-tool>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Readonly</ta-text>
+          <ta-button-tool icon="edit" [readonly]="true" size="lg"></ta-button-tool>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Tool Button — Various Icons</ta-title>
+      <div class="demo-row">
+        <ta-button-tool icon="edit" size="lg"></ta-button-tool>
+        <ta-button-tool icon="delete" size="lg"></ta-button-tool>
+        <ta-button-tool icon="add" size="lg"></ta-button-tool>
+        <ta-button-tool icon="close" size="lg"></ta-button-tool>
+        <ta-button-tool icon="search" size="lg"></ta-button-tool>
+        <ta-button-tool icon="download" size="lg"></ta-button-tool>
+        <ta-button-tool icon="save" size="lg"></ta-button-tool>
+        <ta-button-tool icon="settings" size="lg"></ta-button-tool>
+        <ta-button-tool icon="favorite" size="lg"></ta-button-tool>
+        <ta-button-tool icon="visibility" size="lg"></ta-button-tool>
+      </div>
+    </section>
+
+    <!-- Links & Labels -->
+    <section>
+      <ta-title [level]="2">Links &amp; Labels</ta-title>
+      <div class="demo-row">
+        <ta-link>Default link</ta-link>
+        <ta-link size="sm">Small link</ta-link>
+      </div>
+      <div class="demo-row">
+        <ta-label>Default</ta-label>
+        <ta-label type="success">Success</ta-label>
+        <ta-label type="alert">Alert</ta-label>
+        <ta-label type="warning">Warning</ta-label>
+        <ta-label type="secondary">Secondary</ta-label>
+      </div>
+    </section>
+
+    <!-- Badges -->
+    <section>
+      <ta-title [level]="2">Badges</ta-title>
+      <div class="demo-row">
+        <ta-badge value="Primary" type="primary"></ta-badge>
+        <ta-badge value="Secondary" type="secondary"></ta-badge>
+        <ta-badge value="Success" type="success"></ta-badge>
+        <ta-badge value="Danger" type="danger"></ta-badge>
+        <ta-badge value="Warning" type="warning"></ta-badge>
+        <ta-badge value="Info" type="info"></ta-badge>
+        <ta-badge value="Purple" type="purple"></ta-badge>
+        <ta-badge value="Orange" type="orange"></ta-badge>
+      </div>
+      <div class="demo-row">
+        <ta-badge value="Closable" type="primary" icon="close"></ta-badge>
+      </div>
+    </section>
+
+    <!-- Banners -->
+    <section>
+      <ta-title [level]="2">Banners</ta-title>
+      <div class="demo-column">
+        <ta-banner type="info" message="This is an info banner."></ta-banner>
+        <ta-banner
+          type="success"
+          message="Operation completed successfully."
+        ></ta-banner>
+        <ta-banner type="warning" message="Please review before continuing."></ta-banner>
+        <ta-banner type="danger" message="Something went wrong."></ta-banner>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section>
+      <ta-title [level]="2">Cards</ta-title>
+      <div class="demo-cards">
+        <ta-card>
+          <ta-card-header>
+            <ta-card-title>Card Title</ta-card-title>
+          </ta-card-header>
+          <ta-card-content>
+            <ta-text>Card content with some text inside.</ta-text>
+          </ta-card-content>
+        </ta-card>
+        <ta-card>
+          <ta-card-content>
+            <ta-text [isBold]="true">Simple card</ta-text>
+            <ta-text size="sm">With subtitle text</ta-text>
+          </ta-card-content>
+        </ta-card>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section>
+      <ta-title [level]="2">Progress</ta-title>
+      <div class="demo-row">
+        <ta-progress [value]="65"></ta-progress>
+      </div>
+      <div class="demo-row">
+        <ta-progress-circle
+          [progress]="75"
+        ></ta-progress-circle>
+        <ta-progress-circle
+          [progress]="40"
+        ></ta-progress-circle>
+      </div>
+    </section>
+
+    <!-- Rating -->
+    <section>
+      <ta-title [level]="2">Rating</ta-title>
+      <div class="demo-row">
+        <ta-rating [value]="this.rating"></ta-rating>
+      </div>
+    </section>
+
+    <!-- Expansion Panel -->
+    <section>
+      <ta-title [level]="2">Expansion Panel</ta-title>
+      <ta-expansion-panel title="Click to expand">
+        <ta-text>Hidden content revealed on expand.</ta-text>
+      </ta-expansion-panel>
+    </section>
+
+    <!-- Toggle Card -->
+    <section>
+      <ta-title [level]="2">Toggle Card</ta-title>
+      <div class="demo-row">
+        <ta-toggle-card
+          title="Feature toggle"
+          [isActive]="this.toggleActive"
+          (toggle)="this.toggleActive = $event"
+        ></ta-toggle-card>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

@@ -22,9 +22,11 @@
           "options": {
             "outputPath": "dist/ta",
             "index": "src/index.html",
+            "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": ["fast-deep-equal", "compressorjs", "slugify", "intl-tel-input"],
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -91,11 +93,9 @@
             ],
             "styles": ["src/styles.scss"],
             "scripts": [],
-            "preserveSymlinks": true,
             "stylePreprocessorOptions": {
               "includePaths": ["src", "sass", "projects/styles/src/style", "."]
-            },
-            "main": "src/main.ts"
+            }
           },
           "configurations": {
             "production": {

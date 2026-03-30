@@ -1,6 +1,7 @@
 {
   "name": "@ta/features",
   "version": "0.0.0",
+  "main": "./dist",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0"

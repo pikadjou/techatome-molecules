@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start-local": "ng serve --configuration local",
+    "build-themes": "node ./scripts/build-themes.js",
     "pre-build-skin": "node ./partners/apply-skin.js",
     "build-website": "ng build",
     "watch-website": "ng build --watch --configuration development",

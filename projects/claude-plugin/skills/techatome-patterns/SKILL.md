@@ -2158,3 +2158,59 @@ export class MyEntityFormService {
 - Les compositions partagées entre services (ex : `addressPropsComposition`) sont exportées depuis leur `dto/`
 
 ---
+
+## 14. THEMING PARTENAIRE
+
+Le système de theming permet aux partenaires d'overrider les CSS custom properties `--ta-*` via un mixin SCSS.
+
+### API
+
+- **`apply-theme($overrides, $selector: ':root')`** — Mixin qui génère des overrides CSS custom properties
+- **`build-tokens($brand, $second, $neutral, $semantic)`** — Fonction qui recalcule automatiquement les tokens (text, surface, icon, border, semantic-token) à partir de foundations
+
+### Fichiers
+
+| Fichier | Rôle |
+|---------|------|
+| `projects/styles/src/style/ta/_theme.scss` | Module de theming |
+| `sass/partners/_theme.scss` | Thème actif (copié par `apply-skin.js`) |
+| `partners/{nom}/sass/_theme.scss` | Thème de chaque partenaire |
+| `src/styles.scss` | Importe `partners/theme` après `bases` |
+
+### Exemple de thème partenaire
+
+```scss
+@use 'sass:map';
+@use 'ta/theme';
+
+$_theme: map.merge(
+  theme.build-tokens(
+    $brand: (900: #262D36, 800: #2f3742, 700: #3a434e, ...),
+    $second: (900: #b45309, 800: #d97706, 500: #f59e0b, ...),
+  ),
+  (
+    components: (
+      button: (
+        secondary: (color: #ffffff, background: #f59e0b, border: #f59e0b),
+      ),
+    ),
+  ),
+);
+
+@include theme.apply-theme($_theme);
+```
+
+### Workflow
+
+```bash
+node partners/apply-skin.js {nom}   # Copie le thème dans sass/partners/
+yarn start                           # L'app utilise le thème
+```
+
+### Catégories d'overrides
+
+Foundations : `brand`, `second`, `neutral`, `semantic`
+Tokens : `text`, `surface`, `icon`, `border`, `semantic-token`
+Design : `space`, `radius`, `shadow`, `font`, `components`
+
+---

@@ -1,19 +1,34 @@
-<div class="app-layout">
+<div class="shell">
   <nav class="sidebar">
-    <div class="sidebar-header">
-      <ta-title [level]="2">{{ title }}</ta-title>
-    </div>
-    <div class="nav-menu">
-      @for (item of mainMenu; track item) {
-      <a [routerLink]="item.route" class="nav-item" routerLinkActive="active">
-        <span class="material-icons">{{ item.icon.name }}</span>
-        {{ item.title }}
+    <div class="sidebar-header">{{ this.title }}</div>
+    <div class="sidebar-nav">
+      @for (item of this.menu; track item.route) {
+      <a
+        [routerLink]="item.route"
+        class="nav-item"
+        routerLinkActive="active"
+      >
+        <span class="material-icons">{{ item.icon }}</span>
+        <span>{{ item.label }}</span>
       </a>
       }
     </div>
+    <div class="sidebar-footer">
+      <label class="theme-label">
+        <span class="material-icons">palette</span>
+        <select
+          class="theme-select"
+          [value]="this.activeTheme().name"
+          (change)="this.onThemeChange($event)"
+        >
+          @for (theme of this.themes; track theme.name) {
+            <option [value]="theme.name">{{ theme.label }}</option>
+          }
+        </select>
+      </label>
+    </div>
   </nav>
-
-  <main class="main-content">
+  <main class="content">
     <router-outlet />
   </main>
 </div>

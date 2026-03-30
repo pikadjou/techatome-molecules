@@ -1,10 +1,10 @@
 <div class="hello-user-container">
   @if (this.title()) {
-  <div class="title">{{ this.title() | translate }}</div>
-  } @if (this.userInfo()) {
+  <div class="title">{{ this.title()! | translate }}</div>
+  } @if (this.getUserLogoData(); as userData) {
   <div class="trigram">
     <ta-user-logo
-      [userInfo]="this.userInfo()"
+      [user]="userData"
       [size]="this.bulletSize()"
     ></ta-user-logo>
   </div>
@@ -20,7 +20,7 @@
       {{ this.userInfo()?.naming?.name }}
     </div>
     } @if (this.footer()) {
-    <div>{{ this.footer() | translate }}</div>
+    <div>{{ this.footer()! | translate }}</div>
     }
   </div>
 </div>

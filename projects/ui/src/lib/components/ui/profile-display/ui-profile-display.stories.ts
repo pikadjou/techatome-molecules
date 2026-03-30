@@ -28,14 +28,11 @@ export default {
   args: {
     label: "Jean-François Vanderheyden",
     userLogo: {
-      userInfo: {
-        profilePictureUrl:
+      user: {
+        firstname: "Vadehors",
+        lastname: "Dark",
+        picture:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_eQMBIoGyHlsmDCKsRwjZpvyRzkr7HA0dIwcrMQtnSxGcNQfQXa_ZQrzUY0NEWcuxyMU&usqp=CAU",
-        naming: {
-          name: "Dark",
-          firstName: "Vadehors",
-          trigram: "DVD",
-        },
       },
       size: 120,
     },
@@ -59,12 +56,9 @@ export const Basic: StoryObj<UiProfileDisplayComponent> = {};
 export const WithoutPicture: StoryObj<UiProfileDisplayComponent> = {
   args: {
     userLogo: {
-      userInfo: {
-        naming: {
-          name: "Dark",
-          firstName: "Vadehors",
-          trigram: "DVD",
-        },
+      user: {
+        firstname: "Vadehors",
+        lastname: "Dark",
       },
       size: 120,
     },

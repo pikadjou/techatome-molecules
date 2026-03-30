@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 
 import { FormComponent } from '@ta/form-basic';
 import { InputBase } from '@ta/form-model';
+import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { TitleComponent } from '@ta/ui';
+import { ButtonComponent, TitleComponent } from '@ta/ui';
 
 import { TaGridFormService } from '../../services/grid-form.services';
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -11,11 +12,14 @@ import { TaAbstractGridComponent } from '../abstract.component';
 @Component({
   selector: 'ta-grid-form',
   standalone: true,
-  imports: [FormComponent, TitleComponent, TranslatePipe],
+  imports: [FormComponent, TitleComponent, TranslatePipe, FontIconComponent, ButtonComponent],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
 export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
+  showTitle = input<boolean>(true);
+  showReset = input<boolean>(true);
+
   public filtersForm = signal<InputBase<any>[]>([]);
   public groupForm = signal<InputBase<any>[]>([]);
 
@@ -39,6 +43,7 @@ export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
 
     this._grid.filters?.apply(filters);
   }
+
   public applyGroup(data: any) {
     const group = this._formService.formatGroupForm(data);
 
@@ -47,5 +52,10 @@ export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
       return;
     }
     this._grid.setGroupBy(group);
+  }
+
+  public reset() {
+    this._grid.filters?.apply([]);
+    this._grid.clearGroupBy();
   }
 }

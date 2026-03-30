@@ -1,5 +1,5 @@
 import { OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TaBaseModal } from '@ta/utils';
 import { Preset, ViewType } from '../../models/types';
 import { TaAbstractGridComponent } from '../abstract.component';
 import * as i0 from "@angular/core";
@@ -9,7 +9,7 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
         filters?: boolean | undefined;
         preset?: boolean | undefined;
     }>;
-    readonly dialog: MatDialog;
+    private readonly _dialog;
     constructor();
     ngOnInit(): void;
     switchView(type: ViewType): void;
@@ -21,11 +21,12 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
 interface FiltersModalData {
     gridId: string;
 }
-export declare class FiltersModal {
-    readonly dialogRef: MatDialogRef<any, any>;
+export declare class FiltersModal extends TaBaseModal {
+    private readonly _dialogRef;
     readonly data: FiltersModalData;
+    constructor();
     close(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<FiltersModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FiltersModal, "ng-component", never, {}, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FiltersModal, "ta-grid-filters-modal", never, {}, {}, never, never, true, never>;
 }
 export {};

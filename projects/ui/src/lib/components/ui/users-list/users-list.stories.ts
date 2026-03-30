@@ -8,19 +8,16 @@ export type StoryType = UsersListComponent;
 
 const mockUsers: UserLogoData[] = [
   {
-    firstName: "John",
-    lastName: "Doe",
-    trigram: "JDO",
+    firstname: "John",
+    lastname: "Doe",
   },
   {
-    firstName: "Jane",
-    lastName: "Smith",
-    trigram: "JSM",
+    firstname: "Jane",
+    lastname: "Smith",
   },
   {
-    firstName: "Bob",
-    lastName: "Johnson",
-    trigram: "BJO",
+    firstname: "Bob",
+    lastname: "Johnson",
   },
 ];
 
@@ -48,19 +45,16 @@ export const ManyUsers: StoryObj<StoryType> = {
     users: of([
       ...mockUsers,
       {
-        firstName: "Alice",
-        lastName: "Wilson",
-        trigram: "AWI",
+        firstname: "Alice",
+        lastname: "Wilson",
       },
       {
-        firstName: "Charlie",
-        lastName: "Brown",
-        trigram: "CBR",
+        firstname: "Charlie",
+        lastname: "Brown",
       },
       {
-        firstName: "Diana",
-        lastName: "Davis",
-        trigram: "DDA",
+        firstname: "Diana",
+        lastname: "Davis",
       },
     ]),
   },

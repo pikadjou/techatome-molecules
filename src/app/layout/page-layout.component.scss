@@ -1,0 +1,26 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.page-header {
+  padding: common.get-var(space, lg) common.get-var(space, xl);
+  border-bottom: 1px solid common.get-var(border, primary);
+  background: common.get-var(surface, primary);
+
+  h1 {
+    margin: 0;
+    @include fonts.fontSizeHeader(h2);
+    color: common.get-var(text, primary);
+  }
+}
+
+.page-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: common.get-var(space, lg) common.get-var(space, xl);
+}

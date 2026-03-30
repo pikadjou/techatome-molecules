@@ -1,0 +1,41 @@
+@use "ta/utils/mixins/common";
+
+.grid-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, sm) 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: common.get-var(space, md);
+}
+
+.product-card {
+  padding: common.get-var(space, md);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, rounded);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xs);
+  transition: box-shadow 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.detail-panel {
+  margin-top: common.get-var(space, lg);
+  padding: common.get-var(space, md);
+  background: common.get-var(surface, secondary);
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, primary);
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xs);
+}

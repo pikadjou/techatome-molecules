@@ -4,9 +4,9 @@ import { IStrapiConfig } from "./config";
 import * as i0 from "@angular/core";
 export declare class TaStrapiService extends TaBaseService {
     private _strapiConfig;
-    constructor(_strapiConfig: IStrapiConfig);
+    constructor(_strapiConfig: IStrapiConfig | null);
     fetchQuery$<T>(payload: GraphQueryPayload, node: string): import("rxjs").Observable<T & {}>;
     fetchQueryList$<T>(payload: GraphQueryPayload, node: string): import("rxjs").Observable<T[]>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<TaStrapiService, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaStrapiService, [{ optional: true; }]>;
     static ɵprov: i0.ɵɵInjectableDeclaration<TaStrapiService>;
 }

@@ -1,25 +1,30 @@
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
-.grid-control-container {
-  @include flex.space-between();
+.grid-control {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
 
-  border-radius: 8px;
-  border: 1px solid common.get-var(brand, 400);
-  overflow: hidden;
-
-  .trigger {
+  &__toggle {
+    @include flex.simple-flex();
     @include flex.align-center();
-
-    padding: common.get-var(space, sm);
-
-    &.active {
-      background: common.get-var(brand, 100);
-      color: common.get-var(brand, 500);
-    }
+    gap: common.get-var(space, xs);
   }
+}
 
-  .sep {
-    border-left: 1px solid common.get-var(brand, 400);
+.preset-menu {
+  @include flex.flex-column();
+  padding: common.get-var(space, xs);
+
+  &__item {
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    border-radius: common.get-var(radius, minimal);
+    @include fonts.fontSizeBody(md);
+
+    &:hover {
+      background: common.get-var(surface, hover);
+    }
   }
 }

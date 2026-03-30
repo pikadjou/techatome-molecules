@@ -18,7 +18,7 @@
       <ta-trigram [value]="this.getFirstLetter"></ta-trigram>
     </div>
     <div class="col">
-      <div class="title">{{ (this.authService.user$ | async)?.name }}</div>
+      <!-- <div class="title">{{ (this.authService.user$ | async)?.name }}</div> -->
       @if (this.roles.length > 0) {
       <div class="subtitle">
         {{ this.roles | join }}

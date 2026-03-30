@@ -1,0 +1,18 @@
+@use 'ta/theme';
+
+$_theme: theme.build-tokens(
+  $brand: (
+    900: #005b1a,
+    800: #007a2d,
+    700: #05742d,
+    600: #199d43,
+    500: #088b38,
+    400: #4db867,
+    300: #6fc582,
+    200: #9ad4a5,
+    100: #c1e5c8,
+    50: #e5f5e9,
+  ),
+);
+
+@include theme.apply-theme($_theme);

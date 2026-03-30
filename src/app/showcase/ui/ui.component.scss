@@ -1,0 +1,43 @@
+@use "ta/utils/mixins/common";
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: common.get-var(space, md);
+}
+
+.demo-column {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, sm);
+}
+
+.demo-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: common.get-var(space, md);
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: auto repeat(3, 1fr);
+  gap: common.get-var(space, md);
+  align-items: center;
+}
+
+.align-center {
+  align-items: center;
+}

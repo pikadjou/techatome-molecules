@@ -1,0 +1,151 @@
+// Theme: Bailo (default — mirrors @ta/styles base values)
+@use 'sass:map';
+@use 'ta/theme';
+
+// ============================================================================
+// Foundations
+// ============================================================================
+$_brand: (
+  900: #121e38,
+  800: #192e50,
+  700: #1f375d,
+  600: #273f67,
+  500: #2d466f,
+  400: #4c5f81,
+  300: #6a7a95,
+  200: #929fb3,
+  100: #bcc4d2,
+  50: #e5e8ec,
+);
+
+$_second: (
+  900: #f26800,
+  800: #f28700,
+  700: #f19800,
+  600: #f1ab00,
+  500: #f0b800,
+  400: #f2c317,
+  300: #f4ce46,
+  200: #f7db7c,
+  100: #fae9b0,
+  50: #fdf7e0,
+);
+
+$_neutral: (
+  black: #1f2245,
+  700: #262626,
+  600: #3c3c3c,
+  500: #7d7d7d,
+  400: #a9a9a9,
+  300: #dddddd,
+  200: #f4f7f9,
+  100: #f8f8f8,
+  white: #ffffff,
+);
+
+$_semantic: (
+  red-light: rgba(231, 76, 60, 0.5),
+  red: #e74c3c,
+  orange-light: rgba(243, 156, 18, 0.5),
+  orange: #f39c12,
+  yellow: #ffd166,
+  green-light: rgba(56, 161, 114, 0.5),
+  green: #38a172,
+  accent: #e74c3c,
+);
+
+// ============================================================================
+// Tokens — derived from foundations
+// ============================================================================
+$_theme: (
+  brand: $_brand,
+  second: $_second,
+  neutral: $_neutral,
+  semantic: $_semantic,
+
+  icon: (
+    primary: map.get($_neutral, black),
+    secondary: map.get($_neutral, 500),
+    tertiary: map.get($_neutral, 400),
+    brand: (
+      primary: map.get($_brand, 900),
+      secondary: map.get($_second, 600),
+    ),
+    invert: (
+      primary: map.get($_neutral, white),
+      secondary: map.get($_brand, 600),
+    ),
+    disabled: map.get($_neutral, 300),
+    success: map.get($_semantic, green),
+    alert: map.get($_semantic, red),
+  ),
+
+  text: (
+    primary: map.get($_neutral, black),
+    secondary: map.get($_neutral, 500),
+    tertiary: map.get($_neutral, 400),
+    brand: (
+      primary: map.get($_brand, 900),
+      secondary: map.get($_second, 800),
+    ),
+    invert: (
+      primary: map.get($_neutral, white),
+      secondary: map.get($_neutral, white),
+    ),
+    body: map.get($_neutral, 600),
+    success: map.get($_semantic, green),
+    warning: map.get($_semantic, orange),
+    alert: map.get($_semantic, red),
+    link: map.get($_brand, 800),
+  ),
+
+  surface: (
+    default: map.get($_neutral, 300),
+    primary: map.get($_neutral, white),
+    secondary: map.get($_neutral, 200),
+    tertiary: map.get($_brand, 50),
+    brand: (
+      primary: map.get($_brand, 900),
+      secondary: map.get($_second, 400),
+      tertiary: map.get($_brand, 100),
+    ),
+    hover: (
+      primary: map.get($_neutral, 200),
+      secondary: map.get($_second, 800),
+    ),
+    invert: map.get($_brand, 900),
+    success: map.get($_semantic, green),
+    warning: map.get($_semantic, orange),
+    alert: map.get($_semantic, red),
+  ),
+
+  semantic-token: (
+    success: map.get($_semantic, green),
+    alert: map.get($_semantic, red),
+    warning: map.get($_semantic, orange),
+    link: map.get($_brand, 800),
+  ),
+
+  border: (
+    primary: map.get($_neutral, black),
+    secondary: map.get($_neutral, 500),
+    tertiary: map.get($_neutral, 300),
+    brand: (
+      primary: map.get($_brand, 900),
+      secondary: map.get($_second, 600),
+    ),
+    hover: (
+      primary: map.get($_brand, 800),
+      secondary: map.get($_brand, 300),
+    ),
+    invert: (
+      primary: map.get($_neutral, white),
+      secondary: map.get($_second, 900),
+    ),
+    disabled: map.get($_neutral, 300),
+    success: map.get($_semantic, green),
+    alert: map.get($_semantic, red),
+  ),
+);
+
+@include theme.apply-theme($_theme);

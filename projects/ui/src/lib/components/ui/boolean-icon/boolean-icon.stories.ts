@@ -25,15 +25,10 @@ export default {
       options: ["xs", "sm", "md", "lg", "xl", "xxl", "big"] as TaSizes[],
       description: "Size of the icon",
     },
-    nullText: {
-      control: "text",
-      description: "Text to display for null/undefined values",
-    },
   },
   args: {
     value: true,
     size: "sm",
-    nullText: "ui.boolean-icon.not-communicated",
   },
 } as Meta<StoryType>;
 
@@ -78,7 +73,6 @@ export const UndefinedValue: StoryObj<StoryType> = {
 export const CustomNullText: StoryObj<StoryType> = {
   args: {
     value: null,
-    nullText: "Non communiqué",
   },
 };
 

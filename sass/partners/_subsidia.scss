@@ -1,0 +1,207 @@
+// Theme: Subsidia (dark)
+@use 'sass:map';
+@use 'ta/theme';
+
+// ============================================================================
+// Foundations — seules ces palettes contiennent des couleurs hardcodees
+// ============================================================================
+$_brand: (
+  900: #262D36,
+  800: #2f3742,
+  700: #3a434e,
+  600: #47515d,
+  500: #56616d,
+  400: #6e7884,
+  300: #8a939d,
+  200: #adb4bb,
+  100: #cdd2d7,
+  50: #ebedef,
+);
+
+$_second: (
+  900: #b45309,
+  800: #d97706,
+  700: #e88a08,
+  600: #f09609,
+  500: #f59e0b,
+  400: #f7b030,
+  300: #f9c258,
+  200: #fbd88a,
+  100: #fdeabc,
+  50: #fef7e6,
+);
+
+$_neutral: (
+  black: #0f1218,
+  700: #1a1f27,
+  600: #262D36,
+  500: #3a434e,
+  400: #56616d,
+  300: #6e7884,
+  200: #8a939d,
+  100: #adb4bb,
+  white: #f0f2f4,
+);
+
+$_semantic: (
+  red-light: rgba(239, 68, 68, 0.3),
+  red: #ef4444,
+  orange-light: rgba(245, 158, 11, 0.3),
+  orange: #f59e0b,
+  yellow: #fbbf24,
+  green-light: rgba(34, 197, 94, 0.3),
+  green: #22c55e,
+  accent: #ef4444,
+);
+
+// ============================================================================
+// Tokens — derives des foundations, aucune couleur hardcodee
+// ============================================================================
+$_theme: map.merge(
+  (
+    brand: $_brand,
+    second: $_second,
+    neutral: $_neutral,
+    semantic: $_semantic,
+
+    // Dark text tokens — light on dark
+    text: (
+      primary: map.get($_neutral, white),
+      secondary: map.get($_neutral, 100),
+      tertiary: map.get($_neutral, 200),
+      brand: (
+        primary: map.get($_neutral, white),
+        secondary: map.get($_second, 400),
+      ),
+      invert: (
+        primary: map.get($_neutral, black),
+        secondary: map.get($_neutral, 700),
+      ),
+      body: map.get($_neutral, 100),
+      success: map.get($_semantic, green),
+      warning: map.get($_semantic, orange),
+      alert: map.get($_semantic, red),
+      link: map.get($_second, 400),
+    ),
+
+    // Dark surface tokens — dark backgrounds
+    surface: (
+      default: map.get($_neutral, black),
+      primary: map.get($_neutral, 700),
+      secondary: map.get($_neutral, 600),
+      tertiary: map.get($_brand, 800),
+      brand: (
+        primary: map.get($_brand, 900),
+        secondary: map.get($_second, 500),
+        tertiary: map.get($_brand, 700),
+      ),
+      hover: (
+        primary: map.get($_brand, 800),
+        secondary: map.get($_second, 800),
+      ),
+      invert: map.get($_neutral, white),
+      success: map.get($_semantic, green),
+      warning: map.get($_semantic, orange),
+      alert: map.get($_semantic, red),
+    ),
+
+    // Dark icon tokens
+    icon: (
+      primary: map.get($_neutral, white),
+      secondary: map.get($_neutral, 100),
+      tertiary: map.get($_neutral, 200),
+      brand: (
+        primary: map.get($_neutral, white),
+        secondary: map.get($_second, 400),
+      ),
+      invert: (
+        primary: map.get($_neutral, black),
+        secondary: map.get($_brand, 900),
+      ),
+      disabled: map.get($_neutral, 400),
+      success: map.get($_semantic, green),
+      alert: map.get($_semantic, red),
+    ),
+
+    // Dark border tokens
+    border: (
+      primary: map.get($_neutral, 200),
+      secondary: map.get($_neutral, 400),
+      tertiary: map.get($_neutral, 500),
+      brand: (
+        primary: map.get($_brand, 400),
+        secondary: map.get($_second, 500),
+      ),
+      hover: (
+        primary: map.get($_neutral, 100),
+        secondary: map.get($_neutral, 400),
+      ),
+      invert: (
+        primary: map.get($_neutral, white),
+        secondary: map.get($_second, 800),
+      ),
+      disabled: map.get($_neutral, 500),
+      success: map.get($_semantic, green),
+      alert: map.get($_semantic, red),
+    ),
+
+    // Dark semantic tokens
+    semantic-token: (
+      success: map.get($_semantic, green),
+      alert: map.get($_semantic, red),
+      warning: map.get($_semantic, orange),
+      link: map.get($_second, 400),
+    ),
+  ),
+  (
+    // Component overrides — also derived from foundations
+    components: (
+      button: (
+        primary: (
+          color: map.get($_neutral, black),
+          background: map.get($_second, 500),
+          border: map.get($_second, 500),
+          hover: (
+            color: map.get($_neutral, white),
+            background: map.get($_brand, 800),
+            border: map.get($_brand, 400),
+          ),
+          icon: (
+            color: map.get($_neutral, black),
+          ),
+        ),
+        secondary: (
+          color: map.get($_neutral, white),
+          background: map.get($_second, 800),
+          border: map.get($_second, 800),
+          hover: (
+            border: map.get($_second, 500),
+          ),
+          icon: (
+            color: map.get($_neutral, white),
+          ),
+        ),
+        tertiary: (
+          color: map.get($_neutral, white),
+          background: map.get($_brand, 900),
+          border: map.get($_brand, 400),
+          hover: (
+            color: map.get($_neutral, white),
+            background: map.get($_brand, 700),
+            border: map.get($_neutral, 200),
+          ),
+        ),
+      ),
+      card: (
+        background: map.get($_neutral, 600),
+        color: map.get($_neutral, white),
+        border: map.get($_neutral, 500),
+        hover: (
+          background: map.get($_brand, 800),
+        ),
+      ),
+    ),
+  ),
+);
+
+@include theme.apply-theme($_theme);

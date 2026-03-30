@@ -5,12 +5,12 @@ import { of } from "rxjs";
 
 import { DropdownComponent } from "@ta/form-input";
 import { InputDropdown } from "@ta/form-model";
-import { CamTranslationService, TranslatePipe } from "@ta/translation";
+import { TaTranslationService, TranslatePipe } from "@ta/translation";
 import { ButtonComponent, TrigramComponent } from "@ta/ui";
 import { JoinPipe, StopPropagationDirective } from "@ta/utils";
 import { TaBaseComponent } from "@ta/utils";
 
-import { CAM_AUTH_TOKEN } from "../../services/auth.service";
+import { TA_AUTH_TOKEN } from "../../services/auth.service";
 import { TaPermissionsService } from "../../services/permissions.service";
 
 @Component({
@@ -37,13 +37,13 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
   }
 
   get getFirstLetter() {
-    return this.authService.firstLetter;
+    return (this.authService as any).firstLetter;
   }
 
-  public authService = inject(CAM_AUTH_TOKEN);
+  public authService = inject(TA_AUTH_TOKEN);
   public language = new InputDropdown<string>({
     label: "",
-    options: of([
+    options$: of([
       { id: "fr", name: "Français" },
       { id: "nl", name: "Nederlands" },
       { id: "en", name: "English" },
@@ -51,14 +51,14 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
     ]),
   });
 
-  constructor(public translateService: CamTranslationService) {
+  constructor(public translateService: TaTranslationService) {
     super();
 
     this.language.value = this.translateService.getLanguage();
 
     this._registerSubscription(
       this.language.changeValue$.subscribe((value) =>
-        this.translateService.use(value)
+        value ? this.translateService.use(value) : null
       )
     );
   }

@@ -1,0 +1,14 @@
+<app-page-layout title="Molecules Sandbox">
+  <div class="cards">
+    @for (s of this.sections; track s.route) {
+    <a [routerLink]="s.route" class="card">
+      <span class="material-icons card-icon">{{ s.icon }}</span>
+      <div class="card-text">
+        <strong>{{ s.title }}</strong>
+        <span>{{ s.description }}</span>
+      </div>
+      <span class="material-icons card-arrow">arrow_forward</span>
+    </a>
+    }
+  </div>
+</app-page-layout>
