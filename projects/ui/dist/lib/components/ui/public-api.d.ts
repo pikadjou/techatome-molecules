@@ -9,6 +9,7 @@ export * from './button/action/action-button-data';
 export * from './button/action/action-button.component';
 export * from './button/button.component';
 export * from './button/dual/dual-button.component';
+export * from './button/itsme/itsme-button.component';
 export * from './button/tool/tool.component';
 export * from './civility/civility.component';
 export * from './contact-information/contact-information.component';

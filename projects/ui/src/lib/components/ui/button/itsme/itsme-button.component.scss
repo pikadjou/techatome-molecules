@@ -1,0 +1,107 @@
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+$itsme-orange: #ff4612;
+$itsme-orange-hover: #e63e10;
+$itsme-orange-active: #cc370e;
+$itsme-disabled-bg: #f0f0f0;
+$itsme-disabled-color: #a0a0a0;
+
+.itsme-button {
+  width: 100%;
+  border: none;
+  border-radius: common.get-var(radius, full);
+  padding: common.get-var(space, sm) common.get-var(space, lg);
+  background-color: $itsme-orange;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  @include fonts.fontSizeBody(md);
+  @include flex.align-center();
+  @include flex.justify-center();
+
+  gap: common.get-var(components, button, gap);
+
+  .itsme-logo-bg {
+    fill: #ffffff;
+  }
+
+  .itsme-logo-text {
+    fill: $itsme-orange;
+  }
+
+  &:hover {
+    background-color: $itsme-orange-hover;
+  }
+
+  &:active {
+    background-color: $itsme-orange-active;
+    transform: scale(0.98);
+  }
+
+  // Sizes
+  &.small {
+    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, md);
+
+    .itsme-logo {
+      height: 24px;
+    }
+  }
+
+  &.medium {
+    .itsme-logo {
+      height: 32px;
+    }
+  }
+
+  &.large {
+    padding: common.get-var(space, md) common.get-var(space, xl);
+
+    .itsme-logo {
+      height: 40px;
+    }
+  }
+
+  // Logo-only mode
+  &.logo {
+    padding: common.get-var(space, sm);
+    width: auto;
+  }
+
+  // States
+  &.disabled {
+    cursor: not-allowed;
+    background-color: $itsme-disabled-bg;
+    color: $itsme-disabled-color;
+
+    .itsme-logo-bg {
+      fill: #d0d0d0;
+    }
+
+    .itsme-logo-text {
+      fill: $itsme-disabled-color;
+    }
+
+    &:hover {
+      background-color: $itsme-disabled-bg;
+    }
+  }
+
+  &.inactive {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: $itsme-orange;
+    }
+  }
+}
+
+.itsme-logo {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+}

@@ -324,6 +324,58 @@
       </div>
     </section>
 
+    <!-- ====================================== -->
+    <!-- ITSME BUTTON - ta-itsme-button        -->
+    <!-- ====================================== -->
+    <section>
+      <ta-title [level]="2">itsme Button — Sizes</ta-title>
+      <ta-text size="sm">size: small | medium | large</ta-text>
+      <div class="demo-row">
+        <ta-itsme-button size="small">Se connecter avec itsme</ta-itsme-button>
+        <ta-itsme-button size="medium">Se connecter avec itsme</ta-itsme-button>
+        <ta-itsme-button size="large">Se connecter avec itsme</ta-itsme-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">itsme Button — States</ta-title>
+      <ta-text size="sm">state: classic | disabled | inactive</ta-text>
+      <div class="demo-row">
+        <ta-itsme-button state="classic">Classic</ta-itsme-button>
+        <ta-itsme-button state="disabled">Disabled</ta-itsme-button>
+        <ta-itsme-button state="inactive">Inactive</ta-itsme-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">itsme Button — Modes</ta-title>
+      <ta-text size="sm">mode: full (logo + texte) | logo (logo seul)</ta-text>
+      <div class="demo-row">
+        <ta-itsme-button mode="full">Se connecter avec itsme</ta-itsme-button>
+        <ta-itsme-button mode="logo"></ta-itsme-button>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">itsme Button — Sizes × Modes</ta-title>
+      <div class="demo-grid">
+        <div></div>
+        <ta-text [isBold]="true">Small</ta-text>
+        <ta-text [isBold]="true">Medium</ta-text>
+        <ta-text [isBold]="true">Large</ta-text>
+
+        <ta-text [isBold]="true">Full</ta-text>
+        <ta-itsme-button size="small" mode="full">itsme</ta-itsme-button>
+        <ta-itsme-button size="medium" mode="full">itsme</ta-itsme-button>
+        <ta-itsme-button size="large" mode="full">itsme</ta-itsme-button>
+
+        <ta-text [isBold]="true">Logo</ta-text>
+        <ta-itsme-button size="small" mode="logo"></ta-itsme-button>
+        <ta-itsme-button size="medium" mode="logo"></ta-itsme-button>
+        <ta-itsme-button size="large" mode="logo"></ta-itsme-button>
+      </div>
+    </section>
+
     <!-- Links & Labels -->
     <section>
       <ta-title [level]="2">Links &amp; Labels</ta-title>
