@@ -245,6 +245,60 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }] } });
 
+class CopyLinkButtonComponent {
+    constructor() {
+        /**
+         * Button state
+         */
+        this.state = input("classic");
+        /**
+         * Button size
+         */
+        this.size = input("medium");
+        /**
+         * Text to copy to clipboard
+         */
+        this.value = input(null);
+        this.stopPropagationActivation = input(true);
+        /**
+         * Event emitted when button is clicked (after copy)
+         */
+        this.action = new EventEmitter();
+        this._sizeMap = {
+            small: "sm",
+            medium: "md",
+            large: "lg",
+        };
+    }
+    async handleClick() {
+        if (this.state() !== "classic") {
+            return;
+        }
+        const text = this.value();
+        if (text) {
+            await navigator.clipboard.writeText(text);
+        }
+        this.action.emit();
+    }
+    getIconSize() {
+        return this._sizeMap[this.size()] || "md";
+    }
+    getClass() {
+        const css = {};
+        css[this.state()] = true;
+        css[this.size()] = true;
+        return css;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CopyLinkButtonComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: CopyLinkButtonComponent, isStandalone: true, selector: "ta-copy-link-button", inputs: { state: { classPropertyName: "state", publicName: "state", isSignal: true, isRequired: false, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, value: { classPropertyName: "value", publicName: "value", isSignal: true, isRequired: false, transformFunction: null }, stopPropagationActivation: { classPropertyName: "stopPropagationActivation", publicName: "stopPropagationActivation", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { action: "action" }, ngImport: i0, template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"copy-link-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <ta-font-icon name=\"content_copy\" [type]=\"this.getIconSize()\"></ta-font-icon>\n    <ng-content></ng-content>\n  </div>\n</button>\n", styles: [".copy-link-button{width:100%;border:1px solid var(--ta-border-primary);border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background-color:transparent;color:var(--ta-text-primary);font-weight:600;transition:background-color .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.copy-link-button:hover{background-color:var(--ta-surface-hover)}.copy-link-button:active{transform:scale(.98)}.copy-link-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.copy-link-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.copy-link-button.disabled{cursor:not-allowed;color:#a0a0a0;border-color:#a0a0a0}.copy-link-button.disabled:hover{background-color:transparent}.copy-link-button.inactive{cursor:not-allowed;opacity:.5}.copy-link-button.inactive:hover{background-color:transparent}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: CopyLinkButtonComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "ta-copy-link-button", standalone: true, imports: [NgClass, FontIconComponent, StopPropagationDirective], template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"copy-link-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <ta-font-icon name=\"content_copy\" [type]=\"this.getIconSize()\"></ta-font-icon>\n    <ng-content></ng-content>\n  </div>\n</button>\n", styles: [".copy-link-button{width:100%;border:1px solid var(--ta-border-primary);border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background-color:transparent;color:var(--ta-text-primary);font-weight:600;transition:background-color .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.copy-link-button:hover{background-color:var(--ta-surface-hover)}.copy-link-button:active{transform:scale(.98)}.copy-link-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.copy-link-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.copy-link-button.disabled{cursor:not-allowed;color:#a0a0a0;border-color:#a0a0a0}.copy-link-button.disabled:hover{background-color:transparent}.copy-link-button.inactive{cursor:not-allowed;opacity:.5}.copy-link-button.inactive:hover{background-color:transparent}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { action: [{
+                type: Output
+            }] } });
+
 class DualButtonComponent {
     constructor() {
         this.isFull = input(false);
@@ -308,6 +362,128 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }] } });
 
+class MessengerButtonComponent {
+    constructor() {
+        /**
+         * Button state
+         */
+        this.state = input("classic");
+        /**
+         * Button size
+         */
+        this.size = input("medium");
+        /**
+         * Display mode: 'full' shows logo + text, 'logo' shows only the logo
+         */
+        this.mode = input("full");
+        /**
+         * URL to share via Messenger. If provided, clicking opens Messenger with this link.
+         */
+        this.url = input(null);
+        this.stopPropagationActivation = input(true);
+        /**
+         * Event emitted when button is clicked
+         */
+        this.action = new EventEmitter();
+    }
+    handleClick() {
+        if (this.state() === "classic") {
+            const link = this.url();
+            if (link) {
+                window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(link)}&redirect_uri=${encodeURIComponent(window.location.href)}`, '_blank');
+            }
+            this.action.emit();
+        }
+    }
+    getClass() {
+        const css = {};
+        css[this.state()] = true;
+        css[this.size()] = true;
+        css[this.mode()] = true;
+        return css;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MessengerButtonComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: MessengerButtonComponent, isStandalone: true, selector: "ta-messenger-button", inputs: { state: { classPropertyName: "state", publicName: "state", isSignal: true, isRequired: false, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, mode: { classPropertyName: "mode", publicName: "mode", isSignal: true, isRequired: false, transformFunction: null }, url: { classPropertyName: "url", publicName: "url", isSignal: true, isRequired: false, transformFunction: null }, stopPropagationActivation: { classPropertyName: "stopPropagationActivation", publicName: "stopPropagationActivation", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { action: "action" }, ngImport: i0, template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"messenger-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <svg\n      class=\"messenger-logo\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      viewBox=\"0 0 800 800\"\n    >\n      <defs>\n        <linearGradient id=\"messenger-grad\" x1=\"400\" y1=\"800\" x2=\"400\" y2=\"0\" gradientUnits=\"userSpaceOnUse\">\n          <stop offset=\"0\" stop-color=\"#0099ff\"/>\n          <stop offset=\"1\" stop-color=\"#a033ff\"/>\n        </linearGradient>\n      </defs>\n      <path\n        class=\"messenger-logo-bg\"\n        d=\"M400,0C174.7,0,0,165.1,0,388.3c0,116.4,47.8,217.4,125.8,288.5a32.5,32.5,0,0,1,10.9,23.4l2.2,73.2a32.5,32.5,0,0,0,45.6,28.4l81.6-36a32.5,32.5,0,0,1,21.8-2.1A451.6,451.6,0,0,0,400,776.5c225.3,0,400-165.1,400-388.3S625.3,0,400,0Z\"\n      />\n      <path\n        class=\"messenger-logo-icon\"\n        d=\"M159.8,501.5,280.3,311.7a60,60,0,0,1,86.8-16l95.6,71.7a24,24,0,0,0,28.9-.1l129.1-98a19.1,19.1,0,0,1,27.7,25.3L527.8,484.3a60,60,0,0,1-86.8,16L345.4,428.6a24,24,0,0,0-28.9.1l-129.1,98A19.1,19.1,0,0,1,159.8,501.5Z\"\n      />\n    </svg>\n    @if (this.mode() === 'full') {\n    <ng-content></ng-content>\n    }\n  </div>\n</button>\n", styles: [".messenger-button{width:100%;border:none;border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background:linear-gradient(180deg,#a033ff,#09f);color:#fff;font-weight:600;transition:opacity .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.messenger-button .messenger-logo-bg{fill:url(#messenger-grad)}.messenger-button .messenger-logo-icon{fill:#fff}.messenger-button:hover{opacity:.9}.messenger-button:active{opacity:.85;transform:scale(.98)}.messenger-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.messenger-button.small .messenger-logo{height:24px}.messenger-button.medium .messenger-logo{height:32px}.messenger-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.messenger-button.large .messenger-logo{height:40px}.messenger-button.logo{padding:var(--ta-space-sm);width:auto}.messenger-button.disabled{cursor:not-allowed;background:#f0f0f0;color:#a0a0a0}.messenger-button.disabled .messenger-logo-bg{fill:#d0d0d0}.messenger-button.disabled .messenger-logo-icon{fill:#a0a0a0}.messenger-button.disabled:hover{opacity:1}.messenger-button.inactive{cursor:not-allowed;opacity:.5}.messenger-button.inactive:hover{opacity:.5}.messenger-logo{height:32px;width:auto;flex-shrink:0}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MessengerButtonComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "ta-messenger-button", standalone: true, imports: [NgClass, StopPropagationDirective], template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"messenger-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <svg\n      class=\"messenger-logo\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      viewBox=\"0 0 800 800\"\n    >\n      <defs>\n        <linearGradient id=\"messenger-grad\" x1=\"400\" y1=\"800\" x2=\"400\" y2=\"0\" gradientUnits=\"userSpaceOnUse\">\n          <stop offset=\"0\" stop-color=\"#0099ff\"/>\n          <stop offset=\"1\" stop-color=\"#a033ff\"/>\n        </linearGradient>\n      </defs>\n      <path\n        class=\"messenger-logo-bg\"\n        d=\"M400,0C174.7,0,0,165.1,0,388.3c0,116.4,47.8,217.4,125.8,288.5a32.5,32.5,0,0,1,10.9,23.4l2.2,73.2a32.5,32.5,0,0,0,45.6,28.4l81.6-36a32.5,32.5,0,0,1,21.8-2.1A451.6,451.6,0,0,0,400,776.5c225.3,0,400-165.1,400-388.3S625.3,0,400,0Z\"\n      />\n      <path\n        class=\"messenger-logo-icon\"\n        d=\"M159.8,501.5,280.3,311.7a60,60,0,0,1,86.8-16l95.6,71.7a24,24,0,0,0,28.9-.1l129.1-98a19.1,19.1,0,0,1,27.7,25.3L527.8,484.3a60,60,0,0,1-86.8,16L345.4,428.6a24,24,0,0,0-28.9.1l-129.1,98A19.1,19.1,0,0,1,159.8,501.5Z\"\n      />\n    </svg>\n    @if (this.mode() === 'full') {\n    <ng-content></ng-content>\n    }\n  </div>\n</button>\n", styles: [".messenger-button{width:100%;border:none;border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background:linear-gradient(180deg,#a033ff,#09f);color:#fff;font-weight:600;transition:opacity .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.messenger-button .messenger-logo-bg{fill:url(#messenger-grad)}.messenger-button .messenger-logo-icon{fill:#fff}.messenger-button:hover{opacity:.9}.messenger-button:active{opacity:.85;transform:scale(.98)}.messenger-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.messenger-button.small .messenger-logo{height:24px}.messenger-button.medium .messenger-logo{height:32px}.messenger-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.messenger-button.large .messenger-logo{height:40px}.messenger-button.logo{padding:var(--ta-space-sm);width:auto}.messenger-button.disabled{cursor:not-allowed;background:#f0f0f0;color:#a0a0a0}.messenger-button.disabled .messenger-logo-bg{fill:#d0d0d0}.messenger-button.disabled .messenger-logo-icon{fill:#a0a0a0}.messenger-button.disabled:hover{opacity:1}.messenger-button.inactive{cursor:not-allowed;opacity:.5}.messenger-button.inactive:hover{opacity:.5}.messenger-logo{height:32px;width:auto;flex-shrink:0}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { action: [{
+                type: Output
+            }] } });
+
+class ShareButtonComponent {
+    constructor() {
+        /**
+         * Button state
+         */
+        this.state = input("classic");
+        /**
+         * Button size
+         */
+        this.size = input("medium");
+        /**
+         * Title for the native share dialog
+         */
+        this.shareTitle = input("");
+        /**
+         * Text message to share
+         */
+        this.message = input(null);
+        /**
+         * URL to share
+         */
+        this.url = input(null);
+        this.stopPropagationActivation = input(true);
+        /**
+         * Event emitted when button is clicked
+         */
+        this.action = new EventEmitter();
+        this._sizeMap = {
+            small: "sm",
+            medium: "md",
+            large: "lg",
+        };
+    }
+    async handleClick() {
+        if (this.state() !== "classic") {
+            return;
+        }
+        const msg = this.message();
+        const link = this.url();
+        if (navigator.share && (msg || link)) {
+            try {
+                await navigator.share({
+                    title: this.shareTitle(),
+                    text: msg ?? undefined,
+                    url: link ?? undefined,
+                });
+            }
+            catch {
+                // User cancelled or share failed silently
+            }
+        }
+        this.action.emit();
+    }
+    getIconSize() {
+        return this._sizeMap[this.size()] || "md";
+    }
+    getClass() {
+        const css = {};
+        css[this.state()] = true;
+        css[this.size()] = true;
+        return css;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ShareButtonComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: ShareButtonComponent, isStandalone: true, selector: "ta-share-button", inputs: { state: { classPropertyName: "state", publicName: "state", isSignal: true, isRequired: false, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, shareTitle: { classPropertyName: "shareTitle", publicName: "shareTitle", isSignal: true, isRequired: false, transformFunction: null }, message: { classPropertyName: "message", publicName: "message", isSignal: true, isRequired: false, transformFunction: null }, url: { classPropertyName: "url", publicName: "url", isSignal: true, isRequired: false, transformFunction: null }, stopPropagationActivation: { classPropertyName: "stopPropagationActivation", publicName: "stopPropagationActivation", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { action: "action" }, ngImport: i0, template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"share-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <ta-font-icon name=\"share\" [type]=\"this.getIconSize()\"></ta-font-icon>\n    <ng-content></ng-content>\n  </div>\n</button>\n", styles: [".share-button{width:100%;border:none;border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background-color:#6c757d;color:#fff;font-weight:600;transition:background-color .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.share-button:hover{background-color:#5a6268}.share-button:active{background-color:#4e555b;transform:scale(.98)}.share-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.share-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.share-button.disabled{cursor:not-allowed;background-color:#f0f0f0;color:#a0a0a0}.share-button.disabled:hover{background-color:#f0f0f0}.share-button.inactive{cursor:not-allowed;opacity:.5}.share-button.inactive:hover{background-color:#6c757d}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ShareButtonComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "ta-share-button", standalone: true, imports: [NgClass, FontIconComponent, StopPropagationDirective], template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"share-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <ta-font-icon name=\"share\" [type]=\"this.getIconSize()\"></ta-font-icon>\n    <ng-content></ng-content>\n  </div>\n</button>\n", styles: [".share-button{width:100%;border:none;border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background-color:#6c757d;color:#fff;font-weight:600;transition:background-color .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.share-button:hover{background-color:#5a6268}.share-button:active{background-color:#4e555b;transform:scale(.98)}.share-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.share-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.share-button.disabled{cursor:not-allowed;background-color:#f0f0f0;color:#a0a0a0}.share-button.disabled:hover{background-color:#f0f0f0}.share-button.inactive{cursor:not-allowed;opacity:.5}.share-button.inactive:hover{background-color:#6c757d}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { action: [{
+                type: Output
+            }] } });
+
 class ButtonToolComponent {
     constructor() {
         this.state = input("classic");
@@ -339,6 +515,56 @@ class ButtonToolComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ButtonToolComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-button-tool", standalone: true, imports: [NgIf, NgClass, FontIconComponent, StopPropagationDirective], template: "<button\n  [disabled]=\"this.readonly()\"\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"this.handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-c enter\">\n    @if (this.icon()) {\n    <ta-font-icon [name]=\"this.icon()!\" [type]=\"this.size()\"></ta-font-icon>\n    }\n  </div>\n</button>\n", styles: [".button{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);padding:var(--ta-space-sm);align-items:center;display:flex;justify-content:center;margin:auto}.button.disabled,.button.inactive{cursor:not-allowed}.button.primary{color:var(--ta-icon-primary)}.button.primary:hover,.button.primary.selected{color:var(--ta-text-brand-primary)}.button.primary.disabled,.button.primary.inactive{color:var(--ta-neutral-200);border-color:var(--ta-surface-hover-secondary)}.button.primary.unselected{color:var(--ta-text-primary);background-color:var(--ta-surface-tertiary)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { action: [{
+                type: Output
+            }] } });
+
+class WhatsappButtonComponent {
+    constructor() {
+        /**
+         * Button state
+         */
+        this.state = input("classic");
+        /**
+         * Button size
+         */
+        this.size = input("medium");
+        /**
+         * Display mode: 'full' shows logo + text, 'logo' shows only the logo
+         */
+        this.mode = input("full");
+        /**
+         * Message to share via WhatsApp. If provided, clicking opens WhatsApp with this message.
+         */
+        this.message = input(null);
+        this.stopPropagationActivation = input(true);
+        /**
+         * Event emitted when button is clicked
+         */
+        this.action = new EventEmitter();
+    }
+    handleClick() {
+        if (this.state() === "classic") {
+            const msg = this.message();
+            if (msg) {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+            }
+            this.action.emit();
+        }
+    }
+    getClass() {
+        const css = {};
+        css[this.state()] = true;
+        css[this.size()] = true;
+        css[this.mode()] = true;
+        return css;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: WhatsappButtonComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: WhatsappButtonComponent, isStandalone: true, selector: "ta-whatsapp-button", inputs: { state: { classPropertyName: "state", publicName: "state", isSignal: true, isRequired: false, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, mode: { classPropertyName: "mode", publicName: "mode", isSignal: true, isRequired: false, transformFunction: null }, message: { classPropertyName: "message", publicName: "message", isSignal: true, isRequired: false, transformFunction: null }, stopPropagationActivation: { classPropertyName: "stopPropagationActivation", publicName: "stopPropagationActivation", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { action: "action" }, ngImport: i0, template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"whatsapp-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <svg\n      class=\"whatsapp-logo\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      viewBox=\"0 0 175.216 175.552\"\n    >\n      <defs>\n        <linearGradient id=\"whatsapp-grad\" x1=\"85.915\" y1=\"175.016\" x2=\"85.915\" y2=\"0.536\" gradientUnits=\"userSpaceOnUse\">\n          <stop offset=\"0\" stop-color=\"#20b038\"/>\n          <stop offset=\"1\" stop-color=\"#60d66a\"/>\n        </linearGradient>\n      </defs>\n      <path\n        class=\"whatsapp-logo-bg\"\n        d=\"M87.184,0C39.04,0,0,39.04,0,87.184a86.743,86.743,0,0,0,11.712,43.648L0,175.552l46.272-11.456A86.86,86.86,0,0,0,87.184,175.552h.064C135.392,175.552,175.216,136.512,175.216,87.184S135.392,0,87.184,0Z\"\n      />\n      <path\n        class=\"whatsapp-logo-icon\"\n        d=\"M87.184,14.848A72.468,72.468,0,0,0,14.848,87.184a72.12,72.12,0,0,0,11.2,38.592l-7.36,26.88,27.52-7.2A72.2,72.2,0,0,0,87.248,157.7h.064a72.468,72.468,0,0,0,72.336-72.336A72.468,72.468,0,0,0,87.184,14.848ZM130.4,120.96c-1.856,5.216-10.784,9.984-14.848,10.56s-3.904,4.288-25.536-5.312S64.48,103.52,62.624,101.088s-15.168-20.16-15.168-38.464,9.6-27.264,13.024-30.976A13.718,13.718,0,0,1,70.4,27.36c1.28,0,2.56.064,3.68.128,3.456.128,5.184.32,7.456,5.76s7.84,19.136,8.512,20.544a5.127,5.127,0,0,1,.256,4.8,18.549,18.549,0,0,1-2.816,4.544c-1.408,1.6-2.944,3.584-4.224,4.8-1.408,1.408-2.88,2.944-1.216,5.76s7.36,12.16,15.808,19.712c10.88,9.728,20.032,12.736,22.88,14.144s4.48,1.216,6.144-.704,7.04-8.192,8.96-11.008,3.776-2.368,6.336-1.408,16.448,7.776,19.264,9.184,4.736,2.112,5.44,3.264S132.256,115.744,130.4,120.96Z\"\n      />\n    </svg>\n    @if (this.mode() === 'full') {\n    <ng-content></ng-content>\n    }\n  </div>\n</button>\n", styles: [".whatsapp-button{width:100%;border:none;border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background-color:#25d366;color:#fff;font-weight:600;transition:background-color .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.whatsapp-button .whatsapp-logo-bg{fill:#25d366}.whatsapp-button .whatsapp-logo-icon{fill:#fff}.whatsapp-button:hover{background-color:#20bd5a}.whatsapp-button:active{background-color:#1da851;transform:scale(.98)}.whatsapp-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.whatsapp-button.small .whatsapp-logo{height:24px}.whatsapp-button.medium .whatsapp-logo{height:32px}.whatsapp-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.whatsapp-button.large .whatsapp-logo{height:40px}.whatsapp-button.logo{padding:var(--ta-space-sm);width:auto}.whatsapp-button.disabled{cursor:not-allowed;background-color:#f0f0f0;color:#a0a0a0}.whatsapp-button.disabled .whatsapp-logo-bg{fill:#d0d0d0}.whatsapp-button.disabled .whatsapp-logo-icon{fill:#a0a0a0}.whatsapp-button.disabled:hover{background-color:#f0f0f0}.whatsapp-button.inactive{cursor:not-allowed;opacity:.5}.whatsapp-button.inactive:hover{background-color:#25d366}.whatsapp-logo{height:32px;width:auto;flex-shrink:0}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: WhatsappButtonComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "ta-whatsapp-button", standalone: true, imports: [NgClass, StopPropagationDirective], template: "<button\n  appStopPropagation\n  [stopPropagationActivation]=\"this.stopPropagationActivation()\"\n  type=\"button\"\n  class=\"whatsapp-button pointer\"\n  [ngClass]=\"this.getClass()\"\n  (click)=\"handleClick()\"\n>\n  <div class=\"flex-row g-space-sm align-center justify-center\">\n    <svg\n      class=\"whatsapp-logo\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      viewBox=\"0 0 175.216 175.552\"\n    >\n      <defs>\n        <linearGradient id=\"whatsapp-grad\" x1=\"85.915\" y1=\"175.016\" x2=\"85.915\" y2=\"0.536\" gradientUnits=\"userSpaceOnUse\">\n          <stop offset=\"0\" stop-color=\"#20b038\"/>\n          <stop offset=\"1\" stop-color=\"#60d66a\"/>\n        </linearGradient>\n      </defs>\n      <path\n        class=\"whatsapp-logo-bg\"\n        d=\"M87.184,0C39.04,0,0,39.04,0,87.184a86.743,86.743,0,0,0,11.712,43.648L0,175.552l46.272-11.456A86.86,86.86,0,0,0,87.184,175.552h.064C135.392,175.552,175.216,136.512,175.216,87.184S135.392,0,87.184,0Z\"\n      />\n      <path\n        class=\"whatsapp-logo-icon\"\n        d=\"M87.184,14.848A72.468,72.468,0,0,0,14.848,87.184a72.12,72.12,0,0,0,11.2,38.592l-7.36,26.88,27.52-7.2A72.2,72.2,0,0,0,87.248,157.7h.064a72.468,72.468,0,0,0,72.336-72.336A72.468,72.468,0,0,0,87.184,14.848ZM130.4,120.96c-1.856,5.216-10.784,9.984-14.848,10.56s-3.904,4.288-25.536-5.312S64.48,103.52,62.624,101.088s-15.168-20.16-15.168-38.464,9.6-27.264,13.024-30.976A13.718,13.718,0,0,1,70.4,27.36c1.28,0,2.56.064,3.68.128,3.456.128,5.184.32,7.456,5.76s7.84,19.136,8.512,20.544a5.127,5.127,0,0,1,.256,4.8,18.549,18.549,0,0,1-2.816,4.544c-1.408,1.6-2.944,3.584-4.224,4.8-1.408,1.408-2.88,2.944-1.216,5.76s7.36,12.16,15.808,19.712c10.88,9.728,20.032,12.736,22.88,14.144s4.48,1.216,6.144-.704,7.04-8.192,8.96-11.008,3.776-2.368,6.336-1.408,16.448,7.776,19.264,9.184,4.736,2.112,5.44,3.264S132.256,115.744,130.4,120.96Z\"\n      />\n    </svg>\n    @if (this.mode() === 'full') {\n    <ng-content></ng-content>\n    }\n  </div>\n</button>\n", styles: [".whatsapp-button{width:100%;border:none;border-radius:var(--ta-radius-full);padding:var(--ta-space-sm) var(--ta-space-lg);background-color:#25d366;color:#fff;font-weight:600;transition:background-color .2s ease,transform .1s ease;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-components-button-gap)}.whatsapp-button .whatsapp-logo-bg{fill:#25d366}.whatsapp-button .whatsapp-logo-icon{fill:#fff}.whatsapp-button:hover{background-color:#20bd5a}.whatsapp-button:active{background-color:#1da851;transform:scale(.98)}.whatsapp-button.small{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-xs) var(--ta-space-md)}.whatsapp-button.small .whatsapp-logo{height:24px}.whatsapp-button.medium .whatsapp-logo{height:32px}.whatsapp-button.large{padding:var(--ta-space-md) var(--ta-space-xl)}.whatsapp-button.large .whatsapp-logo{height:40px}.whatsapp-button.logo{padding:var(--ta-space-sm);width:auto}.whatsapp-button.disabled{cursor:not-allowed;background-color:#f0f0f0;color:#a0a0a0}.whatsapp-button.disabled .whatsapp-logo-bg{fill:#d0d0d0}.whatsapp-button.disabled .whatsapp-logo-icon{fill:#a0a0a0}.whatsapp-button.disabled:hover{background-color:#f0f0f0}.whatsapp-button.inactive{cursor:not-allowed;opacity:.5}.whatsapp-button.inactive:hover{background-color:#25d366}.whatsapp-logo{height:32px;width:auto;flex-shrink:0}\n"] }]
         }], ctorParameters: () => [], propDecorators: { action: [{
                 type: Output
             }] } });
@@ -2571,5 +2797,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, ItsmeButtonComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, ProgressComponent, PwaComponent, RatingComponent, SwiperComponent, SwiperLightComponent, TaDefaultPanelComponent, TaExpansionPanelComponent, TaOverlayPanelComponent, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, WrappedIconComponent, criticityLabel, openModal };
+export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CopyLinkButtonComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, ItsmeButtonComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, MessengerButtonComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, OverlayService, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, ProgressComponent, PwaComponent, RatingComponent, ShareButtonComponent, SwiperComponent, SwiperLightComponent, TaDefaultPanelComponent, TaExpansionPanelComponent, TaOverlayPanelComponent, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TemplateModalContainer, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, WhatsappButtonComponent, WrappedIconComponent, criticityLabel, openModal };
 //# sourceMappingURL=ta-ui.mjs.map

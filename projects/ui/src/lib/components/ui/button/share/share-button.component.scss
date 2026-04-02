@@ -1,0 +1,65 @@
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+$share-bg: #6c757d;
+$share-hover: #5a6268;
+$share-active: #4e555b;
+$share-disabled-bg: #f0f0f0;
+$share-disabled-color: #a0a0a0;
+
+.share-button {
+  width: 100%;
+  border: none;
+  border-radius: common.get-var(radius, full);
+  padding: common.get-var(space, sm) common.get-var(space, lg);
+  background-color: $share-bg;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  @include fonts.fontSizeBody(md);
+  @include flex.align-center();
+  @include flex.justify-center();
+
+  gap: common.get-var(components, button, gap);
+
+  &:hover {
+    background-color: $share-hover;
+  }
+
+  &:active {
+    background-color: $share-active;
+    transform: scale(0.98);
+  }
+
+  // Sizes
+  &.small {
+    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, md);
+  }
+
+  &.large {
+    padding: common.get-var(space, md) common.get-var(space, xl);
+  }
+
+  // States
+  &.disabled {
+    cursor: not-allowed;
+    background-color: $share-disabled-bg;
+    color: $share-disabled-color;
+
+    &:hover {
+      background-color: $share-disabled-bg;
+    }
+  }
+
+  &.inactive {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: $share-bg;
+    }
+  }
+}

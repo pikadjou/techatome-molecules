@@ -27,6 +27,9 @@ Question ou tâche : $ARGUMENTS
 - `taActionButtonComponent` — `ta-action-button`
 - `taDualButtonComponent` — `ta-dual-button`
 - `taToolComponent` — `ta-tool`
+- `ItsmeButtonComponent` — `ta-itsme-button`
+- `WhatsappButtonComponent` — `ta-whatsapp-button`
+- `MessengerButtonComponent` — `ta-messenger-button`
 - `taCivilityComponent` — `ta-civility`
 - `taContactInformationComponent` — `ta-contact-information`
 - `taCriticityComponent` — `ta-criticity`

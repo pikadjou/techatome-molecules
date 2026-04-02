@@ -1,0 +1,107 @@
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+$whatsapp-green: #25d366;
+$whatsapp-green-hover: #20bd5a;
+$whatsapp-green-active: #1da851;
+$whatsapp-disabled-bg: #f0f0f0;
+$whatsapp-disabled-color: #a0a0a0;
+
+.whatsapp-button {
+  width: 100%;
+  border: none;
+  border-radius: common.get-var(radius, full);
+  padding: common.get-var(space, sm) common.get-var(space, lg);
+  background-color: $whatsapp-green;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  @include fonts.fontSizeBody(md);
+  @include flex.align-center();
+  @include flex.justify-center();
+
+  gap: common.get-var(components, button, gap);
+
+  .whatsapp-logo-bg {
+    fill: $whatsapp-green;
+  }
+
+  .whatsapp-logo-icon {
+    fill: #ffffff;
+  }
+
+  &:hover {
+    background-color: $whatsapp-green-hover;
+  }
+
+  &:active {
+    background-color: $whatsapp-green-active;
+    transform: scale(0.98);
+  }
+
+  // Sizes
+  &.small {
+    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, md);
+
+    .whatsapp-logo {
+      height: 24px;
+    }
+  }
+
+  &.medium {
+    .whatsapp-logo {
+      height: 32px;
+    }
+  }
+
+  &.large {
+    padding: common.get-var(space, md) common.get-var(space, xl);
+
+    .whatsapp-logo {
+      height: 40px;
+    }
+  }
+
+  // Logo-only mode
+  &.logo {
+    padding: common.get-var(space, sm);
+    width: auto;
+  }
+
+  // States
+  &.disabled {
+    cursor: not-allowed;
+    background-color: $whatsapp-disabled-bg;
+    color: $whatsapp-disabled-color;
+
+    .whatsapp-logo-bg {
+      fill: #d0d0d0;
+    }
+
+    .whatsapp-logo-icon {
+      fill: $whatsapp-disabled-color;
+    }
+
+    &:hover {
+      background-color: $whatsapp-disabled-bg;
+    }
+  }
+
+  &.inactive {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: $whatsapp-green;
+    }
+  }
+}
+
+.whatsapp-logo {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+}

@@ -1,0 +1,63 @@
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+$copy-bg: transparent;
+$copy-color: common.get-var(text, primary);
+$copy-hover-bg: common.get-var(surface, hover);
+$copy-disabled-color: #a0a0a0;
+
+.copy-link-button {
+  width: 100%;
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, full);
+  padding: common.get-var(space, sm) common.get-var(space, lg);
+  background-color: $copy-bg;
+  color: $copy-color;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  @include fonts.fontSizeBody(md);
+  @include flex.align-center();
+  @include flex.justify-center();
+
+  gap: common.get-var(components, button, gap);
+
+  &:hover {
+    background-color: $copy-hover-bg;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // Sizes
+  &.small {
+    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, md);
+  }
+
+  &.large {
+    padding: common.get-var(space, md) common.get-var(space, xl);
+  }
+
+  // States
+  &.disabled {
+    cursor: not-allowed;
+    color: $copy-disabled-color;
+    border-color: $copy-disabled-color;
+
+    &:hover {
+      background-color: $copy-bg;
+    }
+  }
+
+  &.inactive {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: $copy-bg;
+    }
+  }
+}

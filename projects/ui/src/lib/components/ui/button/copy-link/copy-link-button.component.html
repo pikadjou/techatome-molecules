@@ -1,0 +1,13 @@
+<button
+  appStopPropagation
+  [stopPropagationActivation]="this.stopPropagationActivation()"
+  type="button"
+  class="copy-link-button pointer"
+  [ngClass]="this.getClass()"
+  (click)="handleClick()"
+>
+  <div class="flex-row g-space-sm align-center justify-center">
+    <ta-font-icon name="content_copy" [type]="this.getIconSize()"></ta-font-icon>
+    <ng-content></ng-content>
+  </div>
+</button>
