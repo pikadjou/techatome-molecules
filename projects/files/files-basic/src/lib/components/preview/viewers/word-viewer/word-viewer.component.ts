@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
@@ -15,7 +15,7 @@ import { PreviewDocumentDto } from '../../type';
   imports: [NgxDocViewerModule, LoaderComponent],
 })
 export class WordViewerComponent extends TaAbstractComponent {
-  @Input({ required: true }) file!: PreviewDocumentDto;
+  file = input.required<PreviewDocumentDto>();
 
   constructor() {
     super();

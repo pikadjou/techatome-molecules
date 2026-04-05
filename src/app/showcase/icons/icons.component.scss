@@ -1,0 +1,32 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+
+.sections {
+  @include flex.flex-column();
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: common.get-var(space, md);
+}
+
+.demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: common.get-var(space, md);
+}
+
+.icon-cell {
+  @include flex.flex-column();
+  @include flex.align-center();
+  gap: common.get-var(space, xs);
+  min-width: 80px;
+}

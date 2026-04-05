@@ -1,0 +1,27 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: common.get-var(space, md);
+}
+
+.demo-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: common.get-var(space, md);
+}

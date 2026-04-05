@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -13,7 +12,7 @@ import { TaTranslationUI } from "../../../translation.service";
   templateUrl: "./megaoctet.component.html",
   styleUrls: ["./megaoctet.component.scss"],
   standalone: true,
-  imports: [NgIf, FontIconComponent, TranslateModule],
+  imports: [FontIconComponent, TranslateModule],
 })
 export class MegaoctetComponent {
   octet = input.required<number>();

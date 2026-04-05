@@ -1,4 +1,4 @@
-import { NgIf, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 @Component({
@@ -6,7 +6,7 @@ import { Component, input } from "@angular/core";
   templateUrl: "./hour-date-line.component.html",
   styleUrls: ["./hour-date-line.component.scss"],
   standalone: true,
-  imports: [NgIf, DatePipe],
+  imports: [DatePipe],
 })
 export class HourDateLineComponent {
   /**

@@ -32,15 +32,17 @@ export class InputLogoComponent extends TaAbstractInputComponent<InputLogo> impl
     const logoFile = images.length > 0 ? images[0].file : null;
     if (logoFile) {
       this.requestState.asked();
-      this._documentsService.addDocument$({ file: logoFile, description: 'logo' }).subscribe({
-        next: document => {
-          this.input.value = document;
-          this.requestState.completed();
-        },
-        error: () => {
-          this.requestState.completed();
-        },
-      });
+      this._registerSubscription(
+        this._documentsService.addDocument$({ file: logoFile, description: 'logo' }).subscribe({
+          next: document => {
+            this.input.value = document;
+            this.requestState.completed();
+          },
+          error: () => {
+            this.requestState.completed();
+          },
+        })
+      );
     }
   }
 

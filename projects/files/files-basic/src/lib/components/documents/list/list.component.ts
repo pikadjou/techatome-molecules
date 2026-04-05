@@ -1,14 +1,13 @@
-import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { AsyncPipe, NgTemplateOutlet } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import {
   Component,
-  EventEmitter,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
   inject,
   input,
+  output,
 } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -34,8 +33,7 @@ import { TaBaseComponent, downloadFile } from "@ta/utils";
   styleUrls: ["./list.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
+    NgTemplateOutlet,
     AsyncPipe,
     ButtonToolComponent,
     EmptyComponent,
@@ -63,11 +61,9 @@ export class DocumentsListComponent
 
   readonly = input<boolean>(false);
 
-  @Output()
-  remove = new EventEmitter<string>();
+  remove = output<string>();
 
-  @Output()
-  checkedFilesChanged = new EventEmitter<InputUploadValue[]>();
+  checkedFilesChanged = output<InputUploadValue[]>();
 
   private readonly _documentsService = inject(TaDocumentsService);
 
@@ -113,16 +109,18 @@ export class DocumentsListComponent
 
   private _fetch() {
     this.requestState.asked();
-    this._documentsService.fetchDocuments$(this.documentsIds()).subscribe({
-      next: (documents) => {
-        this._checkedFiles = documents.filter((doc) =>
-          this.defaultSelected().includes(doc.id)
-        );
-      },
-      complete: () => this.requestState.completed(),
-      error: (error: HttpErrorResponse) => {
-        this.requestState.onError(error.status, error.statusText);
-      },
-    });
+    this._registerSubscription(
+      this._documentsService.fetchDocuments$(this.documentsIds()).subscribe({
+        next: (documents) => {
+          this._checkedFiles = documents.filter((doc) =>
+            this.defaultSelected().includes(doc.id)
+          );
+        },
+        complete: () => this.requestState.completed(),
+        error: (error: HttpErrorResponse) => {
+          this.requestState.onError(error.status, error.statusText);
+        },
+      })
+    );
   }
 }

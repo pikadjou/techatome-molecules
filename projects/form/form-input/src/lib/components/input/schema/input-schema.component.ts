@@ -1,5 +1,4 @@
-import { NgIf } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import { FileListComponent } from "@ta/files-basic";
@@ -18,7 +17,6 @@ import { InputSchemaModal } from "./modal/input-schema-modal.component";
   styleUrls: ["./input-schema.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     LocalIconComponent,
     ButtonComponent,
     FileListComponent,
@@ -50,12 +48,14 @@ export class InputSchemaComponent extends TaAbstractInputComponent<InputSchema> 
     this.input.formControl?.setValue(value);
   }
 
-  constructor(public dialog: MatDialog) {
+  public _dialog = inject(MatDialog);
+
+  constructor() {
     super();
   }
 
   public openDialog(): void {
-    const dialogRef = this.dialog.open<
+    const dialogRef = this._dialog.open<
       InputSchemaModal,
       { file: FileStructure }
     >(InputSchemaModal);

@@ -62,7 +62,7 @@
     <div class="trigger-container">
       <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
       <mat-menu #menu="matMenu">
-        <ng-container *ngTemplateOutlet="template"></ng-container>
+        <ng-container [ngTemplateOutlet]="template"></ng-container>
       </mat-menu>
     </div>
     }

@@ -19,7 +19,7 @@ export interface FeatureRouteData {
 export class FeatureGuard {
   public readonly _permissionsService = inject(TaPermissionsService);
 
-  constructor(private router: Router) {}
+  private _router = inject(Router);
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     const level = route.data["level"];
@@ -36,7 +36,7 @@ export class FeatureGuard {
   }
 
   public setRedirect(): void {
-    this.router.navigateByUrl(TaRoutes.getHome());
+    this._router.navigateByUrl(TaRoutes.getHome());
   }
 
   private _isValidPermission(feature: string, level: Level) {

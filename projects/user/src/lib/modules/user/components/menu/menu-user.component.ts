@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { Component, OnDestroy, inject } from "@angular/core";
 
 import { of } from "rxjs";
@@ -19,7 +19,6 @@ import { TaPermissionsService } from "../../services/permissions.service";
   styleUrls: ["./menu-user.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     StopPropagationDirective,
     TrigramComponent,
@@ -37,10 +36,10 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
   }
 
   get getFirstLetter() {
-    return (this.authService as any).firstLetter;
+    return (this._authService as any).firstLetter;
   }
 
-  public authService = inject(TA_AUTH_TOKEN);
+  private _authService = inject(TA_AUTH_TOKEN);
   public language = new InputDropdown<string>({
     label: "",
     options$: of([
@@ -51,23 +50,25 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
     ]),
   });
 
-  constructor(public translateService: TaTranslationService) {
+  private _translateService = inject(TaTranslationService);
+
+  constructor() {
     super();
 
-    this.language.value = this.translateService.getLanguage();
+    this.language.value = this._translateService.getLanguage();
 
     this._registerSubscription(
       this.language.changeValue$.subscribe((value) =>
-        value ? this.translateService.use(value) : null
+        value ? this._translateService.use(value) : null
       )
     );
   }
 
   public login() {
-    this.authService.login();
+    this._authService.login();
   }
 
   public logout() {
-    this.authService.logout();
+    this._authService.logout();
   }
 }

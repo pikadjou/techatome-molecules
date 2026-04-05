@@ -2,15 +2,14 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild,
   input,
+  output,
 } from "@angular/core";
 
-import { NgIf, NgFor, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { FontIconComponent, MaterialIconComponent } from "@ta/icons";
 import { InputSlider } from "@ta/form-model";
 import { LoaderComponent } from "@ta/ui";
@@ -32,8 +31,6 @@ type ShapeSelection = "rect" | "triangle" | "circle" | "line" | "";
   styleUrls: ["./files-edit.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     FontIconComponent,
     LoaderComponent,
@@ -48,8 +45,7 @@ export class FileEditComponent
 
   saveImage$ = input.required<Observable<null>>();
 
-  @Output()
-  savedImage: EventEmitter<Blob> = new EventEmitter();
+  savedImage = output<Blob>();
 
   public tuiImageEditor!: ImageEditor;
 
@@ -99,8 +95,10 @@ export class FileEditComponent
 
     this.slider.value = this.brushSize;
     this.slider.createFormControl();
-    this.slider.changeValue$.subscribe((value) =>
-      this.changeBrushSize(value ?? 0)
+    this._registerSubscription(
+      this.slider.changeValue$.subscribe((value) =>
+        this.changeBrushSize(value ?? 0)
+      )
     );
 
     window.addEventListener("keyup", this.keyPress);

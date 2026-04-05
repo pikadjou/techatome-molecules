@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaState } from "@ta/styles";
@@ -43,8 +43,7 @@ export class ButtonComponent {
   /**
    * Event emitted when button is clicked
    */
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 
   constructor() {}
 

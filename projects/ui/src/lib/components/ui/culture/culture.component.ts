@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -12,7 +11,7 @@ import { TaTranslationUI } from "../../../translation.service";
   templateUrl: "./culture.component.html",
   styleUrls: ["./culture.component.scss"],
   standalone: true,
-  imports: [NgFor, TranslateModule],
+  imports: [TranslateModule],
 })
 export class CultureComponent {
   cultures = input.required<Culture[]>();

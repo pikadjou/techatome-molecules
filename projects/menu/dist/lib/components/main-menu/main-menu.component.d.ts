@@ -1,5 +1,4 @@
 import { TemplateRef } from '@angular/core';
-import { TaSharedMenuService } from '@ta/services';
 import { TaBaseComponent } from '@ta/utils';
 import { Menu } from '../../models/menu/menu';
 import * as i0 from "@angular/core";
@@ -8,7 +7,7 @@ export declare class MainMenuComponent extends TaBaseComponent {
     menuUser: import("@angular/core").InputSignal<Menu<import("@ta/menu").MenuBase> | undefined>;
     userMenuTemplate: import("@angular/core").InputSignal<TemplateRef<any> | undefined>;
     direction: import("@angular/core").InputSignal<"horizontal" | "vertical">;
-    sharedMenu: TaSharedMenuService;
+    private _sharedMenu;
     isPanelOpen: boolean;
     navigateToHome(): void;
     toggleView(): void;

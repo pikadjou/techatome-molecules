@@ -1,4 +1,4 @@
-import { NgFor, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { createRange } from "@ta/utils";
@@ -10,7 +10,7 @@ import { Placeholder } from "./config";
   templateUrl: "./placeholder.component.html",
   styleUrls: ["./placeholder.component.scss"],
   standalone: true,
-  imports: [NgFor, NgClass],
+  imports: [NgClass],
 })
 export class PlaceholderComponent {
   placeholder = input.required<Placeholder>();

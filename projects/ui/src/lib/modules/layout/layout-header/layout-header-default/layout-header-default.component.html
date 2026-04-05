@@ -20,6 +20,6 @@
 
 <mat-menu #menu="matMenu">
   @if (this.menuTemplate()) {
-    <ng-template *ngTemplateOutlet="this.menuTemplate(); context: { element: menu }"></ng-template>
+    <ng-container [ngTemplateOutlet]="this.menuTemplate() ?? null" [ngTemplateOutletContext]="{ element: menu }"></ng-container>
   }
 </mat-menu>

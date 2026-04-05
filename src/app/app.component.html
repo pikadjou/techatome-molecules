@@ -2,7 +2,10 @@
   <nav class="sidebar">
     <div class="sidebar-header">{{ this.title }}</div>
     <div class="sidebar-nav">
-      @for (item of this.menu; track item.route) {
+      @for (item of this.menu; track item.label) {
+      @if (item.group) {
+      <div class="nav-group">{{ item.label }}</div>
+      } @else {
       <a
         [routerLink]="item.route"
         class="nav-item"
@@ -11,6 +14,7 @@
         <span class="material-icons">{{ item.icon }}</span>
         <span>{{ item.label }}</span>
       </a>
+      }
       }
     </div>
     <div class="sidebar-footer">

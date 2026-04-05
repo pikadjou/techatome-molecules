@@ -1,9 +1,8 @@
 import { NgClass } from "@angular/common";
 import {
   Component,
-  EventEmitter,
   input,
-  Output,
+  output,
   inject,
   effect,
 } from "@angular/core";
@@ -33,8 +32,7 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   showClose = input<boolean>(true);
 
-  @Output()
-  askClose: EventEmitter<null> = new EventEmitter();
+  askClose = output<void>();
 
   private _matDialog = inject(MatDialog);
 

@@ -1,4 +1,4 @@
-import { NgIf, NgStyle } from "@angular/common";
+import { NgStyle } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 @Component({
@@ -6,7 +6,7 @@ import { Component, input } from "@angular/core";
   templateUrl: "./trigram.component.html",
   styleUrls: ["./trigram.component.scss"],
   standalone: true,
-  imports: [NgIf, NgStyle],
+  imports: [NgStyle],
 })
 export class TrigramComponent {
   /**

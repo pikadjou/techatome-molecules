@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -22,8 +22,7 @@ export class FiltersFormComponent extends TaBaseComponent {
 
   askValidation$ = input.required<Observable<null>>();
 
-  @Output()
-  filtersSelected = new EventEmitter<any>();
+  filtersSelected = output<any>();
 
   constructor() {
     super();

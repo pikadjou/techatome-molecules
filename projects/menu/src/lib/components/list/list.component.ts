@@ -1,4 +1,3 @@
-import { NgIf, NgFor } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
@@ -17,8 +16,6 @@ import { Menu } from "../../models/menu/menu";
   styleUrls: ["./list.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     FontIconComponent,
     ListContainerComponent,
     ListElementComponent,

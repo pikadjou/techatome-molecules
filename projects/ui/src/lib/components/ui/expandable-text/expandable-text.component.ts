@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, ElementRef, input, ViewChild } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -10,7 +9,7 @@ import { TaTranslationUI } from "../../../translation.service";
   templateUrl: "./expandable-text.component.html",
   styleUrls: ["./expandable-text.component.scss"],
   standalone: true,
-  imports: [NgIf, TranslateModule],
+  imports: [TranslateModule],
 })
 export class ExpandableTextComponent {
   height = input<number>(100);

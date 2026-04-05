@@ -1,6 +1,6 @@
-import { NgClass, NgTemplateOutlet, NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, Component, input, EventEmitter, Output, signal, HostListener } from '@angular/core';
+import { Injectable, Component, input, output, signal, inject, ElementRef, HostListener } from '@angular/core';
 import * as i1$1 from '@angular/forms';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
@@ -109,8 +109,6 @@ class DynamicComponent extends TaBaseComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DynamicComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-input-dynamic", standalone: true, imports: [
-                        NgIf,
-                        NgFor,
                         NgClass,
                         NgTemplateOutlet,
                         LocalIconComponent,
@@ -202,8 +200,6 @@ class InputTranslationComponent extends TaBaseComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputTranslationComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-input-translation', standalone: true, imports: [
-                        NgIf,
-                        NgFor,
                         NgClass,
                         NgTemplateOutlet,
                         FontIconComponent,
@@ -278,8 +274,8 @@ class FormComponent extends TaBaseComponent {
         this.canDisplayButton = input(true);
         this.buttonTitle = input('form.save');
         this.onLive = input(false);
-        this.valid = new EventEmitter();
-        this.isFormValid = new EventEmitter();
+        this.valid = output();
+        this.isFormValid = output();
         TaTranslationForm.getInstance();
     }
     ngOnInit() {
@@ -342,11 +338,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         TranslatePipe,
                         InputsComponent,
                     ], template: "<div class=\"form-container flex-full\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"this.form\" class=\"flex-column g-space-sm flex-full\">\n    @for (input of this.inputs(); track trackByKey($index, input)) {\n      <div>\n        @if (input.visible$ | async) {\n          <ta-inputs [input]=\"input\"></ta-inputs>\n        }\n      </div>\n    }\n    <div>\n      <ta-notification-inline [message]=\"this.error().message\" [code]=\"this.error().status\" class=\"my-space-sm\">\n        <ta-loader [isLoading]=\"this.loader()\">\n          @if (this.canDisplayButton() && this.buttonTitle()) {\n            <ta-button\n              class=\"justify-end\"\n              (action)=\"this.onSubmit()\"\n              [state]=\"!this.isValid() ? 'disabled' : 'classic'\"\n              icon=\"check-line\"\n            >\n              {{ this.buttonTitle() | translate }}\n            </ta-button>\n          }\n        </ta-loader>\n      </ta-notification-inline>\n    </div>\n  </form>\n</div>\n", styles: [":host{display:flex;flex:1 1 100%}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { valid: [{
-                type: Output
-            }], isFormValid: [{
-                type: Output
-            }] } });
+        }], ctorParameters: () => [] });
 
 class EditFieldComponent extends TaBaseComponent {
     onDocumentClick(targetElement) {
@@ -357,23 +349,23 @@ class EditFieldComponent extends TaBaseComponent {
             targetElement.type === "file") {
             return;
         }
-        const clickedInside = this.elementRef.nativeElement.contains(targetElement);
+        const clickedInside = this._elementRef.nativeElement.contains(targetElement);
         if (!clickedInside) {
             this.validation();
         }
     }
-    constructor(elementRef) {
+    constructor() {
         super();
-        this.elementRef = elementRef;
         this.getInput = input.required();
         this.changeEditMode$ = input(null);
         this.isLoading = input(false);
         this.withBorder = input(true);
         this.disabled = input(false);
-        this.newValue = new EventEmitter();
+        this.newValue = output();
         this.onFocusBehavior = new BehaviorSubject(undefined);
         this.renderInput = signal(null);
         this.editMode = signal(false);
+        this._elementRef = inject(ElementRef);
     }
     ngOnInit() {
         const changeEditMode = this.changeEditMode$();
@@ -408,21 +400,18 @@ class EditFieldComponent extends TaBaseComponent {
     _setInput() {
         this.renderInput.set(this.getInput()());
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditFieldComponent, deps: [{ token: i0.ElementRef }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditFieldComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: EditFieldComponent, isStandalone: true, selector: "ta-edit-field", inputs: { getInput: { classPropertyName: "getInput", publicName: "getInput", isSignal: true, isRequired: true, transformFunction: null }, changeEditMode$: { classPropertyName: "changeEditMode$", publicName: "changeEditMode$", isSignal: true, isRequired: false, transformFunction: null }, isLoading: { classPropertyName: "isLoading", publicName: "isLoading", isSignal: true, isRequired: false, transformFunction: null }, withBorder: { classPropertyName: "withBorder", publicName: "withBorder", isSignal: true, isRequired: false, transformFunction: null }, disabled: { classPropertyName: "disabled", publicName: "disabled", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { newValue: "newValue" }, host: { listeners: { "document:click": "onDocumentClick($event.target)" } }, usesInheritance: true, usesOnChanges: true, ngImport: i0, template: "<ta-loader [isLoading]=\"this.isLoading()\">\n  @let input = this.renderInput(); @if (!this.editMode()) {\n  <div\n    class=\"value-container\"\n    [ngClass]=\"{ 'no-border': !this.withBorder() }\"\n    [class.is-disabled]=\"this.disabled()\"\n    (click)=\"!this.disabled() ? this.toggleEditMode() : null\"\n    appStopPropagation\n  >\n    <ng-content></ng-content>\n  </div>\n  } @else if (input) {\n  <div class=\"align-center g-space-sm\">\n    <ta-inputs\n      class=\"flex-fill\"\n      appStopPropagation\n      [input]=\"input\"\n      [standalone]=\"true\"\n      [onFocus]=\"this.onFocusBehavior\"\n    ></ta-inputs>\n  </div>\n  }\n</ta-loader>\n", styles: [".value-container{flex-direction:row;justify-content:space-between;align-items:center;border:1px solid;border-radius:4px;border-color:var(--ta-neutral-300);display:flex;padding:var(--ta-space-sm)}.value-container:hover{border-color:var(--ta-neutral-500)}.value-container.no-border{border:none}.value-container.is-disabled:hover{border-color:var(--ta-neutral-300)}.hidden-icon{visibility:hidden}.value-container:hover .hidden-icon{visibility:visible}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: InputsComponent, selector: "ta-inputs", inputs: ["input", "standalone", "onFocus", "space"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditFieldComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-edit-field", standalone: true, imports: [
-                        NgIf,
                         NgClass,
                         StopPropagationDirective,
                         LoaderComponent,
                         InputsComponent,
                     ], template: "<ta-loader [isLoading]=\"this.isLoading()\">\n  @let input = this.renderInput(); @if (!this.editMode()) {\n  <div\n    class=\"value-container\"\n    [ngClass]=\"{ 'no-border': !this.withBorder() }\"\n    [class.is-disabled]=\"this.disabled()\"\n    (click)=\"!this.disabled() ? this.toggleEditMode() : null\"\n    appStopPropagation\n  >\n    <ng-content></ng-content>\n  </div>\n  } @else if (input) {\n  <div class=\"align-center g-space-sm\">\n    <ta-inputs\n      class=\"flex-fill\"\n      appStopPropagation\n      [input]=\"input\"\n      [standalone]=\"true\"\n      [onFocus]=\"this.onFocusBehavior\"\n    ></ta-inputs>\n  </div>\n  }\n</ta-loader>\n", styles: [".value-container{flex-direction:row;justify-content:space-between;align-items:center;border:1px solid;border-radius:4px;border-color:var(--ta-neutral-300);display:flex;padding:var(--ta-space-sm)}.value-container:hover{border-color:var(--ta-neutral-500)}.value-container.no-border{border:none}.value-container.is-disabled:hover{border-color:var(--ta-neutral-300)}.hidden-icon{visibility:hidden}.value-container:hover .hidden-icon{visibility:visible}\n"] }]
-        }], ctorParameters: () => [{ type: i0.ElementRef }], propDecorators: { newValue: [{
-                type: Output
-            }], onDocumentClick: [{
+        }], ctorParameters: () => [], propDecorators: { onDocumentClick: [{
                 type: HostListener,
                 args: ["document:click", ["$event.target"]]
             }] } });

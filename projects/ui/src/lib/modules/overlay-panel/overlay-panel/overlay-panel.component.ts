@@ -5,6 +5,7 @@ import {
   ContentChild,
   ElementRef,
   EventEmitter,
+  inject,
   input,
   Output,
   TemplateRef,
@@ -43,7 +44,9 @@ export class TaOverlayPanelComponent
 
   private _configWithDefaults: OverlayMenuConfig<unknown> | null = null;
 
-  constructor(private overlayService: OverlayService) {
+  private _overlayService = inject(OverlayService);
+
+  constructor() {
     super();
   }
 
@@ -89,7 +92,7 @@ export class TaOverlayPanelComponent
     };
 
     this._registerSubscription(
-      this.overlayService.onClose$.subscribe(() => {
+      this._overlayService.onClose$.subscribe(() => {
         this.closed.emit();
       })
     );
@@ -107,9 +110,9 @@ export class TaOverlayPanelComponent
       console.log("OverlayPanel: no trigger element resolved");
       return;
     }
-    this.overlayService.openMenu(this._configWithDefaults);
+    this._overlayService.openMenu(this._configWithDefaults);
   }
   public close() {
-    this.overlayService.closeMenu();
+    this._overlayService.closeMenu();
   }
 }

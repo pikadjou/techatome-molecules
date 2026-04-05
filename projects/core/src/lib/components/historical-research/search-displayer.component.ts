@@ -1,11 +1,10 @@
-import { NgIf } from "@angular/common";
 import {
   Component,
-  EventEmitter,
-  Output,
   TemplateRef,
   ViewChild,
+  inject,
   input,
+  output,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
@@ -25,7 +24,6 @@ import { SearchHistoryDisplayerComponent } from "./search-history-displayer/sear
   styleUrls: ["./search-displayer.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     FontIconComponent,
     SearchHistoryDisplayerComponent,
     ButtonComponent,
@@ -40,8 +38,7 @@ export class SearchDisplayerComponent extends TaBaseComponent {
     type: string;
   }>();
 
-  @Output()
-  valueCompleted = new EventEmitter();
+  valueCompleted = output<any>();
 
   @ViewChild("searchTemplate", { read: TemplateRef })
   searchTemplate!: TemplateRef<void>;
@@ -50,7 +47,9 @@ export class SearchDisplayerComponent extends TaBaseComponent {
     return this.breakpoints.isMobile;
   }
 
-  constructor(private _bottomSheet: MatBottomSheet) {
+  private _bottomSheet = inject(MatBottomSheet);
+
+  constructor() {
     super();
   }
 

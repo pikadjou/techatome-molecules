@@ -1,5 +1,5 @@
-import { ConnectedPosition, Overlay } from "@angular/cdk/overlay";
-import { InjectionToken, Injector, TemplateRef, Type } from "@angular/core";
+import { ConnectedPosition } from "@angular/cdk/overlay";
+import { InjectionToken, TemplateRef, Type } from "@angular/core";
 import { TaBaseService } from "@ta/server";
 import * as i0 from "@angular/core";
 export declare const MENU_TEMPLATE: InjectionToken<TemplateRef<any>>;
@@ -17,14 +17,14 @@ export interface OverlayMenuConfig<T = any> {
     manualTrigger?: boolean;
 }
 export declare class OverlayService extends TaBaseService {
-    private overlay;
-    private injector;
     private _overlayRef?;
     private _onCloseCallback?;
     private readonly _onCloseSubject;
     readonly onClose$: import("rxjs").Observable<void>;
+    private _overlay;
+    private _injector;
     private readonly defaultPositions;
-    constructor(overlay: Overlay, injector: Injector);
+    constructor();
     openMenu<T>(config: OverlayMenuConfig<T>): void;
     closeMenu(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<OverlayService, never>;

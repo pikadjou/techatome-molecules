@@ -1,4 +1,4 @@
-import { NgFor, AsyncPipe } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { Observable } from "rxjs";
@@ -11,7 +11,7 @@ import { UserLogoComponent } from "../user-logo/user-logo.component";
   templateUrl: "./users-list.component.html",
   styleUrls: ["./users-list.component.scss"],
   standalone: true,
-  imports: [NgFor, AsyncPipe, UserLogoComponent],
+  imports: [AsyncPipe, UserLogoComponent],
 })
 export class UsersListComponent {
   users = input.required<Observable<UserLogoData[]>>();

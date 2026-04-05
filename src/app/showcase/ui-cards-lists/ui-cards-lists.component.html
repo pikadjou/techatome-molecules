@@ -1,0 +1,252 @@
+<app-page-layout title="UI — Cards & Lists">
+  <div class="sections">
+    <!-- ======================== -->
+    <!-- CARD — BASIC             -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Card — Basic</ta-title>
+      <ta-text size="sm">Simple card with header and content</ta-text>
+      <div class="demo-cards">
+        <ta-card>
+          <ta-card-header>
+            <ta-card-title>Project Alpha</ta-card-title>
+          </ta-card-header>
+          <ta-card-content>
+            <ta-text>Description of the project with key objectives and milestones.</ta-text>
+          </ta-card-content>
+        </ta-card>
+
+        <ta-card>
+          <ta-card-header>
+            <ta-card-title>Project Beta</ta-card-title>
+          </ta-card-header>
+          <ta-card-content>
+            <ta-text>Another project card showcasing the basic layout.</ta-text>
+          </ta-card-content>
+        </ta-card>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- CARD — WITH IMAGE        -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Card — With Image</ta-title>
+      <ta-text size="sm">Card with image, subtitle, tag, and CTA</ta-text>
+      <div class="demo-cards">
+        <ta-card>
+          <ta-card-image src="https://picsum.photos/400/200"></ta-card-image>
+          <ta-card-header>
+            <ta-card-title>Featured Article</ta-card-title>
+            <ta-card-subtitle>Published yesterday</ta-card-subtitle>
+          </ta-card-header>
+          <ta-card-tag>
+            <ta-badge value="New" type="success"></ta-badge>
+          </ta-card-tag>
+          <ta-card-content>
+            <ta-text size="sm">Article summary text describing the main topic and key takeaways for the reader.</ta-text>
+          </ta-card-content>
+          <ta-card-cta>
+            <ta-button type="secondary" size="small">Read more</ta-button>
+          </ta-card-cta>
+        </ta-card>
+
+        <ta-card>
+          <ta-card-image src="https://picsum.photos/400/201"></ta-card-image>
+          <ta-card-header>
+            <ta-card-title>Product Launch</ta-card-title>
+            <ta-card-subtitle>3 days ago</ta-card-subtitle>
+          </ta-card-header>
+          <ta-card-tag>
+            <ta-badge value="Featured" type="primary"></ta-badge>
+          </ta-card-tag>
+          <ta-card-content>
+            <ta-text size="sm">Discover our latest product with enhanced features and improved performance.</ta-text>
+          </ta-card-content>
+          <ta-card-cta>
+            <ta-button type="secondary" size="small">Learn more</ta-button>
+          </ta-card-cta>
+        </ta-card>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- CARD — VARIANTS          -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Card — Variants</ta-title>
+      <ta-text size="sm">highlight, shadow, directionCard</ta-text>
+      <div class="demo-cards">
+        <ta-card [highlight]="true">
+          <ta-card-header>
+            <ta-card-title>Highlighted Card</ta-card-title>
+          </ta-card-header>
+          <ta-card-content>
+            <ta-text size="sm">This card uses highlight=true for emphasis.</ta-text>
+          </ta-card-content>
+        </ta-card>
+
+        <ta-card [shadow]="false">
+          <ta-card-header>
+            <ta-card-title>No Shadow</ta-card-title>
+          </ta-card-header>
+          <ta-card-content>
+            <ta-text size="sm">This card has shadow=false for a flat appearance.</ta-text>
+          </ta-card-content>
+        </ta-card>
+
+        <ta-card [highlight]="true" [shadow]="false">
+          <ta-card-header>
+            <ta-card-title>Highlight + No Shadow</ta-card-title>
+          </ta-card-header>
+          <ta-card-content>
+            <ta-text size="sm">Combined highlight without shadow.</ta-text>
+          </ta-card-content>
+        </ta-card>
+      </div>
+
+      <ta-text size="sm" [isBold]="true">Horizontal direction</ta-text>
+      <ta-card directionCard="horizontal">
+        <ta-card-image src="https://picsum.photos/200/150"></ta-card-image>
+        <ta-card-header>
+          <ta-card-title>Horizontal Card</ta-card-title>
+          <ta-card-subtitle>Side-by-side layout</ta-card-subtitle>
+        </ta-card-header>
+        <ta-card-content>
+          <ta-text size="sm">This card uses directionCard="horizontal" for a row-based layout.</ta-text>
+        </ta-card-content>
+      </ta-card>
+    </section>
+
+    <!-- ======================== -->
+    <!-- CARD — DASHBOARD         -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Card — Dashboard</ta-title>
+      <ta-text size="sm">DashboardCardComponent with icon</ta-text>
+      <div class="demo-cards">
+        <ta-dashboard-card icon="trending_up">
+          <ta-text [isBold]="true">Revenue</ta-text>
+          <ta-text size="sm">+12% this month</ta-text>
+        </ta-dashboard-card>
+
+        <ta-dashboard-card icon="people">
+          <ta-text [isBold]="true">Users</ta-text>
+          <ta-text size="sm">1,234 active</ta-text>
+        </ta-dashboard-card>
+
+        <ta-dashboard-card icon="inventory">
+          <ta-text [isBold]="true">Orders</ta-text>
+          <ta-text size="sm">56 pending</ta-text>
+        </ta-dashboard-card>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- TOGGLE CARD              -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Toggle Card</ta-title>
+      <ta-text size="sm">Card with toggle switch</ta-text>
+      <div class="demo-row">
+        <ta-toggle-card
+          title="Enable feature"
+          [isActive]="this.toggleActive"
+          (toggle)="this.toggleActive = $event"
+        ></ta-toggle-card>
+
+        <ta-toggle-card
+          title="Disabled toggle"
+          description="This option is not available"
+          icon="lock"
+          [isActive]="false"
+          [disabled]="true"
+        ></ta-toggle-card>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- LIST — BASIC             -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">List — Basic</ta-title>
+      <ta-text size="sm">ListContainer with elements, titles, subtitles, and tags</ta-text>
+      <ta-list-container>
+        <ta-list-element>
+          <ta-list-title>Design System Review</ta-list-title>
+          <ta-list-sub-title>Scheduled for next sprint</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="Active" type="success"></ta-badge>
+          </ta-list-tag>
+        </ta-list-element>
+
+        <ta-list-element>
+          <ta-list-title>API Integration</ta-list-title>
+          <ta-list-sub-title>Backend team assigned</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="In Progress" type="warning"></ta-badge>
+          </ta-list-tag>
+        </ta-list-element>
+
+        <ta-list-element>
+          <ta-list-title>User Testing</ta-list-title>
+          <ta-list-sub-title>Awaiting feedback from QA</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="Pending" type="secondary"></ta-badge>
+          </ta-list-tag>
+        </ta-list-element>
+
+        <ta-list-element>
+          <ta-list-title>Documentation Update</ta-list-title>
+          <ta-list-sub-title>All pages reviewed</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="Done" type="primary"></ta-badge>
+          </ta-list-tag>
+        </ta-list-element>
+      </ta-list-container>
+    </section>
+
+    <!-- ================================ -->
+    <!-- LIST — WITH EXTRA INFORMATION    -->
+    <!-- ================================ -->
+    <section>
+      <ta-title [level]="2">List — With Extra Information</ta-title>
+      <ta-text size="sm">List elements with extra-information slot and tags</ta-text>
+      <ta-list-container>
+        <ta-list-element>
+          <ta-list-title>Alice Martin</ta-list-title>
+          <ta-list-sub-title>Product Designer</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="Admin" type="primary"></ta-badge>
+          </ta-list-tag>
+          <ta-list-extra-information>
+            <ta-text size="sm">Last login: 2 hours ago</ta-text>
+          </ta-list-extra-information>
+        </ta-list-element>
+
+        <ta-list-element>
+          <ta-list-title>Bob Johnson</ta-list-title>
+          <ta-list-sub-title>Frontend Developer</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="Editor" type="info"></ta-badge>
+          </ta-list-tag>
+          <ta-list-extra-information>
+            <ta-text size="sm">Last login: yesterday</ta-text>
+          </ta-list-extra-information>
+        </ta-list-element>
+
+        <ta-list-element>
+          <ta-list-title>Claire Dupont</ta-list-title>
+          <ta-list-sub-title>Backend Developer</ta-list-sub-title>
+          <ta-list-tag>
+            <ta-badge value="Viewer" type="secondary"></ta-badge>
+            <ta-badge value="Remote" type="purple"></ta-badge>
+          </ta-list-tag>
+          <ta-list-extra-information>
+            <ta-text size="sm">Last login: 3 days ago</ta-text>
+          </ta-list-extra-information>
+        </ta-list-element>
+      </ta-list-container>
+    </section>
+  </div>
+</app-page-layout>

@@ -1,5 +1,4 @@
-import { NgIf } from "@angular/common";
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { Subject } from "rxjs";
 
@@ -23,7 +22,6 @@ import { ActiveFilterTag } from "../types";
   styleUrls: ["./filters-container.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     FontIconComponent,
     LayoutWithPanelComponent,
     LayoutPanelComponent,
@@ -38,11 +36,9 @@ export class FiltersContainerComponent extends TaBaseComponent {
 
   activeFilter = input<ActiveFilterTag[]>([]);
 
-  @Output()
-  filtersSelected = new EventEmitter<any>();
+  filtersSelected = output<any>();
 
-  @Output()
-  removedFilter = new EventEmitter<ActiveFilterTag>();
+  removedFilter = output<ActiveFilterTag>();
 
   public isFilterOpen = false;
   public askValidation$ = new Subject<null>();

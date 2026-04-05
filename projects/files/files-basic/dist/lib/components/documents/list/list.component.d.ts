@@ -1,4 +1,4 @@
-import { EventEmitter, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { InputUploadValue } from "@ta/form-model";
 import { DocumentDto, FileType } from "@ta/services";
 import { TaBaseComponent } from "@ta/utils";
@@ -9,8 +9,8 @@ export declare class DocumentsListComponent extends TaBaseComponent implements O
     actions: import("@angular/core").InputSignal<"" | "select" | "delete">;
     defaultSelected: import("@angular/core").InputSignal<string[]>;
     readonly: import("@angular/core").InputSignal<boolean>;
-    remove: EventEmitter<string>;
-    checkedFilesChanged: EventEmitter<InputUploadValue[]>;
+    remove: import("@angular/core").OutputEmitterRef<string>;
+    checkedFilesChanged: import("@angular/core").OutputEmitterRef<InputUploadValue[]>;
     private readonly _documentsService;
     private _checkedFiles;
     FileType: typeof FileType;

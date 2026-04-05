@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -59,14 +59,12 @@ export class RatingComponent {
   /**
    * Emits the new rating value when a star is clicked
    */
-  @Output()
-  ratingChange = new EventEmitter<number>();
+  ratingChange = output<number>();
 
   /**
    * Emits when hovering over a star
    */
-  @Output()
-  hoverChange = new EventEmitter<number>();
+  hoverChange = output<number>();
 
   public hoveredRating: number | null = null;
 

@@ -1,14 +1,13 @@
-import { EventEmitter } from "@angular/core";
 import { FileData, FileType, TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class FileListComponent extends TaBaseComponent {
     files: import("@angular/core").InputSignal<FileData<any>[]>;
     canDeleteFile: import("@angular/core").InputSignal<boolean>;
-    fileSelected: EventEmitter<FileData<any> & {
+    fileSelected: import("@angular/core").OutputEmitterRef<FileData<any> & {
         index: number;
     }>;
-    moreInformationSelected: EventEmitter<FileData>;
-    fileDeleted: EventEmitter<FileData<any>>;
+    moreInformationSelected: import("@angular/core").OutputEmitterRef<FileData<any>>;
+    fileDeleted: import("@angular/core").OutputEmitterRef<FileData<any>>;
     constructor();
     canDisplayFileType(fileType: FileType): boolean;
     onFileSelected(file: FileData, index: number): void;

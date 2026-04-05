@@ -1,0 +1,87 @@
+<app-page-layout title="UI — Feedback">
+  <div class="sections">
+    <!-- ============================== -->
+    <!-- BANNER — TYPES                 -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Banner — Types</ta-title>
+      <ta-text size="sm">type: info | success | warning | danger</ta-text>
+      <div class="demo-column">
+        <ta-banner type="info" message="This is an information banner."></ta-banner>
+        <ta-banner type="success" message="Operation completed successfully."></ta-banner>
+        <ta-banner type="warning" message="Please review before continuing."></ta-banner>
+        <ta-banner type="danger" message="Something went wrong."></ta-banner>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- NOTIFICATION INLINE            -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Notification Inline</ta-title>
+      <ta-text size="sm">code: 0 (information) | 1 (success) | 2 (warning) | 3 (error)</ta-text>
+      <div class="demo-column">
+        <ta-notification-inline message="Information message" [code]="0"></ta-notification-inline>
+        <ta-notification-inline message="Success message" [code]="1"></ta-notification-inline>
+        <ta-notification-inline message="Warning message" [code]="2"></ta-notification-inline>
+        <ta-notification-inline message="Error message" [code]="3"></ta-notification-inline>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- NOTIFICATION BADGE             -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Notification Badge</ta-title>
+      <ta-text size="sm">count: number</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">5</ta-text>
+          <ta-notification-badge [count]="5"></ta-notification-badge>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">42</ta-text>
+          <ta-notification-badge [count]="42"></ta-notification-badge>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">0</ta-text>
+          <ta-notification-badge [count]="0"></ta-notification-badge>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- BULLET                         -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Bullet</ta-title>
+      <ta-text size="sm">type: success | warning | danger</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">success</ta-text>
+          <ta-bullet type="success"></ta-bullet>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">warning</ta-text>
+          <ta-bullet type="warning"></ta-bullet>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">danger</ta-text>
+          <ta-bullet type="danger"></ta-bullet>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- TOAST (VIA SERVICE)            -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Toast (via service)</ta-title>
+      <ta-text size="sm">TaNotificationService.pushSuccess() / pushError()</ta-text>
+      <div class="demo-row">
+        <ta-button type="primary" (action)="this.showToast()">Show Success Toast</ta-button>
+        <ta-button type="danger" (action)="this.showErrorToast()">Show Error Toast</ta-button>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

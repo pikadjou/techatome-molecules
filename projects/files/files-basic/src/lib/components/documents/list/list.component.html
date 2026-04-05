@@ -1,6 +1,6 @@
+@let documents = this.documents$ | async;
 <ta-loader
   [isLoading]="this.requestState.isLoading()"
-  *ngLet="this.documents$ | async as documents"
 >
   <ta-error
     [message]="this.requestState.getErrorMessage()"
@@ -15,10 +15,8 @@
         @for (doc of documents; track doc) {
         <div>
           <ng-container
-            *ngTemplateOutlet="
-              this.actions() !== 'select' ? defaultTemplate : selectTemplate;
-              context: { doc: doc }
-            "
+            [ngTemplateOutlet]="this.actions() !== 'select' ? defaultTemplate : selectTemplate"
+            [ngTemplateOutletContext]="{ doc: doc }"
           ></ng-container>
         </div>
         }

@@ -1,4 +1,4 @@
-import { EventEmitter, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Menu, MenuIcon } from '@ta/menu';
 import { TaSizes } from '@ta/styles';
@@ -9,8 +9,8 @@ export declare class MyAccountComponent extends TaBaseComponent implements OnIni
     profileMenu: import("@angular/core").InputSignal<Menu<import("@ta/menu").MenuBase> | null>;
     appVersion: import("@angular/core").InputSignal<string | null>;
     isEditable: import("@angular/core").InputSignal<boolean>;
-    navigateEvent: EventEmitter<any>;
-    navigateEditEvent: EventEmitter<any>;
+    navigateEvent: import("@angular/core").OutputEmitterRef<void>;
+    navigateEditEvent: import("@angular/core").OutputEmitterRef<void>;
     private _userService;
     private _authService;
     disconnectionMenu: import("@angular/core").WritableSignal<Menu<import("@ta/menu").MenuBase> | null>;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
+import { Component, OnInit, input, output } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
@@ -36,8 +36,7 @@ import { TaTranslationCore } from '../../../translation.service';
 export class FilterContainerComponent extends TaBaseComponent implements OnInit {
   form = input<InputBase<any>[]>([]);
 
-  @Output()
-  filtersSelected = new EventEmitter<any>();
+  filtersSelected = output<any>();
 
   public isFilterOpen = false;
 

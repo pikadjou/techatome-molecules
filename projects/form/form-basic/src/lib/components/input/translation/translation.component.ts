@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, OnInit, TemplateRef, input } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -15,8 +15,6 @@ import { Culture, TaBaseComponent, extractEnum } from '@ta/utils';
   styleUrls: ['./translation.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     NgTemplateOutlet,
     FontIconComponent,

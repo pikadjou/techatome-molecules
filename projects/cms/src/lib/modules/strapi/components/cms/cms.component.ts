@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, Inject, OnInit, Optional, input } from "@angular/core";
 
@@ -20,7 +20,6 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
   styleUrls: ["./cms.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     LoaderComponent,
     ErrorComponent,
@@ -45,13 +44,15 @@ export class CmsComponent extends TaBaseComponent implements OnInit {
   ngOnInit() {
     const tenantId = this.tenantConfig.tenantId ?? 0;
     this.requestState.asked();
-    this.cmsService
-      .fetchCmsContents$(this.contentType(), tenantId.toString())
-      .subscribe({
-        complete: () => this.requestState.completed(),
-        error: (error: HttpErrorResponse) => {
-          this.requestState.onError(error.status, error.statusText);
-        },
-      });
+    this._registerSubscription(
+      this.cmsService
+        .fetchCmsContents$(this.contentType(), tenantId.toString())
+        .subscribe({
+          complete: () => this.requestState.completed(),
+          error: (error: HttpErrorResponse) => {
+            this.requestState.onError(error.status, error.statusText);
+          },
+        })
+    );
   }
 }

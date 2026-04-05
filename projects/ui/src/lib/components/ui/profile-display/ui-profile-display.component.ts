@@ -1,4 +1,3 @@
-import { NgIf, NgFor } from "@angular/common";
 import { FontIconComponent } from "@ta/icons";
 import { Component, input } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
@@ -15,8 +14,6 @@ import { TaTranslationUI } from "../../../translation.service";
   styleUrls: ["./ui-profile-display.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     FontIconComponent,
     TranslateModule,
     UserLogoComponent,

@@ -1,8 +1,6 @@
 import {
   AsyncPipe,
   NgClass,
-  NgFor,
-  NgIf,
   NgTemplateOutlet,
 } from "@angular/common";
 import { Component, Inject } from "@angular/core";
@@ -27,8 +25,6 @@ export interface BottomSheetTemplateBasicParams {
   styleUrls: ["./bottom-sheet-template-basic.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     AsyncPipe,
     NgTemplateOutlet,

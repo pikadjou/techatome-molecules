@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { FilePicker, PickedFile } from "@capawesome/capacitor-file-picker";
@@ -26,8 +26,7 @@ export class UploadComponent {
 
   showInActionButton = input<boolean>(true);
 
-  @Output()
-  filesPicked = new EventEmitter<FileStructure[]>();
+  filesPicked = output<FileStructure[]>();
 
   get addActions(): ActionButtonData[] {
     const actionsAvailable: ActionButtonData[] = [];

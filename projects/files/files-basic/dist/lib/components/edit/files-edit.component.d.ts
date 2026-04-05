@@ -1,4 +1,4 @@
-import { AfterViewInit, EventEmitter, OnDestroy, OnInit } from "@angular/core";
+import { AfterViewInit, OnDestroy, OnInit } from "@angular/core";
 import { InputSlider } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
 import { Observable } from "rxjs";
@@ -9,7 +9,7 @@ type ShapeSelection = "rect" | "triangle" | "circle" | "line" | "";
 export declare class FileEditComponent extends TaBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     imagePath: import("@angular/core").InputSignal<string>;
     saveImage$: import("@angular/core").InputSignal<Observable<null>>;
-    savedImage: EventEmitter<Blob>;
+    savedImage: import("@angular/core").OutputEmitterRef<Blob>;
     tuiImageEditor: ImageEditor;
     selection: Selection;
     shapeSelection: ShapeSelection;

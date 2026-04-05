@@ -1,4 +1,4 @@
-import { NgIf, NgFor, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { FontIconComponent, LocalIconComponent } from "@ta/icons";
 import { Component, input } from "@angular/core";
 
@@ -11,7 +11,7 @@ import { ActionButtonData } from "./action-button-data";
   templateUrl: "./action-button.component.html",
   styleUrls: ["./action-button.component.scss"],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, FontIconComponent, LocalIconComponent],
+  imports: [NgClass, FontIconComponent, LocalIconComponent],
 })
 export class ActionButtonComponent {
   /**

@@ -1,31 +1,33 @@
-import { Component, input } from "@angular/core";
+import { Component, input } from '@angular/core';
 
-import { TaIconType } from "@ta/icons";
-import { TaSizes } from "@ta/styles";
-import { MessageLevel } from "@ta/utils";
+import { TranslateModule } from '@ngx-translate/core';
 
-import { PictureInfoMessageComponent } from "../../../components/ui/picture-info-message/picture-info-message.component";
-import { TaTranslationUI } from "../../../translation.service";
+import { FontIconComponent } from '@ta/icons';
+import { TaSizes } from '@ta/styles';
+import { TaBaseComponent } from '@ta/utils';
+
+import { TaTranslationUI } from '../../../translation.service';
 
 @Component({
-  selector: "ta-empty",
-  templateUrl: "./empty.component.html",
-  styleUrls: ["./empty.component.scss"],
+  selector: 'ta-empty',
+  templateUrl: './empty.component.html',
+  styleUrls: ['./empty.component.scss'],
   standalone: true,
-  imports: [PictureInfoMessageComponent],
+  imports: [TranslateModule, FontIconComponent],
 })
-export class EmptyComponent {
+export class EmptyComponent extends TaBaseComponent {
   isEmpty = input<boolean>(true);
   isLight = input<boolean>(true);
   showMessage = input<boolean>(true);
 
-  text = input<string>("ui.container.empty.light-message");
-  type = input<MessageLevel>("info");
+  text = input<string>('ui.container.empty.title');
+  subtitle = input<string>('');
 
-  icon = input<TaIconType | string>("ghost");
-  iconSize = input<TaSizes | "xl">("lg");
+  emptyIcon = input<string>('sentiment_dissatisfied');
+  iconSize = input<TaSizes | 'xl'>('xl');
 
   constructor() {
+    super();
     TaTranslationUI.getInstance();
   }
 }

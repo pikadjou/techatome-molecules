@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { PreviewDocumentDto } from '../../type';
 
@@ -9,5 +9,5 @@ import { PreviewDocumentDto } from '../../type';
   standalone: true,
 })
 export class ImageViewerComponent {
-  @Input({ required: true }) file!: PreviewDocumentDto;
+  file = input.required<PreviewDocumentDto>();
 }

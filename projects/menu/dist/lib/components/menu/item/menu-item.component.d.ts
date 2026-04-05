@@ -8,13 +8,13 @@ import { MenuIcon } from "../../../models/menu/item/icon";
 import { MenuPanel } from "../../../models/menu/item/panel";
 import * as i0 from "@angular/core";
 export declare class MenuItemComponent extends TaBaseComponent implements OnInit {
-    modal: MatDialog;
     item: import("@angular/core").InputSignal<MenuBase | MenuIcon | MenuAction | MenuPanel>;
     styleType: import("@angular/core").InputSignal<String>;
     triggerMenu: MatMenuTrigger;
     readonly typeToken: MenuIcon | MenuAction | MenuBase | MenuPanel;
     isOpen: boolean;
-    constructor(modal: MatDialog);
+    _modal: MatDialog;
+    constructor();
     ngOnInit(): void;
     getStyleType(): string;
     hasFontIcon(): boolean;

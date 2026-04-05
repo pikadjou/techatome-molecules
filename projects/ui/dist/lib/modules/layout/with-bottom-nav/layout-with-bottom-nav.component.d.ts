@@ -1,12 +1,11 @@
 import { AfterViewChecked } from "@angular/core";
-import { TaSharedMenuService } from "@ta/services";
 import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class LayoutWithBottomNavComponent extends TaBaseComponent implements AfterViewChecked {
     type: import("@angular/core").InputSignal<string>;
     private _bottomNav;
     private _layoutContent;
-    sharedMenu: TaSharedMenuService;
+    private _sharedMenu;
     isMinimized$: import("rxjs").Observable<boolean>;
     constructor();
     ngAfterViewChecked(): void;

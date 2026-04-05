@@ -1,0 +1,184 @@
+<app-page-layout title="UI — Layout">
+  <div class="sections">
+    <!-- ================================= -->
+    <!-- LAYOUT PAGE STRUCTURE (anatomy)   -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Page Structure</ta-title>
+      <ta-text size="sm">Anatomy of a full page layout using ta-layout-* components</ta-text>
+      <div class="anatomy-box">
+        <pre class="anatomy-tree">ta-layout-page
+├── ta-layout-header
+│   └── ta-layout-header-default [title] [showBack]
+├── ta-layout-nav
+├── ta-layout-content [autoHeight]
+├── ta-layout-side
+│   ├── ta-layout-side-content
+│   └── ta-layout-side-cta [background]
+└── ta-layout-panel</pre>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT HEADER DEFAULT             -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Header Default</ta-title>
+      <ta-text size="sm">ta-layout-header-default — Header bar with title and optional back button</ta-text>
+
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">With back button (showBack=true)</ta-text>
+          <div class="layout-preview">
+            <ta-layout-header-default title="Page Title" [showBack]="true"></ta-layout-header-default>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">Without back button (showBack=false)</ta-text>
+          <div class="layout-preview">
+            <ta-layout-header-default title="Dashboard" [showBack]="false"></ta-layout-header-default>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT FLEX                       -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Flex</ta-title>
+      <ta-text size="sm">ta-layout-flex — Multi-panel flexible layout with left / center / right slots</ta-text>
+
+      <div class="layout-preview layout-preview--tall">
+        <ta-layout-flex>
+          <div left class="flex-panel">
+            <ta-text [isBold]="true">Left Panel</ta-text>
+            <ta-text size="sm">Navigation or sidebar content</ta-text>
+          </div>
+          <div center class="flex-panel">
+            <ta-text [isBold]="true">Center Panel</ta-text>
+            <ta-text size="sm">Main content area</ta-text>
+          </div>
+          <div right class="flex-panel">
+            <ta-text [isBold]="true">Right Panel</ta-text>
+            <ta-text size="sm">Details or actions panel</ta-text>
+          </div>
+        </ta-layout-flex>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT FULL PANEL                 -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Full Panel</ta-title>
+      <ta-text size="sm">ta-layout-full-panel — Overlay side panel with title and close action</ta-text>
+      <ta-text size="sm">Inputs: width (default 400px), title</ta-text>
+
+      <div class="layout-preview layout-preview--tall layout-preview--relative">
+        <ta-layout-full-panel width="300px" title="Side Panel">
+          <div class="p-space-md">
+            <ta-text>Panel content goes here. This panel slides in from the side and provides a focused view.</ta-text>
+          </div>
+        </ta-layout-full-panel>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT TITLE                      -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Title</ta-title>
+      <ta-text size="sm">ta-layout-title — Section title component used within layouts</ta-text>
+
+      <div class="demo-row">
+        <div class="layout-preview layout-preview--padded">
+          <ta-layout-title>Page Section Title</ta-layout-title>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT PAGE / HEADER / CONTENT    -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Page + Header + Content</ta-title>
+      <ta-text size="sm">Composing ta-layout-page with ta-layout-header and ta-layout-content</ta-text>
+
+      <div class="layout-preview layout-preview--tall">
+        <ta-layout-page>
+          <ta-layout-header>
+            <ta-layout-header-default title="Composed Page" [showBack]="false"></ta-layout-header-default>
+          </ta-layout-header>
+          <ta-layout-content>
+            <div class="p-space-md">
+              <ta-text>This demonstrates a full page composition with header and content area.</ta-text>
+            </div>
+          </ta-layout-content>
+        </ta-layout-page>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT SIDE                       -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Side</ta-title>
+      <ta-text size="sm">ta-layout-side with ta-layout-side-content and ta-layout-side-cta</ta-text>
+
+      <div class="layout-preview layout-preview--tall">
+        <ta-layout-side>
+          <ta-layout-side-content>
+            <div class="p-space-md">
+              <ta-text [isBold]="true">Side Content</ta-text>
+              <ta-text size="sm">This area holds navigation or filters.</ta-text>
+            </div>
+          </ta-layout-side-content>
+          <ta-layout-side-cta [background]="true">
+            <div class="p-space-md">
+              <ta-button type="primary">Action</ta-button>
+            </div>
+          </ta-layout-side-cta>
+        </ta-layout-side>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT NAV                        -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Nav</ta-title>
+      <ta-text size="sm">ta-layout-nav — Navigation slot within ta-layout-page</ta-text>
+
+      <div class="layout-preview">
+        <ta-layout-nav>
+          <div class="flex-row g-space-md p-space-sm">
+            <ta-button type="tertiary" size="small">Tab 1</ta-button>
+            <ta-button type="tertiary" size="small">Tab 2</ta-button>
+            <ta-button type="tertiary" size="small">Tab 3</ta-button>
+          </div>
+        </ta-layout-nav>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- LAYOUT PANEL                      -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Layout Panel</ta-title>
+      <ta-text size="sm">ta-layout-panel — Panel slot within ta-layout-page for additional content areas</ta-text>
+
+      <div class="layout-preview layout-preview--tall">
+        <ta-layout-panel>
+          <div class="p-space-md">
+            <ta-text [isBold]="true">Panel Area</ta-text>
+            <ta-text size="sm">This panel can host supplementary content alongside the main layout.</ta-text>
+          </div>
+        </ta-layout-panel>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

@@ -1,0 +1,66 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+.sections {
+  @include flex.flex-column();
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: common.get-var(space, md);
+}
+
+.demo-column {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+}
+
+.demo-box {
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  padding: common.get-var(space, md);
+  @include flex.flex-column();
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+  cursor: pointer;
+
+  &:hover {
+    background: common.get-var(surface, hover);
+  }
+}
+
+.demo-btn {
+  padding: common.get-var(space, xs) common.get-var(space, md);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, minimal);
+  background: common.get-var(surface, primary);
+  color: common.get-var(text, primary);
+  @include fonts.fontSizeBody(sm);
+  cursor: pointer;
+
+  &:hover {
+    background: common.get-var(surface, hover);
+  }
+}
+
+.code-block {
+  background: common.get-var(surface, secondary);
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  padding: common.get-var(space, md);
+
+  code {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, primary);
+    word-break: break-all;
+  }
+}

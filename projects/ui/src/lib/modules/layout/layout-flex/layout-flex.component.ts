@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
@@ -16,7 +16,6 @@ type Panel = "left" | "right" | "center";
   styleUrls: ["./layout-flex.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     FontIconComponent,
     ButtonComponent,

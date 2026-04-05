@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from "@angular/core";
+import { Component, ElementRef, inject, Renderer2, ViewChild } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import intlTelInput from "intl-tel-input";
@@ -18,16 +18,18 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
   @ViewChild("phoneInput", { static: false }) phoneInput!: ElementRef;
 
-  constructor(private renderer: Renderer2) {
+  private _renderer = inject(Renderer2);
+
+  constructor() {
     super();
   }
   override ngOnInit() {
     super.ngOnInit();
-    const link = this.renderer.createElement("link");
+    const link = this._renderer.createElement("link");
     link.rel = "stylesheet";
     link.href =
       "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.min.css";
-    this.renderer.appendChild(document.head, link);
+    this._renderer.appendChild(document.head, link);
   }
   override ngAfterViewInit() {
     super.ngAfterViewInit();

@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class ButtonComponent {
@@ -20,14 +19,14 @@ export declare class ButtonComponent {
      */
     options: import("@angular/core").InputSignal<{
         class?: string | undefined;
-        circular?: boolean | "small" | "big" | undefined;
+        circular?: boolean | "big" | "small" | undefined;
         border?: boolean | undefined;
     } | null>;
     stopPropagationActivation: import("@angular/core").InputSignal<boolean>;
     /**
      * Event emitted when button is clicked
      */
-    action: EventEmitter<any>;
+    action: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     handleClick(): void;
     getClass(): {

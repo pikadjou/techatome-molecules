@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { ActionButtonData } from "@ta/ui";
 import { FileStructure } from "@ta/utils";
 import * as i0 from "@angular/core";
@@ -7,7 +6,7 @@ export declare class UploadComponent {
     features: import("@angular/core").InputSignal<Feature[]>;
     canSelectMultipleFiles: import("@angular/core").InputSignal<boolean>;
     showInActionButton: import("@angular/core").InputSignal<boolean>;
-    filesPicked: EventEmitter<FileStructure[]>;
+    filesPicked: import("@angular/core").OutputEmitterRef<FileStructure[]>;
     get addActions(): ActionButtonData[];
     private _haveFeature;
     private _takePic;

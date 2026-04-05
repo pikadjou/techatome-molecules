@@ -1,11 +1,11 @@
-import { EventEmitter, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { InputBase } from '@ta/form-model';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class FilterContainerComponent extends TaBaseComponent implements OnInit {
     form: import("@angular/core").InputSignal<InputBase<any>[]>;
-    filtersSelected: EventEmitter<any>;
+    filtersSelected: import("@angular/core").OutputEmitterRef<any>;
     isFilterOpen: boolean;
     askValidation$: Subject<null>;
     askClear$: Subject<null>;

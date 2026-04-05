@@ -1,0 +1,36 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+
+.sections {
+  @include flex.flex-column();
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  @include flex.flex-row();
+  flex-wrap: wrap;
+  @include flex.align-center();
+  gap: common.get-var(space, md);
+}
+
+.demo-column {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+}
+
+.align-center {
+  align-items: center;
+}
+
+.swiper-slide-demo {
+  padding: common.get-var(space, md);
+  background: common.get-var(surface, secondary);
+  border-radius: common.get-var(radius, rounded);
+  min-width: 150px;
+  text-align: center;
+}

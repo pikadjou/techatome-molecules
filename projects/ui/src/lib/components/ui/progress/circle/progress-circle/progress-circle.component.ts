@@ -1,4 +1,4 @@
-import { DecimalPipe, NgIf } from "@angular/common";
+import { DecimalPipe } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -10,7 +10,7 @@ import { TaTranslationUI } from "../../../../../translation.service";
   templateUrl: "./progress-circle.component.html",
   styleUrls: ["./progress-circle.component.scss"],
   standalone: true,
-  imports: [NgIf, TranslateModule, DecimalPipe],
+  imports: [TranslateModule, DecimalPipe],
 })
 export class ProgressCircleComponent {
   /**

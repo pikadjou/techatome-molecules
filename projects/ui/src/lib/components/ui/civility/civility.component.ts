@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { MaterialIconComponent } from "@ta/icons";
 import { Component, input } from "@angular/core";
 
@@ -9,7 +8,7 @@ import { Civility } from "@ta/utils";
   templateUrl: "./civility.component.html",
   styleUrls: ["./civility.component.scss"],
   standalone: true,
-  imports: [NgIf, MaterialIconComponent],
+  imports: [MaterialIconComponent],
 })
 export class CivilityComponent {
   /**

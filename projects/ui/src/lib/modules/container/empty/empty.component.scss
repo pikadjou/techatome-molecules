@@ -1,10 +1,39 @@
 @use "ta/utils/mixins/common";
 @use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
 
 :host {
   @include flex.flex-full();
 }
+
 .empty-container {
+  @include flex.flex-column();
+  @include flex.align-center();
+  @include flex.justify-center();
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, xl);
   margin: common.get-var(space, sm) auto;
+  background: common.get-var(surface, secondary);
+  border-radius: common.get-var(radius, rounded);
   text-align: center;
+
+  &--light {
+    background: common.get-var(surface, primary);
+    padding: common.get-var(space, md);
+  }
+}
+
+.empty-icon {
+  color: common.get-var(brand, 400);
+  margin-bottom: common.get-var(space, xs);
+}
+
+.empty-title {
+  @include fonts.fontSizeBody(lg);
+  color: common.get-var(text, primary);
+}
+
+.empty-subtitle {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, secondary);
 }

@@ -1,0 +1,78 @@
+<app-page-layout title="Charts">
+  <div class="sections">
+    <!-- Bar Chart -->
+    <section>
+      <ta-title [level]="2">Bar Chart</ta-title>
+      <ta-text size="sm">Multi-dataset bar chart with labels and colors</ta-text>
+      <div class="demo-box">
+        <div class="chart-container">
+          <ta-bar-chart
+            [labels]="this.barLabels"
+            [datasets]="this.barDatasets"
+            [chartHeight]="300"
+          ></ta-bar-chart>
+        </div>
+      </div>
+    </section>
+
+    <!-- Line Chart -->
+    <section>
+      <ta-title [level]="2">Line Chart</ta-title>
+      <ta-text size="sm">Smooth line chart with tension and multiple series</ta-text>
+      <div class="demo-box">
+        <div class="chart-container">
+          <ta-line-chart
+            [labels]="this.lineLabels"
+            [datasets]="this.lineDatasets"
+            [chartHeight]="300"
+          ></ta-line-chart>
+        </div>
+      </div>
+    </section>
+
+    <!-- Doughnut Chart -->
+    <section>
+      <ta-title [level]="2">Doughnut Chart</ta-title>
+      <ta-text size="sm">Doughnut chart for proportional data</ta-text>
+      <div class="demo-box">
+        <div class="chart-container">
+          <ta-doughnut-chart
+            [labels]="this.doughnutLabels"
+            [datasets]="this.doughnutDatasets"
+            [chartHeight]="300"
+          ></ta-doughnut-chart>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pie Chart -->
+    <section>
+      <ta-title [level]="2">Pie Chart</ta-title>
+      <ta-text size="sm">Pie chart for distribution data</ta-text>
+      <div class="demo-box">
+        <div class="chart-container">
+          <ta-pie-chart
+            [labels]="this.pieLabels"
+            [datasets]="this.pieDatasets"
+            [chartHeight]="300"
+          ></ta-pie-chart>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mixed Chart -->
+    <section>
+      <ta-title [level]="2">Mixed Chart</ta-title>
+      <ta-text size="sm">Combined bar and line chart on the same canvas</ta-text>
+      <div class="demo-box">
+        <div class="chart-container">
+          <ta-mixed-chart
+            [labels]="this.mixedLabels"
+            [datasets]="this.mixedDatasets"
+            [chartHeight]="300"
+          ></ta-mixed-chart>
+        </div>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

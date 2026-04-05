@@ -1,22 +1,22 @@
-import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { InputBase } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
 import { BehaviorSubject, Observable } from "rxjs";
 import * as i0 from "@angular/core";
 export type Layout = "row" | "column";
 export declare class EditFieldComponent extends TaBaseComponent implements OnInit, OnChanges {
-    private elementRef;
     getInput: import("@angular/core").InputSignal<() => InputBase<any>>;
     changeEditMode$: import("@angular/core").InputSignal<Observable<boolean> | null>;
     isLoading: import("@angular/core").InputSignal<boolean>;
     withBorder: import("@angular/core").InputSignal<boolean>;
     disabled: import("@angular/core").InputSignal<boolean>;
-    newValue: EventEmitter<unknown>;
+    newValue: import("@angular/core").OutputEmitterRef<unknown>;
     readonly onFocusBehavior: BehaviorSubject<void>;
     readonly renderInput: import("@angular/core").WritableSignal<InputBase<null> | null>;
     editMode: import("@angular/core").WritableSignal<boolean>;
     onDocumentClick(targetElement: HTMLElement): void;
-    constructor(elementRef: ElementRef);
+    private _elementRef;
+    constructor();
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     toggleEditMode(): void;

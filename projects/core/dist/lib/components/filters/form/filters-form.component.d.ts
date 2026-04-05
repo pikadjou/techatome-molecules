@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InputBase } from '@ta/form-model';
 import { TaBaseComponent } from '@ta/utils';
@@ -6,7 +5,7 @@ import * as i0 from "@angular/core";
 export declare class FiltersFormComponent extends TaBaseComponent {
     form: import("@angular/core").InputSignal<InputBase<any>[]>;
     askValidation$: import("@angular/core").InputSignal<Observable<null>>;
-    filtersSelected: EventEmitter<any>;
+    filtersSelected: import("@angular/core").OutputEmitterRef<any>;
     constructor();
     apply(data: any): void;
     clear(): void;

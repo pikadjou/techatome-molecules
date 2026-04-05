@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { LinkComponent as UiLinkComponent } from "@ta/ui";
@@ -10,7 +9,7 @@ import { TextComponent } from "../text/text.component";
   templateUrl: "./link.component.html",
   styleUrls: ["./link.component.scss"],
   standalone: true,
-  imports: [NgFor, UiLinkComponent, TextComponent],
+  imports: [UiLinkComponent, TextComponent],
 })
 export class LinkComponent {
   link = input.required<RichParagraphLink>();

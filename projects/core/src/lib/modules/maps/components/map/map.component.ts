@@ -4,6 +4,8 @@ import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/
 
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 
+import { TaBaseComponent } from '@ta/utils';
+
 import { markers } from '../../mock';
 
 @Component({
@@ -13,7 +15,7 @@ import { markers } from '../../mock';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent extends TaBaseComponent implements AfterViewInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('map') map!: GoogleMap;
   @ViewChildren(MapMarker) mapMarkers!: QueryList<MapMarker>;
@@ -49,7 +51,9 @@ export class MapComponent implements AfterViewInit {
   directionsRenderer!: google.maps.DirectionsRenderer;
   selectedMarker = signal<google.maps.Marker | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   ngAfterViewInit() {
     const bounds = new google.maps.LatLngBounds();
@@ -133,50 +137,52 @@ export class MapComponent implements AfterViewInit {
     };
 
     const key = 'AIzaSyDxd03WdDtISHBrM_6rCYS426grfl_bK8Y';
-    this.http
-      .post(`https://routes.googleapis.com/directions/v2:computeRoutes?key=${key}`, body, {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Goog-FieldMask': '*',
-        },
-      })
-      .subscribe({
-        next: (response: any) => {
-          const route = response.routes[0];
-          const polyline = route.polyline.encodedPolyline;
+    this._registerSubscription(
+      this.http
+        .post(`https://routes.googleapis.com/directions/v2:computeRoutes?key=${key}`, body, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-FieldMask': '*',
+          },
+        })
+        .subscribe({
+          next: (response: any) => {
+            const route = response.routes[0];
+            const polyline = route.polyline.encodedPolyline;
 
-          const decodedPath = google.maps.geometry.encoding.decodePath(polyline);
-          const routePolyline = new google.maps.Polyline({
-            path: decodedPath,
-            strokeColor: 'red',
-            strokeOpacity: 0.8,
-            strokeWeight: 5,
-          });
+            const decodedPath = google.maps.geometry.encoding.decodePath(polyline);
+            const routePolyline = new google.maps.Polyline({
+              path: decodedPath,
+              strokeColor: 'red',
+              strokeOpacity: 0.8,
+              strokeWeight: 5,
+            });
 
-          routePolyline.setMap(this.map.googleMap!);
+            routePolyline.setMap(this.map.googleMap!);
 
-          // Extraire les détails
-          const leg = route.legs[0];
-          this.routeDetails.set(
-            leg.steps.map((step: any) => ({
-              instruction: step.navigationInstruction?.instructions,
-              distance: step.distanceMeters,
-              duration: step.duration,
-            }))
-          );
+            // Extraire les détails
+            const leg = route.legs[0];
+            this.routeDetails.set(
+              leg.steps.map((step: any) => ({
+                instruction: step.navigationInstruction?.instructions,
+                distance: step.distanceMeters,
+                duration: step.duration,
+              }))
+            );
 
-          const distanceKm = (leg.distanceMeters / 1000).toFixed(1);
-          const duration = this.parseDuration(leg.duration);
+            const distanceKm = (leg.distanceMeters / 1000).toFixed(1);
+            const duration = this.parseDuration(leg.duration);
 
-          this.routeSummary = {
-            distanceKm,
-            duration,
-          };
-        },
-        error: err => {
-          console.error('Erreur Routes API :', err);
-        },
-      });
+            this.routeSummary = {
+              distanceKm,
+              duration,
+            };
+          },
+          error: err => {
+            console.error('Erreur Routes API :', err);
+          },
+        })
+    );
   }
 
   parseDuration(isoDuration: string): string {

@@ -1,4 +1,4 @@
-import { EventEmitter, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { IInputsError, InputBase } from '@ta/form-model';
@@ -14,8 +14,8 @@ export declare class FormComponent extends TaBaseComponent implements OnInit, On
     canDisplayButton: import("@angular/core").InputSignal<boolean>;
     buttonTitle: import("@angular/core").InputSignal<string>;
     onLive: import("@angular/core").InputSignal<boolean>;
-    valid: EventEmitter<{}>;
-    isFormValid: EventEmitter<boolean>;
+    valid: import("@angular/core").OutputEmitterRef<{}>;
+    isFormValid: import("@angular/core").OutputEmitterRef<boolean>;
     form: FormGroup;
     constructor();
     ngOnInit(): void;

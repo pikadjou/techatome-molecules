@@ -1,0 +1,77 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: common.get-var(space, md);
+}
+
+.demo-column {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, sm);
+  flex: 1;
+  min-width: 280px;
+}
+
+// Anatomy diagram
+.anatomy-box {
+  background: common.get-var(surface, secondary);
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  padding: common.get-var(space, lg);
+  overflow-x: auto;
+}
+
+.anatomy-tree {
+  margin: 0;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: common.get-var(text, primary);
+  white-space: pre;
+}
+
+// Layout preview containers
+.layout-preview {
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  overflow: hidden;
+  background: common.get-var(surface, primary);
+  min-height: 60px;
+}
+
+.layout-preview--tall {
+  min-height: 200px;
+}
+
+.layout-preview--padded {
+  padding: common.get-var(space, md);
+}
+
+.layout-preview--relative {
+  position: relative;
+}
+
+// Flex panel demo
+.flex-panel {
+  @include flex.flex-column();
+  padding: common.get-var(space, md);
+  background: common.get-var(surface, secondary);
+  flex: 1;
+  gap: common.get-var(space, xs);
+}

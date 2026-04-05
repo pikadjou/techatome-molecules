@@ -1,4 +1,3 @@
-import { NgIf, NgFor } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { Department } from "../interface";
@@ -8,7 +7,7 @@ import { Department } from "../interface";
   templateUrl: "./department-icon-list.component.html",
   styleUrls: ["./department-icon-list.component.scss"],
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [],
 })
 export class DepartmentIconListComponent {
   /**

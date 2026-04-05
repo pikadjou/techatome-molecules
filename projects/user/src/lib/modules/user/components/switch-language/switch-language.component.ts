@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
@@ -17,8 +16,6 @@ import {
   styleUrls: ["./switch-language.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     FontIconComponent,
     ListTagComponent,
     LoaderComponent,
@@ -29,7 +26,7 @@ import {
   ],
 })
 export class SwitchLanguageComponent {
-  readonly translateService = inject(TaTranslationService);
+  private _translateService = inject(TaTranslationService);
   readonly languages = [
     { id: "fr", name: "Français" },
     { id: "nl", name: "Nederlands" },
@@ -37,14 +34,14 @@ export class SwitchLanguageComponent {
     { id: "es", name: "Español" },
   ];
 
-  public activeLanguage = this.translateService.getLanguage();
+  public activeLanguage = this._translateService.getLanguage();
   public changeLanguageAsked: boolean = false;
 
   public changeLanguage(language: string) {
     if (this.activeLanguage != language) {
       this.activeLanguage = language;
       this.changeLanguageAsked = true;
-      this.translateService.use(language);
+      this._translateService.use(language);
     }
   }
 }

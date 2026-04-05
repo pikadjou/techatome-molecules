@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -24,9 +24,9 @@ export class FilesDisplayComponent extends TaBaseComponent {
   tempFiles = input.required<FileData[]>();
   fileType = input.required<FileType>();
 
-  @Output() fileSelected: EventEmitter<FileData & { index: number }> = new EventEmitter();
-  @Output() moreInformationSelected: EventEmitter<FileData> = new EventEmitter();
-  @Output() fileUploading: EventEmitter<FileStructure[]> = new EventEmitter();
+  fileSelected = output<FileData & { index: number }>();
+  moreInformationSelected = output<FileData>();
+  fileUploading = output<FileStructure[]>();
 
   get canSelectMultipleFiles(): boolean {
     switch (this.fileType()) {

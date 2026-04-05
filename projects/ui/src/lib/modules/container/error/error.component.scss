@@ -1,5 +1,38 @@
-@use 'ta/utils/mixins/flex';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
 
 :host {
   @include flex.flex-full();
+}
+
+.error-container {
+  @include flex.flex-column();
+  @include flex.align-center();
+  @include flex.justify-center();
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, xl);
+  margin: common.get-var(space, sm) auto;
+  background: common.get-var(surface, secondary);
+  border-radius: common.get-var(radius, rounded);
+  text-align: center;
+}
+
+.error-icon {
+  color: common.get-var(semantic, red);
+  margin-bottom: common.get-var(space, xs);
+}
+
+.error-title {
+  @include fonts.fontSizeBody(lg);
+  color: common.get-var(text, primary);
+}
+
+.error-message {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, secondary);
+}
+
+.error-cta {
+  margin-top: common.get-var(space, sm);
 }

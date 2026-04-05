@@ -1,7 +1,7 @@
 import { TranslateLoader } from "@ngx-translate/core";
 import { Observable } from "rxjs";
 export declare class TaTranslationLoader implements TranslateLoader {
-    private registry;
+    private _registry;
     constructor();
     getTranslation(lang: string): Observable<object>;
     private _merge;

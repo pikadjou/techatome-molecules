@@ -4,7 +4,7 @@
       <ta-title [level]="3" [isBold]="true">{{
         this.title() | translate
       }}</ta-title>
-      @if(!this.dialogRef.disableClose) {
+      @if(!this._dialogRef.disableClose) {
       <div (click)="this.close()">
         <ta-font-icon name="close" type="md"></ta-font-icon>
       </div>

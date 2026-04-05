@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Router } from "@angular/router";
+import { ActivatedRouteSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
 import { Level, TaPermissionsService } from "../services/permissions.service";
 import * as i0 from "@angular/core";
@@ -7,9 +7,8 @@ export interface FeatureRouteData {
     level: Level;
 }
 export declare class FeatureGuard {
-    private router;
     readonly _permissionsService: TaPermissionsService;
-    constructor(router: Router);
+    private _router;
     canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean;
     setRedirect(): void;
     private _isValidPermission;

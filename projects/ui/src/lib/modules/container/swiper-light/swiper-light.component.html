@@ -2,7 +2,7 @@
   @for (item of this.items(); track this.track($index, item)) { @if
   ((item.visible$ | async) !== false) {
   <ng-container
-    *ngTemplateOutlet="this.template(); context: { element: item }"
+    [ngTemplateOutlet]="this.template()" [ngTemplateOutletContext]="{ element: item }"
   ></ng-container>
   } }
 </div>

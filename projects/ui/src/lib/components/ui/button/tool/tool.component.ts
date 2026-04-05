@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
@@ -10,7 +10,7 @@ import { StopPropagationDirective } from "@ta/utils";
   templateUrl: "./tool.component.html",
   styleUrls: ["./tool.component.scss"],
   standalone: true,
-  imports: [NgIf, NgClass, FontIconComponent, StopPropagationDirective],
+  imports: [NgClass, FontIconComponent, StopPropagationDirective],
 })
 export class ButtonToolComponent {
   state = input<TaState>("classic");

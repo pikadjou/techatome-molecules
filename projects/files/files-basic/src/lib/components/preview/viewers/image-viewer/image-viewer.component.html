@@ -1,5 +1,5 @@
-@if (file) {
+@if (this.file()) {
   <div class="image-viewer">
-    <img [src]="file.url" [alt]="file.url" />
+    <img [src]="this.file().url" [alt]="this.file().url" />
   </div>
 }

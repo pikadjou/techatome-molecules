@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Menu } from '@ta/menu';
 import { FileData, FileStructure, FileType, TaBaseComponent } from '@ta/utils';
@@ -10,11 +9,11 @@ export declare class FilesDisplayComponent extends TaBaseComponent {
     canAddFile: import("@angular/core").InputSignal<boolean>;
     tempFiles: import("@angular/core").InputSignal<FileData<any>[]>;
     fileType: import("@angular/core").InputSignal<FileType>;
-    fileSelected: EventEmitter<FileData & {
+    fileSelected: import("@angular/core").OutputEmitterRef<FileData<any> & {
         index: number;
     }>;
-    moreInformationSelected: EventEmitter<FileData>;
-    fileUploading: EventEmitter<FileStructure[]>;
+    moreInformationSelected: import("@angular/core").OutputEmitterRef<FileData<any>>;
+    fileUploading: import("@angular/core").OutputEmitterRef<FileStructure[]>;
     get canSelectMultipleFiles(): boolean;
     get canDisplayTempsFiles(): boolean;
     getFeature(): Feature[];

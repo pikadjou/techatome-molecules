@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { NewComponent } from '../../components/ui/new/new.component';
 
@@ -23,13 +23,15 @@ export class CardComponent {
 
   isNew = input<boolean>(false);
 
-  @Output()
-  click: EventEmitter<any> = new EventEmitter<any>();
+  click = output<any>();
 
   public hasHandler: boolean = false;
 
   ngOnInit() {
-    this.hasHandler = this.click.observers.length > 0;
+    // With output() signal API, subscriber detection is not available.
+    // The hover class is applied when hasHandler is true.
+    // Parent components binding (click) will trigger the output.
+    this.hasHandler = (this.click as any)['listeners']?.length > 0 || false;
   }
   constructor() {}
 

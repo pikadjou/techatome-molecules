@@ -1,15 +1,16 @@
 {
-  "field.required": "This field is required",
-  "field.invalid": "Invalid value",
-  "validation.email": "Invalid email",
-  "validation.min": "Minimum value: {{min}}",
-  "validation.max": "Maximum value: {{max}}",
-  "validation.minLength": "Minimum length: {{minLength}} characters",
-  "validation.maxLength": "Maximum length: {{maxLength}} characters",
-  "address.street": "Street",
-  "address.number": "Number",
-  "address.floor": "Floor",
   "address.city": "City",
+  "address.country": "Country",
+  "address.floor": "Floor",
+  "address.number": "Number",
+  "address.street": "Street",
   "address.zipCode": "Postal code",
-  "address.country": "Country"
+  "field.invalid": "Invalid value",
+  "field.required": "This field is required",
+  "save": "Save",
+  "validation.email": "Invalid email",
+  "validation.max": "Maximum value: {{max}}",
+  "validation.maxLength": "Maximum length: {{maxLength}} characters",
+  "validation.min": "Minimum value: {{min}}",
+  "validation.minLength": "Minimum length: {{minLength}} characters"
 }

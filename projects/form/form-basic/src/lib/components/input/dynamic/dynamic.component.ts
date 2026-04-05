@@ -1,4 +1,4 @@
-import { NgIf, NgFor, NgClass, NgTemplateOutlet } from "@angular/common";
+import { NgClass, NgTemplateOutlet } from "@angular/common";
 import { LocalIconComponent } from "@ta/icons";
 import { Component, input, TemplateRef } from "@angular/core";
 
@@ -13,8 +13,6 @@ import { TaBaseComponent } from "@ta/utils";
   styleUrls: ["./dynamic.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     NgTemplateOutlet,
     LocalIconComponent,

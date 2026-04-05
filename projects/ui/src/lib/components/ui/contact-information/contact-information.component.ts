@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -13,7 +12,7 @@ import { TaTranslationUI } from "../../../translation.service";
   templateUrl: "./contact-information.component.html",
   styleUrls: ["./contact-information.component.scss"],
   standalone: true,
-  imports: [NgIf, FontIconComponent, LocalIconComponent, TranslateModule],
+  imports: [FontIconComponent, LocalIconComponent, TranslateModule],
 })
 export class ContactInformationComponent {
   /**

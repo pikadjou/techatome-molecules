@@ -2,13 +2,13 @@ import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Output,
   Renderer2,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
+  inject,
   input,
+  output,
 } from '@angular/core';
 
 import { TitleComponent } from '@ta/ui';
@@ -27,13 +27,14 @@ import { PaginationComponent } from '../pagination/pagination.component';
 export class TaGridComponent<T extends { id: number }> extends TaAbstractGridComponent<T> {
   cardTemplate = input.required<TemplateRef<{ items: T[] }>>();
 
-  @Output()
-  rowClicked = new EventEmitter<T>();
+  rowClicked = output<T>();
 
   @ViewChild('table', { static: true })
   tableElement!: ElementRef;
 
-  constructor(private renderer: Renderer2) {
+  private _renderer = inject(Renderer2);
+
+  constructor() {
     super();
   }
 
@@ -42,7 +43,7 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
       this.isReady$.subscribe({
         next: () => {
           if (this._grid.tableHtml) {
-            this.renderer.appendChild(this.tableElement.nativeElement, this._grid.tableHtml.nativeElement);
+            this._renderer.appendChild(this.tableElement.nativeElement, this._grid.tableHtml.nativeElement);
           }
           this._registerSubscription(this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) }));
         },

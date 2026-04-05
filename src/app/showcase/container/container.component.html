@@ -1,0 +1,228 @@
+<app-page-layout title="Container Components">
+  <div class="sections">
+    <!-- ======================== -->
+    <!-- EMPTY - ta-empty         -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Empty — Default</ta-title>
+      <ta-text size="sm">Affichage par défaut avec icône et titre</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-empty [isEmpty]="true" [isLight]="false"></ta-empty>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Empty — Light</ta-title>
+      <ta-text size="sm">Mode light : texte simple, sans fond ni icône</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-empty [isEmpty]="true" [isLight]="true"></ta-empty>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Empty — With Subtitle</ta-title>
+      <ta-text size="sm">Titre + sous-titre pour plus de contexte</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-empty
+            [isEmpty]="true"
+            [isLight]="false"
+            text="Aucun document"
+            subtitle="Ajoutez des documents pour les voir apparaître ici"
+          ></ta-empty>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Empty — With CTA</ta-title>
+      <ta-text size="sm">Slot [emptyAction] pour ajouter un bouton d'action</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-empty
+            [isEmpty]="true"
+            [isLight]="false"
+            emptyIcon="search"
+            text="Aucun résultat trouvé"
+            subtitle="Essayez avec d'autres mots-clés"
+          >
+            <div emptyAction class="mt-space-sm">
+              <ta-button type="secondary" icon="refresh">Réinitialiser les filtres</ta-button>
+            </div>
+          </ta-empty>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Empty — Custom Icons</ta-title>
+      <ta-text size="sm">Icônes personnalisées selon le contexte</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-empty
+            [isEmpty]="true"
+            [isLight]="false"
+            emptyIcon="calendar"
+            text="Aucun événement"
+            subtitle="Votre calendrier est vide"
+          ></ta-empty>
+        </div>
+        <div class="demo-box">
+          <ta-empty
+            [isEmpty]="true"
+            [isLight]="false"
+            emptyIcon="notification"
+            text="Pas de notifications"
+          ></ta-empty>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Empty — Not Empty (content projection)</ta-title>
+      <ta-text size="sm">Quand isEmpty=false, le contenu projeté s'affiche</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-empty [isEmpty]="false">
+            <ta-text>Ce contenu s'affiche car la liste n'est pas vide.</ta-text>
+          </ta-empty>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- ERROR - ta-error         -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Error — Default (with retry)</ta-title>
+      <ta-text size="sm">Erreur standard avec bouton "Compris, réessayer"</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-error
+            [message]="this.errorMessage()"
+            [code]="500"
+            (retry)="this.onRetry()"
+          ></ta-error>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Error — Without Retry</ta-title>
+      <ta-text size="sm">showRetry=false : pas de bouton</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-error
+            message="Accès refusé. Vous n'avez pas les permissions nécessaires."
+            [code]="403"
+            [showRetry]="false"
+          ></ta-error>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Error — Custom Retry Label</ta-title>
+      <ta-text size="sm">retryLabel personnalisé selon le contexte</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-error
+            message="La session a expiré"
+            [code]="401"
+            retryLabel="Se reconnecter"
+          ></ta-error>
+        </div>
+        <div class="demo-box">
+          <ta-error
+            message="La ressource demandée est introuvable"
+            [code]="404"
+            retryLabel="Retour"
+          ></ta-error>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Error — No Error (content projection)</ta-title>
+      <ta-text size="sm">Quand message est vide, le contenu projeté s'affiche</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-error message="">
+            <ta-text>Pas d'erreur, voici le contenu normal.</ta-text>
+          </ta-error>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- LOADER - ta-loader       -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Loader — Default</ta-title>
+      <ta-text size="sm">Chargement avec animation SVG</ta-text>
+      <div class="demo-row">
+        <div class="demo-box demo-box--tall">
+          <ta-loader [isLoading]="true"></ta-loader>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Loader — Sizes</ta-title>
+      <ta-text size="sm">size: sm | md | lg</ta-text>
+      <div class="demo-row">
+        <div class="demo-box demo-box--tall">
+          <ta-loader [isLoading]="true" size="sm" text="Chargement sm..."></ta-loader>
+        </div>
+        <div class="demo-box demo-box--tall">
+          <ta-loader [isLoading]="true" size="md" text="Chargement md..."></ta-loader>
+        </div>
+        <div class="demo-box demo-box--tall">
+          <ta-loader [isLoading]="true" size="lg" text="Chargement lg..."></ta-loader>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ta-title [level]="2">Loader — Loaded (content projection)</ta-title>
+      <ta-text size="sm">Quand isLoading=false, le contenu projeté s'affiche</ta-text>
+      <div class="demo-row">
+        <div class="demo-box">
+          <ta-loader [isLoading]="false">
+            <ta-text>Le contenu a fini de charger.</ta-text>
+          </ta-loader>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- COMBINED PATTERN          -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Pattern combiné — Loader &gt; Error &gt; Empty</ta-title>
+      <ta-text size="sm">Utilisation typique : ta-loader wraps ta-error wraps ta-empty</ta-text>
+      <div class="demo-row">
+        <div class="demo-box demo-box--tall">
+          <ta-loader [isLoading]="false">
+            <ta-error message="">
+              <ta-empty
+                [isEmpty]="true"
+                [isLight]="false"
+                text="Aucun résultat"
+                subtitle="Aucune donnée correspondant à vos critères"
+              >
+                <div emptyAction class="mt-space-sm">
+                  <ta-button type="secondary">Modifier les filtres</ta-button>
+                </div>
+              </ta-empty>
+            </ta-error>
+          </ta-loader>
+        </div>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

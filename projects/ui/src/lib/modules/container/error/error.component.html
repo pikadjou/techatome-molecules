@@ -1,12 +1,20 @@
 @if (this.message() === '') {
-<ng-content></ng-content>
+  <ng-content></ng-content>
 } @else {
-<ta-picture-info-message
-  icon="sad"
-  iconSize="lg"
-  type="danger"
-  text="container.error.title"
->
-</ta-picture-info-message>
-<p>{{ this.message() | translate }}</p>
+  <div class="error-container">
+    <div class="error-icon">
+      <ta-font-icon name="sentiment_very_dissatisfied" type="xl"></ta-font-icon>
+    </div>
+
+    <span class="error-title">{{ 'ui.container.error.title' | translate }}</span>
+    <span class="error-message">{{ this.message() | translate }}</span>
+
+    @if (this.showRetry()) {
+      <div class="error-cta">
+        <ta-button type="secondary" (action)="this.onRetry()">
+          {{ this.retryLabel() | translate }}
+        </ta-button>
+      </div>
+    }
+  </div>
 }

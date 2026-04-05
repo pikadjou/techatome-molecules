@@ -19,7 +19,7 @@ import { TaPermissionsService } from "../services/permissions.service";
 export class AuthGuard {
   public readonly _permissionsService = inject(TaPermissionsService);
 
-  constructor(private router: Router) {}
+  private _router = inject(Router);
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -44,6 +44,6 @@ export class AuthGuard {
   }
 
   public setRedirect(): void {
-    this.router.navigateByUrl(TaRoutes.getLogin());
+    this._router.navigateByUrl(TaRoutes.getLogin());
   }
 }

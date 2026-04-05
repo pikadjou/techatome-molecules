@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { Component, input } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
@@ -25,8 +25,6 @@ import { TaTranslationMenu } from "../../translation.service";
   styleUrls: ["./context-menu.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     RouterModule,
     TranslateModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, input } from '@angular/core';
+import { Component, inject, OnInit, input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,16 +32,18 @@ export class LayoutModalComponent extends TaBaseComponent implements OnInit {
 
   title = input<string>('');
 
-  constructor(public dialogRef: MatDialogRef<any>) {
+  public _dialogRef = inject(MatDialogRef<any>);
+
+  constructor() {
     super();
     TaTranslationUI.getInstance();
   }
 
   ngOnInit() {
-    this.dialogRef.addPanelClass(this.style() + '-modal');
+    this._dialogRef.addPanelClass(this.style() + '-modal');
   }
 
   public close() {
-    this.dialogRef.close();
+    this._dialogRef.close();
   }
 }

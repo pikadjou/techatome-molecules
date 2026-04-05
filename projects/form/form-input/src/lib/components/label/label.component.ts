@@ -1,4 +1,3 @@
-import { NgFor } from "@angular/common";
 import { Component, input } from "@angular/core";
 import { ValidatorFn, Validators } from "@angular/forms";
 
@@ -9,7 +8,7 @@ import { TranslatePipe } from "@ta/translation";
   templateUrl: "./label.component.html",
   styleUrls: ["./label.component.scss"],
   standalone: true,
-  imports: [NgFor, TranslatePipe],
+  imports: [TranslatePipe],
 })
 export class FormLabelComponent {
   inputModel = input.required<{ label: string; validators: ValidatorFn[] }>({ alias: 'input' });

@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 import * as i0 from "@angular/core";
 export declare class RatingComponent {
     constructor();
@@ -37,11 +36,11 @@ export declare class RatingComponent {
     /**
      * Emits the new rating value when a star is clicked
      */
-    ratingChange: EventEmitter<number>;
+    ratingChange: import("@angular/core").OutputEmitterRef<number>;
     /**
      * Emits when hovering over a star
      */
-    hoverChange: EventEmitter<number>;
+    hoverChange: import("@angular/core").OutputEmitterRef<number>;
     hoveredRating: number | null;
     get stars(): number[];
     /**

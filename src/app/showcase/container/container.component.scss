@@ -1,0 +1,35 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+
+.sections {
+  @include flex.flex-column();
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: common.get-var(space, md);
+}
+
+.demo-box {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  padding: common.get-var(space, md);
+  display: flex;
+
+  &--tall {
+    min-height: 200px;
+    @include flex.align-center();
+    @include flex.justify-center();
+  }
+}

@@ -546,7 +546,7 @@ class EditorInputComponent extends TaBaseComponent {
         this.maxHeight = input(false);
         this.changed = new EventEmitter();
         this.saved = new EventEmitter();
-        this.translationService = inject(TaTranslationService);
+        this._translationService = inject(TaTranslationService);
         this.languages = {
             en: en$1,
             es: es$1,
@@ -672,10 +672,10 @@ class EditorInputComponent extends TaBaseComponent {
         });
     }
     _getTranslation() {
-        if (!isNonNullable(this.translationService.getLanguage())) {
+        if (!isNonNullable(this._translationService.getLanguage())) {
             return {};
         }
-        return this.languages[this.translationService.getLanguage()].editorjs ?? {};
+        return this.languages[this._translationService.getLanguage()].editorjs ?? {};
     }
     async _extractWithColorTokenStyles() {
         const output = await this.editorInstance?.save();

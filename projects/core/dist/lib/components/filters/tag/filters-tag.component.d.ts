@@ -1,10 +1,9 @@
-import { EventEmitter } from "@angular/core";
 import { TaBaseComponent } from "@ta/utils";
 import { ActiveFilterTag } from "../types";
 import * as i0 from "@angular/core";
 export declare class FiltersTagComponent extends TaBaseComponent {
     activeFilter: import("@angular/core").InputSignal<ActiveFilterTag[]>;
-    removedFilter: EventEmitter<ActiveFilterTag>;
+    removedFilter: import("@angular/core").OutputEmitterRef<ActiveFilterTag>;
     constructor();
     remove(filter: ActiveFilterTag): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<FiltersTagComponent, never>;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, input, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import { TaBaseComponent } from "@ta/utils";
@@ -16,7 +16,9 @@ export class ContainerValidationComponent extends TaBaseComponent {
   @Output()
   validated = new EventEmitter();
 
-  constructor(public dialog: MatDialog) {
+  public _dialog = inject(MatDialog);
+
+  constructor() {
     super();
   }
 
@@ -25,10 +27,12 @@ export class ContainerValidationComponent extends TaBaseComponent {
       return;
     }
 
-    openModal(this.dialog).subscribe((result) => {
-      if (result) {
-        this.validated.emit();
-      }
-    });
+    this._registerSubscription(
+      openModal(this._dialog).subscribe((result) => {
+        if (result) {
+          this.validated.emit();
+        }
+      })
+    );
   }
 }

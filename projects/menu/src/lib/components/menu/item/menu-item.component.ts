@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, input, OnInit, ViewChild } from "@angular/core";
+import { Component, inject, input, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { RouterModule } from "@angular/router";
@@ -49,7 +49,9 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   public readonly typeToken!: MenuIcon | MenuAction | MenuBase | MenuPanel;
   public isOpen: boolean = false;
 
-  constructor(public modal: MatDialog) {
+  public _modal = inject(MatDialog);
+
+  constructor() {
     super();
     TaTranslationMenu.getInstance();
   }
@@ -100,7 +102,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
     const myTemplate = this.getTemplate();
     if (myTemplate) {
       if (this.breakpoints.isLessThanXS) {
-        this.modal.open<TemplateModalContainer, TemplateModalContainerData>(
+        this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
           TemplateModalContainer,
           {
             data: {

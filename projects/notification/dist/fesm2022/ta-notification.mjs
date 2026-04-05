@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { InjectionToken, Injectable, inject, Component, input, EventEmitter, effect, Output } from '@angular/core';
+import { InjectionToken, Injectable, inject, Component, input, output, effect } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { newGuid, TaBaseModal, copyTextToClipboard, TaBaseComponent, isNonNullable, getUniqueArray } from '@ta/utils';
 import { Subject, map, switchMap, of } from 'rxjs';
@@ -145,7 +145,7 @@ class NotificationInlineComponent extends TaBaseComponent {
         this.messageInput = input("", { alias: "message" });
         this.code = input(ENotificationCode.information);
         this.showClose = input(true);
-        this.askClose = new EventEmitter();
+        this.askClose = output();
         this._matDialog = inject(MatDialog);
         this.showMessage = false;
         this.close = () => {
@@ -211,9 +211,7 @@ class NotificationInlineComponent extends TaBaseComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationInlineComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-notification-inline", standalone: true, imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule], template: "@if (this.showMessage) {\n<div class=\"notification\" [ngClass]=\"this.getTypeClass()\">\n  <div class=\"notification_sidebar\"></div>\n  <div class=\"notification_content\">\n    <div class=\"notification_header\">\n      <div class=\"notification_type\">\n        <ta-font-icon [name]=\"this.getIcon()\" type=\"md\"></ta-font-icon>\n        <span class=\"notification_title\">{{\n          this.getTypeLabel() | translate\n        }}</span>\n      </div>\n      @if (this.showClose()) {\n      <button class=\"notification_close\" (click)=\"this.close()\">\n        <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n      </button>\n      }\n    </div>\n    <div class=\"notification_body\">\n      @if (this.message) {\n      <span class=\"notification_message\">{{\n        this.message | translate\n      }}</span>\n      } @else {\n      <span class=\"notification_message\">{{\n        this.getDefaultMessageKey() | translate\n      }}</span>\n      }\n    </div>\n    @if (this.isError) {\n    <div class=\"notification_footer\">\n      <ta-link size=\"sm\" (action)=\"this.openErrorBox()\">{{\n        \"notification.action.viewDetails\" | translate\n      }}</ta-link>\n    </div>\n    }\n  </div>\n</div>\n} @else {\n<ng-content></ng-content>\n}\n", styles: [".notification{display:flex;overflow:hidden;border-radius:var(--ta-radius-rounded);background-color:var(--ta-surface-primary);box-shadow:0 4px 12px #0000001f}.notification_sidebar{width:4px;flex-shrink:0}.notification_content{display:flex;flex-direction:column;gap:var(--ta-space-xs);padding:var(--ta-space-sm) var(--ta-space-md);flex:1;min-width:0}.notification_header{display:flex;align-items:center;justify-content:space-between;gap:var(--ta-space-sm)}.notification_type{display:flex;align-items:center;gap:var(--ta-space-xs)}.notification_title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:600}.notification_close{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border:none;background:none;cursor:pointer;border-radius:var(--ta-radius-minimal);color:var(--ta-text-secondary);flex-shrink:0;padding:0;transition:background-color .15s ease}.notification_close:hover{background-color:var(--ta-surface-hover)}.notification_body{padding-left:calc(16px + var(--ta-space-xs))}.notification_message{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary);word-break:break-word}.notification_footer{padding-left:calc(16px + var(--ta-space-xs));padding-top:var(--ta-space-xs)}.notification.success .notification_sidebar{background-color:var(--ta-semantic-token-success)}.notification.success .notification_type{color:var(--ta-semantic-token-success)}.notification.danger .notification_sidebar{background-color:var(--ta-semantic-token-alert)}.notification.danger .notification_type{color:var(--ta-semantic-token-alert)}.notification.warning .notification_sidebar{background-color:var(--ta-semantic-token-warning)}.notification.warning .notification_type{color:var(--ta-semantic-token-warning)}.notification.info .notification_sidebar{background-color:var(--ta-semantic-token-link)}.notification.info .notification_type{color:var(--ta-semantic-token-link)}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { askClose: [{
-                type: Output
-            }] } });
+        }], ctorParameters: () => [] });
 
 const AUTO_DISMISS_DELAY = 3000;
 class NotificationBoxComponent extends TaBaseComponent {
@@ -355,11 +353,11 @@ const graphEndpoint = {
     endpoint: "notification",
 };
 class TaNotificationDataService extends TaBaseService {
-    constructor(_sharedService) {
+    constructor() {
         super();
-        this._sharedService = _sharedService;
         this.list = new HandleComplexRequest();
         this.count = new HandleComplexRequest();
+        this._sharedService = inject(TaNotificationSharedService);
         this._graphService.registerGraphEndpoint(graphEndpoint);
     }
     fetchNotifications$(filters) {
@@ -393,7 +391,7 @@ class TaNotificationDataService extends TaBaseService {
         }
         return `${filters.projectId}-${filters.isNew}-${filters.take}`;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationDataService, deps: [{ token: TaNotificationSharedService }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationDataService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationDataService, providedIn: "root" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaNotificationDataService, decorators: [{
@@ -401,35 +399,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{
                     providedIn: "root",
                 }]
-        }], ctorParameters: () => [{ type: TaNotificationSharedService }] });
+        }], ctorParameters: () => [] });
 
 class BulletComponent extends TaBaseComponent {
     get number$() {
         return this._notificationDataService.count.get$(this._notificationDataService.computeKey(this.filters()));
     }
-    constructor(_notificationDataService) {
+    constructor() {
         super();
-        this._notificationDataService = _notificationDataService;
         this.filters = input(null);
+        this._notificationDataService = inject(TaNotificationDataService);
     }
     ngOnInit() {
         this.requestState.asked();
-        this._notificationDataService
+        this._registerSubscription(this._notificationDataService
             .fetchNumberOfNotifications$(this.filters())
             .subscribe({
             complete: () => this.requestState.completed(),
             error: (error) => {
                 this.requestState.onError(error.status, error.statusText);
             },
-        });
+        }));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BulletComponent, deps: [{ token: TaNotificationDataService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BulletComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BulletComponent, isStandalone: true, selector: "ta-notification-bullet", inputs: { filters: { classPropertyName: "filters", publicName: "filters", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n", styles: [""], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: BulletComponent$1, selector: "ta-bullet", inputs: ["size", "type"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BulletComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-notification-bullet", standalone: true, imports: [AsyncPipe, BulletComponent$1], template: "<ta-bullet type=\"notif\" size=\"md\">\n  {{ this.number$ | async }}\n</ta-bullet>\n" }]
-        }], ctorParameters: () => [{ type: TaNotificationDataService }] });
+        }], ctorParameters: () => [] });
 
 /*
  * Public API Surface of notification

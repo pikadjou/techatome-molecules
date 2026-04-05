@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { map, of, switchMap } from "rxjs";
 
@@ -27,7 +27,9 @@ export class TaNotificationDataService extends TaBaseService {
 
   public count = new HandleComplexRequest<number>();
 
-  constructor(private _sharedService: TaNotificationSharedService) {
+  private _sharedService = inject(TaNotificationSharedService);
+
+  constructor() {
     super();
 
     this._graphService.registerGraphEndpoint(graphEndpoint);

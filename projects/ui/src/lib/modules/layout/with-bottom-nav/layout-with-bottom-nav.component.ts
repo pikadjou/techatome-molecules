@@ -32,10 +32,10 @@ export class LayoutWithBottomNavComponent
   @ViewChild("bottomLayoutContainer")
   private _layoutContent!: ElementRef<HTMLDivElement>;
 
-  public sharedMenu = inject(TaSharedMenuService);
+  private _sharedMenu = inject(TaSharedMenuService);
 
   public isMinimized$ = combineLatest([
-    this.sharedMenu.isMinimized$.pipe(startWith(false)),
+    this._sharedMenu.isMinimized$.pipe(startWith(false)),
     this.breakpoints.isDesktop$,
   ]).pipe(
     map((data) => ({

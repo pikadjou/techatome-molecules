@@ -1,12 +1,11 @@
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import {
   Component,
-  EventEmitter,
   Inject,
   OnInit,
   Optional,
-  Output,
+  output,
 } from "@angular/core";
 
 import { filter, of } from "rxjs";
@@ -26,7 +25,6 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
   styleUrls: ["./sale.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     LoaderComponent,
     ErrorComponent,
@@ -36,8 +34,7 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
   ],
 })
 export class SaleComponent extends TaBaseComponent implements OnInit {
-  @Output()
-  acceptation = new EventEmitter<boolean>();
+  acceptation = output<boolean>();
 
   public checkbox = new InputCheckBox({
     label: "strapi.sale.cguAcceptation",
@@ -69,11 +66,13 @@ export class SaleComponent extends TaBaseComponent implements OnInit {
     const tenantId = this.tenantConfig.tenantId ?? 0;
 
     this.requestState.asked();
-    this.saleService.fetchSaleContents$(tenantId.toString()).subscribe({
-      complete: () => this.requestState.completed(),
-      error: (error: HttpErrorResponse) => {
-        this.requestState.onError(error.status, error.statusText);
-      },
-    });
+    this._registerSubscription(
+      this.saleService.fetchSaleContents$(tenantId.toString()).subscribe({
+        complete: () => this.requestState.completed(),
+        error: (error: HttpErrorResponse) => {
+          this.requestState.onError(error.status, error.statusText);
+        },
+      })
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, inject, OnInit, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorage } from 'storage-manager-js';
@@ -21,17 +21,20 @@ import { ToastComponent } from '../toast/toast.component';
   imports: [TranslateModule, LinkComponent, TitleComponent, ButtonComponent, LogoComponent, ToastComponent],
 })
 export class PwaComponent extends TaBaseComponent implements OnInit {
-  @Output()
-  askClose: EventEmitter<null> = new EventEmitter();
+  askClose = output<void>();
 
   public isShowed: boolean = false;
   public pictureWidth: number = 29;
 
-  constructor(private _pwa: TaPwaService) {
+  private _pwa = inject(TaPwaService);
+
+  constructor() {
     super();
     TaTranslationUI.getInstance();
-    this._pwa.isPWaCapability$.subscribe(
-      capability => (this.isShowed = capability && !LocalStorage.get('askForPwaAbility'))
+    this._registerSubscription(
+      this._pwa.isPWaCapability$.subscribe(
+        capability => (this.isShowed = capability && !LocalStorage.get('askForPwaAbility'))
+      )
     );
   }
 

@@ -1,17 +1,23 @@
 @if (this.isEmpty()) {
-<div class="empty-container">
-  @if (this.showMessage()) { @if (this.isLight()) {
-  <ta-picture-info-message [type]="this.type()" [text]="this.text()">
-  </ta-picture-info-message>
-  } @else {
-  <ta-picture-info-message
-    [icon]="this.icon()"
-    [iconSize]="this.iconSize()"
-    [type]="this.type()"
-    [text]="this.text()"
-  >
-  </ta-picture-info-message>
-  } }
+<div class="empty-container" [class.empty-container--light]="this.isLight()">
+  @if (this.showMessage()) {
+  @if (!this.isLight() && this.emptyIcon()) {
+  <div class="empty-icon">
+    <ta-font-icon
+      [name]="this.emptyIcon()"
+      [type]="this.iconSize()"
+    ></ta-font-icon>
+  </div>
+  }
+
+  <span class="empty-title">{{ this.text() | translate }}</span>
+
+  @if (!this.isLight() && this.subtitle()) {
+  <span class="empty-subtitle">{{ this.subtitle() | translate }}</span>
+  }
+
+  <ng-content select="[emptyAction]"></ng-content>
+  }
 </div>
 } @else {
 <ng-content></ng-content>

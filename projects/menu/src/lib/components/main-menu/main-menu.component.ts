@@ -26,7 +26,7 @@ export class MainMenuComponent extends TaBaseComponent {
 
   direction = input<'horizontal' | 'vertical'>('vertical');
 
-  public sharedMenu = inject(TaSharedMenuService);
+  private _sharedMenu = inject(TaSharedMenuService);
 
   public isPanelOpen = false;
 
@@ -34,7 +34,7 @@ export class MainMenuComponent extends TaBaseComponent {
     this._router.navigate(['/']);
   }
   public toggleView() {
-    this.sharedMenu.isMinimized$.next(!this.sharedMenu.isMinimized$.getValue());
+    this._sharedMenu.isMinimized$.next(!this._sharedMenu.isMinimized$.getValue());
   }
 
   public toggleMobilePanel() {

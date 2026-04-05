@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass, NgFor, NgIf } from "@angular/common";
+import { AsyncPipe, NgClass } from "@angular/common";
 import { Component } from "@angular/core";
 
 import { InputRadio } from "@ta/form-model";
@@ -15,8 +15,6 @@ import { FormLabelComponent } from "../../label/label.component";
   styleUrls: ["./radio.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     AsyncPipe,
     LocalIconComponent,

@@ -1,7 +1,8 @@
-import { NgIf } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  inject,
   input,
   TemplateRef,
 } from "@angular/core";
@@ -28,7 +29,7 @@ interface UserLogoNaming {
   templateUrl: "./layout-header-logo.component.html",
   styleUrls: ["./layout-header-logo.component.scss"],
   standalone: true,
-  imports: [NgIf, FontIconComponent, MatMenuModule],
+  imports: [NgTemplateOutlet, FontIconComponent, MatMenuModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutHeaderLogoComponent extends TaBaseComponent {
@@ -41,7 +42,9 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
 
   askClosing$ = input<Observable<null> | undefined>(undefined);
 
-  constructor(private _modal: MatDialog) {
+  private _modal = inject(MatDialog);
+
+  constructor() {
     super();
   }
 

@@ -1,6 +1,8 @@
 {
   "button.clear": "Clear",
   "button.select": "Select",
+  "dropdown.novalue": "No value",
+  "filter.clear": "Clear",
   "logo.add": "Add a cover image",
   "logo.modal.cancel": "Cancel",
   "logo.modal.choose": "Choose a file",
@@ -14,5 +16,8 @@
   "placeholder.date": "Select a date...",
   "placeholder.number": "Enter a number...",
   "placeholder.select": "Select an option...",
-  "placeholder.text": "Enter text..."
+  "placeholder.text": "Enter text...",
+  "upload.add": "Add a document",
+  "upload.confirm": "Confirm",
+  "upload.dragndrop": "Drag or drop your files here"
 }

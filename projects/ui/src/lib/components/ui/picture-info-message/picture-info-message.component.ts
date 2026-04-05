@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -18,7 +17,6 @@ import { TypedMessageComponent } from "../typed-message/typed-message.component"
   styleUrls: ["./picture-info-message.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     FontIconComponent,
     LocalIconComponent,
     TranslateModule,

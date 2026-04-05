@@ -32,20 +32,22 @@ export class InputImagesComponent
 
     if (images.length > 0) {
       this.requestState.asked();
-      combineLatest(
-        images
-          .map((image) => image.file)
-          .filter(isNonNullable)
-          .map((file) => this._documentsService.addDocument$({ file: file }))
-      ).subscribe({
-        next: (documents) => {
-          this.input.value = [...(this.input.value || []), ...documents];
-          this.requestState.completed();
-        },
-        error: () => {
-          this.requestState.completed();
-        },
-      });
+      this._registerSubscription(
+        combineLatest(
+          images
+            .map((image) => image.file)
+            .filter(isNonNullable)
+            .map((file) => this._documentsService.addDocument$({ file: file }))
+        ).subscribe({
+          next: (documents) => {
+            this.input.value = [...(this.input.value || []), ...documents];
+            this.requestState.completed();
+          },
+          error: () => {
+            this.requestState.completed();
+          },
+        })
+      );
     }
   }
 

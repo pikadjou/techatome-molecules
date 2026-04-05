@@ -1,0 +1,76 @@
+<app-page-layout title="UI — Progress">
+  <div class="sections">
+    <!-- ============================== -->
+    <!-- PROGRESS BAR — VALUES          -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Progress Bar — Values</ta-title>
+      <ta-text size="sm">Different progress values</ta-text>
+      <div class="demo-column">
+        <ta-progress [value]="25"></ta-progress>
+        <ta-progress [value]="50"></ta-progress>
+        <ta-progress [value]="75"></ta-progress>
+        <ta-progress [value]="100"></ta-progress>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- PROGRESS CIRCLE — VALUES       -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Progress Circle — Values</ta-title>
+      <ta-text size="sm">Circle progress with titles</ta-text>
+      <div class="demo-row">
+        <ta-progress-circle [progress]="25" upTitle="Downloads" downTitle="25%"></ta-progress-circle>
+        <ta-progress-circle [progress]="60" upTitle="Storage" downTitle="60%"></ta-progress-circle>
+        <ta-progress-circle [progress]="90" upTitle="CPU" downTitle="90%"></ta-progress-circle>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- PROGRESS BAR DATA              -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Progress Bar Data</ta-title>
+      <ta-text size="sm">Bar with data labels</ta-text>
+      <div class="demo-column">
+        <ta-progress-bar-data [current]="30" [max]="100" title="Storage Used" titleIcon="storage"></ta-progress-bar-data>
+        <ta-progress-bar-data [current]="85" [max]="100" title="Memory" titleIcon="memory"></ta-progress-bar-data>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- RATING — VALUES                -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Rating — Values</ta-title>
+      <ta-text size="sm">Different rating displays</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">1 star</ta-text>
+          <ta-rating [value]="1"></ta-rating>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">3 stars</ta-text>
+          <ta-rating [value]="3"></ta-rating>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">5 stars</ta-text>
+          <ta-rating [value]="5"></ta-rating>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SWIPER LIGHT                   -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Swiper Light</ta-title>
+      <ta-text size="sm">Scrollable horizontal content</ta-text>
+      <ng-template #slideTemplate let-item>
+        <div class="swiper-slide-demo">{{ item }}</div>
+      </ng-template>
+      <ta-swiper-light [items]="this.swiperItems" [template]="slideTemplate"></ta-swiper-light>
+    </section>
+  </div>
+</app-page-layout>

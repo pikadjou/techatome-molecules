@@ -4,10 +4,10 @@ import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export type ModalStyle = 'full' | 'big' | 'classic' | 'small';
 export declare class LayoutModalComponent extends TaBaseComponent implements OnInit {
-    dialogRef: MatDialogRef<any>;
     style: import("@angular/core").InputSignal<ModalStyle>;
     title: import("@angular/core").InputSignal<string>;
-    constructor(dialogRef: MatDialogRef<any>);
+    _dialogRef: MatDialogRef<any, any>;
+    constructor();
     ngOnInit(): void;
     close(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutModalComponent, never>;

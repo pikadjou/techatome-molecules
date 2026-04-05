@@ -1,6 +1,8 @@
+@use "ta/utils/mixins/common";
+
 .layout-content {
   position: relative;
-  margin: 8px;
+  margin: common.get-var(space, sm);
   min-height: calc(100vh - 80px);
 
   &.auto {

@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Output, Component, Injectable } from '@angular/core';
+import { input, output, Component, Injectable } from '@angular/core';
 import { FileListComponent } from '@ta/files-basic';
 import { NavigationComponent } from '@ta/menu';
 import { ActionButtonComponent, ButtonComponent, LoaderComponent, ErrorComponent } from '@ta/ui';
@@ -16,7 +16,7 @@ class UploadComponent {
         this.features = input([]);
         this.canSelectMultipleFiles = input(false);
         this.showInActionButton = input(true);
-        this.filesPicked = new EventEmitter();
+        this.filesPicked = output();
     }
     get addActions() {
         const actionsAvailable = [];
@@ -102,9 +102,7 @@ class UploadComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-files-upload", standalone: true, imports: [ActionButtonComponent, ButtonComponent], template: "@if (this.showInActionButton()) {\n<ta-action-button [actions]=\"this.addActions\"> </ta-action-button>\n} @else { @for (action of this.addActions; track action) {\n<ta-button (action)=\"action.callback()\">\n  {{ action.label }}\n</ta-button>\n} }\n" }]
-        }], propDecorators: { filesPicked: [{
-                type: Output
-            }] } });
+        }] });
 
 class FilesDisplayComponent extends TaBaseComponent {
     constructor() {
@@ -114,9 +112,9 @@ class FilesDisplayComponent extends TaBaseComponent {
         this.canAddFile = input(true);
         this.tempFiles = input.required();
         this.fileType = input.required();
-        this.fileSelected = new EventEmitter();
-        this.moreInformationSelected = new EventEmitter();
-        this.fileUploading = new EventEmitter();
+        this.fileSelected = output();
+        this.moreInformationSelected = output();
+        this.fileUploading = output();
     }
     get canSelectMultipleFiles() {
         switch (this.fileType()) {
@@ -142,18 +140,12 @@ class FilesDisplayComponent extends TaBaseComponent {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilesDisplayComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilesDisplayComponent, isStandalone: true, selector: "ta-files-display", inputs: { files$: { classPropertyName: "files$", publicName: "files$", isSignal: true, isRequired: true, transformFunction: null }, menu: { classPropertyName: "menu", publicName: "menu", isSignal: true, isRequired: true, transformFunction: null }, canAddFile: { classPropertyName: "canAddFile", publicName: "canAddFile", isSignal: true, isRequired: false, transformFunction: null }, tempFiles: { classPropertyName: "tempFiles", publicName: "tempFiles", isSignal: true, isRequired: true, transformFunction: null }, fileType: { classPropertyName: "fileType", publicName: "fileType", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { fileSelected: "fileSelected", moreInformationSelected: "moreInformationSelected", fileUploading: "fileUploading" }, usesInheritance: true, ngImport: i0, template: "<div class=\"toggle-navigation\">\n  <ta-menu-navigation [menu]=\"this.menu()\" [container]=\"'tab'\"></ta-menu-navigation>\n</div>\n\n@if (this.canDisplayTempsFiles) {\n  <div>\n    <ta-files-list [files]=\"this.tempFiles()\"></ta-files-list>\n    <hr />\n  </div>\n}\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" skeleton=\"fileList\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <div class=\"list\">\n      <ta-files-list\n        [files]=\"(this.files$() | async) || []\"\n        (fileSelected)=\"this.fileSelected.emit($event)\"\n        (moreInformationSelected)=\"this.moreInformationSelected.emit($event)\"\n      ></ta-files-list>\n    </div>\n  </ta-error>\n</ta-loader>\n\n@if (this.canAddFile() === true) {\n  <div class=\"floating-add\">\n    <ta-files-upload\n      [features]=\"this.getFeature()\"\n      [canSelectMultipleFiles]=\"this.canSelectMultipleFiles\"\n      (filesPicked)=\"this.fileUploading.emit($event)\"\n    ></ta-files-upload>\n  </div>\n}\n", styles: [".toggle-navigation{margin-bottom:var(--ta-space-sm)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code"] }, { kind: "component", type: UploadComponent, selector: "ta-files-upload", inputs: ["features", "canSelectMultipleFiles", "showInActionButton"], outputs: ["filesPicked"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }, { kind: "component", type: NavigationComponent, selector: "ta-menu-navigation", inputs: ["menu", "container", "swiper", "options", "manuallyChanged$"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilesDisplayComponent, isStandalone: true, selector: "ta-files-display", inputs: { files$: { classPropertyName: "files$", publicName: "files$", isSignal: true, isRequired: true, transformFunction: null }, menu: { classPropertyName: "menu", publicName: "menu", isSignal: true, isRequired: true, transformFunction: null }, canAddFile: { classPropertyName: "canAddFile", publicName: "canAddFile", isSignal: true, isRequired: false, transformFunction: null }, tempFiles: { classPropertyName: "tempFiles", publicName: "tempFiles", isSignal: true, isRequired: true, transformFunction: null }, fileType: { classPropertyName: "fileType", publicName: "fileType", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { fileSelected: "fileSelected", moreInformationSelected: "moreInformationSelected", fileUploading: "fileUploading" }, usesInheritance: true, ngImport: i0, template: "<div class=\"toggle-navigation\">\n  <ta-menu-navigation [menu]=\"this.menu()\" [container]=\"'tab'\"></ta-menu-navigation>\n</div>\n\n@if (this.canDisplayTempsFiles) {\n  <div>\n    <ta-files-list [files]=\"this.tempFiles()\"></ta-files-list>\n    <hr />\n  </div>\n}\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" skeleton=\"fileList\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <div class=\"list\">\n      <ta-files-list\n        [files]=\"(this.files$() | async) || []\"\n        (fileSelected)=\"this.fileSelected.emit($event)\"\n        (moreInformationSelected)=\"this.moreInformationSelected.emit($event)\"\n      ></ta-files-list>\n    </div>\n  </ta-error>\n</ta-loader>\n\n@if (this.canAddFile() === true) {\n  <div class=\"floating-add\">\n    <ta-files-upload\n      [features]=\"this.getFeature()\"\n      [canSelectMultipleFiles]=\"this.canSelectMultipleFiles\"\n      (filesPicked)=\"this.fileUploading.emit($event)\"\n    ></ta-files-upload>\n  </div>\n}\n", styles: [".toggle-navigation{margin-bottom:var(--ta-space-sm)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code", "showRetry", "retryLabel"], outputs: ["retry"] }, { kind: "component", type: UploadComponent, selector: "ta-files-upload", inputs: ["features", "canSelectMultipleFiles", "showInActionButton"], outputs: ["filesPicked"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }, { kind: "component", type: NavigationComponent, selector: "ta-menu-navigation", inputs: ["menu", "container", "swiper", "options", "manuallyChanged$"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilesDisplayComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-files-display', standalone: true, imports: [AsyncPipe, LoaderComponent, ErrorComponent, UploadComponent, FileListComponent, NavigationComponent], template: "<div class=\"toggle-navigation\">\n  <ta-menu-navigation [menu]=\"this.menu()\" [container]=\"'tab'\"></ta-menu-navigation>\n</div>\n\n@if (this.canDisplayTempsFiles) {\n  <div>\n    <ta-files-list [files]=\"this.tempFiles()\"></ta-files-list>\n    <hr />\n  </div>\n}\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" skeleton=\"fileList\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <div class=\"list\">\n      <ta-files-list\n        [files]=\"(this.files$() | async) || []\"\n        (fileSelected)=\"this.fileSelected.emit($event)\"\n        (moreInformationSelected)=\"this.moreInformationSelected.emit($event)\"\n      ></ta-files-list>\n    </div>\n  </ta-error>\n</ta-loader>\n\n@if (this.canAddFile() === true) {\n  <div class=\"floating-add\">\n    <ta-files-upload\n      [features]=\"this.getFeature()\"\n      [canSelectMultipleFiles]=\"this.canSelectMultipleFiles\"\n      (filesPicked)=\"this.fileUploading.emit($event)\"\n    ></ta-files-upload>\n  </div>\n}\n", styles: [".toggle-navigation{margin-bottom:var(--ta-space-sm)}\n"] }]
-        }], propDecorators: { fileSelected: [{
-                type: Output
-            }], moreInformationSelected: [{
-                type: Output
-            }], fileUploading: [{
-                type: Output
-            }] } });
+        }] });
 
 class UploadDocumentFormService {
     constructor() { }

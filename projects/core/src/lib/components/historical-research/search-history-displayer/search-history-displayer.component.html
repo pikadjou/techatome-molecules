@@ -39,7 +39,7 @@
   <div class="" [style.width.px]="this.searchFieldWidth">
     @if (menuTemplate) {
     <ng-container
-      *ngTemplateOutlet="menuTemplate; context: { element: menu }"
+      [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ element: menu }"
     ></ng-container>
     }
   </div>

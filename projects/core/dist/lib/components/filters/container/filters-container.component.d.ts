@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { Subject } from "rxjs";
 import { InputBase } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
@@ -7,8 +6,8 @@ import * as i0 from "@angular/core";
 export declare class FiltersContainerComponent extends TaBaseComponent {
     form: import("@angular/core").InputSignal<InputBase<any>[]>;
     activeFilter: import("@angular/core").InputSignal<ActiveFilterTag[]>;
-    filtersSelected: EventEmitter<any>;
-    removedFilter: EventEmitter<ActiveFilterTag>;
+    filtersSelected: import("@angular/core").OutputEmitterRef<any>;
+    removedFilter: import("@angular/core").OutputEmitterRef<ActiveFilterTag>;
     isFilterOpen: boolean;
     askValidation$: Subject<null>;
     constructor();

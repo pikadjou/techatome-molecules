@@ -14,15 +14,15 @@ import { TA_USER_SERVICE } from '../../user/services/user.service';
 })
 export class TaAuth0Service extends TaAuthService {
   get userProfile$() {
-    return this.userService.userProfile.get$();
+    return this._userService.userProfile.get$();
   }
-  public auth = inject(AuthService);
-  public userService = inject(TA_USER_SERVICE);
+  private _auth = inject(AuthService);
+  private _userService = inject(TA_USER_SERVICE);
 
   constructor() {
     super();
 
-    this.auth.user$
+    this._auth.user$
       .pipe(
         filter(isNonNullable),
         distinct(user => user?.sub),
@@ -36,7 +36,7 @@ export class TaAuth0Service extends TaAuthService {
       )
       .subscribe();
 
-    this.auth.error$
+    this._auth.error$
       .pipe(
         tap(errors => {
           this.isLoading$.next(false);
@@ -46,7 +46,7 @@ export class TaAuth0Service extends TaAuthService {
       )
       .subscribe();
 
-    this.auth.appState$
+    this._auth.appState$
       .pipe(
         tap(state => {
           Logger.LogInfo('[USERSERVICE] state', state);
@@ -54,7 +54,7 @@ export class TaAuth0Service extends TaAuthService {
       )
       .subscribe();
 
-    this.auth.isAuthenticated$
+    this._auth.isAuthenticated$
       .pipe(
         tap(isAuthenticated => {
           this._serverService.isAuthenticated = isAuthenticated;
@@ -70,15 +70,15 @@ export class TaAuth0Service extends TaAuthService {
   }
 
   public fetchUserProfile$() {
-    return this.userService.fetchUserProfile$().pipe(tap(() => this.isLoading$.next(false)));
+    return this._userService.fetchUserProfile$().pipe(tap(() => this.isLoading$.next(false)));
   }
 
   public load() {}
   public login() {
-    this.auth.loginWithRedirect();
+    this._auth.loginWithRedirect();
   }
   public signin() {
-    this.auth.loginWithRedirect({
+    this._auth.loginWithRedirect({
       authorizationParams: {
         screen_hint: 'signup',
       },
@@ -86,7 +86,7 @@ export class TaAuth0Service extends TaAuthService {
   }
   public logout() {
     return new Promise<null>(resolve => {
-      this.auth.logout();
+      this._auth.logout();
     });
   }
 }

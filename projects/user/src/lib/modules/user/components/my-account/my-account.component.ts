@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, inject, input, signal } from '@angular/core';
+import { Component, OnInit, inject, input, output, signal } from '@angular/core';
 
 import { Observable, map } from 'rxjs';
 
@@ -42,11 +42,9 @@ export class MyAccountComponent extends TaBaseComponent implements OnInit {
 
   isEditable = input<boolean>(false);
 
-  @Output()
-  navigateEvent = new EventEmitter();
+  navigateEvent = output<void>();
 
-  @Output()
-  navigateEditEvent = new EventEmitter();
+  navigateEditEvent = output<void>();
 
   private _userService = inject(TA_USER_SERVICE);
   private _authService = inject(TA_AUTH_TOKEN);

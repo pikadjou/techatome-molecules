@@ -1,0 +1,122 @@
+<app-page-layout title="Utilities — Pipes & Directives">
+  <div class="sections">
+    <!-- ======================== -->
+    <!-- PIPES                     -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Pipes</ta-title>
+    </section>
+
+    <!-- FileSize Pipe -->
+    <section>
+      <ta-title [level]="3">fileSize</ta-title>
+      <ta-text size="sm">Converts bytes to human-readable file size</ta-text>
+      <div class="demo-column">
+        <div class="demo-row">
+          <ta-text>1,048,576 bytes =</ta-text>
+          <ta-text [isBold]="true">{{ this.fileSizeBytes | fileSize }}</ta-text>
+        </div>
+        <div class="demo-row">
+          <ta-text>2,147,483,648 bytes =</ta-text>
+          <ta-text [isBold]="true">{{ this.fileSizeLarge | fileSize }}</ta-text>
+        </div>
+        <div class="demo-row">
+          <ta-text>Long form: 1,048,576 =</ta-text>
+          <ta-text [isBold]="true">{{ this.fileSizeBytes | fileSize:true }}</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Pipe -->
+    <section>
+      <ta-title [level]="3">join</ta-title>
+      <ta-text size="sm">Joins array elements with a separator</ta-text>
+      <div class="demo-column">
+        <div class="demo-row">
+          <ta-text>Default (", "):</ta-text>
+          <ta-text [isBold]="true">{{ this.joinArray | join }}</ta-text>
+        </div>
+        <div class="demo-row">
+          <ta-text>Custom (" | "):</ta-text>
+          <ta-text [isBold]="true">{{ this.joinArray | join:" | " }}</ta-text>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safe Pipe -->
+    <section>
+      <ta-title [level]="3">safe</ta-title>
+      <ta-text size="sm">Bypasses Angular sanitization for trusted content (html, style, url, resourceUrl)</ta-text>
+      <div class="demo-column">
+        <div class="demo-row">
+          <ta-text>Raw HTML:</ta-text>
+          <span [innerHTML]="this.htmlContent | safe:'html'"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== -->
+    <!-- DIRECTIVES                -->
+    <!-- ======================== -->
+    <section>
+      <ta-title [level]="2">Directives</ta-title>
+    </section>
+
+    <!-- StopPropagation -->
+    <section>
+      <ta-title [level]="3">appStopPropagation</ta-title>
+      <ta-text size="sm">Prevents click events from propagating to parent elements</ta-text>
+      <div class="demo-column">
+        <div class="demo-box" (click)="this.onParentClick()">
+          <ta-text size="sm">Parent (click me)</ta-text>
+          <button class="demo-btn" appStopPropagation (click)="this.onChildClick()">
+            Child with appStopPropagation
+          </button>
+          <ta-text size="sm">
+            @if (this.stopPropClicked) {
+              Child clicked — parent NOT triggered
+            } @else {
+              Click the button to test
+            }
+          </ta-text>
+        </div>
+      </div>
+    </section>
+
+    <!-- DndDirective -->
+    <section>
+      <ta-title [level]="3">appDnd</ta-title>
+      <ta-text size="sm">Drag-and-drop file zone directive. Emits (fileDropped) event.</ta-text>
+      <div class="code-block">
+        <code>&lt;div appDnd (fileDropped)="onFileDrop($event)"&gt;Drop files here&lt;/div&gt;</code>
+      </div>
+    </section>
+
+    <!-- LetDirective -->
+    <section>
+      <ta-title [level]="3">ngLet</ta-title>
+      <ta-text size="sm">Creates a local template variable from an expression (useful for async pipe results)</ta-text>
+      <div class="code-block">
+        <code>&lt;div *ngLet="observable$ | async as data"&gt;{{ "{{ data }}" }}&lt;/div&gt;</code>
+      </div>
+    </section>
+
+    <!-- OnRenderDirective -->
+    <section>
+      <ta-title [level]="3">TaOnRender</ta-title>
+      <ta-text size="sm">Conditionally renders content based on a boolean expression</ta-text>
+      <div class="code-block">
+        <code>&lt;div [TaOnRender]="isVisible"&gt;Conditionally rendered content&lt;/div&gt;</code>
+      </div>
+    </section>
+
+    <!-- TypedTemplateDirective -->
+    <section>
+      <ta-title [level]="3">typedTemplate</ta-title>
+      <ta-text size="sm">Provides type safety for ng-template context variables</ta-text>
+      <div class="code-block">
+        <code>&lt;ng-template [typedTemplate]="typeToken" let-item&gt;{{ "{{ item.name }}" }}&lt;/ng-template&gt;</code>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

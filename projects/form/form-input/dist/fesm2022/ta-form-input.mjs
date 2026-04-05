@@ -1,11 +1,10 @@
 import * as i0 from '@angular/core';
-import { input, EventEmitter, ElementRef, ViewChild, Output, Component, Injectable, inject, HostListener, importProvidersFrom } from '@angular/core';
+import { input, output, ElementRef, ViewChild, Component, Injectable, inject, EventEmitter, HostListener, Output, Renderer2, importProvidersFrom } from '@angular/core';
 import * as i1 from '@angular/forms';
 import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { delay, combineLatest, Subject, BehaviorSubject, of, take, startWith, filter, map, debounceTime, tap, concatMap } from 'rxjs';
 import { TaBaseComponent, pickImages, isNonNullable, TaBaseModal, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, downloadFile } from '@ta/utils';
-import { NgFor, NgClass, NgStyle, AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
 import * as i2 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -14,14 +13,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import * as i4 from '@angular/material/input';
 import { MatInputModule } from '@angular/material/input';
 import { isEqual } from 'date-fns';
+import { NgClass, NgStyle, AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import { TaOverlayPanelComponent, LabelComponent as LabelComponent$1, TitleComponent, TextComponent, RatingComponent as RatingComponent$1, ButtonComponent, LoaderComponent, UserLogoComponent, LinkComponent, EmptyComponent, LayoutSideCtaComponent, LayoutSideContentComponent, LayoutSideComponent, MegaoctetComponent, LayoutModalComponent } from '@ta/ui';
 import * as i3$1 from 'ngx-material-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TaDocumentsService } from '@ta/services';
-import { FileEditComponent, FileListComponent } from '@ta/files-basic';
 import * as i1$1 from '@angular/material/dialog';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FileEditComponent, FileListComponent } from '@ta/files-basic';
 import * as i1$2 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputTextBox, InputCheckBox } from '@ta/form-model';
@@ -51,7 +51,7 @@ class TaAbstractInputComponent extends TaBaseComponent {
         this.matcher = input(new ErrorStateMatcher());
         this.standaloneMode = input(false, { alias: 'standalone' });
         this.onFocusObs = input(undefined, { alias: 'onFocus' });
-        this.valueChanged = new EventEmitter();
+        this.valueChanged = output();
         this.validators = Validators;
     }
     ngOnInit() {
@@ -89,9 +89,7 @@ class TaAbstractInputComponent extends TaBaseComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractInputComponent, decorators: [{
             type: Component,
             args: [{ template: "" }]
-        }], ctorParameters: () => [], propDecorators: { valueChanged: [{
-                type: Output
-            }], focusedElement: [{
+        }], ctorParameters: () => [], propDecorators: { focusedElement: [{
                 type: ViewChild,
                 args: ["focusedElement", { read: ElementRef }]
             }] } });
@@ -107,7 +105,7 @@ class FormLabelComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FormLabelComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-form-label", standalone: true, imports: [NgFor, TranslatePipe], template: "@if(this.inputModel().label) {\n<label class=\"form-label\" [class.mb-space-sm]=\"this.withMarginBottom()\">\n  {{ this.inputModel().label | translate }}\n  @for (validator of this.inputModel().validators; track validator) {\n  <span>\n    @if(validator === validators.required) {\n    <span> * </span>\n    }\n  </span>\n  }\n</label>\n}\n", styles: [".form-label{display:block;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-brand-primary)}\n"] }]
+            args: [{ selector: "ta-form-label", standalone: true, imports: [TranslatePipe], template: "@if(this.inputModel().label) {\n<label class=\"form-label\" [class.mb-space-sm]=\"this.withMarginBottom()\">\n  {{ this.inputModel().label | translate }}\n  @for (validator of this.inputModel().validators; track validator) {\n  <span>\n    @if(validator === validators.required) {\n    <span> * </span>\n    }\n  </span>\n  }\n</label>\n}\n", styles: [".form-label{display:block;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-brand-primary)}\n"] }]
         }] });
 
 class CheckboxComponent extends TaAbstractInputComponent {
@@ -130,11 +128,11 @@ class ColorPickerComponent extends TaAbstractInputComponent {
         this.input.formControl?.setValue(value);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ColorPickerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ColorPickerComponent, isStandalone: true, selector: "ta-input-color-picker", usesInheritance: true, ngImport: i0, template: "<div>\n  <!-- <input\n    [value]=\"input.value\"\n    class=\"form-control\"\n    [formControl]=\"$any(input.formControl)\"\n    [(colorPicker)]=\"input.value\"\n    (colorPickerChange)=\"onChangeValue($event)\"\n    [style.background]=\"input.value\"\n  /> -->\n</div>\n", styles: [".form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:.875rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ColorPickerComponent, isStandalone: true, selector: "ta-input-color-picker", usesInheritance: true, ngImport: i0, template: "<div>\n  <!-- <input\n    [value]=\"input.value\"\n    class=\"form-control\"\n    [formControl]=\"$any(input.formControl)\"\n    [(colorPicker)]=\"input.value\"\n    (colorPickerChange)=\"onChangeValue($event)\"\n    [style.background]=\"input.value\"\n  /> -->\n</div>\n", styles: [".form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:var(--ta-space-xs) var(--ta-space-sm);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);font-weight:400;line-height:1.5;color:var(--ta-text-primary);background:var(--ta-surface-primary);background-clip:padding-box;border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-minimal);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ColorPickerComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-color-picker", standalone: true, template: "<div>\n  <!-- <input\n    [value]=\"input.value\"\n    class=\"form-control\"\n    [formControl]=\"$any(input.formControl)\"\n    [(colorPicker)]=\"input.value\"\n    (colorPickerChange)=\"onChangeValue($event)\"\n    [style.background]=\"input.value\"\n  /> -->\n</div>\n", styles: [".form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:.875rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }]
+            args: [{ selector: "ta-input-color-picker", standalone: true, template: "<div>\n  <!-- <input\n    [value]=\"input.value\"\n    class=\"form-control\"\n    [formControl]=\"$any(input.formControl)\"\n    [(colorPicker)]=\"input.value\"\n    (colorPickerChange)=\"onChangeValue($event)\"\n    [style.background]=\"input.value\"\n  /> -->\n</div>\n", styles: [".form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:var(--ta-space-xs) var(--ta-space-sm);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);font-weight:400;line-height:1.5;color:var(--ta-text-primary);background:var(--ta-surface-primary);background-clip:padding-box;border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-minimal);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }]
         }], ctorParameters: () => [] });
 
 class InputErrorComponent {
@@ -325,19 +323,17 @@ class RadioComponent extends TaAbstractInputComponent {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RadioComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: RadioComponent, isStandalone: true, selector: "ta-input-radio", usesInheritance: true, ngImport: i0, template: "<div class=\"radio-label\">\n  <ta-form-label [input]=\"this.input\"></ta-form-label>\n</div>\n\n<div class=\"radio-container\">\n  @for (option of this.input.options | async; track option.id) {\n  <div\n    class=\"radio-element\"\n    [ngClass]=\"{\n        validated: this.input.value === option.id,\n        disabled: this.input.disabled,\n      }\"\n    (click)=\"this.onOptionClicked(option.id)\"\n  >\n    <div\n      [ngClass]=\"{\n          'button-with-icon': this.hasLabel(option),\n          'only-icon': !this.hasLabel(option),\n        }\"\n    >\n      @if (option.icon) {\n      <ta-local-icon [type]=\"option.icon\" [size]=\"this.iconSize(option)\">\n      </ta-local-icon>\n      } @if (option.name) {\n      <span>\n        {{ option.name | translate }}\n      </span>\n      }\n    </div>\n  </div>\n  }\n</div>\n", styles: [".radio-label{display:block;padding-bottom:.5em}.button-with-icon{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;column-gap:8px}.only-icon{margin-left:auto;margin-right:auto}.radio-container{display:flex!important;flex-direction:row;justify-content:space-between}.radio-container .radio-element{display:flex;height:50px;width:45%;border:2px solid var(--ta-neutral-400);border-radius:20px;box-sizing:border-box;align-items:center;gap:8px;justify-content:center;color:var(--ta-neutral-600);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);line-height:28px;font-weight:500}.radio-container .radio-element app-local-icon{opacity:.4}.radio-container .radio-element.validated{border:2px solid var(--ta-surface-brand-primary)}.radio-container .radio-element.validated app-local-icon{opacity:1}.radio-container .radio-element.validated span{color:var(--ta-neutral-900)}.radio-container .radio-element.disabled{opacity:.4}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: RadioComponent, isStandalone: true, selector: "ta-input-radio", usesInheritance: true, ngImport: i0, template: "<div class=\"radio-label\">\n  <ta-form-label [input]=\"this.input\"></ta-form-label>\n</div>\n\n<div class=\"radio-container\">\n  @for (option of this.input.options | async; track option.id) {\n  <div\n    class=\"radio-element\"\n    [ngClass]=\"{\n        validated: this.input.value === option.id,\n        disabled: this.input.disabled,\n      }\"\n    (click)=\"this.onOptionClicked(option.id)\"\n  >\n    <div\n      [ngClass]=\"{\n          'button-with-icon': this.hasLabel(option),\n          'only-icon': !this.hasLabel(option),\n        }\"\n    >\n      @if (option.icon) {\n      <ta-local-icon [type]=\"option.icon\" [size]=\"this.iconSize(option)\">\n      </ta-local-icon>\n      } @if (option.name) {\n      <span>\n        {{ option.name | translate }}\n      </span>\n      }\n    </div>\n  </div>\n  }\n</div>\n", styles: [".radio-label{display:block;padding-bottom:.5em}.button-with-icon{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;column-gap:var(--ta-space-sm)}.only-icon{margin-left:auto;margin-right:auto}.radio-container{display:flex!important;flex-direction:row;justify-content:space-between}.radio-container .radio-element{display:flex;height:50px;width:45%;border:2px solid var(--ta-neutral-400);border-radius:20px;box-sizing:border-box;align-items:center;gap:var(--ta-space-sm);justify-content:center;color:var(--ta-neutral-600);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);line-height:28px;font-weight:500}.radio-container .radio-element app-local-icon{opacity:.4}.radio-container .radio-element.validated{border:2px solid var(--ta-surface-brand-primary)}.radio-container .radio-element.validated app-local-icon{opacity:1}.radio-container .radio-element.validated span{color:var(--ta-neutral-900)}.radio-container .radio-element.disabled{opacity:.4}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: RadioComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-input-radio", standalone: true, imports: [
-                        NgIf,
-                        NgFor,
                         NgClass,
                         AsyncPipe,
                         LocalIconComponent,
                         FormLabelComponent,
                         TranslatePipe,
-                    ], template: "<div class=\"radio-label\">\n  <ta-form-label [input]=\"this.input\"></ta-form-label>\n</div>\n\n<div class=\"radio-container\">\n  @for (option of this.input.options | async; track option.id) {\n  <div\n    class=\"radio-element\"\n    [ngClass]=\"{\n        validated: this.input.value === option.id,\n        disabled: this.input.disabled,\n      }\"\n    (click)=\"this.onOptionClicked(option.id)\"\n  >\n    <div\n      [ngClass]=\"{\n          'button-with-icon': this.hasLabel(option),\n          'only-icon': !this.hasLabel(option),\n        }\"\n    >\n      @if (option.icon) {\n      <ta-local-icon [type]=\"option.icon\" [size]=\"this.iconSize(option)\">\n      </ta-local-icon>\n      } @if (option.name) {\n      <span>\n        {{ option.name | translate }}\n      </span>\n      }\n    </div>\n  </div>\n  }\n</div>\n", styles: [".radio-label{display:block;padding-bottom:.5em}.button-with-icon{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;column-gap:8px}.only-icon{margin-left:auto;margin-right:auto}.radio-container{display:flex!important;flex-direction:row;justify-content:space-between}.radio-container .radio-element{display:flex;height:50px;width:45%;border:2px solid var(--ta-neutral-400);border-radius:20px;box-sizing:border-box;align-items:center;gap:8px;justify-content:center;color:var(--ta-neutral-600);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);line-height:28px;font-weight:500}.radio-container .radio-element app-local-icon{opacity:.4}.radio-container .radio-element.validated{border:2px solid var(--ta-surface-brand-primary)}.radio-container .radio-element.validated app-local-icon{opacity:1}.radio-container .radio-element.validated span{color:var(--ta-neutral-900)}.radio-container .radio-element.disabled{opacity:.4}\n"] }]
+                    ], template: "<div class=\"radio-label\">\n  <ta-form-label [input]=\"this.input\"></ta-form-label>\n</div>\n\n<div class=\"radio-container\">\n  @for (option of this.input.options | async; track option.id) {\n  <div\n    class=\"radio-element\"\n    [ngClass]=\"{\n        validated: this.input.value === option.id,\n        disabled: this.input.disabled,\n      }\"\n    (click)=\"this.onOptionClicked(option.id)\"\n  >\n    <div\n      [ngClass]=\"{\n          'button-with-icon': this.hasLabel(option),\n          'only-icon': !this.hasLabel(option),\n        }\"\n    >\n      @if (option.icon) {\n      <ta-local-icon [type]=\"option.icon\" [size]=\"this.iconSize(option)\">\n      </ta-local-icon>\n      } @if (option.name) {\n      <span>\n        {{ option.name | translate }}\n      </span>\n      }\n    </div>\n  </div>\n  }\n</div>\n", styles: [".radio-label{display:block;padding-bottom:.5em}.button-with-icon{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;column-gap:var(--ta-space-sm)}.only-icon{margin-left:auto;margin-right:auto}.radio-container{display:flex!important;flex-direction:row;justify-content:space-between}.radio-container .radio-element{display:flex;height:50px;width:45%;border:2px solid var(--ta-neutral-400);border-radius:20px;box-sizing:border-box;align-items:center;gap:var(--ta-space-sm);justify-content:center;color:var(--ta-neutral-600);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);line-height:28px;font-weight:500}.radio-container .radio-element app-local-icon{opacity:.4}.radio-container .radio-element.validated{border:2px solid var(--ta-surface-brand-primary)}.radio-container .radio-element.validated app-local-icon{opacity:1}.radio-container .radio-element.validated span{color:var(--ta-neutral-900)}.radio-container .radio-element.disabled{opacity:.4}\n"] }]
         }], ctorParameters: () => [] });
 
 class RatingComponent extends TaAbstractInputComponent {
@@ -415,7 +411,7 @@ class SwitchComponent extends TaAbstractInputComponent {
         super();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwitchComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SwitchComponent, isStandalone: true, selector: "ta-input-switch", usesInheritance: true, ngImport: i0, template: "<div>\n  @switch (input.matchtype()) { @case ('textbox') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('number') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('checkbox') {\n  <ta-input-checkbox [input]=\"$any(input)\"></ta-input-checkbox>\n  } @case ('datePicker') {\n  <ta-input-date-picker [input]=\"$any(input)\"></ta-input-date-picker>\n  } @case ('dropdown') {\n  <ta-input-dropdown [input]=\"$any(input)\"></ta-input-dropdown>\n  } @default {\n  <span>Aucune valeur selectionn\u00E9e</span>\n  } }\n</div>\n", styles: [".mat-form-field{display:block}.form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:.875rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"], dependencies: [{ kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "component", type: DatePickerComponent, selector: "ta-input-date-picker" }, { kind: "component", type: DropdownComponent, selector: "ta-input-dropdown", inputs: ["space"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SwitchComponent, isStandalone: true, selector: "ta-input-switch", usesInheritance: true, ngImport: i0, template: "<div>\n  @switch (input.matchtype()) { @case ('textbox') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('number') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('checkbox') {\n  <ta-input-checkbox [input]=\"$any(input)\"></ta-input-checkbox>\n  } @case ('datePicker') {\n  <ta-input-date-picker [input]=\"$any(input)\"></ta-input-date-picker>\n  } @case ('dropdown') {\n  <ta-input-dropdown [input]=\"$any(input)\"></ta-input-dropdown>\n  } @default {\n  <span>Aucune valeur selectionn\u00E9e</span>\n  } }\n</div>\n", styles: [".mat-form-field{display:block}.form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:var(--ta-space-xs) var(--ta-space-sm);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);font-weight:400;line-height:1.5;color:var(--ta-text-primary);background:var(--ta-surface-primary);background-clip:padding-box;border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-minimal);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"], dependencies: [{ kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "component", type: DatePickerComponent, selector: "ta-input-date-picker" }, { kind: "component", type: DropdownComponent, selector: "ta-input-dropdown", inputs: ["space"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwitchComponent, decorators: [{
             type: Component,
@@ -424,7 +420,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         CheckboxComponent,
                         DatePickerComponent,
                         DropdownComponent,
-                    ], template: "<div>\n  @switch (input.matchtype()) { @case ('textbox') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('number') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('checkbox') {\n  <ta-input-checkbox [input]=\"$any(input)\"></ta-input-checkbox>\n  } @case ('datePicker') {\n  <ta-input-date-picker [input]=\"$any(input)\"></ta-input-date-picker>\n  } @case ('dropdown') {\n  <ta-input-dropdown [input]=\"$any(input)\"></ta-input-dropdown>\n  } @default {\n  <span>Aucune valeur selectionn\u00E9e</span>\n  } }\n</div>\n", styles: [".mat-form-field{display:block}.form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:.875rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }]
+                    ], template: "<div>\n  @switch (input.matchtype()) { @case ('textbox') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('number') {\n  <ta-input-textbox [input]=\"$any(input)\"></ta-input-textbox>\n  } @case ('checkbox') {\n  <ta-input-checkbox [input]=\"$any(input)\"></ta-input-checkbox>\n  } @case ('datePicker') {\n  <ta-input-date-picker [input]=\"$any(input)\"></ta-input-date-picker>\n  } @case ('dropdown') {\n  <ta-input-dropdown [input]=\"$any(input)\"></ta-input-dropdown>\n  } @default {\n  <span>Aucune valeur selectionn\u00E9e</span>\n  } }\n</div>\n", styles: [".mat-form-field{display:block}.form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:var(--ta-space-xs) var(--ta-space-sm);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);font-weight:400;line-height:1.5;color:var(--ta-text-primary);background:var(--ta-surface-primary);background-clip:padding-box;border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-minimal);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}\n"] }]
         }], ctorParameters: () => [] });
 
 class TimePickerComponent extends TaAbstractInputComponent {
@@ -465,7 +461,7 @@ class InputImagesComponent extends TaAbstractInputComponent {
         const images = await pickImages();
         if (images.length > 0) {
             this.requestState.asked();
-            combineLatest(images
+            this._registerSubscription(combineLatest(images
                 .map((image) => image.file)
                 .filter(isNonNullable)
                 .map((file) => this._documentsService.addDocument$({ file: file }))).subscribe({
@@ -476,7 +472,7 @@ class InputImagesComponent extends TaAbstractInputComponent {
                 error: () => {
                     this.requestState.completed();
                 },
-            });
+            }));
         }
     }
     onFileDeleted(fileData) {
@@ -529,7 +525,7 @@ class InputLogoComponent extends TaAbstractInputComponent {
         const logoFile = images.length > 0 ? images[0].file : null;
         if (logoFile) {
             this.requestState.asked();
-            this._documentsService.addDocument$({ file: logoFile, description: 'logo' }).subscribe({
+            this._registerSubscription(this._documentsService.addDocument$({ file: logoFile, description: 'logo' }).subscribe({
                 next: document => {
                     this.input.value = document;
                     this.requestState.completed();
@@ -537,7 +533,7 @@ class InputLogoComponent extends TaAbstractInputComponent {
                 error: () => {
                     this.requestState.completed();
                 },
-            });
+            }));
         }
     }
     removeLogo() {
@@ -598,12 +594,12 @@ class InputSchemaComponent extends TaAbstractInputComponent {
     set selection(value) {
         this.input.formControl?.setValue(value);
     }
-    constructor(dialog) {
+    constructor() {
         super();
-        this.dialog = dialog;
+        this._dialog = inject(MatDialog);
     }
     openDialog() {
-        const dialogRef = this.dialog.open(InputSchemaModal);
+        const dialogRef = this._dialog.open(InputSchemaModal);
         this._registerSubscription(dialogRef
             .afterClosed()
             .subscribe(async (data) => {
@@ -618,19 +614,18 @@ class InputSchemaComponent extends TaAbstractInputComponent {
             }
         }));
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaComponent, deps: [{ token: i1$1.MatDialog }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputSchemaComponent, isStandalone: true, selector: "ta-input-schema", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n  <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n", styles: [""], dependencies: [{ kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-input-schema", standalone: true, imports: [
-                        NgIf,
                         LocalIconComponent,
                         ButtonComponent,
                         FileListComponent,
                         InputLayoutComponent,
                     ], template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n  <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n" }]
-        }], ctorParameters: () => [{ type: i1$1.MatDialog }] });
+        }], ctorParameters: () => [] });
 
 class SearchFieldComponent extends TaAbstractInputComponent {
     constructor() {
@@ -792,7 +787,7 @@ class InputChoicesComponent extends TaAbstractInputComponent {
         this.overlayPanelRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputChoicesComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputChoicesComponent, isStandalone: true, selector: "ta-input-choices", viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: TaOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input.onlyTemplate !== true) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div class=\"form-control\" #focusedElement>\n          <div class=\"input-group flex-full\">\n            <input type=\"hidden\" [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n            <div class=\"flex-start g-space-xs\">\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ (getName$(value) | async) ?? '' | translate }}\n                </ta-label>\n              }\n            </div>\n            @if (this.input.message) {\n              <div class=\"message\">\n                <small class=\"form-text text-muted\">\n                  <span>{{ this.input.message }}</span>\n                </small>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n    <ng-template #panelContent>\n      <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n    </ng-template>\n  </ta-overlay-panel>\n} @else {\n  <div class=\"only-template\">\n    <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n  </div>\n}\n\n<ng-template #choicesTemplate>\n  <div appStopPropagation class=\"flex-column g-space-sm\">\n    @if (!this.input.choiceTemplate) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          [standalone]=\"true\"\n          class=\"m-space-sm\"\n        ></ta-search-field>\n      }\n\n      <ta-layout-side class=\"flex-full choices-wrapper\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n              @if (this.input.showNullableFields) {\n                <div class=\"p-space-sm\">\n                  <ta-input-checkbox\n                    [input]=\"this.inputNullable\"\n                    [standalone]=\"true\"\n                    (valueChanged)=\"this.selectNullable($event)\"\n                  ></ta-input-checkbox>\n                </div>\n              }\n              @for (option of this.filteredOptions$ | async; track option) {\n                <div\n                  class=\"flex-row pointer m-space-sm p-space-sm\"\n                  [class.is-selected]=\"this.isSelected(option)\"\n                  (click)=\"this.select(option)\"\n                >\n                  <ta-text>{{ option.name }}</ta-text>\n                </div>\n              }\n            </ta-empty>\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'input.button.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'input.button.select' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    } @else if (this.input.choiceTemplate && this.filteredOptions$) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          class=\"m-space-sm\"\n          [standalone]=\"true\"\n        ></ta-search-field>\n      }\n      <ta-layout-side class=\"flex-full\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            @if (this.input.choiceTemplate.one) {\n              <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n                @for (option of this.filteredOptions$ | async; track option) {\n                  <div\n                    class=\"flex-row pointer m-space-sm p-space-sm\"\n                    [class.is-selected]=\"this.isSelected(option)\"\n                    (click)=\"this.select(option)\"\n                  >\n                    <ng-template\n                      [ngTemplateOutlet]=\"this.input.choiceTemplate.one\"\n                      [ngTemplateOutletContext]=\"{ item: option.data }\"\n                    ></ng-template>\n                  </div>\n                }\n              </ta-empty>\n            } @else if (this.input.choiceTemplate.list) {\n              <ng-template\n                [ngTemplateOutlet]=\"this.input.choiceTemplate.list\"\n                [ngTemplateOutletContext]=\"{\n                  data: {\n                    items: this.filteredOptions$ | async,\n                    isselected: this.isSelected,\n                    select: this.select,\n                    search: this.inputSearch.value,\n                    refresh: this.refresh,\n                    values: this.input.value,\n                  },\n                }\"\n              ></ng-template>\n            }\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'input.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'input.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    }\n  </div>\n</ng-template>\n", styles: [".textbox-container{width:100%}.input-group{position:relative}.input-group .action{position:absolute;right:8px;top:16px;bottom:0}.is-selected{border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-full)}.menu-panel{background-color:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);border:1px solid;border-color:var(--ta-neutral-300);overflow:hidden}.choices-wrapper{overflow:visible;max-height:none}.only-template{background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: LayoutSideCtaComponent, selector: "ta-layout-side-cta", inputs: ["background"] }, { kind: "component", type: LayoutSideContentComponent, selector: "ta-layout-side-content" }, { kind: "component", type: LayoutSideComponent, selector: "ta-layout-side" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputChoicesComponent, isStandalone: true, selector: "ta-input-choices", viewQueries: [{ propertyName: "overlayPanelRef", first: true, predicate: TaOverlayPanelComponent, descendants: true }], usesInheritance: true, ngImport: i0, template: "@if (this.input.onlyTemplate !== true) {\n  <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n    <ng-template #panelTrigger>\n      <ta-input-layout [input]=\"this.input\">\n        <div class=\"form-control\" #focusedElement>\n          <div class=\"input-group flex-full\">\n            <input type=\"hidden\" [formControl]=\"$any(this.input.formControl)\" [value]=\"this.input.value\" />\n\n            <div class=\"flex-start g-space-xs\">\n              @for (value of this.input.value; track value) {\n                <ta-label size=\"sm\" class=\"d-flex\">\n                  {{ (getName$(value) | async) ?? '' | translate }}\n                </ta-label>\n              }\n            </div>\n            @if (this.input.message) {\n              <div class=\"message\">\n                <small class=\"form-text text-muted\">\n                  <span>{{ this.input.message }}</span>\n                </small>\n              </div>\n            }\n          </div>\n        </div>\n      </ta-input-layout>\n    </ng-template>\n    <ng-template #panelContent>\n      <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n    </ng-template>\n  </ta-overlay-panel>\n} @else {\n  <div class=\"only-template\">\n    <ng-template [ngTemplateOutlet]=\"choicesTemplate\"></ng-template>\n  </div>\n}\n\n<ng-template #choicesTemplate>\n  <div appStopPropagation class=\"flex-column g-space-sm\">\n    @if (!this.input.choiceTemplate) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          [standalone]=\"true\"\n          class=\"m-space-sm\"\n        ></ta-search-field>\n      }\n\n      <ta-layout-side class=\"flex-full choices-wrapper\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n              @if (this.input.showNullableFields) {\n                <div class=\"p-space-sm\">\n                  <ta-input-checkbox\n                    [input]=\"this.inputNullable\"\n                    [standalone]=\"true\"\n                    (valueChanged)=\"this.selectNullable($event)\"\n                  ></ta-input-checkbox>\n                </div>\n              }\n              @for (option of this.filteredOptions$ | async; track option) {\n                <div\n                  class=\"flex-row pointer m-space-sm p-space-sm\"\n                  [class.is-selected]=\"this.isSelected(option)\"\n                  (click)=\"this.select(option)\"\n                >\n                  <ta-text>{{ option.name }}</ta-text>\n                </div>\n              }\n            </ta-empty>\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'input.button.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'input.button.select' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    } @else if (this.input.choiceTemplate && this.filteredOptions$) {\n      @if (this.input.withSearch) {\n        <ta-search-field\n          [isOpen]=\"true\"\n          [input]=\"this.inputSearch\"\n          [onFocus]=\"this.searchFocus\"\n          class=\"m-space-sm\"\n          [standalone]=\"true\"\n        ></ta-search-field>\n      }\n      <ta-layout-side class=\"flex-full\" style=\"min-height: 300px; max-height: 400px\">\n        <ta-layout-side-content>\n          <ta-loader [isLoading]=\"this.requestState.isLoading()\">\n            @if (this.input.choiceTemplate.one) {\n              <ta-empty [isEmpty]=\"(this.filteredOptions$ | async)?.length === 0\">\n                @for (option of this.filteredOptions$ | async; track option) {\n                  <div\n                    class=\"flex-row pointer m-space-sm p-space-sm\"\n                    [class.is-selected]=\"this.isSelected(option)\"\n                    (click)=\"this.select(option)\"\n                  >\n                    <ng-template\n                      [ngTemplateOutlet]=\"this.input.choiceTemplate.one\"\n                      [ngTemplateOutletContext]=\"{ item: option.data }\"\n                    ></ng-template>\n                  </div>\n                }\n              </ta-empty>\n            } @else if (this.input.choiceTemplate.list) {\n              <ng-template\n                [ngTemplateOutlet]=\"this.input.choiceTemplate.list\"\n                [ngTemplateOutletContext]=\"{\n                  data: {\n                    items: this.filteredOptions$ | async,\n                    isselected: this.isSelected,\n                    select: this.select,\n                    search: this.inputSearch.value,\n                    refresh: this.refresh,\n                    values: this.input.value,\n                  },\n                }\"\n              ></ng-template>\n            }\n          </ta-loader>\n        </ta-layout-side-content>\n        <ta-layout-side-cta>\n          <div class=\"align-center space-between\">\n            <div class=\"pr-space-md\">\n              <div class=\"align-center g-space-xs link\">\n                <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n                <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n                  {{ 'input.filter.clear' | translate }}\n                </ta-link>\n              </div>\n            </div>\n            <div>\n              @if (this.input.onlyTemplate !== true) {\n                <ta-button (action)=\"this.close()\">\n                  <div class=\"align-center m-space-xs\">\n                    <ta-font-icon name=\"check-line\"></ta-font-icon>\n                    {{ 'input.validate' | translate }}\n                  </div>\n                </ta-button>\n              }\n            </div>\n          </div>\n        </ta-layout-side-cta>\n      </ta-layout-side>\n    }\n  </div>\n</ng-template>\n", styles: [".textbox-container{width:100%}.input-group{position:relative}.input-group .action{position:absolute;right:8px;top:16px;bottom:0}.is-selected{border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-full)}.menu-panel{background-color:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded);border:1px solid;border-color:var(--ta-neutral-300);overflow:hidden}.choices-wrapper{overflow:visible;max-height:none}.only-template{background:var(--ta-neutral-white);border-radius:var(--ta-radius-rounded)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: StopPropagationDirective, selector: "[appStopPropagation]", inputs: ["stopPropagationActivation"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1$2.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "subtitle", "emptyIcon", "iconSize"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: LayoutSideCtaComponent, selector: "ta-layout-side-cta", inputs: ["background"] }, { kind: "component", type: LayoutSideContentComponent, selector: "ta-layout-side-content" }, { kind: "component", type: LayoutSideComponent, selector: "ta-layout-side" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: LabelComponent$1, selector: "ta-label", inputs: ["size", "type"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputChoicesComponent, decorators: [{
             type: Component,
@@ -838,17 +833,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         }] });
 
 class InputPhoneComponent extends TaAbstractInputComponent {
-    constructor(renderer) {
+    constructor() {
         super();
-        this.renderer = renderer;
+        this._renderer = inject(Renderer2);
     }
     ngOnInit() {
         super.ngOnInit();
-        const link = this.renderer.createElement("link");
+        const link = this._renderer.createElement("link");
         link.rel = "stylesheet";
         link.href =
             "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.min.css";
-        this.renderer.appendChild(document.head, link);
+        this._renderer.appendChild(document.head, link);
     }
     ngAfterViewInit() {
         super.ngAfterViewInit();
@@ -859,13 +854,13 @@ class InputPhoneComponent extends TaAbstractInputComponent {
             separateDialCode: true,
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputPhoneComponent, deps: [{ token: i0.Renderer2 }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputPhoneComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputPhoneComponent, isStandalone: true, selector: "ta-input-phone", viewQueries: [{ propertyName: "phoneInput", first: true, predicate: ["phoneInput"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <input\n    class=\"form-control\"\n    #phoneInput\n    type=\"tel\"\n    [formControl]=\"$any(this.input.formControl)\"\n  />\n</ta-input-layout>\n", styles: [".textbox-container{width:100%}:host ::ng-deep .mdc-text-field{overflow:visible}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input", "width", "height"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputPhoneComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-input-phone", standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule], template: "<ta-input-layout [input]=\"this.input\">\n  <input\n    class=\"form-control\"\n    #phoneInput\n    type=\"tel\"\n    [formControl]=\"$any(this.input.formControl)\"\n  />\n</ta-input-layout>\n", styles: [".textbox-container{width:100%}:host ::ng-deep .mdc-text-field{overflow:visible}\n"] }]
-        }], ctorParameters: () => [{ type: i0.Renderer2 }], propDecorators: { phoneInput: [{
+        }], ctorParameters: () => [], propDecorators: { phoneInput: [{
                 type: ViewChild,
                 args: ["phoneInput", { static: false }]
             }] } });
@@ -873,7 +868,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class UploadComponent extends TaAbstractInputComponent {
     constructor() {
         super();
-        this.uploadStatusChanged = new EventEmitter();
+        this.uploadStatusChanged = output();
         this._documentsService = inject(TaDocumentsService);
         this.inProgressFiles = [];
         this._invervalId = window.setInterval(() => {
@@ -896,7 +891,7 @@ class UploadComponent extends TaAbstractInputComponent {
         if (this.input.value && this.input.value.length > 0) {
             const ids = this.input.value.map((file) => file.id);
             this.requestState.asked();
-            this._documentsService.fetchDocuments$(ids).subscribe({
+            this._registerSubscription(this._documentsService.fetchDocuments$(ids).subscribe({
                 next: () => {
                     const documents = this._documentsService.getDocuments(ids);
                     for (let doc of documents ?? []) {
@@ -908,7 +903,7 @@ class UploadComponent extends TaAbstractInputComponent {
                     }
                     this.requestState.completed();
                 },
-            });
+            }));
         }
     }
     ngOnDestroy() {
@@ -958,7 +953,7 @@ class UploadComponent extends TaAbstractInputComponent {
             };
             this.inProgressFiles.push(inProgressFile);
             this.uploadStatusChanged.emit(false);
-            this._documentsService.addDocument$({ file: item }).subscribe({
+            this._registerSubscription(this._documentsService.addDocument$({ file: item }).subscribe({
                 next: (data) => {
                     inProgressFile.progress = 100;
                     inProgressFile.completed = data;
@@ -967,7 +962,7 @@ class UploadComponent extends TaAbstractInputComponent {
                         this.validation();
                     }
                 },
-            });
+            }));
         }
     }
     async uploadFile() {
@@ -1019,9 +1014,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         LoaderComponent,
                         MatProgressBarModule,
                     ], template: "<ta-loader [isLoading]=\"this.requestState.isLoading()\">\n  <div class=\"upload-container flex-column\" appDnd (fileDropped)=\"this.onFileDropped($event)\">\n    <div class=\"flex-responsive-ctr g-space-md\">\n      @if (this.inProgressFiles.length > 0) {\n        <div class=\"files-list flex-column g-space-sm\">\n          @for (item of this.inProgressFiles; track item) {\n            <div class=\"flex-column\">\n              <div class=\"flex-row align-center\">\n                <ta-font-icon name=\"doc\" size=\"xs\"></ta-font-icon>\n                @if (item.progress < 100) {\n                  <ta-text class=\"name\" size=\"sm\">\n                    {{ item.name }}\n                  </ta-text>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-link class=\"name\" (action)=\"this.openDocument(item.completed)\" size=\"sm\">{{ item.name }}</ta-link>\n                }\n              </div>\n              <div class=\"extra flex-row g-space-md\">\n                @if (item.progress < 100) {\n                  <mat-progress-bar mode=\"determinate\" [value]=\"item.progress\"></mat-progress-bar>\n                  <ta-link (action)=\"this.deleteInProgressFile(item.name)\" [underline]=\"false\">\n                    <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                  </ta-link>\n                } @else if (item.progress === 100 && item.completed) {\n                  <ta-text size=\"sm\" class=\"justify-end\">\n                    <ta-megaoctet [octet]=\"item.completed.size\"></ta-megaoctet>\n                  </ta-text>\n                  @if (item.completed.id) {\n                    <ta-link (action)=\"this.deleteFile(item.completed.id)\" [underline]=\"false\">\n                      <ta-font-icon name=\"close\" type=\"sm\"></ta-font-icon>\n                    </ta-link>\n                  }\n                }\n              </div>\n            </div>\n          }\n        </div>\n      }\n      <div class=\"content ta-c\">\n        <input type=\"file\" multiple (change)=\"this.fileBrowseHandler($event.target)\" />\n        <h3>\n          {{ 'input.upload.dragndrop' | translate }}\n        </h3>\n        <div class=\"d-flex\">\n          <ta-button type=\"secondary\" icon=\"add\" class=\"m-a\" (action)=\"this.uploadFile()\">\n            {{ 'input.upload.add' | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    @if (this.input.confirmButton) {\n      <div class=\"d-flex\">\n        <ta-button\n          icon=\"check-line\"\n          class=\"justify-end align-center\"\n          (action)=\"this.validation()\"\n          size=\"small\"\n          [state]=\"this.isValidDocumentList() ? 'classic' : 'disabled'\"\n        >\n          {{ 'input.upload.confirm' | translate }}\n        </ta-button>\n      </div>\n    }\n  </div>\n</ta-loader>\n", styles: [".upload-container{display:flex;border:1px dotted var(--ta-border-primary);padding:var(--ta-space-md);gap:var(--ta-space-md)}.upload-container .files-list{width:50%;max-height:500px}.upload-container .files-list ta-font-icon{color:var(--ta-surface-brand-secondary)}.upload-container .files-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.upload-container .content{position:relative;background-color:var(--ta-surface-default);padding:var(--ta-space-xl);flex:1}.upload-container .content input{opacity:0;position:absolute;z-index:2;width:100%;height:100%;top:0;left:0;cursor:pointer}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { uploadStatusChanged: [{
-                type: Output
-            }], fileDropEl: [{
+        }], ctorParameters: () => [], propDecorators: { fileDropEl: [{
                 type: ViewChild,
                 args: ["fileDropRef", { static: false }]
             }] } });
@@ -1041,10 +1034,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class ComponentInputComponent extends TaAbstractInputComponent {
     constructor() {
         super(...arguments);
-        this.dialog = inject(MatDialog);
+        this._dialog = inject(MatDialog);
     }
     open() {
-        this.dialog.open(TemplateModal, {
+        this._dialog.open(TemplateModal, {
             data: {
                 input: this.input,
             },
@@ -1060,7 +1053,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class TemplateModal extends TaBaseModal {
     constructor() {
         super();
-        this.dialogRef = inject((MatDialogRef));
+        this._dialogRef = inject((MatDialogRef));
         this.data = inject(MAT_DIALOG_DATA);
         this.selectedValue$ = new Subject();
         this._registerSubscription(this.selectedValue$.subscribe({
@@ -1069,7 +1062,7 @@ class TemplateModal extends TaBaseModal {
     }
     select(value) {
         this.data.input.selectedValue$.next(value);
-        this.dialogRef.close();
+        this._dialogRef.close();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TemplateModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TemplateModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "<ta-layout-modal style=\"classic\" title=\"input.component.modal.title\">\n  @if(this.data.input.template) {\n  <ng-template\n    [ngTemplateOutlet]=\"this.data.input.template\"\n    [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n  ></ng-template>\n  }\n</ta-layout-modal>\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }] }); }

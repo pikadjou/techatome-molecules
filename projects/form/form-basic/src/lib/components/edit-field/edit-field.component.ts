@@ -1,17 +1,17 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
+  inject,
   input,
   OnChanges,
   OnInit,
-  Output,
+  output,
   SimpleChanges,
   signal,
 } from "@angular/core";
 
-import { NgIf, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { StopPropagationDirective } from "@ta/utils";
 import { InputBase } from "@ta/form-model";
 import { LoaderComponent } from "@ta/ui";
@@ -27,7 +27,6 @@ export type Layout = "row" | "column";
   styleUrls: ["./edit-field.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     NgClass,
     StopPropagationDirective,
     LoaderComponent,
@@ -48,8 +47,7 @@ export class EditFieldComponent
 
   disabled = input<boolean>(false);
 
-  @Output()
-  newValue: EventEmitter<unknown> = new EventEmitter();
+  newValue = output<unknown>();
 
   readonly onFocusBehavior = new BehaviorSubject<void>(undefined);
   readonly renderInput = signal<InputBase<null> | null>(null);
@@ -66,13 +64,15 @@ export class EditFieldComponent
     ) {
       return;
     }
-    const clickedInside = this.elementRef.nativeElement.contains(targetElement);
+    const clickedInside = this._elementRef.nativeElement.contains(targetElement);
     if (!clickedInside) {
       this.validation();
     }
   }
 
-  constructor(private elementRef: ElementRef) {
+  private _elementRef = inject(ElementRef);
+
+  constructor() {
     super();
   }
   ngOnInit() {

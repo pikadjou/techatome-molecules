@@ -1,4 +1,4 @@
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TitleComponent } from "@ta/ui";
@@ -15,7 +15,6 @@ import { TextComponent } from "../text/text.component";
   styleUrls: ["./rich-text.component.scss"],
   standalone: true,
   imports: [
-    NgFor,
     NgTemplateOutlet,
     TitleComponent,
     TextComponent,

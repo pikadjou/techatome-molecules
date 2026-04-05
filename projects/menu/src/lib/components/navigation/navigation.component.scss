@@ -132,7 +132,7 @@
     display: block;
     i {
       height: 18px !important;
-      font-size: 18px !important;
+      @include fonts.fontSizeBody(lg);
     }
   }
 }

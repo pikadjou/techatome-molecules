@@ -1,5 +1,4 @@
-import { NgFor } from "@angular/common";
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { BadgeComponent } from "@ta/ui";
 import { TaBaseComponent } from "@ta/utils";
@@ -11,13 +10,12 @@ import { ActiveFilterTag } from "../types";
   templateUrl: "./filters-tag.component.html",
   styleUrls: ["./filters-tag.component.scss"],
   standalone: true,
-  imports: [NgFor, BadgeComponent],
+  imports: [BadgeComponent],
 })
 export class FiltersTagComponent extends TaBaseComponent {
   activeFilter = input<ActiveFilterTag[]>([]);
 
-  @Output()
-  removedFilter = new EventEmitter<ActiveFilterTag>();
+  removedFilter = output<ActiveFilterTag>();
 
   constructor() {
     super();

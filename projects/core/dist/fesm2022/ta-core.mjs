@@ -1,14 +1,14 @@
-import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, input, EventEmitter, Output, Component, TemplateRef, ViewChild, ElementRef, APP_INITIALIZER, signal, ViewChildren, importProvidersFrom, inject } from '@angular/core';
+import { Injectable, input, output, Component, inject, TemplateRef, ViewChild, ElementRef, APP_INITIALIZER, signal, ViewChildren, importProvidersFrom } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FontIconComponent } from '@ta/icons';
 import { ButtonComponent, BadgeComponent, LayoutWithPanelComponent, LayoutPanelComponent, LayoutContentComponent, LinkComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutFullPanelComponent, ContactInformationComponent, EmptyComponent, ListContainerComponent, ListElementComponent, ListTitleComponent, ListTagComponent } from '@ta/ui';
 import { TaBaseComponent, copyTextToClipboard } from '@ta/utils';
 import { FormComponent } from '@ta/form-basic';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetTemplateGenericComponent } from '@ta/menu';
-import * as i1 from '@angular/material/bottom-sheet';
+import { NgTemplateOutlet } from '@angular/common';
 import { Validators } from '@angular/forms';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { LocalStorage } from 'storage-manager-js';
@@ -17,7 +17,7 @@ import { InputTextBox } from '@ta/form-model';
 import * as i2 from '@angular/google-maps';
 import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import * as i1$1 from '@angular/common/http';
+import * as i1 from '@angular/common/http';
 import { GoogleTagManagerModule } from '@edumetz16/angular-google-tag-manager';
 export { GoogleTagManagerService as TaGoogleTagManagerService } from '@edumetz16/angular-google-tag-manager';
 import { LAZY_SERVICE_TOKEN, ENotificationCode } from '@ta/notification';
@@ -41,7 +41,7 @@ class FiltersFormComponent extends TaBaseComponent {
         super();
         this.form = input([]);
         this.askValidation$ = input.required();
-        this.filtersSelected = new EventEmitter();
+        this.filtersSelected = output();
         TaTranslationCore.getInstance();
     }
     apply(data) {
@@ -56,15 +56,13 @@ class FiltersFormComponent extends TaBaseComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersFormComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-filters-form', standalone: true, imports: [ButtonComponent, FormComponent, TranslatePipe], template: "<div>\n  <div class=\"ta-r\">\n    <ta-button (action)=\"this.clear()\">\n      {{ 'core.filter.clear' | translate }}\n    </ta-button>\n  </div>\n  @if (this.form()) {\n    <ta-form\n      [inputs]=\"this.form()\"\n      [canDisplayButton]=\"false\"\n      [askValidation$]=\"this.askValidation$()\"\n      (valid)=\"this.apply($event)\"\n    >\n    </ta-form>\n  }\n</div>\n" }]
-        }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
-                type: Output
-            }] } });
+        }], ctorParameters: () => [] });
 
 class FiltersTagComponent extends TaBaseComponent {
     constructor() {
         super();
         this.activeFilter = input([]);
-        this.removedFilter = new EventEmitter();
+        this.removedFilter = output();
     }
     remove(filter) {
         this.removedFilter.emit(filter);
@@ -74,18 +72,16 @@ class FiltersTagComponent extends TaBaseComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersTagComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-filters-tag", standalone: true, imports: [NgFor, BadgeComponent], template: "<div>\n  @for (filter of this.activeFilter(); track trackById($index, filter)) {\n  <span class=\"badge-container\">\n    <ta-badge\n      [value]=\"filter.name\"\n      type=\"info\"\n      icon=\"close\"\n      (clickAction)=\"this.remove(filter)\"\n    ></ta-badge>\n  </span>\n  }\n</div>\n", styles: [".badge-container{padding-right:var(--ta-space-sm);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.badge-container ta-badge{display:inline-block}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { removedFilter: [{
-                type: Output
-            }] } });
+            args: [{ selector: "ta-filters-tag", standalone: true, imports: [BadgeComponent], template: "<div>\n  @for (filter of this.activeFilter(); track trackById($index, filter)) {\n  <span class=\"badge-container\">\n    <ta-badge\n      [value]=\"filter.name\"\n      type=\"info\"\n      icon=\"close\"\n      (clickAction)=\"this.remove(filter)\"\n    ></ta-badge>\n  </span>\n  }\n</div>\n", styles: [".badge-container{padding-right:var(--ta-space-sm);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.badge-container ta-badge{display:inline-block}\n"] }]
+        }], ctorParameters: () => [] });
 
 class FiltersContainerComponent extends TaBaseComponent {
     constructor() {
         super();
         this.form = input([]);
         this.activeFilter = input([]);
-        this.filtersSelected = new EventEmitter();
-        this.removedFilter = new EventEmitter();
+        this.filtersSelected = output();
+        this.removedFilter = output();
         this.isFilterOpen = false;
         this.askValidation$ = new Subject();
     }
@@ -104,7 +100,6 @@ class FiltersContainerComponent extends TaBaseComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FiltersContainerComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-filters-container", standalone: true, imports: [
-                        NgIf,
                         FontIconComponent,
                         LayoutWithPanelComponent,
                         LayoutPanelComponent,
@@ -113,17 +108,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         FiltersTagComponent,
                         LinkComponent,
                     ], template: "<div class=\"space-between p-space-sm\">\n  @if (this.activeFilter()) {\n  <div>\n    <ta-filters-tag\n      [activeFilter]=\"this.activeFilter()\"\n      (removedFilter)=\"this.removedFilter.emit($event)\"\n    ></ta-filters-tag>\n  </div>\n  }\n  <div>\n    <ta-link (action)=\"this.toggleFilter()\">\n      <ta-font-icon\n        [name]=\"this.isFilterOpen ? 'check-line' : 'filter-tool'\"\n      ></ta-font-icon>\n    </ta-link>\n  </div>\n</div>\n<div>\n  <ta-layout-with-panel [open]=\"this.isFilterOpen\">\n    <ta-layout-panel>\n      <div class=\"p-space-sm\">\n        <ta-filters-form\n          [form]=\"this.form()\"\n          [askValidation$]=\"this.askValidation$\"\n          (filtersSelected)=\"this.apply($event)\"\n        ></ta-filters-form>\n      </div>\n    </ta-layout-panel>\n    <ta-layout-content>\n      <ng-content></ng-content>\n    </ta-layout-content>\n  </ta-layout-with-panel>\n</div>\n" }]
-        }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
-                type: Output
-            }], removedFilter: [{
-                type: Output
-            }] } });
+        }], ctorParameters: () => [] });
 
 class FilterContainerComponent extends TaBaseComponent {
     constructor() {
         super();
         this.form = input([]);
-        this.filtersSelected = new EventEmitter();
+        this.filtersSelected = output();
         this.isFilterOpen = false;
         this.askValidation$ = new Subject();
         this.askClear$ = new Subject();
@@ -158,9 +149,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ButtonComponent,
                         TranslatePipe,
                     ], template: "<ta-layout-side class=\"flex-full\">\n  <ta-layout-side-content>\n    <div class=\"m-space-sm\">\n      <ta-form\n        [inputs]=\"this.form()\"\n        [canDisplayButton]=\"false\"\n        [askValidation$]=\"this.askValidation$\"\n        (valid)=\"this.apply($event)\"\n      ></ta-form>\n    </div>\n  </ta-layout-side-content>\n  <ta-layout-side-cta>\n    <div class=\"align-center space-between\">\n      <div class=\"pr-space-md\">\n        <div class=\"align-center g-space-xs link\">\n          <ta-font-icon name=\"close-tool\" type=\"sm\"></ta-font-icon>\n          <ta-link class=\"c-pointer\" (action)=\"this.clear()\">\n            {{ 'core.filter.clear' | translate }}\n          </ta-link>\n        </div>\n      </div>\n      <div>\n        <ta-button (action)=\"this.validate()\">\n          <div class=\"align-center m-space-xs\">\n            <ta-font-icon name=\"check-line\"></ta-font-icon>\n            {{ 'core.filter.validate' | translate }}\n          </div>\n        </ta-button>\n      </div>\n    </div>\n  </ta-layout-side-cta>\n</ta-layout-side>\n", styles: [".link{color:var(--ta-text-secondary)}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { filtersSelected: [{
-                type: Output
-            }] } });
+        }], ctorParameters: () => [] });
 
 class FilterDisplayerComponent extends TaBaseComponent {
     get isFilterOpen() {
@@ -186,14 +175,14 @@ class FilterDisplayerComponent extends TaBaseComponent {
     get mobileDetection() {
         return this.breakpoints.isMobile;
     }
-    constructor(_bottomSheet) {
+    constructor() {
         super();
-        this._bottomSheet = _bottomSheet;
         this.form = input([]);
         this.iconType = input("filter");
         this.container = input("button");
-        this.filtersSelected = new EventEmitter();
+        this.filtersSelected = output();
         this._isFilterOpen = false;
+        this._bottomSheet = inject(MatBottomSheet);
     }
     selected(filters) {
         this.filtersSelected.emit(filters);
@@ -205,21 +194,18 @@ class FilterDisplayerComponent extends TaBaseComponent {
     close() {
         this.isFilterOpen = false;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterDisplayerComponent, deps: [{ token: i1.MatBottomSheet }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterDisplayerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilterDisplayerComponent, isStandalone: true, selector: "ta-filter-displayer", inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null }, iconType: { classPropertyName: "iconType", publicName: "iconType", isSignal: true, isRequired: false, transformFunction: null }, container: { classPropertyName: "container", publicName: "container", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { filtersSelected: "filtersSelected" }, viewQueries: [{ propertyName: "filterTemplate", first: true, predicate: ["filterTemplate"], descendants: true, read: TemplateRef }], usesInheritance: true, ngImport: i0, template: "@if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</div>\n} @if (!this.mobileDetection) { @if (this.isFilterOpen) {\n<ta-layout-full-panel (closeEvent)=\"this.close()\">\n  <ng-template [ngTemplateOutlet]=\"filterTemplate\"></ng-template>\n</ta-layout-full-panel>\n} }\n\n<ng-template #filterTemplate>\n  <ta-filter-container\n    class=\"flex-full\"\n    [form]=\"this.form()\"\n    (filtersSelected)=\"this.selected($event)\"\n  ></ta-filter-container>\n</ng-template>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LayoutFullPanelComponent, selector: "ta-layout-full-panel", inputs: ["width", "title"], outputs: ["closeEvent"] }, { kind: "component", type: FilterContainerComponent, selector: "ta-filter-container", inputs: ["form"], outputs: ["filtersSelected"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilterDisplayerComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-filter-displayer", standalone: true, imports: [
-                        NgIf,
                         FontIconComponent,
                         LayoutFullPanelComponent,
                         FilterContainerComponent,
                         ButtonComponent,
                     ], template: "@if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.open()\">\n  <ta-font-icon [name]=\"this.iconType()\"></ta-font-icon>\n</div>\n} @if (!this.mobileDetection) { @if (this.isFilterOpen) {\n<ta-layout-full-panel (closeEvent)=\"this.close()\">\n  <ng-template [ngTemplateOutlet]=\"filterTemplate\"></ng-template>\n</ta-layout-full-panel>\n} }\n\n<ng-template #filterTemplate>\n  <ta-filter-container\n    class=\"flex-full\"\n    [form]=\"this.form()\"\n    (filtersSelected)=\"this.selected($event)\"\n  ></ta-filter-container>\n</ng-template>\n" }]
-        }], ctorParameters: () => [{ type: i1.MatBottomSheet }], propDecorators: { filtersSelected: [{
-                type: Output
-            }], filterTemplate: [{
+        }], ctorParameters: () => [], propDecorators: { filterTemplate: [{
                 type: ViewChild,
                 args: ["filterTemplate", { read: TemplateRef }]
             }] } });
@@ -229,7 +215,7 @@ class SearchHistoryDisplayerComponent {
         this.searchHistory = input();
         this.placeholder = input("");
         this.isDropDown = input(false);
-        this.valueCompleted = new EventEmitter();
+        this.valueCompleted = output();
         this.searchField = null;
         this.searchTrigger = null;
         this.input = new InputTextBox({
@@ -287,13 +273,11 @@ class SearchHistoryDisplayerComponent {
         });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchHistoryDisplayerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchHistoryDisplayerComponent, isStandalone: true, selector: "ta-search-history-displayer", inputs: { searchHistory: { classPropertyName: "searchHistory", publicName: "searchHistory", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, isDropDown: { classPropertyName: "isDropDown", publicName: "isDropDown", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchField", first: true, predicate: ["searchField"], descendants: true, read: ElementRef }, { propertyName: "searchTrigger", first: true, predicate: ["searchField"], descendants: true, read: MatMenuTrigger }], ngImport: i0, template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown()\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory()?.type && this.isDropDown() === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ContactInformationComponent, selector: "ta-contact-information", inputs: ["value", "icon", "localIcon"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "type", "icon", "iconSize"] }, { kind: "component", type: ListContainerComponent, selector: "ta-list-container" }, { kind: "component", type: ListElementComponent, selector: "ta-list-element", inputs: ["withSeparator", "flexColumn"], outputs: ["action"] }, { kind: "component", type: ListTitleComponent, selector: "ta-list-title" }, { kind: "component", type: ListTagComponent, selector: "ta-list-tag" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: MatMenu, selector: "mat-menu", inputs: ["backdropClass", "aria-label", "aria-labelledby", "aria-describedby", "xPosition", "yPosition", "overlapTrigger", "hasBackdrop", "class", "classList"], outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "directive", type: MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", inputs: ["mat-menu-trigger-for", "matMenuTriggerFor", "matMenuTriggerData", "matMenuTriggerRestoreFocus"], outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchHistoryDisplayerComponent, isStandalone: true, selector: "ta-search-history-displayer", inputs: { searchHistory: { classPropertyName: "searchHistory", publicName: "searchHistory", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, isDropDown: { classPropertyName: "isDropDown", publicName: "isDropDown", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchField", first: true, predicate: ["searchField"], descendants: true, read: ElementRef }, { propertyName: "searchTrigger", first: true, predicate: ["searchField"], descendants: true, read: MatMenuTrigger }], ngImport: i0, template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown()\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory()?.type && this.isDropDown() === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      [ngTemplateOutlet]=\"menuTemplate\" [ngTemplateOutletContext]=\"{ element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ContactInformationComponent, selector: "ta-contact-information", inputs: ["value", "icon", "localIcon"] }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "subtitle", "emptyIcon", "iconSize"] }, { kind: "component", type: ListContainerComponent, selector: "ta-list-container" }, { kind: "component", type: ListElementComponent, selector: "ta-list-element", inputs: ["withSeparator", "flexColumn"], outputs: ["action"] }, { kind: "component", type: ListTitleComponent, selector: "ta-list-title" }, { kind: "component", type: ListTagComponent, selector: "ta-list-tag" }, { kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }, { kind: "component", type: MatMenu, selector: "mat-menu", inputs: ["backdropClass", "aria-label", "aria-labelledby", "aria-describedby", "xPosition", "yPosition", "overlapTrigger", "hasBackdrop", "class", "classList"], outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "directive", type: MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", inputs: ["mat-menu-trigger-for", "matMenuTriggerFor", "matMenuTriggerData", "matMenuTriggerRestoreFocus"], outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchHistoryDisplayerComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-search-history-displayer", standalone: true, imports: [
-                        NgIf,
-                        NgFor,
                         FontIconComponent,
                         ContactInformationComponent,
                         EmptyComponent,
@@ -305,10 +289,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         MatMenu,
                         MatMenuTrigger,
                         NgTemplateOutlet,
-                    ], template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown()\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory()?.type && this.isDropDown() === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n" }]
-        }], propDecorators: { valueCompleted: [{
-                type: Output
-            }], searchField: [{
+                    ], template: "<ng-template #menuTemplate>\n  <div class=\"p-space-md\">\n    <ta-contact-information\n      icon=\"history\"\n      value=\"core.historical-research.last-searches\"\n    >\n      <ta-empty\n        [isEmpty]=\"!this.listRecentSearches?.length && !this.isDropDown()\"\n      >\n        <ta-list-container class=\"list-container\">\n          @for (search of this.listRecentSearches; track search) {\n          <ta-list-element (click)=\"this.searchCompleted(search)\">\n            <ta-list-title>\n              {{ search }}\n            </ta-list-title>\n            <ta-list-tag>\n              <ta-font-icon name=\"arrow-big-right\" type=\"sm\"></ta-font-icon>\n            </ta-list-tag>\n          </ta-list-element>\n          }\n        </ta-list-container>\n      </ta-empty>\n    </ta-contact-information>\n  </div>\n</ng-template>\n\n<ta-search-field\n  #searchField\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  [input]=\"this.input\"\n  (valueCompleted)=\"this.searchCompleted($event)\"\n  [matMenuTriggerFor]=\"\n    this.searchHistory()?.type && this.isDropDown() === true ? menu : null\n  \"\n></ta-search-field>\n\n<mat-menu #menu=\"matMenu\">\n  <div class=\"\" [style.width.px]=\"this.searchFieldWidth\">\n    @if (menuTemplate) {\n    <ng-container\n      [ngTemplateOutlet]=\"menuTemplate\" [ngTemplateOutletContext]=\"{ element: menu }\"\n    ></ng-container>\n    }\n  </div>\n</mat-menu>\n\n@if (menuTemplate && this.searchHistory()?.type && this.isDropDown() === false) {\n<ng-container\n  *ngTemplateOutlet=\"menuTemplate; context: { element: menu }\"\n></ng-container>\n}\n" }]
+        }], propDecorators: { searchField: [{
                 type: ViewChild,
                 args: ["searchField", { read: ElementRef }]
             }], searchTrigger: [{
@@ -320,13 +302,13 @@ class SearchDisplayerComponent extends TaBaseComponent {
     get mobileDetection() {
         return this.breakpoints.isMobile;
     }
-    constructor(_bottomSheet) {
+    constructor() {
         super();
-        this._bottomSheet = _bottomSheet;
         this.container = input("button");
         this.placeholder = input("");
         this.searchHistory = input();
-        this.valueCompleted = new EventEmitter();
+        this.valueCompleted = output();
+        this._bottomSheet = inject(MatBottomSheet);
     }
     openDialog() {
         if (!this.searchHistory()?.type) {
@@ -347,20 +329,17 @@ class SearchDisplayerComponent extends TaBaseComponent {
             this.valueCompleted.emit(result);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchDisplayerComponent, deps: [{ token: i1.MatBottomSheet }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchDisplayerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: SearchDisplayerComponent, isStandalone: true, selector: "ta-search-displayer", inputs: { container: { classPropertyName: "container", publicName: "container", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, searchHistory: { classPropertyName: "searchHistory", publicName: "searchHistory", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valueCompleted: "valueCompleted" }, viewQueries: [{ propertyName: "searchTemplate", first: true, predicate: ["searchTemplate"], descendants: true, read: TemplateRef }], usesInheritance: true, ngImport: i0, template: "@if (this.mobileDetection) { @if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</div>\n} } @if (!this.mobileDetection) {\n<ng-template\n  [ngTemplateOutlet]=\"searchTemplate\"\n  [ngTemplateOutletContext]=\"{ options: { isDropDown: true } }\"\n></ng-template>\n}\n\n<ng-template #searchTemplate let-options=\"options\">\n  <ta-search-history-displayer\n    [placeholder]=\"this.placeholder()\"\n    [searchHistory]=\"this.searchHistory()\"\n    [isDropDown]=\"options.isDropDown\"\n    (valueCompleted)=\"this.action($event)\"\n  ></ta-search-history-displayer>\n</ng-template>\n", styles: [""], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: SearchHistoryDisplayerComponent, selector: "ta-search-history-displayer", inputs: ["searchHistory", "placeholder", "isDropDown"], outputs: ["valueCompleted"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SearchDisplayerComponent, decorators: [{
             type: Component,
             args: [{ selector: "ta-search-displayer", standalone: true, imports: [
-                        NgIf,
                         FontIconComponent,
                         SearchHistoryDisplayerComponent,
                         ButtonComponent,
                     ], template: "@if (this.mobileDetection) { @if (this.container() === 'button') {\n<ta-button [options]=\"{ circular: true }\" (action)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</ta-button>\n} @else if (this.container() === 'link') {\n<div (click)=\"this.openDialog()\">\n  <ta-font-icon [name]=\"'search'\"></ta-font-icon>\n</div>\n} } @if (!this.mobileDetection) {\n<ng-template\n  [ngTemplateOutlet]=\"searchTemplate\"\n  [ngTemplateOutletContext]=\"{ options: { isDropDown: true } }\"\n></ng-template>\n}\n\n<ng-template #searchTemplate let-options=\"options\">\n  <ta-search-history-displayer\n    [placeholder]=\"this.placeholder()\"\n    [searchHistory]=\"this.searchHistory()\"\n    [isDropDown]=\"options.isDropDown\"\n    (valueCompleted)=\"this.action($event)\"\n  ></ta-search-history-displayer>\n</ng-template>\n" }]
-        }], ctorParameters: () => [{ type: i1.MatBottomSheet }], propDecorators: { valueCompleted: [{
-                type: Output
-            }], searchTemplate: [{
+        }], ctorParameters: () => [], propDecorators: { searchTemplate: [{
                 type: ViewChild,
                 args: ["searchTemplate", { read: TemplateRef }]
             }] } });
@@ -471,8 +450,9 @@ const markers = [
     // { position: { lat: 1.033, lng: 4.4856 }, title: 'Outsiplou' },
 ];
 
-class MapComponent {
+class MapComponent extends TaBaseComponent {
     constructor(http) {
+        super();
         this.http = http;
         this.options = {
             center: { lat: 50, lng: 4 },
@@ -572,7 +552,7 @@ class MapComponent {
             computeAlternativeRoutes: false,
         };
         const key = 'AIzaSyDxd03WdDtISHBrM_6rCYS426grfl_bK8Y';
-        this.http
+        this._registerSubscription(this.http
             .post(`https://routes.googleapis.com/directions/v2:computeRoutes?key=${key}`, body, {
             headers: {
                 'Content-Type': 'application/json',
@@ -608,7 +588,7 @@ class MapComponent {
             error: err => {
                 console.error('Erreur Routes API :', err);
             },
-        });
+        }));
     }
     parseDuration(isoDuration) {
         const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
@@ -617,13 +597,13 @@ class MapComponent {
         const [, hours, minutes] = match;
         return `${hours ? hours + ' h ' : ''}${minutes ? minutes + ' min' : ''}`.trim();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MapComponent, deps: [{ token: i1$1.HttpClient }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: MapComponent, isStandalone: true, selector: "ta-google-maps", viewQueries: [{ propertyName: "infoWindow", first: true, predicate: MapInfoWindow, descendants: true }, { propertyName: "map", first: true, predicate: ["map"], descendants: true }, { propertyName: "mapMarkers", predicate: MapMarker, descendants: true }], ngImport: i0, template: "<google-map #map [options]=\"this.options\">\n  @for (marker of this.markers; track marker.position) {\n  <map-marker\n    #mapMarker=\"mapMarker\"\n    [position]=\"marker.position\"\n    [title]=\"marker.title\"\n    [options]=\"marker.options\"\n    (mapClick)=\"this.openInfoWindow(mapMarker)\"\n  ></map-marker>\n  }\n\n  <map-info-window>\n    {{ this.selectedMarker()?.getTitle() }}\n  </map-info-window>\n</google-map>\n\n@if (this.routeSummary) {\n<div>\n  <h3>R\u00E9sum\u00E9 du trajet</h3>\n  <p>\n    Distance : {{ this.routeSummary.distanceKm }} km<br />\n    Dur\u00E9e estim\u00E9e : {{ this.routeSummary.duration }}\n  </p>\n</div>\n} @if (routeDetails().length > 0) {\n<div>\n  <h3>D\u00E9tails du trajet</h3>\n  <ul>\n    @for (step of routeDetails(); track step) {\n    <li>\n      {{ step.instruction }} \u2014 {{ step.distance }} m \u2014 {{ step.duration }}\n    </li>\n    }\n  </ul>\n</div>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: GoogleMapsModule }, { kind: "component", type: i2.GoogleMap, selector: "google-map", inputs: ["height", "width", "mapId", "mapTypeId", "center", "zoom", "options"], outputs: ["mapInitialized", "authFailure", "boundsChanged", "centerChanged", "mapClick", "mapDblclick", "mapDrag", "mapDragend", "mapDragstart", "headingChanged", "idle", "maptypeidChanged", "mapMousemove", "mapMouseout", "mapMouseover", "projectionChanged", "mapRightclick", "tilesloaded", "tiltChanged", "zoomChanged"], exportAs: ["googleMap"] }, { kind: "directive", type: i2.MapInfoWindow, selector: "map-info-window", inputs: ["options", "position"], outputs: ["closeclick", "contentChanged", "domready", "positionChanged", "zindexChanged", "infoWindowInitialized"], exportAs: ["mapInfoWindow"] }, { kind: "directive", type: i2.MapMarker, selector: "map-marker", inputs: ["title", "position", "label", "clickable", "options", "icon", "visible"], outputs: ["animationChanged", "mapClick", "clickableChanged", "cursorChanged", "mapDblclick", "mapDrag", "mapDragend", "draggableChanged", "mapDragstart", "flatChanged", "iconChanged", "mapMousedown", "mapMouseout", "mapMouseover", "mapMouseup", "positionChanged", "mapRightclick", "shapeChanged", "titleChanged", "visibleChanged", "zindexChanged", "markerInitialized"], exportAs: ["mapMarker"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MapComponent, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: MapComponent, isStandalone: true, selector: "ta-google-maps", viewQueries: [{ propertyName: "infoWindow", first: true, predicate: MapInfoWindow, descendants: true }, { propertyName: "map", first: true, predicate: ["map"], descendants: true }, { propertyName: "mapMarkers", predicate: MapMarker, descendants: true }], usesInheritance: true, ngImport: i0, template: "<google-map #map [options]=\"this.options\">\n  @for (marker of this.markers; track marker.position) {\n  <map-marker\n    #mapMarker=\"mapMarker\"\n    [position]=\"marker.position\"\n    [title]=\"marker.title\"\n    [options]=\"marker.options\"\n    (mapClick)=\"this.openInfoWindow(mapMarker)\"\n  ></map-marker>\n  }\n\n  <map-info-window>\n    {{ this.selectedMarker()?.getTitle() }}\n  </map-info-window>\n</google-map>\n\n@if (this.routeSummary) {\n<div>\n  <h3>R\u00E9sum\u00E9 du trajet</h3>\n  <p>\n    Distance : {{ this.routeSummary.distanceKm }} km<br />\n    Dur\u00E9e estim\u00E9e : {{ this.routeSummary.duration }}\n  </p>\n</div>\n} @if (routeDetails().length > 0) {\n<div>\n  <h3>D\u00E9tails du trajet</h3>\n  <ul>\n    @for (step of routeDetails(); track step) {\n    <li>\n      {{ step.instruction }} \u2014 {{ step.distance }} m \u2014 {{ step.duration }}\n    </li>\n    }\n  </ul>\n</div>\n}\n", styles: [""], dependencies: [{ kind: "ngmodule", type: GoogleMapsModule }, { kind: "component", type: i2.GoogleMap, selector: "google-map", inputs: ["height", "width", "mapId", "mapTypeId", "center", "zoom", "options"], outputs: ["mapInitialized", "authFailure", "boundsChanged", "centerChanged", "mapClick", "mapDblclick", "mapDrag", "mapDragend", "mapDragstart", "headingChanged", "idle", "maptypeidChanged", "mapMousemove", "mapMouseout", "mapMouseover", "projectionChanged", "mapRightclick", "tilesloaded", "tiltChanged", "zoomChanged"], exportAs: ["googleMap"] }, { kind: "directive", type: i2.MapInfoWindow, selector: "map-info-window", inputs: ["options", "position"], outputs: ["closeclick", "contentChanged", "domready", "positionChanged", "zindexChanged", "infoWindowInitialized"], exportAs: ["mapInfoWindow"] }, { kind: "directive", type: i2.MapMarker, selector: "map-marker", inputs: ["title", "position", "label", "clickable", "options", "icon", "visible"], outputs: ["animationChanged", "mapClick", "clickableChanged", "cursorChanged", "mapDblclick", "mapDrag", "mapDragend", "draggableChanged", "mapDragstart", "flatChanged", "iconChanged", "mapMousedown", "mapMouseout", "mapMouseover", "mapMouseup", "positionChanged", "mapRightclick", "shapeChanged", "titleChanged", "visibleChanged", "zindexChanged", "markerInitialized"], exportAs: ["mapMarker"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: MapComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-google-maps', standalone: true, imports: [GoogleMapsModule], template: "<google-map #map [options]=\"this.options\">\n  @for (marker of this.markers; track marker.position) {\n  <map-marker\n    #mapMarker=\"mapMarker\"\n    [position]=\"marker.position\"\n    [title]=\"marker.title\"\n    [options]=\"marker.options\"\n    (mapClick)=\"this.openInfoWindow(mapMarker)\"\n  ></map-marker>\n  }\n\n  <map-info-window>\n    {{ this.selectedMarker()?.getTitle() }}\n  </map-info-window>\n</google-map>\n\n@if (this.routeSummary) {\n<div>\n  <h3>R\u00E9sum\u00E9 du trajet</h3>\n  <p>\n    Distance : {{ this.routeSummary.distanceKm }} km<br />\n    Dur\u00E9e estim\u00E9e : {{ this.routeSummary.duration }}\n  </p>\n</div>\n} @if (routeDetails().length > 0) {\n<div>\n  <h3>D\u00E9tails du trajet</h3>\n  <ul>\n    @for (step of routeDetails(); track step) {\n    <li>\n      {{ step.instruction }} \u2014 {{ step.distance }} m \u2014 {{ step.duration }}\n    </li>\n    }\n  </ul>\n</div>\n}\n" }]
-        }], ctorParameters: () => [{ type: i1$1.HttpClient }], propDecorators: { infoWindow: [{
+        }], ctorParameters: () => [{ type: i1.HttpClient }], propDecorators: { infoWindow: [{
                 type: ViewChild,
                 args: [MapInfoWindow]
             }], map: [{

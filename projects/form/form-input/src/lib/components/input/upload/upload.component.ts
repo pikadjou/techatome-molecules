@@ -1,11 +1,10 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   OnInit,
-  Output,
   ViewChild,
   inject,
+  output,
 } from "@angular/core";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 
@@ -52,7 +51,7 @@ export class UploadComponent
   extends TaAbstractInputComponent<InputUpload>
   implements OnInit
 {
-  @Output() uploadStatusChanged = new EventEmitter<boolean>();
+  uploadStatusChanged = output<boolean>();
 
   @ViewChild("fileDropRef", { static: false }) fileDropEl!: ElementRef;
 
@@ -85,19 +84,21 @@ export class UploadComponent
     if (this.input.value && this.input.value.length > 0) {
       const ids = this.input.value.map((file) => file.id);
       this.requestState.asked();
-      this._documentsService.fetchDocuments$(ids).subscribe({
-        next: () => {
-          const documents = this._documentsService.getDocuments(ids);
-          for (let doc of documents ?? []) {
-            this.inProgressFiles.push({
-              name: doc.description ?? "",
-              completed: doc,
-              progress: 100,
-            });
-          }
-          this.requestState.completed();
-        },
-      });
+      this._registerSubscription(
+        this._documentsService.fetchDocuments$(ids).subscribe({
+          next: () => {
+            const documents = this._documentsService.getDocuments(ids);
+            for (let doc of documents ?? []) {
+              this.inProgressFiles.push({
+                name: doc.description ?? "",
+                completed: doc,
+                progress: 100,
+              });
+            }
+            this.requestState.completed();
+          },
+        })
+      );
     }
   }
   override ngOnDestroy(): void {
@@ -160,17 +161,19 @@ export class UploadComponent
       this.inProgressFiles.push(inProgressFile);
       this.uploadStatusChanged.emit(false);
 
-      this._documentsService.addDocument$({ file: item }).subscribe({
-        next: (data) => {
-          inProgressFile.progress = 100;
-          inProgressFile.completed = data;
+      this._registerSubscription(
+        this._documentsService.addDocument$({ file: item }).subscribe({
+          next: (data) => {
+            inProgressFile.progress = 100;
+            inProgressFile.completed = data;
 
-          this._refreshUploadStatus();
-          if (!this.input.confirmButton) {
-            this.validation();
-          }
-        },
-      });
+            this._refreshUploadStatus();
+            if (!this.input.confirmButton) {
+              this.validation();
+            }
+          },
+        })
+      );
     }
   }
 

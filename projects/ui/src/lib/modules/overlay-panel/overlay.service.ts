@@ -1,6 +1,7 @@
 import { ConnectedPosition, Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import {
+  inject,
   Injectable,
   InjectionToken,
   Injector,
@@ -39,6 +40,9 @@ export class OverlayService extends TaBaseService {
   private readonly _onCloseSubject = new Subject<void>();
   public readonly onClose$ = this._onCloseSubject.asObservable();
 
+  private _overlay = inject(Overlay);
+  private _injector = inject(Injector);
+
   private readonly defaultPositions: ConnectedPosition[] = [
     {
       originX: "start",
@@ -66,7 +70,7 @@ export class OverlayService extends TaBaseService {
     },
   ];
 
-  constructor(private overlay: Overlay, private injector: Injector) {
+  constructor() {
     super();
   }
 
@@ -95,7 +99,7 @@ export class OverlayService extends TaBaseService {
     this._overlayRef?.dispose();
     this._onCloseCallback = onClose;
 
-    const positionStrategy = this.overlay
+    const positionStrategy = this._overlay
       .position()
       .flexibleConnectedTo(triggerElement)
       .withFlexibleDimensions(true)
@@ -104,11 +108,11 @@ export class OverlayService extends TaBaseService {
       .withDefaultOffsetY(offsetY)
       .withPositions(positions);
 
-    this._overlayRef = this.overlay.create({
+    this._overlayRef = this._overlay.create({
       positionStrategy,
       hasBackdrop: true,
       backdropClass: "cdk-overlay-transparent-backdrop",
-      scrollStrategy: this.overlay.scrollStrategies.close(),
+      scrollStrategy: this._overlay.scrollStrategies.close(),
       width: matchTriggerWidth ? triggerElement.clientWidth : undefined,
     });
     this._registerSubscription(
@@ -121,7 +125,7 @@ export class OverlayService extends TaBaseService {
         { provide: MENU_TEMPLATE, useValue: template },
         { provide: MENU_MAX_HEIGHT, useValue: maxHeight },
       ],
-      parent: this.injector,
+      parent: this._injector,
     });
 
     const portal = new ComponentPortal(menuComponent, null, portalInjector);

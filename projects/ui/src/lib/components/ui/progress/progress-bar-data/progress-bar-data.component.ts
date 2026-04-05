@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -15,7 +15,6 @@ import { TaTranslationUI } from "../../../../translation.service";
   styleUrls: ["./progress-bar-data.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     NgClass,
     MaterialIconComponent,
     TranslateModule,

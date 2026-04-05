@@ -1,5 +1,4 @@
 import { TemplateRef } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
 import { TaBaseComponent } from "@ta/utils";
 import { Observable } from "rxjs";
 import * as i0 from "@angular/core";
@@ -9,7 +8,6 @@ interface UserLogoNaming {
     trigram: string;
 }
 export declare class LayoutHeaderLogoComponent extends TaBaseComponent {
-    private _modal;
     profile: import("@angular/core").InputSignal<{
         template: TemplateRef<any>;
         user: {
@@ -19,7 +17,8 @@ export declare class LayoutHeaderLogoComponent extends TaBaseComponent {
     } | null>;
     notificationTemplate: import("@angular/core").InputSignal<TemplateRef<any> | null>;
     askClosing$: import("@angular/core").InputSignal<Observable<null> | undefined>;
-    constructor(_modal: MatDialog);
+    private _modal;
+    constructor();
     userInfo(): {
         profilePictureUrl?: string;
         naming: UserLogoNaming | null;

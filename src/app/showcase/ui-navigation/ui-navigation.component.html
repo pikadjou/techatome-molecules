@@ -1,0 +1,83 @@
+<app-page-layout title="UI — Navigation">
+  <div class="sections">
+    <!-- ============================== -->
+    <!-- NAVIGATION — TABS              -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Navigation — Tabs</ta-title>
+      <ta-text size="sm">Tab-style navigation using container="tab"</ta-text>
+      <div class="nav-preview">
+        <ta-menu-navigation [menu]="this.tabMenu" container="tab"></ta-menu-navigation>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- NAVIGATION — TAGS              -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Navigation — Tags</ta-title>
+      <ta-text size="sm">Tag-style navigation using container="tags"</ta-text>
+      <div class="nav-preview">
+        <ta-menu-navigation [menu]="this.tabMenu" container="tags"></ta-menu-navigation>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- CONTEXT MENU                   -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Context Menu</ta-title>
+      <ta-text size="sm">Contextual menu with icons and vertical layout</ta-text>
+      <div class="nav-preview">
+        <ta-context-menu [menu]="this.verticalMenu"></ta-context-menu>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- TREE                           -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Tree</ta-title>
+      <ta-text size="sm">Hierarchical tree structure with nested children</ta-text>
+      <div class="nav-preview">
+        <ta-tree-container>
+          <ta-tree-item>
+            Root Item 1
+            <ta-tree-children>
+              <ta-tree-item>Child 1.1</ta-tree-item>
+              <ta-tree-item>
+                Child 1.2
+                <ta-tree-children>
+                  <ta-tree-item>Grandchild 1.2.1</ta-tree-item>
+                </ta-tree-children>
+              </ta-tree-item>
+            </ta-tree-children>
+          </ta-tree-item>
+          <ta-tree-item>Root Item 2</ta-tree-item>
+        </ta-tree-container>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- OVERLAY PANEL                  -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Overlay Panel</ta-title>
+      <ta-text size="sm">
+        Overlay panels attach floating content to a trigger element using the CDK overlay.
+        They require runtime interaction and a panelConfig. Typical usage pattern:
+      </ta-text>
+      <ta-text size="sm">
+        &lt;ta-overlay-panel [panelConfig]="config"&gt;
+        &lt;ng-template #panelTrigger&gt; trigger element &lt;/ng-template&gt;
+        &lt;ng-template #panelContent&gt; floating content &lt;/ng-template&gt;
+        &lt;/ta-overlay-panel&gt;
+      </ta-text>
+      <ta-text size="sm">
+        The panelConfig accepts an OverlayMenuConfig with width, maxHeight, manualTrigger,
+        and optional position overrides. The default panel component (ta-default-panel)
+        renders the projected template inside a scrollable container.
+      </ta-text>
+    </section>
+  </div>
+</app-page-layout>

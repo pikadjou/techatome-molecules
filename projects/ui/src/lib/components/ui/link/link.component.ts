@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Component, EventEmitter, input, Output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
@@ -9,7 +9,7 @@ import { TaSizes, TaState } from "@ta/styles";
   templateUrl: "./link.component.html",
   styleUrls: ["./link.component.scss"],
   standalone: true,
-  imports: [NgIf, NgClass, FontIconComponent],
+  imports: [NgClass, FontIconComponent],
 })
 export class LinkComponent {
   state = input<TaState>("classic");

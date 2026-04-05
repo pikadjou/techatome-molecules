@@ -1,5 +1,5 @@
-import { AsyncPipe, NgClass, NgFor, NgIf } from "@angular/common";
-import { Component, input, OnInit, TemplateRef } from "@angular/core";
+import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
+import { Component, inject, input, OnInit, TemplateRef } from "@angular/core";
 
 import { TaDeviceInfoService } from "@ta/capacitor";
 import { TaBaseComponent } from "@ta/utils";
@@ -9,7 +9,7 @@ import { TaBaseComponent } from "@ta/utils";
   templateUrl: "./swiper-light.component.html",
   styleUrls: ["./swiper-light.component.scss"],
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, AsyncPipe],
+  imports: [NgClass, NgTemplateOutlet, AsyncPipe],
 })
 export class SwiperLightComponent extends TaBaseComponent implements OnInit {
   items = input.required<any[]>();
@@ -24,7 +24,9 @@ export class SwiperLightComponent extends TaBaseComponent implements OnInit {
 
   public classes: string = "";
 
-  constructor(private _deviceInfoService: TaDeviceInfoService) {
+  private _deviceInfoService = inject(TaDeviceInfoService);
+
+  constructor() {
     super();
   }
 

@@ -1,11 +1,10 @@
-import { NgIf } from "@angular/common";
 import {
   Component,
-  EventEmitter,
-  Output,
   TemplateRef,
   ViewChild,
+  inject,
   input,
+  output,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
@@ -26,7 +25,6 @@ import { FilterContainerComponent } from "../filter-container/filter-container.c
   styleUrls: ["./filter-displayer.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     FontIconComponent,
     LayoutFullPanelComponent,
     FilterContainerComponent,
@@ -40,8 +38,7 @@ export class FilterDisplayerComponent extends TaBaseComponent {
 
   container = input<"button" | "link">("button");
 
-  @Output()
-  filtersSelected = new EventEmitter<any>();
+  filtersSelected = output<any>();
 
   @ViewChild("filterTemplate", { read: TemplateRef })
   filterTemplate!: TemplateRef<void>;
@@ -75,7 +72,9 @@ export class FilterDisplayerComponent extends TaBaseComponent {
     return this.breakpoints.isMobile;
   }
 
-  constructor(private _bottomSheet: MatBottomSheet) {
+  private _bottomSheet = inject(MatBottomSheet);
+
+  constructor() {
     super();
   }
 

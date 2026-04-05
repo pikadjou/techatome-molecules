@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter } from "@angular/core";
+import { ElementRef } from "@angular/core";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { InputTextBox } from "@ta/form-model";
 import * as i0 from "@angular/core";
@@ -8,7 +8,7 @@ export declare class SearchHistoryDisplayerComponent {
     } | undefined>;
     placeholder: import("@angular/core").InputSignal<string>;
     isDropDown: import("@angular/core").InputSignal<boolean>;
-    valueCompleted: EventEmitter<any>;
+    valueCompleted: import("@angular/core").OutputEmitterRef<any>;
     searchField: ElementRef | null;
     searchTrigger: MatMenuTrigger | null;
     get searchFieldWidth(): any;

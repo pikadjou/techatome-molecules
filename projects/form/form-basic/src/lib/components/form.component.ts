@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import deepEqual from 'fast-deep-equal';
@@ -45,11 +45,9 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
   buttonTitle = input<string>('form.save');
   onLive = input<boolean>(false);
 
-  @Output()
-  valid: EventEmitter<{}> = new EventEmitter();
+  valid = output<{}>();
 
-  @Output()
-  isFormValid = new EventEmitter<boolean>();
+  isFormValid = output<boolean>();
 
   public form!: FormGroup;
 

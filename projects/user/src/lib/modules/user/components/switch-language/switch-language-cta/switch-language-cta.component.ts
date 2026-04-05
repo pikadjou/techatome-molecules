@@ -19,7 +19,7 @@ import { SwitchLanguageComponent } from "../switch-language.component";
   ],
 })
 export class SwitchLanguageCtaComponent {
-  readonly translateService = inject(TaTranslationService);
+  private _translateService = inject(TaTranslationService);
 
-  public activeLanguage = this.translateService.getLanguage();
+  public activeLanguage = this._translateService.getLanguage();
 }

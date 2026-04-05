@@ -19,12 +19,12 @@
 
 <mat-menu #showNotificationTemplate="matMenu">
   @if (this.notificationTemplate()) {
-    <ng-template *ngTemplateOutlet="this.notificationTemplate()"></ng-template>
+    <ng-container [ngTemplateOutlet]="this.notificationTemplate()"></ng-container>
   }
 </mat-menu>
 
 <mat-menu #showProfileTemplate="matMenu">
   @if (this.profile()) {
-    <ng-template *ngTemplateOutlet="this.profile().template"></ng-template>
+    <ng-container [ngTemplateOutlet]="this.profile()?.template ?? null"></ng-container>
   }
 </mat-menu>

@@ -21,10 +21,10 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
   styleUrl: './component.component.scss',
 })
 export class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
-  readonly dialog = inject(MatDialog);
+  private _dialog = inject(MatDialog);
 
   public open() {
-    this.dialog.open(TemplateModal, {
+    this._dialog.open(TemplateModal, {
       data: {
         input: this.input,
       },
@@ -42,7 +42,7 @@ type TemplateModalData = {
   templateUrl: './modal.html',
 })
 export class TemplateModal extends TaBaseModal {
-  readonly dialogRef = inject(MatDialogRef<TemplateModal>);
+  private _dialogRef = inject(MatDialogRef<TemplateModal>);
   readonly data: TemplateModalData = inject(MAT_DIALOG_DATA);
 
   readonly selectedValue$ = new Subject<string>();
@@ -60,6 +60,6 @@ export class TemplateModal extends TaBaseModal {
   public select(value: string) {
     this.data.input.selectedValue$.next(value);
 
-    this.dialogRef.close();
+    this._dialogRef.close();
   }
 }

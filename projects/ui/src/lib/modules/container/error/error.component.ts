@@ -1,9 +1,11 @@
-import { NgIf } from "@angular/common";
-import { Component, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
-import { PictureInfoMessageComponent } from "../../../components/ui/picture-info-message/picture-info-message.component";
+import { FontIconComponent } from "@ta/icons";
+import { TaBaseComponent } from "@ta/utils";
+
+import { ButtonComponent } from "../../../components/ui/button/button.component";
 import { TaTranslationUI } from "../../../translation.service";
 
 @Component({
@@ -11,14 +13,22 @@ import { TaTranslationUI } from "../../../translation.service";
   templateUrl: "./error.component.html",
   styleUrls: ["./error.component.scss"],
   standalone: true,
-  imports: [NgIf, TranslateModule, PictureInfoMessageComponent],
+  imports: [TranslateModule, FontIconComponent, ButtonComponent],
 })
-export class ErrorComponent {
+export class ErrorComponent extends TaBaseComponent {
   message = input<string>("");
-
   code = input<number>(200);
+  showRetry = input<boolean>(true);
+  retryLabel = input<string>("ui.container.error.retry");
+
+  retry = output<void>();
+
+  onRetry(): void {
+    this.retry.emit();
+  }
 
   constructor() {
+    super();
     TaTranslationUI.getInstance();
   }
 }

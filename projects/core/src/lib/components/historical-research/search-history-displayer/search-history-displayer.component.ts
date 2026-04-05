@@ -1,11 +1,10 @@
-import { NgFor, NgIf, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Output,
   ViewChild,
   input,
+  output,
 } from "@angular/core";
 import { Validators } from "@angular/forms";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
@@ -30,8 +29,6 @@ import {
   styleUrls: ["./search-history-displayer.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     FontIconComponent,
     ContactInformationComponent,
     EmptyComponent,
@@ -54,8 +51,7 @@ export class SearchHistoryDisplayerComponent {
 
   isDropDown = input<boolean>(false);
 
-  @Output()
-  valueCompleted = new EventEmitter();
+  valueCompleted = output<any>();
 
   @ViewChild("searchField", { read: ElementRef })
   searchField: ElementRef | null = null;

@@ -6,11 +6,11 @@ import { Observable, forkJoin, map } from "rxjs";
 import { TaTranslationRegistryService } from "./translation-registry.service";
 
 export class TaTranslationLoader implements TranslateLoader {
-  private registry = inject(TaTranslationRegistryService);
+  private _registry = inject(TaTranslationRegistryService);
   constructor() {}
 
   getTranslation(lang: string): Observable<object> {
-    return forkJoin([...this.registry.getTranslations(lang)]).pipe(
+    return forkJoin([...this._registry.getTranslations(lang)]).pipe(
       map((translations) =>
         translations.reduce<object>((acc, translation) => {
           if (!translation) {

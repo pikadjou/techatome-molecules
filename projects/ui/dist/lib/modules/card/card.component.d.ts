@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 import * as i0 from "@angular/core";
 export declare class CardComponent {
     highlight: import("@angular/core").InputSignal<boolean>;
@@ -7,7 +6,7 @@ export declare class CardComponent {
     noContent: import("@angular/core").InputSignal<boolean>;
     directionCard: import("@angular/core").InputSignal<"vertical" | "horizontal" | null>;
     isNew: import("@angular/core").InputSignal<boolean>;
-    click: EventEmitter<any>;
+    click: import("@angular/core").OutputEmitterRef<any>;
     hasHandler: boolean;
     ngOnInit(): void;
     constructor();

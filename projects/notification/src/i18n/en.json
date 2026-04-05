@@ -1,13 +1,17 @@
 {
-  "type.success": "Success",
-  "type.error": "Error",
-  "type.warning": "Warning",
-  "type.info": "Information",
   "action.close": "Close",
   "action.dismiss": "Dismiss",
   "action.viewDetails": "View details",
+  "common.error": "Error",
+  "common.info": "Information",
+  "common.success": "Success",
+  "common.warning": "Warning",
   "inline.label.error": "An error occurred",
   "inline.label.info": "Info",
   "inline.label.success": "Operation successful",
-  "inline.label.warning": "Warning"
+  "inline.label.warning": "Warning",
+  "type.error": "Error",
+  "type.info": "Information",
+  "type.success": "Success",
+  "type.warning": "Warning"
 }

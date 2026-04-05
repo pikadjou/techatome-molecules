@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, EventEmitter, OnDestroy, OnInit } from "@angular/core";
+import { AfterViewInit, ElementRef, OnDestroy, OnInit } from "@angular/core";
 import { Validators } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { Observable } from "rxjs";
@@ -10,7 +10,7 @@ export declare abstract class TaAbstractInputComponent<C extends InputBase<any>,
     matcher: import("@angular/core").InputSignal<ErrorStateMatcher>;
     standaloneMode: import("@angular/core").InputSignal<boolean>;
     onFocusObs: import("@angular/core").InputSignal<Observable<void> | undefined>;
-    valueChanged: EventEmitter<V>;
+    valueChanged: import("@angular/core").OutputEmitterRef<V>;
     get input(): C;
     get standalone(): boolean;
     get onFocus(): Observable<void> | undefined;

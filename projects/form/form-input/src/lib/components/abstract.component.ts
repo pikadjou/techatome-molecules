@@ -2,11 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   ViewChild,
 } from "@angular/core";
 import { Validators } from "@angular/forms";
@@ -33,8 +32,7 @@ export abstract class TaAbstractInputComponent<
 
   onFocusObs = input<Observable<void> | undefined>(undefined, { alias: 'onFocus' });
 
-  @Output()
-  valueChanged = new EventEmitter<V>();
+  valueChanged = output<V>();
 
   // Getter for backward compatibility with subclasses
   get input(): C {

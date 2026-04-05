@@ -18,7 +18,7 @@
 }
 
 .circle-progress-bar .circle-progress-bar-text {
-  font-size: 24px;
+  @include fonts.fontSizeHeader(h2);
 }
 
 .title {

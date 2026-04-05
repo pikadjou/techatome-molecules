@@ -1,7 +1,6 @@
-import { TaTranslationService } from "@ta/translation";
 import * as i0 from "@angular/core";
 export declare class SwitchLanguageComponent {
-    readonly translateService: TaTranslationService;
+    private _translateService;
     readonly languages: {
         id: string;
         name: string;

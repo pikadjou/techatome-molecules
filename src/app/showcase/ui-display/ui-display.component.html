@@ -1,0 +1,250 @@
+<app-page-layout title="UI — Display">
+  <div class="sections">
+    <!-- ============================== -->
+    <!-- BOOLEAN ICON                   -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">BooleanIcon</ta-title>
+      <ta-text size="sm">value: true | false | null &times; size: sm | md | lg</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">true / sm</ta-text>
+          <ta-boolean-icon [value]="true" size="sm"></ta-boolean-icon>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">true / md</ta-text>
+          <ta-boolean-icon [value]="true" size="md"></ta-boolean-icon>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">true / lg</ta-text>
+          <ta-boolean-icon [value]="true" size="lg"></ta-boolean-icon>
+        </div>
+      </div>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">false / sm</ta-text>
+          <ta-boolean-icon [value]="false" size="sm"></ta-boolean-icon>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">false / md</ta-text>
+          <ta-boolean-icon [value]="false" size="md"></ta-boolean-icon>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">false / lg</ta-text>
+          <ta-boolean-icon [value]="false" size="lg"></ta-boolean-icon>
+        </div>
+      </div>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">null / sm</ta-text>
+          <ta-boolean-icon [value]="null" size="sm"></ta-boolean-icon>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">null / md</ta-text>
+          <ta-boolean-icon [value]="null" size="md"></ta-boolean-icon>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">null / lg</ta-text>
+          <ta-boolean-icon [value]="null" size="lg"></ta-boolean-icon>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- CIVILITY                       -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Civility</ta-title>
+      <ta-text size="sm">civility: "mr" | "mrs"</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">Mr</ta-text>
+          <ta-civility civility="mr"></ta-civility>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">Mrs</ta-text>
+          <ta-civility civility="mrs"></ta-civility>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- CRITICITY                      -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Criticity</ta-title>
+      <ta-text size="sm">criticity: 1 through 5</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">1</ta-text>
+          <ta-criticity [criticity]="1"></ta-criticity>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">2</ta-text>
+          <ta-criticity [criticity]="2"></ta-criticity>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">3</ta-text>
+          <ta-criticity [criticity]="3"></ta-criticity>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">4</ta-text>
+          <ta-criticity [criticity]="4"></ta-criticity>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">5</ta-text>
+          <ta-criticity [criticity]="5"></ta-criticity>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- DURATION                       -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Duration</ta-title>
+      <ta-text size="sm">startDate + endDate</ta-text>
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">Jan 2024 &rarr; Jun 2024</ta-text>
+          <ta-duration [startDate]="'2024-01-01'" [endDate]="'2024-06-15'"></ta-duration>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">Mar 2023 &rarr; Dec 2023</ta-text>
+          <ta-duration [startDate]="'2023-03-10'" [endDate]="'2023-12-31'"></ta-duration>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- TIME AGO                       -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">TimeAgo</ta-title>
+      <ta-text size="sm">Relative time display from a date string</ta-text>
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">Yesterday</ta-text>
+          <ta-time-ago [date]="this.yesterdayDate"></ta-time-ago>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">A week ago</ta-text>
+          <ta-time-ago [date]="this.weekAgoDate"></ta-time-ago>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- TRIGRAM                         -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Trigram</ta-title>
+      <ta-text size="sm">Initials from a name, with size in px</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">25px</ta-text>
+          <ta-trigram value="Alice Martin" [size]="25"></ta-trigram>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">35px</ta-text>
+          <ta-trigram value="Bob Dupont" [size]="35"></ta-trigram>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">50px</ta-text>
+          <ta-trigram value="Claire Bernard" [size]="50"></ta-trigram>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- USER LOGO                      -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">UserLogo</ta-title>
+      <ta-text size="sm">size: sm | md | lg | xl</ta-text>
+      <div class="demo-row">
+        <div class="demo-column align-center">
+          <ta-text size="sm">sm</ta-text>
+          <ta-user-logo [user]="{firstName: 'Alice', lastName: 'Martin'}" size="sm"></ta-user-logo>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">md</ta-text>
+          <ta-user-logo [user]="{firstName: 'Bob', lastName: 'Dupont'}" size="md"></ta-user-logo>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">lg</ta-text>
+          <ta-user-logo [user]="{firstName: 'Claire', lastName: 'Bernard'}" size="lg"></ta-user-logo>
+        </div>
+        <div class="demo-column align-center">
+          <ta-text size="sm">xl</ta-text>
+          <ta-user-logo [user]="{firstName: 'David', lastName: 'Leroy'}" size="xl"></ta-user-logo>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- USERS LIST                     -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">UsersList</ta-title>
+      <ta-text size="sm">List of user avatars</ta-text>
+      <div class="demo-row">
+        <ta-users-list [users]="this.users$"></ta-users-list>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- MEGAOCTET                       -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Megaoctet</ta-title>
+      <ta-text size="sm">File size display from octets</ta-text>
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">1 MB</ta-text>
+          <ta-megaoctet [octet]="1048576"></ta-megaoctet>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">500 MB</ta-text>
+          <ta-megaoctet [octet]="524288000"></ta-megaoctet>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">2 GB</ta-text>
+          <ta-megaoctet [octet]="2147483648"></ta-megaoctet>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- EXPANDABLE TEXT                -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">ExpandableText</ta-title>
+      <ta-text size="sm">Long text with a max height and expand/collapse</ta-text>
+      <div class="demo-column">
+        <ta-expandable-text [height]="60">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a
+            odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit.
+          </p>
+        </ta-expandable-text>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- CULTURE                        -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Culture</ta-title>
+      <ta-text size="sm">Language flags from culture list</ta-text>
+      <div class="demo-row">
+        <ta-culture [cultures]="[{key: 'fr', label: 'Fran\u00e7ais'}, {key: 'en', label: 'English'}]"></ta-culture>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  column-gap: 8px;
+  column-gap: common.get-var(space, sm);
 }
 
 .only-icon {
@@ -32,7 +32,7 @@
     border-radius: 20px;
     box-sizing: border-box;
     align-items: center;
-    gap: 8px;
+    gap: common.get-var(space, sm);
     justify-content: center;
     color: common.get-var(neutral, 600);
     @include fonts.fontSizeBody(md);

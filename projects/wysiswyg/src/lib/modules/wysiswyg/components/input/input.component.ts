@@ -69,7 +69,7 @@ export class EditorInputComponent
   @Output()
   saved = new EventEmitter<EditorInputSavedData>();
 
-  public translationService = inject(TaTranslationService);
+  private _translationService = inject(TaTranslationService);
   public readonly languages: {
     [index: string]: { editorjs: { i18n: Object } & any };
   } = {
@@ -219,10 +219,10 @@ export class EditorInputComponent
     }
   };
   private _getTranslation() {
-    if (!isNonNullable(this.translationService.getLanguage())) {
+    if (!isNonNullable(this._translationService.getLanguage())) {
       return {};
     }
-    return this.languages[this.translationService.getLanguage()].editorjs ?? {};
+    return this.languages[this._translationService.getLanguage()].editorjs ?? {};
   }
 
   private async _extractWithColorTokenStyles() {

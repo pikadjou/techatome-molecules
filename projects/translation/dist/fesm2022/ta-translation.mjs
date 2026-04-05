@@ -215,10 +215,10 @@ class TaLazyTranslationService extends TaBaseStrapiService {
 
 class TaTranslationLoader {
     constructor() {
-        this.registry = inject(TaTranslationRegistryService);
+        this._registry = inject(TaTranslationRegistryService);
     }
     getTranslation(lang) {
-        return forkJoin([...this.registry.getTranslations(lang)]).pipe(map((translations) => translations.reduce((acc, translation) => {
+        return forkJoin([...this._registry.getTranslations(lang)]).pipe(map((translations) => translations.reduce((acc, translation) => {
             if (!translation) {
                 return acc;
             }

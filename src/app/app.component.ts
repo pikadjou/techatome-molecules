@@ -22,12 +22,26 @@ export class AppComponent {
   themes = this._themeService.themes;
   activeTheme = this._themeService.activeTheme;
 
-  menu = [
+  menu: { label: string; route?: string; icon?: string; group?: boolean }[] = [
     { label: "Home", route: "/home", icon: "home" },
+    { label: "Foundation", group: true },
     { label: "Theme", route: "/theme", icon: "palette" },
-    { label: "UI", route: "/ui", icon: "widgets" },
+    { label: "Icons", route: "/icons", icon: "emoji_symbols" },
+    { label: "UI Components", group: true },
+    { label: "Buttons & Text", route: "/ui", icon: "smart_button" },
+    { label: "Display", route: "/ui-display", icon: "info" },
+    { label: "Cards & Lists", route: "/ui-cards-lists", icon: "view_agenda" },
+    { label: "Layout", route: "/ui-layout", icon: "dashboard" },
+    { label: "Feedback", route: "/ui-feedback", icon: "notifications" },
+    { label: "Navigation", route: "/ui-navigation", icon: "menu" },
+    { label: "Progress", route: "/ui-progress", icon: "donut_large" },
+    { label: "Container", route: "/container", icon: "check_box_outline_blank" },
+    { label: "Data", group: true },
     { label: "Form", route: "/form", icon: "edit_note" },
     { label: "Grid", route: "/grid", icon: "table_chart" },
+    { label: "Charts", route: "/charts", icon: "bar_chart" },
+    { label: "Utilities", group: true },
+    { label: "Utils", route: "/utils", icon: "build" },
   ];
 
   onThemeChange(event: Event): void {

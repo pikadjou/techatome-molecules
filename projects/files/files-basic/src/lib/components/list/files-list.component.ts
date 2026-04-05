@@ -1,5 +1,4 @@
-import { NgFor, NgIf } from "@angular/common";
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { FontIconComponent, LocalIconComponent } from "@ta/icons";
 import { EmptyComponent } from "@ta/ui";
@@ -19,8 +18,6 @@ import { FileCardComponent } from "./card/file/file-card.component";
   styleUrls: ["./files-list.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     EmptyComponent,
     FileCardComponent,
     FontIconComponent,
@@ -34,15 +31,11 @@ export class FileListComponent extends TaBaseComponent {
 
   canDeleteFile = input<boolean>(false);
 
-  @Output()
-  fileSelected = new EventEmitter<FileData & { index: number }>();
+  fileSelected = output<FileData & { index: number }>();
 
-  @Output()
-  moreInformationSelected: EventEmitter<FileData> =
-    new EventEmitter<FileData>();
+  moreInformationSelected = output<FileData>();
 
-  @Output()
-  fileDeleted = new EventEmitter<FileData>();
+  fileDeleted = output<FileData>();
 
   constructor() {
     super();

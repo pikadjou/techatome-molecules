@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import { Component, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -17,7 +16,7 @@ export interface UserLogoNaming {
   templateUrl: "./hello-user.component.html",
   styleUrls: ["./hello-user.component.scss"],
   standalone: true,
-  imports: [NgIf, TranslateModule, UserLogoComponent],
+  imports: [TranslateModule, UserLogoComponent],
 })
 export class HelloUserComponent {
   title = input<string | undefined>(undefined);

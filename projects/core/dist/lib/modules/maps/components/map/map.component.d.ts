@@ -2,8 +2,9 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, QueryList } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
-export declare class MapComponent implements AfterViewInit {
+export declare class MapComponent extends TaBaseComponent implements AfterViewInit {
     private http;
     infoWindow: MapInfoWindow;
     map: GoogleMap;
