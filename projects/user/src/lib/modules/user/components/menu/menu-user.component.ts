@@ -39,7 +39,7 @@ export class MenuUserComponent extends TaBaseComponent implements OnDestroy {
     return (this._authService as any).firstLetter;
   }
 
-  private _authService = inject(TA_AUTH_TOKEN);
+  protected _authService = inject(TA_AUTH_TOKEN);
   public language = new InputDropdown<string>({
     label: "",
     options$: of([

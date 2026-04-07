@@ -1,25 +1,11 @@
-import { Component, inject } from "@angular/core";
-import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
-
-import { FontIconComponent } from "@ta/icons";
-import { TaTranslationService } from "@ta/translation";
+import { Component } from "@angular/core";
 
 import { SwitchLanguageComponent } from "../switch-language.component";
 
 @Component({
   selector: "ta-switch-language-cta",
-  templateUrl: "./switch-language-cta.component.html",
-  styleUrls: ["./switch-language-cta.component.scss"],
+  template: `<ta-switch-language mode="dropdown"></ta-switch-language>`,
   standalone: true,
-  imports: [
-    FontIconComponent,
-    MatMenu,
-    SwitchLanguageComponent,
-    MatMenuTrigger,
-  ],
+  imports: [SwitchLanguageComponent],
 })
-export class SwitchLanguageCtaComponent {
-  private _translateService = inject(TaTranslationService);
-
-  public activeLanguage = this._translateService.getLanguage();
-}
+export class SwitchLanguageCtaComponent {}

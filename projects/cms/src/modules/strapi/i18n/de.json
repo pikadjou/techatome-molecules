@@ -1,0 +1,7 @@
+{
+  "loading": "Daten werden geladen...",
+  "error.fetch": "Fehler beim Abrufen der Daten",
+  "error.save": "Fehler beim Speichern",
+  "error.delete": "Fehler beim Löschen",
+  "confirm.delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?"
+}

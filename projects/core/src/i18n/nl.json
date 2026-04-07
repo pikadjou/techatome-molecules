@@ -1,0 +1,20 @@
+{
+  "common.add": "Toevoegen",
+  "common.cancel": "Annuleren",
+  "common.delete": "Verwijderen",
+  "common.edit": "Bewerken",
+  "common.export": "Exporteren",
+  "common.filter": "Filteren",
+  "common.import": "Importeren",
+  "common.save": "Opslaan",
+  "common.search": "Zoeken",
+  "documents.all": "Alle",
+  "documents.delete": "Verwijderen",
+  "documents.download": "Downloaden",
+  "documents.mine": "Mijn documenten",
+  "filter.clear": "Wissen",
+  "filter.validate": "Bevestigen",
+  "messages.error": "Er is een fout opgetreden",
+  "messages.loading": "Laden...",
+  "messages.success": "Bewerking geslaagd"
+}

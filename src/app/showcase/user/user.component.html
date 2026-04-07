@@ -1,0 +1,36 @@
+<app-page-layout title="User">
+  <div class="sections">
+    <!-- ============================== -->
+    <!-- SWITCH LANGUAGE — INLINE       -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Switch Language — Inline</ta-title>
+      <ta-text size="sm">ta-switch-language mode="inline" — flags with language code</ta-text>
+      <div class="demo-row">
+        <ta-switch-language></ta-switch-language>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SWITCH LANGUAGE — DROPDOWN     -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Switch Language — Dropdown</ta-title>
+      <ta-text size="sm">ta-switch-language mode="dropdown" — flag trigger with panel</ta-text>
+      <div class="demo-row">
+        <ta-switch-language mode="dropdown"></ta-switch-language>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SWITCH LANGUAGE CTA (WRAPPER)  -->
+    <!-- ============================== -->
+    <section>
+      <ta-title [level]="2">Switch Language CTA</ta-title>
+      <ta-text size="sm">ta-switch-language-cta — backward-compatible wrapper (delegates to dropdown mode)</ta-text>
+      <div class="demo-row">
+        <ta-switch-language-cta></ta-switch-language-cta>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

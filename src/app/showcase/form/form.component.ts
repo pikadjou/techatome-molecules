@@ -144,11 +144,11 @@ export class FormPage {
           key: "skills",
           label: "Skills",
           options$: of([
-            { id: "angular", name: "Angular" },
-            { id: "react", name: "React" },
-            { id: "vue", name: "Vue" },
-            { id: "svelte", name: "Svelte" },
-            { id: "node", name: "Node.js" },
+            { id: "angular", name: "Angular", data: null },
+            { id: "react", name: "React", data: null },
+            { id: "vue", name: "Vue", data: null },
+            { id: "svelte", name: "Svelte", data: null },
+            { id: "node", name: "Node.js", data: null },
           ]),
         }),
         new InputLabel({

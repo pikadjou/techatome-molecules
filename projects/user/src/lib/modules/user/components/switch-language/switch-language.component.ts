@@ -1,6 +1,7 @@
-import { Component, inject } from "@angular/core";
+import { NgClass } from "@angular/common";
+import { Component, InjectionToken, inject, input } from "@angular/core";
 
-import { FontIconComponent } from "@ta/icons";
+import { FlagIconComponent, FontIconComponent } from "@ta/icons";
 import { TaTranslationService, TranslatePipe } from "@ta/translation";
 import {
   ListContainerComponent,
@@ -10,37 +11,54 @@ import {
   LoaderComponent,
 } from "@ta/ui";
 
+export type TaLanguageConfig = { id: string; name: string };
+
+export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>(
+  "TaLanguages",
+  {
+    factory: () => [
+      { id: "fr", name: "Français" },
+      { id: "en", name: "English" },
+    ],
+  }
+);
+
 @Component({
   selector: "ta-switch-language",
   templateUrl: "./switch-language.component.html",
   styleUrls: ["./switch-language.component.scss"],
   standalone: true,
   imports: [
+    FlagIconComponent,
     FontIconComponent,
-    ListTagComponent,
-    LoaderComponent,
     ListContainerComponent,
     ListElementComponent,
+    ListTagComponent,
     ListTitleComponent,
+    LoaderComponent,
+    NgClass,
     TranslatePipe,
   ],
 })
 export class SwitchLanguageComponent {
+  mode = input<"inline" | "dropdown">("inline");
+
   private _translateService = inject(TaTranslationService);
-  readonly languages = [
-    { id: "fr", name: "Français" },
-    { id: "nl", name: "Nederlands" },
-    { id: "en", name: "English" },
-    { id: "es", name: "Español" },
-  ];
+  readonly languages = inject(TA_LANGUAGES);
 
   public activeLanguage = this._translateService.getLanguage();
   public changeLanguageAsked: boolean = false;
+  public dropdownOpen = false;
+
+  public toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
 
   public changeLanguage(language: string) {
-    if (this.activeLanguage != language) {
+    if (this.activeLanguage !== language) {
       this.activeLanguage = language;
       this.changeLanguageAsked = true;
+      this.dropdownOpen = false;
       this._translateService.use(language);
     }
   }

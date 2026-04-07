@@ -9,7 +9,7 @@ import {
   TitleComponent,
   ToastComponent,
 } from "@ta/ui";
-import { NotificationInlineComponent, TaNotificationService } from "@ta/notification";
+import { ENotificationCode, NotificationInlineComponent, TaNotificationService } from "@ta/notification";
 
 import { PageLayoutComponent } from "../../layout/page-layout.component";
 
@@ -35,10 +35,10 @@ export class UiFeedbackPage {
   private _notificationService = inject(TaNotificationService);
 
   showToast(): void {
-    this._notificationService.pushSuccess("Operation completed successfully");
+    this._notificationService.addNotification("Operation completed successfully", ENotificationCode.success);
   }
 
   showErrorToast(): void {
-    this._notificationService.pushError("Something went wrong");
+    this._notificationService.addNotification("Something went wrong", ENotificationCode.error);
   }
 }

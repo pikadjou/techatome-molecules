@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/user — Auth0, AuthGuard, FeatureGuard, taPermissionsService, taUsersService
+description: Assistant contextuel @ta/user — Auth0, AuthGuard, FeatureGuard, taPermissionsService, taUsersService, SwitchLanguage
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -57,8 +57,14 @@ Question ou tâche : $ARGUMENTS
 - `LoginComponent` — page de connexion
 - `SigninComponent` — page d'inscription
 - `MyAccountComponent` — page compte utilisateur
-- `SwitchLanguageCtaComponent` — CTA changement de langue
+- `SwitchLanguageComponent` (`ta-switch-language`) — sélecteur de langue avec drapeaux (modes `inline` et `dropdown`)
+- `SwitchLanguageCtaComponent` (`ta-switch-language-cta`) — wrapper rétrocompatible (délègue à `SwitchLanguageComponent` en mode `dropdown`)
 - `GuardComponent` (`ta-guard`) — protège ou prévisualise du contenu selon les permissions
+
+### Tokens & Types (langue)
+
+- `TA_LANGUAGES` — `InjectionToken<TaLanguageConfig[]>` — langues disponibles (factory par défaut : fr + en)
+- `TaLanguageConfig` — `{ id: string; name: string }` — configuration d'une langue
 
 ### Auth0
 
@@ -182,6 +188,45 @@ En mode `preview`, quand l'accès est refusé :
 - Le contenu projeté est rendu à **12% d'opacité** (`pointer-events: none`)
 - Un gradient couvre la partie basse du contenu
 - Un overlay positionné en bas affiche un titre, un sous-titre et deux boutons qui redirigent vers `/login` et `/signin`
+
+### Configurer les langues (SwitchLanguageComponent)
+
+Les langues sont fournies via le token `TA_LANGUAGES`. Par défaut : fr + en.
+
+```typescript
+import { TA_LANGUAGES, SwitchLanguageComponent } from '@ta/user';
+
+@Component({
+  standalone: true,
+  imports: [SwitchLanguageComponent],
+  providers: [
+    {
+      provide: TA_LANGUAGES,
+      useValue: [
+        { id: 'fr', name: 'Français' },
+        { id: 'en', name: 'English' },
+        { id: 'nl', name: 'Nederlands' },
+      ],
+    },
+  ],
+  template: `
+    <!-- Mode inline (défaut) : drapeaux côte à côte avec code langue -->
+    <ta-switch-language></ta-switch-language>
+
+    <!-- Mode dropdown : trigger drapeau + code + chevron, panel déroulant -->
+    <ta-switch-language mode="dropdown"></ta-switch-language>
+  `,
+})
+```
+
+**Type `TaLanguageConfig`** : `{ id: string; name: string }`
+- `id` : code langue (ex: `'fr'`, `'en'`) — sert aussi de clé pour le drapeau via `ta-flag-icon`
+- `name` : nom affiché de la langue
+
+**Inputs de `SwitchLanguageComponent`** :
+| Input | Type | Défaut | Description |
+|---|---|---|---|
+| `mode` | `'inline' \| 'dropdown'` | `'inline'` | Mode d'affichage |
 
 ### Accéder aux disponibilités
 

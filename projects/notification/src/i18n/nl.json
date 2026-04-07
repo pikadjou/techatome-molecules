@@ -1,0 +1,17 @@
+{
+  "action.close": "Sluiten",
+  "action.dismiss": "Negeren",
+  "action.viewDetails": "Details bekijken",
+  "common.error": "Fout",
+  "common.info": "Informatie",
+  "common.success": "Gelukt",
+  "common.warning": "Waarschuwing",
+  "inline.label.error": "Er is een fout opgetreden",
+  "inline.label.info": "Info",
+  "inline.label.success": "Bewerking geslaagd",
+  "inline.label.warning": "Waarschuwing",
+  "type.error": "Fout",
+  "type.info": "Informatie",
+  "type.success": "Gelukt",
+  "type.warning": "Waarschuwing"
+}

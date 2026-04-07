@@ -466,9 +466,11 @@ class InputSwitch extends InputBase {
         super(options);
         this.matchtype = signal("");
         this.controlType = "switch";
-        this._subscriberHandler.registerSubscription(options.match
-            .pipe(tap((match) => Object.assign(this, match.prop)), tap((match) => this.matchtype.set(match.type)))
-            .subscribe());
+        if (options.match) {
+            this._subscriberHandler.registerSubscription(options.match
+                .pipe(tap((match) => Object.assign(this, match.prop)), tap((match) => this.matchtype.set(match.type)))
+                .subscribe());
+        }
     }
 }
 

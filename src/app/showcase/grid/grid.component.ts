@@ -8,6 +8,7 @@ import {
   TaGridContainerComponent,
   TaGridControlComponent,
   TaGridFormComponent,
+  TaGridHighlightFiltersComponent,
   TaGridSearchComponent,
   TaGridTagsComponent,
 } from "@ta/features";
@@ -34,6 +35,7 @@ const COLS: ColMetaData<Product>[] = [
     type: ParameterType.String,
     isSearchField: true,
     showOnSearch: true,
+    highlighted: true,
   },
   {
     name: "category",
@@ -47,6 +49,7 @@ const COLS: ColMetaData<Product>[] = [
       "Sports",
     ],
     showOnSearch: true,
+    highlighted: true,
   },
   {
     name: "price",
@@ -108,6 +111,7 @@ const DATA: Product[] = [
     TaGridContainerComponent,
     TaGridControlComponent,
     TaGridFormComponent,
+    TaGridHighlightFiltersComponent,
     TaGridSearchComponent,
     TaGridTagsComponent,
     TextComponent,

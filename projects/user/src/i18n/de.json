@@ -1,0 +1,20 @@
+{
+  "account": "Konto",
+  "clientnumber": "Kundennummer",
+  "guard.content": "Sie haben keinen Zugriff auf diese Ressource",
+  "guard.preview.title": "Mehr sehen?",
+  "guard.preview.subtitle": "Melden Sie sich an oder erstellen Sie ein kostenloses Konto, um auf alle Inhalte zuzugreifen.",
+  "infos": "Informationen",
+  "language": "Sprache",
+  "login": "Anmelden",
+  "logout": "Abmelden",
+  "modify": "Ändern",
+  "params": "Einstellungen",
+  "password.change": "Passwort ändern",
+  "password.forgot": "Passwort vergessen",
+  "password.reset": "Passwort zurücksetzen",
+  "profile": "Profil",
+  "register": "Registrieren",
+  "settings": "Einstellungen",
+  "tenantlisttitle": "Mandantenliste"
+}

@@ -5,6 +5,8 @@
     [colsMetaData]="this.cols"
     [preset]="this.presets"
   >
+    <ta-grid-highlight-filters [gridId]="this.gridId"></ta-grid-highlight-filters>
+
     <div class="grid-toolbar">
       <ta-grid-search [gridId]="this.gridId"></ta-grid-search>
       <ta-grid-control

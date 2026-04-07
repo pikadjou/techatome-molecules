@@ -1,9 +1,9 @@
 import * as i0 from '@angular/core';
-import { Injectable, signal, input, inject, Component, output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Injectable, signal, input, inject, Component, output, Renderer2, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FormComponent } from '@ta/form-basic';
 import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { TitleComponent, ButtonComponent, BadgeComponent, TextComponent, TaOverlayPanelComponent } from '@ta/ui';
+import { TitleComponent, ButtonComponent, TextComponent, BadgeComponent, TaOverlayPanelComponent } from '@ta/ui';
 import { of, Subject, BehaviorSubject, firstValueFrom, distinctUntilChanged, filter, map } from 'rxjs';
 import { InputPanel, InputDropdown, InputDatePicker, InputNumber, InputChoices, InputTextBox } from '@ta/form-model';
 import { isNonNullable, getUniqueArray, TaBaseComponent, TypedTemplateDirective, TaBaseModal } from '@ta/utils';
@@ -47,6 +47,31 @@ class TaGridFormService {
                     class: 'g-col-6',
                     children: [input],
                 })),
+            }),
+        ];
+    }
+    getHighlightedFiltersForm(model) {
+        const keys = Object.keys(model.cols);
+        if (!keys || keys.length === 0) {
+            return [];
+        }
+        const children = keys
+            .filter(key => model.cols[key].data.col.highlighted)
+            .map(key => model.cols[key].getInputForm())
+            .filter(isNonNullable)
+            .map(input => new InputPanel({
+            key: 'panel',
+            class: 'g-col-6',
+            children: [input],
+        }));
+        if (children.length === 0) {
+            return [];
+        }
+        return [
+            new InputPanel({
+                key: 'highlight-panel',
+                contentClass: 'grid g-space-md',
+                children,
             }),
         ];
     }
@@ -605,6 +630,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 args: ['table', { static: true }]
             }] } });
 
+class TaGridHighlightFiltersComponent extends TaAbstractGridComponent {
+    constructor() {
+        super(...arguments);
+        this.showResultCount = input(true);
+        this.showReset = input(true);
+        this.highlightForm = signal([]);
+        this.hasActiveFilters = signal(false);
+        this._formService = inject((TaGridFormService));
+    }
+    ngOnInit() {
+        super.ngOnInit();
+        this._registerSubscription(this.isReady$.subscribe({
+            next: () => {
+                this.highlightForm.set(this._formService.getHighlightedFiltersForm(this._grid));
+            },
+        }));
+    }
+    applyFilters(data) {
+        const filters = this._formService.formatFiltersForm(this._grid, data);
+        this.hasActiveFilters.set(filters.length > 0);
+        this._grid.filters?.apply(filters);
+    }
+    reset() {
+        this.hasActiveFilters.set(false);
+        this._grid.filters?.apply([]);
+        this.highlightForm.set(this._formService.getHighlightedFiltersForm(this._grid));
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridHighlightFiltersComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridHighlightFiltersComponent, isStandalone: true, selector: "ta-grid-highlight-filters", inputs: { showResultCount: { classPropertyName: "showResultCount", publicName: "showResultCount", isSignal: true, isRequired: false, transformFunction: null }, showReset: { classPropertyName: "showReset", publicName: "showReset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.highlightForm().length > 0) {\n  <div class=\"highlight-filters\" [class.highlight-filters--active]=\"this.hasActiveFilters()\">\n    <div class=\"highlight-filters__icon\">\n      <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n    </div>\n\n    <div class=\"highlight-filters__form\">\n      <ta-form\n        [inputs]=\"this.highlightForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    <div class=\"highlight-filters__actions\">\n      @if (this.showReset() && this.hasActiveFilters()) {\n        <ta-button type=\"tertiary\" size=\"small\" icon=\"close\" (action)=\"this.reset()\">\n          {{ 'grid.form.reset' | translate }}\n        </ta-button>\n      }\n    </div>\n\n    @if (this.showResultCount()) {\n      <div class=\"highlight-filters__count\">\n        <ta-text size=\"sm\">\n          {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}\n        </ta-text>\n      </div>\n    }\n  </div>\n}\n", styles: [":host{display:block}.highlight-filters{display:flex;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-sm) var(--ta-space-md);background:var(--ta-surface-secondary);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);transition:border-color .2s ease,box-shadow .2s ease}.highlight-filters--active{border-color:var(--ta-brand-300);box-shadow:0 0 0 1px var(--ta-brand-100)}.highlight-filters__icon{display:flex;align-items:center;justify-content:center;width:var(--ta-space-xl);height:var(--ta-space-xl);min-width:var(--ta-space-xl);border-radius:var(--ta-radius-minimal);background:var(--ta-brand-50);color:var(--ta-icon-brand-primary)}.highlight-filters__form{flex:1;min-width:0}.highlight-filters__form ::ng-deep ta-form .ta-form{gap:0}.highlight-filters__form ::ng-deep .ta-panel{padding:0;background:transparent}.highlight-filters__form ::ng-deep .grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--ta-space-sm)}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 160px;min-width:140px;max-width:240px}.highlight-filters__form ::ng-deep .mat-mdc-form-field{width:100%}.highlight-filters__form ::ng-deep ta-inputs{margin-bottom:0}.highlight-filters__actions{display:flex;align-items:center;flex-shrink:0}.highlight-filters__count{display:flex;align-items:center;flex-shrink:0;padding-left:var(--ta-space-sm);border-left:1px solid var(--ta-border-secondary);color:var(--ta-text-secondary);white-space:nowrap;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}@media screen and (max-width: 767px){.highlight-filters{flex-wrap:wrap}.highlight-filters__icon{display:none}.highlight-filters__form{flex-basis:100%}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 100%;max-width:none}.highlight-filters__count{border-left:none;padding-left:0}}\n"], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridHighlightFiltersComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-grid-highlight-filters', standalone: true, imports: [FormComponent, FontIconComponent, TranslatePipe, ButtonComponent, TextComponent], changeDetection: ChangeDetectionStrategy.OnPush, template: "@if (this.highlightForm().length > 0) {\n  <div class=\"highlight-filters\" [class.highlight-filters--active]=\"this.hasActiveFilters()\">\n    <div class=\"highlight-filters__icon\">\n      <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n    </div>\n\n    <div class=\"highlight-filters__form\">\n      <ta-form\n        [inputs]=\"this.highlightForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    <div class=\"highlight-filters__actions\">\n      @if (this.showReset() && this.hasActiveFilters()) {\n        <ta-button type=\"tertiary\" size=\"small\" icon=\"close\" (action)=\"this.reset()\">\n          {{ 'grid.form.reset' | translate }}\n        </ta-button>\n      }\n    </div>\n\n    @if (this.showResultCount()) {\n      <div class=\"highlight-filters__count\">\n        <ta-text size=\"sm\">\n          {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}\n        </ta-text>\n      </div>\n    }\n  </div>\n}\n", styles: [":host{display:block}.highlight-filters{display:flex;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-sm) var(--ta-space-md);background:var(--ta-surface-secondary);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);transition:border-color .2s ease,box-shadow .2s ease}.highlight-filters--active{border-color:var(--ta-brand-300);box-shadow:0 0 0 1px var(--ta-brand-100)}.highlight-filters__icon{display:flex;align-items:center;justify-content:center;width:var(--ta-space-xl);height:var(--ta-space-xl);min-width:var(--ta-space-xl);border-radius:var(--ta-radius-minimal);background:var(--ta-brand-50);color:var(--ta-icon-brand-primary)}.highlight-filters__form{flex:1;min-width:0}.highlight-filters__form ::ng-deep ta-form .ta-form{gap:0}.highlight-filters__form ::ng-deep .ta-panel{padding:0;background:transparent}.highlight-filters__form ::ng-deep .grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--ta-space-sm)}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 160px;min-width:140px;max-width:240px}.highlight-filters__form ::ng-deep .mat-mdc-form-field{width:100%}.highlight-filters__form ::ng-deep ta-inputs{margin-bottom:0}.highlight-filters__actions{display:flex;align-items:center;flex-shrink:0}.highlight-filters__count{display:flex;align-items:center;flex-shrink:0;padding-left:var(--ta-space-sm);border-left:1px solid var(--ta-border-secondary);color:var(--ta-text-secondary);white-space:nowrap;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}@media screen and (max-width: 767px){.highlight-filters{flex-wrap:wrap}.highlight-filters__icon{display:none}.highlight-filters__form{flex-basis:100%}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 100%;max-width:none}.highlight-filters__count{border-left:none;padding-left:0}}\n"] }]
+        }] });
+
 class TaGridTagsComponent extends TaAbstractGridComponent {
     get group() {
         return this._grid.groupBy;
@@ -919,5 +979,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { FiltersModal, ParameterType, TaGridComponent, TaGridContainerComponent, TaGridControlComponent, TaGridFormComponent, TaGridSearchComponent, TaGridTagsComponent };
+export { FiltersModal, ParameterType, TaGridComponent, TaGridContainerComponent, TaGridControlComponent, TaGridFormComponent, TaGridHighlightFiltersComponent, TaGridSearchComponent, TaGridTagsComponent };
 //# sourceMappingURL=ta-features.mjs.map

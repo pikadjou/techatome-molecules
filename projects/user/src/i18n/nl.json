@@ -1,0 +1,20 @@
+{
+  "account": "Account",
+  "clientnumber": "Klantnummer",
+  "guard.content": "U heeft geen toegang tot deze bron",
+  "guard.preview.title": "Meer zien?",
+  "guard.preview.subtitle": "Meld u aan of maak een gratis account aan om alle inhoud te bekijken.",
+  "infos": "Informatie",
+  "language": "Taal",
+  "login": "Inloggen",
+  "logout": "Uitloggen",
+  "modify": "Wijzigen",
+  "params": "Instellingen",
+  "password.change": "Wachtwoord wijzigen",
+  "password.forgot": "Wachtwoord vergeten",
+  "password.reset": "Wachtwoord resetten",
+  "profile": "Profiel",
+  "register": "Registreren",
+  "settings": "Instellingen",
+  "tenantlisttitle": "Lijst van tenants"
+}

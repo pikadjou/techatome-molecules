@@ -98,6 +98,11 @@ export const routes: Routes = [
       import("./showcase/utils/utils.component").then((c) => c.UtilsPage),
   },
   {
+    path: "user",
+    loadComponent: () =>
+      import("./showcase/user/user.component").then((c) => c.UserPage),
+  },
+  {
     path: "**",
     redirectTo: "/home",
   },

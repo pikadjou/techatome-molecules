@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 import { IInputBase, InputBase } from "./base";
 import { IInputDropdown } from "./dropdown";
 export interface IFormSwitch extends IInputBase<unknown> {
-    match: Observable<{
+    match?: Observable<{
         type: "textbox" | "checkbox" | "number" | "datePicker";
         prop: unknown;
     } | {

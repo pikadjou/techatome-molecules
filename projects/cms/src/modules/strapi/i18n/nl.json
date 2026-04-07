@@ -1,0 +1,7 @@
+{
+  "loading": "Gegevens laden...",
+  "error.fetch": "Fout bij het ophalen van gegevens",
+  "error.save": "Fout bij het opslaan",
+  "error.delete": "Fout bij het verwijderen",
+  "confirm.delete": "Weet u zeker dat u dit item wilt verwijderen?"
+}

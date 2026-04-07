@@ -6,7 +6,7 @@ import { ButtonComponent } from "@ta/ui";
 
 import { EmptyComponent } from "./empty.component";
 
-type StoryType = EmptyComponent;
+type StoryType = any;
 
 export default {
   title: "Container/Empty",

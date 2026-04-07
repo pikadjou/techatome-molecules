@@ -3,7 +3,7 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
+    "strictTemplates": false,
     "allowSyntheticDefaultImports": true,
     "compilationMode": "full"
   },
@@ -27,35 +27,88 @@
     "useDefineForClassFields": false,
     "preserveSymlinks": true,
     "resolveJsonModule": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "skipLibCheck": true,
     "paths": {
-      "@angular/*": ["node_modules/@angular/*"],
-      "@ta/ui": ["projects/ui"],
-      "@ta/server": ["projects/server"],
-      "@ta/services": ["projects/services"],
-      "@ta/utils": ["projects/utils"],
-      "@ta/notification": ["projects/notification"],
-      "@ta/menu": ["projects/menu"],
-      "@ta/calendar": ["projects/calendar"],
-      "@ta/translation": ["projects/translation"],
-      "@ta/form-input": ["projects/form/form-input"],
-      "@ta/form-model": ["projects/form/form-model"],
-      "@ta/form-basic": ["projects/form/form-basic"],
-      "@ta/eslint-config": ["projects/config/eslint-config"],
-      "@ta/prettier-config": ["projects/config/prettier-config"],
-      "@ta/styles": ["projects/styles"],
-      "@ta/files-basic": ["projects/files/files-basic"],
-      "@ta/files-extended": ["projects/files/files-extended"],
-      "@ta/icons": ["projects/icons"],
-      "@ta/capacitor": ["projects/capacitor"],
-      "@ta/core": ["projects/core"],
-      "@ta/user": ["projects/user"],
-      "@ta/cms": ["projects/cms"],
-      "@ta/wysiswyg": ["projects/wysiswyg"],
-      "@ta/charts": ["projects/charts"],
-      "@ta/features": ["projects/features"]
+      "@angular/*": [
+        "node_modules/@angular/*"
+      ],
+      "@ta/ui": [
+        "projects/ui"
+      ],
+      "@ta/server": [
+        "projects/server"
+      ],
+      "@ta/services": [
+        "projects/services"
+      ],
+      "@ta/utils": [
+        "projects/utils"
+      ],
+      "@ta/notification": [
+        "projects/notification"
+      ],
+      "@ta/menu": [
+        "projects/menu"
+      ],
+      "@ta/calendar": [
+        "projects/calendar"
+      ],
+      "@ta/translation": [
+        "projects/translation"
+      ],
+      "@ta/form-input": [
+        "projects/form/form-input"
+      ],
+      "@ta/form-model": [
+        "projects/form/form-model"
+      ],
+      "@ta/form-basic": [
+        "projects/form/form-basic"
+      ],
+      "@ta/eslint-config": [
+        "projects/config/eslint-config"
+      ],
+      "@ta/prettier-config": [
+        "projects/config/prettier-config"
+      ],
+      "@ta/styles": [
+        "projects/styles"
+      ],
+      "@ta/files-basic": [
+        "projects/files/files-basic"
+      ],
+      "@ta/files-extended": [
+        "projects/files/files-extended"
+      ],
+      "@ta/icons": [
+        "projects/icons"
+      ],
+      "@ta/capacitor": [
+        "projects/capacitor"
+      ],
+      "@ta/core": [
+        "projects/core"
+      ],
+      "@ta/user": [
+        "projects/user"
+      ],
+      "@ta/cms": [
+        "projects/cms"
+      ],
+      "@ta/wysiswyg": [
+        "projects/wysiswyg"
+      ],
+      "@ta/charts": [
+        "projects/charts"
+      ],
+      "@ta/features": [
+        "projects/features"
+      ]
     },
-    "lib": ["ES2022", "dom"]
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
   }
 }

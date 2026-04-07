@@ -1,0 +1,32 @@
+@if (this.highlightForm().length > 0) {
+  <div class="highlight-filters" [class.highlight-filters--active]="this.hasActiveFilters()">
+    <div class="highlight-filters__icon">
+      <ta-font-icon name="filter" size="sm"></ta-font-icon>
+    </div>
+
+    <div class="highlight-filters__form">
+      <ta-form
+        [inputs]="this.highlightForm()"
+        (valid)="this.applyFilters($event)"
+        [askOnDestroy]="true"
+        [canDisplayButton]="false"
+      ></ta-form>
+    </div>
+
+    <div class="highlight-filters__actions">
+      @if (this.showReset() && this.hasActiveFilters()) {
+        <ta-button type="tertiary" size="small" icon="close" (action)="this.reset()">
+          {{ 'grid.form.reset' | translate }}
+        </ta-button>
+      }
+    </div>
+
+    @if (this.showResultCount()) {
+      <div class="highlight-filters__count">
+        <ta-text size="sm">
+          {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}
+        </ta-text>
+      </div>
+    }
+  </div>
+}

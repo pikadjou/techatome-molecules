@@ -21,78 +21,102 @@ Question ou tâche : $ARGUMENTS
 
 ### Composants
 
-- `taLocalIconComponent` — `ta-local-icon` : icônes SVG locales
-- `taMaterialIconComponent` — `ta-material-icon` : icônes Material Design
-- `taFontIconComponent` — `ta-font-icon` : icônes via police de caractères
+- `FontIconComponent` — `ta-font-icon` : icônes via police de caractères (Remix Icon)
+- `MaterialIconComponent` — `ta-material-icon` : icônes Material Design
+- `LocalIconComponent` — `ta-local-icon` : icônes SVG locales (via `TaIconType` enum) — **deprecated**
+- `FlagIconComponent` — `ta-flag-icon` : drapeaux SVG par code langue
 
 ### Services
 
-- `IconsService` — service de gestion des icônes
+- `TaIconsService` — service de gestion des icônes locales (`getIcon(type: TaIconType)`)
 
-### Module
+### Types
 
-- `IconsModule` — module NgModule (deprecated, préférer les composants standalone)
+- `TaIconType` — enum de toutes les icônes SVG locales (Add, Search, Loader, Pdf, Excel, etc.)
 
 ### Helpers
 
-- Helpers pour la gestion et résolution des icônes
+- `isFontIcon(icon)` — vérifie si l'icône est un font icon (string)
+- `isLocalIcon(icon)` — vérifie si l'icône est dans `TaIconType`
+- `getFontIcon(icon)` — résout le nom du font icon
 
 ## Patterns d'utilisation
 
-### Icône Material
+### Font Icon (Remix Icon) — le plus courant
 
 ```typescript
-import { taMaterialIconComponent } from '@ta/icons';
+import { FontIconComponent } from '@ta/icons';
 
 @Component({
   standalone: true,
-  imports: [taMaterialIconComponent],
-  template: `<ta-material-icon icon="home" />`
+  imports: [FontIconComponent],
+  template: `<ta-font-icon name="check-line" type="md"></ta-font-icon>`
 })
 ```
 
-### Icône locale (SVG)
+Inputs : `name` (required, string), `type` (TaSizes, défaut `'md'`)
+
+### Material Icon
 
 ```typescript
-import { taLocalIconComponent } from '@ta/icons';
+import { MaterialIconComponent } from '@ta/icons';
 
 @Component({
   standalone: true,
-  imports: [taLocalIconComponent],
-  template: `<ta-local-icon icon="my-icon" />`
+  imports: [MaterialIconComponent],
+  template: `<ta-material-icon icon="home"></ta-material-icon>`
 })
 ```
 
-### Icône font
+### Local Icon (SVG via TaIconType) — deprecated
 
 ```typescript
-import { taFontIconComponent } from '@ta/icons';
+import { LocalIconComponent, TaIconType } from '@ta/icons';
 
 @Component({
   standalone: true,
-  imports: [taFontIconComponent],
-  template: `<ta-font-icon icon="icon-name" />`
+  imports: [LocalIconComponent],
+  template: `<ta-local-icon [type]="icon" size="md"></ta-local-icon>`
+})
+export class MyComponent {
+  icon = TaIconType.Search;
+}
+```
+
+Inputs : `type` (required, `TaIconType | string`), `size` (`TaSizes | 'xl'`, défaut `'xs'`), `rotation` (boolean, défaut `false`)
+
+### Flag Icon — drapeaux par code langue
+
+```typescript
+import { FlagIconComponent } from '@ta/icons';
+
+@Component({
+  standalone: true,
+  imports: [FlagIconComponent],
+  template: `<ta-flag-icon code="fr" size="sm"></ta-flag-icon>`
 })
 ```
+
+Inputs : `code` (required, string — code langue : `fr`, `en`, `nl`, `es`, `de`, `it`, `pt`), `size` (TaSizes, défaut `'sm'`)
+
+Drapeaux disponibles : `fr`, `en`, `nl`, `es`, `de`, `it`, `pt`. Le composant gère ses propres SVG en interne.
 
 ## Conventions
 
 - Tous les composants sont `standalone: true`
-- Préférer `ta-material-icon` pour les icônes Material, `ta-local-icon` pour les SVG custom
-- Les icônes locales se trouvent dans les assets du projet
+- Préférer `ta-font-icon` pour la majorité des icônes (Remix Icon)
+- Utiliser `ta-flag-icon` pour les drapeaux (pas `ta-local-icon`)
+- `ta-local-icon` est deprecated — ne pas l'utiliser dans les nouveaux composants
 - Le sélecteur suit le pattern `ta-*-icon`
 
 ## Revue de code
 
-- Vérifier que l'import correct est utilisé selon le type d'icône
-- Ne pas utiliser le `IconsModule` deprecated dans les nouveaux composants
-- Vérifier que les imports sont dans le bon ordre (sort-keys sur les objets)
+- Vérifier que `FontIconComponent` est utilisé (pas `LocalIconComponent`) dans le nouveau code
+- Vérifier que les imports sont dans le bon ordre (Angular → External → @ta/ → Local)
+- Pour les drapeaux, utiliser `FlagIconComponent` avec le code langue
 
 ## Création d'un nouveau composant dans @ta/icons
 
-```bash
-ng g component projects/icons/src/lib/components/mon-icon --standalone --prefix ta
-```
-
-1. Exporter depuis `projects/icons/src/lib/components/public-api.ts`
-2. S'assurer que `standalone: true`
+1. Créer dans `projects/icons/src/lib/components/`
+2. Exporter depuis `projects/icons/src/lib/components/public-api.ts`
+3. S'assurer que `standalone: true`

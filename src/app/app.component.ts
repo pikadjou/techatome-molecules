@@ -42,6 +42,7 @@ export class AppComponent {
     { label: "Charts", route: "/charts", icon: "bar_chart" },
     { label: "Utilities", group: true },
     { label: "Utils", route: "/utils", icon: "build" },
+    { label: "User", route: "/user", icon: "person" },
   ];
 
   onThemeChange(event: Event): void {

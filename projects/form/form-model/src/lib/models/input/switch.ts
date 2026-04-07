@@ -8,7 +8,7 @@ import { IInputBase, InputBase } from "./base";
 import { IInputDropdown } from "./dropdown";
 
 export interface IFormSwitch extends IInputBase<unknown> {
-  match: Observable<
+  match?: Observable<
     | { type: "textbox" | "checkbox" | "number" | "datePicker"; prop: unknown }
     | { type: "dropdown"; prop: IInputDropdown<string> }
   >;
@@ -21,13 +21,15 @@ export class InputSwitch extends InputBase<unknown> {
     super(options);
     this.controlType = "switch";
 
-    this._subscriberHandler.registerSubscription(
-      options.match
-        .pipe(
-          tap((match) => Object.assign(this, match.prop)),
-          tap((match) => this.matchtype.set(match.type))
-        )
-        .subscribe()
-    );
+    if (options.match) {
+      this._subscriberHandler.registerSubscription(
+        options.match
+          .pipe(
+            tap((match) => Object.assign(this, match.prop)),
+            tap((match) => this.matchtype.set(match.type))
+          )
+          .subscribe()
+      );
+    }
   }
 }

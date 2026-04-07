@@ -1,0 +1,17 @@
+{
+  "action.close": "Schließen",
+  "action.dismiss": "Verwerfen",
+  "action.viewDetails": "Details anzeigen",
+  "common.error": "Fehler",
+  "common.info": "Information",
+  "common.success": "Erfolg",
+  "common.warning": "Warnung",
+  "inline.label.error": "Ein Fehler ist aufgetreten",
+  "inline.label.info": "Info",
+  "inline.label.success": "Vorgang erfolgreich",
+  "inline.label.warning": "Warnung",
+  "type.error": "Fehler",
+  "type.info": "Information",
+  "type.success": "Erfolg",
+  "type.warning": "Warnung"
+}

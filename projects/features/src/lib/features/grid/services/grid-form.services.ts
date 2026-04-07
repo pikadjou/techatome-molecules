@@ -41,6 +41,38 @@ export class TaGridFormService<T> {
     ];
   }
 
+  public getHighlightedFiltersForm(model: TaGridData<T>): InputBase<any>[] {
+    const keys = Object.keys(model.cols);
+    if (!keys || keys.length === 0) {
+      return [];
+    }
+
+    const children = keys
+      .filter(key => model.cols[key].data.col.highlighted)
+      .map(key => model.cols[key].getInputForm())
+      .filter(isNonNullable)
+      .map(
+        input =>
+          new InputPanel({
+            key: 'panel',
+            class: 'g-col-6',
+            children: [input],
+          })
+      );
+
+    if (children.length === 0) {
+      return [];
+    }
+
+    return [
+      new InputPanel({
+        key: 'highlight-panel',
+        contentClass: 'grid g-space-md',
+        children,
+      }),
+    ];
+  }
+
   public formatFiltersForm(model: TaGridData<T>, data: any): Filter[] {
     return Object.keys(model.cols).reduce<Filter[]>((acc, key) => {
       const filter = model.cols[key].formatInputForm(data);

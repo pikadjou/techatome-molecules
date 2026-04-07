@@ -14,6 +14,7 @@ const FILE_SIZE_UNITS_LONG = [
 
 @Pipe({
   name: "fileSize",
+  standalone: true,
 })
 export class FileSizePipe implements PipeTransform {
   transform(sizeInBytes: number | null, longForm: boolean = false): string {
