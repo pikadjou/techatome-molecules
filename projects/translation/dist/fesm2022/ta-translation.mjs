@@ -104,7 +104,7 @@ class TaTranslationService {
         return this.translateService.get(key, interpolateParams);
     }
     use(lang) {
-        return this.translateService.use(lang);
+        this.translateService.use(lang).subscribe(() => location.reload());
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, deps: [{ token: TRANSLATION_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, providedIn: "root" }); }

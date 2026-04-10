@@ -13,7 +13,7 @@ export declare class TaTranslationService {
     init(): void;
     getLanguage(): string;
     get(key: string | string[], interpolateParams?: Object): import("rxjs").Observable<any>;
-    use(lang: string): import("rxjs").Observable<import("@ngx-translate/core").InterpolatableTranslationObject>;
+    use(lang: string): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaTranslationService, [{ optional: true; }]>;
     static ɵprov: i0.ɵɵInjectableDeclaration<TaTranslationService>;
 }

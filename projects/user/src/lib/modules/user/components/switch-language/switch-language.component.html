@@ -1,5 +1,4 @@
-<ta-loader [isLoading]="this.changeLanguageAsked">
-  @if (this.mode() === 'inline') {
+@if (this.mode() === 'inline') {
     <div class="language-inline">
       @for (language of this.languages; track language.id) {
         <button
@@ -53,4 +52,3 @@
       }
     </div>
   }
-</ta-loader>

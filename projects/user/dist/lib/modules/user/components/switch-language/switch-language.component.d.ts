@@ -10,7 +10,6 @@ export declare class SwitchLanguageComponent {
     private _translateService;
     readonly languages: TaLanguageConfig[];
     activeLanguage: string;
-    changeLanguageAsked: boolean;
     dropdownOpen: boolean;
     toggleDropdown(): void;
     changeLanguage(language: string): void;

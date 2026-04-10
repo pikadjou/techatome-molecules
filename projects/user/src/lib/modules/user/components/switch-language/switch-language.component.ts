@@ -8,7 +8,6 @@ import {
   ListElementComponent,
   ListTagComponent,
   ListTitleComponent,
-  LoaderComponent,
 } from "@ta/ui";
 
 export type TaLanguageConfig = { id: string; name: string };
@@ -35,7 +34,6 @@ export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>(
     ListElementComponent,
     ListTagComponent,
     ListTitleComponent,
-    LoaderComponent,
     NgClass,
     TranslatePipe,
   ],
@@ -47,7 +45,6 @@ export class SwitchLanguageComponent {
   readonly languages = inject(TA_LANGUAGES);
 
   public activeLanguage = this._translateService.getLanguage();
-  public changeLanguageAsked: boolean = false;
   public dropdownOpen = false;
 
   public toggleDropdown() {
@@ -57,7 +54,6 @@ export class SwitchLanguageComponent {
   public changeLanguage(language: string) {
     if (this.activeLanguage !== language) {
       this.activeLanguage = language;
-      this.changeLanguageAsked = true;
       this.dropdownOpen = false;
       this._translateService.use(language);
     }
