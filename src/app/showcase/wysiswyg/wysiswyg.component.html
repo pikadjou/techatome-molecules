@@ -1,0 +1,70 @@
+<app-page-layout title="Wysiswyg Editor">
+  <div class="sections">
+    <!-- Standalone editor + live render -->
+    <section>
+      <ta-title [level]="2">Editor &amp; Render</ta-title>
+      <ta-text size="sm">
+        Standalone editor with live block rendering. Type &#64; to mention a user.
+      </ta-text>
+
+      <div class="editor-render-layout">
+        <div class="editor-pane">
+          <div class="pane-label">Input</div>
+          <ta-cms-editor-input
+            class="form-control"
+            [initValue]="this.sampleBlocks"
+            [users]="this.sampleUsers"
+            [saveOnChange]="true"
+            (saved)="this.onSaved($event)"
+            (changed)="this.onChanged($event)"
+          ></ta-cms-editor-input>
+        </div>
+
+        <div class="render-pane">
+          <div class="pane-label">Render</div>
+          @if (this.editorBlocks().length) {
+            <ta-cms-editor-blocks [blocks]="this.editorBlocks()"></ta-cms-editor-blocks>
+          } @else {
+            <ta-text size="sm" class="empty-hint">Edit content on the left to see the rendered output here.</ta-text>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Form integration -->
+    <section>
+      <ta-title [level]="2">Form Integration</ta-title>
+      <ta-text size="sm">
+        Using InputWysiswyg within ta-form. Includes a pre-filled input via stringValue.
+      </ta-text>
+
+      <div class="form-area">
+        <ta-form [inputs]="this.formInputs" (valid)="this.onFormSubmit($event)"></ta-form>
+      </div>
+
+      @if (this.formResult()) {
+        <div class="result-area">
+          <ta-title [level]="3">Form Output</ta-title>
+          <pre>{{ this.formResult() | json }}</pre>
+        </div>
+      }
+    </section>
+
+    <!-- Max height -->
+    <section>
+      <ta-title [level]="2">Max Height (scrollable)</ta-title>
+      <ta-text size="sm">
+        Editor with maxHeight enabled — content scrolls after 300px.
+      </ta-text>
+
+      <div class="constrained-editor">
+        <ta-cms-editor-input
+          class="form-control"
+          [initValue]="this.sampleBlocks"
+          [maxHeight]="true"
+          [saveOnChange]="false"
+        ></ta-cms-editor-input>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

@@ -1,0 +1,16 @@
+{
+  "address.city": "Stadt",
+  "address.country": "Land",
+  "address.floor": "Stockwerk",
+  "address.number": "Nummer",
+  "address.street": "Straße",
+  "address.zipCode": "Postleitzahl",
+  "field.invalid": "Ungültiger Wert",
+  "field.required": "Dieses Feld ist erforderlich",
+  "save": "Speichern",
+  "validation.email": "Ungültige E-Mail-Adresse",
+  "validation.max": "Maximalwert: {{max}}",
+  "validation.maxLength": "Maximale Länge: {{maxLength}} Zeichen",
+  "validation.min": "Mindestwert: {{min}}",
+  "validation.minLength": "Mindestlänge: {{minLength}} Zeichen"
+}

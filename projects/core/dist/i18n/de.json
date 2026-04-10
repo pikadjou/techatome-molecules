@@ -1,0 +1,20 @@
+{
+  "common.add": "Hinzufügen",
+  "common.cancel": "Abbrechen",
+  "common.delete": "Löschen",
+  "common.edit": "Bearbeiten",
+  "common.export": "Exportieren",
+  "common.filter": "Filtern",
+  "common.import": "Importieren",
+  "common.save": "Speichern",
+  "common.search": "Suchen",
+  "documents.all": "Alle",
+  "documents.delete": "Löschen",
+  "documents.download": "Herunterladen",
+  "documents.mine": "Meine Dokumente",
+  "filter.clear": "Löschen",
+  "filter.validate": "Bestätigen",
+  "messages.error": "Ein Fehler ist aufgetreten",
+  "messages.loading": "Wird geladen...",
+  "messages.success": "Vorgang erfolgreich"
+}

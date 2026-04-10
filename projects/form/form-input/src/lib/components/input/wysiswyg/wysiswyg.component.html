@@ -9,6 +9,7 @@
   <ta-cms-editor-input
     class="form-control"
     [initValue]="this.input.value"
+    [enabledTools]="this.input.enabledTools"
     (saved)="this.set($event)"
     [saveOnChange]="true"
   >

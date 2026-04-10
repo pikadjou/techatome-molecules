@@ -81,6 +81,13 @@ export const routes: Routes = [
       import("./showcase/form/form.component").then((c) => c.FormPage),
   },
   {
+    path: "wysiswyg",
+    loadComponent: () =>
+      import("./showcase/wysiswyg/wysiswyg.component").then(
+        (c) => c.WysiswygPage,
+      ),
+  },
+  {
     path: "grid",
     loadComponent: () =>
       import("./showcase/grid/grid.component").then((c) => c.GridPage),

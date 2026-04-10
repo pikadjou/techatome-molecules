@@ -466,59 +466,59 @@ var editorjs = {
 			ui: {
 				blockTunes: {
 					toggler: {
-						"Click to tune": "Click to tune",
-						"or drag to move": "or drag to move"
+						"Click to tune": "Klik om aan te passen",
+						"or drag to move": "of sleep om te verplaatsen"
 					}
 				},
 				inlineToolbar: {
 					converter: {
-						"Convert to": "Convert to"
+						"Convert to": "Converteren naar"
 					}
 				},
 				toolbar: {
 					toolbox: {
-						Add: "Add"
+						Add: "Toevoegen"
 					}
 				}
 			},
 			toolNames: {
-				Text: "Text",
-				Heading: "Heading",
-				List: "List",
-				Warning: "Warning",
-				Checklist: "Checklist",
-				Quote: "Quote",
+				Text: "Tekst",
+				Heading: "Kop",
+				List: "Lijst",
+				Warning: "Waarschuwing",
+				Checklist: "Controlelijst",
+				Quote: "Citaat",
 				Code: "Code",
-				Delimiter: "Delimiter",
-				"Raw HTML": "Raw HTML",
-				Table: "Table",
+				Delimiter: "Scheidingslijn",
+				"Raw HTML": "Ruwe HTML",
+				Table: "Tabel",
 				Link: "Link",
-				Marker: "Marker",
-				Bold: "Bold",
-				Italic: "Italic",
-				InlineCode: "InlineCode"
+				Marker: "Markering",
+				Bold: "Vet",
+				Italic: "Cursief",
+				InlineCode: "Inline code"
 			},
 			tools: {
 				warning: {
-					Title: "Title",
-					Message: "Message"
+					Title: "Titel",
+					Message: "Bericht"
 				},
 				link: {
-					"Add a link": "Add a link"
+					"Add a link": "Een link toevoegen"
 				},
 				stub: {
-					"The block can not be displayed correctly.": "The block can not be displayed correctly."
+					"The block can not be displayed correctly.": "Het blok kan niet correct worden weergegeven."
 				}
 			},
 			blockTunes: {
 				"delete": {
-					Delete: "Delete"
+					Delete: "Verwijderen"
 				},
 				moveUp: {
-					"Move up": "Move up"
+					"Move up": "Omhoog"
 				},
 				moveDown: {
-					"Move down": "Move down"
+					"Move down": "Omlaag"
 				}
 			}
 		}
@@ -534,6 +534,16 @@ var nl$1 = /*#__PURE__*/Object.freeze({
     editorjs: editorjs
 });
 
+const EDITOR_ALL_TOOLS = [
+    "header",
+    "list",
+    "quote",
+    "delimiter",
+    "warning",
+    "color",
+    "image",
+    "mention",
+];
 class EditorInputComponent extends TaBaseComponent {
     constructor() {
         super();
@@ -544,6 +554,7 @@ class EditorInputComponent extends TaBaseComponent {
         this.users = input([]);
         this.saveOnChange = input(false);
         this.maxHeight = input(false);
+        this.enabledTools = input(EDITOR_ALL_TOOLS);
         this.changed = new EventEmitter();
         this.saved = new EventEmitter();
         this._translationService = inject(TaTranslationService);
@@ -632,44 +643,65 @@ class EditorInputComponent extends TaBaseComponent {
     }
     init() {
         const translations = this._getTranslation();
+        const tools = this._buildTools(translations);
         return new EditorJS({
             holder: this.editorjs.nativeElement,
             minHeight: 100,
             data: { blocks: this.initValue() },
             placeholder: translations["placeholder"],
-            tools: {
-                header: Header,
-                list: List,
-                quote: Quote,
-                delimiter: Delimiter,
-                warning: Warning,
-                TextColor: {
-                    class: ColorTool,
-                    config: {
-                        backgroundColorLabel: translations["colortool.backgroundColorLabel"],
-                        frontColorLabel: translations["colortool.frontColorLabel"],
-                    },
-                },
-                image: {
-                    class: ImageTool,
-                    config: {
-                        uploader: {
-                            uploadByFile: async (file) => {
-                                return this.uploadByFile(file);
-                            },
-                        },
-                    },
-                },
-                mention: {
-                    class: TagTool,
-                    config: {
-                        users: this.users(),
-                    },
-                },
-            },
+            tools,
             onChange: this._onChange,
             ...translations,
         });
+    }
+    _buildTools(translations) {
+        const enabled = new Set(this.enabledTools());
+        const tools = {};
+        if (enabled.has("header")) {
+            tools["header"] = Header;
+        }
+        if (enabled.has("list")) {
+            tools["list"] = List;
+        }
+        if (enabled.has("quote")) {
+            tools["quote"] = Quote;
+        }
+        if (enabled.has("delimiter")) {
+            tools["delimiter"] = Delimiter;
+        }
+        if (enabled.has("warning")) {
+            tools["warning"] = Warning;
+        }
+        if (enabled.has("color")) {
+            tools["TextColor"] = {
+                class: ColorTool,
+                config: {
+                    backgroundColorLabel: translations["colortool.backgroundColorLabel"],
+                    frontColorLabel: translations["colortool.frontColorLabel"],
+                },
+            };
+        }
+        if (enabled.has("image")) {
+            tools["image"] = {
+                class: ImageTool,
+                config: {
+                    uploader: {
+                        uploadByFile: async (file) => {
+                            return this.uploadByFile(file);
+                        },
+                    },
+                },
+            };
+        }
+        if (enabled.has("mention")) {
+            tools["mention"] = {
+                class: TagTool,
+                config: {
+                    users: this.users(),
+                },
+            };
+        }
+        return tools;
     }
     _getTranslation() {
         if (!isNonNullable(this._translationService.getLanguage())) {
@@ -720,7 +752,7 @@ class EditorInputComponent extends TaBaseComponent {
         return [...html.matchAll(regex)].map((match) => match[1]);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null }, enabledTools: { classPropertyName: "enabledTools", publicName: "enabledTools", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}:host ::ng-deep .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid #000;text-align:center;justify-content:center}:host ::ng-deep .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, decorators: [{
             type: Component,
@@ -751,5 +783,5 @@ const convertBlocksToHtml = (blocks) => {
  * Generated bundle index. Do not edit.
  */
 
-export { BlockTextComponent, EditorInputComponent, convertBlocksToHtml };
+export { BlockTextComponent, EDITOR_ALL_TOOLS, EditorInputComponent, convertBlocksToHtml };
 //# sourceMappingURL=ta-wysiswyg.mjs.map

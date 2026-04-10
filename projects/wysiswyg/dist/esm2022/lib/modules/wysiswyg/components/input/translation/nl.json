@@ -5,59 +5,59 @@
                 "ui": {
                     "blockTunes": {
                         "toggler": {
-                            "Click to tune": "Click to tune",
-                            "or drag to move": "or drag to move"
+                            "Click to tune": "Klik om aan te passen",
+                            "or drag to move": "of sleep om te verplaatsen"
                         }
                     },
                     "inlineToolbar": {
                         "converter": {
-                            "Convert to": "Convert to"
+                            "Convert to": "Converteren naar"
                         }
                     },
                     "toolbar": {
                         "toolbox": {
-                            "Add": "Add"
+                            "Add": "Toevoegen"
                         }
                     }
                 },
                 "toolNames": {
-                    "Text": "Text",
-                    "Heading": "Heading",
-                    "List": "List",
-                    "Warning": "Warning",
-                    "Checklist": "Checklist",
-                    "Quote": "Quote",
+                    "Text": "Tekst",
+                    "Heading": "Kop",
+                    "List": "Lijst",
+                    "Warning": "Waarschuwing",
+                    "Checklist": "Controlelijst",
+                    "Quote": "Citaat",
                     "Code": "Code",
-                    "Delimiter": "Delimiter",
-                    "Raw HTML": "Raw HTML",
-                    "Table": "Table",
+                    "Delimiter": "Scheidingslijn",
+                    "Raw HTML": "Ruwe HTML",
+                    "Table": "Tabel",
                     "Link": "Link",
-                    "Marker": "Marker",
-                    "Bold": "Bold",
-                    "Italic": "Italic",
-                    "InlineCode": "InlineCode"
+                    "Marker": "Markering",
+                    "Bold": "Vet",
+                    "Italic": "Cursief",
+                    "InlineCode": "Inline code"
                 },
                 "tools": {
                     "warning": {
-                        "Title": "Title",
-                        "Message": "Message"
+                        "Title": "Titel",
+                        "Message": "Bericht"
                     },
                     "link": {
-                        "Add a link": "Add a link"
+                        "Add a link": "Een link toevoegen"
                     },
                     "stub": {
-                        "The block can not be displayed correctly.": "The block can not be displayed correctly."
+                        "The block can not be displayed correctly.": "Het blok kan niet correct worden weergegeven."
                     }
                 },
                 "blockTunes": {
                     "delete": {
-                        "Delete": "Delete"
+                        "Delete": "Verwijderen"
                     },
                     "moveUp": {
-                        "Move up": "Move up"
+                        "Move up": "Omhoog"
                     },
                     "moveDown": {
-                        "Move down": "Move down"
+                        "Move down": "Omlaag"
                     }
                 }
             }

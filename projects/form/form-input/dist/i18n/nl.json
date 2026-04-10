@@ -1,0 +1,23 @@
+{
+  "button.clear": "Wissen",
+  "button.select": "Selecteren",
+  "dropdown.novalue": "Geen waarde",
+  "filter.clear": "Wissen",
+  "logo.add": "Een omslagafbeelding toevoegen",
+  "logo.modal.cancel": "Annuleren",
+  "logo.modal.choose": "Een bestand kiezen",
+  "logo.modal.clear": "Selectie wissen",
+  "logo.modal.confirm": "Bevestigen",
+  "logo.modal.current-alt": "Huidig logo",
+  "logo.modal.current-description": "Huidige selectie",
+  "logo.modal.title": "Een logo selecteren",
+  "logo.modify": "Wijzigen",
+  "logo.remove": "Verwijderen",
+  "placeholder.date": "Selecteer een datum...",
+  "placeholder.number": "Voer een nummer in...",
+  "placeholder.select": "Selecteer een optie...",
+  "placeholder.text": "Voer tekst in...",
+  "upload.add": "Een document toevoegen",
+  "upload.confirm": "Bevestigen",
+  "upload.dragndrop": "Sleep uw bestanden hierheen of klik om te uploaden"
+}

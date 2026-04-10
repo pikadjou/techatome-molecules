@@ -1,0 +1,23 @@
+{
+  "button.clear": "Löschen",
+  "button.select": "Auswählen",
+  "dropdown.novalue": "Kein Wert",
+  "filter.clear": "Löschen",
+  "logo.add": "Ein Titelbild hinzufügen",
+  "logo.modal.cancel": "Abbrechen",
+  "logo.modal.choose": "Eine Datei auswählen",
+  "logo.modal.clear": "Auswahl löschen",
+  "logo.modal.confirm": "Bestätigen",
+  "logo.modal.current-alt": "Aktuelles Logo",
+  "logo.modal.current-description": "Aktuelle Auswahl",
+  "logo.modal.title": "Ein Logo auswählen",
+  "logo.modify": "Ändern",
+  "logo.remove": "Entfernen",
+  "placeholder.date": "Datum auswählen...",
+  "placeholder.number": "Zahl eingeben...",
+  "placeholder.select": "Option auswählen...",
+  "placeholder.text": "Text eingeben...",
+  "upload.add": "Ein Dokument hinzufügen",
+  "upload.confirm": "Bestätigen",
+  "upload.dragndrop": "Dateien hierher ziehen oder klicken zum Hochladen"
+}

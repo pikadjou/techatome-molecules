@@ -2,6 +2,7 @@ import { signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, of, distinctUntilChanged } from 'rxjs';
 import { SubscriberHandler, Culture, extractEnum } from '@ta/utils';
+import { EDITOR_ALL_TOOLS } from '@ta/wysiswyg';
 import { tap } from 'rxjs/operators';
 import { Logger } from '@ta/server';
 
@@ -278,6 +279,7 @@ class InputWysiswyg extends InputBase {
     constructor(options = {}) {
         super(options);
         this.controlType = "wysiswyg";
+        this.enabledTools = options.enabledTools ?? EDITOR_ALL_TOOLS;
         if (options.stringValue) {
             try {
                 this.value = JSON.parse(options.stringValue);

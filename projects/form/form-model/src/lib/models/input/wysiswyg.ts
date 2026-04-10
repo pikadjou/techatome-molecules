@@ -1,16 +1,19 @@
-import { WysiswgBlockData } from "@ta/wysiswyg";
+import { EditorToolType, EDITOR_ALL_TOOLS, WysiswgBlockData } from "@ta/wysiswyg";
 
 import { IInputBase, InputBase } from "./base";
 
 export interface IWysiswyg extends IInputBase<WysiswgBlockData[]> {
   stringValue?: string | null;
+  enabledTools?: EditorToolType[];
 }
 
 export class InputWysiswyg extends InputBase<WysiswgBlockData[] | null> {
   override controlType = "wysiswyg";
+  enabledTools: EditorToolType[];
 
   constructor(options: IWysiswyg = {}) {
     super(options);
+    this.enabledTools = options.enabledTools ?? EDITOR_ALL_TOOLS;
     if (options.stringValue) {
       try {
         this.value = JSON.parse(options.stringValue);

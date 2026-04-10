@@ -1,0 +1,85 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xxl);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+}
+
+// --- Editor + Render side by side ---
+.editor-render-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: common.get-var(space, lg);
+  align-items: stretch;
+}
+
+.editor-pane,
+.render-pane {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, md);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, primary);
+  min-height: 300px;
+}
+
+.pane-label {
+  @include fonts.fontSizeBody(sm);
+  font-weight: 600;
+  color: common.get-var(text, secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.empty-hint {
+  color: common.get-var(text, tertiary);
+  font-style: italic;
+}
+
+// --- Form area ---
+.form-area {
+  max-width: 800px;
+}
+
+.result-area {
+  max-width: 800px;
+  padding: common.get-var(space, md);
+  background: common.get-var(surface, secondary);
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, primary);
+
+  pre {
+    margin: common.get-var(space, sm) 0 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 12px;
+    color: common.get-var(text, secondary);
+  }
+}
+
+// --- Max height demo ---
+.constrained-editor {
+  max-width: 800px;
+}
+
+// form-control style for standalone editors
+:host ::ng-deep .form-control {
+  @include fonts.fontSizeBody(md);
+  border-radius: common.get-var(radius, rounded);
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  outline: none;
+  border: 1px solid common.get-var(neutral, 300);
+  background-color: common.get-var(neutral, white);
+  width: 100%;
+  box-sizing: border-box;
+}

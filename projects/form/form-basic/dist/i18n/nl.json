@@ -1,0 +1,16 @@
+{
+  "address.city": "Stad",
+  "address.country": "Land",
+  "address.floor": "Verdieping",
+  "address.number": "Nummer",
+  "address.street": "Straat",
+  "address.zipCode": "Postcode",
+  "field.invalid": "Ongeldige waarde",
+  "field.required": "Dit veld is verplicht",
+  "save": "Opslaan",
+  "validation.email": "Ongeldig e-mailadres",
+  "validation.max": "Maximumwaarde: {{max}}",
+  "validation.maxLength": "Maximale lengte: {{maxLength}} tekens",
+  "validation.min": "Minimumwaarde: {{min}}",
+  "validation.minLength": "Minimale lengte: {{minLength}} tekens"
+}

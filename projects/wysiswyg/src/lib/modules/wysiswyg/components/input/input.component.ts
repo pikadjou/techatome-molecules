@@ -36,6 +36,28 @@ export type EditorInputSavedData = {
   blocks: WysiswgBlockData[];
   tags: string[];
 };
+
+export type EditorToolType =
+  | "header"
+  | "list"
+  | "quote"
+  | "delimiter"
+  | "warning"
+  | "color"
+  | "image"
+  | "mention";
+
+export const EDITOR_ALL_TOOLS: EditorToolType[] = [
+  "header",
+  "list",
+  "quote",
+  "delimiter",
+  "warning",
+  "color",
+  "image",
+  "mention",
+];
+
 @Component({
   selector: "ta-cms-editor-input",
   templateUrl: "./input.component.html",
@@ -62,6 +84,8 @@ export class EditorInputComponent
   saveOnChange = input<boolean>(false);
 
   maxHeight = input<boolean>(false);
+
+  enabledTools = input<EditorToolType[]>(EDITOR_ALL_TOOLS);
 
   @Output()
   changed = new EventEmitter<{ blocks: WysiswgBlockData[] }>();
@@ -147,46 +171,70 @@ export class EditorInputComponent
   }
   public init(): EditorJS {
     const translations = this._getTranslation();
+    const tools = this._buildTools(translations);
 
     return new EditorJS({
       holder: this.editorjs.nativeElement,
       minHeight: 100,
       data: { blocks: this.initValue() },
       placeholder: translations["placeholder"],
-      tools: {
-        header: Header,
-        list: List,
-        quote: Quote,
-        delimiter: Delimiter,
-        warning: Warning,
-        TextColor: {
-          class: ColorTool,
-          config: {
-            backgroundColorLabel:
-              translations["colortool.backgroundColorLabel"],
-            frontColorLabel: translations["colortool.frontColorLabel"],
-          },
-        },
-        image: {
-          class: ImageTool,
-          config: {
-            uploader: {
-              uploadByFile: async (file: File) => {
-                return this.uploadByFile(file);
-              },
-            },
-          },
-        },
-        mention: {
-          class: TagTool,
-          config: {
-            users: this.users(),
-          },
-        },
-      },
+      tools,
       onChange: this._onChange,
       ...translations,
     });
+  }
+
+  private _buildTools(translations: Record<string, any>): Record<string, any> {
+    const enabled = new Set(this.enabledTools());
+    const tools: Record<string, any> = {};
+
+    if (enabled.has("header")) {
+      tools["header"] = Header;
+    }
+    if (enabled.has("list")) {
+      tools["list"] = List;
+    }
+    if (enabled.has("quote")) {
+      tools["quote"] = Quote;
+    }
+    if (enabled.has("delimiter")) {
+      tools["delimiter"] = Delimiter;
+    }
+    if (enabled.has("warning")) {
+      tools["warning"] = Warning;
+    }
+    if (enabled.has("color")) {
+      tools["TextColor"] = {
+        class: ColorTool,
+        config: {
+          backgroundColorLabel:
+            translations["colortool.backgroundColorLabel"],
+          frontColorLabel: translations["colortool.frontColorLabel"],
+        },
+      };
+    }
+    if (enabled.has("image")) {
+      tools["image"] = {
+        class: ImageTool,
+        config: {
+          uploader: {
+            uploadByFile: async (file: File) => {
+              return this.uploadByFile(file);
+            },
+          },
+        },
+      };
+    }
+    if (enabled.has("mention")) {
+      tools["mention"] = {
+        class: TagTool,
+        config: {
+          users: this.users(),
+        },
+      };
+    }
+
+    return tools;
   }
 
   public uploadByFile = async (file: File) => {

@@ -38,6 +38,7 @@ export class AppComponent {
     { label: "Container", route: "/container", icon: "check_box_outline_blank" },
     { label: "Data", group: true },
     { label: "Form", route: "/form", icon: "edit_note" },
+    { label: "Wysiswyg", route: "/wysiswyg", icon: "edit_document" },
     { label: "Grid", route: "/grid", icon: "table_chart" },
     { label: "Charts", route: "/charts", icon: "bar_chart" },
     { label: "Utilities", group: true },
