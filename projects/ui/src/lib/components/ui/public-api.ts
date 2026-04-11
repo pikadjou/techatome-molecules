@@ -13,6 +13,7 @@ export * from './button/button.component';
 export * from './button/copy-link/copy-link-button.component';
 export * from './button/dual/dual-button.component';
 export * from './button/itsme/itsme-button.component';
+export * from './button/veriff/veriff-button.component';
 export * from './button/messenger/messenger-button.component';
 export * from './button/share/share-button.component';
 export * from './button/tool/tool.component';
