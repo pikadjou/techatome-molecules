@@ -54,11 +54,11 @@ class TaAbstractTranslationModule {
     }
 }
 
-const TRANSLATION_CONFIG = "config_translation";
+const TRANSLATION_CONFIG = 'config_translation';
 class TaTranslationService {
     constructor(_config = {
-        default: "fr",
-        supportedLanguages: ["fr"],
+        default: 'fr',
+        supportedLanguages: ['fr'],
     }) {
         this._config = _config;
         this.translateService = inject(TranslateService);
@@ -66,11 +66,8 @@ class TaTranslationService {
         // this language will be used as a fallback when a translation isn't found in the current language
         this.translateService.setDefaultLang(this._config.default);
         // the lang to use, if the lang isn't available, it will use the current loader to get them
-        let lang = SessionStorage.get("lang") ??
-            this.translateService.getBrowserLang() ??
-            this._config.default;
-        if (!lang ||
-            !this._config.supportedLanguages.find((langId) => langId === lang)) {
+        let lang = SessionStorage.get('lang') ?? this.translateService.getBrowserLang() ?? this._config.default;
+        if (!lang || !this._config.supportedLanguages.find(langId => langId === lang)) {
             lang = this._config.default;
         }
         this.translateService.use(lang);
@@ -79,20 +76,20 @@ class TaTranslationService {
         // tap(data => console.log('reload lang', data))
         )
             .subscribe({
-            next: (translations) => this.translateService.onTranslationChange.emit({
+            next: translations => this.translateService.onTranslationChange.emit({
                 lang: this.translateService.currentLang,
                 translations,
             }),
         });
         this.translateService.onLangChange.subscribe(({ lang }) => {
-            if (!SessionStorage.has("lang")) {
-                SessionStorage.set("lang", lang);
+            if (!SessionStorage.has('lang')) {
+                SessionStorage.set('lang', lang);
                 return;
             }
-            if (lang === SessionStorage.get("lang")) {
+            if (lang === SessionStorage.get('lang')) {
                 return;
             }
-            SessionStorage.set("lang", lang);
+            SessionStorage.set('lang', lang);
             location.reload();
         });
     }
@@ -104,15 +101,15 @@ class TaTranslationService {
         return this.translateService.get(key, interpolateParams);
     }
     use(lang) {
-        this.translateService.use(lang).subscribe(() => location.reload());
+        return this.translateService.use(lang);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, deps: [{ token: TRANSLATION_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, providedIn: "root" }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, decorators: [{
             type: Injectable,
             args: [{
-                    providedIn: "root",
+                    providedIn: 'root',
                 }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Optional

@@ -77,6 +77,6 @@ export class TaTranslationService {
   }
 
   public use(lang: string) {
-    this.translateService.use(lang);
+    return this.translateService.use(lang);
   }
 }
