@@ -4,6 +4,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { distinct, filter, tap } from 'rxjs';
 
 import { Logger } from '@ta/server';
+import { TaTranslationService } from '@ta/translation';
 import { isNonNullable } from '@ta/utils';
 
 import { TaAuthService } from '../../user/services/auth.service';
@@ -18,6 +19,7 @@ export class TaAuth0Service extends TaAuthService {
   }
   private _auth = inject(AuthService);
   private _userService = inject(TA_USER_SERVICE);
+  private _translation = inject(TaTranslationService);
 
   constructor() {
     super();
@@ -75,12 +77,17 @@ export class TaAuth0Service extends TaAuthService {
 
   public load() {}
   public login() {
-    this._auth.loginWithRedirect();
+    this._auth.loginWithRedirect({
+      authorizationParams: {
+        ui_locales: this._translation.getLanguage(),
+      },
+    });
   }
   public signin() {
     this._auth.loginWithRedirect({
       authorizationParams: {
         screen_hint: 'signup',
+        ui_locales: this._translation.getLanguage(),
       },
     });
   }

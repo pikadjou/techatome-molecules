@@ -90,6 +90,9 @@ export class InputAddress extends InputBase<Partial<IAddressValue>> {
   }
 
   public static formatAddressForm(data: any) {
+    if (!data) {
+      return null;
+    }
     return {
       street: data[EAddressValues.street],
       number: data[EAddressValues.number],

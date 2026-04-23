@@ -549,6 +549,9 @@ class InputAddress extends InputBase {
         this.value = data;
     }
     static formatAddressForm(data) {
+        if (!data) {
+            return null;
+        }
         return {
             street: data[EAddressValues.street],
             number: data[EAddressValues.number],

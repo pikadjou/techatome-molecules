@@ -40,5 +40,5 @@ export declare class InputAddress extends InputBase<Partial<IAddressValue>> {
         city: any;
         zipCode: any;
         country: any;
-    };
+    } | null;
 }

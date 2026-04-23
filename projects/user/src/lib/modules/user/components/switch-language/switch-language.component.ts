@@ -8,6 +8,8 @@ import {
   ListElementComponent,
   ListTagComponent,
   ListTitleComponent,
+  OverlayMenuConfig,
+  TaOverlayPanelComponent,
 } from "@ta/ui";
 
 export type TaLanguageConfig = { id: string; name: string };
@@ -35,17 +37,19 @@ export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>(
     ListTagComponent,
     ListTitleComponent,
     NgClass,
+    TaOverlayPanelComponent,
     TranslatePipe,
   ],
 })
 export class SwitchLanguageComponent {
-  mode = input<"inline" | "dropdown">("inline");
+  mode = input<"inline" | "dropdown" | "modal">("inline");
 
   private _translateService = inject(TaTranslationService);
   readonly languages = inject(TA_LANGUAGES);
 
   public activeLanguage = this._translateService.getLanguage();
   public dropdownOpen = false;
+  public panelConfig: OverlayMenuConfig = { matchTriggerWidth: false };
 
   public toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;

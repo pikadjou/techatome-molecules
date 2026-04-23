@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 
 import { TranslateLoader } from "@ngx-translate/core";
-import { Observable, forkJoin, map } from "rxjs";
+import { Observable, forkJoin, map, of } from "rxjs";
 
 import { TaTranslationRegistryService } from "./translation-registry.service";
 
@@ -10,7 +10,11 @@ export class TaTranslationLoader implements TranslateLoader {
   constructor() {}
 
   getTranslation(lang: string): Observable<object> {
-    return forkJoin([...this._registry.getTranslations(lang)]).pipe(
+    const sources = this._registry.getTranslations(lang);
+    if (sources.length === 0) {
+      return of({});
+    }
+    return forkJoin(sources).pipe(
       map((translations) =>
         translations.reduce<object>((acc, translation) => {
           if (!translation) {

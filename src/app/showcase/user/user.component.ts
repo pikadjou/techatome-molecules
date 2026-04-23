@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
 
 import { TextComponent, TitleComponent } from "@ta/ui";
+import { Menu, MenuBase, NavigationComponent } from "@ta/menu";
 import {
   SwitchLanguageComponent,
   SwitchLanguageCtaComponent,
@@ -13,6 +14,7 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
   standalone: true,
   selector: "",
   imports: [
+    NavigationComponent,
     PageLayoutComponent,
     SwitchLanguageComponent,
     SwitchLanguageCtaComponent,
@@ -26,7 +28,6 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
         { id: "fr", name: "Français" },
         { id: "nl", name: "Nederlands" },
         { id: "en", name: "English" },
-        { id: "es", name: "Español" },
       ],
     },
   ],
@@ -34,4 +35,15 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
   styleUrl: "./user.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserPage {}
+export class UserPage {
+  activeTab = signal<string>("inline");
+
+  tabMenu = new Menu({
+    elements: [
+      new MenuBase({ key: "inline", label: "Inline", defaultOpen: true, callback: () => this.activeTab.set("inline") }),
+      new MenuBase({ key: "dropdown", label: "Dropdown", callback: () => this.activeTab.set("dropdown") }),
+      new MenuBase({ key: "modal", label: "Modal (Overlay)", callback: () => this.activeTab.set("modal") }),
+      new MenuBase({ key: "cta", label: "CTA Wrapper", callback: () => this.activeTab.set("cta") }),
+    ],
+  });
+}

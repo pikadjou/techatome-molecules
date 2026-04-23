@@ -2,8 +2,8 @@ import { TranslateService, provideTranslateService, TranslateLoader } from '@ngx
 export { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import * as i0 from '@angular/core';
 import { Injectable, inject, Optional, Inject, InjectionToken, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
-import { Subject, BehaviorSubject, debounceTime, mergeMap, map, forkJoin } from 'rxjs';
-import { SessionStorage } from 'storage-manager-js';
+import { Subject, BehaviorSubject, debounceTime, mergeMap, map, of, forkJoin } from 'rxjs';
+import { LocalStorage } from 'storage-manager-js';
 import { HttpClient } from '@angular/common/http';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService } from '@ta/server';
 
@@ -66,7 +66,7 @@ class TaTranslationService {
         // this language will be used as a fallback when a translation isn't found in the current language
         this.translateService.setDefaultLang(this._config.default);
         // the lang to use, if the lang isn't available, it will use the current loader to get them
-        let lang = SessionStorage.get('lang') ?? this.translateService.getBrowserLang() ?? this._config.default;
+        let lang = LocalStorage.get('lang') ?? this.translateService.getBrowserLang() ?? this._config.default;
         if (!lang || !this._config.supportedLanguages.find(langId => langId === lang)) {
             lang = this._config.default;
         }
@@ -82,14 +82,14 @@ class TaTranslationService {
             }),
         });
         this.translateService.onLangChange.subscribe(({ lang }) => {
-            if (!SessionStorage.has('lang')) {
-                SessionStorage.set('lang', lang);
+            if (!LocalStorage.has('lang')) {
+                LocalStorage.set('lang', lang);
                 return;
             }
-            if (lang === SessionStorage.get('lang')) {
+            if (lang === LocalStorage.get('lang')) {
                 return;
             }
-            SessionStorage.set('lang', lang);
+            LocalStorage.set('lang', lang);
             location.reload();
         });
     }
@@ -215,7 +215,11 @@ class TaTranslationLoader {
         this._registry = inject(TaTranslationRegistryService);
     }
     getTranslation(lang) {
-        return forkJoin([...this._registry.getTranslations(lang)]).pipe(map((translations) => translations.reduce((acc, translation) => {
+        const sources = this._registry.getTranslations(lang);
+        if (sources.length === 0) {
+            return of({});
+        }
+        return forkJoin(sources).pipe(map((translations) => translations.reduce((acc, translation) => {
             if (!translation) {
                 return acc;
             }

@@ -1,4 +1,5 @@
 import { InjectionToken } from "@angular/core";
+import { OverlayMenuConfig } from "@ta/ui";
 import * as i0 from "@angular/core";
 export type TaLanguageConfig = {
     id: string;
@@ -6,11 +7,12 @@ export type TaLanguageConfig = {
 };
 export declare const TA_LANGUAGES: InjectionToken<TaLanguageConfig[]>;
 export declare class SwitchLanguageComponent {
-    mode: import("@angular/core").InputSignal<"inline" | "dropdown">;
+    mode: import("@angular/core").InputSignal<"inline" | "dropdown" | "modal">;
     private _translateService;
     readonly languages: TaLanguageConfig[];
     activeLanguage: string;
     dropdownOpen: boolean;
+    panelConfig: OverlayMenuConfig;
     toggleDropdown(): void;
     changeLanguage(language: string): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<SwitchLanguageComponent, never>;

@@ -19,7 +19,7 @@ export declare class ButtonComponent {
      */
     options: import("@angular/core").InputSignal<{
         class?: string | undefined;
-        circular?: boolean | "small" | "big" | undefined;
+        circular?: boolean | "big" | "small" | undefined;
         border?: boolean | undefined;
     } | null>;
     stopPropagationActivation: import("@angular/core").InputSignal<boolean>;
