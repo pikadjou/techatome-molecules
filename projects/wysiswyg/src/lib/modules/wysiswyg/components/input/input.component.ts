@@ -87,6 +87,8 @@ export class EditorInputComponent
 
   enabledTools = input<EditorToolType[]>(EDITOR_ALL_TOOLS);
 
+  placeholder = input<string>();
+
   @Output()
   changed = new EventEmitter<{ blocks: WysiswgBlockData[] }>();
 
@@ -177,7 +179,7 @@ export class EditorInputComponent
       holder: this.editorjs.nativeElement,
       minHeight: 100,
       data: { blocks: this.initValue() },
-      placeholder: translations["placeholder"],
+      placeholder: this.placeholder() ?? translations["placeholder"],
       tools,
       onChange: this._onChange,
       ...translations,

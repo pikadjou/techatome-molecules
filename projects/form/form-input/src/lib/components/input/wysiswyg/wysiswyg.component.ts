@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { InputWysiswyg } from "@ta/form-model";
+import { TranslatePipe } from "@ta/translation";
 import { EditorInputComponent, EditorInputSavedData } from "@ta/wysiswyg";
 
 import { TaAbstractInputComponent } from "../../abstract.component";
@@ -12,9 +13,8 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
   templateUrl: "./wysiswyg.component.html",
   styleUrls: ["./wysiswyg.component.scss"],
   standalone: true,
-  imports: [EditorInputComponent, InputLayoutComponent, ReactiveFormsModule],
+  imports: [EditorInputComponent, InputLayoutComponent, ReactiveFormsModule, TranslatePipe],
 })
-export class WysiswygComponent extends TaAbstractInputComponent<InputWysiswyg> {
   public set(value: EditorInputSavedData) {
     this.input.value = value.blocks;
   }
