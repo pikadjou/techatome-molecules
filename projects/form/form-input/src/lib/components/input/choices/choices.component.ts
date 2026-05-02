@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,
   Observable,
+  Subject,
   combineLatest,
   concatMap,
   debounceTime,
@@ -86,7 +87,7 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
 
   public bOptions$ = new BehaviorSubject<InputChoicesOption[]>([]);
 
-  readonly searchFocus = new BehaviorSubject<void>(undefined);
+  readonly searchFocus = new Subject<void>();
 
   constructor() {
     super();
