@@ -7,7 +7,9 @@
   padding: common.get-var(space, sm) common.get-var(space, xs);
   @include fonts.fontSizeBody(xs, true);
 
-  border-radius: 6px;
+  border-radius: common.get-var(radius, minimal);
+  font-weight: 600;
+  letter-spacing: 0.03em;
 
   .value {
     white-space: nowrap;

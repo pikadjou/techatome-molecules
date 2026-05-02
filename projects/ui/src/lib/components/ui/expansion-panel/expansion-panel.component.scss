@@ -8,14 +8,15 @@
   .mat-expansion-panel {
     box-shadow: none;
     border-radius: 0px !important;
-    border-bottom: 1px solid common.get-var(neutral, 400);
+    border-bottom: 1px solid common.get-var(border, tertiary);
     padding: common.get-var(space, sm) 0;
-
     background-color: common.get-var(surface, primary);
+    transition: box-shadow common.get-var(transition, base),
+                border-radius common.get-var(transition, base);
 
     &.mat-expanded {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: common.get-var(space, xs) !important;
+      box-shadow: common.get-var(shadow, black, md);
+      border-radius: common.get-var(radius, rounded) !important;
     }
   }
   .mat-expansion-panel-header,

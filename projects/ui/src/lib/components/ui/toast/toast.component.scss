@@ -2,26 +2,24 @@
 @use "ta/utils/mixins/common";
 
 .card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: common.get-var(space, md);
+  box-shadow: common.get-var(shadow, black, md);
+  border-radius: common.get-var(radius, rounded);
   overflow: hidden;
-
   padding: common.get-var(space, lg);
   background-color: common.get-var(surface, primary);
   color: common.get-var(text, primary);
-
   @include fonts.fontSizeBody(md);
 
   &.success {
-    border: 1px solid common.get-var(semantic-token, success);
+    border-left: 4px solid common.get-var(semantic-token, success);
   }
   &.danger {
-    border: 1px solid common.get-var(semantic-token, alert);
+    border-left: 4px solid common.get-var(semantic-token, alert);
   }
   &.warning {
-    border: 1px solid common.get-var(semantic-token, warning);
+    border-left: 4px solid common.get-var(semantic-token, warning);
   }
   &.info {
-    border: 1px solid common.get-var(semantic-token, link);
+    border-left: 4px solid common.get-var(semantic-token, link);
   }
 }

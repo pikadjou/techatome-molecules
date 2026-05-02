@@ -22,7 +22,7 @@ $grid-breakpoints: (
   xxxl: 1800px,
 ) !default;
 $space-base: 8px !default;
-$radius-base: 8px !default;
+$radius-base: 10px !default;
 
 $brand: () !default;
 $second: () !default;
@@ -223,26 +223,36 @@ $space: map.merge(
 
 $radius: map.merge(
   (
-    minimal: $space-base * 0.5,
-    rounded: $space-base * 1,
-    label: $space-base * 2,
+    minimal: $radius-base * 0.5,
+    rounded: $radius-base,
+    label: $radius-base * 2,
     full: $space-base * 5,
   ),
   $radius
 );
 
+$transition: map.merge(
+  (
+    fast: 0.12s ease,
+    base: 0.18s ease,
+    slow: 0.28s ease,
+  ),
+  $transition
+);
+
 $shadow: map.merge(
   (
     black: (
-      sm: 0px 4px 8px 0px rgba(0, 0, 0, 0.1),
-      md: 0px 4px 16px 0px rgba(0, 0, 0, 0.15),
-      lg: 0px 8px 24px 4px rgba(0, 0, 0, 0.1),
+      sm: 0px 1px 3px 0px rgba(18, 30, 56, 0.08),
+      md: 0px 4px 12px 0px rgba(18, 30, 56, 0.10),
+      lg: 0px 8px 24px 0px rgba(18, 30, 56, 0.12),
     ),
     brand: (
-      sm: 0px 4px 8px 0px rgba(107, 124, 234, 0.1),
-      md: 0px 4px 16px 0px rgba(107, 124, 234, 0.15),
-      lg: 0px 8px 24px 4px rgba(107, 124, 234, 0.1),
+      sm: 0px 2px 8px 0px rgba(18, 30, 56, 0.14),
+      md: 0px 4px 14px 0px rgba(18, 30, 56, 0.20),
+      lg: 0px 8px 24px 0px rgba(18, 30, 56, 0.18),
     ),
+    focus: 0 0 0 3px rgba(18, 30, 56, 0.10),
   ),
   $shadow
 );
@@ -418,6 +428,8 @@ $components: map.merge(
     button: (
       radius: map.get($radius, rounded),
       gap: map.get($space, md),
+      font-weight: 600,
+      letter-spacing: 0.01em,
       padding-vertical: map.get($space, sm),
       padding-horizontal: map.get($space, md),
       small: (
@@ -509,6 +521,8 @@ $components: map.merge(
       radius: map.get($radius, label),
       padding-vertical: map.get($space, sm),
       padding-horizontal: map.get($space, md),
+      font-weight: 600,
+      letter-spacing: 0.03em,
       // Sizes
       xs: (
           padding-vertical: map.get($space, xs),

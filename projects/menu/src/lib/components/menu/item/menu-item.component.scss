@@ -1,6 +1,7 @@
 @use 'ta/utils/mixins/flex';
 @use 'ta/utils/mixins/fonts';
 @use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/transitions';
 
 @mixin menu-item-horizontal() {
   justify-content: center;
@@ -34,8 +35,9 @@
   display: flex;
   flex-direction: row;
   text-decoration: none;
-
   padding: common.get-var(space, xs);
+  border-radius: common.get-var(radius, minimal);
+  @include transitions.transition-colors();
 
   .item {
     width: 100%;
@@ -48,6 +50,7 @@
     padding: 0;
     margin: 0;
     color: common.get-var(text, secondary);
+    transition: color common.get-var(transition, fast);
   }
   .icon {
     margin-right: common.get-var(space, sm);
@@ -66,24 +69,22 @@
   &.dark {
     .icon,
     .ending-icon {
-      color: get-var(icon, tertiary);
+      color: common.get-var(icon, tertiary);
     }
     .title {
-      color: get-var(text, primary);
+      color: common.get-var(text, primary);
     }
 
-    &:hover {
-      &:not(.disabled):not(.active) {
-        .icon,
-        .ending-icon {
-          color: get-var(icon, brand, primary);
-        }
-        .title {
-          color: get-var(text, brand, primary);
-        }
-        background-color: get-var(surface, brand, tertiary);
-        border-radius: get-var(radius, label);
+    &:hover:not(.disabled):not(.active) {
+      .icon,
+      .ending-icon {
+        color: common.get-var(icon, brand, primary);
       }
+      .title {
+        color: common.get-var(text, brand, primary);
+      }
+      background-color: common.get-var(surface, brand, tertiary);
+      border-radius: common.get-var(radius, rounded);
     }
   }
 
@@ -98,17 +99,11 @@
   &.responsive {
     @media screen and (max-width: 575px) {
       @include menu-item-horizontal();
-
-      .ending-icon-container {
-        display: none;
-      }
+      .ending-icon-container { display: none; }
     }
     @media screen and (min-width: 576px) {
       @include menu-item-horizontal();
-
-      .ending-icon-container {
-        display: none;
-      }
+      .ending-icon-container { display: none; }
     }
     @media screen and (min-width: 992px) {
       @include menu-item-vertical();

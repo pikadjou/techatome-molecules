@@ -1,0 +1,41 @@
+@use "ta/utils/mixins/common";
+
+/// Transition générale sur toutes les propriétés — vitesse base.
+/// Utiliser sur les éléments interactifs (boutons, cards cliquables).
+@mixin transition-interactive() {
+  transition: all common.get-var(transition, base);
+}
+
+/// Transition rapide sur couleur, fond et bordure.
+/// Utiliser sur les liens, items de menu, icônes.
+@mixin transition-colors() {
+  transition: color common.get-var(transition, fast),
+              background-color common.get-var(transition, fast),
+              border-color common.get-var(transition, fast);
+}
+
+/// Transition bordure + ombre — vitesse base.
+/// Utiliser sur tous les inputs (focus/blur).
+@mixin transition-border-focus() {
+  transition: border-color common.get-var(transition, base),
+              box-shadow common.get-var(transition, base);
+}
+
+/// Focus ring brand — anneau de 3px autour de l'élément focalisé.
+/// Utiliser dans les états :focus ou .focus des inputs et selects.
+@mixin focus-ring() {
+  box-shadow: common.get-var(shadow, focus);
+}
+
+/// Focus outline clavier — outline visible pour l'accessibilité.
+/// Utiliser dans :focus-visible des boutons et éléments interactifs.
+@mixin focus-outline() {
+  outline: 2px solid common.get-var(border, brand, primary);
+  outline-offset: 2px;
+}
+
+/// Hover lift — légère élévation verticale au survol.
+/// Combiner avec transition-interactive() sur l'élément parent.
+@mixin hover-lift() {
+  transform: translateY(-1px);
+}

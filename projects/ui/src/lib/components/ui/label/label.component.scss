@@ -7,6 +7,8 @@
 .label-container {
   padding: common.get-var(components, label, padding-vertical) common.get-var(components, label, padding-horizontal);
   @include fonts.fontSizeBody(sm);
+  font-weight: common.get-var(components, label, font-weight);
+  letter-spacing: common.get-var(components, label, letter-spacing);
 
   border-radius: common.get-var(components, label, radius);
   border: 1px solid transparent;

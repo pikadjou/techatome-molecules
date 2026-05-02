@@ -4,6 +4,7 @@
 .bottom-sheet-template-basic {
   padding-bottom: env(safe-area-inset-bottom);
 }
+
 .handler {
   text-align: center;
   padding-top: common.get-var(space, xs);
@@ -13,8 +14,8 @@
     display: block;
     height: 4px;
     width: 40px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    background-color: common.get-var(border, tertiary);
+    border-radius: common.get-var(radius, full);
     margin: auto;
   }
 }
@@ -22,6 +23,8 @@
 .item {
   text-align: center;
   padding: common.get-var(space, sm) 0;
+  transition: opacity common.get-var(transition, fast);
+
   &.horizontal {
     display: flex;
     justify-content: flex-start;

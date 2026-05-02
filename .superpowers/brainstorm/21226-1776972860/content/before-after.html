@@ -1,0 +1,320 @@
+
+<h2>Avant / Après — même palette de couleurs</h2>
+<p class="subtitle">Les couleurs brand (navy #121e38) et secondary (gold #f0b800) sont conservées. Seul le polish visuel change.</p>
+
+<style>
+  /* ── Layout ── */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .ba-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .ba-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .ba-label.before { background: #f1f5f9; color: #64748b; }
+  .ba-label.after  { background: #e0f2fe; color: #0369a1; }
+
+  .demo-block {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+  }
+  .demo-block.dark { background: #f0f4f8; }
+  .block-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  /* ════════════════════════════════════════
+     AVANT — tel quel aujourd'hui
+  ════════════════════════════════════════ */
+
+  /* Boutons avant */
+  .old-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: 8px 16px;
+    border-radius: 8px; font-size: 15px; font-weight: 400;
+    border: none; cursor: pointer;
+  }
+  .old-btn-primary { background: #121e38; color: white; }
+  .old-btn-secondary { background: #f0b800; color: #121e38; border: 1px solid #f0b800; }
+  .old-btn-tertiary { background: white; color: #121e38; border: 1px solid #121e38; }
+
+  /* Input avant */
+  .old-input-group {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .old-label { font-size: 14px; color: #1f2245; }
+  .old-input {
+    padding: 8px 12px; border-radius: 8px;
+    border: 1px solid #dddddd; background: white;
+    font-size: 15px; color: #1f2245; width: 100%; box-sizing: border-box;
+  }
+
+  /* Card avant */
+  .old-card {
+    background: white; border-radius: 8px;
+    border: 1px solid #dddddd; padding: 16px;
+  }
+  .old-card-title { font-size: 15px; font-weight: 400; color: #1f2245; margin: 0 0 4px; }
+  .old-card-sub { font-size: 13px; color: #7d7d7d; margin: 0 0 12px; }
+  .old-card-badge { display: inline-block; padding: 4px 16px; border-radius: 16px; font-size: 13px; background: #dddddd; color: #1f2245; border: 1px solid #121e38; }
+
+  /* Panel avant */
+  .old-panel {
+    border-radius: 8px; border: 1px solid #dddddd; padding: 24px;
+  }
+  .old-panel-title { color: #121e38; font-size: 15px; font-weight: 600; margin: 0 0 12px; }
+  .old-separator { border-bottom: 1px solid #a9a9a9; padding-bottom: 8px; margin-bottom: 8px; }
+
+  /* Checkbox avant */
+  .old-check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #1f2245; }
+  .old-check {
+    width: 16px; height: 16px; border-radius: 3px;
+    border: 1px solid #121e38; appearance: none; background: white;
+    display: inline-block; flex-shrink: 0;
+  }
+  .old-check.checked { background: #121e38; border-color: #121e38; }
+
+  /* ════════════════════════════════════════
+     APRÈS — moderne, mêmes couleurs
+  ════════════════════════════════════════ */
+
+  /* Boutons après */
+  .new-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: 10px 20px;
+    border-radius: 10px; font-size: 14px; font-weight: 600;
+    border: none; cursor: pointer;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+  }
+  .new-btn-primary {
+    background: #121e38; color: white;
+    box-shadow: 0 2px 8px rgba(18,30,56,0.22);
+  }
+  .new-btn-primary:hover { background: #192e50; box-shadow: 0 4px 14px rgba(18,30,56,0.3); transform: translateY(-1px); }
+  .new-btn-secondary {
+    background: #f0b800; color: #121e38;
+    box-shadow: 0 2px 8px rgba(240,184,0,0.28);
+  }
+  .new-btn-secondary:hover { background: #f2c317; box-shadow: 0 4px 14px rgba(240,184,0,0.38); transform: translateY(-1px); }
+  .new-btn-tertiary {
+    background: white; color: #121e38;
+    border: 1.5px solid #bcc4d2;
+  }
+  .new-btn-tertiary:hover { border-color: #121e38; background: #f8fafc; }
+
+  /* Input après */
+  .new-input-group { display: flex; flex-direction: column; gap: 5px; }
+  .new-label {
+    font-size: 12px; font-weight: 600; color: #4c5f81;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .new-input-wrap { position: relative; }
+  .new-input {
+    padding: 10px 14px; border-radius: 10px;
+    border: 1.5px solid #bcc4d2; background: white;
+    font-size: 14px; color: #121e38; width: 100%; box-sizing: border-box;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .new-input:focus {
+    border-color: #121e38;
+    box-shadow: 0 0 0 3px rgba(18,30,56,0.1);
+    outline: none;
+  }
+  .new-input.focus {
+    border-color: #121e38;
+    box-shadow: 0 0 0 3px rgba(18,30,56,0.1);
+  }
+  .new-input.gold-focus {
+    border-color: #f0b800;
+    box-shadow: 0 0 0 3px rgba(240,184,0,0.18);
+  }
+
+  /* Card après */
+  .new-card {
+    background: white; border-radius: 12px;
+    border: 1px solid #e5e8ec; padding: 18px;
+    box-shadow: 0 2px 8px rgba(18,30,56,0.06);
+    transition: box-shadow 0.18s, transform 0.18s;
+  }
+  .new-card:hover { box-shadow: 0 6px 20px rgba(18,30,56,0.12); transform: translateY(-1px); }
+  .new-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .new-card-title { font-size: 14px; font-weight: 600; color: #121e38; margin: 0; }
+  .new-card-sub { font-size: 13px; color: #6a7a95; margin: 4px 0 12px; }
+  .new-badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    background: #e5e8ec; color: #1f375d;
+    letter-spacing: 0.03em;
+  }
+  .new-badge.gold { background: #fdf7e0; color: #f26800; border: 1px solid #fae9b0; }
+
+  /* Panel après */
+  .new-panel {
+    border-radius: 12px; border: 1px solid #e5e8ec; padding: 24px;
+    box-shadow: 0 1px 4px rgba(18,30,56,0.05);
+  }
+  .new-panel-title {
+    color: #121e38; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    margin: 0 0 16px; padding-bottom: 12px;
+    border-bottom: 2px solid #e5e8ec;
+  }
+  .new-panel-title span { color: #f0b800; }
+
+  /* Checkbox après */
+  .new-check-row { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #121e38; }
+  .new-check {
+    width: 18px; height: 18px; border-radius: 5px;
+    border: 1.5px solid #bcc4d2; background: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.15s;
+  }
+  .new-check.checked { background: #121e38; border-color: #121e38; }
+  .new-check.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+
+  /* Divider */
+  .divider {
+    width: 1px; background: #e2e8f0;
+    grid-row: 1;
+  }
+</style>
+
+<div class="ba-grid">
+
+  <!-- AVANT -->
+  <div class="ba-col">
+    <span class="ba-label before">Avant</span>
+
+    <div class="demo-block">
+      <div class="block-title">Boutons</div>
+      <button class="old-btn old-btn-primary">Action principale</button>
+      <button class="old-btn old-btn-secondary">Action secondaire</button>
+      <button class="old-btn old-btn-tertiary">Annuler</button>
+    </div>
+
+    <div class="demo-block">
+      <div class="block-title">Formulaire</div>
+      <div class="old-input-group">
+        <label class="old-label">Prénom</label>
+        <input class="old-input" placeholder="Jean" />
+      </div>
+      <div class="old-input-group">
+        <label class="old-label">Email</label>
+        <input class="old-input" placeholder="jean@exemple.be" />
+      </div>
+      <div class="old-check-row">
+        <span class="old-check checked"></span> J'accepte les conditions
+      </div>
+      <div class="old-check-row">
+        <span class="old-check"></span> Recevoir les newsletters
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="block-title">Card + Badge</div>
+      <div class="old-card">
+        <p class="old-card-title">Marie Dupont</p>
+        <p class="old-card-sub">Administratrice · Bruxelles</p>
+        <span class="old-card-badge">Actif</span>
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="block-title">Panel formulaire</div>
+      <div class="old-panel">
+        <div class="old-separator">
+          <p class="old-panel-title">Informations personnelles</p>
+        </div>
+        <div class="old-input-group">
+          <label class="old-label">Ville</label>
+          <input class="old-input" placeholder="Bruxelles" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APRÈS -->
+  <div class="ba-col">
+    <span class="ba-label after">Après</span>
+
+    <div class="demo-block">
+      <div class="block-title">Boutons</div>
+      <button class="new-btn new-btn-primary">Action principale</button>
+      <button class="new-btn new-btn-secondary">Action secondaire</button>
+      <button class="new-btn new-btn-tertiary">Annuler</button>
+    </div>
+
+    <div class="demo-block">
+      <div class="block-title">Formulaire</div>
+      <div class="new-input-group">
+        <label class="new-label">Prénom</label>
+        <input class="new-input focus" placeholder="Jean" />
+      </div>
+      <div class="new-input-group">
+        <label class="new-label">Email</label>
+        <input class="new-input" placeholder="jean@exemple.be" />
+      </div>
+      <div class="new-check-row">
+        <span class="new-check checked"></span> J'accepte les conditions
+      </div>
+      <div class="new-check-row">
+        <span class="new-check"></span> Recevoir les newsletters
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="block-title">Card + Badge</div>
+      <div class="new-card">
+        <div class="new-card-header">
+          <div>
+            <p class="new-card-title">Marie Dupont</p>
+            <p class="new-card-sub">Administratrice · Bruxelles</p>
+          </div>
+          <span class="new-badge gold">Actif</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="block-title">Panel formulaire</div>
+      <div class="new-panel">
+        <p class="new-panel-title">Informations <span>personnelles</span></p>
+        <div class="new-input-group">
+          <label class="new-label">Ville</label>
+          <input class="new-input gold-focus" placeholder="Bruxelles" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:20px;text-align:center">
+  Dis-moi ce que tu veux ajuster (coins, ombres, labels, accents gold…) avant qu'on passe au code.
+</p>

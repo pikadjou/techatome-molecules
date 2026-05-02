@@ -1,14 +1,30 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/transitions";
 
 .custom-dropdown-button {
   text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1.5px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+  @include transitions.transition-border-focus();
+
+  &:hover:not(.disabled) {
+    border-color: common.get-var(border, hover, primary);
+  }
+
+  &:focus,
+  &:focus-within {
+    border-color: common.get-var(border, brand, primary);
+    @include transitions.focus-ring();
+    outline: none;
+  }
 
   &.disabled {
-    border-color: common.get-var(neutral, 300);
+    border-color: common.get-var(border, disabled);
     pointer-events: none;
+    opacity: 0.6;
   }
 }
 
@@ -21,6 +37,21 @@ button .selected-value {
 
 .custom-menu {
   padding: 0;
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, tertiary);
+  box-shadow: common.get-var(shadow, black, md);
+  animation: dropdownIn common.get-var(transition, base);
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .input-search {
@@ -29,9 +60,12 @@ button .selected-value {
   flex-direction: column;
   padding: 10px;
   border: none;
+  border-bottom: 1px solid common.get-var(border, tertiary);
   outline: none;
+
   &:focus {
     border: none;
+    border-bottom: 1px solid common.get-var(border, tertiary);
     outline: none;
     box-shadow: none;
   }
@@ -46,14 +80,20 @@ button .selected-value {
   background: transparent;
   cursor: pointer;
   width: 100%;
+  transition: background-color common.get-var(transition, fast);
 
   .checkmark {
     margin-left: common.get-var(space, sm);
-    color: common.get-var(border, brand);
+    color: common.get-var(border, brand, primary);
   }
 
   &:hover {
-    background-color: common.get-var(neutral, 100);
+    background-color: common.get-var(surface, secondary);
+  }
+
+  &.selected {
+    background-color: common.get-var(surface, tertiary);
+    font-weight: 600;
   }
 
   &.disabled {

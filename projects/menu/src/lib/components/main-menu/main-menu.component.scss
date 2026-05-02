@@ -5,11 +5,9 @@
 // Desktop layout
 .main-nav-container {
   padding: common.get-var(space, sm);
-  border-radius: 3px 3px 0px 0px;
-  background-color: common.get-var(neutral, white);
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: common.get-var(radius, rounded) common.get-var(radius, rounded) 0 0;
+  background-color: common.get-var(surface, primary);
+  box-shadow: common.get-var(shadow, black, sm);
 }
 
 .main-nav {
@@ -55,7 +53,7 @@
 
   .user-nav {
     .sep {
-      border-bottom: 1px solid common.get-var(surface, brand, primary);
+      border-bottom: 1px solid common.get-var(border, tertiary);
       margin: common.get-var(space, sm);
     }
   }
@@ -79,6 +77,11 @@
   cursor: pointer;
   color: common.get-var(text, primary);
   @include fonts.fontSizeBody(lg);
+  transition: color common.get-var(transition, fast);
+
+  &:hover {
+    color: common.get-var(text, brand, primary);
+  }
 }
 
 // Custom panel
@@ -88,9 +91,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(18, 30, 56, 0.5);
   z-index: 999;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn common.get-var(transition, base) ease;
 }
 
 .mobile-panel {
@@ -99,11 +102,11 @@
   left: 0;
   width: 280px;
   height: 100%;
-  background-color: common.get-var(neutral, white);
+  background-color: common.get-var(surface, primary);
   z-index: 1000;
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  transition: transform common.get-var(transition, slow);
+  box-shadow: common.get-var(shadow, brand, lg);
   overflow-y: auto;
 
   &.open {
@@ -121,12 +124,17 @@
   @include flex.space-between();
   @include flex.align-center();
   padding-bottom: common.get-var(space, md);
-  border-bottom: 1px solid common.get-var(border, secondary);
+  border-bottom: 1px solid common.get-var(border, tertiary);
   margin-bottom: common.get-var(space, md);
 
   .close-icon {
     cursor: pointer;
     color: common.get-var(text, secondary);
+    transition: color common.get-var(transition, fast);
+
+    &:hover {
+      color: common.get-var(text, primary);
+    }
   }
 }
 
@@ -136,16 +144,12 @@
 
 .mobile-user-nav {
   .sep {
-    border-bottom: 1px solid common.get-var(surface, brand, primary);
+    border-bottom: 1px solid common.get-var(border, tertiary);
     margin: common.get-var(space, sm) 0;
   }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

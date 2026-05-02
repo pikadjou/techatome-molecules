@@ -1,5 +1,6 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/transitions";
 
 $search-field-size: 44px;
 $search-field-deploy-size: 100%;
@@ -10,21 +11,34 @@ $search-field-deploy-size: 100%;
   padding: common.get-var(space, sm);
   gap: common.get-var(space, sm);
   box-sizing: border-box;
+  border: 1.5px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+  @include transitions.transition-border-focus();
 
-  .inner-div {
-    flex-grow: 1;
+  &:hover {
+    border-color: common.get-var(border, hover, secondary);
   }
 
   &.focus {
+    border-color: common.get-var(border, brand, primary);
+    @include transitions.focus-ring();
+
     ta-font-icon {
       color: common.get-var(icon, brand, primary);
     }
   }
+
   &.disabled {
     color: common.get-var(text, tertiary);
+    opacity: 0.6;
+
     ta-font-icon {
       color: common.get-var(icon, tertiary);
     }
+  }
+
+  .inner-div {
+    flex-grow: 1;
   }
 }
 

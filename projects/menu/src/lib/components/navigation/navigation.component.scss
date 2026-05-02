@@ -4,9 +4,9 @@
 
 .element-list {
   gap: common.get-var(space, md);
-
   display: flex;
   flex-direction: row;
+
   .item-container {
     cursor: pointer;
     &.disabled {
@@ -18,107 +18,113 @@
     flex-direction: column;
   }
 }
+
 .tags {
   .item-container {
     .item {
       @include flex.flex-row();
       @include flex.align-center();
       gap: common.get-var(space, xs);
-      padding: common.get-var(space, md);
-
+      padding: common.get-var(space, sm) common.get-var(space, md);
       border: 1px solid transparent;
-
-      color: common.get-var(text-tertiary);
+      color: common.get-var(text, tertiary);
       background-color: common.get-var(surface, tertiary);
       border-color: common.get-var(surface, tertiary);
-
-      border-radius: common.get-var(radius, rounded);
-
+      border-radius: common.get-var(radius, label);
       @include fonts.fontSizeBody(sm);
+      font-weight: 500;
+      transition: background-color common.get-var(transition, fast),
+                  border-color common.get-var(transition, fast),
+                  color common.get-var(transition, fast);
     }
 
-    &.disabled {
-      .item {
-        background-color: common.get-var(surface, primary);
-        border-color: common.get-var(border, disabled);
-      }
+    &.disabled .item {
+      background-color: common.get-var(surface, primary);
+      border-color: common.get-var(border, disabled);
+      opacity: 0.5;
     }
-    &.active {
-      .item {
-        color: common.get-var(text, brand, primary);
-        background-color: common.get-var(surface, default);
-        border-color: common.get-var(surface, default);
-      }
+    &.active .item {
+      color: common.get-var(text, brand, primary);
+      background-color: common.get-var(surface, default);
+      border-color: common.get-var(border, brand, primary);
+      font-weight: 600;
+    }
+    &:not(.disabled):not(.active):hover .item {
+      border-color: common.get-var(border, hover, secondary);
     }
   }
 }
+
 .tab {
   .list {
-    border-bottom: 1px solid common.get-var(border, secondary);
+    border-bottom: 1px solid common.get-var(border, tertiary);
   }
   .item-container {
     .item {
       @include flex.flex-row();
       @include flex.align-center();
       gap: common.get-var(space, xs);
-      padding: common.get-var(space, md);
-
+      padding: common.get-var(space, sm) common.get-var(space, md);
       border-bottom: 2px solid transparent;
-
-      color: common.get-var(text-tertiary);
-
+      color: common.get-var(text, secondary);
       @include fonts.fontSizeBody(sm);
+      transition: color common.get-var(transition, fast),
+                  border-bottom-color common.get-var(transition, fast);
     }
 
     &.disabled {
       opacity: 0.5;
     }
-    &.active {
-      .item {
-        color: common.get-var(text, brand, primary);
-        border-bottom-color: common.get-var(border, brand);
-      }
+    &.active .item {
+      color: common.get-var(text, brand, primary);
+      border-bottom-color: common.get-var(border, brand, primary);
+      font-weight: 600;
+    }
+    &:not(.disabled):not(.active):hover .item {
+      color: common.get-var(text, primary);
     }
   }
 }
+
 .submenu {
   padding: common.get-var(space, xs);
-  background-color: common.get-var(surface, default);
+  background-color: common.get-var(surface, secondary);
   border-radius: common.get-var(radius, rounded);
+  box-shadow: common.get-var(shadow, black, sm);
+
   .element-list {
     gap: common.get-var(space, xs);
-
     @include flex.space-between();
     .element {
       @include flex.flex-fill();
     }
   }
+
   .item-container {
     .item {
       @include flex.flex-row();
       @include flex.align-center();
       @include flex.justify-center();
       padding: common.get-var(space, sm);
-      border-radius: common.get-var(radius, rounded);
+      border-radius: common.get-var(radius, minimal);
       color: common.get-var(text, secondary);
       @include fonts.fontSizeBody(md);
+      transition: background-color common.get-var(transition, fast),
+                  color common.get-var(transition, fast);
     }
 
     &.disabled {
       opacity: 0.5;
     }
-    &.active {
-      .item {
-        background-color: common.get-var(surface, primary);
-        color: common.get-var(text, brand, primary);
-        @include fonts.fontSizeBody(md, true);
-      }
+    &.active .item {
+      background-color: common.get-var(surface, primary);
+      color: common.get-var(text, brand, primary);
+      box-shadow: common.get-var(shadow, black, sm);
+      @include fonts.fontSizeBody(md, true);
     }
-    &:hover {
-      .item {
-        color: common.get-var(text, brand, primary);
-        @include fonts.fontSizeBody(md, true);
-      }
+    &:not(.disabled):not(.active):hover .item {
+      color: common.get-var(text, brand, primary);
+      background-color: common.get-var(surface, primary);
     }
   }
 }

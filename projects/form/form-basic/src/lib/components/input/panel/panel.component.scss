@@ -2,14 +2,20 @@
 @use 'ta/utils/mixins/fonts';
 
 .with-separator {
-  border-bottom: 1px solid #a9a9a9;
-  padding-bottom: 2em;
+  border-bottom: 1px solid common.get-var(border, tertiary);
+  padding-bottom: common.get-var(space, lg);
+  margin-bottom: common.get-var(space, md);
 }
 
 .highlight-title {
   .panel-title {
-    color: common.get-var(surface, brand, primary);
-    @include fonts.fontSizeBody(lg, true);
+    color: common.get-var(text, brand, primary);
+    @include fonts.fontSizeBody(sm, true);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding-bottom: common.get-var(space, sm);
+    border-bottom: 2px solid common.get-var(border, tertiary);
+    margin-bottom: common.get-var(space, md);
   }
 }
 
@@ -17,6 +23,7 @@
   border-radius: common.get-var(radius, rounded);
   border: 1px solid common.get-var(border, tertiary);
   padding: common.get-var(space, lg);
+  box-shadow: common.get-var(shadow, black, sm);
 }
 
 .no-title-space {

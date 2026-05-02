@@ -1,4 +1,6 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/transitions";
 
 .toggle-card {
   display: flex;
@@ -6,31 +8,34 @@
   justify-content: space-between;
   padding: common.get-var(components, toggle-card, padding);
   cursor: pointer;
-  transition: common.get-var(components, toggle-card, transition);
-  border: 2px solid common.get-var(components, toggle-card, border);
-  border-radius: common.get-var(components, toggle-card, border-radius);
-  background-color: common.get-var(components, toggle-card, background);
-  box-shadow: common.get-var(components, toggle-card, box-shadow);
+  @include transitions.transition-interactive();
+  border: 1.5px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+  background-color: common.get-var(surface, primary);
+  box-shadow: common.get-var(shadow, black, sm);
 
   &:hover:not(&--disabled) {
-    border-color: common.get-var(brand, 600);
-    background-color: common.get-var(color-surface-secondary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: common.get-var(border, brand, primary);
+    background-color: common.get-var(surface, secondary);
+    box-shadow: common.get-var(shadow, black, md);
+    @include transitions.hover-lift();
   }
 
   &--active {
-    border-color: common.get-var(brand, 700);
-    background-color: common.get-var(color-surface-secondary);
+    border-color: common.get-var(border, brand, primary);
+    background-color: common.get-var(surface, secondary);
+    box-shadow: common.get-var(shadow, brand, sm);
 
     &:hover {
-      border-color: common.get-var(brand, 600);
-      background-color: common.get-var(color-surface-tertiary);
+      border-color: common.get-var(border, hover, primary);
+      background-color: common.get-var(surface, tertiary);
+      box-shadow: common.get-var(shadow, brand, md);
     }
   }
 
   &--disabled {
-    background-color: common.get-var(color-surface-tertiary);
-    border-color: common.get-var(color-surface-secondary);
+    background-color: common.get-var(surface, tertiary);
+    border-color: common.get-var(border, tertiary);
     cursor: not-allowed;
     opacity: 0.6;
 
@@ -48,11 +53,11 @@
 
   &__icon {
     margin-right: common.get-var(space, md);
-    color: common.get-var(text, secondary);
-    font-size: common.get-var(font-size, lg);
+    color: common.get-var(icon, secondary);
+    transition: color common.get-var(transition, fast);
 
     .toggle-card--active & {
-      color: common.get-var(brand, 700);
+      color: common.get-var(icon, brand, primary);
     }
   }
 
@@ -61,14 +66,13 @@
   }
 
   &__title {
-    font-size: common.get-var(font-size, md);
-    font-weight: common.get-var(font-weight-semibold);
+    @include fonts.fontSizeBody(md, true);
     color: common.get-var(text, primary);
     margin: 0 0 common.get-var(space, xs) 0;
   }
 
   &__description {
-    font-size: common.get-var(font-size, sm);
+    @include fonts.fontSizeBody(sm);
     color: common.get-var(text, secondary);
     margin: 0;
   }
@@ -81,19 +85,17 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 2px solid common.get-var(color-surface-secondary);
-    background-color: common.get-var(color-surface-primary);
+    border: 1.5px solid common.get-var(border, tertiary);
+    background-color: common.get-var(surface, primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
-    font-size: common.get-var(font-size, sm);
-    font-weight: common.get-var(font-weight-semibold);
+    @include transitions.transition-interactive();
 
     &--active {
-      background-color: common.get-var(brand, 700);
-      border-color: common.get-var(brand, 700);
-      color: common.get-var(text, tertiary);
+      background-color: common.get-var(surface, brand, primary);
+      border-color: common.get-var(border, brand, primary);
+      color: common.get-var(text, invert, primary);
     }
   }
 }

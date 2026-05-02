@@ -8,27 +8,35 @@
 
   .disabled {
     opacity: 0.5;
+    pointer-events: none;
   }
 
   .element {
     text-align: center;
-
-    border: 1px solid common.get-var(neutral, 400);
-
+    border: 1px solid common.get-var(border, tertiary);
     padding: common.get-var(space, md) 0;
     margin-bottom: common.get-var(space, sm);
+    border-radius: common.get-var(radius, rounded);
+    cursor: pointer;
+    transition: border-color common.get-var(transition, fast),
+                box-shadow common.get-var(transition, fast),
+                background-color common.get-var(transition, fast);
 
-    border-radius: common.get-var(space, md);
+    &:hover:not(.disabled) {
+      border-color: common.get-var(border, brand, primary);
+      box-shadow: common.get-var(shadow, black, sm);
+      background-color: common.get-var(surface, secondary);
+    }
 
     .icon {
-      color: common.get-var(surface, brand, primary);
+      color: common.get-var(icon, brand, primary);
     }
+
     .label {
       @include fonts.fontSizeBody(md, true);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-
       margin-top: common.get-var(space, xs);
     }
   }
