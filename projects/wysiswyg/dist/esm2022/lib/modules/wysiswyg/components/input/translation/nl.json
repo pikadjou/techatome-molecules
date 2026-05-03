@@ -1,5 +1,6 @@
 {
     "editorjs": {
+        "placeholder": "Begin te schrijven...",
         "i18n": {
             "messages": {
                 "ui": {

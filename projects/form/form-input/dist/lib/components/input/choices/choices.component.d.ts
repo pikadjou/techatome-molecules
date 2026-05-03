@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
 import { TaOverlayPanelComponent } from '@ta/ui';
 import { TaAbstractInputComponent } from '../../abstract.component';
@@ -14,7 +14,7 @@ export declare class InputChoicesComponent extends TaAbstractInputComponent<Inpu
         data: any;
     }[]> | null;
     bOptions$: BehaviorSubject<InputChoicesOption[]>;
-    readonly searchFocus: BehaviorSubject<void>;
+    readonly searchFocus: Subject<void>;
     constructor();
     ngOnInit(): void;
     ngAfterViewInit(): void;

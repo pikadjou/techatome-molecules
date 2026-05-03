@@ -9,6 +9,9 @@ import { NewComponent } from '../../components/ui/new/new.component';
   styleUrls: ['./card.component.scss'],
   standalone: true,
   imports: [NgClass, NewComponent],
+  host: {
+    '[class.full-height]': 'this.fullHeight()',
+  },
 })
 export class CardComponent {
   highlight = input<boolean>(false);

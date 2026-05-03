@@ -10,7 +10,7 @@
     class="form-control"
     [initValue]="this.input.value"
     [enabledTools]="this.input.enabledTools"
-    [placeholder]="this.input.placeholder ? (this.input.placeholder | translate) : undefined"
+    [placeholder]="this.input.placeholder | translate"
     (saved)="this.set($event)"
     [saveOnChange]="true"
   >

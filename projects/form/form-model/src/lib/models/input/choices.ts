@@ -35,6 +35,7 @@ export interface IInputChoices extends IInputDropdown<string[]> {
     list?: TemplateRef<any>;
   };
   showNullableFields?: boolean;
+  focusSearch?: boolean;
 }
 export class InputChoices extends InputDropdown<string[]> {
   override controlType = 'choices';
@@ -47,6 +48,7 @@ export class InputChoices extends InputDropdown<string[]> {
     list?: TemplateRef<any>;
   };
   public showNullableFields: boolean;
+  public focusSearch: boolean;
 
   constructor(options: IInputChoices = {}) {
     super(options);
@@ -55,5 +57,6 @@ export class InputChoices extends InputDropdown<string[]> {
     this.advancedSearch$ = options['advancedSearch$'] || null;
     this.choiceTemplate = options.choiceTemplate;
     this.showNullableFields = options.showNullableFields ?? false;
+    this.focusSearch = options.focusSearch ?? false;
   }
 }

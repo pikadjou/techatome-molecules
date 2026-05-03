@@ -7,4 +7,8 @@
   &.background {
     background-color: common.get-var(surface, brand, tertiary);
   }
+
+  &.rounded {
+    border-radius: 0 0 common.get-var(radius, rounded) common.get-var(radius, rounded);
+  }
 }

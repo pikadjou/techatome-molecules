@@ -35,6 +35,7 @@ export interface IInputChoices extends IInputDropdown<string[]> {
         list?: TemplateRef<any>;
     };
     showNullableFields?: boolean;
+    focusSearch?: boolean;
 }
 export declare class InputChoices extends InputDropdown<string[]> {
     controlType: string;
@@ -46,5 +47,6 @@ export declare class InputChoices extends InputDropdown<string[]> {
         list?: TemplateRef<any>;
     };
     showNullableFields: boolean;
+    focusSearch: boolean;
     constructor(options?: IInputChoices);
 }

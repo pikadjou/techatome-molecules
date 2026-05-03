@@ -244,15 +244,15 @@ $shadow: map.merge(
   (
     black: (
       sm: 0px 1px 3px 0px rgba(18, 30, 56, 0.08),
-      md: 0px 4px 12px 0px rgba(18, 30, 56, 0.10),
+      md: 0px 4px 12px 0px rgba(18, 30, 56, 0.1),
       lg: 0px 8px 24px 0px rgba(18, 30, 56, 0.12),
     ),
     brand: (
       sm: 0px 2px 8px 0px rgba(18, 30, 56, 0.14),
-      md: 0px 4px 14px 0px rgba(18, 30, 56, 0.20),
+      md: 0px 4px 14px 0px rgba(18, 30, 56, 0.2),
       lg: 0px 8px 24px 0px rgba(18, 30, 56, 0.18),
     ),
-    focus: 0 0 0 3px rgba(18, 30, 56, 0.10),
+    focus: 0 0 0 3px rgba(18, 30, 56, 0.1),
   ),
   $shadow
 );
@@ -260,8 +260,7 @@ $shadow: map.merge(
 $font: map.merge(
   (
     family: (
-      'Inter',
-      'Diodrum Cyrillic',
+      'Roboto',
       sans-serif,
     ),
     h1: (

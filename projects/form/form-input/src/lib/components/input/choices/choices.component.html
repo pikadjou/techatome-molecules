@@ -72,26 +72,16 @@
             </ta-empty>
           </ta-loader>
         </ta-layout-side-content>
-        <ta-layout-side-cta>
-          <div class="align-center space-between">
-            <div class="pr-space-md">
-              <div class="align-center g-space-xs link">
-                <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
-                <ta-link class="c-pointer" (action)="this.clear()">
-                  {{ 'input.button.clear' | translate }}
-                </ta-link>
-              </div>
-            </div>
-            <div>
-              @if (this.input.onlyTemplate !== true) {
-                <ta-button (action)="this.close()">
-                  <div class="align-center m-space-xs">
-                    <ta-font-icon name="check-line"></ta-font-icon>
-                    {{ 'input.button.select' | translate }}
-                  </div>
-                </ta-button>
-              }
-            </div>
+        <ta-layout-side-cta [rounded]="true">
+          <div class="choices-cta">
+            <ta-button type="danger" (action)="this.clear()">
+              {{ 'input.button.clear' | translate }}
+            </ta-button>
+            @if (this.input.onlyTemplate !== true) {
+              <ta-button (action)="this.close()">
+                {{ 'input.button.select' | translate }}
+              </ta-button>
+            }
           </div>
         </ta-layout-side-cta>
       </ta-layout-side>
@@ -140,26 +130,16 @@
             }
           </ta-loader>
         </ta-layout-side-content>
-        <ta-layout-side-cta>
-          <div class="align-center space-between">
-            <div class="pr-space-md">
-              <div class="align-center g-space-xs link">
-                <ta-font-icon name="close-tool" type="sm"></ta-font-icon>
-                <ta-link class="c-pointer" (action)="this.clear()">
-                  {{ 'input.filter.clear' | translate }}
-                </ta-link>
-              </div>
-            </div>
-            <div>
-              @if (this.input.onlyTemplate !== true) {
-                <ta-button (action)="this.close()">
-                  <div class="align-center m-space-xs">
-                    <ta-font-icon name="check-line"></ta-font-icon>
-                    {{ 'input.validate' | translate }}
-                  </div>
-                </ta-button>
-              }
-            </div>
+        <ta-layout-side-cta [rounded]="true">
+          <div class="choices-cta">
+            <ta-button type="danger" (action)="this.clear()">
+              {{ 'input.filter.clear' | translate }}
+            </ta-button>
+            @if (this.input.onlyTemplate !== true) {
+              <ta-button (action)="this.close()">
+                {{ 'input.validate' | translate }}
+              </ta-button>
+            }
           </div>
         </ta-layout-side-cta>
       </ta-layout-side>

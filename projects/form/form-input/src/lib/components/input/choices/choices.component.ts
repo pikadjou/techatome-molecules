@@ -19,7 +19,6 @@ import {
 } from 'rxjs';
 
 import { InputCheckBox, InputChoices, InputChoicesOption, InputTextBox } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
 import {
   ButtonComponent,
   EmptyComponent,
@@ -27,7 +26,6 @@ import {
   LayoutSideComponent,
   LayoutSideContentComponent,
   LayoutSideCtaComponent,
-  LinkComponent,
   LoaderComponent,
   TextComponent,
 } from '@ta/ui';
@@ -48,11 +46,9 @@ import { SearchFieldComponent } from '../search-field/search-field.component';
   standalone: true,
   imports: [
     AsyncPipe,
-    FontIconComponent,
     StopPropagationDirective,
     TranslateModule,
     ButtonComponent,
-    LinkComponent,
     TaOverlayPanelComponent,
     EmptyComponent,
     LoaderComponent,
@@ -147,7 +143,9 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
 
-    this.searchFocus.next();
+    if (this.input.focusSearch) {
+      this.searchFocus.next();
+    }
   }
 
   public getName$(id: string) {

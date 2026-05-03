@@ -280,6 +280,7 @@ class InputWysiswyg extends InputBase {
         super(options);
         this.controlType = "wysiswyg";
         this.enabledTools = options.enabledTools ?? EDITOR_ALL_TOOLS;
+        this.placeholder = options.placeholder ?? '';
         if (options.stringValue) {
             try {
                 this.value = JSON.parse(options.stringValue);
@@ -337,6 +338,7 @@ class InputChoices extends InputDropdown {
         this.advancedSearch$ = options['advancedSearch$'] || null;
         this.choiceTemplate = options.choiceTemplate;
         this.showNullableFields = options.showNullableFields ?? false;
+        this.focusSearch = options.focusSearch ?? false;
     }
 }
 

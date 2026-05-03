@@ -9,5 +9,7 @@ import { Component, input } from "@angular/core";
 export class LayoutSideCtaComponent {
   background = input<boolean>(true);
 
+  rounded = input<boolean>(false);
+
   constructor() {}
 }

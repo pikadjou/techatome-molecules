@@ -7,6 +7,10 @@ $spacing: common.get-var(components, card, padding);
 
 :host {
   @include flex.flex-full();
+
+  &.full-height {
+    height: 100%;
+  }
 }
 .card {
   &.hover {
@@ -27,9 +31,6 @@ $spacing: common.get-var(components, card, padding);
   width: 100%;
   @include fonts.fontSizeBody(md);
 
-  &.full-height {
-    height: calc(100% - common.get-var(components, card, full-height, spacing-offset) * 2);
-  }
   &.highlight {
     color: common.get-var(components, card, highlight, color);
     border: 1px solid common.get-var(components, card, highlight, border);
@@ -40,6 +41,7 @@ $spacing: common.get-var(components, card, padding);
 
   .responsive-content {
     @include flex.flex-column();
+    @include flex.flex-full();
     &.horizontal-card {
       @include grid.grid-base();
       gap: common.get-var(space, sm);
