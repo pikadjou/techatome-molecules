@@ -67,6 +67,12 @@ section {
   position: relative;
 }
 
+// Section group dividers (Panels / Modaux)
+.section-divider {
+  padding-top: common.get-var(space, lg);
+  border-top: 2px solid common.get-var(border, secondary);
+}
+
 // Flex panel demo
 .flex-panel {
   @include flex.flex-column();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
 
 import {
   ButtonComponent,
@@ -14,6 +14,9 @@ import {
   LayoutSideContentComponent,
   LayoutSideCtaComponent,
   LayoutTitleComponent,
+  LayoutWithPanelComponent,
+  ModalSize,
+  TaModalComponent,
   TextComponent,
   TitleComponent,
 } from "@ta/ui";
@@ -37,7 +40,9 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
     LayoutSideContentComponent,
     LayoutSideCtaComponent,
     LayoutTitleComponent,
+    LayoutWithPanelComponent,
     PageLayoutComponent,
+    TaModalComponent,
     TextComponent,
     TitleComponent,
   ],
@@ -45,4 +50,16 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
   styleUrl: "./ui-layout.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UiLayoutPage {}
+export class UiLayoutPage {
+  public showFullPanel = signal(false);
+  public showWithPanel = signal(false);
+  public activeModal = signal<ModalSize | 'flexible' | null>(null);
+
+  public openModal(size: ModalSize | 'flexible'): void {
+    this.activeModal.set(size);
+  }
+
+  public closeModal(): void {
+    this.activeModal.set(null);
+  }
+}

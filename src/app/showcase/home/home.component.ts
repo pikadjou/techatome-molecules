@@ -32,5 +32,11 @@ export class HomePage {
       route: "/grid",
       icon: "table_chart",
     },
+    {
+      title: "Files",
+      description: "File list, documents list, upload — @ta/files-basic + @ta/files-extended",
+      route: "/files",
+      icon: "folder",
+    },
   ];
 }

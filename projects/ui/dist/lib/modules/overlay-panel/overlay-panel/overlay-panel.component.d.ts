@@ -7,7 +7,7 @@ export declare class TaOverlayPanelComponent extends TaBaseComponent implements 
     contentTpl: TemplateRef<any>;
     triggerHostRef: ElementRef<HTMLElement>;
     panelConfig: import("@angular/core").InputSignal<OverlayMenuConfig<any>>;
-    position: import("@angular/core").InputSignal<"default" | "right">;
+    position: import("@angular/core").InputSignal<"right" | "default">;
     closed: EventEmitter<void>;
     private _configWithDefaults;
     private _overlayService;

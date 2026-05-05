@@ -23,6 +23,7 @@
   "layout.notfound.cta": "Back to home",
   "layout.notfound.title": "Page not found",
   "megaoctet": "{{size}} MB",
+  "modal.close": "Close",
   "pwa.cancel": "Cancel",
   "pwa.description": "Install the app for a better experience",
   "pwa.install": "Install",

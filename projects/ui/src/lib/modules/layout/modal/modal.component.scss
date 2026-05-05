@@ -1,7 +1,7 @@
 @use "ta/utils/mixins/common";
 @use "ta/utils/mixins/flex";
 
-.side-panel-background {
+.ta-modal-backdrop {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -12,19 +12,48 @@
   background-color: common.get-var(surface, invert);
 }
 
-.side-panel {
+.ta-modal-container {
   position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  background-color: common.get-var(surface, primary);
-  box-shadow: common.get-var(shadow, black, md);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1000;
-  overflow: hidden;
+  background-color: common.get-var(surface, primary);
+  border-radius: common.get-var(radius, rounded);
+  box-shadow: common.get-var(shadow, black, lg);
   @include flex.flex-column();
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: hidden;
+
+  &.ta-modal--fullscreen {
+    width: 100vw;
+    height: 100dvh;
+    max-width: 100vw;
+    max-height: 100dvh;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
+  &.ta-modal--large {
+    width: 900px;
+    max-height: 85vh;
+  }
+
+  &.ta-modal--medium {
+    width: 600px;
+    max-height: 80vh;
+  }
+
+  &.ta-modal--small {
+    width: 400px;
+    max-height: 70vh;
+  }
 }
 
-.side-panel-header {
+.ta-modal-header {
   @include flex.flex-row();
   @include flex.space-between();
   align-items: center;
@@ -32,19 +61,19 @@
   padding: common.get-var(space, md);
   border-bottom: 1px solid common.get-var(border, secondary);
 
-  .side-panel-close {
+  .ta-modal-close {
     cursor: pointer;
     color: common.get-var(icon, primary);
   }
 }
 
-.side-panel-content {
+.ta-modal-content {
   flex: 1;
   overflow-y: auto;
   padding: common.get-var(space, md);
 }
 
-.side-panel-footer {
+.ta-modal-footer {
   flex-shrink: 0;
   padding: common.get-var(space, md);
   border-top: 1px solid common.get-var(border, secondary);

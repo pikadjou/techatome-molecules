@@ -10,6 +10,7 @@ export * from './layout-side/layout-side-content/layout-side-content.component';
 export * from './layout-nav/layout-nav.component';
 export * from './layout-panel/layout-panel.component';
 export * from './layout-full-panel/layout-full-panel.component';
+export * from './modal/modal.component';
 export * from './with-bottom-nav/layout-with-bottom-nav.component';
 export * from './with-panel/layout-with-panel.component';
 export * from './layout-page/layout-page.component';

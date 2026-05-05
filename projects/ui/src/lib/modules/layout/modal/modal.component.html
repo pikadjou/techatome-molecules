@@ -1,0 +1,21 @@
+@if (this.open()) {
+  <div class="ta-modal-backdrop" (click)="this.onBackdropClick()"></div>
+  <div class="ta-modal-container" [class]="this.sizeClass()">
+
+    <div class="ta-modal-header">
+      <ta-title [level]="3" [isBold]="true">{{ this.title() }}</ta-title>
+      <div class="ta-modal-close" (click)="this.close()">
+        <ta-font-icon name="close"></ta-font-icon>
+      </div>
+    </div>
+
+    <div class="ta-modal-content">
+      <ng-content select="[modal-content]"></ng-content>
+    </div>
+
+    <div class="ta-modal-footer">
+      <ng-content select="[modal-footer]"></ng-content>
+    </div>
+
+  </div>
+}

@@ -1,16 +1,19 @@
 <div class="side-panel-background" (click)="this.askClose()"></div>
 <div class="side-panel" [style.width]="this.width()">
-  <ta-layout-header>
-    <div class="flex-row justify-content-between">
-      <ta-title [level]="3" [isBold]="true">{{
-        this.title() | translate
-      }}</ta-title>
-      <div (click)="this.askClose()">
-        <ta-font-icon name="close"></ta-font-icon>
-      </div>
+
+  <div class="side-panel-header">
+    <ta-title [level]="3" [isBold]="true">{{ this.title() | translate }}</ta-title>
+    <div class="side-panel-close" (click)="this.askClose()">
+      <ta-font-icon name="close"></ta-font-icon>
     </div>
-  </ta-layout-header>
-  <div class="layout-content">
-    <ng-content></ng-content>
   </div>
+
+  <div class="side-panel-content">
+    <ng-content select="[panel-content]"></ng-content>
+  </div>
+
+  <div class="side-panel-footer">
+    <ng-content select="[panel-footer]"></ng-content>
+  </div>
+
 </div>

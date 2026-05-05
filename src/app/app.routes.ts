@@ -110,6 +110,11 @@ export const routes: Routes = [
       import("./showcase/user/user.component").then((c) => c.UserPage),
   },
   {
+    path: "files",
+    loadComponent: () =>
+      import("./showcase/files/files.component").then((c) => c.FilesPage),
+  },
+  {
     path: "**",
     redirectTo: "/home",
   },

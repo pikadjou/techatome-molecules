@@ -23,6 +23,8 @@ description: Bonnes pratiques et patterns Angular pour le développement sur les
 | Formulaire         | `<ta-form>` + `<ta-input-*>`                                                          | `<form>`, `<input>`, `<select>` natifs  |
 | Notification       | `NotificationService` (`@ta/notification`)                                            | `alert()`, `mat-snackbar` direct        |
 | Progression        | `<ta-progress-bar>`, `<ta-progress-circle>`                                           | `<mat-progress-bar>` direct             |
+| Modal centrée      | `<ta-modal>` (`@ta/ui`)                                                               | `MatDialog.open()`, divs custom         |
+| Panneau latéral    | `<ta-layout-full-panel>` (`@ta/ui`)                                                   | `mat-drawer`, divs custom               |
 
 En cas de doute, vérifier les APIs publiques de `@ta/ui`, `@ta/form-basic`, `@ta/form-input`, `@ta/icons`, `@ta/notification` avant d'utiliser un élément natif ou tiers.
 
@@ -98,12 +100,18 @@ border-radius: 8px;
 
 ### Ombres — `get-var(shadow, ...)`
 
+La syntaxe est à **3 arguments** : `common.get-var(shadow, <couleur>, <taille>)`.
+
 ```scss
 // ✅ Correct
-box-shadow: get-var(shadow, black-sm);
-box-shadow: get-var(shadow, brand-md);
+box-shadow: common.get-var(shadow, black, sm);
+box-shadow: common.get-var(shadow, black, md);
+box-shadow: common.get-var(shadow, black, lg);
+box-shadow: common.get-var(shadow, brand, sm);
+box-shadow: common.get-var(shadow, brand, md);
 
 // ❌ Interdit
+box-shadow: get-var(shadow, black-sm);   // mauvaise syntaxe (2 args au lieu de 3)
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 ```
 
@@ -946,16 +954,20 @@ export class TeamsPage extends BaseListPage<Team> {}
   <app-teams-list (open)="this.active($event)" [refresh$]="this.refresh$"></app-teams-list>
 </div>
 
-<ta-layout-full-panel
-  [toggleState]="!!this.isShowPanel()"
-  (closeEvent)="this.close()"
-  [title]="'teams.edit.title' | translate"
->
-  @if (this.isShowPanel()) {
-  <app-team-edit class="d-flex full-width" [team]="this.activeItem" (closeEvent)="this.close()"></app-team-edit>
-  }
-</ta-layout-full-panel>
+@if (this.isShowPanel()) {
+  <ta-layout-full-panel
+    width="400px"
+    [title]="'teams.edit.title' | translate"
+    (closeEvent)="this.close()"
+  >
+    <div panel-content class="d-flex full-width">
+      <app-team-edit [team]="this.activeItem" (closeEvent)="this.close()"></app-team-edit>
+    </div>
+  </ta-layout-full-panel>
+}
 ```
+
+> **Slots `ta-layout-full-panel` :** utiliser `[panel-content]` pour le contenu scrollable et `[panel-footer]` pour les actions fixes en bas. Le panneau s'affiche via `@if` dans le parent (pas d'input `open`).
 
 `BaseListPage<T>` fournit :
 
@@ -969,21 +981,139 @@ export class TeamsPage extends BaseListPage<Team> {}
 
 ---
 
-## 5. MODALES (MatDialog)
+## 5. MODALES ET PANNEAUX LATÉRAUX
 
-### Ouvrir une modale depuis un composant
+### 5a. `ta-modal` — modale déclarative (approche préférée)
+
+`ta-modal` est un composant standalone de `@ta/ui` qui remplace `MatDialog` pour les cas courants. Il est contrôlé par un signal `open` passé depuis le parent — **pas de service, pas d'injection**.
+
+**Inputs :**
+| Input | Type | Défaut | Description |
+|---|---|---|---|
+| `open` | `boolean` (required) | — | Contrôle l'affichage |
+| `size` | `'small' \| 'medium' \| 'large' \| 'fullscreen'` | `undefined` | Largeur fixe (sinon contenu) |
+| `title` | `string` | `''` | Titre affiché dans le header |
+| `closeOnBackdrop` | `boolean` | `true` | Fermer au clic sur le backdrop |
+
+**Output :** `closeEvent: EventEmitter<void>`
+
+**Slots de contenu :**
+- `[modal-content]` — zone scrollable principale
+- `[modal-footer]` — pied de modale fixe (masqué si vide)
+
+**Tailles :**
+| Valeur | Largeur |
+|---|---|
+| `small` | 400px |
+| `medium` | 600px |
+| `large` | 900px |
+| `fullscreen` | 100vw / 100dvh |
+| _(absent)_ | Pilotée par le contenu (max 90vw / 85vh) |
+
+**Usage complet :**
+
+```typescript
+// mon-composant.component.ts
+public isModalOpen = signal(false);
+public openModal(): void { this.isModalOpen.set(true); }
+public closeModal(): void { this.isModalOpen.set(false); }
+```
+
+```html
+<!-- mon-composant.component.html -->
+<ta-button type="secondary" (action)="this.openModal()">Ouvrir</ta-button>
+
+<ta-modal
+  [open]="this.isModalOpen()"
+  size="medium"
+  title="Titre de la modale"
+  (closeEvent)="this.closeModal()"
+>
+  <div modal-content>
+    <ta-text>Contenu principal scrollable.</ta-text>
+  </div>
+  <div modal-footer>
+    <ta-button type="secondary" (action)="this.closeModal()">Annuler</ta-button>
+    <ta-button type="primary" (action)="this.confirm()">Confirmer</ta-button>
+  </div>
+</ta-modal>
+```
+
+**Import dans le composant :**
+
+```typescript
+import { TaModalComponent } from '@ta/ui';
+// ou
+import { ModalSize, TaModalComponent } from '@ta/ui'; // si besoin du type ModalSize
+```
+
+**Règles :**
+- Utiliser `ta-modal` pour toutes les **nouvelles** modales — éviter `MatDialog` sauf pour les cas complexes (formulaire avec `@ViewChild`, résultat typé via `afterClosed()`)
+- Toujours passer les slots via `<div modal-content>` et `<div modal-footer>`
+- Le `title` est une chaîne brute (pas une clé de traduction) — utiliser le pipe `translate` si nécessaire : `[title]="'key' | translate"`
+- Ne **pas** utiliser `TranslateModule` dans `ta-modal` — les traductions se font côté parent
+
+---
+
+### 5b. `ta-layout-full-panel` — panneau latéral fixe
+
+Overlay fixe depuis la droite avec backdrop semi-transparent. Contrôlé via `@if` dans le parent (pas d'input `open`).
+
+**Inputs :**
+| Input | Type | Défaut | Description |
+|---|---|---|---|
+| `width` | `string` | `'400px'` | Largeur CSS du panneau |
+| `title` | `string` | `''` | Titre affiché dans le header |
+
+**Output :** `closeEvent: EventEmitter<void>`
+
+**Slots de contenu :**
+- `[panel-content]` — zone scrollable principale
+- `[panel-footer]` — pied de panneau fixe (masqué si vide)
+
+**Usage complet :**
+
+```typescript
+// mon-composant.component.ts
+public isPanelOpen = signal(false);
+```
+
+```html
+<!-- mon-composant.component.html -->
+<ta-button type="secondary" (action)="this.isPanelOpen.set(true)">Ouvrir le panel</ta-button>
+
+@if (this.isPanelOpen()) {
+  <ta-layout-full-panel
+    width="400px"
+    title="Titre du panneau"
+    (closeEvent)="this.isPanelOpen.set(false)"
+  >
+    <div panel-content class="flex-column g-space-md">
+      <ta-text>Contenu du panneau.</ta-text>
+    </div>
+    <div panel-footer>
+      <ta-button type="secondary" (action)="this.isPanelOpen.set(false)">Fermer</ta-button>
+    </div>
+  </ta-layout-full-panel>
+}
+```
+
+**Import :**
+
+```typescript
+import { LayoutFullPanelComponent } from '@ta/ui';
+```
+
+---
+
+### 5c. `MatDialog` — modales complexes (legacy / cas spéciaux)
+
+Réserver `MatDialog` aux cas où `ta-modal` ne suffit pas : résultat typé via `afterClosed()`, `@ViewChild` sur un composant interne, ou formulaire avec cycle de vie complexe.
 
 ```typescript
 import { MatDialog } from '@angular/material/dialog';
-
 import { AttachmentsResult, DocumentAttachmentModal } from './document-attachment-modal.component';
 
-@Component({
-  standalone: true,
-  imports: [
-    /* ... */
-  ],
-})
 export class ParentComponent extends BaseComponent {
   private _dialog = inject(MatDialog);
 
@@ -991,7 +1121,6 @@ export class ParentComponent extends BaseComponent {
     const ref = this._dialog.open<DocumentAttachmentModal, void, AttachmentsResult | null>(DocumentAttachmentModal, {
       panelClass: 'classic-modal',
     });
-
     ref.afterClosed().subscribe(result => {
       if (!result) return;
       // traiter result.files, etc.
@@ -1000,45 +1129,16 @@ export class ParentComponent extends BaseComponent {
 }
 ```
 
-### Créer une modale
-
 ```typescript
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-
-import { InputUpload, InputUploadValue } from '@ta/form-model';
 import { taBaseModal } from '@ta/utils';
 
-export interface MyModalResult {
-  files: InputUploadValue[];
-}
-
-@Component({
-  selector: 'app-my-modal',
-  standalone: true,
-  imports: [taFormInputsModule, taLayoutModule],
-  templateUrl: './my-modal.component.html',
-})
 export class MyModal extends taBaseModal {
-  public uploadInput = new InputUpload({ confirmButton: true });
-
   constructor(public dialogRef: MatDialogRef<MyModal, MyModalResult | null>) {
     super();
     this.dialogRef.addPanelClass('classic-modal');
-
-    // Réagir aux changements du formulaire dans la modale
-    this.uploadInput.changeValue$.subscribe({
-      next: files => this.onSave(files),
-    });
   }
-
-  public onSave(files: InputUploadValue[]) {
-    this.dialogRef.close({ files });
-  }
-
-  public onCancel() {
-    this.dialogRef.close(null);
-  }
+  public onSave(files: InputUploadValue[]) { this.dialogRef.close({ files }); }
+  public onCancel() { this.dialogRef.close(null); }
 }
 ```
 
@@ -1599,6 +1699,8 @@ Les notifications affichent : barre latérale colorée (4px) + icône + titre ty
 - [ ] `HandleSimpleRequest` vs `HandleComplexRequest` : utiliser la bonne selon le besoin
 - [ ] `standalone: true` sur tous les nouveaux composants
 - [ ] `selector: ''` sur les pages (pas de sélecteur HTML pour les routes)
+- [ ] Modales : utiliser `<ta-modal>` (déclaratif) plutôt que `MatDialog` pour les cas simples
+- [ ] Panneaux latéraux : utiliser `<ta-layout-full-panel>` avec slots `[panel-content]` et `[panel-footer]`
 - [ ] `this.` devant toutes les variables/méthodes dans les templates HTML
 - [ ] Ordre des membres : signal inputs/outputs / `@ViewChild` → publics → readonly → getters → services privés → constructor → lifecycle → méthodes publiques → méthodes privées
 - [ ] Suffixe de classe : `Page` pour les routes, `Component` pour les réutilisables, `Modal` pour les dialogues

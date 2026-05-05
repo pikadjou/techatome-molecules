@@ -1,0 +1,159 @@
+<app-page-layout title="Files">
+  <div class="sections">
+
+    <!-- ================================= -->
+    <!-- ANATOMY                           -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Component Anatomy</ta-title>
+      <ta-text size="sm">Vue d'ensemble des composants de gestion de fichiers</ta-text>
+      <div class="anatomy-box">
+        <pre class="anatomy-tree">&#64;ta/files-basic
+├── ta-files-list [files] [canDeleteFile]
+│   ├── (fileSelected)   → FileData &amp; &#123; index &#125;
+│   ├── (moreInformationSelected) → FileData
+│   └── (fileDeleted)    → FileData
+├── ta-documents-list [documentsIds] [actions] [readonly] [emptyMessage]
+│   ├── (remove)         → string (document id)
+│   └── (checkedFilesChanged) → InputUploadValue[]
+└── ta-files-preview [initial: PreviewDocumentDto]
+
+&#64;ta/files-extended
+├── ta-files-upload [features] [canSelectMultipleFiles] [showInActionButton]
+│   └── (filesPicked)    → FileStructure[]
+└── ta-files-display [files$] [menu] [canAddFile] [tempFiles] [fileType]
+    ├── (fileSelected)
+    ├── (moreInformationSelected)
+    └── (fileUploading)  → FileStructure[]</pre>
+      </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- SECTION : FILES BASIC                    -->
+    <!-- ======================================== -->
+    <div class="section-divider">
+      <ta-title [level]="1">&#64;ta/files-basic</ta-title>
+    </div>
+
+    <!-- ================================= -->
+    <!-- TA-FILES-LIST — IMAGES            -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Files List — Images</ta-title>
+      <ta-text size="sm">ta-files-list [files] [canDeleteFile] — Affiche une liste de fichiers image sous forme de cartes. Le 3e fichier simule l'état isLoading.</ta-text>
+
+      <div class="demo-row">
+        <ta-button
+          type="secondary"
+          (action)="this.toggleImageDelete()"
+        >
+          {{ this.canDeleteImageFiles() ? 'Masquer suppression' : 'Afficher suppression' }}
+        </ta-button>
+      </div>
+
+      <div class="files-preview">
+        <ta-files-list
+          [files]="this.imageFiles()"
+          [canDeleteFile]="this.canDeleteImageFiles()"
+          (fileSelected)="this.onFileSelected($event)"
+          (fileDeleted)="this.onFileDeleted($event)"
+        ></ta-files-list>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- TA-FILES-LIST — DOCUMENTS         -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Files List — Documents</ta-title>
+      <ta-text size="sm">ta-files-list avec type Document — PDF, Word, Excel. Formats détectés via fileExtension.</ta-text>
+
+      <div class="demo-row">
+        <ta-button
+          type="secondary"
+          (action)="this.toggleDocDelete()"
+        >
+          {{ this.canDeleteDocFiles() ? 'Masquer suppression' : 'Afficher suppression' }}
+        </ta-button>
+      </div>
+
+      <div class="files-preview">
+        <ta-files-list
+          [files]="this.documentFiles()"
+          [canDeleteFile]="this.canDeleteDocFiles()"
+          (fileSelected)="this.onFileSelected($event)"
+          (fileDeleted)="this.onFileDeleted($event)"
+        ></ta-files-list>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- TA-FILES-LIST — EMPTY STATE       -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Files List — Empty State</ta-title>
+      <ta-text size="sm">ta-files-list sans fichiers — affiche le composant ta-empty.</ta-text>
+
+      <div class="files-preview">
+        <ta-files-list [files]="this.emptyFiles()"></ta-files-list>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- TA-DOCUMENTS-LIST                 -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Documents List</ta-title>
+      <ta-text size="sm">ta-documents-list [documentsIds] — Récupère les documents depuis l'API via TaDocumentsService. Passer un tableau vide affiche l'état vide. Requiert une API GraphQL configurée pour les IDs réels.</ta-text>
+
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">Empty (documentsIds=[])</ta-text>
+          <div class="files-preview">
+            <ta-documents-list [documentsIds]="[]"></ta-documents-list>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- SECTION : FILES EXTENDED                 -->
+    <!-- ======================================== -->
+    <div class="section-divider">
+      <ta-title [level]="1">&#64;ta/files-extended</ta-title>
+    </div>
+
+    <!-- ================================= -->
+    <!-- TA-FILES-UPLOAD                   -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Files Upload</ta-title>
+      <ta-text size="sm">ta-files-upload [features] [canSelectMultipleFiles] [showInActionButton] — Boutons d'upload. Les actions take-pic et upload-pic utilisent Capacitor (app mobile). upload-file utilise le FilePicker natif.</ta-text>
+
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">Images — take-pic + upload-pic (showInActionButton=true)</ta-text>
+          <ta-files-upload
+            [features]="['take-pic', 'upload-pic']"
+            [showInActionButton]="true"
+          ></ta-files-upload>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">Documents — upload-file (showInActionButton=true)</ta-text>
+          <ta-files-upload
+            [features]="['upload-file']"
+            [showInActionButton]="true"
+          ></ta-files-upload>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">Toutes features (showInActionButton=false)</ta-text>
+          <ta-files-upload
+            [features]="['take-pic', 'upload-pic', 'upload-file']"
+            [showInActionButton]="false"
+          ></ta-files-upload>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</app-page-layout>

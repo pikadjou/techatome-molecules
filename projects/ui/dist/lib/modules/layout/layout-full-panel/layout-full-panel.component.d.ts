@@ -8,5 +8,5 @@ export declare class LayoutFullPanelComponent extends TaBaseComponent {
     constructor();
     askClose(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutFullPanelComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutFullPanelComponent, "ta-layout-full-panel", never, { "width": { "alias": "width"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; }, { "closeEvent": "closeEvent"; }, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<LayoutFullPanelComponent, "ta-layout-full-panel", never, { "width": { "alias": "width"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; }, { "closeEvent": "closeEvent"; }, never, ["[panel-content]", "[panel-footer]"], true, never>;
 }
