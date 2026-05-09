@@ -1,7 +1,14 @@
-<div class="edit-schema-container">
-  <ta-files-edit
-    [imagePath]="this.imagePath"
-    [saveImage$]="this.askImage$"
-    (savedImage)="this.savedImage($event)"
-  ></ta-files-edit>
-</div>
+<ta-modal
+  [open]="this.open()"
+  size="fullscreen"
+  title=""
+  (closeEvent)="this.close()"
+>
+  <div modal-content class="edit-schema-container">
+    <ta-files-edit
+      [imagePath]="this.imagePath"
+      [saveImage$]="this.askImage$"
+      (savedImage)="this.savedImage($event)"
+    ></ta-files-edit>
+  </div>
+</ta-modal>

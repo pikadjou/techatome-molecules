@@ -6,8 +6,8 @@ export declare class NotificationInlineComponent extends TaBaseComponent {
     code: import("@angular/core").InputSignal<ENotificationCode>;
     showClose: import("@angular/core").InputSignal<boolean>;
     askClose: import("@angular/core").OutputEmitterRef<void>;
-    private _matDialog;
     showMessage: boolean;
+    isErrorModalOpen: import("@angular/core").WritableSignal<boolean>;
     get message(): string;
     get isError(): boolean;
     get isWarning(): boolean;

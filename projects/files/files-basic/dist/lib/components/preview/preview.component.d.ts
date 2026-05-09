@@ -1,4 +1,4 @@
-import { EFileExtension, TaBaseComponent, TaBaseModal } from '@ta/utils';
+import { EFileExtension, TaBaseComponent } from '@ta/utils';
 import { PreviewDocumentDto } from './type';
 import * as i0 from "@angular/core";
 export declare class FilesPreviewComponent extends TaBaseComponent {
@@ -13,10 +13,10 @@ export declare class FilesPreviewComponent extends TaBaseComponent {
 export type PreviewModalDataModal = {
     initial: PreviewDocumentDto | null;
 };
-export declare class PreviewModal extends TaBaseModal {
-    data: PreviewModalDataModal;
-    readonly initial: import("@angular/core").WritableSignal<PreviewDocumentDto | null>;
-    constructor();
+export declare class PreviewModal extends TaBaseComponent {
+    open: import("@angular/core").InputSignal<boolean>;
+    initial: import("@angular/core").InputSignal<PreviewDocumentDto | null>;
+    closeEvent: import("@angular/core").OutputEmitterRef<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<PreviewModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<PreviewModal, "ng-component", never, {}, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PreviewModal, "ta-files-preview-modal", never, { "open": { "alias": "open"; "required": true; "isSignal": true; }; "initial": { "alias": "initial"; "required": false; "isSignal": true; }; }, { "closeEvent": "closeEvent"; }, never, never, true, never>;
 }

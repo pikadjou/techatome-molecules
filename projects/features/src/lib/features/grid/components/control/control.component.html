@@ -44,3 +44,9 @@
     }
   </div>
 }
+
+<ta-grid-filters-modal
+  [open]="this.isFiltersOpen()"
+  [gridId]="this.gridId()"
+  (closeEvent)="this.isFiltersOpen.set(false)"
+></ta-grid-filters-modal>

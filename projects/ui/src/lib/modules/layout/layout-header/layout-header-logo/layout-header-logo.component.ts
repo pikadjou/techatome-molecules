@@ -2,21 +2,16 @@ import { NgTemplateOutlet } from "@angular/common";
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  inject,
-  input,
   TemplateRef,
+  input,
+  signal,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatMenuModule } from "@angular/material/menu";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaBaseComponent } from "@ta/utils";
 import { Observable } from "rxjs";
 
-import {
-  TemplateModalContainer,
-  TemplateModalContainerData,
-} from "../../layout-modal/layout-modal-container/layout-modal-container.component";
+import { TaModalComponent } from "../../modal/modal.component";
 
 interface UserLogoNaming {
   name: string;
@@ -29,7 +24,7 @@ interface UserLogoNaming {
   templateUrl: "./layout-header-logo.component.html",
   styleUrls: ["./layout-header-logo.component.scss"],
   standalone: true,
-  imports: [NgTemplateOutlet, FontIconComponent, MatMenuModule],
+  imports: [NgTemplateOutlet, FontIconComponent, TaModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutHeaderLogoComponent extends TaBaseComponent {
@@ -42,7 +37,8 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
 
   askClosing$ = input<Observable<null> | undefined>(undefined);
 
-  private _modal = inject(MatDialog);
+  public isProfileOpen = signal(false);
+  public isNotifOpen = signal(false);
 
   constructor() {
     super();
@@ -53,10 +49,7 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
     naming: UserLogoNaming | null;
   } {
     if (!this.profile()) {
-      return {
-        naming: null,
-        profilePictureUrl: "",
-      };
+      return { naming: null, profilePictureUrl: "" };
     }
     return {
       naming: this.profile()!.user.naming,
@@ -67,33 +60,14 @@ export class LayoutHeaderLogoComponent extends TaBaseComponent {
   public goToHome() {
     this._router.navigateByUrl("/");
   }
+
   public openProfile() {
-    if (!this.profile()?.template) {
-      return;
-    }
-    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
-      TemplateModalContainer,
-      {
-        data: {
-          template: this.profile()!.template,
-          askClosing$: this.askClosing$(),
-        },
-      }
-    );
+    if (!this.profile()?.template) return;
+    this.isProfileOpen.set(true);
   }
 
   public openNotification() {
-    if (!this.notificationTemplate()) {
-      return;
-    }
-    this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
-      TemplateModalContainer,
-      {
-        data: {
-          template: this.notificationTemplate()!,
-          askClosing$: this.askClosing$(),
-        },
-      }
-    );
+    if (!this.notificationTemplate()) return;
+    this.isNotifOpen.set(true);
   }
 }

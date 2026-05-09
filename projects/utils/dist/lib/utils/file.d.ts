@@ -4,7 +4,7 @@ export declare const extractExtension: (name: string) => "docx" | "pdf" | "xlsx"
 export declare const getBase64FromFile: (file: File) => Promise<string>;
 export declare const getBlobImage: (base64: string) => Promise<Blob>;
 export declare const compressImage: (blob: Blob) => Promise<Blob>;
-export declare const downloadFile: (url: string) => void;
+export declare const downloadFile: (url: string, filename?: string) => void;
 export declare const pickImages: () => Promise<FileStructure[]>;
 export declare const pathToFile: (pic: {
     webPath?: string;

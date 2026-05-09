@@ -1,16 +1,15 @@
 import { JsonPipe } from "@angular/common";
-import { Component, inject } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, inject, input, output } from "@angular/core";
 
 import { ServerError, TaServerErrorService } from "@ta/server";
 import {
   ButtonComponent,
   ExpandableTextComponent,
-  LayoutModalComponent,
+  TaModalComponent,
   TextComponent,
   TitleComponent,
 } from "@ta/ui";
-import { TaBaseModal, copyTextToClipboard } from "@ta/utils";
+import { TaBaseComponent, copyTextToClipboard } from "@ta/utils";
 
 import { ENotificationCode } from "../../enum";
 import { LAZY_SERVICE_TOKEN } from "../../services/notification.service";
@@ -24,12 +23,16 @@ import { LAZY_SERVICE_TOKEN } from "../../services/notification.service";
     ButtonComponent,
     ExpandableTextComponent,
     JsonPipe,
-    LayoutModalComponent,
+    TaModalComponent,
     TextComponent,
     TitleComponent,
   ],
 })
-export class ErrorBoxModal extends TaBaseModal {
+export class ErrorBoxModal extends TaBaseComponent {
+  open = input.required<boolean>();
+
+  closeEvent = output<void>();
+
   protected _notificationService = inject(LAZY_SERVICE_TOKEN);
 
   private readonly _errorService = inject(TaServerErrorService);
@@ -65,28 +68,21 @@ export class ErrorBoxModal extends TaBaseModal {
     return `
       🔴 Error Name:
       ${entity.error?.name ?? "N/A"}
-      
+
       💬 Message:
       ${entity.error?.message ?? "N/A"}
-      
+
       📜 Stack:
       ${entity.error?.stack ?? "N/A"}
-      
+
       📄 Query:
       ${entity.query ?? "N/A"}
-      
+
       📦 Variables:
       ${JSON.stringify(entity.variables, null, 2)}
-      
+
       🧾 Error Messages:
       ${errorMessages}
       `.trim();
   }
-}
-
-export function openErrorModal(dialog: MatDialog) {
-  return dialog.open(ErrorBoxModal, {
-    width: "600px",
-    maxHeight: "80vh",
-  });
 }

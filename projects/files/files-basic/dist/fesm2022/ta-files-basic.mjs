@@ -1,15 +1,15 @@
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Output, Component, output, ViewChild, inject, signal } from '@angular/core';
+import { input, EventEmitter, Output, Component, output, ViewChild, Injectable, inject } from '@angular/core';
 import { TaIconType, FontIconComponent, LocalIconComponent, MaterialIconComponent } from '@ta/icons';
-import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent, EmptyComponent, LoaderComponent, ButtonComponent, MegaoctetComponent, TextComponent, LayoutModalComponent, ButtonToolComponent, ErrorComponent, LinkComponent, TimeAgoComponent } from '@ta/ui';
-import { EFileExtension, TaBaseComponent, SafePipe, StopPropagationDirective, isLight, getBlobImage, determineNewSize, TaAbstractComponent, getFileExtension, downloadFile, TaBaseModal } from '@ta/utils';
+import { BadgeComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardTagComponent, CardTitleComponent, TitleComponent, TrigramComponent, EmptyComponent, LoaderComponent, ButtonComponent, MegaoctetComponent, TextComponent, TaModalComponent, ButtonToolComponent, ErrorComponent, LinkComponent, TimeAgoComponent } from '@ta/ui';
+import { EFileExtension, TaBaseComponent, SafePipe, StopPropagationDirective, isLight, getBlobImage, determineNewSize, TaAbstractComponent, getFileExtension, downloadFile } from '@ta/utils';
 import * as i1$1 from '@angular/common';
 import { NgClass, CommonModule, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { InputSlider } from '@ta/form-model';
 import ImageEditor from 'tui-image-editor';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as i2 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaLazyTranslationService } from '@ta/translation';
 import * as i1 from 'ngx-doc-viewer';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { TaDocumentsService, FileType } from '@ta/services';
@@ -344,6 +344,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 args: ["tuiRef"]
             }] } });
 
+class TaTranslationFiles extends TaLazyTranslationService {
+    constructor() {
+        super('files');
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationFiles, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationFiles, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationFiles, decorators: [{
+            type: Injectable,
+            args: [{ providedIn: 'root' }]
+        }], ctorParameters: () => [] });
+
 class ExcelViewerComponent extends TaAbstractComponent {
     constructor() {
         super();
@@ -363,11 +375,11 @@ class ImageViewerComponent {
         this.file = input.required();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ImageViewerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ImageViewerComponent, isStandalone: true, selector: "ta-image-viewer", inputs: { file: { classPropertyName: "file", publicName: "file", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "@if (this.file()) {\n  <div class=\"image-viewer\">\n    <img [src]=\"this.file().url\" [alt]=\"this.file().url\" />\n  </div>\n}\n", styles: [".image-viewer{width:100%;height:100%;display:grid;place-items:center;background-color:#f1f5f9;overflow:hidden}.image-viewer img{max-width:100%;max-height:100%;min-width:0;min-height:0;width:auto;height:auto;object-fit:contain;display:block}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ImageViewerComponent, isStandalone: true, selector: "ta-image-viewer", inputs: { file: { classPropertyName: "file", publicName: "file", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "@if (this.file()) {\n  <div class=\"image-viewer\">\n    <img [src]=\"this.file().url\" [alt]=\"this.file().url\" />\n  </div>\n}\n", styles: [":host{display:block;height:100%}.image-viewer{width:100%;height:100%;display:grid;place-items:center;background-color:var(--ta-surface-secondary);overflow:hidden}.image-viewer img{max-width:100%;max-height:100%;min-width:0;min-height:0;width:auto;height:auto;object-fit:contain;display:block}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ImageViewerComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-image-viewer', standalone: true, template: "@if (this.file()) {\n  <div class=\"image-viewer\">\n    <img [src]=\"this.file().url\" [alt]=\"this.file().url\" />\n  </div>\n}\n", styles: [".image-viewer{width:100%;height:100%;display:grid;place-items:center;background-color:#f1f5f9;overflow:hidden}.image-viewer img{max-width:100%;max-height:100%;min-width:0;min-height:0;width:auto;height:auto;object-fit:contain;display:block}\n"] }]
+            args: [{ selector: 'ta-image-viewer', standalone: true, template: "@if (this.file()) {\n  <div class=\"image-viewer\">\n    <img [src]=\"this.file().url\" [alt]=\"this.file().url\" />\n  </div>\n}\n", styles: [":host{display:block;height:100%}.image-viewer{width:100%;height:100%;display:grid;place-items:center;background-color:var(--ta-surface-secondary);overflow:hidden}.image-viewer img{max-width:100%;max-height:100%;min-width:0;min-height:0;width:auto;height:auto;object-fit:contain;display:block}\n"] }]
         }] });
 
 class PdfViewerComponent extends TaAbstractComponent {
@@ -404,12 +416,13 @@ class FilesPreviewComponent extends TaBaseComponent {
         this.initial = input.required();
         this.getFileExtension = getFileExtension;
         this.EFileExtension = EFileExtension;
+        TaTranslationFiles.getInstance();
     }
     download() {
         downloadFile(this.initial().url);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilesPreviewComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilesPreviewComponent, isStandalone: true, selector: "ta-files-preview", inputs: { initial: { classPropertyName: "initial", publicName: "initial", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div Class=\"slide-container flex-column g-space-sm\">\n  <div class=\"header flex-column g-space-sm\">\n    @if (this.initial().filename; as filename) {\n      <ta-title [level]=\"3\">{{ filename }}</ta-title>\n    }\n\n    <div class=\"flex-start g-space-sm align-center\">\n      @if (this.initial().uploadedDate; as uploadedDate) {\n        <ta-text>{{ uploadedDate | date: 'shortDate' }}</ta-text>\n      }\n      @if (this.initial().size; as size) {\n        <ta-megaoctet [octet]=\"size\"></ta-megaoctet>\n      }\n    </div>\n  </div>\n  <div class=\"body\">\n    @switch (this.getFileExtension(this.initial().url)) {\n      @case (EFileExtension.Image) {\n        <ta-image-viewer [file]=\"this.initial()\"></ta-image-viewer>\n      }\n      @case (EFileExtension.PDF) {\n        <ta-pdf-viewer [file]=\"this.initial()\"></ta-pdf-viewer>\n      }\n      @case (EFileExtension.Excel) {\n        <ta-excel-viewer [file]=\"this.initial()\"></ta-excel-viewer>\n      }\n      @case (EFileExtension.Word) {\n        <ta-word-viewer [file]=\"this.initial()\"></ta-word-viewer>\n      }\n      @default {\n        {{ 'files.slide.no-viewer' | translate }}\n      }\n    }\n  </div>\n  <div class=\"footer space-between\">\n    <div class=\"flex-row g-space-sm\">\n      <!-- <ta-button icon=\"delete\" (action)=\"this.delete()\" type=\"alert\">{{ 'files.slide.delete' | translate }}</ta-button> -->\n      <ta-button\n        icon=\"download\"\n        (action)=\"this.download()\"\n        [options]=\"this.breakpoints.isMobile ? { circular: 'small' } : {}\"\n      >\n        @if (!this.breakpoints.isMobile) {\n          {{ 'files.slide.download' | translate }}\n        }\n      </ta-button>\n    </div>\n  </div>\n</div>\n", styles: [".slide-container{height:100%}.header{border-bottom:1px solid var(--ta-neutral-300);padding-bottom:var(--ta-space-md)}.body{flex:1;width:100%;overflow:auto}.body ta-image-viewer,.body ta-pdf-viewer,.body ta-word-viewer,.body ta-excel-viewer{height:100%;width:100%;display:block}.footer{border-top:1px solid var(--ta-neutral-300);padding:var(--ta-space-md)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "pipe", type: i1$1.DatePipe, name: "date" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i2.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: MegaoctetComponent, selector: "ta-megaoctet", inputs: ["octet", "icon"] }, { kind: "component", type: ImageViewerComponent, selector: "ta-image-viewer", inputs: ["file"] }, { kind: "component", type: PdfViewerComponent, selector: "ta-pdf-viewer", inputs: ["file"] }, { kind: "component", type: ExcelViewerComponent, selector: "ta-excel-viewer", inputs: ["file"] }, { kind: "component", type: WordViewerComponent, selector: "ta-word-viewer", inputs: ["file"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FilesPreviewComponent, isStandalone: true, selector: "ta-files-preview", inputs: { initial: { classPropertyName: "initial", publicName: "initial", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"preview-layout\">\n  <div class=\"preview-header\">\n    @if (this.initial().filename; as filename) {\n      <ta-title [level]=\"'4'\">{{ filename }}</ta-title>\n    }\n    <div class=\"flex-start g-space-sm align-center\">\n      @if (this.initial().uploadedDate; as uploadedDate) {\n        <ta-text>{{ uploadedDate | date: 'shortDate' }}</ta-text>\n      }\n      @if (this.initial().size; as size) {\n        <ta-megaoctet [octet]=\"size\"></ta-megaoctet>\n      }\n    </div>\n  </div>\n\n  <div class=\"preview-body\">\n    @switch (this.getFileExtension(this.initial().url)) {\n      @case (EFileExtension.Image) {\n        <ta-image-viewer [file]=\"this.initial()\"></ta-image-viewer>\n      }\n      @case (EFileExtension.PDF) {\n        <ta-pdf-viewer [file]=\"this.initial()\"></ta-pdf-viewer>\n      }\n      @case (EFileExtension.Excel) {\n        <ta-excel-viewer [file]=\"this.initial()\"></ta-excel-viewer>\n      }\n      @case (EFileExtension.Word) {\n        <ta-word-viewer [file]=\"this.initial()\"></ta-word-viewer>\n      }\n      @default {\n        {{ 'files.slide.no-viewer' | translate }}\n      }\n    }\n  </div>\n\n  <div class=\"preview-footer\">\n    <ta-button\n      icon=\"download\"\n      (action)=\"this.download()\"\n      [options]=\"this.breakpoints.isMobile ? { circular: 'small' } : {}\"\n    >\n      @if (!this.breakpoints.isMobile) {\n        {{ 'files.slide.download' | translate }}\n      }\n    </ta-button>\n  </div>\n</div>\n", styles: [":host{display:block;position:relative}.preview-layout{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr auto}.preview-header{display:flex;flex-direction:column;gap:var(--ta-space-sm);padding:var(--ta-space-md);border-bottom:1px solid var(--ta-border-secondary)}.preview-body{overflow:hidden;min-height:0}.preview-body ta-image-viewer,.preview-body ta-pdf-viewer,.preview-body ta-word-viewer,.preview-body ta-excel-viewer{height:100%;width:100%;display:block}.preview-footer{display:flex;align-items:center;padding:var(--ta-space-md);border-top:1px solid var(--ta-border-secondary)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "pipe", type: i1$1.DatePipe, name: "date" }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i2.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: MegaoctetComponent, selector: "ta-megaoctet", inputs: ["octet", "icon"] }, { kind: "component", type: ImageViewerComponent, selector: "ta-image-viewer", inputs: ["file"] }, { kind: "component", type: PdfViewerComponent, selector: "ta-pdf-viewer", inputs: ["file"] }, { kind: "component", type: ExcelViewerComponent, selector: "ta-excel-viewer", inputs: ["file"] }, { kind: "component", type: WordViewerComponent, selector: "ta-word-viewer", inputs: ["file"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FilesPreviewComponent, decorators: [{
             type: Component,
@@ -424,29 +437,50 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         WordViewerComponent,
                         TitleComponent,
                         TextComponent,
-                    ], template: "<div Class=\"slide-container flex-column g-space-sm\">\n  <div class=\"header flex-column g-space-sm\">\n    @if (this.initial().filename; as filename) {\n      <ta-title [level]=\"3\">{{ filename }}</ta-title>\n    }\n\n    <div class=\"flex-start g-space-sm align-center\">\n      @if (this.initial().uploadedDate; as uploadedDate) {\n        <ta-text>{{ uploadedDate | date: 'shortDate' }}</ta-text>\n      }\n      @if (this.initial().size; as size) {\n        <ta-megaoctet [octet]=\"size\"></ta-megaoctet>\n      }\n    </div>\n  </div>\n  <div class=\"body\">\n    @switch (this.getFileExtension(this.initial().url)) {\n      @case (EFileExtension.Image) {\n        <ta-image-viewer [file]=\"this.initial()\"></ta-image-viewer>\n      }\n      @case (EFileExtension.PDF) {\n        <ta-pdf-viewer [file]=\"this.initial()\"></ta-pdf-viewer>\n      }\n      @case (EFileExtension.Excel) {\n        <ta-excel-viewer [file]=\"this.initial()\"></ta-excel-viewer>\n      }\n      @case (EFileExtension.Word) {\n        <ta-word-viewer [file]=\"this.initial()\"></ta-word-viewer>\n      }\n      @default {\n        {{ 'files.slide.no-viewer' | translate }}\n      }\n    }\n  </div>\n  <div class=\"footer space-between\">\n    <div class=\"flex-row g-space-sm\">\n      <!-- <ta-button icon=\"delete\" (action)=\"this.delete()\" type=\"alert\">{{ 'files.slide.delete' | translate }}</ta-button> -->\n      <ta-button\n        icon=\"download\"\n        (action)=\"this.download()\"\n        [options]=\"this.breakpoints.isMobile ? { circular: 'small' } : {}\"\n      >\n        @if (!this.breakpoints.isMobile) {\n          {{ 'files.slide.download' | translate }}\n        }\n      </ta-button>\n    </div>\n  </div>\n</div>\n", styles: [".slide-container{height:100%}.header{border-bottom:1px solid var(--ta-neutral-300);padding-bottom:var(--ta-space-md)}.body{flex:1;width:100%;overflow:auto}.body ta-image-viewer,.body ta-pdf-viewer,.body ta-word-viewer,.body ta-excel-viewer{height:100%;width:100%;display:block}.footer{border-top:1px solid var(--ta-neutral-300);padding:var(--ta-space-md)}\n"] }]
+                    ], template: "<div class=\"preview-layout\">\n  <div class=\"preview-header\">\n    @if (this.initial().filename; as filename) {\n      <ta-title [level]=\"'4'\">{{ filename }}</ta-title>\n    }\n    <div class=\"flex-start g-space-sm align-center\">\n      @if (this.initial().uploadedDate; as uploadedDate) {\n        <ta-text>{{ uploadedDate | date: 'shortDate' }}</ta-text>\n      }\n      @if (this.initial().size; as size) {\n        <ta-megaoctet [octet]=\"size\"></ta-megaoctet>\n      }\n    </div>\n  </div>\n\n  <div class=\"preview-body\">\n    @switch (this.getFileExtension(this.initial().url)) {\n      @case (EFileExtension.Image) {\n        <ta-image-viewer [file]=\"this.initial()\"></ta-image-viewer>\n      }\n      @case (EFileExtension.PDF) {\n        <ta-pdf-viewer [file]=\"this.initial()\"></ta-pdf-viewer>\n      }\n      @case (EFileExtension.Excel) {\n        <ta-excel-viewer [file]=\"this.initial()\"></ta-excel-viewer>\n      }\n      @case (EFileExtension.Word) {\n        <ta-word-viewer [file]=\"this.initial()\"></ta-word-viewer>\n      }\n      @default {\n        {{ 'files.slide.no-viewer' | translate }}\n      }\n    }\n  </div>\n\n  <div class=\"preview-footer\">\n    <ta-button\n      icon=\"download\"\n      (action)=\"this.download()\"\n      [options]=\"this.breakpoints.isMobile ? { circular: 'small' } : {}\"\n    >\n      @if (!this.breakpoints.isMobile) {\n        {{ 'files.slide.download' | translate }}\n      }\n    </ta-button>\n  </div>\n</div>\n", styles: [":host{display:block;position:relative}.preview-layout{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr auto}.preview-header{display:flex;flex-direction:column;gap:var(--ta-space-sm);padding:var(--ta-space-md);border-bottom:1px solid var(--ta-border-secondary)}.preview-body{overflow:hidden;min-height:0}.preview-body ta-image-viewer,.preview-body ta-pdf-viewer,.preview-body ta-word-viewer,.preview-body ta-excel-viewer{height:100%;width:100%;display:block}.preview-footer{display:flex;align-items:center;padding:var(--ta-space-md);border-top:1px solid var(--ta-border-secondary)}\n"] }]
         }], ctorParameters: () => [] });
-class PreviewModal extends TaBaseModal {
+class PreviewModal extends TaBaseComponent {
     constructor() {
-        super();
-        this.data = inject(MAT_DIALOG_DATA);
-        this.initial = signal(null);
-        //  TaTranslationFiles.getInstance();
-        this.initial.set(this.data.initial);
+        super(...arguments);
+        this.open = input.required();
+        this.initial = input(null);
+        this.closeEvent = output();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PreviewModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: PreviewModal, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: '<ta-layout-modal [style]="\'big\'" title="files.preview.title"><ta-loader [isLoading]="this.requestState.isLoading()"><ta-files-preview [initial]="this.initial()!"></ta-files-preview></ta-loader></ta-layout-modal>', isInline: true, dependencies: [{ kind: "component", type: LayoutModalComponent, selector: "ta-layout-modal", inputs: ["style", "title"] }, { kind: "component", type: FilesPreviewComponent, selector: "ta-files-preview", inputs: ["initial"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PreviewModal, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PreviewModal, isStandalone: true, selector: "ta-files-preview-modal", inputs: { open: { classPropertyName: "open", publicName: "open", isSignal: true, isRequired: true, transformFunction: null }, initial: { classPropertyName: "initial", publicName: "initial", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: `
+    <ta-modal
+      [open]="this.open()"
+      size="large"
+      [contentFit]="true"
+      [title]="'files.preview.title' | translate"
+      (closeEvent)="this.closeEvent.emit()"
+    >
+      <div modal-content class="preview-modal-content">
+        @if (this.initial(); as doc) {
+          <ta-files-preview [initial]="doc"></ta-files-preview>
+        }
+      </div>
+    </ta-modal>
+  `, isInline: true, styles: [".preview-modal-content{flex:1;min-height:0;display:flex;flex-direction:column}ta-files-preview{flex:1;min-height:0}\n"], dependencies: [{ kind: "component", type: FilesPreviewComponent, selector: "ta-files-preview", inputs: ["initial"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i2.TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PreviewModal, decorators: [{
             type: Component,
-            args: [{
-                    // eslint-disable-next-line @angular-eslint/component-selector
-                    selector: '',
-                    template: '<ta-layout-modal [style]="\'big\'" title="files.preview.title"><ta-loader [isLoading]="this.requestState.isLoading()"><ta-files-preview [initial]="this.initial()!"></ta-files-preview></ta-loader></ta-layout-modal>',
-                    standalone: true,
-                    imports: [LayoutModalComponent, FilesPreviewComponent, LoaderComponent],
-                }]
-        }], ctorParameters: () => [] });
+            args: [{ selector: 'ta-files-preview-modal', template: `
+    <ta-modal
+      [open]="this.open()"
+      size="large"
+      [contentFit]="true"
+      [title]="'files.preview.title' | translate"
+      (closeEvent)="this.closeEvent.emit()"
+    >
+      <div modal-content class="preview-modal-content">
+        @if (this.initial(); as doc) {
+          <ta-files-preview [initial]="doc"></ta-files-preview>
+        }
+      </div>
+    </ta-modal>
+  `, standalone: true, imports: [FilesPreviewComponent, TaModalComponent, TranslateModule], styles: [".preview-modal-content{flex:1;min-height:0;display:flex;flex-direction:column}ta-files-preview{flex:1;min-height:0}\n"] }]
+        }] });
 
 class DocumentsListComponent extends TaBaseComponent {
     constructor() {
@@ -534,5 +568,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { DocumentsListComponent, ExcelViewerComponent, FileEditComponent, FileListComponent, FilesPreviewComponent, ImageViewerComponent, PdfViewerComponent, PreviewModal, WordViewerComponent };
+export { DocumentsListComponent, ExcelViewerComponent, FileEditComponent, FileListComponent, FilesPreviewComponent, ImageViewerComponent, PdfViewerComponent, PreviewModal, TaTranslationFiles, WordViewerComponent };
 //# sourceMappingURL=ta-files-basic.mjs.map

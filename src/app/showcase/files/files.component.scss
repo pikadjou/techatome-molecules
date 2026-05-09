@@ -51,6 +51,18 @@ section {
   background: common.get-var(surface, primary);
 }
 
+.files-preview--tall {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  ta-files-preview {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
 .section-divider {
   padding-top: common.get-var(space, lg);
   border-top: 2px solid common.get-var(border, secondary);

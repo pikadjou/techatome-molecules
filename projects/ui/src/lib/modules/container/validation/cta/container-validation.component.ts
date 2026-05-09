@@ -1,38 +1,45 @@
-import { Component, EventEmitter, inject, input, Output } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, EventEmitter, Output, input, signal } from "@angular/core";
 
+import { TranslateModule } from "@ngx-translate/core";
+
+import { ButtonComponent } from "../../../../components/ui/button/button.component";
+import { TextComponent } from "../../../../components/ui/text/text.component";
+import { TaModalComponent } from "../../../layout/modal/modal.component";
+import { TaTranslationUI } from "../../../../translation.service";
 import { TaBaseComponent } from "@ta/utils";
-
-import { openModal } from "../common-modal";
 
 @Component({
   selector: "ta-container-validation",
   templateUrl: "./container-validation.component.html",
   standalone: true,
+  imports: [ButtonComponent, TextComponent, TaModalComponent, TranslateModule],
 })
 export class ContainerValidationComponent extends TaBaseComponent {
   disabled = input<boolean>(false);
+  title = input<string>("validation.modal.title");
+  subtitle = input<string>("validation.modal.content");
 
   @Output()
   validated = new EventEmitter();
 
-  public _dialog = inject(MatDialog);
+  public isModalOpen = signal(false);
 
   constructor() {
     super();
+    TaTranslationUI.getInstance();
   }
 
-  openModal(): void {
-    if (this.disabled()) {
-      return;
-    }
+  public openModal(): void {
+    if (this.disabled()) return;
+    this.isModalOpen.set(true);
+  }
 
-    this._registerSubscription(
-      openModal(this._dialog).subscribe((result) => {
-        if (result) {
-          this.validated.emit();
-        }
-      })
-    );
+  public onNoClick(): void {
+    this.isModalOpen.set(false);
+  }
+
+  public onYesClick(): void {
+    this.isModalOpen.set(false);
+    this.validated.emit();
   }
 }

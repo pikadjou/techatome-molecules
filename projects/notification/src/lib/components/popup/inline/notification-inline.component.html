@@ -1,40 +1,45 @@
 @if (this.showMessage) {
-<div class="notification" [ngClass]="this.getTypeClass()">
-  <div class="notification_sidebar"></div>
-  <div class="notification_content">
-    <div class="notification_header">
-      <div class="notification_type">
-        <ta-font-icon [name]="this.getIcon()" type="md"></ta-font-icon>
-        <span class="notification_title">{{
-          this.getTypeLabel() | translate
-        }}</span>
+  <div class="notification" [ngClass]="this.getTypeClass()">
+    <div class="notification_sidebar"></div>
+    <div class="notification_content">
+      <div class="notification_header">
+        <div class="notification_type">
+          <ta-font-icon [name]="this.getIcon()" type="md"></ta-font-icon>
+          <span class="notification_title">{{
+            this.getTypeLabel() | translate
+          }}</span>
+        </div>
+        @if (this.showClose()) {
+          <button class="notification_close" (click)="this.close()">
+            <ta-font-icon name="close" type="sm"></ta-font-icon>
+          </button>
+        }
       </div>
-      @if (this.showClose()) {
-      <button class="notification_close" (click)="this.close()">
-        <ta-font-icon name="close" type="sm"></ta-font-icon>
-      </button>
+      <div class="notification_body">
+        @if (this.message) {
+          <span class="notification_message">{{
+            this.message | translate
+          }}</span>
+        } @else {
+          <span class="notification_message">{{
+            this.getDefaultMessageKey() | translate
+          }}</span>
+        }
+      </div>
+      @if (this.isError) {
+        <div class="notification_footer">
+          <ta-link size="sm" (action)="this.openErrorBox()">{{
+            "notification.action.viewDetails" | translate
+          }}</ta-link>
+        </div>
       }
     </div>
-    <div class="notification_body">
-      @if (this.message) {
-      <span class="notification_message">{{
-        this.message | translate
-      }}</span>
-      } @else {
-      <span class="notification_message">{{
-        this.getDefaultMessageKey() | translate
-      }}</span>
-      }
-    </div>
-    @if (this.isError) {
-    <div class="notification_footer">
-      <ta-link size="sm" (action)="this.openErrorBox()">{{
-        "notification.action.viewDetails" | translate
-      }}</ta-link>
-    </div>
-    }
   </div>
-</div>
 } @else {
-<ng-content></ng-content>
+  <ng-content></ng-content>
 }
+
+<ta-error-box
+  [open]="this.isErrorModalOpen()"
+  (closeEvent)="this.isErrorModalOpen.set(false)"
+></ta-error-box>

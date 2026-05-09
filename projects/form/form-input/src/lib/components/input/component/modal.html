@@ -1,8 +1,15 @@
-<ta-layout-modal style="classic" title="input.component.modal.title">
-  @if(this.data.input.template) {
-  <ng-template
-    [ngTemplateOutlet]="this.data.input.template"
-    [ngTemplateOutletContext]="{ selectedValue$: this.selectedValue$ }"
-  ></ng-template>
-  }
-</ta-layout-modal>
+<ta-modal
+  [open]="this.open()"
+  size="medium"
+  title="input.component.modal.title"
+  (closeEvent)="this.closeEvent.emit()"
+>
+  <div modal-content>
+    @if (this.inputData().template) {
+      <ng-template
+        [ngTemplateOutlet]="this.inputData().template"
+        [ngTemplateOutletContext]="{ selectedValue$: this.selectedValue$ }"
+      ></ng-template>
+    }
+  </div>
+</ta-modal>

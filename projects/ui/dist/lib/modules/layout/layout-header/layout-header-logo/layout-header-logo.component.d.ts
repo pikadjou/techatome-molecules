@@ -17,7 +17,8 @@ export declare class LayoutHeaderLogoComponent extends TaBaseComponent {
     } | null>;
     notificationTemplate: import("@angular/core").InputSignal<TemplateRef<any> | null>;
     askClosing$: import("@angular/core").InputSignal<Observable<null> | undefined>;
-    private _modal;
+    isProfileOpen: import("@angular/core").WritableSignal<boolean>;
+    isNotifOpen: import("@angular/core").WritableSignal<boolean>;
     constructor();
     userInfo(): {
         profilePictureUrl?: string;

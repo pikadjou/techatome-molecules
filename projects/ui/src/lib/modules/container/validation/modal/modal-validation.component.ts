@@ -1,40 +1,47 @@
-import { Component, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
 import { ButtonComponent } from "../../../../components/ui/button/button.component";
-import { LayoutModalComponent } from "../../../layout/layout-modal/layout-modal.component";
+import { TextComponent } from "../../../../components/ui/text/text.component";
+import { TaModalComponent } from "../../../layout/modal/modal.component";
+import { TaBaseComponent } from "@ta/utils";
 import { ModalParameter } from "../common-modal";
 import { TaTranslationUI } from "../../../../translation.service";
 
 @Component({
-  selector: "",
+  selector: "ta-validation-modal",
   templateUrl: "./modal-validation.component.html",
   styleUrls: ["./modal-validation.component.scss"],
   standalone: true,
-  imports: [TranslateModule, ButtonComponent, LayoutModalComponent],
+  imports: [TranslateModule, ButtonComponent, TextComponent, TaModalComponent],
 })
-export class ValidationModal {
+export class ValidationModal extends TaBaseComponent {
+  open = input.required<boolean>();
+  params = input<ModalParameter | undefined>(undefined);
+
+  @Output() validated = new EventEmitter<void>();
+  @Output() closeEvent = new EventEmitter<void>();
+
   public get title(): string {
-    return this.data?.title ?? "validation.modal.title";
+    return this.params()?.title ?? "validation.modal.title";
   }
 
   public get subtitle(): string {
-    return this.data?.subtitle ?? "validation.modal.content";
+    return this.params()?.subtitle ?? "validation.modal.content";
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<ValidationModal>,
-    @Inject(MAT_DIALOG_DATA) public data?: ModalParameter
-  ) {
+  constructor() {
+    super();
     TaTranslationUI.getInstance();
   }
 
   public onNoClick(): void {
-    this.dialogRef.close(false);
+    this.closeEvent.emit();
   }
+
   public onYesClick(): void {
-    this.dialogRef.close(true);
+    this.validated.emit();
+    this.closeEvent.emit();
   }
 }

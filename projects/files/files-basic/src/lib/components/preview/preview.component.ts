@@ -1,19 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, signal } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, output, input } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
   ButtonComponent,
-  LayoutModalComponent,
-  LoaderComponent,
   MegaoctetComponent,
+  TaModalComponent,
   TextComponent,
   TitleComponent,
 } from '@ta/ui';
-import { EFileExtension, TaBaseComponent, TaBaseModal, downloadFile, getFileExtension } from '@ta/utils';
+import { EFileExtension, TaBaseComponent, downloadFile, getFileExtension } from '@ta/utils';
 
+import { TaTranslationFiles } from '../../translation.service';
 import { PreviewDocumentDto } from './type';
 import { ExcelViewerComponent } from './viewers/excel-viewer/excel-viewer.component';
 import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
@@ -43,8 +42,10 @@ export class FilesPreviewComponent extends TaBaseComponent {
 
   readonly getFileExtension = getFileExtension;
   readonly EFileExtension = EFileExtension;
+
   constructor() {
     super();
+    TaTranslationFiles.getInstance();
   }
 
   public download() {
@@ -55,23 +56,42 @@ export class FilesPreviewComponent extends TaBaseComponent {
 export type PreviewModalDataModal = {
   initial: PreviewDocumentDto | null;
 };
+
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '',
-  template:
-    '<ta-layout-modal [style]="\'big\'" title="files.preview.title"><ta-loader [isLoading]="this.requestState.isLoading()"><ta-files-preview [initial]="this.initial()!"></ta-files-preview></ta-loader></ta-layout-modal>',
+  selector: 'ta-files-preview-modal',
+  template: `
+    <ta-modal
+      [open]="this.open()"
+      size="large"
+      [contentFit]="true"
+      [title]="'files.preview.title' | translate"
+      (closeEvent)="this.closeEvent.emit()"
+    >
+      <div modal-content class="preview-modal-content">
+        @if (this.initial(); as doc) {
+          <ta-files-preview [initial]="doc"></ta-files-preview>
+        }
+      </div>
+    </ta-modal>
+  `,
+  styles: [`
+    .preview-modal-content {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    ta-files-preview {
+      flex: 1;
+      min-height: 0;
+    }
+  `],
   standalone: true,
-  imports: [LayoutModalComponent, FilesPreviewComponent, LoaderComponent],
+  imports: [FilesPreviewComponent, TaModalComponent, TranslateModule],
 })
-export class PreviewModal extends TaBaseModal {
-  public data = inject<PreviewModalDataModal>(MAT_DIALOG_DATA);
+export class PreviewModal extends TaBaseComponent {
+  open = input.required<boolean>();
+  initial = input<PreviewDocumentDto | null>(null);
 
-  readonly initial = signal<PreviewDocumentDto | null>(null);
-
-  constructor() {
-    super();
-    //  TaTranslationFiles.getInstance();
-
-    this.initial.set(this.data.initial);
-  }
+  closeEvent = output<void>();
 }

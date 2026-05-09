@@ -1,14 +1,12 @@
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, inject, input, OnInit, ViewChild } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, input, OnInit, ViewChild, signal } from "@angular/core";
 import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { RouterModule } from "@angular/router";
 
 import { TranslateModule } from "@ngx-translate/core";
 
 import { FontIconComponent } from "@ta/icons";
-import { NotificationBadgeComponent } from "@ta/ui";
-import { TemplateModalContainer, TemplateModalContainerData } from "@ta/ui";
+import { NotificationBadgeComponent, TaModalComponent } from "@ta/ui";
 import { TaBaseComponent, TypedTemplateDirective } from "@ta/utils";
 
 import {
@@ -36,6 +34,7 @@ import { TaTranslationMenu } from "../../../translation.service";
     TranslateModule,
     FontIconComponent,
     NotificationBadgeComponent,
+    TaModalComponent,
     TypedTemplateDirective,
   ],
 })
@@ -48,8 +47,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
 
   public readonly typeToken!: MenuIcon | MenuAction | MenuBase | MenuPanel;
   public isOpen: boolean = false;
-
-  public _modal = inject(MatDialog);
+  public isMobileModalOpen = signal(false);
 
   constructor() {
     super();
@@ -83,6 +81,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
   public hasChild(): boolean {
     return this.item().children.length > 0;
   }
+
   public toggle() {
     this.isOpen = !this.isOpen;
   }
@@ -102,14 +101,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
     const myTemplate = this.getTemplate();
     if (myTemplate) {
       if (this.breakpoints.isLessThanXS) {
-        this._modal.open<TemplateModalContainer, TemplateModalContainerData>(
-          TemplateModalContainer,
-          {
-            data: {
-              template: myTemplate,
-            },
-          }
-        );
+        this.isMobileModalOpen.set(true);
       } else {
         this.triggerMenu.openMenu();
       }

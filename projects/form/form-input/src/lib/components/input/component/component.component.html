@@ -14,3 +14,9 @@
     </div>
   </div>
 </ta-input-layout>
+
+<ta-component-selector-modal
+  [open]="this.isModalOpen()"
+  [inputData]="this.input"
+  (closeEvent)="this.isModalOpen.set(false)"
+></ta-component-selector-modal>

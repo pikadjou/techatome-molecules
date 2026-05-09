@@ -1,5 +1,9 @@
 {
   "documents.upload.dialog.description": "Description du document",
   "documents.upload.dialog.document-type": "Type de document",
-  "documents.upload.dialog.title": "Téléverser un document"
+  "documents.upload.dialog.title": "Téléverser un document",
+  "preview.title": "Prévisualisation du fichier",
+  "slide.download": "Télécharger",
+  "slide.delete": "Supprimer",
+  "slide.no-viewer": "Aucun visualiseur disponible pour ce type de fichier"
 }

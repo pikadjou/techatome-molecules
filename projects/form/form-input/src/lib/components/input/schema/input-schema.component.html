@@ -9,6 +9,12 @@
   </ta-button>
 
   @if (this.pics) {
-  <ta-files-list [files]="this.pics"></ta-files-list>
+    <ta-files-list [files]="this.pics"></ta-files-list>
   }
 </ta-input-layout>
+
+<ta-input-schema-modal
+  [open]="this.isModalOpen()"
+  (savedFile)="this.onSavedFile($event)"
+  (closeEvent)="this.isModalOpen.set(false)"
+></ta-input-schema-modal>

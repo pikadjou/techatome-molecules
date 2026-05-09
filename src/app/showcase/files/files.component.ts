@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal } from "@angular/core";
 
-import { DocumentsListComponent, FileListComponent } from "@ta/files-basic";
+import {
+  DocumentsListComponent,
+  FileListComponent,
+  FilesPreviewComponent,
+  PreviewDocumentDto,
+  PreviewModal,
+} from "@ta/files-basic";
 import { UploadComponent } from "@ta/files-extended";
 import { ButtonComponent, TextComponent, TitleComponent } from "@ta/ui";
 import { EFileExtension, FileData } from "@ta/utils";
@@ -14,7 +20,9 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
     ButtonComponent,
     DocumentsListComponent,
     FileListComponent,
+    FilesPreviewComponent,
     PageLayoutComponent,
+    PreviewModal,
     TextComponent,
     TitleComponent,
     UploadComponent,
@@ -24,30 +32,32 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesPage {
+  private _cdr = inject(ChangeDetectorRef);
+
   canDeleteImageFiles = signal(false);
   canDeleteDocFiles = signal(false);
 
   imageFiles = signal<FileData[]>([
     {
       id: 1,
-      url: "https://picsum.photos/400/300?random=1",
-      thumbnailUrl: "https://picsum.photos/120/90?random=1",
+      url: "https://picsum.photos/seed/1/400/300.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/1/120/90.jpg",
       type: "Image",
       fileExtension: EFileExtension.Image,
       name: "photo-vacances.jpg",
     },
     {
       id: 2,
-      url: "https://picsum.photos/400/300?random=2",
-      thumbnailUrl: "https://picsum.photos/120/90?random=2",
+      url: "https://picsum.photos/seed/2/400/300.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/2/120/90.jpg",
       type: "Image",
       fileExtension: EFileExtension.Image,
       name: "portrait-equipe.jpg",
     },
     {
       id: 3,
-      url: "https://picsum.photos/400/300?random=3",
-      thumbnailUrl: "https://picsum.photos/120/90?random=3",
+      url: "https://picsum.photos/seed/3/400/300.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/3/120/90.jpg",
       type: "Image",
       fileExtension: EFileExtension.Image,
       name: "loading-example.jpg",
@@ -81,6 +91,62 @@ export class FilesPage {
 
   emptyFiles = signal<FileData[]>([]);
 
+  readonly previewImage: PreviewDocumentDto = {
+    filename: "paysage-montagne.jpg",
+    url: "https://picsum.photos/seed/10/800/600.jpg",
+    size: 245760,
+  };
+
+  readonly previewPdf: PreviewDocumentDto = {
+    filename: "wcag21-spec.pdf",
+    url: "https://www.w3.org/WAI/WCAG21/wcag21.pdf",
+    size: 1048576,
+  };
+
+  previewFiles = signal<FileData[]>([
+    {
+      id: 10,
+      url: "https://picsum.photos/seed/10/800/600.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/10/120/90.jpg",
+      type: "Image",
+      fileExtension: EFileExtension.Image,
+      name: "paysage-montagne.jpg",
+    },
+    {
+      id: 11,
+      url: "https://picsum.photos/seed/11/800/600.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/11/120/90.jpg",
+      type: "Image",
+      fileExtension: EFileExtension.Image,
+      name: "portrait-ville.jpg",
+    },
+    {
+      id: 12,
+      url: "https://picsum.photos/seed/12/800/600.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/12/120/90.jpg",
+      type: "Image",
+      fileExtension: EFileExtension.Image,
+      name: "nature-foret.jpg",
+    },
+    {
+      id: 13,
+      url: "https://picsum.photos/seed/13/800/600.jpg",
+      thumbnailUrl: "https://picsum.photos/seed/13/120/90.jpg",
+      type: "Image",
+      fileExtension: EFileExtension.Image,
+      name: "architecture.jpg",
+    },
+    {
+      id: 14,
+      url: "https://www.w3.org/WAI/WCAG21/wcag21.pdf",
+      type: "Document",
+      fileExtension: EFileExtension.PDF,
+      name: "wcag21-spec.pdf",
+    },
+  ]);
+
+  activePreview = signal<PreviewDocumentDto | null>(null);
+
   public toggleImageDelete(): void {
     this.canDeleteImageFiles.update((v) => !v);
   }
@@ -95,5 +161,24 @@ export class FilesPage {
 
   public onFileDeleted(file: FileData): void {
     console.log("File deleted:", file);
+  }
+
+  public openPreviewFromFile(file: FileData & { index: number }): void {
+    this.activePreview.set({
+      filename: file.name ?? `fichier-${file.id}`,
+      url: file.url,
+      size: 0,
+    });
+    this._cdr.markForCheck();
+  }
+
+  public openPreview(doc: PreviewDocumentDto): void {
+    this.activePreview.set(doc);
+    this._cdr.markForCheck();
+  }
+
+  public closePreview(): void {
+    this.activePreview.set(null);
+    this._cdr.markForCheck();
   }
 }

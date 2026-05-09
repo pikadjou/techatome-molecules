@@ -1,5 +1,4 @@
-import { Component, inject } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, signal } from "@angular/core";
 
 import { FileListComponent } from "@ta/files-basic";
 import { InputSchema } from "@ta/form-model";
@@ -21,60 +20,40 @@ import { InputSchemaModal } from "./modal/input-schema-modal.component";
     ButtonComponent,
     FileListComponent,
     InputLayoutComponent,
+    InputSchemaModal,
   ],
 })
 export class InputSchemaComponent extends TaAbstractInputComponent<InputSchema> {
-  get pics(): FileData[] | null {
-    if (!this.input.value) {
-      return null;
-    }
+  public isModalOpen = signal(false);
 
-    return [
-      {
-        id: 0,
-        type: "Image",
-        url: this.input.value,
-      },
-    ];
+  get pics(): FileData[] | null {
+    if (!this.input.value) return null;
+    return [{ id: 0, type: "Image", url: this.input.value }];
   }
 
   get isCircularButton(): boolean {
-    if (!this.pics) return false;
-
-    return this.pics.length > 0;
+    return !!this.pics && this.pics.length > 0;
   }
 
   set selection(value: string) {
     this.input.formControl?.setValue(value);
   }
 
-  public _dialog = inject(MatDialog);
-
   constructor() {
     super();
   }
 
   public openDialog(): void {
-    const dialogRef = this._dialog.open<
-      InputSchemaModal,
-      { file: FileStructure }
-    >(InputSchemaModal);
+    this.isModalOpen.set(true);
+  }
 
-    this._registerSubscription(
-      dialogRef
-        .afterClosed()
-        .subscribe(async (data: { file: FileStructure }) => {
-          if (!data || !data.file) {
-            return;
-          }
-          if (this.input.update) {
-            const pics = await this.input.update([data.file]);
-
-            if (pics && pics.length > 0 && data.file.file) {
-              this.selection = await getBase64FromFile(data.file.file);
-            }
-          }
-        })
-    );
+  public async onSavedFile(data: { file: FileStructure }): Promise<void> {
+    if (!data?.file) return;
+    if (this.input.update) {
+      const pics = await this.input.update([data.file]);
+      if (pics && pics.length > 0 && data.file.file) {
+        this.selection = await getBase64FromFile(data.file.file);
+      }
+    }
   }
 }

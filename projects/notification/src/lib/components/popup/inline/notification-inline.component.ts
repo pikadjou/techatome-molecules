@@ -1,12 +1,11 @@
 import { NgClass } from "@angular/common";
 import {
   Component,
+  effect,
   input,
   output,
-  inject,
-  effect,
+  signal,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -16,14 +15,14 @@ import { TaBaseComponent } from "@ta/utils";
 
 import { ENotificationCode } from "../../../enum";
 import { TaTranslationNotification } from "../../../translation.service";
-import { openErrorModal } from "../../error-box/error-box.component";
+import { ErrorBoxModal } from "../../error-box/error-box.component";
 
 @Component({
   selector: "ta-notification-inline",
   templateUrl: "./notification-inline.component.html",
   styleUrls: ["./notification-inline.component.scss"],
   standalone: true,
-  imports: [FontIconComponent, LinkComponent, NgClass, TranslateModule],
+  imports: [ErrorBoxModal, FontIconComponent, LinkComponent, NgClass, TranslateModule],
 })
 export class NotificationInlineComponent extends TaBaseComponent {
   messageInput = input<string>("", { alias: "message" });
@@ -34,9 +33,9 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   askClose = output<void>();
 
-  private _matDialog = inject(MatDialog);
-
   public showMessage = false;
+
+  public isErrorModalOpen = signal(false);
 
   get message(): string {
     return this.messageInput();
@@ -109,7 +108,7 @@ export class NotificationInlineComponent extends TaBaseComponent {
     return "notification.inline.label." + this.getTypeKey();
   }
 
-  public openErrorBox() {
-    openErrorModal(this._matDialog);
+  public openErrorBox(): void {
+    this.isErrorModalOpen.set(true);
   }
 }

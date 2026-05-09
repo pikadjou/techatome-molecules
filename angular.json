@@ -89,6 +89,11 @@
                 "glob": "*.json",
                 "input": "projects/user/src/modules/user/i18n",
                 "output": "assets/i18n/user"
+              },
+              {
+                "glob": "*.json",
+                "input": "projects/files/src/i18n",
+                "output": "assets/i18n/files"
               }
             ],
             "styles": ["src/styles.scss"],

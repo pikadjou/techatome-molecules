@@ -1,14 +1,12 @@
 import { AsyncPipe } from "@angular/common";
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, EventEmitter, OnInit, Output, input } from "@angular/core";
 
 import { map } from "rxjs";
+import { Observable } from "rxjs";
 
 import { FileListComponent } from "@ta/files-basic";
-import { DualButtonComponent } from "@ta/ui";
-import { FileData, FileStructure, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
-
-import { Observable } from "rxjs";
+import { DualButtonComponent, TaModalComponent } from "@ta/ui";
+import { FileData, FileStructure, TaBaseComponent, TemporaryFile, pickImages } from "@ta/utils";
 
 export interface DialogData {
   selection: string[];
@@ -19,38 +17,39 @@ export interface DialogData {
 }
 
 @Component({
-  selector: "",
+  selector: "ta-input-images-modal",
   styleUrls: ["./input-images-modal.component.scss"],
   templateUrl: "./input-images-modal.component.html",
   standalone: true,
-  imports: [AsyncPipe, FileListComponent, DualButtonComponent],
+  imports: [AsyncPipe, DualButtonComponent, FileListComponent, TaModalComponent],
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-export class InputImageModal extends TaBaseModal implements OnInit {
-  public selection: string[] = [];
+export class InputImageModal extends TaBaseComponent implements OnInit {
+  open = input.required<boolean>();
+  initialSelection = input<string[]>([]);
+  files$ = input<Observable<FileData[]> | undefined>(undefined);
+  updateFn = input<((files: FileStructure[]) => void) | undefined>(undefined);
 
+  @Output() saved = new EventEmitter<string[]>();
+  @Output() closeEvent = new EventEmitter<void>();
+
+  public selection: string[] = [];
   public tempFiles = new TemporaryFile();
 
-  constructor(
-    public dialogRef: MatDialogRef<InputImageModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {
+  constructor() {
     super();
-
-    this.dialogRef.addPanelClass(["full-screen-modal", "forced"]);
-    this.selection = this.data.selection;
   }
 
   ngOnInit() {
-    if (this.data.input.files$) {
+    this.selection = [...this.initialSelection()];
+    if (this.files$()) {
       this._registerSubscription(
-        this.data.input.files$.subscribe(() => this.tempFiles.removeAll())
+        this.files$()!.subscribe(() => this.tempFiles.removeAll())
       );
     }
   }
 
   public getPics$() {
-    return this.data.input.files$?.pipe(
+    return this.files$()?.pipe(
       map((files) =>
         files.map((file) => ({
           ...file,
@@ -59,21 +58,26 @@ export class InputImageModal extends TaBaseModal implements OnInit {
       )
     );
   }
+
   public onFileSelected(file: FileData) {
     if (this.selection.includes(file.url)) {
       this.selection = this.selection.filter((url) => file.url !== url);
-      return;
+    } else {
+      this.selection = [...this.selection, file.url];
     }
-    this.selection = [...this.selection, file.url];
   }
+
   public uploadPics = async () => {
     const pics = await pickImages();
-    if (this.data.input.update) {
+    const fn = this.updateFn();
+    if (fn) {
       this.tempFiles.addFiles(pics);
-      this.data.input.update(pics);
+      fn(pics);
     }
   };
+
   public selected = () => {
-    this.dialogRef.close(this.selection);
+    this.saved.emit(this.selection);
+    this.closeEvent.emit();
   };
 }

@@ -758,16 +758,15 @@ const compressImage = async (blob) => {
         });
     });
 };
-const downloadFile = (url) => {
-    const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
-    if (imageRegex.test(url)) {
-        window.open(url, "_blank");
-    }
-    else {
-        window.open("https://docs.google.com/a/google.com/viewer?url=" +
-            url.replaceAll("&", "%26") +
-            "&embedded=false", "_blank");
-    }
+const downloadFile = (url, filename) => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename ?? url.split("/").pop() ?? "download";
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 };
 const pickImages = async () => {
     const gallery = await Camera.pickImages({

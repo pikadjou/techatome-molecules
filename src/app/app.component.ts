@@ -41,6 +41,7 @@ export class AppComponent {
     { label: "Wysiswyg", route: "/wysiswyg", icon: "edit_document" },
     { label: "Grid", route: "/grid", icon: "table_chart" },
     { label: "Charts", route: "/charts", icon: "bar_chart" },
+    { label: "Files", route: "/files", icon: "folder" },
     { label: "Utilities", group: true },
     { label: "Utils", route: "/utils", icon: "build" },
     { label: "User", route: "/user", icon: "person" },

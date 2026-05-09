@@ -1,19 +1,19 @@
-<ta-layout-modal [style]="'classic'" [title]="this.title">
-  <div class="subtitle">
-    {{ this.subtitle | translate }}
+<ta-modal
+  [open]="this.open()"
+  size="small"
+  [title]="this.title | translate"
+  [closeOnBackdrop]="false"
+  (closeEvent)="this.onNoClick()"
+>
+  <div modal-content>
+    <ta-text>{{ this.subtitle | translate }}</ta-text>
   </div>
-
-  <div class="align-end flex-start g-space-md ml-a">
-    <div>
-      <ta-button [type]="'danger'" (action)="this.onNoClick()">
-        {{ "ui.container.validation.modal.cta.cancel" | translate }}
-      </ta-button>
-    </div>
-
-    <div>
-      <ta-button (action)="this.onYesClick()">
-        {{ "ui.container.validation.modal.cta.ok" | translate }}
-      </ta-button>
-    </div>
+  <div modal-footer>
+    <ta-button type="danger" (action)="this.onNoClick()">
+      {{ "ui.container.validation.modal.cta.cancel" | translate }}
+    </ta-button>
+    <ta-button type="primary" (action)="this.onYesClick()">
+      {{ "ui.container.validation.modal.cta.ok" | translate }}
+    </ta-button>
   </div>
-</ta-layout-modal>
+</ta-modal>

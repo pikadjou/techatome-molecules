@@ -1,7 +1,6 @@
-import { TemplateRef } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { EventEmitter, TemplateRef } from "@angular/core";
 import { Observable } from "rxjs";
-import { TaBaseModal } from "@ta/utils";
+import { TaBaseComponent } from "@ta/utils";
 import { ModalStyle } from "../layout-modal.component";
 import * as i0 from "@angular/core";
 export interface TemplateModalContainerData {
@@ -9,11 +8,14 @@ export interface TemplateModalContainerData {
     askClosing$?: Observable<null>;
     style?: ModalStyle;
 }
-export declare class TemplateModalContainer extends TaBaseModal {
-    data: TemplateModalContainerData;
-    dialogRef: MatDialogRef<any>;
-    get style(): ModalStyle;
-    constructor(data: TemplateModalContainerData, dialogRef: MatDialogRef<any>);
+export declare class TemplateModalContainer extends TaBaseComponent {
+    open: import("@angular/core").InputSignal<boolean>;
+    template: import("@angular/core").InputSignal<TemplateRef<any> | null>;
+    style: import("@angular/core").InputSignal<ModalStyle>;
+    askClosing$: import("@angular/core").InputSignal<Observable<null> | undefined>;
+    closeEvent: EventEmitter<void>;
+    modalSize(): "small" | "medium" | "large" | "fullscreen";
+    constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<TemplateModalContainer, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TemplateModalContainer, "ng-component", never, {}, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TemplateModalContainer, "ta-template-modal-container", never, { "open": { "alias": "open"; "required": true; "isSignal": true; }; "template": { "alias": "template"; "required": false; "isSignal": true; }; "style": { "alias": "style"; "required": false; "isSignal": true; }; "askClosing$": { "alias": "askClosing$"; "required": false; "isSignal": true; }; }, { "closeEvent": "closeEvent"; }, never, never, true, never>;
 }

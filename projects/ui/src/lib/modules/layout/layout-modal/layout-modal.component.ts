@@ -1,5 +1,4 @@
-import { Component, inject, OnInit, input } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -10,9 +9,9 @@ import { TitleComponent } from '../../../components/ui/title/title.component';
 import { TaTranslationUI } from '../../../translation.service';
 import { LayoutContentComponent } from '../layout-content/layout-content.component';
 import { LayoutHeaderComponent } from '../layout-header/layout-header.component';
-import { LayoutTitleComponent } from '../layout-title/layout-title.component';
 
 export type ModalStyle = 'full' | 'big' | 'classic' | 'small';
+
 @Component({
   selector: 'ta-layout-modal',
   templateUrl: './layout-modal.component.html',
@@ -21,29 +20,24 @@ export type ModalStyle = 'full' | 'big' | 'classic' | 'small';
   imports: [
     FontIconComponent,
     TranslateModule,
-    LayoutTitleComponent,
     LayoutHeaderComponent,
     TitleComponent,
     LayoutContentComponent,
   ],
 })
-export class LayoutModalComponent extends TaBaseComponent implements OnInit {
+export class LayoutModalComponent extends TaBaseComponent {
   style = input<ModalStyle>('classic');
-
   title = input<string>('');
+  showClose = input<boolean>(true);
 
-  public _dialogRef = inject(MatDialogRef<any>);
+  @Output() closeEvent = new EventEmitter<void>();
 
   constructor() {
     super();
     TaTranslationUI.getInstance();
   }
 
-  ngOnInit() {
-    this._dialogRef.addPanelClass(this.style() + '-modal');
-  }
-
   public close() {
-    this._dialogRef.close();
+    this.closeEvent.emit();
   }
 }

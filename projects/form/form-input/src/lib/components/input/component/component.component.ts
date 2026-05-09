@@ -1,65 +1,55 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, input, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Subject } from 'rxjs';
 
 import { InputComponent } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
-import { LayoutModalComponent } from '@ta/ui';
-import { TaBaseModal } from '@ta/utils';
+import { TaModalComponent } from '@ta/ui';
+import { TaBaseComponent } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
 import { InputLayoutComponent } from '../../input-layout/input-layout.component';
 
 @Component({
-  selector: 'ta-input-component',
+  selector: 'ta-component-selector-modal',
   standalone: true,
-  imports: [InputLayoutComponent, ReactiveFormsModule, FontIconComponent],
-  templateUrl: './component.component.html',
-  styleUrl: './component.component.scss',
-})
-export class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
-  private _dialog = inject(MatDialog);
-
-  public open() {
-    this._dialog.open(TemplateModal, {
-      data: {
-        input: this.input,
-      },
-    });
-  }
-}
-
-type TemplateModalData = {
-  input: InputComponent;
-};
-@Component({
-  selector: '',
-  standalone: true,
-  imports: [NgTemplateOutlet, LayoutModalComponent],
+  imports: [NgTemplateOutlet, TaModalComponent],
   templateUrl: './modal.html',
 })
-export class TemplateModal extends TaBaseModal {
-  private _dialogRef = inject(MatDialogRef<TemplateModal>);
-  readonly data: TemplateModalData = inject(MAT_DIALOG_DATA);
+export class ComponentSelectorModal extends TaBaseComponent {
+  open = input.required<boolean>();
+  inputData = input.required<InputComponent>();
+
+  @Output() closeEvent = new EventEmitter<void>();
 
   readonly selectedValue$ = new Subject<string>();
 
   constructor() {
     super();
-
     this._registerSubscription(
-      this.selectedValue$.subscribe({
-        next: value => this.select(value),
-      })
+      this.selectedValue$.subscribe({ next: value => this.select(value) })
     );
   }
 
   public select(value: string) {
-    this.data.input.selectedValue$.next(value);
+    this.inputData().selectedValue$.next(value);
+    this.closeEvent.emit();
+  }
+}
 
-    this._dialogRef.close();
+@Component({
+  selector: 'ta-input-component',
+  standalone: true,
+  imports: [InputLayoutComponent, ReactiveFormsModule, FontIconComponent, ComponentSelectorModal],
+  templateUrl: './component.component.html',
+  styleUrl: './component.component.scss',
+})
+export class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
+  public isModalOpen = signal(false);
+
+  public open() {
+    this.isModalOpen.set(true);
   }
 }

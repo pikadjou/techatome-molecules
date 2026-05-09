@@ -1,5 +1,4 @@
 import { OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { TaBaseComponent } from "@ta/utils";
 import { MenuAction } from "../../../models/menu/item/action";
@@ -13,7 +12,7 @@ export declare class MenuItemComponent extends TaBaseComponent implements OnInit
     triggerMenu: MatMenuTrigger;
     readonly typeToken: MenuIcon | MenuAction | MenuBase | MenuPanel;
     isOpen: boolean;
-    _modal: MatDialog;
+    isMobileModalOpen: import("@angular/core").WritableSignal<boolean>;
     constructor();
     ngOnInit(): void;
     getStyleType(): string;

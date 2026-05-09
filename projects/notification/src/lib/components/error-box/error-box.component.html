@@ -1,26 +1,29 @@
-<ta-layout-modal>
-  <div class="flex-column">
+<ta-modal
+  [open]="this.open()"
+  size="medium"
+  title="Server Errors"
+  (closeEvent)="this.closeEvent.emit()"
+>
+  <div modal-content class="flex-column">
     @for (entity of this.errorList(); track entity; let i = $index) {
-    <ta-title [level]="3">{{ entity.error.name }}</ta-title>
-    <div class="row">
-      <div class="col-6">
-        @for (message of entity.errorsMessage; track message) {
-        <ta-text>{{ message.message }}</ta-text>
-        }
+      <ta-title [level]="3">{{ entity.error.name }}</ta-title>
+      <div class="row">
+        <div class="col-6">
+          @for (message of entity.errorsMessage; track message) {
+            <ta-text>{{ message.message }}</ta-text>
+          }
+        </div>
+        <div class="col-6">
+          <ta-text size="sm">{{ entity.query }}</ta-text>
+          <ta-text size="sm">{{ entity.variables | json }}</ta-text>
+        </div>
       </div>
-      <div class="col-6">
-        <ta-text size="sm">{{ entity.query }}</ta-text>
-        <ta-text size="sm">{{ entity.variables | json }}</ta-text>
+      <div class="extra">
+        <ta-text size="sm" [isBold]="true">{{ entity.error.message }}</ta-text>
+        <ta-expandable-text size="sm" [height]="20">{{ entity.error.stack }}</ta-expandable-text>
       </div>
-    </div>
-    <div class="extra">
-      <ta-text size="sm" [isBold]="true"> {{ entity.error.message }}</ta-text>
-      <ta-expandable-text size="sm" [height]="20">{{
-        entity.error.stack
-      }}</ta-expandable-text>
-    </div>
-    <ta-button class="ml-a" (action)="this.copyContent(entity)">copy</ta-button>
-    <div class="sep"></div>
+      <ta-button class="ml-a" (action)="this.copyContent(entity)">copy</ta-button>
+      <div class="sep"></div>
     }
   </div>
-</ta-layout-modal>
+</ta-modal>

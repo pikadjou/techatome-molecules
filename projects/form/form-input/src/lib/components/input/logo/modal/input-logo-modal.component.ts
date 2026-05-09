@@ -1,14 +1,12 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, EventEmitter, OnInit, Output, input } from "@angular/core";
 
 import { map } from "rxjs";
+import { Observable } from "rxjs";
 
 import { FontIconComponent } from "@ta/icons";
 import { TranslatePipe } from "@ta/translation";
-import { ButtonComponent, DualButtonComponent, TitleComponent } from "@ta/ui";
-import { FileData, FileStructure, TaBaseModal, TemporaryFile, pickImages } from "@ta/utils";
-
-import { Observable } from "rxjs";
+import { ButtonComponent, DualButtonComponent, TaModalComponent, TitleComponent } from "@ta/ui";
+import { FileData, FileStructure, TaBaseComponent, TemporaryFile, pickImages } from "@ta/utils";
 
 export interface LogoDialogData {
   selection: string | null;
@@ -19,77 +17,74 @@ export interface LogoDialogData {
 }
 
 @Component({
-  selector: "",
+  selector: "ta-input-logo-modal",
   styleUrls: ["./input-logo-modal.component.scss"],
   templateUrl: "./input-logo-modal.component.html",
   standalone: true,
   imports: [
     ButtonComponent,
-    FontIconComponent,
-    TitleComponent,
     DualButtonComponent,
+    FontIconComponent,
+    TaModalComponent,
+    TitleComponent,
     TranslatePipe,
   ],
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-export class InputLogoModal extends TaBaseModal implements OnInit {
-  public selection: string | null = null;
+export class InputLogoModal extends TaBaseComponent implements OnInit {
+  open = input.required<boolean>();
+  initialSelection = input<string | null>(null);
+  availableFile$ = input<Observable<FileData> | undefined>(undefined);
+  updateFn = input<((file: FileStructure) => void) | undefined>(undefined);
 
+  @Output() saved = new EventEmitter<string | null>();
+  @Output() closeEvent = new EventEmitter<void>();
+
+  public selection: string | null = null;
   public tempFiles = new TemporaryFile();
 
-  constructor(
-    public dialogRef: MatDialogRef<InputLogoModal>,
-    @Inject(MAT_DIALOG_DATA) public data: LogoDialogData
-  ) {
+  constructor() {
     super();
-
-    this.dialogRef.addPanelClass(["full-screen-modal", "forced"]);
-    this.selection = this.data.selection;
+    this.selection = this.initialSelection();
   }
 
   ngOnInit() {
-    if (this.data.input.availableFile$) {
+    this.selection = this.initialSelection();
+    if (this.availableFile$()) {
       this._registerSubscription(
-        this.data.input.availableFile$.subscribe(() =>
-          this.tempFiles.removeAll()
-        )
+        this.availableFile$()!.subscribe(() => this.tempFiles.removeAll())
       );
     }
   }
 
   public getPics$() {
-    return this.data.input.availableFile$?.pipe(
-      map((file) => ({
-        ...file,
-        isSelected: this.selection === file.url,
-      }))
+    return this.availableFile$()?.pipe(
+      map((file) => ({ ...file, isSelected: this.selection === file.url }))
     );
   }
 
   public onFileSelected(file: FileData) {
-    // For logo, only one selection is allowed
     this.selection = this.selection === file.url ? null : file.url;
   }
 
   public uploadPics = async () => {
     const pics = await pickImages();
     if (pics.length > 0) {
-      if (this.data.input.update) {
+      const fn = this.updateFn();
+      if (fn) {
         this.tempFiles.addFiles(pics);
-        // For logo, pass only the first image (not an array)
-        this.data.input.update(pics[0]);
+        fn(pics[0]);
       }
-      // For logo, automatically select the first uploaded image
       this.selection = pics[0].localUrl!;
     }
   };
 
   public selected = () => {
-    this.dialogRef.close(this.selection);
+    this.saved.emit(this.selection);
+    this.closeEvent.emit();
   };
 
   public cancel = () => {
-    this.dialogRef.close(undefined);
+    this.closeEvent.emit();
   };
 
   public clearSelection = () => {

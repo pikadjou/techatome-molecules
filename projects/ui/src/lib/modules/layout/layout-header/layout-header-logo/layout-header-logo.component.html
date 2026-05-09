@@ -11,20 +11,34 @@
     <ta-font-icon
       name="notifications"
       type="lg"
-      [class.disabled]="!this.notificationTemplate"
+      [class.disabled]="!this.notificationTemplate()"
       (click)="this.openNotification()"
     ></ta-font-icon>
   </div>
 </div>
 
-<mat-menu #showNotificationTemplate="matMenu">
-  @if (this.notificationTemplate()) {
-    <ng-container [ngTemplateOutlet]="this.notificationTemplate()"></ng-container>
-  }
-</mat-menu>
+@if (this.profile()?.template; as tpl) {
+  <ta-modal
+    [open]="this.isProfileOpen()"
+    size="fullscreen"
+    title=""
+    (closeEvent)="this.isProfileOpen.set(false)"
+  >
+    <div modal-content>
+      <ng-template [ngTemplateOutlet]="tpl"></ng-template>
+    </div>
+  </ta-modal>
+}
 
-<mat-menu #showProfileTemplate="matMenu">
-  @if (this.profile()) {
-    <ng-container [ngTemplateOutlet]="this.profile()?.template ?? null"></ng-container>
-  }
-</mat-menu>
+@if (this.notificationTemplate(); as tpl) {
+  <ta-modal
+    [open]="this.isNotifOpen()"
+    size="fullscreen"
+    title=""
+    (closeEvent)="this.isNotifOpen.set(false)"
+  >
+    <div modal-content>
+      <ng-template [ngTemplateOutlet]="tpl"></ng-template>
+    </div>
+  </ta-modal>
+}

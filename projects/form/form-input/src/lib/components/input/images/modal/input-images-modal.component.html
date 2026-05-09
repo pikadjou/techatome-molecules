@@ -1,16 +1,21 @@
-<div class="input-image-container">
-  @if (this.tempFiles.files.length > 0) {
-  <ta-files-list [files]="this.tempFiles.files"></ta-files-list>
-  <hr />
-  }
+<ta-modal
+  [open]="this.open()"
+  size="fullscreen"
+  title=""
+  (closeEvent)="this.closeEvent.emit()"
+>
+  <div modal-content class="input-image-container">
+    @if (this.tempFiles.files.length > 0) {
+      <ta-files-list [files]="this.tempFiles.files"></ta-files-list>
+      <hr />
+    }
 
-  <ta-files-list
-    [files]="(this.getPics$() | async) || []"
-    (fileSelected)="this.onFileSelected($event)"
-  >
-  </ta-files-list>
-
-  <div class="cta-container">
+    <ta-files-list
+      [files]="(this.getPics$() | async) || []"
+      (fileSelected)="this.onFileSelected($event)"
+    ></ta-files-list>
+  </div>
+  <div modal-footer>
     <ta-dual-button
       [isFull]="true"
       [first]="{
@@ -25,4 +30,4 @@
       }"
     ></ta-dual-button>
   </div>
-</div>
+</ta-modal>

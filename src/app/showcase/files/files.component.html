@@ -16,7 +16,8 @@
 ├── ta-documents-list [documentsIds] [actions] [readonly] [emptyMessage]
 │   ├── (remove)         → string (document id)
 │   └── (checkedFilesChanged) → InputUploadValue[]
-└── ta-files-preview [initial: PreviewDocumentDto]
+├── ta-files-preview [initial: PreviewDocumentDto]
+└── ta-files-preview-modal [open] [initial] (closeEvent)
 
 &#64;ta/files-extended
 ├── ta-files-upload [features] [canSelectMultipleFiles] [showInActionButton]
@@ -114,6 +115,50 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- TA-FILES-PREVIEW — INLINE        -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Files Preview — Inline</ta-title>
+      <ta-text size="sm">ta-files-preview [initial: PreviewDocumentDto] — Visionneuse intégrée. Détecte automatiquement le type de fichier (image, PDF, Word, Excel) via l'extension du nom.</ta-text>
+
+      <div class="demo-row">
+        <div class="demo-column">
+          <ta-text size="sm">Image (JPEG)</ta-text>
+          <div class="files-preview files-preview--tall">
+            <ta-files-preview [initial]="this.previewImage"></ta-files-preview>
+          </div>
+        </div>
+        <div class="demo-column">
+          <ta-text size="sm">Document (PDF)</ta-text>
+          <div class="files-preview files-preview--tall">
+            <ta-files-preview [initial]="this.previewPdf"></ta-files-preview>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================= -->
+    <!-- TA-FILES-PREVIEW-MODAL            -->
+    <!-- ================================= -->
+    <section>
+      <ta-title [level]="2">Files Preview — Modal</ta-title>
+      <ta-text size="sm">Cliquer sur un fichier de la liste pour l'ouvrir dans ta-files-preview-modal.</ta-text>
+
+      <div class="files-preview">
+        <ta-files-list
+          [files]="this.previewFiles()"
+          (fileSelected)="this.openPreviewFromFile($event)"
+        ></ta-files-list>
+      </div>
+
+      <ta-files-preview-modal
+        [open]="this.activePreview() !== null"
+        [initial]="this.activePreview()"
+        (closeEvent)="this.closePreview()"
+      ></ta-files-preview-modal>
     </section>
 
     <!-- ======================================== -->

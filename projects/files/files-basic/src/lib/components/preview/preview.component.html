@@ -1,9 +1,8 @@
-<div Class="slide-container flex-column g-space-sm">
-  <div class="header flex-column g-space-sm">
+<div class="preview-layout">
+  <div class="preview-header">
     @if (this.initial().filename; as filename) {
-      <ta-title [level]="3">{{ filename }}</ta-title>
+      <ta-title [level]="'3'">{{ filename }}</ta-title>
     }
-
     <div class="flex-start g-space-sm align-center">
       @if (this.initial().uploadedDate; as uploadedDate) {
         <ta-text>{{ uploadedDate | date: 'shortDate' }}</ta-text>
@@ -13,7 +12,8 @@
       }
     </div>
   </div>
-  <div class="body">
+
+  <div class="preview-body">
     @switch (this.getFileExtension(this.initial().url)) {
       @case (EFileExtension.Image) {
         <ta-image-viewer [file]="this.initial()"></ta-image-viewer>
@@ -32,18 +32,16 @@
       }
     }
   </div>
-  <div class="footer space-between">
-    <div class="flex-row g-space-sm">
-      <!-- <ta-button icon="delete" (action)="this.delete()" type="alert">{{ 'files.slide.delete' | translate }}</ta-button> -->
-      <ta-button
-        icon="download"
-        (action)="this.download()"
-        [options]="this.breakpoints.isMobile ? { circular: 'small' } : {}"
-      >
-        @if (!this.breakpoints.isMobile) {
-          {{ 'files.slide.download' | translate }}
-        }
-      </ta-button>
-    </div>
+
+  <div class="preview-footer">
+    <ta-button
+      icon="download"
+      (action)="this.download()"
+      [options]="this.breakpoints.isMobile ? { circular: 'small' } : {}"
+    >
+      @if (!this.breakpoints.isMobile) {
+        {{ 'files.slide.download' | translate }}
+      }
+    </ta-button>
   </div>
 </div>

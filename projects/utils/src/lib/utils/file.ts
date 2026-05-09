@@ -50,19 +50,15 @@ export const compressImage = async (blob: Blob): Promise<Blob> => {
   });
 };
 
-export const downloadFile = (url: string) => {
-  const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
-
-  if (imageRegex.test(url)) {
-    window.open(url, "_blank");
-  } else {
-    window.open(
-      "https://docs.google.com/a/google.com/viewer?url=" +
-        url.replaceAll("&", "%26") +
-        "&embedded=false",
-      "_blank"
-    );
-  }
+export const downloadFile = (url: string, filename?: string) => {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename ?? url.split("/").pop() ?? "download";
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 };
 
 export const pickImages = async (): Promise<FileStructure[]> => {

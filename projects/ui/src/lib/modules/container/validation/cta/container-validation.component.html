@@ -1,3 +1,23 @@
 <div stopPropagationActivation (click)="this.openModal()">
   <ng-content></ng-content>
 </div>
+
+<ta-modal
+  [open]="this.isModalOpen()"
+  size="small"
+  [title]="this.title() | translate"
+  [closeOnBackdrop]="false"
+  (closeEvent)="this.onNoClick()"
+>
+  <div modal-content>
+    <ta-text>{{ this.subtitle() | translate }}</ta-text>
+  </div>
+  <div modal-footer>
+    <ta-button type="danger" (action)="this.onNoClick()">
+      {{ 'ui.container.validation.modal.cta.cancel' | translate }}
+    </ta-button>
+    <ta-button type="primary" (action)="this.onYesClick()">
+      {{ 'ui.container.validation.modal.cta.ok' | translate }}
+    </ta-button>
+  </div>
+</ta-modal>

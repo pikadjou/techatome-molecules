@@ -23,6 +23,20 @@
 </ng-container>
 }
 
+@let template = this.getTemplate();
+@if (template) {
+  <ta-modal
+    [open]="this.isMobileModalOpen()"
+    size="fullscreen"
+    title=""
+    (closeEvent)="this.isMobileModalOpen.set(false)"
+  >
+    <div modal-content>
+      <ng-template [ngTemplateOutlet]="template"></ng-template>
+    </div>
+  </ta-modal>
+}
+
 <ng-template #Item [typedTemplate]="this.typeToken">
   <div class="item pointer" [class.disable]="this.item().disabled">
     <div class="icon">
@@ -58,11 +72,11 @@
         [ngClass]="this.item().iconsColor"
       ></ta-font-icon>
     </div>
-    } @let template = this.getTemplate(); @if (template) {
+    } @let panelTemplate = this.getTemplate(); @if (panelTemplate) {
     <div class="trigger-container">
       <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
       <mat-menu #menu="matMenu">
-        <ng-container [ngTemplateOutlet]="template"></ng-container>
+        <ng-container [ngTemplateOutlet]="panelTemplate"></ng-container>
       </mat-menu>
     </div>
     }
