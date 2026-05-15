@@ -17,7 +17,7 @@ import { TaTranslationUI } from '../../../translation.service';
 })
 export class EmptyComponent extends TaBaseComponent {
   isEmpty = input<boolean>(true);
-  isLight = input<boolean>(true);
+  isLight = input<boolean>(false);
   showMessage = input<boolean>(true);
 
   text = input<string>('ui.container.empty.title');
