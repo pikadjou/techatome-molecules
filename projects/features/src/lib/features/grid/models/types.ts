@@ -1,5 +1,6 @@
+import { TemplateRef } from '@angular/core';
+
 import { Observable } from 'rxjs';
-import { Filter as TabulatorFilter } from 'tabulator-tables';
 
 import { InputChoicesOption } from '@ta/form-model';
 
@@ -28,10 +29,25 @@ export interface ColMetaData<T = unknown> {
     model: string;
     data$: (id: number[]) => Observable<string[]>;
   };
+  template?: TemplateRef<{ $implicit: T; value: any }>;
+  width?: string;
+}
+
+export interface Filter {
+  field: string;
+  type: string;
+  value: any;
+}
+
+export interface ColConfig {
+  key: string;
+  title: string;
+  sortable: boolean;
+  width?: string;
+  template?: TemplateRef<any>;
 }
 
 export type ActiveFilter = { key: string; values: Filter[] };
-export type Filter = TabulatorFilter;
 export type Sort = { field: string; dir: 'asc' | 'desc' };
 export type GridOptions<T> = (services?: any) => {
   key: string;
