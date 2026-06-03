@@ -18,11 +18,9 @@ export class DateCol extends BaseCol<Date> {
   public override defaultFormatter(row: any): string {
     const value = row[this.key as string];
     if (!value) return '';
-    try {
-      return format(new Date(value), 'dd/MM/yyyy');
-    } catch {
-      return String(value);
-    }
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return String(value);
+    return format(date, 'dd/MM/yyyy');
   }
 
   public override formatInputForm(data: any): Filter | null {

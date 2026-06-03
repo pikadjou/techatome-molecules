@@ -119,13 +119,26 @@ describe('BaseCol', () => {
     });
   });
 
-  describe('getColDef', () => {
-    it('should return a column definition', () => {
-      const colDef = baseCol.getColDef();
+  describe('getColConfig', () => {
+    it('should return key, title and sortable: true', () => {
+      const config = baseCol.getColConfig();
 
-      expect(colDef.field).toBe('testField');
-      expect(colDef.title).toBe('grid.test-scope.core.testField');
-      expect(colDef.headerFilter).toBe('input');
+      expect(config.key).toBe('testField');
+      expect(config.title).toBe('grid.test-scope.core.testField');
+      expect(config.sortable).toBe(true);
+    });
+  });
+
+  describe('defaultFormatter', () => {
+    it('should return a string representation of the value', () => {
+      const result = baseCol.defaultFormatter({ testField: 42 });
+      expect(typeof result).toBe('string');
+      expect(result).toBe('42');
+    });
+
+    it('should return empty string for null or undefined values', () => {
+      expect(baseCol.defaultFormatter({ testField: null })).toBe('');
+      expect(baseCol.defaultFormatter({ testField: undefined })).toBe('');
     });
   });
 
