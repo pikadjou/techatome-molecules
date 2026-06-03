@@ -84,7 +84,7 @@ describe('ActiveFilter', () => {
 });
 
 describe('Filter', () => {
-  it('should create a Filter (TabulatorFilter alias)', () => {
+  it('should create a Filter with field, type, and value', () => {
     const filter: Filter = {
       field: 'name',
       type: 'like',

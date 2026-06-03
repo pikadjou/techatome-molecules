@@ -33,9 +33,11 @@ export interface ColMetaData<T = unknown> {
   width?: string;
 }
 
+export type FilterType = '=' | '!=' | 'like' | '<' | '>' | '<=' | '>=' | 'in' | 'regex' | 'starts' | 'ends';
+
 export interface Filter {
   field: string;
-  type: string;
+  type: FilterType;
   value: any;
 }
 
