@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/menu — taRoutes, MenuIcon, MenuBase, MenuCollapse, MenuPanel, Menu
+description: Assistant contextuel @ta/menu — catalogue compact + pointeurs vers references/menu/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,125 +10,62 @@ Tu es un expert de la librairie `@ta/menu` dans ce monorepo Angular techatome.
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/menu`
-**Import path** : `@ta/menu`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/menu/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Composants (`lib/components/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, modèle, helper…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/menu/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, outputs ou la structure des modèles.
 
-- `taMenuComponent` — `ta-menu` : composant menu principal
-- `taMenuItemComponent` — `ta-menu-item` : élément de menu
-- `taMainMenuComponent` — `ta-main-menu` : menu principal de l'application
-- `taBottomSheetTemplateBasicComponent` — template bottom sheet basique
-- `taBottomSheetTemplateGenericComponent` — template bottom sheet générique
-- `taQuickActionsComponent` — `ta-quick-actions` : actions rapides
-- `taQuickActionsCustomComponent` — `ta-quick-actions-custom`
-- `taToggleNavigationComponent` — `ta-toggle-navigation`
-- `taContextMenuComponent` — `ta-context-menu`
-- `taListComponent` — `ta-list` (menu list)
-- `taNavigationComponent` — `ta-navigation`
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Helpers (`lib/helpers/`)
+---
 
-- Fonctions utilitaires pour la construction du menu
+## Package
 
-### Modèles (`lib/models/`)
+- **Package** : `@ta/menu`
+- **Import path** : `@ta/menu`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/menu/`
 
-- `BottomSheetData` — données pour le bottom sheet
-- `Menu` — modèle de menu
-- `MenuItemIcon` — modèle icône d'élément de menu
-- `MenuItemBase` — modèle de base pour les éléments de menu
-- `MenuItemPanel` — modèle élément panneau
-- `MenuItemCollapse` — modèle élément repliable
-- `Routes` — routes du menu
+## Catalogue
 
-### Module
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/menu/<name>.md`.
 
-- `MenuModule` — module NgModule (deprecated)
+### Composants
 
-## Patterns d'utilisation
+- `ta-menu` (`MenuComponent`) — composant menu principal.
+- `ta-menu-item` (`MenuItemComponent`) — élément de menu individuel.
+- `ta-main-menu` (`MainMenuComponent`) — menu principal de l'application.
+- `ta-navigation` (`NavigationComponent`) — barre de navigation.
+- `ta-context-menu` (`ContextMenuComponent`) — menu contextuel (clic droit / actions).
+- `ta-quick-actions` (`QuickActionsComponent`) — actions rapides.
+- `ta-quick-actions-custom` (`QuickActionsCustomComponent`) — actions rapides personnalisées.
+- `ta-toggle-navigation` (`ToggleNavigationComponent`) — toggle navigation.
+- `ta-bottom-sheet-basic` (`BottomSheetTemplateBasicComponent`) — template bottom sheet basique (mobile).
+- `ta-bottom-sheet-generic` (`BottomSheetTemplateGenericComponent`) — template bottom sheet générique (mobile).
 
-### Menu principal
+### Modèles
 
-```typescript
-import { taMainMenuComponent } from '@ta/menu';
-import { MenuItemBase, MenuItemIcon } from '@ta/menu';
+- `Menu` — modèle de menu racine.
+- `MenuBase` — modèle de base pour les éléments de menu.
+- `MenuIcon` (`MenuItemIcon`) — modèle élément avec icône.
+- `MenuCollapse` (`MenuItemCollapse`) — modèle élément repliable.
+- `MenuPanel` (`MenuItemPanel`) — modèle élément panneau.
+- `MenuAction` — modèle action de menu.
+- `BottomSheetData` — données pour le bottom sheet.
 
-@Component({
-  standalone: true,
-  imports: [taMainMenuComponent],
-  template: `<ta-main-menu [items]="menuItems" />`,
-})
-export class AppComponent {
-  menuItems: MenuItemBase[] = [
-    {
-      icon: 'home',
-      label: 'HOME',
-      route: '/dashboard',
-    },
-  ];
-}
-```
+### Helpers et types
 
-### Context Menu
-
-```typescript
-import { taContextMenuComponent } from '@ta/menu';
-
-@Component({
-  standalone: true,
-  imports: [taContextMenuComponent],
-  template: `
-    <ta-context-menu [items]="contextItems" (itemClick)="onItemClick($event)" />
-  `
-})
-```
-
-### Quick Actions
-
-```typescript
-import { taQuickActionsComponent } from '@ta/menu';
-
-@Component({
-  standalone: true,
-  imports: [taQuickActionsComponent],
-  template: `<ta-quick-actions [actions]="actions" />`
-})
-```
-
-### Navigation avec Bottom Sheet
-
-```typescript
-import { taNavigationComponent, taBottomSheetTemplateGenericComponent } from '@ta/menu';
-
-@Component({
-  standalone: true,
-  imports: [taNavigationComponent, taBottomSheetTemplateGenericComponent],
-  template: `<ta-navigation />`
-})
-```
+- `taRoutes` / `Routes` — routes du menu (voir `/patterns` section 1 pour le routing).
+- Fonctions utilitaires pour la construction du menu.
 
 ## Conventions
 
-- Tous les composants sont `standalone: true`
-- Les modèles de menu (`MenuItemBase`, etc.) définissent la structure des éléments
-- Les labels de menu doivent être des clés de traduction (via `@ta/translation`)
-- Le `MenuModule` est deprecated — utiliser les composants standalone
-
-## Revue de code
-
-- Vérifier que les labels de menu passent par les traductions
-- Vérifier que les routes dans les éléments de menu correspondent aux routes Angular définies
-- S'assurer que l'ordre des clés dans les objets `MenuItemBase` est trié alphabétiquement
-- Ne pas utiliser `MenuModule` dans les nouveaux développements
-
-## Ajout d'un nouveau composant dans @ta/menu
-
-1. Créer dans `projects/menu/src/lib/components/`
-2. Exporter depuis `projects/menu/src/lib/components/public-api.ts`
-3. S'assurer que `standalone: true`
+- Labels de menu = clés de traduction (via `@ta/translation`).
+- Routes dans les éléments de menu = routes Angular existantes.
+- Clés d'objets `MenuItemBase` triées alphabétiquement.
+- Ne pas utiliser `MenuModule` (deprecated) — composants standalone.

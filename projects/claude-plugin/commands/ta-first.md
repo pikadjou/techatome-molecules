@@ -10,6 +10,23 @@ $ARGUMENTS
 
 ---
 
+## ⚠️ WORKFLOW OBLIGATOIRE
+
+Avant de répondre à la question :
+
+1. **Identifie** dans les tableaux ci-dessous le composant ou token concerné.
+2. **Lis la fiche de référence** via `Read` si un élément spécifique est mentionné :
+   - Composants UI : `references/ui/<selector>.md`
+   - Mixins/tokens SCSS : `references/styles/mixins.md` ou `references/styles/tokens.md`
+   - Classes CSS : `references/styles/css-classes.md`
+3. **Réponds à partir du contenu lu** — les références sont la **source de vérité**.
+
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
+
+---
+
+---
+
 ## PRINCIPE FONDAMENTAL
 
 > **La librairie `@ta/*` est PRIORITAIRE sur tout élément HTML natif ou composant tiers.**

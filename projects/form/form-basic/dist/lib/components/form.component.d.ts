@@ -22,6 +22,7 @@ export declare class FormComponent extends TaBaseComponent implements OnInit, On
     ngOnChanges(simpleChanges: SimpleChanges): void;
     ngOnDestroy(): void;
     onSubmit(): void;
+    handleInvalidSubmit(): void;
     isValid(): boolean;
     toFormGroup(inputs: InputBase<any>[]): FormGroup;
     static ɵfac: i0.ɵɵFactoryDeclaration<FormComponent, never>;

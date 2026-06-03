@@ -1,9 +1,34 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
 .textbox-container {
   width: 100%;
+}
+
+.ta-input-phone__field--hidden {
+  display: none;
 }
 
 :host ::ng-deep {
   .mdc-text-field {
     overflow: visible;
+  }
+  .iti__search-icon {
+    display: none;
+  }
+  .iti__search-input-wrapper {
+    @include flex.align-center();
+  }
+  .iti__search-input {
+    @include fonts.fontSizeBody(md);
+    border-radius: common.get-var(radius, rounded);
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    outline: none;
+    border: 1px solid common.get-var(neutral, 300);
+    background-color: common.get-var(neutral, white);
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 40px;
   }
 }

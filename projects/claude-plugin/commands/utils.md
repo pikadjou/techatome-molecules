@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/utils — pipes, directives, BaseComponent, taAbstractComponent, helpers RxJS
+description: Assistant contextuel @ta/utils — catalogue compact + pointeurs vers references/utils/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,141 +10,84 @@ Tu es un expert de la librairie `@ta/utils` dans ce monorepo Angular techatome.
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/utils`
-**Import path** : `@ta/utils`
-**Localisation** : `projects/utils/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Directives (`projects/utils/src/lib/directive/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (classe, directive, pipe, helper, type…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/utils/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les signatures ou l'API des classes de base.
 
-- `StopPropagationDirective` — stoppe la propagation des événements
-- `TypeTemplateDirective` — directive de typage de template
-- `LetDirective` — directive `*taLet` pour assigner des valeurs dans le template
-- `OnRenderDirective` — directive déclenchée au rendu
-- `ClickOrDblclickDirective` — gestion click / double-click
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Pipes (`projects/utils/src/lib/pipe/`)
+---
 
-- `FileSizePipe` — formatage de taille de fichier (bytes → Ko/Mo/Go)
-- `JoinPipe` — jointure d'un tableau en chaîne
-- `SafePipe` — DomSanitizer pipe (safe HTML, safe URL, etc.)
+## Package
 
-### Module
+- **Package** : `@ta/utils`
+- **Import path** : `@ta/utils`
+- **Localisation** : `projects/utils/`
 
-- `DirectivePipeModule` — module NgModule groupant directives et pipes (deprecated)
+## Catalogue
 
-### Classes abstraites (`projects/utils/src/lib/abstract/`)
+Format : nom (`Class/Function`) — description courte. Le fichier de référence est `references/utils/<name>.md`.
 
-- `AbstractComponent` — base pour tous les composants
-- `BaseComponent` — composant de base avec gestion du cycle de vie
-- `BasePage` — base pour les pages
-- `BaseModal` — base pour les modales
+### Classes abstraites (`references/utils/abstract-classes.md`)
 
-### Services (`projects/utils/src/lib/service/`)
+- `TaAbstractComponent` — base minimale pour tous les composants Angular.
+- `TaBaseComponent` — composant de base avec gestion du cycle de vie et subscriptions.
+- `TaBasePage` — base pour les pages (étend TaBaseComponent).
+- `TaBaseModal` — base pour les modales (étend TaBaseComponent).
 
-- `ReadOnlyContextService` — gestion du contexte lecture seule
+### Helpers de classe (`references/utils/helpers.md`)
 
-### Types (`projects/utils/src/lib/types/`)
+- `SubscriberHandler` — gestion centralisée des subscriptions RxJS.
+- `RequestState` — machine d'état pour les opérations asynchrones (asked/completed/onError/isLoading).
+- `BreakpointDetection` — détection responsive des breakpoints.
+- `HorizontalScroll` — gestion du scroll horizontal.
 
-- Types pour fichiers : `FileData`, `FileExtension`, `TemporaryFiles`
-- Types de civilité : `Civility`
-- Types culture : `Culture`
-- Types généraux : `Type`
+### Directives (`references/utils/directives.md`)
 
-### Helpers et utils (`projects/utils/src/lib/helpers/`, `utils/`)
+- `StopPropagationDirective` — stoppe la propagation des événements DOM.
+- `TypedTemplateDirective` — directive de typage de template.
+- `LetDirective` — directive `*taLet` pour assigner des valeurs dans le template.
+- `OnRenderDirective` — directive déclenchée au rendu.
+- `DndDirective` — drag-and-drop.
 
-- Fonctions utilitaires diverses
+### Pipes (`references/utils/pipes.md`)
 
-### Constante d'environnement
+- `FileSizePipe` — formatage de taille de fichier (bytes → Ko/Mo/Go).
+- `JoinPipe` — jointure d'un tableau en chaîne.
+- `SafePipe` — DomSanitizer pipe (safe HTML, safe URL…).
+- `PluralTranslatePipe` — gestion du pluriel dans les traductions.
 
-- `environment` — depuis `@ta/utils` (réexportée)
+### Services (`references/utils/services.md`)
 
-## Patterns d'utilisation
+- `ReadOnlyContextService` — gestion du contexte lecture seule global.
 
-### Utiliser LetDirective dans un template
+### Fonctions utilitaires (`references/utils/functions.md`)
 
-```typescript
-import { LetDirective } from '@ta/utils';
+- `isNonNullable()`, `getUniqueArray()`, `toArray()`, `filterNonNullableItems()`
+- `capitalizeFirstLetter()`, `isURL()`, `newGuid()`, `merge()`, `compare()`
+- `getModifiedValues()`, `copyTextToClipboard()`, `isLight()`, `extractEnum()`
+- `fullName()`, `compressImage()`, `downloadFile()`, `octetsToMo()`
+- `search()`, `sort()`, `createRange()`, `percentage()`, `roundToDecimal()`
 
-@Component({
-  standalone: true,
-  imports: [LetDirective],
-  template: `
-    <ng-container *taLet="data$ | async as data">
-      {{ data.name }}
-    </ng-container>
-  `
-})
-```
+### Types (`references/utils/types.md`)
 
-### Utiliser SafePipe
-
-```typescript
-import { SafePipe } from '@ta/utils';
-
-@Component({
-  standalone: true,
-  imports: [SafePipe],
-  template: `<div [innerHTML]="htmlContent | safe:'html'"></div>`
-})
-```
-
-### Étendre BaseComponent
-
-```typescript
-import { BaseComponent } from '@ta/utils';
-
-@Component({ standalone: true, ... })
-export class MonComponent extends BaseComponent {
-  // Accès à this.destroy$ pour la gestion des subscriptions RxJS
-}
-```
-
-### Étendre BasePage
-
-```typescript
-import { BasePage } from '@ta/utils';
-
-@Component({ selector: 'app-ma-page', ... })
-export class MaPage extends BasePage implements OnInit {
-  ngOnInit(): void {
-    super.ngOnInit();
-  }
-}
-```
-
-### ReadOnlyContextService
-
-```typescript
-import { ReadOnlyContextService } from '@ta/utils';
-
-constructor(private readOnly: ReadOnlyContextService) {}
-
-// Dans le template
-readonly isReadOnly = this.readOnly.isReadOnly;
-```
+- `Civility` — civilité (Mr/Mme/…).
+- `Culture` — culture/langue.
+- `EFileExtension` — extensions de fichiers supportées.
+- `FileData<T>` — donnée de fichier générique.
+- `FileType` — type de fichier.
+- `MessageLevel` — niveau de message.
+- `RecursivePartial<T>` — Partial récursif.
 
 ## Conventions
 
-- `BaseComponent` doit être étendu par tous les composants qui font des subscriptions RxJS
-- Utiliser `takeUntil(this.destroy$)` pour éviter les memory leaks
-- Les pipes et directives sont `standalone: true`
-- Préférer les imports individuels plutôt que `DirectivePipeModule`
-
-## Revue de code
-
-- Vérifier que tous les composants avec subscriptions étendent `BaseComponent`
-- Vérifier l'utilisation de `takeUntil(this.destroy$)` sur toutes les subscriptions
-- S'assurer que `SafePipe` est utilisé pour tout contenu HTML dynamique
-- Vérifier que les types `FileData`, `Civility`, `Culture` sont importés depuis `@ta/utils`
-
-## Ajout dans @ta/utils
-
-- Directives → `projects/utils/src/lib/directive/`
-- Pipes → `projects/utils/src/lib/pipe/`
-- Helpers → `projects/utils/src/lib/helpers/`
-- Types → `projects/utils/src/lib/types/`
-- Exporter depuis le `public-api.ts` correspondant
+- **Toujours étendre** `TaBaseComponent` pour les composants avec subscriptions.
+- **`_registerSubscription()`** sur chaque subscription (jamais `takeUntil` manuel).
+- Pipes et directives sont `standalone: true` — importer individuellement.
+- Préférer `inject()` à l'injection par constructeur.

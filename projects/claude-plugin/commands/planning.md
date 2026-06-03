@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/planning — feature planning, composants et services de planification
+description: Assistant contextuel @ta/planning — catalogue compact + pointeurs vers references/planning/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,163 +10,74 @@ Tu es un expert de la librairie `@ta/planning` dans ce monorepo Angular techatom
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/planning`
-**Import path** : `@ta/planning`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/features/planning/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Composants (`lib/components/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, service, DTO…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/planning/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, méthodes ou les types.
 
-- `taPlanningCardComponent` — carte de planning (abstract-card)
-- `taPlanningCalendarComponent` — calendrier de planning
-- `taPlanningSchedulerComponent` — scheduler de planning
-- `taCreateNoteComponent` — formulaire de création de note
-- `taCreateUnavailabilityComponent` — formulaire d'indisponibilité
-- `taCreateVisitEventComponent` — formulaire de création d'événement visite
-- `taEventFormComponent` — formulaire d'événement
-- `taVisitStatusComponent` — affichage du statut de visite
-- `taVisitCardComponent` — carte de visite
-- `taCreateEventSelectionComponent` — sélection de type d'événement à créer
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Services (`lib/services/`)
+---
 
-- `NoteTypeService` — service des types de notes
-- `ColorSetService` — service des sets de couleurs
-- `CalendarSyncConfigurationService` — configuration de synchronisation calendrier
-- `UserCalendarSubscriptionService` — abonnements calendrier utilisateur
-- `ExternalsService` — service des événements externes
-- `NotesService` — service des notes
-- `UnavailabilitiesService` — service des indisponibilités
-- `TimeEntryService` — service des entrées de temps
-- `VisitsService` — service des visites
-- Services formulaires : `NoteTypeFormService`, `ColorSetFormService`, `CalendarSyncConfigFormService`, `UnavailabilityFormService`, `CalendarNoteFormService`
+## Package
 
-### Types et DTOs (`lib/services/dto/`)
+- **Package** : `@ta/planning`
+- **Import path** : `@ta/planning`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/features/planning/`
 
-- `NoteType` — type de note
-- `ColorSet` — set de couleurs
-- `CalendarSyncConfig` — config de sync calendrier
-- `UserCalendarSubscription` — abonnement calendrier
-- `CalendarTimeEntry` — entrée de temps
-- `Unavailability` — indisponibilité
-- `Visit` — visite
-- `VisitCreationPayloadInput` — payload de création de visite
-- `VisitModifierPayloadInput` — payload de modification de visite
-- `UnavailabilityCreationPayloadInput` — payload de création d'indisponibilité
-- `UnavailabilityModifierPayloadInput` — payload de modification
-- `CalendarNoteCreationPayloadInput` — payload de note
-- `CalendarNoteModifierPayloadInput` — payload de modification de note
-- `CalendarEntry` — entrée calendrier
-- `Note` — note
-- `UnavailabilityType` — type d'indisponibilité
-- `ExternalEvent` — événement externe
+## Catalogue
 
-### Types (`lib/types/`)
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/planning/<name>.md`.
 
-- `Event` — type d'événement planning
+### Composants
 
-## Patterns d'utilisation
+- `ta-planning-calendar` (`PlanningCalendarComponent`) — calendrier de planning.
+- `ta-planning-scheduler` (`PlanningSchedulerComponent`) — scheduler de planning.
+- `ta-planning-card` (`PlanningCardComponent`) — carte de planning.
+- `ta-create-note` (`CreateNoteComponent`) — formulaire de création de note.
+- `ta-create-unavailability` (`CreateUnavailabilityComponent`) — formulaire d'indisponibilité.
+- `ta-create-visit-event` (`CreateVisitEventComponent`) — formulaire de création d'événement visite.
+- `ta-event-form` (`EventFormComponent`) — formulaire d'événement.
+- `ta-visit-status` (`VisitStatusComponent`) — affichage du statut de visite.
+- `ta-visit-card` (`VisitCardComponent`) — carte de visite.
+- `ta-create-event-selection` (`CreateEventSelectionComponent`) — sélection de type d'événement à créer.
 
-### Afficher le calendrier de planning
+### Services de données
 
-```typescript
-import { taPlanningCalendarComponent } from '@ta/planning';
+- `VisitsService` — CRUD des visites.
+- `NotesService` — CRUD des notes.
+- `UnavailabilitiesService` — CRUD des indisponibilités.
+- `TimeEntryService` — entrées de temps.
+- `ExternalsService` — événements externes.
+- `NoteTypeService` — types de notes.
+- `ColorSetService` — sets de couleurs.
+- `CalendarSyncConfigurationService` — configuration de synchronisation calendrier.
+- `UserCalendarSubscriptionService` — abonnements calendrier utilisateur.
 
-@Component({
-  standalone: true,
-  imports: [taPlanningCalendarComponent],
-  template: `
-    <ta-planning-calendar
-      [userId]="currentUserId"
-      [date]="selectedDate"
-      (eventClick)="onEventClick($event)"
-    />
-  `
-})
-```
+### Services de formulaire
 
-### Créer une visite
+- `NoteTypeFormService` / `ColorSetFormService` / `CalendarSyncConfigFormService`
+- `UnavailabilityFormService` / `CalendarNoteFormService`
 
-```typescript
-import { VisitCreationPayloadInput, VisitsService } from '@ta/planning';
+### DTOs (`references/planning/dtos.md`)
 
-@Injectable({ providedIn: 'root' })
-export class MyPlanningService {
-  private visits = inject(VisitsService);
-
-  createVisit(payload: VisitCreationPayloadInput) {
-    return this.visits.create(payload);
-  }
-}
-```
-
-### Gérer les indisponibilités
-
-```typescript
-import { UnavailabilitiesService, UnavailabilityCreationPayloadInput } from '@ta/planning';
-
-@Injectable({ providedIn: 'root' })
-export class MyService {
-  private unavail = inject(UnavailabilitiesService);
-
-  createUnavailability(payload: UnavailabilityCreationPayloadInput) {
-    return this.unavail.create(payload);
-  }
-}
-```
-
-### Formulaire de création d'événement
-
-```typescript
-import { taCreateEventSelectionComponent } from '@ta/planning';
-
-@Component({
-  standalone: true,
-  imports: [taCreateEventSelectionComponent],
-  template: `
-    <ta-create-event-selection
-      (eventTypeSelected)="onEventTypeSelected($event)"
-    />
-  `
-})
-```
-
-### Synchronisation calendrier externe
-
-```typescript
-import { CalendarSyncConfig, CalendarSyncConfigurationService } from '@ta/planning';
-
-@Injectable({ providedIn: 'root' })
-export class SyncService {
-  private syncConfig = inject(CalendarSyncConfigurationService);
-
-  getConfigs() {
-    return this.syncConfig.getAll();
-  }
-}
-```
+- `Visit` / `VisitCreationPayloadInput` / `VisitModifierPayloadInput`
+- `Unavailability` / `UnavailabilityCreationPayloadInput` / `UnavailabilityModifierPayloadInput`
+- `CalendarEntry` / `CalendarTimeEntry`
+- `Note` / `CalendarNoteCreationPayloadInput` / `CalendarNoteModifierPayloadInput`
+- `NoteType` / `ColorSet` / `CalendarSyncConfig` / `UserCalendarSubscription`
+- `ExternalEvent` / `UnavailabilityType` / `Event`
 
 ## Conventions
 
-- Les payloads de création suivent le pattern `XxxCreationPayloadInput`
-- Les payloads de modification suivent le pattern `XxxModifierPayloadInput`
-- Les services formulaires (`*FormService`) sont séparés des services de données
-- Utiliser `VisitsService` pour les CRUD des visites (pas d'accès direct à `@ta/server`)
-
-## Revue de code
-
-- Vérifier que les payloads de création/modification utilisent les types définis
-- S'assurer que les services formulaires sont utilisés pour la validation
-- Vérifier les clés d'objet triées alphabétiquement dans les payloads
-- S'assurer que `standalone: true` et les imports explicites
-
-## Ajout dans @ta/planning
-
-- Composant : `projects/features/planning/src/lib/components/`
-- Service : `projects/features/planning/src/lib/services/`
-- Type/DTO : `projects/features/planning/src/lib/services/dto/`
-- Exporter depuis les `public-api.ts` correspondants
+- Payloads de création : pattern `XxxCreationPayloadInput`.
+- Payloads de modification : pattern `XxxModifierPayloadInput`.
+- Services formulaires (`*FormService`) séparés des services de données.
+- Utiliser les services de données (pas d'accès direct à `@ta/server`).
+- Clés d'objets triées alphabétiquement.

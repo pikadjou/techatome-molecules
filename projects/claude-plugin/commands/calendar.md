@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/calendar — Bryntum calendar/scheduler, ta-planning-calendar
+description: Assistant contextuel @ta/calendar — catalogue compact + pointeurs vers references/calendar/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,133 +10,73 @@ Tu es un expert de la librairie `@ta/calendar` dans ce monorepo Angular techatom
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/calendar`
-**Import path** : `@ta/calendar`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/calendar/`
-**Dépendance commerciale** : Bryntum (nécessite une licence)
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Types
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, service, abstraction…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/calendar/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, outputs ou l'API Bryntum.
 
-- `CalendarTypes` — types de vues du calendrier
-- `VisitEventTypes` — types d'événements de visite
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Composants (`lib/components/`)
+---
 
-- `taCalendarByDayComponent` — `ta-calendar-by-day` : vue journalière
-- `taCalendarByMonthComponent` — `ta-calendar-by-month` : vue mensuelle
-- `taCalendarComponent` — `ta-calendar` : composant calendrier principal
-- `taCalendarHeaderComponent` — `ta-calendar-header` : en-tête du calendrier
-- `taCalendarViewComponent` — `ta-calendar-view` : vue du calendrier
-- `taBucketContainerComponent` — `ta-bucket-container` : conteneur de buckets
-- `taBucketItemComponent` — `ta-bucket-item` : élément de bucket
-- `taSchedulerComponent` — `ta-scheduler` : composant scheduler (Bryntum)
-- `taSchedulerViewComponent` — `ta-scheduler-view` : vue scheduler
-- `taSchedulerHeaderComponent` — `ta-scheduler-header` : en-tête scheduler
+## Package
 
-### Abstractions
+- **Package** : `@ta/calendar`
+- **Import path** : `@ta/calendar`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/calendar/`
+- **Dépendance commerciale** : Bryntum (licence requise).
 
-- `AbstractCalendarComponent` — base pour les composants calendrier
-- `AbstractSchedulerComponent` — base pour les composants scheduler
-- `AbstractCellComponent` — base pour les cellules du scheduler
+## Catalogue
+
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/calendar/<name>.md`.
+
+### Composants calendrier
+
+- `ta-calendar` (`CalendarComponent`) — composant calendrier principal.
+- `ta-calendar-by-day` (`CalendarByDayComponent`) — vue journalière.
+- `ta-calendar-by-month` (`CalendarByMonthComponent`) — vue mensuelle.
+- `ta-calendar-header` (`CalendarHeaderComponent`) — en-tête du calendrier.
+- `ta-calendar-view` (`CalendarViewComponent`) — vue du calendrier.
+
+### Composants scheduler (Bryntum)
+
+- `ta-scheduler` (`SchedulerComponent`) — composant scheduler Bryntum principal.
+- `ta-scheduler-view` (`SchedulerViewComponent`) — vue du scheduler.
+- `ta-scheduler-header` (`SchedulerHeaderComponent`) — en-tête du scheduler.
+
+### Composants bucket
+
+- `ta-bucket-container` (`BucketContainerComponent`) — conteneur de buckets.
+- `ta-bucket-item` (`BucketItemComponent`) — élément de bucket.
+
+### Classes abstraites
+
+- `AbstractCalendarComponent` — base pour les composants calendrier personnalisés.
+- `AbstractSchedulerComponent` — base pour les composants scheduler personnalisés.
+- `AbstractCellComponent` — base pour les cellules du scheduler (accès à `this.event`, `this.resource`).
 
 ### Services
 
-- `InstancesService` — gestion des instances Bryntum
-- `ComponentRendererService` — rendu de composants Angular dans Bryntum
+- `InstancesService` — gestion des instances Bryntum.
+- `ComponentRendererService` — rendu de composants Angular dans les cellules Bryntum.
+- `CalendarTranslationService` — service de traduction du calendrier.
 
-### Divers
+### Types et providers
 
-- `DateFormatterProvider` — provider de formatage de dates
-- `CalendarTranslationService` — service de traduction du calendrier
-
-### Module
-
-- `CalendarModule` — module NgModule
-
-## Patterns d'utilisation
-
-### Calendrier par jour
-
-```typescript
-import { taCalendarByDayComponent } from '@ta/calendar';
-
-@Component({
-  standalone: true,
-  imports: [taCalendarByDayComponent],
-  template: `
-    <ta-calendar-by-day
-      [date]="selectedDate"
-      [events]="events"
-      (eventClick)="onEventClick($event)"
-    />
-  `
-})
-```
-
-### Scheduler (Bryntum)
-
-```typescript
-import { taSchedulerComponent } from '@ta/calendar';
-
-@Component({
-  standalone: true,
-  imports: [taSchedulerComponent],
-  template: `
-    <ta-scheduler
-      [resources]="resources"
-      [events]="events"
-      [startDate]="startDate"
-      [endDate]="endDate"
-    />
-  `
-})
-```
-
-### Cellule personnalisée pour le scheduler
-
-```typescript
-import { AbstractCellComponent } from '@ta/calendar';
-
-@Component({
-  standalone: true,
-  template: `<div class="my-cell">{{ event.name }}</div>`,
-})
-export class MyCellComponent extends AbstractCellComponent {
-  // Accès à this.event, this.resource, etc.
-}
-```
-
-### Configuration du provider de dates
-
-```typescript
-import { DateFormatterProvider } from '@ta/calendar';
-
-export const appConfig: ApplicationConfig = {
-  providers: [DateFormatterProvider],
-};
-```
+- `CalendarTypes` — types de vues du calendrier.
+- `VisitEventTypes` — types d'événements de visite.
+- `DateFormatterProvider` — provider de formatage de dates (à ajouter dans les providers).
 
 ## Conventions
 
-- Les composants Bryntum (`taSchedulerComponent`) nécessitent une licence `.npmrc`
-- Utiliser `AbstractCalendarComponent` / `AbstractSchedulerComponent` pour les extensions
-- `ComponentRendererService` permet d'injecter des composants Angular dans les cellules Bryntum
-- Le formatage des dates utilise `DateFormatterProvider` pour la cohérence
-
-## Revue de code
-
-- Vérifier que la licence Bryntum est configurée dans `.npmrc`
-- S'assurer que `DateFormatterProvider` est dans les providers si des dates sont formatées
-- Vérifier que les types d'événements utilisent `VisitEventTypes`
-- Pour les cellules personnalisées, étendre `AbstractCellComponent`
-
-## Ajout d'un nouveau composant dans @ta/calendar
-
-1. Créer dans `projects/calendar/src/lib/components/`
-2. Exporter depuis `projects/calendar/src/lib/components/public-api.ts`
-3. Pour une cellule Bryntum : étendre `AbstractCellComponent`
+- Les composants Bryntum nécessitent une licence `.npmrc` configurée.
+- Étendre `AbstractCalendarComponent` / `AbstractSchedulerComponent` pour les extensions.
+- `ComponentRendererService` permet d'injecter des composants Angular dans les cellules Bryntum.
+- `DateFormatterProvider` doit être dans les providers si des dates sont formatées.
+- Utiliser `VisitEventTypes` pour typer les événements.

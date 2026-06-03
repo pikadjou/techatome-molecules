@@ -30,6 +30,7 @@ export interface IInputBase<T> {
   class?: string;
   children?: (InputBase<any> | InputLabel)[];
   disabled?: boolean;
+  readonly?: boolean;
   visible$?: Observable<boolean>;
   bindStatusToVisible?: boolean;
 }
@@ -45,6 +46,7 @@ export class InputBase<T> implements IInputBase<T> {
   class: string;
   children: (InputBase<any> | InputLabel)[];
   disabled: boolean;
+  readonly: boolean;
   visible$: Observable<boolean>;
   changeValue$ = new Subject<T | null>();
 
@@ -84,6 +86,7 @@ export class InputBase<T> implements IInputBase<T> {
     this.class = options.class || "col-12";
     this.children = [];
     this.disabled = options.disabled === true;
+    this.readonly = options.readonly === true;
 
     this.visible$ = options.visible$ || of(true);
 
@@ -142,6 +145,10 @@ export class InputBase<T> implements IInputBase<T> {
   public disable() {
     this.formControl?.disable();
     this.children.forEach((child) => child.disable());
+  }
+
+  public setReadonly(value: boolean) {
+    this.readonly = value;
   }
 
   public enable() {

@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/services — services applicatifs partagés
+description: Assistant contextuel @ta/services — catalogue compact + pointeurs vers references/services/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,118 +10,51 @@ Tu es un expert de la librairie `@ta/services` dans ce monorepo Angular techatom
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/services`
-**Import path** : `@ta/services`
-**Localisation** : `projects/services/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Services communs (`lib/services/common/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (service, DTO, helper…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/services/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les méthodes ou les types.
 
-- Services utilitaires partagés entre les features
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Services contacts (`lib/services/contacts/`)
+---
 
-- Services pour la gestion des contacts
-- DTOs contacts
+## Package
 
-### Services énumérations traduites
+- **Package** : `@ta/services`
+- **Import path** : `@ta/services`
+- **Localisation** : `projects/services/`
 
-- `EnumerationService` — service de gestion des énumérations avec traduction
-- `translatedEnumerationHelpers` — helpers pour les énumérations traduites
+## Catalogue
 
-### Service menu
+Format : nom (`Class`) — description courte. Le fichier de référence est `references/services/<name>.md`.
 
-- `MenuService` — service de gestion de l'état du menu
+### Services communs
 
-### Services projets (`lib/services/projects/`)
+- `TaEnumerationService` (`EnumerationService`) — service de gestion des énumérations avec traduction.
+- `translatedEnumerationHelpers` — helpers pour les énumérations traduites (toDropdownOptions…).
+- `TaSharedMenuService` (`MenuService`) — service de gestion de l'état du menu.
+- `TaDocumentsService` (`DocumentsService`) — service de gestion des documents.
+- `TaProjectsService` — service de gestion des projets.
 
-- Services pour la gestion des projets
+### DTOs partagés
 
-### Services tâches (`lib/services/tasks/`)
-
-- Services pour la gestion des tâches
-
-### Services planning (`lib/services/planning/`)
-
-- Services pour la gestion du planning
-
-### Services fichiers (`lib/services/files/`)
-
-- `DocumentsService` — service de gestion des documents
-- DTOs fichiers : `UploadFilePayloadInput`, `Document`, `FileType`
-
-## Patterns d'utilisation
-
-### Utiliser EnumerationService
-
-```typescript
-import { EnumerationService } from '@ta/services';
-
-@Component({ standalone: true, ... })
-export class MonComponent {
-  private enumService = inject(EnumerationService);
-
-  getStatuses() {
-    return this.enumService.getTranslated('STATUS');
-  }
-}
-```
-
-### Utiliser DocumentsService
-
-```typescript
-import { DocumentsService, UploadFilePayloadInput } from '@ta/services';
-
-@Injectable({ providedIn: 'root' })
-export class MyService {
-  private docs = inject(DocumentsService);
-
-  uploadDocument(payload: UploadFilePayloadInput) {
-    return this.docs.upload(payload);
-  }
-}
-```
-
-### Gérer les énumérations avec traductions
-
-```typescript
-import { EnumerationService, translatedEnumerationHelpers } from '@ta/services';
-
-// Obtenir les options traduites d'une enum pour un dropdown
-const options = translatedEnumerationHelpers.toDropdownOptions(myEnum, translateFn);
-```
-
-### MenuService
-
-```typescript
-import { MenuService } from '@ta/services';
-
-constructor(private menu: MenuService) {}
-
-openMenu() {
-  this.menu.open();
-}
-```
+- `TranslatedEnumeration` — énumération avec traduction.
+- `User` — modèle utilisateur partagé.
+- `Picture` — modèle image/photo.
+- `DocumentDto` / `Document` — document partagé.
+- `FileType` — type de fichier.
+- `Project` / `Status` — projet et statut partagés.
+- `UploadFilePayloadInput` — payload d'upload de fichier.
 
 ## Conventions
 
-- Utiliser `inject()` plutôt que l'injection par constructeur dans les nouveaux composants
-- Les services sont `providedIn: 'root'` par défaut
-- Les DTOs suivent la convention de nommage `XxxPayloadInput` pour les créations/modifications
-- Les enums doivent passer par `EnumerationService` pour la traduction
-
-## Revue de code
-
-- Vérifier que les enums ne sont pas traduits manuellement (utiliser `EnumerationService`)
-- Vérifier que les types DTOs (`UploadFilePayloadInput`, `Document`, `FileType`) sont importés depuis `@ta/services`
-- Vérifier les clés d'objet triées alphabétiquement
-
-## Ajout d'un nouveau service dans @ta/services
-
-1. Choisir le sous-dossier approprié dans `projects/services/src/lib/services/`
-2. Créer le service en étendant `BaseService` si c'est un service HTTP
-3. Exporter depuis le `public-api.ts` du sous-dossier correspondant
-4. S'assurer que l'export remonte jusqu'à `projects/services/src/public-api.ts`
+- Services `@Injectable({ providedIn: 'root' })` par défaut.
+- Utiliser `inject()` plutôt que l'injection par constructeur.
+- DTOs suivent le pattern `XxxPayloadInput` pour les créations/modifications.
+- Les enums doivent passer par `TaEnumerationService` pour la traduction (jamais traduits manuellement).

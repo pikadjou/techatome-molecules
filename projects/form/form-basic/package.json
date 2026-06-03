@@ -16,6 +16,7 @@
     "@ta/icons": "^0.0.0",
     "@ta/styles": "^0.0.0",
     "@ta/translation": "^0.0.0",
+    "@ta/ui": "^0.0.0",
     "fast-deep-equal": "^3.1.3",
     "tslib": "^2.3.0"
   },

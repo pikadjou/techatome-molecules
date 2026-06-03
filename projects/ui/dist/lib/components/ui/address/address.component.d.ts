@@ -5,7 +5,7 @@ export interface Address {
     number: string;
     city: string;
     zipCode: string;
-    contry?: string;
+    country?: string;
     floor: string;
 }
 export declare class AddressComponent {

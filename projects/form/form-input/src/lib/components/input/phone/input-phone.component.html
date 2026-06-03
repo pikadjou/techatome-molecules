@@ -1,8 +1,14 @@
 <ta-input-layout [input]="this.input">
-  <input
-    class="form-control"
-    #phoneInput
-    type="tel"
-    [formControl]="$any(this.input.formControl)"
-  />
+  @if (!this.isReady()) {
+    <ta-loader [isLoading]="true"></ta-loader>
+  }
+  <div class="ta-input-phone__field" [class.ta-input-phone__field--hidden]="!this.isReady()">
+    <input
+      class="form-control"
+      #phoneInput
+      type="tel"
+      (blur)="this.onBlur()"
+      (countrychange)="this.onCountryChange()"
+    />
+  </div>
 </ta-input-layout>

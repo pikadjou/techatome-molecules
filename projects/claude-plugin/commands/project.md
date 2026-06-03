@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/project — feature project, composants et services de gestion de projet
+description: Assistant contextuel @ta/project — catalogue compact + pointeurs vers references/project/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,138 +10,82 @@ Tu es un expert de la librairie `@ta/project` dans ce monorepo Angular techatome
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/project`
-**Import path** : `@ta/project`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/features/project/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés (par feature)
+Avant de répondre à la question :
 
-### Feature Project (`lib/features/project/`)
+1. **Identifie** dans le catalogue ci-dessous la feature et l'élément concerné (composant, service, DTO…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/project/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, méthodes ou les types.
 
-- **Composants** :
-  - `taProjectStatusComponent` — affichage du statut de projet
-  - `taProjectTenantUrlDisplayerComponent` — affichage URL tenant
-  - `taProjectProfileComponent` — profil du projet
-  - `taProjectProfileCardComponent` — carte de profil projet
-- **Services** : Services de gestion des projets
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Feature Invoice (`lib/features/invoice/`)
+---
 
-- Composants de facturation
-- Services de facturation
-- Helpers de facturation
+## Package
 
-### Feature Quotation (`lib/features/quotation/`)
+- **Package** : `@ta/project`
+- **Import path** : `@ta/project`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/features/project/`
 
-- Composants de devis
-- Services de devis
+## Catalogue
 
-### Feature Maintenance (`lib/features/maintenance/`)
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/project/<name>.md`.
 
-- Composants de maintenance
-- Services de maintenance
+### Feature Project
 
-### Feature Organization (`lib/features/organization/`)
+- `ta-project-status` (`ProjectStatusComponent`) — affichage du statut de projet.
+- `ta-project-tenant-url-displayer` (`ProjectTenantUrlDisplayerComponent`) — affichage URL tenant.
+- `ta-project-profile` (`ProjectProfileComponent`) — profil du projet.
+- `ta-project-profile-card` (`ProjectProfileCardComponent`) — carte de profil projet.
 
-- Composants d'organisation
-- DTOs d'organisation
+### Feature Invoice (facturation)
 
-### Feature Mission (`lib/features/mission/`)
+- Composants et services de facturation.
+- Helpers de facturation (logique métier pure).
 
-- Composants de mission
-- Services de mission
+### Feature Quotation (devis)
 
-### Common (`lib/common/`)
+- Composants et services de devis.
 
-- Services communs partagés entre les features project
+### Feature Maintenance
 
-## Patterns d'utilisation
+- Composants et services de maintenance.
 
-### Afficher le statut d'un projet
+### Feature Organization
 
-```typescript
-import { taProjectStatusComponent } from '@ta/project';
+- Composants d'organisation.
+- DTOs d'organisation.
 
-@Component({
-  standalone: true,
-  imports: [taProjectStatusComponent],
-  template: `<ta-project-status [status]="project.status" />`,
-})
-export class ProjectDetailComponent {
-  project = this.projectService.getCurrent();
-}
-```
+### Feature Mission
 
-### Profil de projet
+- Composants et services de mission.
 
-```typescript
-import { taProjectProfileCardComponent } from '@ta/project';
+### Common (partagé entre features)
 
-@Component({
-  standalone: true,
-  imports: [taProjectProfileCardComponent],
-  template: `
-    <ta-project-profile-card [projectId]="projectId" />
-  `
-})
-```
+- Services communs accessibles par toutes les features de `@ta/project`.
 
-### URL tenant du projet
-
-```typescript
-import { taProjectTenantUrlDisplayerComponent } from '@ta/project';
-
-@Component({
-  standalone: true,
-  imports: [taProjectTenantUrlDisplayerComponent],
-  template: `<ta-project-tenant-url-displayer [url]="tenantUrl" />`
-})
-```
-
-## Structure du monorepo feature/project
+## Structure de fichiers
 
 ```
 projects/features/project/src/lib/
-├── common/           # services communs entre features
+├── common/
 ├── features/
-│   ├── invoice/      # facturation
-│   │   ├── components/
-│   │   ├── helpers/
-│   │   └── services/
-│   ├── maintenance/  # maintenance
-│   ├── mission/      # missions
-│   ├── organization/ # organisations
-│   │   └── dto/
-│   ├── project/      # projets
-│   │   ├── components/
-│   │   └── services/
-│   └── quotation/    # devis
-│       ├── components/
-│       └── services/
+│   ├── invoice/      (components/, helpers/, services/)
+│   ├── maintenance/
+│   ├── mission/
+│   ├── organization/ (dto/)
+│   ├── project/      (components/, services/)
+│   └── quotation/    (components/, services/)
 ```
 
 ## Conventions
 
-- Chaque feature est indépendante et expose son propre `public-api.ts`
-- Les services communs (`lib/common/`) sont partagés entre les features
-- Les helpers (`lib/features/invoice/helpers/`) contiennent la logique métier pure
-- Les composants sont `standalone: true`
-- Les payloads de mutation suivent le pattern `XxxCreationPayloadInput` / `XxxModifierPayloadInput`
-
-## Revue de code
-
-- Vérifier que les imports viennent de `@ta/project` (pas de chemins relatifs hors lib)
-- S'assurer que chaque nouvelle feature exporte via un `public-api.ts` dédié
-- Vérifier les clés d'objet triées alphabétiquement
-- S'assurer que `standalone: true` et les imports explicites
-
-## Ajout d'une nouvelle feature dans @ta/project
-
-1. Créer le dossier `projects/features/project/src/lib/features/ma-feature/`
-2. Créer les sous-dossiers : `components/`, `services/`, éventuellement `helpers/`, `dto/`
-3. Créer les `public-api.ts` à chaque niveau
-4. Exporter depuis `projects/features/project/src/lib/features/ma-feature/public-api.ts`
-5. Exporter depuis `projects/features/project/src/public-api.ts`
+- Chaque feature expose son propre `public-api.ts`.
+- Les helpers (`helpers/`) contiennent la logique métier pure.
+- Payloads de création : `XxxCreationPayloadInput` ; modification : `XxxModifierPayloadInput`.
+- Imports depuis `@ta/project` (pas de chemins relatifs hors lib).
+- Clés d'objets triées alphabétiquement.

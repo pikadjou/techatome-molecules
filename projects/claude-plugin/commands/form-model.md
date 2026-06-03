@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/form-model — InputBase, InputTextBox, InputChoices, InputDatePicker, InputPanel, InputUpload
+description: Assistant contextuel @ta/form-model — catalogue compact + pointeurs vers references/form-model/inputs/<name>.md et references/form-model/validators/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,149 +10,75 @@ Tu es un expert de la librairie `@ta/form-model` dans ce monorepo Angular techat
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/form-model`
-**Import path** : `@ta/form-model`
-**Localisation** : `projects/form/form-model/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Validators
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (modèle d'input, validator, helper…).
+2. **Lis la fiche de référence** via `Read` :
+   - Inputs : `references/form-model/inputs/<name>.md`
+   - Validators : `references/form-model/validators/<name>.md`
+3. **Réponds à partir du contenu lu** — ne **devine pas** les propriétés ou constructeurs des modèles.
 
-- `SlugValidator` — validateur pour les slugs (format URL-friendly)
-- `PhoneValidator` — validateur pour les numéros de téléphone
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
+
+---
+
+## Package
+
+- **Package** : `@ta/form-model`
+- **Import path** : `@ta/form-model`
+- **Localisation** : `projects/form/form-model/`
+
+## Catalogue
+
+### Modèles d'inputs (base : `references/form-model/inputs/`)
+
+- `InputBase<T>` — classe de base pour tous les inputs.
+- `InputTextBox` — champ texte simple.
+- `InputTextarea` — zone de texte multilignes.
+- `InputEmail` — champ email.
+- `InputPassword` — champ mot de passe.
+- `InputPhone` — champ téléphone.
+- `InputNumber` — champ numérique.
+- `InputDropdown` — liste déroulante.
+- `InputChoices` — choix multiples (checkbox/radio group).
+- `InputCheckBox` — case à cocher unique.
+- `InputRadio` — bouton radio.
+- `InputDatePicker` — sélecteur de date.
+- `InputTimePicker` — sélecteur d'heure.
+- `InputSlider` — curseur de valeur.
+- `InputSwitch` — interrupteur on/off.
+- `InputColorPicker` — sélecteur de couleur.
+- `InputRating` — notation par étoiles.
+- `InputUpload` — upload de fichier.
+- `InputImages` — upload multiple d'images.
+- `InputLogo` — upload de logo.
+- `InputWysiswyg` — éditeur WYSIWYG.
+- `InputSchema` — schéma dynamique.
+- `InputAddress` — adresse postale.
+- `InputCulture` — sélection de culture/langue.
+- `InputComponent` — composant personnalisé injecté.
+- `InputPanel` — groupe/panneau conteneur d'autres inputs.
+- `InputLabel` — texte statique ou titre dans le formulaire (props : `icon?`, `level?: 1|2|3|4|5|6`).
+- `InputDynamic` — input dynamique.
+- `InputTranslation` — champ de traduction multilingue.
+
+### Validators (`references/form-model/validators/`)
+
+- `phoneValidator()` — validation numéro de téléphone.
+- `slugValidator()` — validation slug (format URL-friendly).
 
 ### Helpers
 
-- `DateHelper` — helper pour la manipulation des dates dans les formulaires
-
-### Modèles (`lib/models/`)
-
-- Modèles de données pour les différents types d'inputs :
-  - `BaseInput` — base pour tous les inputs
-  - `CheckboxInput` — modèle checkbox
-  - `ChoicesInput` — modèle choix multiples
-  - `ColorPickerInput` — modèle sélecteur de couleur
-  - `DatePickerInput` — modèle sélecteur de date
-  - `DynamicTranslationInput` — modèle traduction dynamique
-  - `DropdownInput` — modèle liste déroulante
-  - `DynamicInput` — modèle input dynamique
-  - `EmailInput` — modèle email
-  - `ImagesInput` — modèle images
-  - `LabelInput` — modèle label (optionnel : `icon?: string`, `level?: 1|2|3|4|5|6`)
-  - `NumberInput` — modèle nombre
-  - `PanelInput` — modèle panneau
-  - `PasswordInput` — modèle mot de passe
-  - `PhoneInput` — modèle téléphone
-  - `RadioInput` — modèle radio
-  - `SchemaInput` — modèle schéma
-  - `SliderInput` — modèle curseur
-  - `SwitchInput` — modèle interrupteur
-  - `TextareaInput` — modèle zone de texte
-  - `TextboxInput` — modèle champ texte
-  - `TimePickerInput` — modèle sélecteur d'heure
-  - `WysiswyInput` — modèle éditeur WYSIWYG
-  - `AddressInput` — modèle adresse
-  - `UploadInput` — modèle upload
-  - `TranslationInput` — modèle traduction
-  - `CultureInput` — modèle culture
-  - `ComponentInput` — modèle composant personnalisé
-- `InputFactory` — factory pour créer des instances d'input
-
-## Patterns d'utilisation
-
-### Créer un formulaire avec des modèles
-
-```typescript
-import { DropdownInput, InputFactory, TextboxInput } from '@ta/form-model';
-
-const formConfig = {
-  fields: [
-    new TextboxInput({
-      key: 'firstName',
-      label: 'FIRST_NAME',
-      required: true,
-    }),
-    new DropdownInput({
-      key: 'status',
-      label: 'STATUS',
-      options: statusOptions,
-    }),
-  ],
-};
-```
-
-### Utiliser les validators
-
-```typescript
-import { FormControl } from '@angular/forms';
-
-import { PhoneValidator, SlugValidator } from '@ta/form-model';
-
-const phoneControl = new FormControl('', [PhoneValidator()]);
-const slugControl = new FormControl('', [SlugValidator()]);
-```
-
-### Utiliser DateHelper
-
-```typescript
-import { DateHelper } from '@ta/form-model';
-
-const formattedDate = DateHelper.toApiFormat(new Date());
-const parsedDate = DateHelper.fromApiFormat('2024-01-15');
-```
-
-### Factory pattern
-
-```typescript
-import { InputFactory } from '@ta/form-model';
-
-const input = InputFactory.create('textbox', {
-  key: 'name',
-  label: 'NAME',
-});
-```
-
-### InputLabel — affichage de texte statique dans un formulaire
-
-`InputLabel` affiche du texte non-interactif. Il supporte deux props optionnelles :
-
-- `icon` — nom d'icône à afficher avant le texte (via `ta-font-icon`)
-- `level` — niveau de titre (`1`–`6`) : si défini → rendu `<ta-title>`, sinon → `<ta-text>`
-
-```typescript
-import { InputLabel } from '@ta/form-model';
-
-// Texte simple
-new InputLabel({ key: 'info', label: 'form.info_text' })
-
-// Texte avec icône
-new InputLabel({ key: 'info', label: 'form.info_text', icon: 'info' })
-
-// Titre h2
-new InputLabel({ key: 'section', label: 'form.section_title', level: 2 })
-
-// Titre h3 avec icône
-new InputLabel({ key: 'section', label: 'form.section_title', level: 3, icon: 'star' })
-```
+- `DateHelper` — manipulation des dates dans les formulaires (`toApiFormat`, `fromApiFormat`).
+- `InputFactory` — factory pour créer des instances d'input de manière programmatique.
 
 ## Conventions
 
-- Les modèles d'input définissent la configuration, pas le rendu (c'est `@ta/form-basic` et `@ta/form-input` qui font le rendu)
-- Toutes les clés d'objet doivent être triées alphabétiquement
-- Les `label` sont des clés de traduction, pas du texte direct
-- Utiliser la factory `InputFactory` pour créer des inputs de manière programmatique
-
-## Revue de code
-
-- Vérifier que les `label` sont des clés de traduction
-- Vérifier que les validators sont importés depuis `@ta/form-model` (pas recréés)
-- Vérifier que les clés des objets de configuration sont triées
-- S'assurer que `required` est explicitement défini si nécessaire
-
-## Ajout d'un nouveau type d'input dans @ta/form-model
-
-1. Créer le modèle dans `projects/form/form-model/src/lib/models/input/`
-2. Exporter depuis `projects/form/form-model/src/lib/models/public-api.ts`
-3. Enregistrer dans `InputFactory` si nécessaire
+- Les `label` sont des **clés de traduction**, pas du texte direct.
+- Les clés d'objets doivent être triées alphabétiquement (`sort-keys`).
+- Les modèles définissent la **configuration**, pas le rendu (rendu = `@ta/form-input` + `@ta/form-basic`).
+- `InputPanel` pour grouper avec `containerClass: ['highlight-title', 'with-separator']`.

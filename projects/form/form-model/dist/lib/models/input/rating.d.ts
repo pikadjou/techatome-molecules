@@ -10,6 +10,5 @@ export declare class InputRating<T = number> extends InputBase<T> {
     max: number;
     size: number;
     allowHalf: boolean;
-    readonly: boolean;
     constructor(options?: IInputRating<T>);
 }

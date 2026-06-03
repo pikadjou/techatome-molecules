@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/testing — utilitaires de test partagés, mocks et helpers Jasmine/Karma
+description: Assistant contextuel @ta/testing — catalogue compact + pointeurs vers references/testing/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,164 +10,56 @@ Tu es un expert de la librairie `@ta/testing` dans ce monorepo Angular techatome
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/testing`
-**Import path** : `@ta/testing`
-**Localisation** : `projects/testing/`
-**Framework de test** : Jasmine + Karma
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Rôle de la librairie
+Avant de répondre à la question :
 
-`@ta/testing` fournit des utilitaires, mocks et helpers partagés pour les tests des autres librairies du monorepo techatome.
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (helper, mock, pattern de test…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/testing/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les helpers disponibles ou les patterns.
 
-## Exports clés
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-- Utilitaires de test partagés (helpers, factories, mocks communs)
-- Fixtures et données de test réutilisables
-- Helpers pour le setup des tests Angular
+---
+
+## Package
+
+- **Package** : `@ta/testing`
+- **Import path** : `@ta/testing`
+- **Localisation** : `projects/testing/`
+- **Framework** : Jasmine + Karma
+
+## Catalogue
+
+Format : nom — description courte. Le fichier de référence est `references/testing/<name>.md`.
+
+### Utilitaires partagés
+
+- Helpers de test, factories, mocks communs entre les librairies.
+- Fixtures et données de test réutilisables.
+- Helpers pour le setup des tests Angular (TestBed…).
+
+### Patterns de test (`references/testing/patterns.md`)
+
+- Test de composant standalone — `TestBed.configureTestingModule({ imports: [MonComponent] })`.
+- Test de service — `TestBed.configureTestingModule({ providers: [MonService] })`.
+- Mock HTTP — `provideHttpClientTesting()` + `HttpTestingController`.
+- Mock TranslateService — `TranslateModule.forRoot({ loader: TranslateFakeLoader })`.
 
 ## Conventions de test dans techatome
 
-### Framework
+- Pas de génération automatique de `.spec.ts` (`skipTests: true` dans angular.json) — créer manuellement.
+- Mocks locaux dans `__mocks__/` dans chaque librairie.
+- Tests standalone importent directement le composant (pas de module NgModule).
+- `httpMock.verify()` à la fin de chaque test avec requêtes HTTP.
+- `fixture.detectChanges()` après chaque changement de données.
 
-- **Tests unitaires** : Jasmine + Karma
-- **Pas de génération automatique** de `.spec.ts` (`skipTests: true` dans angular.json)
-- **Mocks locaux** : dossier `__mocks__/` dans chaque librairie
-
-### Lancer les tests
+## Commandes
 
 ```bash
-# Tester l'application principale
-ng test
-
-# Tester une librairie spécifique
-ng test @ta/ui
-ng test @ta/form-basic
-
-# Avec couverture de code
-ng test --code-coverage
+ng test                       # Tests application principale
+ng test @ta/<lib>             # Tests d'une librairie spécifique
+ng test --code-coverage       # Avec couverture de code
 ```
-
-### Structure d'un test de composant
-
-```typescript
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MonComponent } from './mon.component';
-
-describe('MonComponent', () => {
-  let component: MonComponent;
-  let fixture: ComponentFixture<MonComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MonComponent], // standalone component
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(MonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should display the correct label', () => {
-    component.label = 'TEST';
-    fixture.detectChanges();
-    const el = fixture.nativeElement.querySelector('.label');
-    expect(el.textContent).toContain('TEST');
-  });
-});
-```
-
-### Structure d'un test de service
-
-```typescript
-import { TestBed } from '@angular/core/testing';
-
-import { MonService } from './mon.service';
-
-describe('MonService', () => {
-  let service: MonService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [MonService],
-    });
-    service = TestBed.inject(MonService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
-```
-
-### Utiliser les mocks de @ta/testing
-
-```typescript
-import '@ta/testing';
-
-// Données de test partagées
-const mockUser = createMockUser({ id: 1, name: 'Test User' });
-```
-
-### Pattern **mocks** par librairie
-
-Chaque librairie crée ses propres mocks dans `__mocks__/` :
-
-```
-projects/ui/src/lib/components/ui/button/__mocks__/
-  button.mock.ts   # données de test pour ButtonComponent
-```
-
-### Mock d'un service HTTP
-
-```typescript
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { HttpTestingController } from '@angular/common/http/testing';
-
-TestBed.configureTestingModule({
-  providers: [provideHttpClient(), provideHttpClientTesting(), MonService],
-});
-
-const httpMock = TestBed.inject(HttpTestingController);
-```
-
-### Mock de TranslateService
-
-```typescript
-import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
-await TestBed.configureTestingModule({
-  imports: [
-    TranslateModule.forRoot({
-      loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
-    }),
-    MonComponent,
-  ],
-}).compileComponents();
-```
-
-## Conventions
-
-- Créer les specs manuellement (pas de génération automatique)
-- Un fichier `__mocks__/` par sous-composant qui en a besoin
-- Les tests standalone importent directement le composant (pas de module)
-- Utiliser `provideHttpClientTesting()` pour mocker les requêtes HTTP
-
-## Revue de code (tests)
-
-- Vérifier que chaque nouveau service/composant a un `.spec.ts`
-- S'assurer que les mocks HTTP sont vidés avec `httpMock.verify()`
-- Vérifier que les tests couvrent les cas limites et d'erreur
-- S'assurer que `fixture.detectChanges()` est appelé après chaque changement de données
-
-## Ajout dans @ta/testing
-
-1. Créer le helper/mock dans `projects/testing/src/lib/`
-2. Exporter depuis `projects/testing/src/public-api.ts`
-3. Versionner si la modification est breaking (suit la convention Lerna)

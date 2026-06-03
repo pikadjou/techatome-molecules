@@ -3,6 +3,7 @@ export * from "./input/base";
 export * from "./input/checkbox";
 export * from "./input/choices";
 export * from "./input/colorPicker";
+export * from "./input/currency";
 export * from "./input/datePicker";
 export * from "./input/dropdown";
 export * from "./input/dynamic";

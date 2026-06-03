@@ -19,6 +19,7 @@ export interface IInputBase<T> {
     class?: string;
     children?: (InputBase<any> | InputLabel)[];
     disabled?: boolean;
+    readonly?: boolean;
     visible$?: Observable<boolean>;
     bindStatusToVisible?: boolean;
 }
@@ -33,6 +34,7 @@ export declare class InputBase<T> implements IInputBase<T> {
     class: string;
     children: (InputBase<any> | InputLabel)[];
     disabled: boolean;
+    readonly: boolean;
     visible$: Observable<boolean>;
     changeValue$: Subject<T | null>;
     protected _value: import("@angular/core").WritableSignal<T | null>;
@@ -44,6 +46,7 @@ export declare class InputBase<T> implements IInputBase<T> {
     createFormControl(group?: FormGroup): void;
     launchChangeValue(): void;
     disable(): void;
+    setReadonly(value: boolean): void;
     enable(): void;
     destroy(): void;
 }

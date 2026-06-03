@@ -1,13 +1,14 @@
-import { TaIconType } from "@ta/icons";
 import { IInputBase, InputBase } from "./base";
 export interface IInputTextBox<T> extends IInputBase<T> {
     type?: string;
-    icon?: TaIconType;
+    icon?: string;
     iconClicked?: () => void;
+    step?: string;
 }
 export declare class InputTextBox<T = string> extends InputBase<T> {
     controlType: string;
-    icon?: TaIconType | null;
+    icon?: string | null;
     iconClicked?: () => void;
+    step?: string;
     constructor(options?: IInputTextBox<T>);
 }

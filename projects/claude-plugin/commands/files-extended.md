@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/files-extended — gestion de fichiers avancée avec preview et édition
+description: Assistant contextuel @ta/files-extended — catalogue compact + pointeurs vers references/files-extended/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,93 +10,52 @@ Tu es un expert de la librairie `@ta/files-extended` dans ce monorepo Angular te
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/files-extended`
-**Import path** : `@ta/files-extended`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/files/files-extended/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Composants (`lib/components/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, service…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/files-extended/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, outputs ou l'API.
 
-- `taFilesDisplayComponent` — `ta-files-display` : affichage étendu de fichiers
-- `taFilesUploadComponent` — `ta-files-upload` : upload de fichiers
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Services (`lib/services/`)
+---
 
-- Services étendus pour la gestion des fichiers (upload, gestion avancée)
+## Package
 
-### Module
+- **Package** : `@ta/files-extended`
+- **Import path** : `@ta/files-extended`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/files/files-extended/`
 
-- `FilesExtendedModule` — module NgModule (deprecated)
+## Catalogue
 
-## Patterns d'utilisation
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/files-extended/<name>.md`.
 
-### Upload de fichiers
+### Composants
 
-```typescript
-import { taFilesUploadComponent } from '@ta/files-extended';
-import { UploadFilePayloadInput } from '@ta/services';
+- `ta-files-display` (`FilesDisplayComponent`) — affichage étendu de fichiers avec preview et actions.
+- `ta-files-upload` (`FilesUploadComponent`) — upload de fichiers avec progression, intégration serveur.
 
-@Component({
-  standalone: true,
-  imports: [taFilesUploadComponent],
-  template: ` <ta-files-upload [entityId]="entityId" [entityType]="entityType" (uploaded)="onUploaded($event)" /> `,
-})
-export class MyComponent {
-  entityId = 123;
-  entityType = 'project';
+### Services
 
-  onUploaded(files: UploadFilePayloadInput[]) {
-    // traiter les fichiers uploadés
-  }
-}
-```
-
-### Affichage étendu de fichiers
-
-```typescript
-import { taFilesDisplayComponent } from '@ta/files-extended';
-
-@Component({
-  standalone: true,
-  imports: [taFilesDisplayComponent],
-  template: `
-    <ta-files-display
-      [entityId]="entityId"
-      [entityType]="entityType"
-    />
-  `
-})
-```
+- `UploadDocumentFormService` — service de formulaire d'upload de documents.
 
 ## Différence avec @ta/files-basic
 
-| `@ta/files-basic`                | `@ta/files-extended`         |
-| -------------------------------- | ---------------------------- |
-| Affichage et lecture de fichiers | Upload et gestion avancée    |
-| Liste, slide, PDF viewer         | Upload avec progression      |
-| Pas d'upload                     | Intégration serveur complète |
-| Composants simples               | Services + composants        |
+| `@ta/files-basic` | `@ta/files-extended` |
+|---|---|
+| Affichage et lecture de fichiers | Upload et gestion avancée |
+| Liste, slide, PDF viewer | Upload avec progression |
+| Pas d'upload | Intégration serveur complète |
+| Composants simples | Services + composants |
 
 ## Conventions
 
-- `FilesExtendedModule` est deprecated — utiliser les composants standalone
-- `taFilesUploadComponent` gère l'upload vers le serveur via `@ta/server`
-- Les types de fichiers acceptés sont configurables via les inputs du composant
-- Intégration avec `DocumentsService` de `@ta/services` pour la persistance
-
-## Revue de code
-
-- Vérifier que les `entityId` et `entityType` sont fournis pour l'upload
-- S'assurer que l'événement `uploaded` est géré pour mettre à jour l'état
-- Vérifier que `standalone: true` et les imports explicites
-- Ne pas utiliser `FilesExtendedModule` dans les nouveaux développements
-
-## Ajout d'un nouveau composant dans @ta/files-extended
-
-1. Créer dans `projects/files/files-extended/src/lib/components/`
-2. Exporter depuis `projects/files/files-extended/src/lib/components/public-api.ts`
-3. S'assurer que `standalone: true`
+- Ne pas utiliser `FilesExtendedModule` (deprecated) — composants standalone.
+- `ta-files-upload` gère l'upload vers le serveur via `@ta/server`.
+- `entityId` et `entityType` doivent être fournis pour l'upload.
+- Intégration avec `DocumentsService` de `@ta/services` pour la persistance.

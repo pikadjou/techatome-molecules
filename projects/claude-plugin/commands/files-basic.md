@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/files-basic — upload et gestion de fichiers basique
+description: Assistant contextuel @ta/files-basic — catalogue compact + pointeurs vers references/files-basic/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,118 +10,53 @@ Tu es un expert de la librairie `@ta/files-basic` dans ce monorepo Angular techa
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/files-basic`
-**Import path** : `@ta/files-basic`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/files/files-basic/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Composants (`lib/components/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, service…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/files-basic/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, outputs ou l'API.
 
-- `taFilesListComponent` — `ta-files-list` : liste de fichiers
-- `taDisplayComponent` — `ta-display` : affichage d'un fichier
-- `taSlideComponent` — `ta-slide` : visualisation en carrousel
-- `taPdfViewerComponent` — `ta-pdf-viewer` : lecteur PDF
-- `taFileCardComponent` — `ta-file-card` : carte d'un fichier
-- `taFilesEditComponent` — `ta-files-edit` : édition des fichiers
-- `taDocumentsListComponent` — liste de documents
-- `taFileTypeBadgeComponent` — `ta-file-type-badge` : badge type de fichier
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Module
+---
 
-- `FilesBasicModule` — module NgModule (deprecated)
+## Package
 
-## Patterns d'utilisation
+- **Package** : `@ta/files-basic`
+- **Import path** : `@ta/files-basic`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/files/files-basic/`
 
-### Liste de fichiers
+## Catalogue
 
-```typescript
-import { taFilesListComponent } from '@ta/files-basic';
-import { FileData } from '@ta/utils';
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/files-basic/<name>.md`.
 
-@Component({
-  standalone: true,
-  imports: [taFilesListComponent],
-  template: ` <ta-files-list [files]="files" (fileClick)="onFileClick($event)" /> `,
-})
-export class MyComponent {
-  files: FileData[] = [];
-}
-```
+### Composants
 
-### Affichage d'un fichier
+- `ta-files-list` (`FilesListComponent`) — liste de fichiers.
+- `ta-display` (`DisplayComponent`) — affichage d'un fichier unique.
+- `ta-slide` (`SlideComponent`) — visualisation en carrousel/slide.
+- `ta-pdf-viewer` (`PdfViewerComponent`) — lecteur PDF.
+- `ta-file-card` (`FileCardComponent`) — carte d'un fichier.
+- `ta-files-edit` (`FilesEditComponent`) — édition des fichiers (ajout/suppression).
+- `ta-documents-list` (`DocumentsListComponent`) — liste de documents.
+- `ta-file-type-badge` (`FileTypeBadgeComponent`) — badge type de fichier.
 
-```typescript
-import { taDisplayComponent } from '@ta/files-basic';
+## Différence avec @ta/files-extended
 
-@Component({
-  standalone: true,
-  imports: [taDisplayComponent],
-  template: `<ta-display [file]="file" />`
-})
-```
-
-### Visualisation PDF
-
-```typescript
-import { taPdfViewerComponent } from '@ta/files-basic';
-
-@Component({
-  standalone: true,
-  imports: [taPdfViewerComponent],
-  template: `<ta-pdf-viewer [src]="pdfUrl" />`
-})
-```
-
-### Édition de fichiers
-
-```typescript
-import { taFilesEditComponent } from '@ta/files-basic';
-
-@Component({
-  standalone: true,
-  imports: [taFilesEditComponent],
-  template: `
-    <ta-files-edit
-      [files]="files"
-      (filesChanged)="onFilesChanged($event)"
-      (fileDeleted)="onFileDeleted($event)"
-    />
-  `
-})
-```
-
-### Badge de type de fichier
-
-```typescript
-import { taFileTypeBadgeComponent } from '@ta/files-basic';
-
-@Component({
-  standalone: true,
-  imports: [taFileTypeBadgeComponent],
-  template: `<ta-file-type-badge [file]="file" />`
-})
-```
+| `@ta/files-basic` | `@ta/files-extended` |
+|---|---|
+| Affichage et lecture de fichiers | Upload et gestion avancée |
+| Liste, slide, PDF viewer | Upload avec progression |
+| Pas d'upload | Intégration serveur complète |
 
 ## Conventions
 
-- Les types `FileData` et `FileExtension` viennent de `@ta/utils`
-- `FilesBasicModule` est deprecated — utiliser les composants standalone
-- Pour l'upload, utiliser `@ta/files-extended`
-- Les documents utilisent le `DocumentsService` de `@ta/services`
-
-## Revue de code
-
-- Vérifier que les types de fichiers sont importés depuis `@ta/utils`
-- Vérifier que `standalone: true` et les imports explicites
-- S'assurer que les événements de sortie (`fileClick`, `filesChanged`, `fileDeleted`) sont gérés
-- Ne pas utiliser `FilesBasicModule` dans les nouveaux développements
-
-## Ajout d'un nouveau composant dans @ta/files-basic
-
-1. Créer dans `projects/files/files-basic/src/lib/components/`
-2. Exporter depuis `projects/files/files-basic/src/lib/components/public-api.ts`
-3. S'assurer que `standalone: true`
+- Les types `FileData` et `EFileExtension` viennent de `@ta/utils` (pas de `@ta/files-basic`).
+- Ne pas utiliser `FilesBasicModule` (deprecated) — composants standalone.
+- Pour l'upload, utiliser `@ta/files-extended`.
+- Les documents utilisent `DocumentsService` de `@ta/services`.

@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/user — Auth0, AuthGuard, FeatureGuard, taPermissionsService, taUsersService, SwitchLanguage
+description: Assistant contextuel @ta/user — catalogue compact + pointeurs vers references/user/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,257 +10,81 @@ Tu es un expert de la librairie `@ta/user` dans ce monorepo Angular techatome.
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/user`
-**Import path** : `@ta/user`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/user/`
-**Authentification** : Auth0
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
+
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, service, guard, DTO…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/user/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, méthodes ou l'API Auth0.
+
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
+
+---
+
+## Package
+
+- **Package** : `@ta/user`
+- **Import path** : `@ta/user`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/user/`
+- **Authentification** : Auth0
+
+## Catalogue
+
+Format : nom (`Class`) — description courte. Le fichier de référence est `references/user/<name>.md`.
+
+### Composants
+
+- `ta-switch-language` (`SwitchLanguageComponent`) — sélecteur de langue avec drapeaux (modes `inline` et `dropdown`).
+- `ta-switch-language-cta` (`SwitchLanguageCtaComponent`) — wrapper rétrocompatible (délègue à `SwitchLanguageComponent` en mode `dropdown`).
+- `ta-guard` (`GuardComponent`) — protège ou prévisualise du contenu selon les permissions (modes masqué et preview).
+- `LoginCardComponent` — carte de connexion.
+- `LoginComponent` — page de connexion.
+- `SigninComponent` — page d'inscription.
+- `MyAccountComponent` — page compte utilisateur.
 
 ### Guards
 
-- Guards d'authentification/autorisation (depuis `lib/modules/user/guards/`)
+- `authGuard` — garde d'authentification (functional guard).
+- Autres guards d'autorisation (voir fiche).
 
 ### Services
 
-- `UserService` — service utilisateur courant
-- `ContactService` — service de gestion des contacts utilisateurs
-- `UsersService` — service de gestion de la liste des utilisateurs
-- `FunctionsService` — service des fonctions/rôles
-- `AvailabilitiesService` — service des disponibilités
-- `AuthService` — service d'authentification Auth0
-- `PermissionsService` — service de gestion des permissions
-- `UserFormFunctionsService` — service formulaire des fonctions
-- `UserFormAvailabilitiesService` — service formulaire des disponibilités
-- `UserFormService` — service de formulaire utilisateur
-- `Permissions` — objet de permissions disponibles
+- `AuthService` — service d'authentification Auth0 (loginWithRedirect, logout, isAuthenticated$).
+- `UserService` — service utilisateur courant (`currentUser$`).
+- `UsersService` — service de gestion de la liste des utilisateurs.
+- `PermissionsService` — service de gestion des permissions (`has(permission)`).
+- `ContactService` — service de gestion des contacts utilisateurs.
+- `FunctionsService` — service des fonctions/rôles.
+- `AvailabilitiesService` — service des disponibilités.
 
 ### DTOs
 
-- `UserProfile` — profil utilisateur
-- `CurrentUser` — utilisateur connecté courant
-- `User` — modèle utilisateur
-- `UserAddedPayload` — payload d'ajout d'utilisateur
-- `UserModifiedPayload` — payload de modification
-- `ModifyUserPayloadInput` — input de modification
-- `Function` — fonction/rôle utilisateur
-- `Role` — rôle
-- `DayAvailability` — disponibilité journalière
-- `MissionType` — type de mission
+- `CurrentUser` — utilisateur connecté complet.
+- `User` — utilisateur générique de liste.
+- `UserProfile` — profil utilisateur.
+- `UserAddedPayload` / `UserModifiedPayload` / `ModifyUserPayloadInput` — payloads de mutation.
+- `Function` / `Role` — fonction et rôle.
+- `DayAvailability` — disponibilité journalière.
+- `MissionType` — type de mission.
 
-### Composants (`lib/modules/user/components/`)
+### Tokens et types
 
-- `LoginCardComponent` — carte de connexion
-- `LoginComponent` — page de connexion
-- `SigninComponent` — page d'inscription
-- `MyAccountComponent` — page compte utilisateur
-- `SwitchLanguageComponent` (`ta-switch-language`) — sélecteur de langue avec drapeaux (modes `inline` et `dropdown`)
-- `SwitchLanguageCtaComponent` (`ta-switch-language-cta`) — wrapper rétrocompatible (délègue à `SwitchLanguageComponent` en mode `dropdown`)
-- `GuardComponent` (`ta-guard`) — protège ou prévisualise du contenu selon les permissions
+- `TA_LANGUAGES` — `InjectionToken<TaLanguageConfig[]>` — langues disponibles (défaut : fr + en).
+- `TaLanguageConfig` — `{ id: string; name: string }`.
+- `Permissions` — objet de toutes les permissions disponibles.
 
-### Tokens & Types (langue)
+### Provider
 
-- `TA_LANGUAGES` — `InjectionToken<TaLanguageConfig[]>` — langues disponibles (factory par défaut : fr + en)
-- `TaLanguageConfig` — `{ id: string; name: string }` — configuration d'une langue
-
-### Auth0
-
-- `provideAuth0()` — provider Auth0
-
-### Module
-
-- `UserModule` — module NgModule (deprecated)
-
-## Patterns d'utilisation
-
-### Configurer Auth0
-
-```typescript
-import { provideAuth0 } from '@ta/user';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideAuth0({
-      clientId: environment.auth0ClientId,
-      domain: environment.auth0Domain,
-    }),
-  ],
-};
-```
-
-### Utiliser AuthService
-
-```typescript
-import { AuthService } from '@ta/user';
-
-@Component({ standalone: true })
-export class AppComponent {
-  private auth = inject(AuthService);
-
-  login() {
-    this.auth.loginWithRedirect();
-  }
-
-  logout() {
-    this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
-  }
-
-  isAuthenticated$ = this.auth.isAuthenticated$;
-}
-```
-
-### Utiliser UserService
-
-```typescript
-import { CurrentUser, UserService } from '@ta/user';
-
-@Component({ standalone: true })
-export class ProfileComponent {
-  private userService = inject(UserService);
-
-  currentUser$ = this.userService.currentUser$;
-}
-```
-
-### Vérifier les permissions
-
-```typescript
-import { Permissions, PermissionsService } from '@ta/user';
-
-@Component({ standalone: true })
-export class MyComponent {
-  private permissions = inject(PermissionsService);
-
-  canEdit$ = this.permissions.has(Permissions.EDIT_PROJECT);
-}
-```
-
-### Protéger une route avec un guard
-
-```typescript
-import { authGuard } from '@ta/user';
-
-// Importer le guard approprié
-
-const routes = [
-  {
-    canActivate: [authGuard],
-    component: ProtectedComponent,
-    path: 'protected',
-  },
-];
-```
-
-### Utiliser GuardComponent (`ta-guard`)
-
-Protège l'affichage d'un bloc de contenu selon les permissions. Deux modes :
-
-**Mode masqué (défaut)** — le contenu est caché et un message d'erreur s'affiche si l'accès est refusé :
-
-```html
-<ta-guard feature="premium-section" level="authenticated">
-  <app-premium-content />
-</ta-guard>
-```
-
-**Mode preview** — le contenu est affiché avec une opacité réduite et un overlay avec boutons "Se connecter" / "S'inscrire" s'affiche par-dessus, pour inciter l'utilisateur à s'authentifier :
-
-```html
-<ta-guard feature="premium-section" level="authenticated" [preview]="true">
-  <app-teaser-content />
-</ta-guard>
-```
-
-#### Inputs de `GuardComponent`
-
-| Input | Type | Défaut | Description |
-|---|---|---|---|
-| `feature` | `string` | — | Clé de feature à vérifier via `PermissionsService` |
-| `level` | `Level` | `'authorize'` | Niveau requis (`'authenticated'`, `'authorize'`, etc.) |
-| `role` | `string` | — | Rôle requis (alternatif à `feature`/`level`) |
-| `canDisplayErrorMessage` | `boolean` | `true` | Affiche le message d'erreur en mode masqué |
-| `preview` | `boolean` | `false` | Active le mode preview avec overlay CTA |
-
-En mode `preview`, quand l'accès est refusé :
-- Le contenu projeté est rendu à **12% d'opacité** (`pointer-events: none`)
-- Un gradient couvre la partie basse du contenu
-- Un overlay positionné en bas affiche un titre, un sous-titre et deux boutons qui redirigent vers `/login` et `/signin`
-
-### Configurer les langues (SwitchLanguageComponent)
-
-Les langues sont fournies via le token `TA_LANGUAGES`. Par défaut : fr + en.
-
-```typescript
-import { TA_LANGUAGES, SwitchLanguageComponent } from '@ta/user';
-
-@Component({
-  standalone: true,
-  imports: [SwitchLanguageComponent],
-  providers: [
-    {
-      provide: TA_LANGUAGES,
-      useValue: [
-        { id: 'fr', name: 'Français' },
-        { id: 'en', name: 'English' },
-        { id: 'nl', name: 'Nederlands' },
-      ],
-    },
-  ],
-  template: `
-    <!-- Mode inline (défaut) : drapeaux côte à côte avec code langue -->
-    <ta-switch-language></ta-switch-language>
-
-    <!-- Mode dropdown : trigger drapeau + code + chevron, panel déroulant -->
-    <ta-switch-language mode="dropdown"></ta-switch-language>
-  `,
-})
-```
-
-**Type `TaLanguageConfig`** : `{ id: string; name: string }`
-- `id` : code langue (ex: `'fr'`, `'en'`) — sert aussi de clé pour le drapeau via `ta-flag-icon`
-- `name` : nom affiché de la langue
-
-**Inputs de `SwitchLanguageComponent`** :
-| Input | Type | Défaut | Description |
-|---|---|---|---|
-| `mode` | `'inline' \| 'dropdown'` | `'inline'` | Mode d'affichage |
-
-### Accéder aux disponibilités
-
-```typescript
-import { AvailabilitiesService, DayAvailability } from '@ta/user';
-
-@Injectable({ providedIn: 'root' })
-export class MyService {
-  private avail = inject(AvailabilitiesService);
-
-  getUserAvailabilities(userId: number) {
-    return this.avail.getByUser(userId);
-  }
-}
-```
+- `provideAuth0()` — provider Auth0 pour `app.config.ts`.
 
 ## Conventions
 
-- `UserModule` est deprecated — utiliser les composants standalone et providers
-- Les guards utilisent la nouvelle syntaxe functional guards (fonctions, pas classes)
-- `CurrentUser` est le type de l'utilisateur connecté (complet)
-- `User` est un utilisateur générique de la liste
-- Toutes les vérifications de permissions passent par `PermissionsService`
-
-## Revue de code
-
-- Vérifier que les routes protégées utilisent les guards appropriés
-- S'assurer que `provideAuth0()` est configuré dans `app.config.ts`
-- Vérifier que `PermissionsService` est utilisé (pas d'accès direct aux rôles)
-- S'assurer que les DTOs (`CurrentUser`, `User`, etc.) sont importés depuis `@ta/user`
-- Vérifier les clés d'objet triées alphabétiquement dans les configurations
-
-## Ajout d'un nouveau composant dans @ta/user
-
-1. Créer dans `projects/user/src/lib/modules/user/components/`
-2. Exporter depuis `projects/user/src/lib/modules/user/components/public-api.ts`
-3. S'assurer que `standalone: true`
+- `UserModule` est deprecated — composants standalone et providers.
+- Guards = functional guards (fonctions, pas classes).
+- `CurrentUser` = utilisateur connecté (complet) ; `User` = utilisateur générique.
+- Toutes les vérifications de permissions via `PermissionsService`.
+- Clés d'objets triées alphabétiquement.

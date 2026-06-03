@@ -12,8 +12,9 @@
       class="form-control"
       [value]="this.input.value"
       [formControl]="$any(this.input.formControl)"
-      [readonly]="this.input.disabled"
+      [readonly]="this.input.disabled || this.input.readonly"
       [type]="this.isPassword && !this.hide ? 'text' : this.input.type"
+      [attr.step]="this.input.step || null"
       (keyup)="this.onChange(box.value)"
     />
     @if (this.isPassword) {

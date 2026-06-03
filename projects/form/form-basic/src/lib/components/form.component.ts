@@ -98,6 +98,12 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
     this.valid.emit(this.form.value);
   }
 
+  public handleInvalidSubmit() {
+    if (!this.isValid()) {
+      this.form.markAllAsTouched();
+    }
+  }
+
   public isValid(): boolean {
     return this.form.valid && !this.loader();
   }

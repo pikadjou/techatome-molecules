@@ -4,12 +4,14 @@ import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
     phoneInput: ElementRef;
-    private _isReady;
+    readonly isReady: import("@angular/core").WritableSignal<boolean>;
     private _iti?;
+    private _stylesheetReady$?;
     private _syncingFromControl;
     private _validator?;
     ngOnInit(): void;
     ngAfterViewInit(): void;
+    private _initPhoneInput;
     ngOnDestroy(): void;
     onBlur(): void;
     onCountryChange(): void;

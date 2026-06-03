@@ -6,21 +6,43 @@ import { EDITOR_ALL_TOOLS } from '@ta/wysiswyg';
 import { tap } from 'rxjs/operators';
 import { Logger } from '@ta/server';
 
+const BCE_REGEX = /^[01]\d{3}[. ]?\d{3}[. ]?\d{3}$/;
+function bceValidator() {
+    return (control) => {
+        const value = control.value;
+        if (!value)
+            return null;
+        return BCE_REGEX.test(value.trim()) ? null : { bce: true };
+    };
+}
+
+/**
+ * Validator that delegates phone number validation to an intl-tel-input instance.
+ *
+ * - Empty control values are considered valid (use Validators.required to enforce presence).
+ * - Returns `null` when the instance is not yet available or its utils script is still loading
+ *   (`isValidNumber()` returns `null`), so validation is deferred until the lib is ready.
+ * - Returns `{ validatePhoneNumber: true }` when the instance reports the number as invalid.
+ */
+function phoneValidator(getInstance) {
+    return (control) => {
+        if (!control.value) {
+            return null;
+        }
+        const valid = getInstance()?.isValidNumber();
+        if (valid == null) {
+            return null;
+        }
+        return valid ? null : { validatePhoneNumber: true };
+    };
+}
+
 function slugValidator() {
     return (control) => {
         const value = control.value;
         // Vérifier si la valeur respecte les caractéristiques d'un slug
         const isValidSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
         return isValidSlug ? null : { invalidSlug: true };
-    };
-}
-
-function phoneValidator() {
-    return (control) => {
-        const value = control.value;
-        // Vérifier si la valeur respecte les caractéristiques d'un slug
-        const isValidSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
-        return isValidSlug ? null : { validatePhoneNumber: true };
     };
 }
 
@@ -56,6 +78,7 @@ class InputBase {
         this.class = options.class || "col-12";
         this.children = [];
         this.disabled = options.disabled === true;
+        this.readonly = options.readonly === true;
         this.visible$ = options.visible$ || of(true);
         if (options.bindStatusToVisible !== false) {
             this._subscriberHandler.registerSubscription(this.visible$.subscribe((visible) => {
@@ -106,6 +129,9 @@ class InputBase {
         this.formControl?.disable();
         this.children.forEach((child) => child.disable());
     }
+    setReadonly(value) {
+        this.readonly = value;
+    }
     enable() {
         if (!this._isVisible)
             return;
@@ -138,6 +164,7 @@ class InputTextBox extends InputBase {
         this.type = options.type || "text";
         this.icon = options.icon || null;
         this.iconClicked = options.iconClicked;
+        this.step = options.step;
     }
 }
 
@@ -221,6 +248,8 @@ class InputNumber extends InputTextBox {
     constructor(options = {}) {
         super(options);
         this.type = "number";
+        this.decimals = options.decimals ?? 0;
+        this.step = this.decimals > 0 ? `${Math.pow(10, -this.decimals)}` : "1";
     }
 }
 
@@ -342,6 +371,12 @@ class InputChoices extends InputDropdown {
     }
 }
 
+class InputCurrency extends InputNumber {
+    constructor(options) {
+        super({ decimals: 2, icon: 'euro', ...options });
+    }
+}
+
 class InputDatePicker extends InputBase {
     constructor(options = {}) {
         super(options);
@@ -438,10 +473,9 @@ class InputPassword extends InputTextBox {
 class InputPhone extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = "phone";
-        this.type = "tel";
-        this.preferredCountries = ["be", "fr"];
-        this.validators.push(phoneValidator());
+        this.controlType = 'phone';
+        this.type = 'tel';
+        this.preferredCountries = ['be', 'fr'];
     }
 }
 
@@ -488,79 +522,34 @@ class InputTimePicker extends InputTextBox {
 
 var EAddressValues;
 (function (EAddressValues) {
-    EAddressValues["street"] = "street";
-    EAddressValues["number"] = "number";
-    EAddressValues["floor"] = "floor";
     EAddressValues["city"] = "city";
-    EAddressValues["zipCode"] = "zipCode";
     EAddressValues["country"] = "country";
-    EAddressValues["longitude"] = "longitude";
+    EAddressValues["floor"] = "floor";
     EAddressValues["latitude"] = "latitude";
+    EAddressValues["longitude"] = "longitude";
+    EAddressValues["number"] = "number";
+    EAddressValues["placeId"] = "placeId";
+    EAddressValues["street"] = "street";
+    EAddressValues["zipCode"] = "zipCode";
 })(EAddressValues || (EAddressValues = {}));
 class InputAddress extends InputBase {
-    set value(data) {
-        super.value = data;
-        this.street.value = data?.street ?? null;
-        this.number.value = data?.number ?? null;
-        this.floor.value = data?.floor ?? null;
-        this.country.value = data?.country ?? null;
-        this.city.value = data?.city ?? null;
-        this.zipCode.value = data?.zipCode ?? null;
-    }
     constructor(options = {}) {
         super(options);
         this.controlType = 'address';
-        this.street = new InputTextBox({
-            key: EAddressValues.street,
-            label: 'form.address.street',
-        });
-        this.number = new InputTextBox({
-            key: EAddressValues.number,
-            label: 'form.address.number',
-        });
-        this.floor = new InputTextBox({
-            key: EAddressValues.floor,
-            label: 'form.address.floor',
-        });
-        this.city = new InputTextBox({
-            key: EAddressValues.city,
-            label: 'form.address.city',
-        });
-        this.country = new InputTextBox({
-            key: EAddressValues.country,
-            label: 'form.address.country',
-        });
-        this.zipCode = new InputTextBox({
-            key: EAddressValues.zipCode,
-            label: 'form.address.zipCode',
-        });
         this.type = 'address';
-        this.value = this._value();
-    }
-    updateValue() {
-        const data = {
-            street: this.street.value,
-            number: this.number.value,
-            floor: this.floor.value,
-            city: this.city.value,
-            zipCode: this.zipCode.value,
-            country: this.country.value,
-            longitude: null,
-            latitude: null,
-        };
-        this.value = data;
     }
     static formatAddressForm(data) {
         if (!data) {
             return null;
         }
         return {
-            street: data[EAddressValues.street],
-            number: data[EAddressValues.number],
-            floor: data[EAddressValues.floor],
             city: data[EAddressValues.city],
-            zipCode: data[EAddressValues.zipCode],
             country: data[EAddressValues.country],
+            floor: data[EAddressValues.floor],
+            number: data[EAddressValues.number],
+            placeId: data[EAddressValues.placeId],
+            street: data[EAddressValues.street],
+            zipCode: data[EAddressValues.zipCode],
         };
     }
 }
@@ -630,5 +619,5 @@ class InputComponent extends InputBase {
  * Generated bundle index. Do not edit.
  */
 
-export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, phoneValidator, slugValidator };
+export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
 //# sourceMappingURL=ta-form-model.mjs.map

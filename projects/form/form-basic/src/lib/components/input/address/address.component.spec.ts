@@ -19,18 +19,7 @@ describe('InputAddressComponent', () => {
   let addressInput: InputAddress;
 
   beforeEach(async () => {
-    addressInput = new InputAddress({
-      key: 'address',
-      label: 'Address',
-      value: {
-        street: 'Main St',
-        number: '42',
-        floor: '2',
-        city: 'Brussels',
-        zipCode: '1000',
-        country: 'Belgium',
-      },
-    });
+    addressInput = new InputAddress({ key: 'address', label: 'Address' });
 
     await TestBed.configureTestingModule({
       imports: [
@@ -92,78 +81,76 @@ describe('InputAddressComponent', () => {
     expect(component.input.key).toBe('address');
   });
 
-  it('should have sub-inputs for address fields', () => {
-    expect(component.input.street).toBeTruthy();
-    expect(component.input.number).toBeTruthy();
-    expect(component.input.floor).toBeTruthy();
-    expect(component.input.city).toBeTruthy();
-    expect(component.input.zipCode).toBeTruthy();
-    expect(component.input.country).toBeTruthy();
+  it('should initialize with empty state when no value provided', () => {
+    expect(component.state()).toBe('empty');
+    expect(component.snapshot()).toBeNull();
   });
 
-  describe('parseAddress', () => {
-    it('should parse Google Places address components', () => {
-      const place = {
-        address_components: [
-          { types: ['street_number'], long_name: '10' },
-          { types: ['route'], long_name: 'Rue de la Loi' },
-          { types: ['locality'], long_name: 'Brussels' },
-          { types: ['postal_code'], long_name: '1000' },
-          { types: ['country'], long_name: 'Belgium' },
-        ],
-      };
+  it('should initialize with locked state when value is provided', () => {
+    addressInput.destroy();
+    addressInput = new InputAddress({
+      key: 'address',
+      label: 'Address',
+      value: { city: 'Brussels', country: 'Belgium', street: 'Main St', zipCode: '1000' },
+    });
+    fixture.componentRef.setInput('input', addressInput);
+    fixture.detectChanges();
 
-      component.parseAddress(place);
+    expect(component.state()).toBe('locked');
+  });
 
-      expect(component.input.value).toEqual({
-        streetNumber: '10',
-        street: 'Rue de la Loi',
-        locality: 'Brussels',
-        postalCode: '1000',
+  it('should have sub-inputs for each address field', () => {
+    expect(component.streetInput).toBeTruthy();
+    expect(component.numberInput).toBeTruthy();
+    expect(component.cityInput).toBeTruthy();
+    expect(component.zipCodeInput).toBeTruthy();
+    expect(component.countryInput).toBeTruthy();
+    expect(component.complementInput).toBeTruthy();
+  });
+
+  describe('unlockManual', () => {
+    beforeEach(() => {
+      component.state.set('locked');
+    });
+
+    it('should set state to manual', () => {
+      component.unlockManual();
+      expect(component.state()).toBe('manual');
+    });
+
+    it('should make sub-inputs editable', () => {
+      component.unlockManual();
+      expect(component.streetInput.readonly).toBeFalse();
+      expect(component.cityInput.readonly).toBeFalse();
+    });
+  });
+
+  describe('revertToOriginal', () => {
+    it('should do nothing when no snapshot', () => {
+      component.state.set('manual');
+      component.revertToOriginal();
+      expect(component.state()).toBe('manual');
+    });
+
+    it('should restore snapshot and lock fields', () => {
+      component.snapshot.set({
+        city: 'Brussels',
         country: 'Belgium',
+        floor: '',
+        latitude: 50.8,
+        longitude: 4.3,
+        number: '10',
+        placeId: 'abc123',
+        street: 'Rue de la Loi',
+        zipCode: '1000',
       });
-    });
+      component.state.set('manual');
 
-    it('should handle missing address components gracefully', () => {
-      const place = {
-        address_components: [
-          { types: ['locality'], long_name: 'Brussels' },
-        ],
-      };
+      component.revertToOriginal();
 
-      component.parseAddress(place);
-
-      expect(component.input.value).toEqual({
-        streetNumber: null,
-        street: null,
-        locality: 'Brussels',
-        postalCode: null,
-        country: null,
-      });
-    });
-
-    it('should handle empty address components', () => {
-      const place = {
-        address_components: [],
-      };
-
-      component.parseAddress(place);
-
-      expect(component.input.value).toEqual({
-        streetNumber: null,
-        street: null,
-        locality: null,
-        postalCode: null,
-        country: null,
-      });
-    });
-  });
-
-  describe('dispatchNewValue', () => {
-    it('should call updateValue on the input', () => {
-      spyOn(component.input, 'updateValue');
-      component.dispatchNewValue();
-      expect(component.input.updateValue).toHaveBeenCalled();
+      expect(component.state()).toBe('locked');
+      expect(component.streetInput.value).toBe('Rue de la Loi');
+      expect(component.cityInput.value).toBe('Brussels');
     });
   });
 });

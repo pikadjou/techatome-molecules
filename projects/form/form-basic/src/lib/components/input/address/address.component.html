@@ -1,57 +1,99 @@
-<ta-form-label [input]="input"></ta-form-label>
-<!-- <mat-google-maps-autocomplete
-  class="form-control"
-  autocomplete="off"
-  appearance="standard"
-  [addressLabelText]="''"
-  [placeholderText]="'form.input.address.placeholder' | translate"
-  [requiredErrorText]="'form.input.address.required' | translate"
-  [invalidErrorText]="'form.input.address.invalid' | translate"
-  (onAutocompleteSelected)="this.parseAddress($event)"
-  #addresstext
-></mat-google-maps-autocomplete> -->
+<ta-form-label [input]="this.input"></ta-form-label>
+<div class="address-form flex-column g-space-md">
+  <input
+    #googleSearchInput
+    class="form-control"
+    [placeholder]="'form.address.search-google' | translate"
+  />
 
-<div class="grid g-space-sm">
-  <div class="one-half">
-    <ta-input-textbox
-      [input]="this.input.street"
-      [standalone]="true"
-      (valueChanged)="this.dispatchNewValue()"
-    ></ta-input-textbox>
-  </div>
-  <div class="one-fourth">
-    <ta-input-textbox
-      [input]="this.input.number"
-      [standalone]="true"
-      (valueChanged)="this.dispatchNewValue()"
-    ></ta-input-textbox>
-  </div>
-  <div class="one-fourth">
-    <ta-input-textbox
-      [input]="this.input.floor"
-      [standalone]="true"
-      (valueChanged)="this.dispatchNewValue()"
-    ></ta-input-textbox>
-  </div>
-  <div class="one-third">
-    <ta-input-textbox
-      [input]="this.input.zipCode"
-      [standalone]="true"
-      (valueChanged)="this.dispatchNewValue()"
-    ></ta-input-textbox>
-  </div>
-  <div class="two-thirds">
-    <ta-input-textbox
-      [input]="this.input.city"
-      [standalone]="true"
-      (valueChanged)="this.dispatchNewValue()"
-    ></ta-input-textbox>
-  </div>
-  <div class="full">
-    <ta-input-textbox
-      [input]="this.input.country"
-      [standalone]="true"
-      (valueChanged)="this.dispatchNewValue()"
-    ></ta-input-textbox>
-  </div>
+  @if (this.state() === 'empty') {
+    <ta-link [icon]="'edit'" (action)="this.unlockManual()">
+      {{ 'form.address.fill-manually' | translate }}
+    </ta-link>
+  }
+
+  @if (this.state() === 'locked' && this.currentPlaceId()) {
+    <div class="address-form__banner flex-row g-space-sm align-center">
+      <ta-font-icon name="check-circle" type="sm"></ta-font-icon>
+      <ta-text [isBold]="true">{{ 'form.address.verified' | translate }}</ta-text>
+    </div>
+  }
+
+  @if (this.state() !== 'empty') {
+    <ta-card>
+      <ta-card-content>
+        <div class="address-form__section flex-column g-space-sm">
+          <div class="address-form__section-header flex-row space-between align-center">
+            <ta-title [level]="4">{{ 'form.address.section-details' | translate }}</ta-title>
+            @if (this.state() === 'locked') {
+              <ta-badge [value]="'form.address.readonly'" [icon]="'lock'" type="secondary"></ta-badge>
+            }
+            @if (this.state() === 'manual') {
+              <ta-badge [value]="'form.address.manual'" [icon]="'edit'" type="warning"></ta-badge>
+            }
+          </div>
+
+          <div class="grid g-space-sm">
+            <div class="two-thirds">
+              <ta-input-textbox
+                [input]="this.streetInput"
+                [standalone]="true"
+                (valueChanged)="this.onSubInputChanged()"
+              ></ta-input-textbox>
+            </div>
+            <div class="one-third">
+              <ta-input-textbox
+                [input]="this.numberInput"
+                [standalone]="true"
+                (valueChanged)="this.onSubInputChanged()"
+              ></ta-input-textbox>
+            </div>
+            <div class="one-third">
+              <ta-input-textbox
+                [input]="this.zipCodeInput"
+                [standalone]="true"
+                (valueChanged)="this.onSubInputChanged()"
+              ></ta-input-textbox>
+            </div>
+            <div class="two-thirds">
+              <ta-input-textbox
+                [input]="this.cityInput"
+                [standalone]="true"
+                (valueChanged)="this.onSubInputChanged()"
+              ></ta-input-textbox>
+            </div>
+            <div class="full">
+              <ta-input-textbox
+                [input]="this.countryInput"
+                [standalone]="true"
+                (valueChanged)="this.onSubInputChanged()"
+              ></ta-input-textbox>
+            </div>
+            <div class="full">
+              <ta-input-textbox
+                [input]="this.complementInput"
+                [standalone]="true"
+                (valueChanged)="this.onSubInputChanged()"
+              ></ta-input-textbox>
+            </div>
+          </div>
+
+          @if (this.state() === 'locked') {
+            <div class="address-form__bottom-action flex-row space-between align-center">
+              <ta-text>{{ 'form.address.does-not-match' | translate }}</ta-text>
+              <ta-button type="secondary" [icon]="'edit'" (action)="this.unlockManual()">
+                {{ 'form.address.edit-manually' | translate }}
+              </ta-button>
+            </div>
+          }
+
+          @if (this.state() === 'manual' && this.snapshot() !== null) {
+            <ta-link [icon]="'arrow-left'" (action)="this.revertToOriginal()">
+              {{ 'form.address.revert' | translate }}
+            </ta-link>
+          }
+        </div>
+      </ta-card-content>
+    </ta-card>
+  }
 </div>

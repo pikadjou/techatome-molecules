@@ -1,9 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ReactiveFormsModule, ValidatorFn } from '@angular/forms';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { ValidatorFn } from '@angular/forms';
 
 import intlTelInput from 'intl-tel-input';
 
-import { InputPhone } from '@ta/form-model';
+import { InputPhone, phoneValidator } from '@ta/form-model';
+import { LoaderComponent } from '@ta/ui';
 import { loadStylesheet } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
@@ -16,19 +17,20 @@ intlTelInput.attachUtils(() => import('intl-tel-input/utils') as any);
   templateUrl: './input-phone.component.html',
   styleUrls: ['./input-phone.component.scss'],
   standalone: true,
-  imports: [InputLayoutComponent, ReactiveFormsModule],
+  imports: [InputLayoutComponent, LoaderComponent],
 })
 export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
   @ViewChild('phoneInput', { static: false }) phoneInput!: ElementRef;
 
-  private _isReady = false;
+  public readonly isReady = signal(false);
   private _iti?: ReturnType<typeof intlTelInput>;
+  private _stylesheetReady$?: Promise<void>;
   private _syncingFromControl = false;
   private _validator?: ValidatorFn;
 
   override ngOnInit() {
     super.ngOnInit();
-    loadStylesheet(
+    this._stylesheetReady$ = loadStylesheet(
       'intl-tel-input-css',
       'https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.min.css'
     );
@@ -36,7 +38,10 @@ export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
+    (this._stylesheetReady$ ?? Promise.resolve()).catch(() => undefined).then(() => this._initPhoneInput());
+  }
 
+  private _initPhoneInput() {
     this._iti = intlTelInput(this.phoneInput.nativeElement, {
       initialCountry: 'be',
       countryOrder: this.input.preferredCountries as any,
@@ -53,19 +58,10 @@ export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
         this._writeFromControl(control.value);
       }
       control.updateValueAndValidity({ emitEvent: false });
-      this._isReady = true;
+      this.isReady.set(true);
     });
 
-    this._validator = () => {
-      if (!control.value) {
-        return null;
-      }
-      const valid = this._iti?.isValidNumber();
-      if (valid == null) {
-        return null;
-      }
-      return valid ? null : { validatePhoneNumber: true };
-    };
+    this._validator = phoneValidator(() => this._iti);
     control.addValidators(this._validator);
     control.updateValueAndValidity({ emitEvent: false });
 
@@ -95,14 +91,14 @@ export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
   }
 
   public onBlur() {
-    if (!this._isReady) {
+    if (!this.isReady()) {
       return;
     }
     this._dispatch();
   }
 
   public onCountryChange() {
-    if (!this._isReady) {
+    if (!this.isReady()) {
       return;
     }
     this._dispatch();

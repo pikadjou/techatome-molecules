@@ -956,15 +956,28 @@ const copyTextToClipboard = async (text, success, error) => {
 const openExternalUrl = (url) => {
     window.open(url);
 };
+const _stylesheetPromises = new Map();
 const loadStylesheet = (id, href) => {
-    if (document.getElementById(id)) {
-        return;
+    const cached = _stylesheetPromises.get(id);
+    if (cached) {
+        return cached;
     }
-    const link = document.createElement('link');
-    link.id = id;
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
+    if (document.getElementById(id)) {
+        const resolved = Promise.resolve();
+        _stylesheetPromises.set(id, resolved);
+        return resolved;
+    }
+    const promise = new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.id = id;
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.onload = () => resolve();
+        link.onerror = () => reject(new Error(`Failed to load stylesheet: ${href}`));
+        document.head.appendChild(link);
+    });
+    _stylesheetPromises.set(id, promise);
+    return promise;
 };
 
 function getModifiedValues(current, initial) {

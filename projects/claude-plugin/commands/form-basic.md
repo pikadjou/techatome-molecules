@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/form-basic — ta-form, FormComponent, AbstractPanelFormLayout
+description: Assistant contextuel @ta/form-basic — catalogue compact + pointeurs vers references/form-basic/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,109 +10,58 @@ Tu es un expert de la librairie `@ta/form-basic` dans ce monorepo Angular techat
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/form-basic`
-**Import path** : `@ta/form-basic`
-**Préfixe sélecteur** : `ta-`
-**Localisation** : `projects/form/form-basic/`
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Composants standalone
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant de formulaire, service…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/form-basic/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, outputs ou l'API.
 
-- `taFormComponent` — `ta-form` : composant de formulaire principal
-- `taInputsComponent` — `ta-inputs` : rendu d'un ensemble d'inputs
-- `taEditFieldComponent` — `ta-edit-field` : champ éditable inline
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Composants input (sous-composants)
+---
 
-- `taInputDynamicComponent` — rendu dynamique d'un input selon son type
-- `taInputPanelComponent` — input dans un panneau
-- `taInputTranslationComponent` — input de traduction
+## Package
+
+- **Package** : `@ta/form-basic`
+- **Import path** : `@ta/form-basic`
+- **Préfixe sélecteur** : `ta-`
+- **Localisation** : `projects/form/form-basic/`
+
+## Catalogue
+
+Format : `selector` (`Class`) — description courte. Le fichier de référence est `references/form-basic/<name>.md`.
+
+### Composants principaux
+
+- `ta-form` (`FormComponent`) — composant de formulaire principal. Gère le `FormGroup` Angular en interne. Outputs : `(valid)`, `(submitted)`.
+- `ta-inputs` (`InputsComponent`) — rendu d'un ensemble d'inputs depuis un tableau `InputBase[]`. Peut s'utiliser sans `ta-form`.
+- `ta-edit-field` (`EditFieldComponent`) — champ éditable inline (sans formulaire complet). Output : `(changed)`.
+
+### Composants internes (sous-composants)
+
+- `InputDynamicComponent` — rendu dynamique d'un input selon son type `InputBase`.
+- `InputPanelComponent` — rendu d'un `InputPanel` avec ses enfants.
+- `InputTranslationComponent` — rendu d'un `InputTranslation`.
 
 ### Services
 
-- `FormTranslationService` — service de traduction du module form
+- `FormTranslationService` — service de traduction du module form-basic.
 
-### Module
+## Architecture form system (3 couches)
 
-- `FormModule` — module NgModule (deprecated)
-
-## Patterns d'utilisation
-
-### Formulaire de base
-
-```typescript
-import { taFormComponent } from '@ta/form-basic';
-import { DropdownInput, TextboxInput } from '@ta/form-model';
-
-@Component({
-  standalone: true,
-  imports: [taFormComponent],
-  template: ` <ta-form [fields]="fields" [value]="entity" (submitted)="onSubmit($event)" /> `,
-})
-export class MonFormComponent {
-  fields = [
-    new TextboxInput({ key: 'name', label: 'NAME', required: true }),
-    new DropdownInput({ key: 'status', label: 'STATUS', options: [] }),
-  ];
-
-  entity = { name: '', status: null };
-
-  onSubmit(value: unknown) {
-    // traiter les données
-  }
-}
 ```
-
-### EditField pour édition inline
-
-```typescript
-import { taEditFieldComponent } from '@ta/form-basic';
-import { TextboxInput } from '@ta/form-model';
-
-@Component({
-  standalone: true,
-  imports: [taEditFieldComponent],
-  template: ` <ta-edit-field [field]="nameField" [value]="entity.name" (changed)="onNameChange($event)" /> `,
-})
-export class InlineEditComponent {
-  nameField = new TextboxInput({ key: 'name', label: 'NAME' });
-}
-```
-
-### Rendu dynamique d'inputs
-
-```typescript
-import { taInputsComponent } from '@ta/form-basic';
-
-@Component({
-  standalone: true,
-  imports: [taInputsComponent],
-  template: `
-    <ta-inputs [fields]="fields" [formGroup]="form" />
-  `
-})
+@ta/form-model  → InputBase<T> et ses sous-classes (données/config)
+@ta/form-input  → TaAbstractInputComponent (UI de chaque champ)
+@ta/form-basic  → <ta-form> orchestre et rend dynamiquement
 ```
 
 ## Conventions
 
-- `taFormComponent` gère le `FormGroup` Angular en interne
-- Les modèles d'input viennent de `@ta/form-model`
-- Utiliser `taEditFieldComponent` pour l'édition inline (sans formulaire complet)
-- `FormModule` est deprecated — utiliser les composants standalone
-- Les labels sont des clés de traduction
-
-## Revue de code
-
-- Vérifier que les modèles d'input viennent de `@ta/form-model`
-- Vérifier que les labels sont des clés de traduction (pas de texte hardcodé)
-- S'assurer que `standalone: true` et que les imports sont explicites
-- Vérifier les événements de sortie (`submitted`, `changed`) pour l'intégration
-
-## Ajout d'un nouveau composant dans @ta/form-basic
-
-1. Créer dans `projects/form/form-basic/src/lib/components/`
-2. Exporter depuis `projects/form/form-basic/src/lib/components/public-api.ts`
-3. S'assurer que `standalone: true`
+- Les modèles d'input viennent **toujours** de `@ta/form-model`.
+- `ta-form` gère le `FormGroup` — ne pas créer de FormGroup manuellement si `ta-form` suffit.
+- Les labels sont des clés de traduction (pas de texte hardcodé).
+- Ne pas utiliser `FormModule` (deprecated) — utiliser les composants standalone.

@@ -11,14 +11,17 @@
       <ta-notification-inline [message]="this.error().message" [code]="this.error().status" class="my-space-sm">
         <ta-loader [isLoading]="this.loader()">
           @if (this.canDisplayButton() && this.buttonTitle()) {
-            <ta-button
-              class="justify-end"
-              (action)="this.onSubmit()"
-              [state]="!this.isValid() ? 'disabled' : 'classic'"
-              icon="check-line"
-            >
-              {{ this.buttonTitle() | translate }}
-            </ta-button>
+            <div (click)="this.handleInvalidSubmit()">
+              <ta-button
+                class="justify-end"
+                (action)="this.onSubmit()"
+                [state]="!this.isValid() ? 'disabled' : 'classic'"
+                [stopPropagationActivation]="false"
+                icon="check-line"
+              >
+                {{ this.buttonTitle() | translate }}
+              </ta-button>
+            </div>
           }
         </ta-loader>
       </ta-notification-inline>

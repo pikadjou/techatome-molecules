@@ -1,20 +1,17 @@
 import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, Component, input, output, signal, inject, ElementRef, HostListener } from '@angular/core';
+import { Injectable, signal, computed, inject, Injector, effect, afterNextRender, ViewChild, Component, input, output, ElementRef, HostListener } from '@angular/core';
 import * as i1$1 from '@angular/forms';
-import { ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
 import { distinctUntilChanged, BehaviorSubject } from 'rxjs';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent } from '@ta/ui';
+import { BadgeComponent, ButtonComponent, CardComponent, CardContentComponent, LinkComponent, TextComponent, TitleComponent, LoaderComponent } from '@ta/ui';
 import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
-import { TaAbstractInputComponent, TextBoxComponent, FormLabelComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { LocalIconComponent, FontIconComponent } from '@ta/icons';
+import { TaAbstractInputComponent, FormLabelComponent, TextBoxComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
+import { InputTextBox } from '@ta/form-model';
+import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
 import { Menu, MenuBase } from '@ta/menu';
@@ -36,41 +33,229 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class InputAddressComponent extends TaAbstractInputComponent {
     constructor() {
         super();
+        this.cityInput = new InputTextBox({
+            key: 'displayCity',
+            label: 'form.address.city',
+            readonly: true,
+            validators: [Validators.required],
+        });
+        this.complementInput = new InputTextBox({
+            key: 'displayFloor',
+            label: 'form.address.floor',
+        });
+        this.countryInput = new InputTextBox({
+            key: 'displayCountry',
+            label: 'form.address.country',
+            readonly: true,
+            validators: [Validators.required],
+        });
+        this.numberInput = new InputTextBox({
+            key: 'displayNumber',
+            label: 'form.address.number',
+            readonly: true,
+        });
+        this.snapshot = signal(null);
+        this.state = signal('empty');
+        this.streetInput = new InputTextBox({
+            key: 'displayStreet',
+            label: 'form.address.street',
+            readonly: true,
+            validators: [Validators.required],
+        });
+        this.zipCodeInput = new InputTextBox({
+            key: 'displayZipCode',
+            label: 'form.address.zipCode',
+            readonly: true,
+            validators: [Validators.required],
+        });
+        this.currentPlaceId = computed(() => this.snapshot()?.placeId ?? '');
+        this._injector = inject(Injector);
+        this._isApplyingSnapshot = false;
         TaTranslationForm.getInstance();
+        this.detailsInputs = [
+            this.cityInput,
+            this.complementInput,
+            this.countryInput,
+            this.numberInput,
+            this.streetInput,
+            this.zipCodeInput,
+        ];
+        effect(() => {
+            const currentState = this.state();
+            if (currentState !== 'empty' && currentState !== 'locked' && currentState !== 'manual') {
+                return;
+            }
+            afterNextRender(() => this._rebindAutocompleteIfNeeded(), { injector: this._injector });
+        });
     }
-    parseAddress(place) {
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.input.value) {
+            this._applyValueToFields(this.input.value);
+            this.state.set('locked');
+        }
+    }
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
+        this._bindAutocomplete(this.googleSearchInput?.nativeElement);
+    }
+    ngOnDestroy() {
+        if (this._autocomplete) {
+            google?.maps?.event?.clearInstanceListeners?.(this._autocomplete);
+            this._autocomplete.unbindAll?.();
+        }
+        this.detailsInputs.forEach(i => i.destroy());
+        super.ngOnDestroy();
+    }
+    onSubInputChanged() {
+        if (this._isApplyingSnapshot) {
+            return;
+        }
+        this._updateValueFromInputs();
+        this.input.formControl?.setErrors(this.detailsInputs.some(i => i.formControl?.invalid ?? false) ? { invalid: true } : null);
+    }
+    revertToOriginal() {
+        const snap = this.snapshot();
+        if (!snap) {
+            return;
+        }
+        this._applySnapshotToFields(snap);
+        this._setDetailsLocked(true);
+        this.state.set('locked');
+        this._updateValueFromInputs();
+    }
+    unlockManual() {
+        this._setDetailsLocked(false);
+        this.state.set('manual');
+    }
+    _applySnapshotToFields(snap) {
+        this._isApplyingSnapshot = true;
+        this.cityInput.value = snap.city;
+        this.complementInput.value = snap.floor;
+        this.countryInput.value = snap.country;
+        this.numberInput.value = snap.number;
+        this.streetInput.value = snap.street;
+        this.zipCodeInput.value = snap.zipCode;
+        this._isApplyingSnapshot = false;
+    }
+    _applyValueToFields(value) {
+        const snap = {
+            city: value.city ?? '',
+            country: value.country ?? '',
+            floor: value.floor ?? '',
+            latitude: value.latitude ?? 0,
+            longitude: value.longitude ?? 0,
+            number: value.number ?? '',
+            placeId: value.placeId ?? '',
+            street: value.street ?? '',
+            zipCode: value.zipCode ?? '',
+        };
+        this.snapshot.set(snap);
+        this._applySnapshotToFields(snap);
+        this._setDetailsLocked(true);
+    }
+    _bindAutocomplete(el) {
+        if (!el) {
+            return;
+        }
+        if (this._autocomplete) {
+            google?.maps?.event?.clearInstanceListeners?.(this._autocomplete);
+        }
+        if (!google?.maps?.places?.Autocomplete) {
+            return;
+        }
+        this._autocomplete = new google.maps.places.Autocomplete(el, {
+            fields: ['address_components', 'geometry', 'place_id'],
+        });
+        this._autocomplete.addListener('place_changed', () => {
+            const place = this._autocomplete?.getPlace();
+            if (place?.geometry) {
+                this._parseAddress(place);
+            }
+        });
+        this._lastBoundInput = el;
+    }
+    _parseAddress(place) {
         const addressComponents = place.address_components;
-        const getComponent = (type) => {
-            const component = addressComponents.find((comp) => comp.types.includes(type));
-            return component ? component.long_name : null;
+        const geometry = place.geometry;
+        const getComponent = (type, nameType = 'long_name') => {
+            const component = addressComponents?.find((c) => c.types.includes(type));
+            return component ? component[nameType] : '';
         };
-        const addressData = {
-            streetNumber: getComponent("street_number"),
-            street: getComponent("route"),
-            locality: getComponent("locality"),
-            postalCode: getComponent("postal_code"),
-            country: getComponent("country"),
+        const snap = {
+            city: getComponent('locality'),
+            country: getComponent('country'),
+            floor: this.complementInput.value ?? '',
+            latitude: geometry?.location?.lat() ?? 0,
+            longitude: geometry?.location?.lng() ?? 0,
+            number: getComponent('street_number'),
+            placeId: place.place_id ?? '',
+            street: getComponent('route'),
+            zipCode: getComponent('postal_code'),
         };
-        this.input.value = addressData;
+        this.snapshot.set(snap);
+        this._applySnapshotToFields(snap);
+        this._setDetailsLocked(true);
+        this.state.set('locked');
+        this.input.value = {
+            city: snap.city || null,
+            country: snap.country || null,
+            floor: snap.floor || null,
+            latitude: snap.latitude,
+            longitude: snap.longitude,
+            number: snap.number || null,
+            placeId: snap.placeId || null,
+            street: snap.street || null,
+            zipCode: snap.zipCode || null,
+        };
     }
-    dispatchNewValue() {
-        this.input.updateValue();
+    _rebindAutocompleteIfNeeded() {
+        const el = this.googleSearchInput?.nativeElement;
+        if (!el || el === this._lastBoundInput) {
+            return;
+        }
+        this._bindAutocomplete(el);
+    }
+    _setDetailsLocked(locked) {
+        this.detailsInputs.forEach(i => i.setReadonly(locked));
+        this.complementInput.setReadonly(false);
+    }
+    _updateValueFromInputs() {
+        const snap = this.snapshot();
+        this.input.value = {
+            city: this.cityInput.value ?? null,
+            country: this.countryInput.value ?? null,
+            floor: this.complementInput.value ?? null,
+            latitude: snap?.latitude ?? null,
+            longitude: snap?.longitude ?? null,
+            number: this.numberInput.value ?? null,
+            placeId: snap?.placeId ?? null,
+            street: this.streetInput.value ?? null,
+            zipCode: this.zipCodeInput.value ?? null,
+        };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"input\"></ta-form-label>\n<!-- <mat-google-maps-autocomplete\n  class=\"form-control\"\n  autocomplete=\"off\"\n  appearance=\"standard\"\n  [addressLabelText]=\"''\"\n  [placeholderText]=\"'form.input.address.placeholder' | translate\"\n  [requiredErrorText]=\"'form.input.address.required' | translate\"\n  [invalidErrorText]=\"'form.input.address.invalid' | translate\"\n  (onAutocompleteSelected)=\"this.parseAddress($event)\"\n  #addresstext\n></mat-google-maps-autocomplete> -->\n\n<div class=\"grid g-space-sm\">\n  <div class=\"one-half\">\n    <ta-input-textbox\n      [input]=\"this.input.street\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"one-fourth\">\n    <ta-input-textbox\n      [input]=\"this.input.number\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"one-fourth\">\n    <ta-input-textbox\n      [input]=\"this.input.floor\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"one-third\">\n    <ta-input-textbox\n      [input]=\"this.input.zipCode\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"two-thirds\">\n    <ta-input-textbox\n      [input]=\"this.input.city\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"full\">\n    <ta-input-textbox\n      [input]=\"this.input.country\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n</div>\n", styles: ["::ng-deep .mat-mdc-form-field-required-marker{display:none}::ng-deep .mat-mdc-form-field-infix{padding-top:var(--ta-space-sm)!important;padding-bottom:var(--ta-space-sm)!important;align-content:center;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}::ng-deep .mat-mdc-text-field-wrapper{border-radius:var(--ta-radius-rounded)!important}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "ngmodule", type: MatGoogleMapsAutocompleteModule }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "ngmodule", type: MatFormFieldModule }, { kind: "ngmodule", type: MatInputModule }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", viewQueries: [{ propertyName: "googleSearchInput", first: true, predicate: ["googleSearchInput"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n<div class=\"address-form flex-column g-space-md\">\n  <input\n    #googleSearchInput\n    class=\"form-control\"\n    [placeholder]=\"'form.address.search-google' | translate\"\n  />\n\n  @if (this.state() === 'empty') {\n    <ta-link [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n      {{ 'form.address.fill-manually' | translate }}\n    </ta-link>\n  }\n\n  @if (this.state() === 'locked' && this.currentPlaceId()) {\n    <div class=\"address-form__banner flex-row g-space-sm align-center\">\n      <ta-font-icon name=\"check-circle\" type=\"sm\"></ta-font-icon>\n      <ta-text [isBold]=\"true\">{{ 'form.address.verified' | translate }}</ta-text>\n    </div>\n  }\n\n  @if (this.state() !== 'empty') {\n    <ta-card>\n      <ta-card-content>\n        <div class=\"address-form__section flex-column g-space-sm\">\n          <div class=\"address-form__section-header flex-row space-between align-center\">\n            <ta-title [level]=\"4\">{{ 'form.address.section-details' | translate }}</ta-title>\n            @if (this.state() === 'locked') {\n              <ta-badge [value]=\"'form.address.readonly'\" [icon]=\"'lock'\" type=\"secondary\"></ta-badge>\n            }\n            @if (this.state() === 'manual') {\n              <ta-badge [value]=\"'form.address.manual'\" [icon]=\"'edit'\" type=\"warning\"></ta-badge>\n            }\n          </div>\n\n          <div class=\"grid g-space-sm\">\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.streetInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.numberInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.zipCodeInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.cityInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.countryInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.complementInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n          </div>\n\n          @if (this.state() === 'locked') {\n            <div class=\"address-form__bottom-action flex-row space-between align-center\">\n              <ta-text>{{ 'form.address.does-not-match' | translate }}</ta-text>\n              <ta-button type=\"secondary\" [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n                {{ 'form.address.edit-manually' | translate }}\n              </ta-button>\n            </div>\n          }\n\n          @if (this.state() === 'manual' && this.snapshot() !== null) {\n            <ta-link [icon]=\"'arrow-left'\" (action)=\"this.revertToOriginal()\">\n              {{ 'form.address.revert' | translate }}\n            </ta-link>\n          }\n        </div>\n      </ta-card-content>\n    </ta-card>\n  }\n</div>\n", styles: [":host{display:block}.address-form__banner{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-brand);padding:var(--ta-space-sm) var(--ta-space-md)}.address-form__section-header{margin-bottom:var(--ta-space-xs)}.address-form__bottom-action{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}\n"], dependencies: [{ kind: "component", type: BadgeComponent, selector: "ta-badge", inputs: ["value", "type", "showClickOption", "icon"], outputs: ["clickAction"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: CardComponent, selector: "ta-card", inputs: ["highlight", "shadow", "fullHeight", "noContent", "directionCard", "isNew"], outputs: ["click"] }, { kind: "component", type: CardContentComponent, selector: "ta-card-content" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-address", standalone: true, imports: [
-                        TranslateModule,
-                        MatGoogleMapsAutocompleteModule,
-                        ReactiveFormsModule,
-                        MatFormFieldModule,
-                        MatInputModule,
-                        TextBoxComponent,
+            args: [{ imports: [
+                        BadgeComponent,
+                        ButtonComponent,
+                        CardComponent,
+                        CardContentComponent,
+                        FontIconComponent,
                         FormLabelComponent,
-                    ], template: "<ta-form-label [input]=\"input\"></ta-form-label>\n<!-- <mat-google-maps-autocomplete\n  class=\"form-control\"\n  autocomplete=\"off\"\n  appearance=\"standard\"\n  [addressLabelText]=\"''\"\n  [placeholderText]=\"'form.input.address.placeholder' | translate\"\n  [requiredErrorText]=\"'form.input.address.required' | translate\"\n  [invalidErrorText]=\"'form.input.address.invalid' | translate\"\n  (onAutocompleteSelected)=\"this.parseAddress($event)\"\n  #addresstext\n></mat-google-maps-autocomplete> -->\n\n<div class=\"grid g-space-sm\">\n  <div class=\"one-half\">\n    <ta-input-textbox\n      [input]=\"this.input.street\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"one-fourth\">\n    <ta-input-textbox\n      [input]=\"this.input.number\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"one-fourth\">\n    <ta-input-textbox\n      [input]=\"this.input.floor\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"one-third\">\n    <ta-input-textbox\n      [input]=\"this.input.zipCode\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"two-thirds\">\n    <ta-input-textbox\n      [input]=\"this.input.city\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n  <div class=\"full\">\n    <ta-input-textbox\n      [input]=\"this.input.country\"\n      [standalone]=\"true\"\n      (valueChanged)=\"this.dispatchNewValue()\"\n    ></ta-input-textbox>\n  </div>\n</div>\n", styles: ["::ng-deep .mat-mdc-form-field-required-marker{display:none}::ng-deep .mat-mdc-form-field-infix{padding-top:var(--ta-space-sm)!important;padding-bottom:var(--ta-space-sm)!important;align-content:center;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}::ng-deep .mat-mdc-text-field-wrapper{border-radius:var(--ta-radius-rounded)!important}\n"] }]
-        }], ctorParameters: () => [] });
+                        LinkComponent,
+                        TextBoxComponent,
+                        TextComponent,
+                        TitleComponent,
+                        TranslatePipe,
+                    ], selector: 'ta-input-address', standalone: true, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n<div class=\"address-form flex-column g-space-md\">\n  <input\n    #googleSearchInput\n    class=\"form-control\"\n    [placeholder]=\"'form.address.search-google' | translate\"\n  />\n\n  @if (this.state() === 'empty') {\n    <ta-link [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n      {{ 'form.address.fill-manually' | translate }}\n    </ta-link>\n  }\n\n  @if (this.state() === 'locked' && this.currentPlaceId()) {\n    <div class=\"address-form__banner flex-row g-space-sm align-center\">\n      <ta-font-icon name=\"check-circle\" type=\"sm\"></ta-font-icon>\n      <ta-text [isBold]=\"true\">{{ 'form.address.verified' | translate }}</ta-text>\n    </div>\n  }\n\n  @if (this.state() !== 'empty') {\n    <ta-card>\n      <ta-card-content>\n        <div class=\"address-form__section flex-column g-space-sm\">\n          <div class=\"address-form__section-header flex-row space-between align-center\">\n            <ta-title [level]=\"4\">{{ 'form.address.section-details' | translate }}</ta-title>\n            @if (this.state() === 'locked') {\n              <ta-badge [value]=\"'form.address.readonly'\" [icon]=\"'lock'\" type=\"secondary\"></ta-badge>\n            }\n            @if (this.state() === 'manual') {\n              <ta-badge [value]=\"'form.address.manual'\" [icon]=\"'edit'\" type=\"warning\"></ta-badge>\n            }\n          </div>\n\n          <div class=\"grid g-space-sm\">\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.streetInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.numberInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.zipCodeInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.cityInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.countryInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.complementInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n          </div>\n\n          @if (this.state() === 'locked') {\n            <div class=\"address-form__bottom-action flex-row space-between align-center\">\n              <ta-text>{{ 'form.address.does-not-match' | translate }}</ta-text>\n              <ta-button type=\"secondary\" [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n                {{ 'form.address.edit-manually' | translate }}\n              </ta-button>\n            </div>\n          }\n\n          @if (this.state() === 'manual' && this.snapshot() !== null) {\n            <ta-link [icon]=\"'arrow-left'\" (action)=\"this.revertToOriginal()\">\n              {{ 'form.address.revert' | translate }}\n            </ta-link>\n          }\n        </div>\n      </ta-card-content>\n    </ta-card>\n  }\n</div>\n", styles: [":host{display:block}.address-form__banner{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-brand);padding:var(--ta-space-sm) var(--ta-space-md)}.address-form__section-header{margin-bottom:var(--ta-space-xs)}.address-form__bottom-action{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { googleSearchInput: [{
+                type: ViewChild,
+                args: ['googleSearchInput']
+            }] } });
 
 class DynamicComponent extends TaBaseComponent {
     // Getter for backward compatibility
@@ -124,7 +309,7 @@ class PanelComponent extends TaBaseComponent {
         this.panel = input.required();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PanelComponent, isStandalone: true, selector: "ta-form-panel", inputs: { inputsTemplate: { classPropertyName: "inputsTemplate", publicName: "inputsTemplate", isSignal: true, isRequired: true, transformFunction: null }, panel: { classPropertyName: "panel", publicName: "panel", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\" [ngClass]=\"this.panel().containerClass\">\n  @if (this.panel().label) {\n  <ta-title [level]=\"this.panel().level\" [icon]=\"this.panel().icon\" class=\"panel-title\">{{\n    this.panel().label | translate\n  }}@if (this.panel().required) {<span class=\"required\"> *</span>}</ta-title>\n  }\n\n  <div [ngClass]=\"this.panel().contentClass\">\n    @for (input of this.panel().children; track this.trackByKey($index, input)) {\n    @if (input) {\n    <div\n      [ngClass]=\"input.class\"\n      [style.display]=\"(input.visible$ | async) ? 'block' : 'none'\"\n      class=\"mb-space-sm\"\n    >\n      <ng-container\n        [ngTemplateOutlet]=\"this.inputsTemplate()\"\n        [ngTemplateOutletContext]=\"{\n          input: input\n        }\"\n      >\n      </ng-container>\n    </div>\n    } }\n  </div>\n</div>\n", styles: [".with-separator{border-bottom:1px solid var(--ta-border-tertiary);padding-bottom:var(--ta-space-lg);margin-bottom:var(--ta-space-md)}.highlight-title .panel-title{color:var(--ta-text-brand-primary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);text-transform:uppercase;letter-spacing:.07em;padding-bottom:var(--ta-space-sm);border-bottom:2px solid var(--ta-border-tertiary);margin-bottom:var(--ta-space-md)}.card{border-radius:var(--ta-radius-rounded);border:1px solid var(--ta-border-tertiary);padding:var(--ta-space-lg);box-shadow:var(--ta-shadow-black-sm)}.no-title-space .panel-title{padding-top:0}.required{color:var(--ta-semantic-red)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PanelComponent, isStandalone: true, selector: "ta-form-panel", inputs: { inputsTemplate: { classPropertyName: "inputsTemplate", publicName: "inputsTemplate", isSignal: true, isRequired: true, transformFunction: null }, panel: { classPropertyName: "panel", publicName: "panel", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\" [ngClass]=\"this.panel().containerClass\">\n  @if (this.panel().label) {\n  <ta-title [level]=\"this.panel().level\" [icon]=\"this.panel().icon\" class=\"panel-title\">{{\n    this.panel().label | translate\n  }}@if (this.panel().required) {<span class=\"required\"> *</span>}</ta-title>\n  }\n\n  <div [ngClass]=\"this.panel().contentClass\">\n    @for (input of this.panel().children; track this.trackByKey($index, input)) {\n    @if (input) {\n    <div\n      [ngClass]=\"input.class\"\n      [style.display]=\"(input.visible$ | async) ? 'block' : 'none'\"\n      class=\"mb-space-sm\"\n    >\n      <ng-container\n        [ngTemplateOutlet]=\"this.inputsTemplate()\"\n        [ngTemplateOutletContext]=\"{\n          input: input\n        }\"\n      >\n      </ng-container>\n    </div>\n    } }\n  </div>\n</div>\n", styles: [".with-separator{border-bottom:1px solid var(--ta-border-tertiary);padding-bottom:var(--ta-space-lg);margin-bottom:var(--ta-space-md)}.highlight-title .panel-title{color:var(--ta-text-brand-primary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);text-transform:uppercase;letter-spacing:.07em;padding-bottom:var(--ta-space-sm);border-bottom:2px solid var(--ta-border-tertiary);margin-bottom:var(--ta-space-md)}.card{border-radius:var(--ta-radius-rounded);border:1px solid var(--ta-border-tertiary);padding:var(--ta-space-lg);box-shadow:var(--ta-shadow-black-sm)}.no-title-space .panel-title{padding-top:0}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PanelComponent, decorators: [{
             type: Component,
@@ -135,7 +320,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         TranslatePipe,
                         TitleComponent,
                         FontIconComponent,
-                    ], template: "<div class=\"flex-column g-space-md\" [ngClass]=\"this.panel().containerClass\">\n  @if (this.panel().label) {\n  <ta-title [level]=\"this.panel().level\" [icon]=\"this.panel().icon\" class=\"panel-title\">{{\n    this.panel().label | translate\n  }}@if (this.panel().required) {<span class=\"required\"> *</span>}</ta-title>\n  }\n\n  <div [ngClass]=\"this.panel().contentClass\">\n    @for (input of this.panel().children; track this.trackByKey($index, input)) {\n    @if (input) {\n    <div\n      [ngClass]=\"input.class\"\n      [style.display]=\"(input.visible$ | async) ? 'block' : 'none'\"\n      class=\"mb-space-sm\"\n    >\n      <ng-container\n        [ngTemplateOutlet]=\"this.inputsTemplate()\"\n        [ngTemplateOutletContext]=\"{\n          input: input\n        }\"\n      >\n      </ng-container>\n    </div>\n    } }\n  </div>\n</div>\n", styles: [".with-separator{border-bottom:1px solid var(--ta-border-tertiary);padding-bottom:var(--ta-space-lg);margin-bottom:var(--ta-space-md)}.highlight-title .panel-title{color:var(--ta-text-brand-primary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);text-transform:uppercase;letter-spacing:.07em;padding-bottom:var(--ta-space-sm);border-bottom:2px solid var(--ta-border-tertiary);margin-bottom:var(--ta-space-md)}.card{border-radius:var(--ta-radius-rounded);border:1px solid var(--ta-border-tertiary);padding:var(--ta-space-lg);box-shadow:var(--ta-shadow-black-sm)}.no-title-space .panel-title{padding-top:0}.required{color:var(--ta-semantic-red)}\n"] }]
+                    ], template: "<div class=\"flex-column g-space-md\" [ngClass]=\"this.panel().containerClass\">\n  @if (this.panel().label) {\n  <ta-title [level]=\"this.panel().level\" [icon]=\"this.panel().icon\" class=\"panel-title\">{{\n    this.panel().label | translate\n  }}@if (this.panel().required) {<span class=\"required\"> *</span>}</ta-title>\n  }\n\n  <div [ngClass]=\"this.panel().contentClass\">\n    @for (input of this.panel().children; track this.trackByKey($index, input)) {\n    @if (input) {\n    <div\n      [ngClass]=\"input.class\"\n      [style.display]=\"(input.visible$ | async) ? 'block' : 'none'\"\n      class=\"mb-space-sm\"\n    >\n      <ng-container\n        [ngTemplateOutlet]=\"this.inputsTemplate()\"\n        [ngTemplateOutletContext]=\"{\n          input: input\n        }\"\n      >\n      </ng-container>\n    </div>\n    } }\n  </div>\n</div>\n", styles: [".with-separator{border-bottom:1px solid var(--ta-border-tertiary);padding-bottom:var(--ta-space-lg);margin-bottom:var(--ta-space-md)}.highlight-title .panel-title{color:var(--ta-text-brand-primary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);text-transform:uppercase;letter-spacing:.07em;padding-bottom:var(--ta-space-sm);border-bottom:2px solid var(--ta-border-tertiary);margin-bottom:var(--ta-space-md)}.card{border-radius:var(--ta-radius-rounded);border:1px solid var(--ta-border-tertiary);padding:var(--ta-space-lg);box-shadow:var(--ta-shadow-black-sm)}.no-title-space .panel-title{padding-top:0}\n"] }]
         }], ctorParameters: () => [] });
 
 class InputTranslationComponent extends TaBaseComponent {
@@ -311,6 +496,11 @@ class FormComponent extends TaBaseComponent {
         }
         this.valid.emit(this.form.value);
     }
+    handleInvalidSubmit() {
+        if (!this.isValid()) {
+            this.form.markAllAsTouched();
+        }
+    }
     isValid() {
         return this.form.valid && !this.loader();
     }
@@ -325,7 +515,7 @@ class FormComponent extends TaBaseComponent {
         return group;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FormComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FormComponent, isStandalone: true, selector: "ta-form", inputs: { inputs: { classPropertyName: "inputs", publicName: "inputs", isSignal: true, isRequired: true, transformFunction: null }, askValidation$: { classPropertyName: "askValidation$", publicName: "askValidation$", isSignal: true, isRequired: false, transformFunction: null }, askOnDestroy: { classPropertyName: "askOnDestroy", publicName: "askOnDestroy", isSignal: true, isRequired: false, transformFunction: null }, loader: { classPropertyName: "loader", publicName: "loader", isSignal: true, isRequired: false, transformFunction: null }, error: { classPropertyName: "error", publicName: "error", isSignal: true, isRequired: false, transformFunction: null }, border: { classPropertyName: "border", publicName: "border", isSignal: true, isRequired: false, transformFunction: null }, canDisplayButton: { classPropertyName: "canDisplayButton", publicName: "canDisplayButton", isSignal: true, isRequired: false, transformFunction: null }, buttonTitle: { classPropertyName: "buttonTitle", publicName: "buttonTitle", isSignal: true, isRequired: false, transformFunction: null }, onLive: { classPropertyName: "onLive", publicName: "onLive", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valid: "valid", isFormValid: "isFormValid" }, usesInheritance: true, usesOnChanges: true, ngImport: i0, template: "<div class=\"form-container flex-full\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"this.form\" class=\"flex-column g-space-sm flex-full\">\n    @for (input of this.inputs(); track trackByKey($index, input)) {\n      <div>\n        @if (input.visible$ | async) {\n          <ta-inputs [input]=\"input\"></ta-inputs>\n        }\n      </div>\n    }\n    <div>\n      <ta-notification-inline [message]=\"this.error().message\" [code]=\"this.error().status\" class=\"my-space-sm\">\n        <ta-loader [isLoading]=\"this.loader()\">\n          @if (this.canDisplayButton() && this.buttonTitle()) {\n            <ta-button\n              class=\"justify-end\"\n              (action)=\"this.onSubmit()\"\n              [state]=\"!this.isValid() ? 'disabled' : 'classic'\"\n              icon=\"check-line\"\n            >\n              {{ this.buttonTitle() | translate }}\n            </ta-button>\n          }\n        </ta-loader>\n      </ta-notification-inline>\n    </div>\n  </form>\n</div>\n", styles: [":host{display:flex;flex:1 1 100%}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1$1.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i1$1.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i1$1.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InputsComponent, selector: "ta-inputs", inputs: ["input", "standalone", "onFocus", "space"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: FormComponent, isStandalone: true, selector: "ta-form", inputs: { inputs: { classPropertyName: "inputs", publicName: "inputs", isSignal: true, isRequired: true, transformFunction: null }, askValidation$: { classPropertyName: "askValidation$", publicName: "askValidation$", isSignal: true, isRequired: false, transformFunction: null }, askOnDestroy: { classPropertyName: "askOnDestroy", publicName: "askOnDestroy", isSignal: true, isRequired: false, transformFunction: null }, loader: { classPropertyName: "loader", publicName: "loader", isSignal: true, isRequired: false, transformFunction: null }, error: { classPropertyName: "error", publicName: "error", isSignal: true, isRequired: false, transformFunction: null }, border: { classPropertyName: "border", publicName: "border", isSignal: true, isRequired: false, transformFunction: null }, canDisplayButton: { classPropertyName: "canDisplayButton", publicName: "canDisplayButton", isSignal: true, isRequired: false, transformFunction: null }, buttonTitle: { classPropertyName: "buttonTitle", publicName: "buttonTitle", isSignal: true, isRequired: false, transformFunction: null }, onLive: { classPropertyName: "onLive", publicName: "onLive", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { valid: "valid", isFormValid: "isFormValid" }, usesInheritance: true, usesOnChanges: true, ngImport: i0, template: "<div class=\"form-container flex-full\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"this.form\" class=\"flex-column g-space-sm flex-full\">\n    @for (input of this.inputs(); track trackByKey($index, input)) {\n      <div>\n        @if (input.visible$ | async) {\n          <ta-inputs [input]=\"input\"></ta-inputs>\n        }\n      </div>\n    }\n    <div>\n      <ta-notification-inline [message]=\"this.error().message\" [code]=\"this.error().status\" class=\"my-space-sm\">\n        <ta-loader [isLoading]=\"this.loader()\">\n          @if (this.canDisplayButton() && this.buttonTitle()) {\n            <div (click)=\"this.handleInvalidSubmit()\">\n              <ta-button\n                class=\"justify-end\"\n                (action)=\"this.onSubmit()\"\n                [state]=\"!this.isValid() ? 'disabled' : 'classic'\"\n                [stopPropagationActivation]=\"false\"\n                icon=\"check-line\"\n              >\n                {{ this.buttonTitle() | translate }}\n              </ta-button>\n            </div>\n          }\n        </ta-loader>\n      </ta-notification-inline>\n    </div>\n  </form>\n</div>\n", styles: [":host{display:flex;flex:1 1 100%}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1$1.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i1$1.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i1$1.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: InputsComponent, selector: "ta-inputs", inputs: ["input", "standalone", "onFocus", "space"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FormComponent, decorators: [{
             type: Component,
@@ -337,7 +527,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ButtonComponent,
                         TranslatePipe,
                         InputsComponent,
-                    ], template: "<div class=\"form-container flex-full\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"this.form\" class=\"flex-column g-space-sm flex-full\">\n    @for (input of this.inputs(); track trackByKey($index, input)) {\n      <div>\n        @if (input.visible$ | async) {\n          <ta-inputs [input]=\"input\"></ta-inputs>\n        }\n      </div>\n    }\n    <div>\n      <ta-notification-inline [message]=\"this.error().message\" [code]=\"this.error().status\" class=\"my-space-sm\">\n        <ta-loader [isLoading]=\"this.loader()\">\n          @if (this.canDisplayButton() && this.buttonTitle()) {\n            <ta-button\n              class=\"justify-end\"\n              (action)=\"this.onSubmit()\"\n              [state]=\"!this.isValid() ? 'disabled' : 'classic'\"\n              icon=\"check-line\"\n            >\n              {{ this.buttonTitle() | translate }}\n            </ta-button>\n          }\n        </ta-loader>\n      </ta-notification-inline>\n    </div>\n  </form>\n</div>\n", styles: [":host{display:flex;flex:1 1 100%}\n"] }]
+                    ], template: "<div class=\"form-container flex-full\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"this.form\" class=\"flex-column g-space-sm flex-full\">\n    @for (input of this.inputs(); track trackByKey($index, input)) {\n      <div>\n        @if (input.visible$ | async) {\n          <ta-inputs [input]=\"input\"></ta-inputs>\n        }\n      </div>\n    }\n    <div>\n      <ta-notification-inline [message]=\"this.error().message\" [code]=\"this.error().status\" class=\"my-space-sm\">\n        <ta-loader [isLoading]=\"this.loader()\">\n          @if (this.canDisplayButton() && this.buttonTitle()) {\n            <div (click)=\"this.handleInvalidSubmit()\">\n              <ta-button\n                class=\"justify-end\"\n                (action)=\"this.onSubmit()\"\n                [state]=\"!this.isValid() ? 'disabled' : 'classic'\"\n                [stopPropagationActivation]=\"false\"\n                icon=\"check-line\"\n              >\n                {{ this.buttonTitle() | translate }}\n              </ta-button>\n            </div>\n          }\n        </ta-loader>\n      </ta-notification-inline>\n    </div>\n  </form>\n</div>\n", styles: [":host{display:flex;flex:1 1 100%}\n"] }]
         }], ctorParameters: () => [] });
 
 class EditFieldComponent extends TaBaseComponent {

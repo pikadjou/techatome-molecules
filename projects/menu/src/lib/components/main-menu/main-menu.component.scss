@@ -1,6 +1,7 @@
 @use 'ta/utils/mixins/flex';
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 // Desktop layout
 .main-nav-container {
@@ -18,23 +19,10 @@
   }
 
   .logo {
-    @media screen and (min-width: 576px) {
-      width: 48px;
-      .small {
-        display: block;
-      }
-      .oneline {
-        display: none;
-      }
-    }
-    @media screen and (min-width: 992px) {
+    width: 60px;
+
+    @include mq.from-key(lg) {
       width: 80px;
-      .small {
-        display: none;
-      }
-      .oneline {
-        display: block;
-      }
     }
   }
 
@@ -68,7 +56,7 @@
     flex: 1;
     .oneline {
       display: block;
-      max-width: 120px;
+      max-width: 80px;
     }
   }
 }
@@ -126,6 +114,10 @@
   padding-bottom: common.get-var(space, md);
   border-bottom: 1px solid common.get-var(border, tertiary);
   margin-bottom: common.get-var(space, md);
+
+  .oneline {
+    max-width: 80px;
+  }
 
   .close-icon {
     cursor: pointer;

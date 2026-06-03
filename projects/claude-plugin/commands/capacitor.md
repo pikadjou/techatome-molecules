@@ -1,5 +1,5 @@
 ---
-description: Assistant contextuel @ta/capacitor — intégration mobile Capacitor, services natifs
+description: Assistant contextuel @ta/capacitor — catalogue compact + pointeurs vers references/capacitor/<name>.md
 argument-hint: [question ou tâche]
 allowed-tools: [Read, Glob, Grep]
 ---
@@ -10,129 +10,42 @@ Tu es un expert de la librairie `@ta/capacitor` dans ce monorepo Angular techato
 
 Question ou tâche : $ARGUMENTS
 
-## Informations sur la librairie
+---
 
-**Package** : `@ta/capacitor`
-**Import path** : `@ta/capacitor`
-**Localisation** : `projects/capacitor/`
-**Plateforme cible** : Mobile (iOS/Android) via Capacitor + PWA
+## ⚠️ WORKFLOW OBLIGATOIRE
 
-## Exports clés
+Avant de répondre à la question :
 
-### Services (`lib/services/`)
+1. **Identifie** dans le catalogue ci-dessous l'élément concerné (service…).
+2. **Lis la fiche de référence** via `Read` (chemin : `references/capacitor/<name>.md`).
+3. **Réponds à partir du contenu lu** — ne **devine pas** les méthodes ou les API Capacitor.
 
-- `DeviceInfoService` — informations sur l'appareil (OS, modèle, version)
-- `DeviceNetworkService` — état du réseau (connecté, WiFi, 4G)
-- `DevicePositionService` — géolocalisation GPS
-- `PwaService` — gestion des fonctionnalités PWA
+Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
 
-### Module
+---
 
-- `CapacitorModule` — module NgModule
+## Package
 
-## Patterns d'utilisation
+- **Package** : `@ta/capacitor`
+- **Import path** : `@ta/capacitor`
+- **Localisation** : `projects/capacitor/`
+- **Plateforme cible** : Mobile (iOS/Android) via Capacitor + PWA web
 
-### Informations sur l'appareil
+## Catalogue
 
-```typescript
-import { DeviceInfoService } from '@ta/capacitor';
+Format : nom (`Class`) — description courte. Le fichier de référence est `references/capacitor/<name>.md`.
 
-@Injectable({ providedIn: 'root' })
-export class MyService {
-  private deviceInfo = inject(DeviceInfoService);
+### Services
 
-  async checkPlatform() {
-    const info = await this.deviceInfo.getInfo();
-    console.log(info.platform); // 'ios' | 'android' | 'web'
-    console.log(info.model);
-    console.log(info.osVersion);
-  }
-
-  isMobile() {
-    return this.deviceInfo.isMobile();
-  }
-}
-```
-
-### État du réseau
-
-```typescript
-import { DeviceNetworkService } from '@ta/capacitor';
-
-@Component({ standalone: true })
-export class AppComponent implements OnInit {
-  private network = inject(DeviceNetworkService);
-
-  isOnline$ = this.network.isOnline$;
-  connectionType$ = this.network.connectionType$;
-
-  ngOnInit() {
-    this.network.isOnline$.subscribe(online => {
-      if (!online) {
-        // afficher un message de déconnexion
-      }
-    });
-  }
-}
-```
-
-### Géolocalisation
-
-```typescript
-import { DevicePositionService } from '@ta/capacitor';
-
-@Injectable({ providedIn: 'root' })
-export class LocationService {
-  private position = inject(DevicePositionService);
-
-  async getCurrentLocation() {
-    const coords = await this.position.getCurrentPosition();
-    return { lat: coords.latitude, lng: coords.longitude };
-  }
-
-  watchLocation() {
-    return this.position.watchPosition();
-  }
-}
-```
-
-### PWA Service
-
-```typescript
-import { PwaService } from '@ta/capacitor';
-
-@Component({ standalone: true })
-export class AppComponent {
-  private pwa = inject(PwaService);
-
-  canInstall$ = this.pwa.canInstall$;
-
-  installApp() {
-    this.pwa.install();
-  }
-
-  checkForUpdates() {
-    return this.pwa.checkForUpdates();
-  }
-}
-```
+- `DeviceInfoService` — informations sur l'appareil (OS, modèle, version, plateforme : `ios | android | web`).
+- `DeviceNetworkService` — état du réseau (`isOnline$`, `connectionType$`).
+- `DevicePositionService` — géolocalisation GPS (`getCurrentPosition`, `watchPosition`).
+- `PwaService` — fonctionnalités PWA (`canInstall$`, `install()`, `checkForUpdates()`).
 
 ## Conventions
 
-- Toujours vérifier la plateforme (`DeviceInfoService`) avant d'utiliser des APIs natives
-- Les services sont conçus pour fonctionner à la fois sur mobile (Capacitor) et web (PWA)
-- Utiliser `isOnline$` observable pour réagir aux changements de réseau
-- Les permissions (géolocalisation, appareil photo) doivent être demandées via Capacitor
-
-## Revue de code
-
-- Vérifier que les appels Capacitor sont encapsulés dans `try/catch` (APIs natives peuvent échouer)
-- S'assurer que la vérification de plateforme précède les appels natifs
-- Vérifier que `DeviceNetworkService` est utilisé pour détecter la connexion
-- Ne pas accéder directement aux plugins Capacitor — passer par les services de `@ta/capacitor`
-
-## Ajout d'un nouveau service dans @ta/capacitor
-
-1. Créer dans `projects/capacitor/src/lib/services/`
-2. Exporter depuis `projects/capacitor/src/lib/services/public-api.ts`
-3. S'assurer que le service fonctionne sur web ET mobile
+- Toujours vérifier la plateforme (`DeviceInfoService`) avant d'utiliser des APIs natives.
+- Les services fonctionnent à la fois sur mobile (Capacitor) et web (PWA).
+- Utiliser `isOnline$` observable pour réagir aux changements de réseau.
+- Les appels Capacitor doivent être encapsulés dans `try/catch` (APIs natives peuvent échouer).
+- Ne pas accéder directement aux plugins Capacitor — passer par les services de `@ta/capacitor`.
