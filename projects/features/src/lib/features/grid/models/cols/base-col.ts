@@ -1,9 +1,7 @@
-import { ColumnDefinition } from 'tabulator-tables';
-
 import { InputBase } from '@ta/form-model';
 
 import { TaGridData } from '../grid-data';
-import { ColMetaData, Filter } from '../types';
+import { ColConfig, ColMetaData, Filter } from '../types';
 
 export const operatorMap: { [key: string]: string } = {
   contains: '%',
@@ -46,12 +44,19 @@ export class BaseCol<T> {
     this.model = model;
   }
 
-  public getColDef(): ColumnDefinition {
+  public getColConfig(): ColConfig {
     return {
-      field: this.key,
+      key: this.key as string,
       title: this.inputLabel,
-      headerFilter: 'input',
+      sortable: true,
+      width: this.data.col.width,
+      template: this.data.col.template as any,
     };
+  }
+
+  public defaultFormatter(row: any): string {
+    const value = row[this.key as string];
+    return value != null ? String(value) : '';
   }
 
   public getInputForm(): InputBase<any> | null {
@@ -65,7 +70,7 @@ export class BaseCol<T> {
     }
 
     return {
-      field: this.key,
+      field: this.key as string,
       type: '=',
       value: value.trim(),
     };

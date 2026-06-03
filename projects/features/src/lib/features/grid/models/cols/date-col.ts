@@ -15,6 +15,16 @@ export class DateCol extends BaseCol<Date> {
     });
   }
 
+  public override defaultFormatter(row: any): string {
+    const value = row[this.key as string];
+    if (!value) return '';
+    try {
+      return format(new Date(value), 'dd/MM/yyyy');
+    } catch {
+      return String(value);
+    }
+  }
+
   public override formatInputForm(data: any): Filter | null {
     const value = data[this.key];
 
@@ -23,7 +33,7 @@ export class DateCol extends BaseCol<Date> {
     }
 
     return {
-      field: this.key,
+      field: this.key as string,
       type: 'like',
       value: format(value, 'yyyy-MM-dd') + '%',
     };
