@@ -15,6 +15,7 @@ import { TaTranslationUI } from "../../../translation.service";
   imports: [TranslatePipe, TranslateModule],
 })
 export class BannerComponent extends TaBaseComponent {
+  inline = input<boolean>(false);
   message = input.required<string>();
 
   constructor() {

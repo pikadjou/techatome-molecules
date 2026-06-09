@@ -10,4 +10,12 @@
   padding: common.get-var(space, xs) common.get-var(space, md);
   text-align: center;
   box-shadow: common.get-var(shadow, black, sm);
+
+  &--inline {
+    position: relative;
+    top: unset;
+    left: unset;
+    right: unset;
+    border-radius: common.get-var(radius, rounded);
+  }
 }
