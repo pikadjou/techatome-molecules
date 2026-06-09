@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Renderer2, TemplateRef } from '@angular/core';
+import { TemplateRef } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -26,7 +27,6 @@ describe('TaGridComponent', () => {
       table: null,
       cols: {},
       filters: null,
-      tableHtml: null,
       rowClicked$: new Subject(),
       totalItems: jasmine.createSpy('totalItems').and.returnValue(0),
       switchView: jasmine.createSpy('switchView'),
@@ -44,11 +44,9 @@ describe('TaGridComponent', () => {
       ],
       providers: [
         { provide: TaGridInstanceService, useValue: mockInstanceService },
+        provideRouter([]),
       ],
     })
-      .overrideComponent(TaGridComponent, {
-        set: { template: '<div #table></div>' },
-      })
       .compileComponents();
 
     fixture = TestBed.createComponent(TaGridComponent);

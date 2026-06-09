@@ -235,6 +235,8 @@ class SearchHistoryDisplayerComponent {
         return null;
     }
     searchCompleted(search) {
+        if (!search?.trim())
+            return;
         const searchHistoryValue = this.searchHistory();
         if (searchHistoryValue?.type) {
             this._saveInLocalStorage(search);

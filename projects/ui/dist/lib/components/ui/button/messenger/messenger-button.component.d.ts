@@ -9,7 +9,7 @@ export declare class MessengerButtonComponent {
     /**
      * Button size
      */
-    size: import("@angular/core").InputSignal<"small" | "medium" | "large">;
+    size: import("@angular/core").InputSignal<"large" | "medium" | "small">;
     /**
      * Display mode: 'full' shows logo + text, 'logo' shows only the logo
      */

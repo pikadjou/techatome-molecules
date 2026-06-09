@@ -72,11 +72,9 @@ export class SearchFieldComponent
       this.isDeployed = true;
       return;
     }
-    if (this.input.value) {
-      this.valueCompleted.emit(this.input.value);
-      return;
-    }
-    if (!this.isOpen()) {
+    // Always emit so consumers can react to explicit clear (empty value = clear signal)
+    this.valueCompleted.emit(this.input.value ?? '');
+    if (!this.input.value && !this.isOpen()) {
       this.isDeployed = false;
     }
   }

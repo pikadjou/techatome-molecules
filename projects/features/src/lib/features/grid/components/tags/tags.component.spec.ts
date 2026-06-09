@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BehaviorSubject, Subject } from 'rxjs';
+
+import { ActiveFilter, Filter } from '../../models/types';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TaGridInstanceService } from '../../services/grid-instance.service';
@@ -69,7 +71,7 @@ describe('TaGridTagsComponent', () => {
 
     it('should reflect changes to groupBy', () => {
       mockGridData.groupBy = 'category';
-      expect(component.group).toBe('category');
+      expect(component.group as unknown as string).toBe('category');
     });
   });
 
@@ -79,7 +81,7 @@ describe('TaGridTagsComponent', () => {
     });
 
     it('should return filters from grid', () => {
-      const filters = [
+      const filters: ActiveFilter[] = [
         { key: 'status', values: [{ field: 'status', type: '=', value: 'active' }] },
       ];
       mockGridData.filters.get.and.returnValue(filters);
@@ -95,7 +97,7 @@ describe('TaGridTagsComponent', () => {
 
   describe('remove', () => {
     it('should call grid.filters.remove with the given filter', () => {
-      const filter = { field: 'status', type: '=', value: 'active' };
+      const filter: Filter = { field: 'status', type: '=', value: 'active' };
 
       component.remove(filter);
 

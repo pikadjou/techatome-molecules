@@ -64,7 +64,7 @@ export type ajaxRequestFuncParams = {
   groupBy: string | null;
   page: number;
   size: number;
-  colsMetaData: ColMetaData[];
+  colsMetaData: ColMetaData<any>[];
 };
 
 export type ViewType = 'grid' | 'card';

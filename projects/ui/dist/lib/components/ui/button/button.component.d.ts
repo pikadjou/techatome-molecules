@@ -9,7 +9,7 @@ export declare class ButtonComponent {
      * Indicate the button type
      */
     type: import("@angular/core").InputSignal<"danger" | "primary" | "secondary" | "tertiary">;
-    size: import("@angular/core").InputSignal<"small" | "medium" | "large">;
+    size: import("@angular/core").InputSignal<"large" | "medium" | "small">;
     icon: import("@angular/core").InputSignal<string | null>;
     /**
      * Class - Add custom classes separates by space
@@ -19,7 +19,7 @@ export declare class ButtonComponent {
      */
     options: import("@angular/core").InputSignal<{
         class?: string | undefined;
-        circular?: boolean | "big" | "small" | undefined;
+        circular?: boolean | "small" | "big" | undefined;
         border?: boolean | undefined;
     } | null>;
     stopPropagationActivation: import("@angular/core").InputSignal<boolean>;

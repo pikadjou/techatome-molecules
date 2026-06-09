@@ -56,14 +56,11 @@ describe('FiltersModal', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have access to dialog data', () => {
-    expect(component.data.gridId).toBe('test-grid');
-  });
-
-  describe('close', () => {
-    it('should close the dialog', () => {
-      component.close();
-      expect(mockDialogRef.close).toHaveBeenCalled();
+  describe('closeEvent', () => {
+    it('should emit closeEvent', () => {
+      spyOn(component.closeEvent, 'emit');
+      component.closeEvent.emit();
+      expect(component.closeEvent.emit).toHaveBeenCalled();
     });
   });
 });

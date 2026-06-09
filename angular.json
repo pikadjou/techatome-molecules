@@ -930,7 +930,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/features/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src", "sass", "projects/styles/src/style", "."]
+            }
           }
         }
       }

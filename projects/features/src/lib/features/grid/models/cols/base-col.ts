@@ -17,19 +17,19 @@ export interface IFilterOptions {
 }
 export interface IBaseCol {
   scope: string;
-  col: ColMetaData;
+  col: ColMetaData<any>;
 }
 
 export class BaseCol<T> {
   public data: IBaseCol;
   public model: TaGridData<any>;
 
-  get key() {
-    return this.data.col.name;
+  get key(): string {
+    return this.data.col.name as string;
   }
 
   get inputLabel() {
-    return `grid.${this.data.scope}.core.${this.data.col.name}`;
+    return `grid.${this.data.scope}.core.${this.key}`;
   }
   get filterValues(): T[] {
     return (

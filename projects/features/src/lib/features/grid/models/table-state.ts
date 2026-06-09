@@ -9,7 +9,7 @@ export interface ITableStateServices<T> {
 }
 
 export interface ITableStateParams<T> {
-  colsMetaData: ColMetaData[];
+  colsMetaData: ColMetaData<T>[];
   data?: T[];
   services?: ITableStateServices<T>;
   initialFilter?: Filter[];
@@ -33,8 +33,10 @@ export class TaTableState<T> {
   readonly isDataReady$ = new BehaviorSubject(false);
 
   private _services: ITableStateServices<T> | null = null;
-  private _colsMetaData: ColMetaData[] = [];
+  private _allData: T[] = [];
+  private _colsMetaData: ColMetaData<T>[] = [];
   private _fetchTimer: ReturnType<typeof setTimeout> | null = null;
+  private _fetchId = 0;
   private _onDataUpdate?: (total: number) => void;
 
   public init(params: ITableStateParams<T>): void {
@@ -47,17 +49,11 @@ export class TaTableState<T> {
     }
 
     if (params.data && !params.services) {
-      this.rows.set(params.data);
-      this.totalItems.set(params.data.length);
+      this._allData = params.data;
     }
 
     this.isReady$.next(true);
-
-    if (this._services) {
-      this._scheduleFetch();
-    } else {
-      this.isDataReady$.next(true);
-    }
+    this._scheduleUpdate();
   }
 
   getData(): T[] {
@@ -75,57 +71,57 @@ export class TaTableState<T> {
   setPage(n: number): void {
     if (n >= 1 && n <= this.totalPages()) {
       this.currentPage.set(n);
-      this._scheduleFetch();
+      this._scheduleUpdate();
     }
   }
 
   nextPage(): void {
     if (this.currentPage() < this.totalPages()) {
       this.currentPage.update(p => p + 1);
-      this._scheduleFetch();
+      this._scheduleUpdate();
     }
   }
 
   previousPage(): void {
     if (this.currentPage() > 1) {
       this.currentPage.update(p => p - 1);
-      this._scheduleFetch();
+      this._scheduleUpdate();
     }
   }
 
   setFilter(filters: Filter[]): void {
     this.currentPage.set(1);
     this.filters.set(filters);
-    this._scheduleFetch();
+    this._scheduleUpdate();
   }
 
   getFilters(_includeHeaderFilters: boolean): Filter[] {
     return this.filters();
   }
 
-  removeFilter(field: string, type: string, value: any): void {
+  removeFilter(field: string, type: Filter['type'], value: any): void {
     this.filters.update(f =>
       f.filter(filter => !(filter.field === field && filter.type === type && filter.value === value))
     );
     this.currentPage.set(1);
-    this._scheduleFetch();
+    this._scheduleUpdate();
   }
 
   setSort(field: string | null, dir: 'asc' | 'desc'): void {
     this.sortField.set(field);
     this.sortDir.set(dir);
     this.currentPage.set(1);
-    this._scheduleFetch();
+    this._scheduleUpdate();
   }
 
   setGroupBy(field: string | null): void {
     this.groupByField.set(field);
     this.currentPage.set(1);
-    this._scheduleFetch();
+    this._scheduleUpdate();
   }
 
   refresh(): void {
-    this._scheduleFetch();
+    this._scheduleUpdate();
   }
 
   destroy(): void {
@@ -133,16 +129,91 @@ export class TaTableState<T> {
       clearTimeout(this._fetchTimer);
       this._fetchTimer = null;
     }
+    ++this._fetchId;
+    this.rowClicked$.complete();
+    this.isReady$.complete();
+    this.isDataReady$.complete();
   }
 
-  private _scheduleFetch(): void {
-    if (!this._services) return;
+  private _scheduleUpdate(): void {
+    if (!this._services) {
+      this._applyLocalFilter();
+      return;
+    }
     if (this._fetchTimer) clearTimeout(this._fetchTimer);
     this._fetchTimer = setTimeout(() => this._fetchData(), 0);
   }
 
+  // Client-side filter/sort/page for static data
+  private _applyLocalFilter(): void {
+    let data = [...this._allData];
+
+    for (const f of this.filters()) {
+      const isSearch = f.field === 'search';
+
+      if (isSearch) {
+        const searchFields = this._colsMetaData
+          .filter(c => c.isSearchField)
+          .map(c => String(c.name));
+
+        if (searchFields.length && f.value) {
+          const needle = String(f.value).toLowerCase();
+          data = data.filter(item =>
+            searchFields.some(key =>
+              String((item as any)[key] ?? '').toLowerCase().includes(needle)
+            )
+          );
+        }
+        continue;
+      }
+
+      data = data.filter(item => {
+        const val = (item as any)[f.field];
+        const target = f.value;
+        switch (f.type) {
+          case '=': return val == target;
+          case '!=': return val != target;
+          case 'like': return String(val ?? '').toLowerCase().includes(String(target).toLowerCase());
+          case '<': return val < target;
+          case '>': return val > target;
+          case '<=': return val <= target;
+          case '>=': return val >= target;
+          case 'starts': return String(val ?? '').toLowerCase().startsWith(String(target).toLowerCase());
+          case 'ends': return String(val ?? '').toLowerCase().endsWith(String(target).toLowerCase());
+          case 'in': return Array.isArray(target) ? target.includes(val) : val == target;
+          default: return true;
+        }
+      });
+    }
+
+    if (this.sortField()) {
+      const field = this.sortField()!;
+      const dir = this.sortDir();
+      data.sort((a, b) => {
+        const av = (a as any)[field];
+        const bv = (b as any)[field];
+        if (av == null) return 1;
+        if (bv == null) return -1;
+        const cmp = av > bv ? 1 : av < bv ? -1 : 0;
+        return dir === 'asc' ? cmp : -cmp;
+      });
+    }
+
+    const total = data.length;
+    this.totalItems.set(total);
+
+    const page = this.currentPage();
+    const size = this.pageSize();
+    const start = (page - 1) * size;
+    this.rows.set(data.slice(start, start + size));
+
+    this.isDataReady$.next(true);
+    this._onDataUpdate?.(total);
+  }
+
   private _fetchData(): void {
     if (!this._services) return;
+    const id = ++this._fetchId;
     this.isLoading.set(true);
 
     const sort: Sort[] = this.sortField() ? [{ field: this.sortField()!, dir: this.sortDir() }] : [];
@@ -158,6 +229,7 @@ export class TaTableState<T> {
       })
     )
       .then(response => {
+        if (id !== this._fetchId) return;
         this.rows.set(response.data);
         this.totalItems.set(response.total);
         this.isLoading.set(false);
@@ -165,6 +237,7 @@ export class TaTableState<T> {
         this._onDataUpdate?.(response.total);
       })
       .catch(() => {
+        if (id !== this._fetchId) return;
         this.isLoading.set(false);
       });
   }

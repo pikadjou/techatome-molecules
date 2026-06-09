@@ -1,8 +1,52 @@
-<div [style.display]="this.displayType() === 'grid' ? 'block' : 'none'">
-  <div #table></div>
-</div>
-
 @if (this.isReady$ | async) {
+  @if (this.displayType() === 'grid') {
+    <div class="ta-grid-table-wrapper">
+      <table class="ta-grid-table">
+        <thead>
+          <tr>
+            @for (col of this.visibleCols(); track col.key) {
+              <th
+                class="ta-grid-th"
+                [class.is-sortable]="col.sortable"
+                [class.is-sorted]="this.sortField === col.key"
+                [style.width]="col.width ?? 'auto'"
+                (click)="this.onSort(col)"
+              >
+                <div class="ta-grid-th__inner">
+                  <span class="ta-grid-th__label">{{ col.title | translate }}</span>
+                  @if (this.sortField === col.key) {
+                    <ta-font-icon
+                      class="ta-grid-th__sort-icon"
+                      [icon]="this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'"
+                    />
+                  }
+                </div>
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of this.rows; track row.id) {
+            <tr class="ta-grid-tr c-pointer" (click)="this.onRowClick(row)">
+              @for (col of this.visibleCols(); track col.key) {
+                <td class="ta-grid-td">
+                  @if (col.template) {
+                    <ng-container
+                      [ngTemplateOutlet]="col.template"
+                      [ngTemplateOutletContext]="{ $implicit: row, value: this.getCellValue(row, col.key) }"
+                    ></ng-container>
+                  } @else {
+                    {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
   @if (this.displayType() === 'card') {
     @if (this.isGroup) {
       @for (group of this.dataByGroup; track group.key) {
@@ -21,6 +65,7 @@
       ></ng-template>
     }
   }
+
   <div class="py-space-md align-center">
     <ta-grid-pagination [gridId]="this.gridId()"></ta-grid-pagination>
   </div>

@@ -1,4 +1,6 @@
-import { BehaviorSubject, Subject, signal } from '@angular/core';
+import { signal } from '@angular/core';
+
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { EnumCol } from './enum-col';
 import { TaGridData } from '../grid-data';

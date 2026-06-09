@@ -1,13 +1,12 @@
-import { TabulatorFull as Tabulator } from 'tabulator-tables';
-
+import { TaTableState } from './table-state';
 import { ActiveFilter, Filter, Preset } from './types';
 
 export class TaGridFilters {
-  private _debounceTimer: any = null;
+  private _debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     public readonly scope: string,
-    public readonly table: Tabulator,
+    public readonly table: TaTableState<any>,
     public readonly preset: Preset[] = []
   ) {}
 
@@ -25,6 +24,7 @@ export class TaGridFilters {
       return acc;
     }, []);
   }
+
   public apply(filters: Filter[]) {
     if (this._debounceTimer) {
       clearTimeout(this._debounceTimer);
@@ -37,5 +37,12 @@ export class TaGridFilters {
 
   public remove(filter: Filter) {
     this.table.removeFilter(filter.field, filter.type, filter.value);
+  }
+
+  public destroy(): void {
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+      this._debounceTimer = null;
+    }
   }
 }

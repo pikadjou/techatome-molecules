@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, signal, input, inject, Component, output, Renderer2, ViewChild, ViewEncapsulation, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Injectable, signal, computed, input, inject, Component, output, ViewEncapsulation, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { FormComponent } from '@ta/form-basic';
 import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
@@ -7,9 +7,10 @@ import { TitleComponent, ButtonComponent, TextComponent, BadgeComponent, TaModal
 import { of, Subject, BehaviorSubject, firstValueFrom, distinctUntilChanged, filter, map } from 'rxjs';
 import { InputPanel, InputDropdown, InputDatePicker, InputNumber, InputChoices, InputTextBox } from '@ta/form-model';
 import { isNonNullable, getUniqueArray, TaBaseComponent, TypedTemplateDirective } from '@ta/utils';
-import { TabulatorFull } from 'tabulator-tables';
 import { format } from 'date-fns';
 import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import * as i1 from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import { SearchFieldComponent } from '@ta/form-input';
 import { HandleComplexRequest, createQuery, TaBaseService } from '@ta/server';
@@ -131,7 +132,7 @@ class BaseCol {
         return this.data.col.name;
     }
     get inputLabel() {
-        return `grid.${this.data.scope}.core.${this.data.col.name}`;
+        return `grid.${this.data.scope}.core.${this.key}`;
     }
     get filterValues() {
         return (this.model.filters
@@ -143,12 +144,18 @@ class BaseCol {
         this.data = data;
         this.model = model;
     }
-    getColDef() {
+    getColConfig() {
         return {
-            field: this.key,
+            key: this.key,
             title: this.inputLabel,
-            headerFilter: 'input',
+            sortable: true,
+            width: this.data.col.width,
+            template: this.data.col.template,
         };
+    }
+    defaultFormatter(row) {
+        const value = row[this.key];
+        return value != null ? String(value) : '';
     }
     getInputForm() {
         return null;
@@ -167,6 +174,12 @@ class BaseCol {
 }
 
 class BoolCol extends BaseCol {
+    defaultFormatter(row) {
+        const value = row[this.key];
+        if (value == null)
+            return '';
+        return value ? '✓' : '✗';
+    }
 }
 
 class DateCol extends BaseCol {
@@ -177,6 +190,15 @@ class DateCol extends BaseCol {
             rangeEnabled: true,
             value: this.filterValues[0] ? { start: this.filterValues[0] } : undefined,
         });
+    }
+    defaultFormatter(row) {
+        const value = row[this.key];
+        if (!value)
+            return '';
+        const date = new Date(value);
+        if (isNaN(date.getTime()))
+            return String(value);
+        return format(date, 'dd/MM/yyyy');
     }
     formatInputForm(data) {
         const value = data[this.key];
@@ -323,6 +345,206 @@ class TaGridFilters {
     remove(filter) {
         this.table.removeFilter(filter.field, filter.type, filter.value);
     }
+    destroy() {
+        if (this._debounceTimer) {
+            clearTimeout(this._debounceTimer);
+            this._debounceTimer = null;
+        }
+    }
+}
+
+class TaTableState {
+    constructor() {
+        this.rows = signal([]);
+        this.currentPage = signal(1);
+        this.pageSize = signal(20);
+        this.totalItems = signal(0);
+        this.totalPages = computed(() => Math.max(1, Math.ceil(this.totalItems() / this.pageSize())));
+        this.sortField = signal(null);
+        this.sortDir = signal('asc');
+        this.filters = signal([]);
+        this.groupByField = signal(null);
+        this.isLoading = signal(false);
+        this.rowClicked$ = new Subject();
+        this.isReady$ = new BehaviorSubject(false);
+        this.isDataReady$ = new BehaviorSubject(false);
+        this._services = null;
+        this._allData = [];
+        this._colsMetaData = [];
+        this._fetchTimer = null;
+        this._fetchId = 0;
+    }
+    init(params) {
+        this._services = params.services ?? null;
+        this._colsMetaData = params.colsMetaData;
+        this._onDataUpdate = params.onDataUpdate;
+        if (params.initialFilter?.length) {
+            this.filters.set(params.initialFilter);
+        }
+        if (params.data && !params.services) {
+            this._allData = params.data;
+        }
+        this.isReady$.next(true);
+        this._scheduleUpdate();
+    }
+    getData() {
+        return this.rows();
+    }
+    getPage() {
+        return this.currentPage();
+    }
+    getPageMax() {
+        return this.totalPages();
+    }
+    setPage(n) {
+        if (n >= 1 && n <= this.totalPages()) {
+            this.currentPage.set(n);
+            this._scheduleUpdate();
+        }
+    }
+    nextPage() {
+        if (this.currentPage() < this.totalPages()) {
+            this.currentPage.update(p => p + 1);
+            this._scheduleUpdate();
+        }
+    }
+    previousPage() {
+        if (this.currentPage() > 1) {
+            this.currentPage.update(p => p - 1);
+            this._scheduleUpdate();
+        }
+    }
+    setFilter(filters) {
+        this.currentPage.set(1);
+        this.filters.set(filters);
+        this._scheduleUpdate();
+    }
+    getFilters(_includeHeaderFilters) {
+        return this.filters();
+    }
+    removeFilter(field, type, value) {
+        this.filters.update(f => f.filter(filter => !(filter.field === field && filter.type === type && filter.value === value)));
+        this.currentPage.set(1);
+        this._scheduleUpdate();
+    }
+    setSort(field, dir) {
+        this.sortField.set(field);
+        this.sortDir.set(dir);
+        this.currentPage.set(1);
+        this._scheduleUpdate();
+    }
+    setGroupBy(field) {
+        this.groupByField.set(field);
+        this.currentPage.set(1);
+        this._scheduleUpdate();
+    }
+    refresh() {
+        this._scheduleUpdate();
+    }
+    destroy() {
+        if (this._fetchTimer) {
+            clearTimeout(this._fetchTimer);
+            this._fetchTimer = null;
+        }
+        ++this._fetchId;
+        this.rowClicked$.complete();
+        this.isReady$.complete();
+        this.isDataReady$.complete();
+    }
+    _scheduleUpdate() {
+        if (!this._services) {
+            this._applyLocalFilter();
+            return;
+        }
+        if (this._fetchTimer)
+            clearTimeout(this._fetchTimer);
+        this._fetchTimer = setTimeout(() => this._fetchData(), 0);
+    }
+    // Client-side filter/sort/page for static data
+    _applyLocalFilter() {
+        let data = [...this._allData];
+        for (const f of this.filters()) {
+            const isSearch = f.field === 'search';
+            if (isSearch) {
+                const searchFields = this._colsMetaData
+                    .filter(c => c.isSearchField)
+                    .map(c => String(c.name));
+                if (searchFields.length && f.value) {
+                    const needle = String(f.value).toLowerCase();
+                    data = data.filter(item => searchFields.some(key => String(item[key] ?? '').toLowerCase().includes(needle)));
+                }
+                continue;
+            }
+            data = data.filter(item => {
+                const val = item[f.field];
+                const target = f.value;
+                switch (f.type) {
+                    case '=': return val == target;
+                    case '!=': return val != target;
+                    case 'like': return String(val ?? '').toLowerCase().includes(String(target).toLowerCase());
+                    case '<': return val < target;
+                    case '>': return val > target;
+                    case '<=': return val <= target;
+                    case '>=': return val >= target;
+                    case 'starts': return String(val ?? '').toLowerCase().startsWith(String(target).toLowerCase());
+                    case 'ends': return String(val ?? '').toLowerCase().endsWith(String(target).toLowerCase());
+                    case 'in': return Array.isArray(target) ? target.includes(val) : val == target;
+                    default: return true;
+                }
+            });
+        }
+        if (this.sortField()) {
+            const field = this.sortField();
+            const dir = this.sortDir();
+            data.sort((a, b) => {
+                const av = a[field];
+                const bv = b[field];
+                if (av == null)
+                    return 1;
+                if (bv == null)
+                    return -1;
+                const cmp = av > bv ? 1 : av < bv ? -1 : 0;
+                return dir === 'asc' ? cmp : -cmp;
+            });
+        }
+        const total = data.length;
+        this.totalItems.set(total);
+        const page = this.currentPage();
+        const size = this.pageSize();
+        const start = (page - 1) * size;
+        this.rows.set(data.slice(start, start + size));
+        this.isDataReady$.next(true);
+        this._onDataUpdate?.(total);
+    }
+    _fetchData() {
+        if (!this._services)
+            return;
+        const id = ++this._fetchId;
+        this.isLoading.set(true);
+        const sort = this.sortField() ? [{ field: this.sortField(), dir: this.sortDir() }] : [];
+        firstValueFrom(this._services.getData$({
+            filter: this.filters(),
+            sort,
+            groupBy: this.groupByField(),
+            page: this.currentPage(),
+            size: this.pageSize(),
+            colsMetaData: this._colsMetaData,
+        }))
+            .then(response => {
+            if (id !== this._fetchId)
+                return;
+            this.rows.set(response.data);
+            this.totalItems.set(response.total);
+            this.isLoading.set(false);
+            this.isDataReady$.next(true);
+            this._onDataUpdate?.(response.total);
+        })
+            .catch(() => {
+            if (id !== this._fetchId)
+                return;
+            this.isLoading.set(false);
+        });
+    }
 }
 
 const groupBy = (key, data) => {
@@ -354,85 +576,54 @@ class TaGridData {
         this.filters = null;
         this.isReady$ = new BehaviorSubject(false);
         this.isDataReady$ = new BehaviorSubject(false);
-        this.tableHtml = null;
         this.displayType = signal('card');
         this.groupBy = null;
         this.totalItems = signal(0);
     }
     init(params) {
-        this.table = new TabulatorFull(params.elementRef.nativeElement, this._getOptions(params));
-        this.table.on('tableBuilt', () => {
-            this.tableHtml = params.elementRef;
-            this.filters = new TaGridFilters(this.scope, this.table, params.preset);
-            this.isReady$.next(true);
+        this._buildCols(params.colsMetaData);
+        this.table = new TaTableState();
+        this.table.init({
+            colsMetaData: params.colsMetaData,
+            data: params.data,
+            services: params.services,
+            initialFilter: params.initialFilter,
+            onDataUpdate: total => this.totalItems.set(total),
         });
-        this.table.on('rowClick', (_e, row) => {
-            this.rowClicked$.next(row.getData());
+        this.filters = new TaGridFilters(this.scope, this.table, params.preset);
+        this.table.isReady$.subscribe(ready => {
+            if (ready)
+                this.isReady$.next(true);
         });
+        this.table.isDataReady$.subscribe(ready => {
+            if (ready)
+                this.isDataReady$.next(true);
+        });
+        this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row));
     }
     destroy() {
+        this.filters?.destroy();
         this.table?.destroy();
+        this.rowClicked$.complete();
+        this.isReady$.complete();
+        this.isDataReady$.complete();
     }
     setGroupBy(field) {
         this.groupBy = field;
         this.table?.setGroupBy(field);
-        this.table?.setData();
     }
     clearGroupBy() {
         this.groupBy = null;
-        this.table?.setGroupBy([]);
-        this.table?.setData();
+        this.table?.setGroupBy(null);
     }
     switchView(type) {
         this.displayType.set(type);
     }
-    _getOptions(params) {
-        const baseOptions = {
-            height: '500px',
-            layout: 'fitColumns',
-            initialFilter: params.initialFilter,
-            columns: this._getColumns(params.colsMetaData),
-        };
-        const serviceOptions = params.services
-            ? {
-                paginationMode: 'remote',
-                pagination: true,
-                paginationSize: 20,
-                paginationInitialPage: 1,
-                ajaxFiltering: true,
-                filterMode: 'remote',
-                ajaxSorting: true,
-                sortMode: 'remote',
-                ajaxURL: 'dummy',
-                ajaxRequestFunc: (url, config, ajaxParams) => {
-                    return firstValueFrom(params.services.getData$({
-                        ...ajaxParams,
-                        groupBy: this.groupBy,
-                        colsMetaData: params.colsMetaData,
-                    }));
-                },
-                ajaxResponse: (_, __, response) => {
-                    this.isDataReady$.next(true);
-                    this.totalItems.set(response.total);
-                    return response;
-                },
-            }
-            : {};
-        const dataOptions = params.data
-            ? {
-                data: params.data,
-            }
-            : {};
-        return { ...baseOptions, ...serviceOptions, ...dataOptions };
-    }
-    _getColumns(colsMetaData) {
+    _buildCols(colsMetaData) {
         this.cols = Object.fromEntries(colsMetaData.map(meta => {
             const field = this._factoryCols(meta);
             return [field.key, field];
         }));
-        return Object.keys(this.cols)
-            .filter(key => !key.startsWith('_'))
-            .map(key => ({ ...this.cols[key].getColDef() }));
     }
     _factoryCols(col) {
         switch (col.type) {
@@ -606,28 +797,51 @@ class TaGridComponent extends TaAbstractGridComponent {
         super();
         this.cardTemplate = input.required();
         this.rowClicked = output();
-        this._renderer = inject(Renderer2);
     }
-    ngAfterViewInit() {
-        this._registerSubscription(this.isReady$.subscribe({
-            next: () => {
-                if (this._grid.tableHtml) {
-                    this._renderer.appendChild(this.tableElement.nativeElement, this._grid.tableHtml.nativeElement);
-                }
-                this._registerSubscription(this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) }));
-            },
-        }));
+    ngOnInit() {
+        super.ngOnInit();
+        this.visibleCols = computed(() => Object.values(this.grid.cols)
+            .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
+            .map(col => col.getColConfig()));
+        this._registerSubscription(this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) }));
+    }
+    get rows() {
+        return this._grid.table?.rows() ?? [];
+    }
+    get sortField() {
+        return this._grid.table?.sortField() ?? null;
+    }
+    get sortDir() {
+        return this._grid.table?.sortDir() ?? 'asc';
+    }
+    getCellValue(row, key) {
+        return row[key];
+    }
+    onRowClick(row) {
+        this._grid.rowClicked$.next(row);
+    }
+    onSort(col) {
+        if (!col.sortable || !this._grid.table)
+            return;
+        const current = this.sortField;
+        const dir = this.sortDir;
+        if (current !== col.key) {
+            this._grid.table.setSort(col.key, 'asc');
+        }
+        else if (dir === 'asc') {
+            this._grid.table.setSort(col.key, 'desc');
+        }
+        else {
+            this._grid.table.setSort(null, 'asc');
+        }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridComponent, isStandalone: true, selector: "ta-grid", inputs: { cardTemplate: { classPropertyName: "cardTemplate", publicName: "cardTemplate", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { rowClicked: "rowClicked" }, viewQueries: [{ propertyName: "tableElement", first: true, predicate: ["table"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div [style.display]=\"this.displayType() === 'grid' ? 'block' : 'none'\">\r\n  <div #table></div>\r\n</div>\r\n\r\n@if (this.isReady$ | async) {\r\n  @if (this.displayType() === 'card') {\r\n    @if (this.isGroup) {\r\n      @for (group of this.dataByGroup; track group.key) {\r\n        <ta-title [level]=\"3\">{{ group.key }}</ta-title>\r\n        <div class=\"py-space-md\">\r\n          <ng-template\r\n            [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n            [ngTemplateOutletContext]=\"{ items: group.data }\"\r\n          ></ng-template>\r\n        </div>\r\n      }\r\n    } @else {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n        [ngTemplateOutletContext]=\"{ items: this.data }\"\r\n      ></ng-template>\r\n    }\r\n  }\r\n  <div class=\"py-space-md align-center\">\r\n    <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\r\n  </div>\r\n}\r\n", styles: [".tabulator{background-color:#888;border:1px solid #999;font-size:14px;overflow:hidden;position:relative;text-align:left;-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-ms-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}.tabulator[tabulator-layout=fitDataFill] .tabulator-tableholder .tabulator-table{min-width:100%}.tabulator[tabulator-layout=fitDataTable]{display:inline-block}.tabulator.tabulator-block-select,.tabulator.tabulator-ranges .tabulator-cell:not(.tabulator-editing){-webkit-user-select:none;user-select:none}.tabulator .tabulator-header{background-color:#e6e6e6;border-bottom:1px solid #999;box-sizing:border-box;color:#555;font-weight:700;outline:none;overflow:hidden;position:relative;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;white-space:nowrap;width:100%}.tabulator .tabulator-header.tabulator-header-hidden{display:none}.tabulator .tabulator-header .tabulator-header-contents{overflow:hidden;position:relative}.tabulator .tabulator-header .tabulator-header-contents .tabulator-headers{display:inline-block}.tabulator .tabulator-header .tabulator-col{background:#e6e6e6;border-right:1px solid #aaa;box-sizing:border-box;display:inline-flex;flex-direction:column;justify-content:flex-start;overflow:hidden;position:relative;text-align:left;vertical-align:bottom}.tabulator .tabulator-header .tabulator-col.tabulator-moving{background:#cdcdcd;border:1px solid #999;pointer-events:none;position:absolute}.tabulator .tabulator-header .tabulator-col.tabulator-range-highlight{background-color:#d6d6d6;color:#000}.tabulator .tabulator-header .tabulator-col.tabulator-range-selected{background-color:#3876ca;color:#fff}.tabulator .tabulator-header .tabulator-col .tabulator-col-content{box-sizing:border-box;padding:4px;position:relative}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-header-popup-button{padding:0 8px}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-header-popup-button:hover{cursor:pointer;opacity:.6}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title-holder{position:relative}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title{box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;white-space:nowrap;width:100%}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title.tabulator-col-title-wrap{text-overflow:clip;white-space:normal}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title .tabulator-title-editor{background:#fff;border:1px solid #999;box-sizing:border-box;padding:1px;width:100%}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title .tabulator-header-popup-button+.tabulator-title-editor{width:calc(100% - 22px)}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter{align-items:center;bottom:0;display:flex;position:absolute;right:4px;top:0}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:6px solid #bbb;border-left:6px solid transparent;border-right:6px solid transparent;height:0;width:0}.tabulator .tabulator-header .tabulator-col.tabulator-col-group .tabulator-col-group-cols{border-top:1px solid #aaa;display:flex;margin-right:-1px;overflow:hidden;position:relative}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter{box-sizing:border-box;margin-top:2px;position:relative;text-align:center;width:100%}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter textarea{height:auto!important}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter svg{margin-top:3px}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input::-ms-clear{height:0;width:0}.tabulator .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title{padding-right:25px}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{background-color:#cdcdcd;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter{color:#bbb}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover{border-bottom:6px solid #555;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:6px solid #bbb;border-top:none}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter{color:#666}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover{border-bottom:6px solid #555;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:6px solid #666;border-top:none}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter{color:#666}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover{border-top:6px solid #555;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:none;border-top:6px solid #666;color:#666}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical .tabulator-col-content .tabulator-col-title{align-items:center;display:flex;justify-content:center;text-orientation:mixed;writing-mode:vertical-rl}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-col-vertical-flip .tabulator-col-title{transform:rotate(180deg)}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-sortable .tabulator-col-title{padding-right:0;padding-top:20px}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-sortable.tabulator-col-vertical-flip .tabulator-col-title{padding-bottom:20px;padding-right:0}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-sortable .tabulator-col-sorter{justify-content:center;inset:4px 0 auto}.tabulator .tabulator-header .tabulator-frozen{left:0;position:sticky;z-index:11}.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-left{border-right:2px solid #aaa}.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-right{border-left:2px solid #aaa}.tabulator .tabulator-header .tabulator-calcs-holder{background:#f3f3f3!important;border-bottom:1px solid #aaa;border-top:1px solid #aaa;box-sizing:border-box;display:inline-block}.tabulator .tabulator-header .tabulator-calcs-holder .tabulator-row{background:#f3f3f3!important}.tabulator .tabulator-header .tabulator-calcs-holder .tabulator-row .tabulator-col-resize-handle{display:none}.tabulator .tabulator-header .tabulator-frozen-rows-holder{display:inline-block}.tabulator .tabulator-header .tabulator-frozen-rows-holder:empty{display:none}.tabulator .tabulator-tableholder{-webkit-overflow-scrolling:touch;overflow:auto;position:relative;white-space:nowrap;width:100%}.tabulator .tabulator-tableholder:focus{outline:none}.tabulator .tabulator-tableholder .tabulator-placeholder{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-width:100%;width:100%}.tabulator .tabulator-tableholder .tabulator-placeholder[tabulator-render-mode=virtual]{min-height:100%}.tabulator .tabulator-tableholder .tabulator-placeholder .tabulator-placeholder-contents{color:#ccc;display:inline-block;font-size:20px;font-weight:700;padding:10px;text-align:center;white-space:normal}.tabulator .tabulator-tableholder .tabulator-table{background-color:#fff;color:#333;display:inline-block;overflow:visible;position:relative;white-space:nowrap}.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs{background:#e2e2e2!important;font-weight:700}.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top{border-bottom:2px solid #aaa}.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom{border-top:2px solid #aaa}.tabulator .tabulator-tableholder .tabulator-range-overlay{inset:0;pointer-events:none;position:absolute;z-index:10}.tabulator .tabulator-tableholder .tabulator-range-overlay .tabulator-range{border:1px solid #2975dd;box-sizing:border-box;position:absolute}.tabulator .tabulator-tableholder .tabulator-range-overlay .tabulator-range.tabulator-range-active:after{background-color:#2975dd;border-radius:999px;bottom:-3px;content:\"\";height:6px;position:absolute;right:-3px;width:6px}.tabulator .tabulator-tableholder .tabulator-range-overlay .tabulator-range-cell-active{border:2px solid #2975dd;box-sizing:border-box;position:absolute}.tabulator .tabulator-footer{background-color:#e6e6e6;border-top:1px solid #999;color:#555;font-weight:700;user-select:none;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;white-space:nowrap}.tabulator .tabulator-footer .tabulator-footer-contents{align-items:center;display:flex;flex-direction:row;justify-content:space-between;padding:5px 10px}.tabulator .tabulator-footer .tabulator-footer-contents:empty{display:none}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs{margin-top:-5px;overflow-x:auto}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs .tabulator-spreadsheet-tab{border:1px solid #999;border-bottom-left-radius:5px;border-bottom-right-radius:5px;border-top:none;display:inline-block;font-size:.9em;padding:5px}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs .tabulator-spreadsheet-tab:hover{cursor:pointer;opacity:.7}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs .tabulator-spreadsheet-tab.tabulator-spreadsheet-tab-active{background:#fff}.tabulator .tabulator-footer .tabulator-calcs-holder{background:#f3f3f3!important;border-bottom:1px solid #aaa;border-top:1px solid #aaa;box-sizing:border-box;overflow:hidden;text-align:left;width:100%}.tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{background:#f3f3f3!important;display:inline-block}.tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row .tabulator-col-resize-handle{display:none}.tabulator .tabulator-footer .tabulator-calcs-holder:only-child{border-bottom:none;margin-bottom:-5px}.tabulator .tabulator-footer>*+.tabulator-page-counter{margin-left:10px}.tabulator .tabulator-footer .tabulator-page-counter{font-weight:400}.tabulator .tabulator-footer .tabulator-paginator{color:#555;flex:1;font-family:inherit;font-size:inherit;font-weight:inherit;text-align:right}.tabulator .tabulator-footer .tabulator-page-size{border:1px solid #aaa;border-radius:3px;display:inline-block;margin:0 5px;padding:2px 5px}.tabulator .tabulator-footer .tabulator-pages{margin:0 7px}.tabulator .tabulator-footer .tabulator-page{background:#fff3;border:1px solid #aaa;border-radius:3px;display:inline-block;margin:0 2px;padding:2px 5px}.tabulator .tabulator-footer .tabulator-page.active{color:#d00}.tabulator .tabulator-footer .tabulator-page:disabled{opacity:.5}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-footer .tabulator-page:not(disabled):hover{background:#0003;color:#fff;cursor:pointer}}.tabulator .tabulator-col-resize-handle{display:inline-block;margin-left:-3px;margin-right:-3px;position:relative;vertical-align:middle;width:6px;z-index:11}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-col-resize-handle:hover{cursor:ew-resize}}.tabulator .tabulator-col-resize-handle:last-of-type{margin-right:0;width:3px}.tabulator .tabulator-col-resize-guide{background-color:#999;height:100%;margin-left:-.5px;opacity:.5;position:absolute;top:0;width:4px}.tabulator .tabulator-row-resize-guide{background-color:#999;height:4px;left:0;margin-top:-.5px;opacity:.5;position:absolute;width:100%}.tabulator .tabulator-alert{align-items:center;background:#0006;display:flex;height:100%;left:0;position:absolute;text-align:center;top:0;width:100%;z-index:100}.tabulator .tabulator-alert .tabulator-alert-msg{background:#fff;border-radius:10px;display:inline-block;font-size:16px;font-weight:700;margin:0 auto;padding:10px 20px}.tabulator .tabulator-alert .tabulator-alert-msg.tabulator-alert-state-msg{border:4px solid #333;color:#000}.tabulator .tabulator-alert .tabulator-alert-msg.tabulator-alert-state-error{border:4px solid #d00;color:#590000}.tabulator-row{background-color:#fff;box-sizing:border-box;min-height:22px;position:relative}.tabulator-row.tabulator-row-even{background-color:#efefef}@media (hover:hover) and (pointer:fine){.tabulator-row.tabulator-selectable:hover{background-color:#bbb;cursor:pointer}}.tabulator-row.tabulator-selected{background-color:#9abcea}@media (hover:hover) and (pointer:fine){.tabulator-row.tabulator-selected:hover{background-color:#769bcc;cursor:pointer}}.tabulator-row.tabulator-row-moving{background:#fff;border:1px solid #000}.tabulator-row.tabulator-moving{border-bottom:1px solid #aaa;border-top:1px solid #aaa;pointer-events:none;position:absolute;z-index:15}.tabulator-row.tabulator-range-highlight .tabulator-cell.tabulator-range-row-header{background-color:#d6d6d6;color:#000}.tabulator-row.tabulator-range-highlight.tabulator-range-selected .tabulator-cell.tabulator-range-row-header,.tabulator-row.tabulator-range-selected .tabulator-cell.tabulator-range-row-header{background-color:#3876ca;color:#fff}.tabulator-row .tabulator-row-resize-handle{bottom:0;height:5px;left:0;position:absolute;right:0}.tabulator-row .tabulator-row-resize-handle.prev{bottom:auto;top:0}@media (hover:hover) and (pointer:fine){.tabulator-row .tabulator-row-resize-handle:hover{cursor:ns-resize}}.tabulator-row .tabulator-responsive-collapse{border-bottom:1px solid #aaa;border-top:1px solid #aaa;box-sizing:border-box;padding:5px}.tabulator-row .tabulator-responsive-collapse:empty{display:none}.tabulator-row .tabulator-responsive-collapse table{font-size:14px}.tabulator-row .tabulator-responsive-collapse table tr td{position:relative}.tabulator-row .tabulator-responsive-collapse table tr td:first-of-type{padding-right:10px}.tabulator-row .tabulator-cell{border-right:1px solid #aaa;box-sizing:border-box;display:inline-block;outline:none;overflow:hidden;padding:4px;position:relative;text-overflow:ellipsis;vertical-align:middle;white-space:nowrap}.tabulator-row .tabulator-cell.tabulator-row-header{background:#e6e6e6;border-bottom:1px solid #aaa;border-right:1px solid #999}.tabulator-row .tabulator-cell.tabulator-frozen{background-color:inherit;display:inline-block;left:0;position:sticky;z-index:11}.tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left{border-right:2px solid #aaa}.tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-right{border-left:2px solid #aaa}.tabulator-row .tabulator-cell.tabulator-editing{border:1px solid #1d68cd;outline:none;padding:0}.tabulator-row .tabulator-cell.tabulator-editing input,.tabulator-row .tabulator-cell.tabulator-editing select{background:transparent;border:1px;outline:none}.tabulator-row .tabulator-cell.tabulator-validation-fail{border:1px solid #d00}.tabulator-row .tabulator-cell.tabulator-validation-fail input,.tabulator-row .tabulator-cell.tabulator-validation-fail select{background:transparent;border:1px;color:#d00}.tabulator-row .tabulator-cell.tabulator-row-handle{align-items:center;display:inline-flex;justify-content:center;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none}.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box{width:80%}.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar{background:#666;height:3px;margin-top:2px;width:100%}.tabulator-row .tabulator-cell.tabulator-range-selected:not(.tabulator-range-only-cell-selected):not(.tabulator-range-row-header){background-color:#9abcea}.tabulator-row .tabulator-cell .tabulator-data-tree-branch-empty{display:inline-block;width:7px}.tabulator-row .tabulator-cell .tabulator-data-tree-branch{border-bottom:2px solid #aaa;border-bottom-left-radius:1px;border-left:2px solid #aaa;display:inline-block;height:9px;margin-right:5px;margin-top:-9px;vertical-align:middle;width:7px}.tabulator-row .tabulator-cell .tabulator-data-tree-control{align-items:center;background:#0000001a;border:1px solid #333;border-radius:2px;display:inline-flex;height:11px;justify-content:center;margin-right:5px;overflow:hidden;vertical-align:middle;width:11px}@media (hover:hover) and (pointer:fine){.tabulator-row .tabulator-cell .tabulator-data-tree-control:hover{background:#0003;cursor:pointer}}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-collapse{background:transparent;display:inline-block;height:7px;position:relative;width:1px}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-collapse:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-expand{background:#333;display:inline-block;height:7px;position:relative;width:1px}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-expand:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle{align-items:center;background:#666;border-radius:20px;color:#fff;display:inline-flex;font-size:1.1em;font-weight:700;height:15px;justify-content:center;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;width:15px}@media (hover:hover) and (pointer:fine){.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle:hover{cursor:pointer;opacity:.7}}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle.open .tabulator-responsive-collapse-toggle-close{display:initial}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle.open .tabulator-responsive-collapse-toggle-open{display:none}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle svg{stroke:#fff}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle .tabulator-responsive-collapse-toggle-close{display:none}.tabulator-row .tabulator-cell .tabulator-traffic-light{border-radius:14px;display:inline-block;height:14px;width:14px}.tabulator-row.tabulator-group{background:#ccc;border-bottom:1px solid #999;border-right:1px solid #aaa;border-top:1px solid #999;box-sizing:border-box;font-weight:700;min-width:100%;padding:5px 5px 5px 10px}@media (hover:hover) and (pointer:fine){.tabulator-row.tabulator-group:hover{background-color:#0000001a;cursor:pointer}}.tabulator-row.tabulator-group.tabulator-group-visible .tabulator-arrow{border-bottom:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #666;margin-right:10px}.tabulator-row.tabulator-group.tabulator-group-level-1{padding-left:30px}.tabulator-row.tabulator-group.tabulator-group-level-2{padding-left:50px}.tabulator-row.tabulator-group.tabulator-group-level-3{padding-left:70px}.tabulator-row.tabulator-group.tabulator-group-level-4{padding-left:90px}.tabulator-row.tabulator-group.tabulator-group-level-5{padding-left:110px}.tabulator-row.tabulator-group .tabulator-group-toggle{display:inline-block}.tabulator-row.tabulator-group .tabulator-arrow{border-bottom:6px solid transparent;border-left:6px solid #666;border-right:0;border-top:6px solid transparent;display:inline-block;height:0;margin-right:16px;vertical-align:middle;width:0}.tabulator-row.tabulator-group span{color:#d00;margin-left:10px}.tabulator-toggle{background:#dcdcdc;border:1px solid #ccc;box-sizing:border-box;display:flex;flex-direction:row}.tabulator-toggle.tabulator-toggle-on{background:#1c6cc2}.tabulator-toggle .tabulator-toggle-switch{background:#fff;border:1px solid #ccc;box-sizing:border-box}.tabulator-popup-container{-webkit-overflow-scrolling:touch;background:#fff;border:1px solid #aaa;box-shadow:0 0 5px #0003;box-sizing:border-box;display:inline-block;font-size:14px;overflow-y:auto;position:absolute;z-index:10000}.tabulator-popup{border-radius:3px;padding:5px}.tabulator-tooltip{border-radius:2px;box-shadow:none;font-size:12px;max-width:Min(500px,100%);padding:3px 5px;pointer-events:none}.tabulator-menu .tabulator-menu-item{box-sizing:border-box;padding:5px 10px;position:relative;-webkit-user-select:none;user-select:none}.tabulator-menu .tabulator-menu-item.tabulator-menu-item-disabled{opacity:.5}@media (hover:hover) and (pointer:fine){.tabulator-menu .tabulator-menu-item:not(.tabulator-menu-item-disabled):hover{background:#efefef;cursor:pointer}}.tabulator-menu .tabulator-menu-item.tabulator-menu-item-submenu{padding-right:25px}.tabulator-menu .tabulator-menu-item.tabulator-menu-item-submenu:after{border-color:#aaa;border-style:solid;border-width:1px 1px 0 0;content:\"\";display:inline-block;height:7px;position:absolute;right:10px;top:calc(5px + .4em);transform:rotate(45deg);vertical-align:top;width:7px}.tabulator-menu .tabulator-menu-separator{border-top:1px solid #aaa}.tabulator-edit-list{-webkit-overflow-scrolling:touch;font-size:14px;max-height:200px;overflow-y:auto}.tabulator-edit-list .tabulator-edit-list-item{color:#333;outline:none;padding:4px}.tabulator-edit-list .tabulator-edit-list-item.active{background:#1d68cd;color:#fff}.tabulator-edit-list .tabulator-edit-list-item.active.focused{outline:1px solid hsla(0,0%,100%,.5)}.tabulator-edit-list .tabulator-edit-list-item.focused{outline:1px solid #1d68cd}@media (hover:hover) and (pointer:fine){.tabulator-edit-list .tabulator-edit-list-item:hover{background:#1d68cd;color:#fff;cursor:pointer}}.tabulator-edit-list .tabulator-edit-list-placeholder{color:#333;padding:4px;text-align:center}.tabulator-edit-list .tabulator-edit-list-group{border-bottom:1px solid #aaa;color:#333;font-weight:700;padding:6px 4px 4px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-2,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-2{padding-left:12px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-3,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-3{padding-left:20px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-4,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-4{padding-left:28px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-5,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-5{padding-left:36px}.tabulator.tabulator-ltr{direction:ltr}.tabulator.tabulator-rtl{direction:rtl;text-align:initial}.tabulator.tabulator-rtl .tabulator-header .tabulator-col{border-left:1px solid #aaa;border-right:initial;text-align:initial}.tabulator.tabulator-rtl .tabulator-header .tabulator-col.tabulator-col-group .tabulator-col-group-cols{margin-left:-1px;margin-right:0}.tabulator.tabulator-rtl .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title{padding-left:25px;padding-right:0}.tabulator.tabulator-rtl .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter{left:8px;right:auto}.tabulator.tabulator-rtl .tabulator-tableholder .tabulator-range-overlay .tabulator-range.tabulator-range-active:after{background-color:#2975dd;border-radius:999px;bottom:-3px;content:\"\";height:6px;left:-3px;position:absolute;right:auto;width:6px}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell{border-left:1px solid #aaa;border-right:initial}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell .tabulator-data-tree-branch{border-bottom-left-radius:0;border-bottom-right-radius:1px;border-left:initial;border-right:2px solid #aaa;margin-left:5px;margin-right:0}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell .tabulator-data-tree-control{margin-left:5px;margin-right:0}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left{border-left:2px solid #aaa}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-right{border-right:2px solid #aaa}.tabulator.tabulator-rtl .tabulator-row .tabulator-col-resize-handle:last-of-type{margin-left:0;margin-right:-3px;width:3px}.tabulator.tabulator-rtl .tabulator-footer .tabulator-calcs-holder{text-align:initial}.tabulator-print-fullscreen{inset:0;position:absolute;z-index:10000}body.tabulator-print-fullscreen-hide>:not(.tabulator-print-fullscreen){display:none!important}.tabulator-print-table{border-collapse:collapse}.tabulator-print-table .tabulator-data-tree-branch{border-bottom:2px solid #aaa;border-bottom-left-radius:1px;border-left:2px solid #aaa;display:inline-block;height:9px;margin-right:5px;margin-top:-9px;vertical-align:middle;width:7px}.tabulator-print-table .tabulator-print-table-group{background:#ccc;border-bottom:1px solid #999;border-right:1px solid #aaa;border-top:1px solid #999;box-sizing:border-box;font-weight:700;min-width:100%;padding:5px 5px 5px 10px}@media (hover:hover) and (pointer:fine){.tabulator-print-table .tabulator-print-table-group:hover{background-color:#0000001a;cursor:pointer}}.tabulator-print-table .tabulator-print-table-group.tabulator-group-visible .tabulator-arrow{border-bottom:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #666;margin-right:10px}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-1 td{padding-left:30px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-2 td{padding-left:50px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-3 td{padding-left:70px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-4 td{padding-left:90px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-5 td{padding-left:110px!important}.tabulator-print-table .tabulator-print-table-group .tabulator-group-toggle{display:inline-block}.tabulator-print-table .tabulator-print-table-group .tabulator-arrow{border-bottom:6px solid transparent;border-left:6px solid #666;border-right:0;border-top:6px solid transparent;display:inline-block;height:0;margin-right:16px;vertical-align:middle;width:0}.tabulator-print-table .tabulator-print-table-group span{color:#d00;margin-left:10px}.tabulator-print-table .tabulator-data-tree-control{align-items:center;background:#0000001a;border:1px solid #333;border-radius:2px;display:inline-flex;height:11px;justify-content:center;margin-right:5px;overflow:hidden;vertical-align:middle;width:11px}@media (hover:hover) and (pointer:fine){.tabulator-print-table .tabulator-data-tree-control:hover{background:#0003;cursor:pointer}}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-collapse{background:transparent;display:inline-block;height:7px;position:relative;width:1px}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-collapse:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-expand{background:#333;display:inline-block;height:7px;position:relative;width:1px}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-expand:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}\n"], dependencies: [{ kind: "component", type: PaginationComponent, selector: "ta-grid-pagination" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridComponent, isStandalone: true, selector: "ta-grid", inputs: { cardTemplate: { classPropertyName: "cardTemplate", publicName: "cardTemplate", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { rowClicked: "rowClicked" }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\r\n  @if (this.displayType() === 'grid') {\r\n    <div class=\"ta-grid-table-wrapper\">\r\n      <table class=\"ta-grid-table\">\r\n        <thead>\r\n          <tr>\r\n            @for (col of this.visibleCols(); track col.key) {\r\n              <th\r\n                class=\"ta-grid-th\"\r\n                [class.is-sortable]=\"col.sortable\"\r\n                [class.is-sorted]=\"this.sortField === col.key\"\r\n                [style.width]=\"col.width ?? 'auto'\"\r\n                (click)=\"this.onSort(col)\"\r\n              >\r\n                <div class=\"ta-grid-th__inner\">\r\n                  <span class=\"ta-grid-th__label\">{{ col.title | translate }}</span>\r\n                  @if (this.sortField === col.key) {\r\n                    <ta-font-icon\r\n                      class=\"ta-grid-th__sort-icon\"\r\n                      [icon]=\"this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'\"\r\n                    />\r\n                  }\r\n                </div>\r\n              </th>\r\n            }\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          @for (row of this.rows; track row.id) {\r\n            <tr class=\"ta-grid-tr c-pointer\" (click)=\"this.onRowClick(row)\">\r\n              @for (col of this.visibleCols(); track col.key) {\r\n                <td class=\"ta-grid-td\">\r\n                  @if (col.template) {\r\n                    <ng-container\r\n                      [ngTemplateOutlet]=\"col.template\"\r\n                      [ngTemplateOutletContext]=\"{ $implicit: row, value: this.getCellValue(row, col.key) }\"\r\n                    ></ng-container>\r\n                  } @else {\r\n                    {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}\r\n                  }\r\n                </td>\r\n              }\r\n            </tr>\r\n          }\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n  }\r\n\r\n  @if (this.displayType() === 'card') {\r\n    @if (this.isGroup) {\r\n      @for (group of this.dataByGroup; track group.key) {\r\n        <ta-title [level]=\"3\">{{ group.key }}</ta-title>\r\n        <div class=\"py-space-md\">\r\n          <ng-template\r\n            [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n            [ngTemplateOutletContext]=\"{ items: group.data }\"\r\n          ></ng-template>\r\n        </div>\r\n      }\r\n    } @else {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n        [ngTemplateOutletContext]=\"{ items: this.data }\"\r\n      ></ng-template>\r\n    }\r\n  }\r\n\r\n  <div class=\"py-space-md align-center\">\r\n    <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\r\n  </div>\r\n}\r\n", styles: [".ta-grid-table-wrapper{width:100%;overflow-x:auto}.ta-grid-table{width:100%;border-collapse:collapse;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.ta-grid-table .ta-grid-th{padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border-bottom:2px solid var(--ta-border-primary);color:var(--ta-text-secondary);white-space:nowrap;-webkit-user-select:none;user-select:none}.ta-grid-table .ta-grid-th.is-sortable{cursor:pointer}.ta-grid-table .ta-grid-th.is-sortable:hover{color:var(--ta-text-primary);background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-th.is-sorted{color:var(--ta-text-brand)}.ta-grid-table .ta-grid-th__inner{display:flex;align-items:center;gap:var(--ta-space-xs)}.ta-grid-table .ta-grid-tr{border-bottom:1px solid var(--ta-border-secondary)}.ta-grid-table .ta-grid-tr:hover{background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-td{padding:var(--ta-space-sm) var(--ta-space-md);color:var(--ta-text-primary);vertical-align:middle}\n"], dependencies: [{ kind: "component", type: PaginationComponent, selector: "ta-grid-pagination" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid', standalone: true, imports: [PaginationComponent, NgTemplateOutlet, AsyncPipe, TitleComponent], encapsulation: ViewEncapsulation.None, template: "<div [style.display]=\"this.displayType() === 'grid' ? 'block' : 'none'\">\r\n  <div #table></div>\r\n</div>\r\n\r\n@if (this.isReady$ | async) {\r\n  @if (this.displayType() === 'card') {\r\n    @if (this.isGroup) {\r\n      @for (group of this.dataByGroup; track group.key) {\r\n        <ta-title [level]=\"3\">{{ group.key }}</ta-title>\r\n        <div class=\"py-space-md\">\r\n          <ng-template\r\n            [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n            [ngTemplateOutletContext]=\"{ items: group.data }\"\r\n          ></ng-template>\r\n        </div>\r\n      }\r\n    } @else {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n        [ngTemplateOutletContext]=\"{ items: this.data }\"\r\n      ></ng-template>\r\n    }\r\n  }\r\n  <div class=\"py-space-md align-center\">\r\n    <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\r\n  </div>\r\n}\r\n", styles: [".tabulator{background-color:#888;border:1px solid #999;font-size:14px;overflow:hidden;position:relative;text-align:left;-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-ms-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}.tabulator[tabulator-layout=fitDataFill] .tabulator-tableholder .tabulator-table{min-width:100%}.tabulator[tabulator-layout=fitDataTable]{display:inline-block}.tabulator.tabulator-block-select,.tabulator.tabulator-ranges .tabulator-cell:not(.tabulator-editing){-webkit-user-select:none;user-select:none}.tabulator .tabulator-header{background-color:#e6e6e6;border-bottom:1px solid #999;box-sizing:border-box;color:#555;font-weight:700;outline:none;overflow:hidden;position:relative;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;white-space:nowrap;width:100%}.tabulator .tabulator-header.tabulator-header-hidden{display:none}.tabulator .tabulator-header .tabulator-header-contents{overflow:hidden;position:relative}.tabulator .tabulator-header .tabulator-header-contents .tabulator-headers{display:inline-block}.tabulator .tabulator-header .tabulator-col{background:#e6e6e6;border-right:1px solid #aaa;box-sizing:border-box;display:inline-flex;flex-direction:column;justify-content:flex-start;overflow:hidden;position:relative;text-align:left;vertical-align:bottom}.tabulator .tabulator-header .tabulator-col.tabulator-moving{background:#cdcdcd;border:1px solid #999;pointer-events:none;position:absolute}.tabulator .tabulator-header .tabulator-col.tabulator-range-highlight{background-color:#d6d6d6;color:#000}.tabulator .tabulator-header .tabulator-col.tabulator-range-selected{background-color:#3876ca;color:#fff}.tabulator .tabulator-header .tabulator-col .tabulator-col-content{box-sizing:border-box;padding:4px;position:relative}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-header-popup-button{padding:0 8px}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-header-popup-button:hover{cursor:pointer;opacity:.6}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title-holder{position:relative}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title{box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;white-space:nowrap;width:100%}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title.tabulator-col-title-wrap{text-overflow:clip;white-space:normal}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title .tabulator-title-editor{background:#fff;border:1px solid #999;box-sizing:border-box;padding:1px;width:100%}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title .tabulator-header-popup-button+.tabulator-title-editor{width:calc(100% - 22px)}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter{align-items:center;bottom:0;display:flex;position:absolute;right:4px;top:0}.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:6px solid #bbb;border-left:6px solid transparent;border-right:6px solid transparent;height:0;width:0}.tabulator .tabulator-header .tabulator-col.tabulator-col-group .tabulator-col-group-cols{border-top:1px solid #aaa;display:flex;margin-right:-1px;overflow:hidden;position:relative}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter{box-sizing:border-box;margin-top:2px;position:relative;text-align:center;width:100%}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter textarea{height:auto!important}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter svg{margin-top:3px}.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input::-ms-clear{height:0;width:0}.tabulator .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title{padding-right:25px}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{background-color:#cdcdcd;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter{color:#bbb}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover{border-bottom:6px solid #555;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:6px solid #bbb;border-top:none}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter{color:#666}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover{border-bottom:6px solid #555;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:6px solid #666;border-top:none}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter{color:#666}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover{border-top:6px solid #555;cursor:pointer}}.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{border-bottom:none;border-top:6px solid #666;color:#666}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical .tabulator-col-content .tabulator-col-title{align-items:center;display:flex;justify-content:center;text-orientation:mixed;writing-mode:vertical-rl}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-col-vertical-flip .tabulator-col-title{transform:rotate(180deg)}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-sortable .tabulator-col-title{padding-right:0;padding-top:20px}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-sortable.tabulator-col-vertical-flip .tabulator-col-title{padding-bottom:20px;padding-right:0}.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical.tabulator-sortable .tabulator-col-sorter{justify-content:center;inset:4px 0 auto}.tabulator .tabulator-header .tabulator-frozen{left:0;position:sticky;z-index:11}.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-left{border-right:2px solid #aaa}.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-right{border-left:2px solid #aaa}.tabulator .tabulator-header .tabulator-calcs-holder{background:#f3f3f3!important;border-bottom:1px solid #aaa;border-top:1px solid #aaa;box-sizing:border-box;display:inline-block}.tabulator .tabulator-header .tabulator-calcs-holder .tabulator-row{background:#f3f3f3!important}.tabulator .tabulator-header .tabulator-calcs-holder .tabulator-row .tabulator-col-resize-handle{display:none}.tabulator .tabulator-header .tabulator-frozen-rows-holder{display:inline-block}.tabulator .tabulator-header .tabulator-frozen-rows-holder:empty{display:none}.tabulator .tabulator-tableholder{-webkit-overflow-scrolling:touch;overflow:auto;position:relative;white-space:nowrap;width:100%}.tabulator .tabulator-tableholder:focus{outline:none}.tabulator .tabulator-tableholder .tabulator-placeholder{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-width:100%;width:100%}.tabulator .tabulator-tableholder .tabulator-placeholder[tabulator-render-mode=virtual]{min-height:100%}.tabulator .tabulator-tableholder .tabulator-placeholder .tabulator-placeholder-contents{color:#ccc;display:inline-block;font-size:20px;font-weight:700;padding:10px;text-align:center;white-space:normal}.tabulator .tabulator-tableholder .tabulator-table{background-color:#fff;color:#333;display:inline-block;overflow:visible;position:relative;white-space:nowrap}.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs{background:#e2e2e2!important;font-weight:700}.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top{border-bottom:2px solid #aaa}.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom{border-top:2px solid #aaa}.tabulator .tabulator-tableholder .tabulator-range-overlay{inset:0;pointer-events:none;position:absolute;z-index:10}.tabulator .tabulator-tableholder .tabulator-range-overlay .tabulator-range{border:1px solid #2975dd;box-sizing:border-box;position:absolute}.tabulator .tabulator-tableholder .tabulator-range-overlay .tabulator-range.tabulator-range-active:after{background-color:#2975dd;border-radius:999px;bottom:-3px;content:\"\";height:6px;position:absolute;right:-3px;width:6px}.tabulator .tabulator-tableholder .tabulator-range-overlay .tabulator-range-cell-active{border:2px solid #2975dd;box-sizing:border-box;position:absolute}.tabulator .tabulator-footer{background-color:#e6e6e6;border-top:1px solid #999;color:#555;font-weight:700;user-select:none;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;white-space:nowrap}.tabulator .tabulator-footer .tabulator-footer-contents{align-items:center;display:flex;flex-direction:row;justify-content:space-between;padding:5px 10px}.tabulator .tabulator-footer .tabulator-footer-contents:empty{display:none}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs{margin-top:-5px;overflow-x:auto}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs .tabulator-spreadsheet-tab{border:1px solid #999;border-bottom-left-radius:5px;border-bottom-right-radius:5px;border-top:none;display:inline-block;font-size:.9em;padding:5px}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs .tabulator-spreadsheet-tab:hover{cursor:pointer;opacity:.7}.tabulator .tabulator-footer .tabulator-spreadsheet-tabs .tabulator-spreadsheet-tab.tabulator-spreadsheet-tab-active{background:#fff}.tabulator .tabulator-footer .tabulator-calcs-holder{background:#f3f3f3!important;border-bottom:1px solid #aaa;border-top:1px solid #aaa;box-sizing:border-box;overflow:hidden;text-align:left;width:100%}.tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{background:#f3f3f3!important;display:inline-block}.tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row .tabulator-col-resize-handle{display:none}.tabulator .tabulator-footer .tabulator-calcs-holder:only-child{border-bottom:none;margin-bottom:-5px}.tabulator .tabulator-footer>*+.tabulator-page-counter{margin-left:10px}.tabulator .tabulator-footer .tabulator-page-counter{font-weight:400}.tabulator .tabulator-footer .tabulator-paginator{color:#555;flex:1;font-family:inherit;font-size:inherit;font-weight:inherit;text-align:right}.tabulator .tabulator-footer .tabulator-page-size{border:1px solid #aaa;border-radius:3px;display:inline-block;margin:0 5px;padding:2px 5px}.tabulator .tabulator-footer .tabulator-pages{margin:0 7px}.tabulator .tabulator-footer .tabulator-page{background:#fff3;border:1px solid #aaa;border-radius:3px;display:inline-block;margin:0 2px;padding:2px 5px}.tabulator .tabulator-footer .tabulator-page.active{color:#d00}.tabulator .tabulator-footer .tabulator-page:disabled{opacity:.5}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-footer .tabulator-page:not(disabled):hover{background:#0003;color:#fff;cursor:pointer}}.tabulator .tabulator-col-resize-handle{display:inline-block;margin-left:-3px;margin-right:-3px;position:relative;vertical-align:middle;width:6px;z-index:11}@media (hover:hover) and (pointer:fine){.tabulator .tabulator-col-resize-handle:hover{cursor:ew-resize}}.tabulator .tabulator-col-resize-handle:last-of-type{margin-right:0;width:3px}.tabulator .tabulator-col-resize-guide{background-color:#999;height:100%;margin-left:-.5px;opacity:.5;position:absolute;top:0;width:4px}.tabulator .tabulator-row-resize-guide{background-color:#999;height:4px;left:0;margin-top:-.5px;opacity:.5;position:absolute;width:100%}.tabulator .tabulator-alert{align-items:center;background:#0006;display:flex;height:100%;left:0;position:absolute;text-align:center;top:0;width:100%;z-index:100}.tabulator .tabulator-alert .tabulator-alert-msg{background:#fff;border-radius:10px;display:inline-block;font-size:16px;font-weight:700;margin:0 auto;padding:10px 20px}.tabulator .tabulator-alert .tabulator-alert-msg.tabulator-alert-state-msg{border:4px solid #333;color:#000}.tabulator .tabulator-alert .tabulator-alert-msg.tabulator-alert-state-error{border:4px solid #d00;color:#590000}.tabulator-row{background-color:#fff;box-sizing:border-box;min-height:22px;position:relative}.tabulator-row.tabulator-row-even{background-color:#efefef}@media (hover:hover) and (pointer:fine){.tabulator-row.tabulator-selectable:hover{background-color:#bbb;cursor:pointer}}.tabulator-row.tabulator-selected{background-color:#9abcea}@media (hover:hover) and (pointer:fine){.tabulator-row.tabulator-selected:hover{background-color:#769bcc;cursor:pointer}}.tabulator-row.tabulator-row-moving{background:#fff;border:1px solid #000}.tabulator-row.tabulator-moving{border-bottom:1px solid #aaa;border-top:1px solid #aaa;pointer-events:none;position:absolute;z-index:15}.tabulator-row.tabulator-range-highlight .tabulator-cell.tabulator-range-row-header{background-color:#d6d6d6;color:#000}.tabulator-row.tabulator-range-highlight.tabulator-range-selected .tabulator-cell.tabulator-range-row-header,.tabulator-row.tabulator-range-selected .tabulator-cell.tabulator-range-row-header{background-color:#3876ca;color:#fff}.tabulator-row .tabulator-row-resize-handle{bottom:0;height:5px;left:0;position:absolute;right:0}.tabulator-row .tabulator-row-resize-handle.prev{bottom:auto;top:0}@media (hover:hover) and (pointer:fine){.tabulator-row .tabulator-row-resize-handle:hover{cursor:ns-resize}}.tabulator-row .tabulator-responsive-collapse{border-bottom:1px solid #aaa;border-top:1px solid #aaa;box-sizing:border-box;padding:5px}.tabulator-row .tabulator-responsive-collapse:empty{display:none}.tabulator-row .tabulator-responsive-collapse table{font-size:14px}.tabulator-row .tabulator-responsive-collapse table tr td{position:relative}.tabulator-row .tabulator-responsive-collapse table tr td:first-of-type{padding-right:10px}.tabulator-row .tabulator-cell{border-right:1px solid #aaa;box-sizing:border-box;display:inline-block;outline:none;overflow:hidden;padding:4px;position:relative;text-overflow:ellipsis;vertical-align:middle;white-space:nowrap}.tabulator-row .tabulator-cell.tabulator-row-header{background:#e6e6e6;border-bottom:1px solid #aaa;border-right:1px solid #999}.tabulator-row .tabulator-cell.tabulator-frozen{background-color:inherit;display:inline-block;left:0;position:sticky;z-index:11}.tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left{border-right:2px solid #aaa}.tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-right{border-left:2px solid #aaa}.tabulator-row .tabulator-cell.tabulator-editing{border:1px solid #1d68cd;outline:none;padding:0}.tabulator-row .tabulator-cell.tabulator-editing input,.tabulator-row .tabulator-cell.tabulator-editing select{background:transparent;border:1px;outline:none}.tabulator-row .tabulator-cell.tabulator-validation-fail{border:1px solid #d00}.tabulator-row .tabulator-cell.tabulator-validation-fail input,.tabulator-row .tabulator-cell.tabulator-validation-fail select{background:transparent;border:1px;color:#d00}.tabulator-row .tabulator-cell.tabulator-row-handle{align-items:center;display:inline-flex;justify-content:center;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none}.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box{width:80%}.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar{background:#666;height:3px;margin-top:2px;width:100%}.tabulator-row .tabulator-cell.tabulator-range-selected:not(.tabulator-range-only-cell-selected):not(.tabulator-range-row-header){background-color:#9abcea}.tabulator-row .tabulator-cell .tabulator-data-tree-branch-empty{display:inline-block;width:7px}.tabulator-row .tabulator-cell .tabulator-data-tree-branch{border-bottom:2px solid #aaa;border-bottom-left-radius:1px;border-left:2px solid #aaa;display:inline-block;height:9px;margin-right:5px;margin-top:-9px;vertical-align:middle;width:7px}.tabulator-row .tabulator-cell .tabulator-data-tree-control{align-items:center;background:#0000001a;border:1px solid #333;border-radius:2px;display:inline-flex;height:11px;justify-content:center;margin-right:5px;overflow:hidden;vertical-align:middle;width:11px}@media (hover:hover) and (pointer:fine){.tabulator-row .tabulator-cell .tabulator-data-tree-control:hover{background:#0003;cursor:pointer}}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-collapse{background:transparent;display:inline-block;height:7px;position:relative;width:1px}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-collapse:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-expand{background:#333;display:inline-block;height:7px;position:relative;width:1px}.tabulator-row .tabulator-cell .tabulator-data-tree-control .tabulator-data-tree-control-expand:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle{align-items:center;background:#666;border-radius:20px;color:#fff;display:inline-flex;font-size:1.1em;font-weight:700;height:15px;justify-content:center;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;width:15px}@media (hover:hover) and (pointer:fine){.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle:hover{cursor:pointer;opacity:.7}}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle.open .tabulator-responsive-collapse-toggle-close{display:initial}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle.open .tabulator-responsive-collapse-toggle-open{display:none}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle svg{stroke:#fff}.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle .tabulator-responsive-collapse-toggle-close{display:none}.tabulator-row .tabulator-cell .tabulator-traffic-light{border-radius:14px;display:inline-block;height:14px;width:14px}.tabulator-row.tabulator-group{background:#ccc;border-bottom:1px solid #999;border-right:1px solid #aaa;border-top:1px solid #999;box-sizing:border-box;font-weight:700;min-width:100%;padding:5px 5px 5px 10px}@media (hover:hover) and (pointer:fine){.tabulator-row.tabulator-group:hover{background-color:#0000001a;cursor:pointer}}.tabulator-row.tabulator-group.tabulator-group-visible .tabulator-arrow{border-bottom:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #666;margin-right:10px}.tabulator-row.tabulator-group.tabulator-group-level-1{padding-left:30px}.tabulator-row.tabulator-group.tabulator-group-level-2{padding-left:50px}.tabulator-row.tabulator-group.tabulator-group-level-3{padding-left:70px}.tabulator-row.tabulator-group.tabulator-group-level-4{padding-left:90px}.tabulator-row.tabulator-group.tabulator-group-level-5{padding-left:110px}.tabulator-row.tabulator-group .tabulator-group-toggle{display:inline-block}.tabulator-row.tabulator-group .tabulator-arrow{border-bottom:6px solid transparent;border-left:6px solid #666;border-right:0;border-top:6px solid transparent;display:inline-block;height:0;margin-right:16px;vertical-align:middle;width:0}.tabulator-row.tabulator-group span{color:#d00;margin-left:10px}.tabulator-toggle{background:#dcdcdc;border:1px solid #ccc;box-sizing:border-box;display:flex;flex-direction:row}.tabulator-toggle.tabulator-toggle-on{background:#1c6cc2}.tabulator-toggle .tabulator-toggle-switch{background:#fff;border:1px solid #ccc;box-sizing:border-box}.tabulator-popup-container{-webkit-overflow-scrolling:touch;background:#fff;border:1px solid #aaa;box-shadow:0 0 5px #0003;box-sizing:border-box;display:inline-block;font-size:14px;overflow-y:auto;position:absolute;z-index:10000}.tabulator-popup{border-radius:3px;padding:5px}.tabulator-tooltip{border-radius:2px;box-shadow:none;font-size:12px;max-width:Min(500px,100%);padding:3px 5px;pointer-events:none}.tabulator-menu .tabulator-menu-item{box-sizing:border-box;padding:5px 10px;position:relative;-webkit-user-select:none;user-select:none}.tabulator-menu .tabulator-menu-item.tabulator-menu-item-disabled{opacity:.5}@media (hover:hover) and (pointer:fine){.tabulator-menu .tabulator-menu-item:not(.tabulator-menu-item-disabled):hover{background:#efefef;cursor:pointer}}.tabulator-menu .tabulator-menu-item.tabulator-menu-item-submenu{padding-right:25px}.tabulator-menu .tabulator-menu-item.tabulator-menu-item-submenu:after{border-color:#aaa;border-style:solid;border-width:1px 1px 0 0;content:\"\";display:inline-block;height:7px;position:absolute;right:10px;top:calc(5px + .4em);transform:rotate(45deg);vertical-align:top;width:7px}.tabulator-menu .tabulator-menu-separator{border-top:1px solid #aaa}.tabulator-edit-list{-webkit-overflow-scrolling:touch;font-size:14px;max-height:200px;overflow-y:auto}.tabulator-edit-list .tabulator-edit-list-item{color:#333;outline:none;padding:4px}.tabulator-edit-list .tabulator-edit-list-item.active{background:#1d68cd;color:#fff}.tabulator-edit-list .tabulator-edit-list-item.active.focused{outline:1px solid hsla(0,0%,100%,.5)}.tabulator-edit-list .tabulator-edit-list-item.focused{outline:1px solid #1d68cd}@media (hover:hover) and (pointer:fine){.tabulator-edit-list .tabulator-edit-list-item:hover{background:#1d68cd;color:#fff;cursor:pointer}}.tabulator-edit-list .tabulator-edit-list-placeholder{color:#333;padding:4px;text-align:center}.tabulator-edit-list .tabulator-edit-list-group{border-bottom:1px solid #aaa;color:#333;font-weight:700;padding:6px 4px 4px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-2,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-2{padding-left:12px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-3,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-3{padding-left:20px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-4,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-4{padding-left:28px}.tabulator-edit-list .tabulator-edit-list-group.tabulator-edit-list-group-level-5,.tabulator-edit-list .tabulator-edit-list-item.tabulator-edit-list-group-level-5{padding-left:36px}.tabulator.tabulator-ltr{direction:ltr}.tabulator.tabulator-rtl{direction:rtl;text-align:initial}.tabulator.tabulator-rtl .tabulator-header .tabulator-col{border-left:1px solid #aaa;border-right:initial;text-align:initial}.tabulator.tabulator-rtl .tabulator-header .tabulator-col.tabulator-col-group .tabulator-col-group-cols{margin-left:-1px;margin-right:0}.tabulator.tabulator-rtl .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title{padding-left:25px;padding-right:0}.tabulator.tabulator-rtl .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter{left:8px;right:auto}.tabulator.tabulator-rtl .tabulator-tableholder .tabulator-range-overlay .tabulator-range.tabulator-range-active:after{background-color:#2975dd;border-radius:999px;bottom:-3px;content:\"\";height:6px;left:-3px;position:absolute;right:auto;width:6px}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell{border-left:1px solid #aaa;border-right:initial}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell .tabulator-data-tree-branch{border-bottom-left-radius:0;border-bottom-right-radius:1px;border-left:initial;border-right:2px solid #aaa;margin-left:5px;margin-right:0}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell .tabulator-data-tree-control{margin-left:5px;margin-right:0}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left{border-left:2px solid #aaa}.tabulator.tabulator-rtl .tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-right{border-right:2px solid #aaa}.tabulator.tabulator-rtl .tabulator-row .tabulator-col-resize-handle:last-of-type{margin-left:0;margin-right:-3px;width:3px}.tabulator.tabulator-rtl .tabulator-footer .tabulator-calcs-holder{text-align:initial}.tabulator-print-fullscreen{inset:0;position:absolute;z-index:10000}body.tabulator-print-fullscreen-hide>:not(.tabulator-print-fullscreen){display:none!important}.tabulator-print-table{border-collapse:collapse}.tabulator-print-table .tabulator-data-tree-branch{border-bottom:2px solid #aaa;border-bottom-left-radius:1px;border-left:2px solid #aaa;display:inline-block;height:9px;margin-right:5px;margin-top:-9px;vertical-align:middle;width:7px}.tabulator-print-table .tabulator-print-table-group{background:#ccc;border-bottom:1px solid #999;border-right:1px solid #aaa;border-top:1px solid #999;box-sizing:border-box;font-weight:700;min-width:100%;padding:5px 5px 5px 10px}@media (hover:hover) and (pointer:fine){.tabulator-print-table .tabulator-print-table-group:hover{background-color:#0000001a;cursor:pointer}}.tabulator-print-table .tabulator-print-table-group.tabulator-group-visible .tabulator-arrow{border-bottom:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #666;margin-right:10px}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-1 td{padding-left:30px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-2 td{padding-left:50px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-3 td{padding-left:70px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-4 td{padding-left:90px!important}.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-5 td{padding-left:110px!important}.tabulator-print-table .tabulator-print-table-group .tabulator-group-toggle{display:inline-block}.tabulator-print-table .tabulator-print-table-group .tabulator-arrow{border-bottom:6px solid transparent;border-left:6px solid #666;border-right:0;border-top:6px solid transparent;display:inline-block;height:0;margin-right:16px;vertical-align:middle;width:0}.tabulator-print-table .tabulator-print-table-group span{color:#d00;margin-left:10px}.tabulator-print-table .tabulator-data-tree-control{align-items:center;background:#0000001a;border:1px solid #333;border-radius:2px;display:inline-flex;height:11px;justify-content:center;margin-right:5px;overflow:hidden;vertical-align:middle;width:11px}@media (hover:hover) and (pointer:fine){.tabulator-print-table .tabulator-data-tree-control:hover{background:#0003;cursor:pointer}}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-collapse{background:transparent;display:inline-block;height:7px;position:relative;width:1px}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-collapse:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-expand{background:#333;display:inline-block;height:7px;position:relative;width:1px}.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-expand:after{background:#333;content:\"\";height:1px;left:-3px;position:absolute;top:3px;width:7px}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { tableElement: [{
-                type: ViewChild,
-                args: ['table', { static: true }]
-            }] } });
+            args: [{ selector: 'ta-grid', standalone: true, imports: [PaginationComponent, NgTemplateOutlet, AsyncPipe, TitleComponent, TranslateModule, FontIconComponent], encapsulation: ViewEncapsulation.None, template: "@if (this.isReady$ | async) {\r\n  @if (this.displayType() === 'grid') {\r\n    <div class=\"ta-grid-table-wrapper\">\r\n      <table class=\"ta-grid-table\">\r\n        <thead>\r\n          <tr>\r\n            @for (col of this.visibleCols(); track col.key) {\r\n              <th\r\n                class=\"ta-grid-th\"\r\n                [class.is-sortable]=\"col.sortable\"\r\n                [class.is-sorted]=\"this.sortField === col.key\"\r\n                [style.width]=\"col.width ?? 'auto'\"\r\n                (click)=\"this.onSort(col)\"\r\n              >\r\n                <div class=\"ta-grid-th__inner\">\r\n                  <span class=\"ta-grid-th__label\">{{ col.title | translate }}</span>\r\n                  @if (this.sortField === col.key) {\r\n                    <ta-font-icon\r\n                      class=\"ta-grid-th__sort-icon\"\r\n                      [icon]=\"this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'\"\r\n                    />\r\n                  }\r\n                </div>\r\n              </th>\r\n            }\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          @for (row of this.rows; track row.id) {\r\n            <tr class=\"ta-grid-tr c-pointer\" (click)=\"this.onRowClick(row)\">\r\n              @for (col of this.visibleCols(); track col.key) {\r\n                <td class=\"ta-grid-td\">\r\n                  @if (col.template) {\r\n                    <ng-container\r\n                      [ngTemplateOutlet]=\"col.template\"\r\n                      [ngTemplateOutletContext]=\"{ $implicit: row, value: this.getCellValue(row, col.key) }\"\r\n                    ></ng-container>\r\n                  } @else {\r\n                    {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}\r\n                  }\r\n                </td>\r\n              }\r\n            </tr>\r\n          }\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n  }\r\n\r\n  @if (this.displayType() === 'card') {\r\n    @if (this.isGroup) {\r\n      @for (group of this.dataByGroup; track group.key) {\r\n        <ta-title [level]=\"3\">{{ group.key }}</ta-title>\r\n        <div class=\"py-space-md\">\r\n          <ng-template\r\n            [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n            [ngTemplateOutletContext]=\"{ items: group.data }\"\r\n          ></ng-template>\r\n        </div>\r\n      }\r\n    } @else {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n        [ngTemplateOutletContext]=\"{ items: this.data }\"\r\n      ></ng-template>\r\n    }\r\n  }\r\n\r\n  <div class=\"py-space-md align-center\">\r\n    <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\r\n  </div>\r\n}\r\n", styles: [".ta-grid-table-wrapper{width:100%;overflow-x:auto}.ta-grid-table{width:100%;border-collapse:collapse;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.ta-grid-table .ta-grid-th{padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border-bottom:2px solid var(--ta-border-primary);color:var(--ta-text-secondary);white-space:nowrap;-webkit-user-select:none;user-select:none}.ta-grid-table .ta-grid-th.is-sortable{cursor:pointer}.ta-grid-table .ta-grid-th.is-sortable:hover{color:var(--ta-text-primary);background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-th.is-sorted{color:var(--ta-text-brand)}.ta-grid-table .ta-grid-th__inner{display:flex;align-items:center;gap:var(--ta-space-xs)}.ta-grid-table .ta-grid-tr{border-bottom:1px solid var(--ta-border-secondary)}.ta-grid-table .ta-grid-tr:hover{background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-td{padding:var(--ta-space-sm) var(--ta-space-md);color:var(--ta-text-primary);vertical-align:middle}\n"] }]
+        }], ctorParameters: () => [] });
 
 class TaGridHighlightFiltersComponent extends TaAbstractGridComponent {
     constructor() {
@@ -900,13 +1114,10 @@ class TaGridSearchComponent extends TaAbstractGridComponent {
         this._session = inject(TaGridSessionService);
     }
     valueChanged(value) {
-        const filters = [
-            {
-                field: gridSearchFieldsName,
-                type: 'like',
-                value: value.trim(),
-            },
-        ];
+        const trimmed = (value ?? '').trim();
+        const filters = trimmed
+            ? [{ field: gridSearchFieldsName, type: 'like', value: trimmed }]
+            : [];
         if (this.outOfBox()) {
             this._session.setFilter(this.gridId(), filters);
         }
@@ -932,32 +1143,30 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
         this._session = inject(TaGridSessionService);
         this._service = inject(TaGridViewService);
     }
-    ngAfterViewInit() {
+    ngOnInit() {
+        super.ngOnInit();
         const raw = this._session.getFilter(this.gridId());
         this._grid.init({
-            elementRef: this.tableElement,
             colsMetaData: this.colsMetaData(),
             initialFilter: raw ?? [],
             data: this.initialData(),
             preset: this.preset(),
-            services: {
-                getData$: params => this._service.getData$(this.model(), params),
-            },
+            services: this.model()
+                ? { getData$: params => this._service.getData$(this.model(), params) }
+                : undefined,
         });
     }
     ngOnDestroy() {
+        super.ngOnDestroy();
         this._grid.destroy();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "tableElement", first: true, predicate: ["table"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div style=\"display: none\">\r\n  <div #table></div>\r\n</div>\r\n\r\n<ng-content></ng-content>\r\n", styles: [""] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-content></ng-content>\r\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-container', standalone: true, imports: [], template: "<div style=\"display: none\">\r\n  <div #table></div>\r\n</div>\r\n\r\n<ng-content></ng-content>\r\n" }]
-        }], propDecorators: { tableElement: [{
-                type: ViewChild,
-                args: ['table', { static: true }]
-            }] } });
+            args: [{ selector: 'ta-grid-container', standalone: true, imports: [], template: "<ng-content></ng-content>\r\n" }]
+        }] });
 
 /*
  * Public API Surface of features

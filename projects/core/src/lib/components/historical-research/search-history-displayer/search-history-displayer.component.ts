@@ -78,6 +78,7 @@ export class SearchHistoryDisplayerComponent {
   });
 
   public searchCompleted(search: string) {
+    if (!search?.trim()) return;
     const searchHistoryValue = this.searchHistory();
     if (searchHistoryValue?.type) {
       this._saveInLocalStorage(search);

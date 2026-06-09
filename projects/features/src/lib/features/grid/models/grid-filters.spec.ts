@@ -1,3 +1,4 @@
+import { Filter, Preset } from './types';
 import { TaGridFilters } from './grid-filters';
 
 describe('TaGridFilters', () => {
@@ -31,7 +32,7 @@ describe('TaGridFilters', () => {
   });
 
   it('should accept preset through constructor', () => {
-    const presets = [{ name: 'Active', filters: [{ field: 'status', type: '=', value: 'active' }] }];
+    const presets: Preset[] = [{ name: 'Active', filters: [{ field: 'status', type: '=', value: 'active' }] }];
     const filtersWithPreset = new TaGridFilters('scope', mockTable, presets);
 
     expect(filtersWithPreset.preset).toEqual(presets);
@@ -74,7 +75,7 @@ describe('TaGridFilters', () => {
 
   describe('apply', () => {
     it('should call table.setFilter with the given filters after debounce', (done) => {
-      const filters = [{ field: 'name', type: 'like', value: 'test' }];
+      const filters: Filter[] = [{ field: 'name', type: 'like', value: 'test' }];
 
       gridFilters.apply(filters);
 
@@ -85,8 +86,8 @@ describe('TaGridFilters', () => {
     });
 
     it('should debounce multiple calls', (done) => {
-      const filters1 = [{ field: 'name', type: 'like', value: 'test1' }];
-      const filters2 = [{ field: 'name', type: 'like', value: 'test2' }];
+      const filters1: Filter[] = [{ field: 'name', type: 'like', value: 'test1' }];
+      const filters2: Filter[] = [{ field: 'name', type: 'like', value: 'test2' }];
 
       gridFilters.apply(filters1);
       gridFilters.apply(filters2);
@@ -101,7 +102,7 @@ describe('TaGridFilters', () => {
 
   describe('remove', () => {
     it('should call table.removeFilter with correct arguments', () => {
-      const filter = { field: 'name', type: 'like', value: 'test' };
+      const filter: Filter = { field: 'name', type: 'like', value: 'test' };
 
       gridFilters.remove(filter);
 

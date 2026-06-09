@@ -45,10 +45,6 @@ describe('TaGridData', () => {
     expect(gridData.displayType()).toBe('card');
   });
 
-  it('should have tableHtml initially null', () => {
-    expect(gridData.tableHtml).toBeNull();
-  });
-
   describe('data', () => {
     it('should return empty array when table is null', () => {
       expect(gridData.data).toEqual([]);
@@ -88,7 +84,6 @@ describe('TaGridData', () => {
     it('should set groupBy field', () => {
       gridData.table = {
         setGroupBy: jasmine.createSpy('setGroupBy'),
-        setData: jasmine.createSpy('setData'),
       } as any;
 
       gridData.setGroupBy('category');
@@ -96,17 +91,15 @@ describe('TaGridData', () => {
       expect(gridData.groupBy).toBe('category');
     });
 
-    it('should call table.setGroupBy and table.setData', () => {
+    it('should call table.setGroupBy', () => {
       const mockTable = {
         setGroupBy: jasmine.createSpy('setGroupBy'),
-        setData: jasmine.createSpy('setData'),
       };
       gridData.table = mockTable as any;
 
       gridData.setGroupBy('category');
 
       expect(mockTable.setGroupBy).toHaveBeenCalledWith('category');
-      expect(mockTable.setData).toHaveBeenCalled();
     });
   });
 
@@ -114,7 +107,6 @@ describe('TaGridData', () => {
     it('should set groupBy to null', () => {
       gridData.table = {
         setGroupBy: jasmine.createSpy('setGroupBy'),
-        setData: jasmine.createSpy('setData'),
       } as any;
 
       gridData.setGroupBy('category');
@@ -123,17 +115,15 @@ describe('TaGridData', () => {
       expect(gridData.groupBy).toBeNull();
     });
 
-    it('should call table.setGroupBy with empty array and table.setData', () => {
+    it('should call table.setGroupBy with null', () => {
       const mockTable = {
         setGroupBy: jasmine.createSpy('setGroupBy'),
-        setData: jasmine.createSpy('setData'),
       };
       gridData.table = mockTable as any;
 
       gridData.clearGroupBy();
 
-      expect(mockTable.setGroupBy).toHaveBeenCalledWith([]);
-      expect(mockTable.setData).toHaveBeenCalled();
+      expect(mockTable.setGroupBy).toHaveBeenCalledWith(null);
     });
   });
 

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, of } from 'rxjs';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { Filter } from '../../models/types';
 import { TaGridFormService } from '../../services/grid-form.services';
 import { TaGridInstanceService } from '../../services/grid-instance.service';
 import { TaGridFormComponent } from './form.component';
@@ -96,7 +97,7 @@ describe('TaGridFormComponent', () => {
   describe('applyFilters', () => {
     it('should format and apply filters', () => {
       const testData = { name: 'test' };
-      const formattedFilters = [{ field: 'name', type: 'like', value: 'test' }];
+      const formattedFilters: Filter[] = [{ field: 'name', type: 'like', value: 'test' }];
       mockFormService.formatFiltersForm.and.returnValue(formattedFilters);
 
       component.applyFilters(testData);

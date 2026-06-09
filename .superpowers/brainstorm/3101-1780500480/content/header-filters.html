@@ -1,0 +1,93 @@
+<h2>Header Filters — Quel comportement préféres-tu ?</h2>
+<p class="subtitle">Le nouveau composant Angular doit avoir des filtres inline dans les colonnes. Choisis le style qui correspond le mieux à ce que vous avez aujourd'hui avec Tabulator.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Filtre sous le titre — ligne dédiée</h3>
+      <p>Chaque colonne a son titre en haut, puis un input de filtre dans une seconde ligne de header. Identique au comportement Tabulator par défaut.</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-body" style="padding:0;overflow:hidden;border-radius:6px">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:#1e2433;color:#fff">
+                <th style="padding:8px 10px;text-align:left;border-right:1px solid #2d3447">Nom ↑</th>
+                <th style="padding:8px 10px;text-align:left;border-right:1px solid #2d3447">Statut</th>
+                <th style="padding:8px 10px;text-align:left">Date</th>
+              </tr>
+              <tr style="background:#161b2e;border-bottom:2px solid #2d3447">
+                <th style="padding:4px 6px;border-right:1px solid #2d3447"><input style="width:100%;background:#0d1117;border:1px solid #3d4663;border-radius:4px;color:#ccc;padding:3px 6px;font-size:11px" placeholder="Filtrer…" /></th>
+                <th style="padding:4px 6px;border-right:1px solid #2d3447"><input style="width:100%;background:#0d1117;border:1px solid #3d4663;border-radius:4px;color:#ccc;padding:3px 6px;font-size:11px" placeholder="Filtrer…" /></th>
+                <th style="padding:4px 6px"><input style="width:100%;background:#0d1117;border:1px solid #3d4663;border-radius:4px;color:#ccc;padding:3px 6px;font-size:11px" placeholder="Filtrer…" /></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #1e2433">
+                <td style="padding:8px 10px;color:#ccc;border-right:1px solid #1e2433">Alice Martin</td>
+                <td style="padding:8px 10px;border-right:1px solid #1e2433"><span style="background:#1a3a2a;color:#4ade80;padding:2px 8px;border-radius:4px;font-size:11px">Actif</span></td>
+                <td style="padding:8px 10px;color:#ccc">12/05/2025</td>
+              </tr>
+              <tr style="border-bottom:1px solid #1e2433;background:#0f1420">
+                <td style="padding:8px 10px;color:#ccc;border-right:1px solid #1e2433">Bob Dupont</td>
+                <td style="padding:8px 10px;border-right:1px solid #1e2433"><span style="background:#3a1a1a;color:#f87171;padding:2px 8px;border-radius:4px;font-size:11px">Inactif</span></td>
+                <td style="padding:8px 10px;color:#ccc">03/11/2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Filtre intégré dans le titre — icône toggle</h3>
+      <p>Le titre et le filtre partagent la même cellule de header. Un clic sur l'icône loupe affiche/masque l'input. Plus compact, une seule ligne de header.</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-body" style="padding:0;overflow:hidden;border-radius:6px">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:#1e2433;color:#fff;border-bottom:2px solid #2d3447">
+                <th style="padding:6px 10px;text-align:left;border-right:1px solid #2d3447">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span>Nom ↑</span>
+                      <span style="opacity:0.5;cursor:pointer;font-size:13px">🔍</span>
+                    </div>
+                    <input style="width:100%;background:#0d1117;border:1px solid #3d4663;border-radius:4px;color:#ccc;padding:2px 6px;font-size:11px" placeholder="Filtrer…" />
+                  </div>
+                </th>
+                <th style="padding:6px 10px;text-align:left;border-right:1px solid #2d3447">
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <span>Statut</span>
+                    <span style="opacity:0.5;cursor:pointer;font-size:13px">🔍</span>
+                  </div>
+                </th>
+                <th style="padding:6px 10px;text-align:left">
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <span>Date</span>
+                    <span style="opacity:0.5;cursor:pointer;font-size:13px">🔍</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #1e2433">
+                <td style="padding:8px 10px;color:#ccc;border-right:1px solid #1e2433">Alice Martin</td>
+                <td style="padding:8px 10px;border-right:1px solid #1e2433"><span style="background:#1a3a2a;color:#4ade80;padding:2px 8px;border-radius:4px;font-size:11px">Actif</span></td>
+                <td style="padding:8px 10px;color:#ccc">12/05/2025</td>
+              </tr>
+              <tr style="border-bottom:1px solid #1e2433;background:#0f1420">
+                <td style="padding:8px 10px;color:#ccc;border-right:1px solid #1e2433">Bob Dupont</td>
+                <td style="padding:8px 10px;border-right:1px solid #1e2433"><span style="background:#3a1a1a;color:#f87171;padding:2px 8px;border-radius:4px;font-size:11px">Inactif</span></td>
+                <td style="padding:8px 10px;color:#ccc">03/11/2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

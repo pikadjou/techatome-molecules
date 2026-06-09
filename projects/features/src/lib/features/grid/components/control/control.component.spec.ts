@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { Preset } from '../../models/types';
 import { TaGridInstanceService } from '../../services/grid-instance.service';
 import { TaGridControlComponent } from './control.component';
 
@@ -96,7 +97,7 @@ describe('TaGridControlComponent', () => {
   describe('setPreset', () => {
     it('should call grid.filters.apply when filters exist', () => {
       mockGridData.filters = { apply: jasmine.createSpy('apply') };
-      const preset = { name: 'Active', filters: [{ field: 'status', type: '=', value: 'active' }] };
+      const preset: Preset = { name: 'Active', filters: [{ field: 'status', type: '=', value: 'active' }] };
 
       component.setPreset(preset);
 

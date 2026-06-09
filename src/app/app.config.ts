@@ -6,6 +6,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { provideRouter } from "@angular/router";
 
+import { LAZY_SERVICE_TOKEN, TaNotificationService } from "@ta/notification";
 import { provideServer } from "@ta/server";
 import { provideTranslation, TranslationSourceType } from "@ta/translation";
 
@@ -30,5 +31,6 @@ export const appConfig: ApplicationConfig = {
         filePath: "assets/i18n/",
       },
     }),
+    { provide: LAZY_SERVICE_TOKEN, useExisting: TaNotificationService },
   ],
 };

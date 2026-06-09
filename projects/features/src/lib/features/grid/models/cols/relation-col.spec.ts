@@ -1,4 +1,6 @@
-import { BehaviorSubject, Subject, of, signal } from '@angular/core';
+import { signal } from '@angular/core';
+
+import { BehaviorSubject, Subject, of } from 'rxjs';
 
 import { RelationCol } from './relation-col';
 import { TaGridData } from '../grid-data';
@@ -79,7 +81,7 @@ describe('RelationCol', () => {
           col: {
             name: 'projectId',
             type: ParameterType.Relation,
-            dataSearch$: () => of([{ id: '1', name: 'Project A' }]),
+            dataSearch$: () => of([{ id: '1', name: 'Project A', data: {} }]),
           },
         },
         mockModel

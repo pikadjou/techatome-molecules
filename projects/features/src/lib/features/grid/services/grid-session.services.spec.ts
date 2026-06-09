@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { Filter } from '../models/types';
 import { TaGridSessionService } from './grid-session.services';
 
 describe('TaGridSessionService', () => {
@@ -18,7 +19,7 @@ describe('TaGridSessionService', () => {
 
   describe('setFilter and getFilter', () => {
     it('should store and retrieve a filter', () => {
-      const filters = [{ field: 'name', type: 'like', value: 'test' }];
+      const filters: Filter[] = [{ field: 'name', type: 'like', value: 'test' }];
 
       service.setFilter('grid-1', filters);
       const result = service.getFilter('grid-1');
@@ -32,8 +33,8 @@ describe('TaGridSessionService', () => {
     });
 
     it('should update an existing filter', () => {
-      const filters1 = [{ field: 'name', type: 'like', value: 'test1' }];
-      const filters2 = [{ field: 'name', type: 'like', value: 'test2' }];
+      const filters1: Filter[] = [{ field: 'name', type: 'like', value: 'test1' }];
+      const filters2: Filter[] = [{ field: 'name', type: 'like', value: 'test2' }];
 
       service.setFilter('grid-1', filters1);
       service.setFilter('grid-1', filters2);
@@ -43,8 +44,8 @@ describe('TaGridSessionService', () => {
     });
 
     it('should store filters for different keys independently', () => {
-      const filters1 = [{ field: 'name', type: 'like', value: 'test1' }];
-      const filters2 = [{ field: 'status', type: '=', value: 'active' }];
+      const filters1: Filter[] = [{ field: 'name', type: 'like', value: 'test1' }];
+      const filters2: Filter[] = [{ field: 'status', type: '=', value: 'active' }];
 
       service.setFilter('grid-1', filters1);
       service.setFilter('grid-2', filters2);
@@ -56,7 +57,7 @@ describe('TaGridSessionService', () => {
 
   describe('clearFilter', () => {
     it('should clear filter for a given key', () => {
-      const filters = [{ field: 'name', type: 'like', value: 'test' }];
+      const filters: Filter[] = [{ field: 'name', type: 'like', value: 'test' }];
       service.setFilter('grid-1', filters);
 
       service.clearFilter('grid-1');

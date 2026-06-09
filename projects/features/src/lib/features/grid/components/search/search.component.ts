@@ -24,13 +24,11 @@ export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
   private _session = inject(TaGridSessionService);
 
   public valueChanged(value: string) {
-    const filters: Filter[] = [
-      {
-        field: gridSearchFieldsName,
-        type: 'like',
-        value: value.trim(),
-      },
-    ];
+    const trimmed = (value ?? '').trim();
+    const filters: Filter[] = trimmed
+      ? [{ field: gridSearchFieldsName, type: 'like', value: trimmed }]
+      : [];
+
     if (this.outOfBox()) {
       this._session.setFilter(this.gridId(), filters);
     } else {

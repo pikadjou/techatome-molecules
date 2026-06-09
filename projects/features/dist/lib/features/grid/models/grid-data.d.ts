@@ -1,12 +1,9 @@
-import { ElementRef } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { TabulatorFull as Tabulator } from 'tabulator-tables';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { BaseCol } from './cols/base-col';
 import { TaGridFilters } from './grid-filters';
-import { ColMetaData, Filter, Preset, ViewType, ajaxRequestFuncParams, ajaxResponse } from './types';
-export interface IDataService<T> {
-    getData$: (params: ajaxRequestFuncParams) => Observable<ajaxResponse<T>>;
-}
+import { ITableStateServices as IDataService, TaTableState } from './table-state';
+import { ColMetaData, Filter, Preset, ViewType } from './types';
+export { ITableStateServices as IDataService } from './table-state';
 export declare class TaGridData<T> {
     readonly scope: string;
     get data(): T[];
@@ -16,21 +13,19 @@ export declare class TaGridData<T> {
     }[];
     get isGroup(): boolean;
     readonly rowClicked$: Subject<T>;
-    table: Tabulator | null;
+    table: TaTableState<T> | null;
     cols: {
         [index: string]: BaseCol<any>;
     };
     filters: TaGridFilters | null;
     readonly isReady$: BehaviorSubject<boolean>;
     readonly isDataReady$: BehaviorSubject<boolean>;
-    tableHtml: ElementRef | null;
     readonly displayType: import("@angular/core").WritableSignal<ViewType>;
     groupBy: keyof T | null;
     readonly totalItems: import("@angular/core").WritableSignal<number>;
     constructor(scope: string);
     init(params: {
-        elementRef: ElementRef;
-        colsMetaData: ColMetaData[];
+        colsMetaData: ColMetaData<T>[];
         data?: T[];
         services?: IDataService<T>;
         initialFilter?: Filter[];
@@ -40,7 +35,6 @@ export declare class TaGridData<T> {
     setGroupBy(field: string): void;
     clearGroupBy(): void;
     switchView(type: ViewType): void;
-    private _getOptions;
-    private _getColumns;
+    private _buildCols;
     private _factoryCols;
 }

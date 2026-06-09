@@ -1594,15 +1594,16 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class BannerComponent extends TaBaseComponent {
     constructor() {
         super();
+        this.inline = input(false);
         this.message = input.required();
         TaTranslationUI.getInstance();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BannerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BannerComponent, isStandalone: true, selector: "ta-banner", inputs: { message: { classPropertyName: "message", publicName: "message", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"banner\">\n  {{ this.message() | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-semantic-yellow-light);color:var(--ta-semantic-yellow-dark);padding:var(--ta-space-xs) var(--ta-space-md);text-align:center;box-shadow:var(--ta-shadow-black-sm)}\n"], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "ngmodule", type: TranslateModule }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BannerComponent, isStandalone: true, selector: "ta-banner", inputs: { inline: { classPropertyName: "inline", publicName: "inline", isSignal: true, isRequired: false, transformFunction: null }, message: { classPropertyName: "message", publicName: "message", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"banner\" [class.banner--inline]=\"this.inline()\">\r\n  {{ this.message() | translate }}\r\n</div>\r\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-semantic-yellow-light);color:var(--ta-semantic-yellow-dark);padding:var(--ta-space-xs) var(--ta-space-md);text-align:center;box-shadow:var(--ta-shadow-black-sm)}.banner--inline{position:relative;top:unset;left:unset;right:unset;border-radius:var(--ta-radius-rounded)}\n"], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "ngmodule", type: TranslateModule }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BannerComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-banner", standalone: true, imports: [TranslatePipe, TranslateModule], template: "<div class=\"banner\">\n  {{ this.message() | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-semantic-yellow-light);color:var(--ta-semantic-yellow-dark);padding:var(--ta-space-xs) var(--ta-space-md);text-align:center;box-shadow:var(--ta-shadow-black-sm)}\n"] }]
+            args: [{ selector: "ta-banner", standalone: true, imports: [TranslatePipe, TranslateModule], template: "<div class=\"banner\" [class.banner--inline]=\"this.inline()\">\r\n  {{ this.message() | translate }}\r\n</div>\r\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-semantic-yellow-light);color:var(--ta-semantic-yellow-dark);padding:var(--ta-space-xs) var(--ta-space-md);text-align:center;box-shadow:var(--ta-shadow-black-sm)}.banner--inline{position:relative;top:unset;left:unset;right:unset;border-radius:var(--ta-radius-rounded)}\n"] }]
         }], ctorParameters: () => [] });
 
 class InlineProfileDataComponent {

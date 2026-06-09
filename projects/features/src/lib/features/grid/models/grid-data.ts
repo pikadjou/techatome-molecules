@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { BaseCol } from './cols/base-col';
 import { BoolCol } from './cols/bool-col';
@@ -10,13 +10,11 @@ import { NumberCol } from './cols/number-col';
 import { RelationCol } from './cols/relation-col';
 import { StringCol } from './cols/string-col';
 import { TaGridFilters } from './grid-filters';
-import { TaTableState } from './table-state';
-import { ColMetaData, Filter, ParameterType, Preset, ViewType, ajaxRequestFuncParams, ajaxResponse } from './types';
+import { ITableStateServices as IDataService, TaTableState } from './table-state';
+import { ColMetaData, Filter, ParameterType, Preset, ViewType } from './types';
 import { groupBy } from './utils';
 
-export interface IDataService<T> {
-  getData$: (params: ajaxRequestFuncParams) => Observable<ajaxResponse<T>>;
-}
+export { ITableStateServices as IDataService } from './table-state';
 
 export class TaGridData<T> {
   get data(): T[] {
@@ -45,7 +43,7 @@ export class TaGridData<T> {
   constructor(public readonly scope: string) {}
 
   public init(params: {
-    colsMetaData: ColMetaData[];
+    colsMetaData: ColMetaData<T>[];
     data?: T[];
     services?: IDataService<T>;
     initialFilter?: Filter[];
@@ -74,7 +72,11 @@ export class TaGridData<T> {
   }
 
   public destroy() {
+    this.filters?.destroy();
     this.table?.destroy();
+    this.rowClicked$.complete();
+    this.isReady$.complete();
+    this.isDataReady$.complete();
   }
 
   public setGroupBy(field: string) {
@@ -90,7 +92,7 @@ export class TaGridData<T> {
     this.displayType.set(type);
   }
 
-  private _buildCols(colsMetaData: ColMetaData[]): void {
+  private _buildCols(colsMetaData: ColMetaData<T>[]): void {
     this.cols = Object.fromEntries(
       colsMetaData.map(meta => {
         const field = this._factoryCols(meta);
@@ -99,7 +101,7 @@ export class TaGridData<T> {
     );
   }
 
-  private _factoryCols(col: ColMetaData): BaseCol<any> {
+  private _factoryCols(col: ColMetaData<any>): BaseCol<any> {
     switch (col.type) {
       case ParameterType.String:
         return new StringCol({ scope: this.scope, col: col }, this);

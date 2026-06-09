@@ -1,1 +1,56 @@
-@import 'tabulator-tables/dist/css/tabulator.min.css';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+.ta-grid-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.ta-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  @include fonts.fontSizeBody(sm);
+
+  .ta-grid-th {
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    text-align: left;
+    border-bottom: 2px solid common.get-var(border, primary);
+    color: common.get-var(text, secondary);
+    white-space: nowrap;
+    user-select: none;
+
+    &.is-sortable {
+      cursor: pointer;
+
+      &:hover {
+        color: common.get-var(text, primary);
+        background: common.get-var(surface, hover);
+      }
+    }
+
+    &.is-sorted {
+      color: common.get-var(text, brand);
+    }
+
+    &__inner {
+      display: flex;
+      align-items: center;
+      gap: common.get-var(space, xs);
+    }
+  }
+
+  .ta-grid-tr {
+    border-bottom: 1px solid common.get-var(border, secondary);
+
+    &:hover {
+      background: common.get-var(surface, hover);
+    }
+  }
+
+  .ta-grid-td {
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    color: common.get-var(text, primary);
+    vertical-align: middle;
+  }
+}

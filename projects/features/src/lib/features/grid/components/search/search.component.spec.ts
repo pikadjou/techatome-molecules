@@ -74,7 +74,7 @@ describe('TaGridSearchComponent', () => {
   });
 
   it('should have an InputTextBox instance', () => {
-    expect(component.input).toBeTruthy();
+    expect(component.searchInput).toBeTruthy();
   });
 
   describe('valueChanged', () => {

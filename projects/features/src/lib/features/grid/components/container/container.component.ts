@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 
 import { ColMetaData, Preset } from '../../models/types';
 import { TaGridSessionService } from '../../services/grid-session.services';
@@ -12,39 +12,35 @@ import { TaAbstractGridComponent } from '../abstract.component';
   templateUrl: './container.component.html',
   styleUrl: './container.component.scss',
 })
-export class TaGridContainerComponent<T = unknown>
-  extends TaAbstractGridComponent<T>
-  implements AfterViewInit, OnDestroy
-{
+export class TaGridContainerComponent<T = unknown> extends TaAbstractGridComponent<T> {
   initialData = input<T[]>();
 
   model = input<string>('');
 
-  colsMetaData = input<ColMetaData<any>[]>([]);
+  colsMetaData = input<ColMetaData<T>[]>([]);
 
   preset = input<Preset[]>();
-
-  @ViewChild('table', { static: true }) tableElement!: ElementRef;
 
   private _session = inject(TaGridSessionService);
   private _service = inject(TaGridViewService);
 
-  ngAfterViewInit() {
+  override ngOnInit() {
+    super.ngOnInit();
     const raw = this._session.getFilter(this.gridId());
 
     this._grid.init({
-      elementRef: this.tableElement,
       colsMetaData: this.colsMetaData(),
       initialFilter: raw ?? [],
       data: this.initialData(),
       preset: this.preset(),
-      services: {
-        getData$: params => this._service.getData$<T>(this.model(), params),
-      },
+      services: this.model()
+        ? { getData$: params => this._service.getData$<T>(this.model(), params) }
+        : undefined,
     });
   }
 
   override ngOnDestroy() {
+    super.ngOnDestroy();
     this._grid.destroy();
   }
 }
