@@ -1,0 +1,76 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+.sections {
+  @include flex.flex-column();
+  gap: common.get-var(space, xxl);
+}
+
+.demo-section {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, lg);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, primary);
+
+  ta-title {
+    border-bottom: 1px solid common.get-var(border, secondary);
+    padding-bottom: common.get-var(space, sm);
+  }
+
+  code {
+    @include fonts.fontSizeBody(sm);
+    background: common.get-var(surface, secondary);
+    border: 1px solid common.get-var(border, secondary);
+    border-radius: common.get-var(radius, minimal);
+    padding: 1px 6px;
+    color: common.get-var(text, brand);
+  }
+}
+
+.grid-toolbar {
+  @include flex.flex-row();
+  @include flex.align-center();
+  @include flex.space-between();
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, sm) 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: common.get-var(space, md);
+}
+
+.product-card {
+  padding: common.get-var(space, md);
+  border: 1px solid common.get-var(border, primary);
+  border-radius: common.get-var(radius, rounded);
+  cursor: pointer;
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+  transition: box-shadow 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.detail-panel {
+  padding: common.get-var(space, md);
+  background: common.get-var(surface, secondary);
+  border-radius: common.get-var(radius, rounded);
+  border: 1px solid common.get-var(border, primary);
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+}
+
+.empty-state {
+  padding: common.get-var(space, xl);
+  text-align: center;
+  color: common.get-var(text, secondary);
+  border: 1px dashed common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+}

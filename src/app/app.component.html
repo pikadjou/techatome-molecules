@@ -3,18 +3,37 @@
     <div class="sidebar-header">{{ this.title }}</div>
     <div class="sidebar-nav">
       @for (item of this.menu; track item.label) {
-      @if (item.group) {
-      <div class="nav-group">{{ item.label }}</div>
-      } @else {
-      <a
-        [routerLink]="item.route"
-        class="nav-item"
-        routerLinkActive="active"
-      >
-        <span class="material-icons">{{ item.icon }}</span>
-        <span>{{ item.label }}</span>
-      </a>
-      }
+        @if (item.group) {
+          <div class="nav-group">{{ item.label }}</div>
+        } @else if (item.children) {
+          <a
+            [routerLink]="item.route"
+            class="nav-item"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: false }"
+          >
+            <span class="material-icons">{{ item.icon }}</span>
+            <span>{{ item.label }}</span>
+          </a>
+          @for (child of item.children; track child.label) {
+            <a
+              [routerLink]="child.route"
+              class="nav-item nav-item--child"
+              routerLinkActive="active"
+            >
+              <span>{{ child.label }}</span>
+            </a>
+          }
+        } @else {
+          <a
+            [routerLink]="item.route"
+            class="nav-item"
+            routerLinkActive="active"
+          >
+            <span class="material-icons">{{ item.icon }}</span>
+            <span>{{ item.label }}</span>
+          </a>
+        }
       }
     </div>
     <div class="sidebar-footer">

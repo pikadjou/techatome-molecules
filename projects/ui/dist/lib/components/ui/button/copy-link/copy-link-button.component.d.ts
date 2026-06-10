@@ -9,7 +9,7 @@ export declare class CopyLinkButtonComponent {
     /**
      * Button size
      */
-    size: import("@angular/core").InputSignal<"large" | "medium" | "small">;
+    size: import("@angular/core").InputSignal<"small" | "medium" | "large">;
     /**
      * Text to copy to clipboard
      */

@@ -5,12 +5,12 @@
     <!-- ============================== -->
     <section>
       <ta-title [level]="2">Banner — Types</ta-title>
-      <ta-text size="sm">type: info | success | warning | danger</ta-text>
+      <ta-text size="sm">type: default | warning | success | alert</ta-text>
       <div class="demo-column">
-        <ta-banner type="info" message="This is an information banner."></ta-banner>
-        <ta-banner type="success" message="Operation completed successfully."></ta-banner>
-        <ta-banner type="warning" message="Please review before continuing."></ta-banner>
-        <ta-banner type="danger" message="Something went wrong."></ta-banner>
+        <ta-banner [inline]="true" type="default" message="This is a default banner."></ta-banner>
+        <ta-banner [inline]="true" type="warning" message="Please review before continuing."></ta-banner>
+        <ta-banner [inline]="true" type="success" message="Operation completed successfully."></ta-banner>
+        <ta-banner [inline]="true" type="alert" message="Something went wrong."></ta-banner>
       </div>
     </section>
 

@@ -27,6 +27,10 @@ export class TaTableState<T> {
   readonly filters = signal<Filter[]>([]);
   readonly groupByField = signal<string | null>(null);
   readonly isLoading = signal(false);
+  readonly errorMessage = signal<string>('');
+
+  readonly selectedIds = signal<Set<number>>(new Set());
+  readonly selectionChanged$ = new Subject<number[]>();
 
   readonly rowClicked$ = new Subject<T>();
   readonly isReady$ = new BehaviorSubject(false);
@@ -124,12 +128,45 @@ export class TaTableState<T> {
     this._scheduleUpdate();
   }
 
+  toggleRow(id: number): void {
+    this.selectedIds.update(set => {
+      const next = new Set(set);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+    this.selectionChanged$.next([...this.selectedIds()]);
+  }
+
+  toggleAll(): void {
+    const pageIds = (this.rows() as Array<{ id: number }>).map(r => r.id);
+    const allSelected = pageIds.length > 0 && pageIds.every(id => this.selectedIds().has(id));
+    this.selectedIds.update(set => {
+      const next = new Set(set);
+      if (allSelected) pageIds.forEach(id => next.delete(id));
+      else pageIds.forEach(id => next.add(id));
+      return next;
+    });
+    this.selectionChanged$.next([...this.selectedIds()]);
+  }
+
+  clearSelection(): void {
+    this.selectedIds.set(new Set());
+    this.selectionChanged$.next([]);
+  }
+
+  isAllPageSelected(): boolean {
+    const pageIds = (this.rows() as Array<{ id: number }>).map(r => r.id);
+    return pageIds.length > 0 && pageIds.every(id => this.selectedIds().has(id));
+  }
+
   destroy(): void {
     if (this._fetchTimer) {
       clearTimeout(this._fetchTimer);
       this._fetchTimer = null;
     }
     ++this._fetchId;
+    this.selectionChanged$.complete();
     this.rowClicked$.complete();
     this.isReady$.complete();
     this.isDataReady$.complete();
@@ -201,6 +238,7 @@ export class TaTableState<T> {
 
     const total = data.length;
     this.totalItems.set(total);
+    this.errorMessage.set('');
 
     const page = this.currentPage();
     const size = this.pageSize();
@@ -232,6 +270,7 @@ export class TaTableState<T> {
         if (id !== this._fetchId) return;
         this.rows.set(response.data);
         this.totalItems.set(response.total);
+        this.errorMessage.set('');
         this.isLoading.set(false);
         this.isDataReady$.next(true);
         this._onDataUpdate?.(response.total);
@@ -239,6 +278,7 @@ export class TaTableState<T> {
       .catch(() => {
         if (id !== this._fetchId) return;
         this.isLoading.set(false);
+        this.errorMessage.set('grid.error.fetch');
       });
   }
 }

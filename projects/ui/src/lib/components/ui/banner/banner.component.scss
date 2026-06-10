@@ -5,8 +5,8 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: common.get-var(semantic, yellow-light);
-  color: common.get-var(semantic, yellow-dark);
+  background-color: common.get-var(surface, secondary);
+  color: common.get-var(text, primary);
   padding: common.get-var(space, xs) common.get-var(space, md);
   text-align: center;
   box-shadow: common.get-var(shadow, black, sm);
@@ -17,5 +17,25 @@
     left: unset;
     right: unset;
     border-radius: common.get-var(radius, rounded);
+  }
+
+  &--warning {
+    background-color: common.get-var(semantic, orange-light);
+    color: common.get-var(semantic, orange);
+  }
+
+  &--success {
+    background-color: common.get-var(semantic, green-light);
+    color: common.get-var(semantic, green);
+  }
+
+  &--alert {
+    background-color: common.get-var(semantic, red-light);
+    color: common.get-var(semantic, red);
+  }
+
+  &--default {
+    background-color: common.get-var(surface, secondary);
+    color: common.get-var(text, primary);
   }
 }

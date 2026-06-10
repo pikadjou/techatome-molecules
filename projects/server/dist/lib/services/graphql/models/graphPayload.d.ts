@@ -34,4 +34,9 @@ export interface GraphMutationPayload {
     mutation: TypedDocumentNode<unknown, unknown>;
     variables: any;
 }
+export interface PagedGraphQueryInput<T> extends Omit<GraphQueryInput<T>, 'order'> {
+    skip?: number;
+    order?: OrderType<T>[] | null;
+}
+export declare function createPagedQuery<T>(name: string, input?: PagedGraphQueryInput<T>): GraphPayload;
 export declare function createQuery<T>(name: string, input?: GraphQueryInput<T>): GraphPayload;

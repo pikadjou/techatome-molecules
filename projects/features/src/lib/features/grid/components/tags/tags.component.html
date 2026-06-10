@@ -9,7 +9,7 @@
 
     @for (tag of this.activeFilters; track tag.key) {
       <div class="item-tag flex-start g-space-xs align-center">
-        <div class="tag-title">{{ 'grid.' + this.gridId + '.core.' + tag.key | translate }}:</div>
+        <div class="tag-title">{{ 'grid.' + this.gridId() + '.core.' + tag.key | translate }}:</div>
         @for (value of tag.values; track value.field) {
           <ta-badge
             [value]="value.type + ' ' + value.value"

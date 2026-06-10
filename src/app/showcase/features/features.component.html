@@ -1,0 +1,362 @@
+<!-- ============================================================ -->
+<!-- Cell-level TemplateRefs — static: true, resolved in ngOnInit -->
+<!-- ============================================================ -->
+<ng-template #priceTpl let-row let-value="value">
+  <ta-badge [value]="value + ' €'"></ta-badge>
+</ng-template>
+
+<ng-template #stockTpl let-row let-value="value">
+  <ta-badge
+    [value]="value"
+    [type]="value === 0 ? 'danger' : value < 20 ? 'warning' : 'success'"
+  ></ta-badge>
+</ng-template>
+
+<ng-template #availableTpl let-row let-value="value">
+  <ta-badge [value]="value ? 'Disponible' : 'Épuisé'" [type]="value ? 'success' : 'danger'"></ta-badge>
+</ng-template>
+
+<!-- ============================================================ -->
+<app-page-layout title="@ta/features — Grid">
+  <div class="sections">
+
+    <!-- ======================================================== -->
+    <!-- 1. VUE CARTE — Mode par défaut + Sélection de ligne      -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">1. Vue Carte — Mode par défaut + Sélection de ligne</ta-title>
+      <ta-text size="sm">
+        Affichage en cartes avec un template <code>#cardTemplate</code> personnalisé.
+        Cliquez une carte pour déclencher <code>(rowClicked)</code> — la ligne sélectionnée s'affiche dans le panneau de détail.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.cardGridId"
+        [initialData]="this.products"
+        [colsMetaData]="this.baseCols"
+      >
+        <ta-grid
+          [gridId]="this.cardGridId"
+          [cardTemplate]="card1Tpl"
+          (rowClicked)="this.onRowClick($event)"
+        ></ta-grid>
+
+        <ng-template #card1Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card" (click)="this.onRowClick(item)">
+                <div class="space-between align-center">
+                  <strong>{{ item.name }}</strong>
+                  <ta-badge
+                    [value]="item.available ? 'Dispo' : 'Épuisé'"
+                    [type]="item.available ? 'success' : 'danger'"
+                  ></ta-badge>
+                </div>
+                <ta-text size="sm">{{ item.category }} — {{ item.price }} €</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+
+      @if (this.selected()) {
+        <div class="detail-panel">
+          <ta-title [level]="4">Sélectionné : {{ this.selected()!.name }}</ta-title>
+          <ta-text size="sm">Catégorie : {{ this.selected()!.category }}</ta-text>
+          <ta-text size="sm">Prix : {{ this.selected()!.price }} € · Stock : {{ this.selected()!.stock }}</ta-text>
+          <ta-badge [value]="this.selected()!.available ? 'En stock' : 'Épuisé'" [type]="this.selected()!.available ? 'success' : 'danger'"></ta-badge>
+        </div>
+      }
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 2. VUE TABLEAU — Tri par en-têtes + Switch de vue        -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">2. Vue Tableau — Tri par en-têtes de colonnes</ta-title>
+      <ta-text size="sm">
+        Utilisez le bouton de switch pour passer en vue tableau.
+        Cliquez un en-tête : 1er clic → ASC (↑) · 2e clic → DESC (↓) · 3e clic → aucun tri.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.tableGridId"
+        [initialData]="this.products"
+        [colsMetaData]="this.baseCols"
+      >
+        <div class="grid-toolbar">
+          <ta-grid-search [gridId]="this.tableGridId"></ta-grid-search>
+          <ta-grid-control
+            [gridId]="this.tableGridId"
+            [show]="{ switchView: true, filters: false, preset: false }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid [gridId]="this.tableGridId" [cardTemplate]="card2Tpl"></ta-grid>
+
+        <ng-template #card2Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card">
+                <strong>{{ item.name }}</strong>
+                <ta-text size="sm">{{ item.category }} · {{ item.price }} €</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 3. TYPES DE COLONNES — Formatteurs natifs                 -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">3. Types de colonnes — Formatteurs natifs (vue tableau)</ta-title>
+      <ta-text size="sm">
+        Boolean → ✓ / ✗ · DateTime → dd/MM/yyyy · Number → valeur brute · String → texte · Enum → libellé de l'option.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.typesGridId"
+        [initialData]="this.products"
+        [colsMetaData]="this.typeCols"
+      >
+        <div class="grid-toolbar">
+          <span></span>
+          <ta-grid-control
+            [gridId]="this.typesGridId"
+            [show]="{ switchView: true, filters: false, preset: false }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid [gridId]="this.typesGridId" [cardTemplate]="card3Tpl"></ta-grid>
+
+        <ng-template #card3Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card">
+                <div class="space-between align-center">
+                  <strong>{{ item.name }}</strong>
+                  <ta-badge
+                    [value]="item.available ? '✓ Dispo' : '✗ Épuisé'"
+                    [type]="item.available ? 'success' : 'danger'"
+                  ></ta-badge>
+                </div>
+                <ta-text size="sm">{{ item.createdAt }} · {{ item.category }}</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 4. TEMPLATES DE CELLULE — TemplateRef par colonne        -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">4. Templates de cellule — ColMetaData.template: TemplateRef</ta-title>
+      <ta-text size="sm">
+        Les colonnes price, stock et available utilisent un TemplateRef injecté via &#64;ViewChild &#123; static: true &#125;.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.templateGridId"
+        [initialData]="this.products"
+        [colsMetaData]="this.templateCols"
+      >
+        <div class="grid-toolbar">
+          <span></span>
+          <ta-grid-control
+            [gridId]="this.templateGridId"
+            [show]="{ switchView: true, filters: false, preset: false }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid [gridId]="this.templateGridId" [cardTemplate]="card4Tpl"></ta-grid>
+
+        <ng-template #card4Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card">
+                <div class="space-between align-center">
+                  <strong>{{ item.name }}</strong>
+                  <ta-badge
+                    [value]="item.available ? 'Disponible' : 'Épuisé'"
+                    [type]="item.available ? 'success' : 'danger'"
+                  ></ta-badge>
+                </div>
+                <ta-text size="sm">{{ item.price }} € · Stock : {{ item.stock }}</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 5. FILTRES COMPLETS — Search + Form + Tags + Presets     -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">5. Filtres complets — Recherche + Formulaire + Tags + Presets + Highlights</ta-title>
+      <ta-text size="sm">
+        Flux de filtrage complet : ta-grid-search · ta-grid-control · ta-grid-form · ta-grid-tags · ta-grid-highlight-filters.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.filterGridId"
+        [initialData]="this.products"
+        [colsMetaData]="this.baseCols"
+        [preset]="this.presets"
+      >
+        <ta-grid-highlight-filters [gridId]="this.filterGridId"></ta-grid-highlight-filters>
+
+        <div class="grid-toolbar">
+          <ta-grid-search [gridId]="this.filterGridId"></ta-grid-search>
+          <ta-grid-control
+            [gridId]="this.filterGridId"
+            [show]="{ switchView: true, filters: true, preset: true }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid-form [gridId]="this.filterGridId"></ta-grid-form>
+        <ta-grid-tags [gridId]="this.filterGridId"></ta-grid-tags>
+
+        <ta-grid [gridId]="this.filterGridId" [cardTemplate]="card5Tpl"></ta-grid>
+
+        <ng-template #card5Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card">
+                <div class="space-between align-center">
+                  <strong>{{ item.name }}</strong>
+                  <ta-badge [value]="item.category"></ta-badge>
+                </div>
+                <ta-text size="sm">{{ item.price }} € · Stock : {{ item.stock }}</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 6. COLONNES CONFIGURÉES — Largeurs fixes + notDisplayable-->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">6. Configuration des colonnes — Largeurs fixes + Colonne masquée</ta-title>
+      <ta-text size="sm">
+        La colonne id est masquée (notDisplayable: true). Les colonnes name, category, price et stock ont des largeurs définies.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.widthGridId"
+        [initialData]="this.products"
+        [colsMetaData]="this.widthCols"
+      >
+        <div class="grid-toolbar">
+          <span></span>
+          <ta-grid-control
+            [gridId]="this.widthGridId"
+            [show]="{ switchView: true, filters: false, preset: false }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid [gridId]="this.widthGridId" [cardTemplate]="card6Tpl"></ta-grid>
+
+        <ng-template #card6Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card">
+                <strong>{{ item.name }}</strong>
+                <ta-text size="sm">{{ item.category }} · {{ item.price }} €</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 7. ÉTAT VIDE — initialData = []                          -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">7. État vide — [initialData]="[]"</ta-title>
+      <ta-text size="sm">
+        Quand initialData est un tableau vide et qu'aucun service n'est configuré, le grid est prêt avec zéro ligne.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.emptyGridId"
+        [initialData]="[]"
+        [colsMetaData]="this.baseCols"
+      >
+        <div class="grid-toolbar">
+          <span></span>
+          <ta-grid-control
+            [gridId]="this.emptyGridId"
+            [show]="{ switchView: true, filters: false, preset: false }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid [gridId]="this.emptyGridId" [cardTemplate]="card7Tpl"></ta-grid>
+
+        <ng-template #card7Tpl let-items="items">
+          @if (items.length === 0) {
+            <div class="empty-state">
+              <ta-text>Aucun produit disponible.</ta-text>
+            </div>
+          } @else {
+            <div class="card-grid">
+              @for (item of items; track item.id) {
+                <div class="product-card">
+                  <strong>{{ item.name }}</strong>
+                </div>
+              }
+            </div>
+          }
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 8. PAGINATION — 60 éléments, 3 pages                    -->
+    <!-- ======================================================== -->
+    <section class="demo-section">
+      <ta-title [level]="2">8. Pagination — 60 éléments · pageSize = 20 · 3 pages</ta-title>
+      <ta-text size="sm">
+        Avec 60 éléments et une taille de page de 20, la pagination affiche 3 pages.
+      </ta-text>
+
+      <ta-grid-container
+        [gridId]="this.paginationGridId"
+        [initialData]="this.products60"
+        [colsMetaData]="this.baseCols"
+      >
+        <div class="grid-toolbar">
+          <ta-grid-search [gridId]="this.paginationGridId"></ta-grid-search>
+          <ta-grid-control
+            [gridId]="this.paginationGridId"
+            [show]="{ switchView: true, filters: false, preset: false }"
+          ></ta-grid-control>
+        </div>
+
+        <ta-grid [gridId]="this.paginationGridId" [cardTemplate]="card8Tpl"></ta-grid>
+
+        <ng-template #card8Tpl let-items="items">
+          <div class="card-grid">
+            @for (item of items; track item.id) {
+              <div class="product-card">
+                <div class="space-between align-center">
+                  <strong>#{{ item.id }} {{ item.name }}</strong>
+                  <ta-badge [value]="item.category"></ta-badge>
+                </div>
+                <ta-text size="sm">{{ item.price }} € · {{ item.available ? 'Dispo' : 'Épuisé' }}</ta-text>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-grid-container>
+    </section>
+
+  </div>
+</app-page-layout>

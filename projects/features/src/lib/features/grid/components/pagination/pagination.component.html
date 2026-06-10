@@ -1,6 +1,6 @@
 @if (this.grid && this.grid.table && this.show) {
   <div class="flex-start g-space-sm align-center">
-    <mat-icon (click)="this.grid.table.previousPage()"> chevron_left </mat-icon>
+    <ta-font-icon icon="chevron_left" class="c-pointer" (click)="this.grid.table.previousPage()"></ta-font-icon>
     <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ pagenumber: { number: 1 } }"></ng-template>
 
     @for (page of this.getListPage(); track page.number) {
@@ -16,7 +16,7 @@
       ></ng-template>
     }
 
-    <mat-icon (click)="this.grid.table.nextPage()"> chevron_right </mat-icon>
+    <ta-font-icon icon="chevron_right" class="c-pointer" (click)="this.grid.table.nextPage()"></ta-font-icon>
   </div>
 }
 
@@ -27,7 +27,7 @@
     (click)="this.grid.table?.setPage(pagenumber.number)"
   >
     @if (pagenumber.icon) {
-      <mat-icon type="sm">{{ pagenumber.icon }}</mat-icon>
+      <ta-font-icon [icon]="pagenumber.icon"></ta-font-icon>
     } @else {
       {{ pagenumber.number }}
     }

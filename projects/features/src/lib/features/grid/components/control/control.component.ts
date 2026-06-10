@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, input, signal } from '@angular/core';
+import { Component, OnInit, input, output, signal } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
@@ -31,11 +31,11 @@ import { TaGridFormComponent } from '../form/form.component';
   standalone: true,
   imports: [TaGridFormComponent, ButtonComponent, TaModalComponent, TranslatePipe],
 })
-export class FiltersModal extends TaBaseComponent {
+export class TaFiltersModal extends TaBaseComponent {
   open = input.required<boolean>();
   gridId = input.required<string>();
 
-  @Output() closeEvent = new EventEmitter<void>();
+  closeEvent = output<void>();
 
   constructor() {
     super();
@@ -47,7 +47,7 @@ export class FiltersModal extends TaBaseComponent {
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, FiltersModal],
+  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaFiltersModal],
 })
 export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
   show = input<{ switchView?: boolean; filters?: boolean; preset?: boolean }>({

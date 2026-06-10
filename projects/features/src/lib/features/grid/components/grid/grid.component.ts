@@ -4,7 +4,7 @@ import { Component, Signal, TemplateRef, ViewEncapsulation, computed, input, out
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FontIconComponent } from '@ta/icons';
-import { TitleComponent } from '@ta/ui';
+import { EmptyComponent, ErrorComponent, LoaderComponent, TitleComponent } from '@ta/ui';
 
 import { ColConfig } from '../../models/types';
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -13,15 +13,17 @@ import { PaginationComponent } from '../pagination/pagination.component';
 @Component({
   selector: 'ta-grid',
   standalone: true,
-  imports: [PaginationComponent, NgTemplateOutlet, AsyncPipe, TitleComponent, TranslateModule, FontIconComponent],
+  imports: [PaginationComponent, NgTemplateOutlet, AsyncPipe, EmptyComponent, ErrorComponent, FontIconComponent, LoaderComponent, TitleComponent, TranslateModule],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class TaGridComponent<T extends { id: number }> extends TaAbstractGridComponent<T> {
-  cardTemplate = input.required<TemplateRef<{ items: T[] }>>();
+  cardTemplate = input.required<TemplateRef<{ items: T[]; selectedIds: Set<number> }>>();
+  showSelection = input<boolean>(false);
 
   rowClicked = output<T>();
+  selectionChanged = output<T[]>();
 
   constructor() {
     super();
@@ -39,6 +41,13 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
     this._registerSubscription(
       this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) })
     );
+    if (this._grid.table) {
+      this._registerSubscription(
+        this._grid.table.selectionChanged$.subscribe(ids => {
+          this.selectionChanged.emit(this.rows.filter(r => ids.includes(r.id)));
+        })
+      );
+    }
   }
 
   get rows(): T[] {
@@ -51,6 +60,34 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
 
   get sortDir(): 'asc' | 'desc' {
     return this._grid.table?.sortDir() ?? 'asc';
+  }
+
+  get isLoading(): boolean {
+    return this._grid.table?.isLoading() ?? false;
+  }
+
+  get errorMessage(): string {
+    return this._grid.table?.errorMessage() ?? '';
+  }
+
+  get selectedIds(): Set<number> {
+    return this._grid.table?.selectedIds() ?? new Set();
+  }
+
+  isSelected(id: number): boolean {
+    return this.selectedIds.has(id);
+  }
+
+  isAllPageSelected(): boolean {
+    return this._grid.table?.isAllPageSelected() ?? false;
+  }
+
+  toggleRow(row: T): void {
+    this._grid.table?.toggleRow(row.id);
+  }
+
+  toggleAll(): void {
+    this._grid.table?.toggleAll();
   }
 
   getCellValue(row: T, key: string): any {

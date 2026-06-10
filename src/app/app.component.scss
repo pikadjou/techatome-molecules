@@ -106,3 +106,22 @@
     outline-offset: 1px;
   }
 }
+
+.nav-item--child {
+  padding-left: common.get-var(space, xxl);
+  @include fonts.fontSizeBody(sm);
+  border-left: 2px solid transparent;
+  margin-left: common.get-var(space, md);
+
+  &:hover {
+    background: common.get-var(surface, hover);
+    color: common.get-var(text, primary);
+  }
+
+  &.active {
+    background: common.get-var(brand, 50);
+    color: common.get-var(text, brand);
+    font-weight: 600;
+    border-left-color: common.get-var(brand, 500);
+  }
+}

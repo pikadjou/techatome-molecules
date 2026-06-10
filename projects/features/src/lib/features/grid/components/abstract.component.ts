@@ -37,7 +37,7 @@ export abstract class TaAbstractGridComponent<T> extends TaBaseComponent impleme
   }
 
   ngOnInit() {
-    this._grid = this._dataService.get(this.gridId(), true);
+    this._grid = this._dataService.get<T>(this.gridId(), true);
     this.isReady$ = this._grid.isReady$.pipe(
       distinctUntilChanged(),
       filter(isReady => isReady)

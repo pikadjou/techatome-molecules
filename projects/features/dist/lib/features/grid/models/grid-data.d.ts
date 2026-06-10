@@ -20,6 +20,7 @@ export declare class TaGridData<T> {
     filters: TaGridFilters | null;
     readonly isReady$: BehaviorSubject<boolean>;
     readonly isDataReady$: BehaviorSubject<boolean>;
+    private _tableSubs;
     readonly displayType: import("@angular/core").WritableSignal<ViewType>;
     groupBy: keyof T | null;
     readonly totalItems: import("@angular/core").WritableSignal<number>;

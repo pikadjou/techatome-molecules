@@ -49,6 +49,59 @@ export interface GraphMutationPayload {
   variables: any;
 }
 
+export interface PagedGraphQueryInput<T> extends Omit<GraphQueryInput<T>, 'order'> {
+  skip?: number;
+  order?: OrderType<T>[] | null;
+}
+
+export function createPagedQuery<T>(name: string, input?: PagedGraphQueryInput<T>): GraphPayload {
+  const capName = capitalizeFirstLetter(name);
+  const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
+
+  const queryParams: string[] = [];
+  const queryArgs: string[] = [];
+  const variables: any = {};
+
+  if (input?.where) {
+    queryParams.push(`$where: ${capPrefixType}FilterInput`);
+    queryArgs.push('where: $where');
+    variables.where = input.where;
+  }
+
+  if (input?.order) {
+    queryParams.push(`$order: [${capPrefixType}SortInput!]`);
+    queryArgs.push('order: $order');
+    variables.order = input.order;
+  }
+
+  if (input?.take != null) {
+    queryArgs.push(`take: ${input.take}`);
+  }
+
+  if (input?.skip != null) {
+    queryArgs.push(`skip: ${input.skip}`);
+  }
+
+  const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
+  const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
+  const propsStr = input?.props ?? '';
+
+  return {
+    name,
+    query: gql`
+      query ${capName}${queryParamsStr} {
+        ${name}${queryArgsStr} {
+          totalCount
+          items {
+            ${propsStr}
+          }
+        }
+      }
+    `,
+    variables,
+  };
+}
+
 export function createQuery<T>(name: string, input?: GraphQueryInput<T>): GraphPayload {
   const capName = capitalizeFirstLetter(name);
   const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';

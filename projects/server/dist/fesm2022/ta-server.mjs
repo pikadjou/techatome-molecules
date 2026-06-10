@@ -452,6 +452,46 @@ const graphQlPaginationFields = () => {
     `;
 };
 
+function createPagedQuery(name, input) {
+    const capName = capitalizeFirstLetter(name);
+    const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
+    const queryParams = [];
+    const queryArgs = [];
+    const variables = {};
+    if (input?.where) {
+        queryParams.push(`$where: ${capPrefixType}FilterInput`);
+        queryArgs.push('where: $where');
+        variables.where = input.where;
+    }
+    if (input?.order) {
+        queryParams.push(`$order: [${capPrefixType}SortInput!]`);
+        queryArgs.push('order: $order');
+        variables.order = input.order;
+    }
+    if (input?.take != null) {
+        queryArgs.push(`take: ${input.take}`);
+    }
+    if (input?.skip != null) {
+        queryArgs.push(`skip: ${input.skip}`);
+    }
+    const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
+    const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
+    const propsStr = input?.props ?? '';
+    return {
+        name,
+        query: gql `
+      query ${capName}${queryParamsStr} {
+        ${name}${queryArgsStr} {
+          totalCount
+          items {
+            ${propsStr}
+          }
+        }
+      }
+    `,
+        variables,
+    };
+}
 function createQuery(name, input) {
     const capName = capitalizeFirstLetter(name);
     const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
@@ -918,5 +958,5 @@ const provideStrapi = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, baseStrapiProps, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, baseStrapiProps, createPagedQuery, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
 //# sourceMappingURL=ta-server.mjs.map

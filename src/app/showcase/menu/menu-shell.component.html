@@ -1,0 +1,10 @@
+<app-page-layout title="@ta/menu">
+  <nav class="tabs-nav">
+    @for (tab of this.tabs; track tab.route) {
+      <a [routerLink]="tab.route" routerLinkActive="active" class="tab-link">{{ tab.label }}</a>
+    }
+  </nav>
+  <div class="tab-content">
+    <router-outlet></router-outlet>
+  </div>
+</app-page-layout>

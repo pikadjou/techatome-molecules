@@ -1,72 +1,98 @@
 @if (this.isReady$ | async) {
-  @if (this.displayType() === 'grid') {
-    <div class="ta-grid-table-wrapper">
-      <table class="ta-grid-table">
-        <thead>
-          <tr>
-            @for (col of this.visibleCols(); track col.key) {
-              <th
-                class="ta-grid-th"
-                [class.is-sortable]="col.sortable"
-                [class.is-sorted]="this.sortField === col.key"
-                [style.width]="col.width ?? 'auto'"
-                (click)="this.onSort(col)"
-              >
-                <div class="ta-grid-th__inner">
-                  <span class="ta-grid-th__label">{{ col.title | translate }}</span>
-                  @if (this.sortField === col.key) {
-                    <ta-font-icon
-                      class="ta-grid-th__sort-icon"
-                      [icon]="this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'"
-                    />
+  <ta-loader [isLoading]="this.isLoading">
+    <ta-error [message]="this.errorMessage" (retry)="this._grid.table?.refresh()">
+      <ta-empty [isEmpty]="this.rows.length === 0">
+        @if (this.displayType() === 'grid') {
+          <div class="ta-grid-table-wrapper">
+            <table class="ta-grid-table">
+              <thead>
+                <tr>
+                  @if (this.showSelection()) {
+                    <th class="ta-grid-th ta-grid-th--select" (click)="this.toggleAll()">
+                      <ta-font-icon
+                        class="c-pointer"
+                        [icon]="this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'"
+                      />
+                    </th>
                   }
-                </div>
-              </th>
+                  @for (col of this.visibleCols(); track col.key) {
+                    <th
+                      class="ta-grid-th"
+                      [class.is-sortable]="col.sortable"
+                      [class.is-sorted]="this.sortField === col.key"
+                      [style.width]="col.width ?? 'auto'"
+                      (click)="this.onSort(col)"
+                    >
+                      <div class="ta-grid-th__inner">
+                        <span class="ta-grid-th__label">{{ col.title | translate }}</span>
+                        @if (this.sortField === col.key) {
+                          <ta-font-icon
+                            class="ta-grid-th__sort-icon"
+                            [icon]="this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'"
+                          />
+                        }
+                      </div>
+                    </th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of this.rows; track row.id) {
+                  <tr
+                    class="ta-grid-tr c-pointer"
+                    [class.is-selected]="this.isSelected(row.id)"
+                    (click)="this.onRowClick(row)"
+                  >
+                    @if (this.showSelection()) {
+                      <td class="ta-grid-td ta-grid-td--select" (click)="$event.stopPropagation(); this.toggleRow(row)">
+                        <ta-font-icon
+                          class="c-pointer"
+                          [icon]="this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'"
+                        />
+                      </td>
+                    }
+                    @for (col of this.visibleCols(); track col.key) {
+                      <td class="ta-grid-td">
+                        @if (col.template) {
+                          <ng-container
+                            [ngTemplateOutlet]="col.template"
+                            [ngTemplateOutletContext]="{ $implicit: row, value: this.getCellValue(row, col.key) }"
+                          ></ng-container>
+                        } @else {
+                          {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}
+                        }
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+
+        @if (this.displayType() === 'card') {
+          @if (this.isGroup) {
+            @for (group of this.dataByGroup; track group.key) {
+              <ta-title [level]="3">{{ group.key }}</ta-title>
+              <div class="py-space-md">
+                <ng-template
+                  [ngTemplateOutlet]="this.cardTemplate()"
+                  [ngTemplateOutletContext]="{ items: group.data, selectedIds: this.selectedIds }"
+                ></ng-template>
+              </div>
             }
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of this.rows; track row.id) {
-            <tr class="ta-grid-tr c-pointer" (click)="this.onRowClick(row)">
-              @for (col of this.visibleCols(); track col.key) {
-                <td class="ta-grid-td">
-                  @if (col.template) {
-                    <ng-container
-                      [ngTemplateOutlet]="col.template"
-                      [ngTemplateOutletContext]="{ $implicit: row, value: this.getCellValue(row, col.key) }"
-                    ></ng-container>
-                  } @else {
-                    {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}
-                  }
-                </td>
-              }
-            </tr>
+          } @else {
+            <ng-template
+              [ngTemplateOutlet]="this.cardTemplate()"
+              [ngTemplateOutletContext]="{ items: this.data, selectedIds: this.selectedIds }"
+            ></ng-template>
           }
-        </tbody>
-      </table>
-    </div>
-  }
+        }
 
-  @if (this.displayType() === 'card') {
-    @if (this.isGroup) {
-      @for (group of this.dataByGroup; track group.key) {
-        <ta-title [level]="3">{{ group.key }}</ta-title>
-        <div class="py-space-md">
-          <ng-template
-            [ngTemplateOutlet]="this.cardTemplate()"
-            [ngTemplateOutletContext]="{ items: group.data }"
-          ></ng-template>
+        <div class="py-space-md align-center">
+          <ta-grid-pagination [gridId]="this.gridId()"></ta-grid-pagination>
         </div>
-      }
-    } @else {
-      <ng-template
-        [ngTemplateOutlet]="this.cardTemplate()"
-        [ngTemplateOutletContext]="{ items: this.data }"
-      ></ng-template>
-    }
-  }
-
-  <div class="py-space-md align-center">
-    <ta-grid-pagination [gridId]="this.gridId()"></ta-grid-pagination>
-  </div>
+      </ta-empty>
+    </ta-error>
+  </ta-loader>
 }

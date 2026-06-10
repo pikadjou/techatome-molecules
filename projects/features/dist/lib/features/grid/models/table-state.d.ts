@@ -21,6 +21,9 @@ export declare class TaTableState<T> {
     readonly filters: import("@angular/core").WritableSignal<Filter[]>;
     readonly groupByField: import("@angular/core").WritableSignal<string | null>;
     readonly isLoading: import("@angular/core").WritableSignal<boolean>;
+    readonly errorMessage: import("@angular/core").WritableSignal<string>;
+    readonly selectedIds: import("@angular/core").WritableSignal<Set<number>>;
+    readonly selectionChanged$: Subject<number[]>;
     readonly rowClicked$: Subject<T>;
     readonly isReady$: BehaviorSubject<boolean>;
     readonly isDataReady$: BehaviorSubject<boolean>;
@@ -43,6 +46,10 @@ export declare class TaTableState<T> {
     setSort(field: string | null, dir: 'asc' | 'desc'): void;
     setGroupBy(field: string | null): void;
     refresh(): void;
+    toggleRow(id: number): void;
+    toggleAll(): void;
+    clearSelection(): void;
+    isAllPageSelected(): boolean;
     destroy(): void;
     private _scheduleUpdate;
     private _applyLocalFilter;

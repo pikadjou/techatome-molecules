@@ -1,0 +1,37 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+.tabs-nav {
+  display: flex;
+  border-bottom: 1px solid common.get-var(border, secondary);
+  padding: 0 common.get-var(space, xl);
+  gap: common.get-var(space, xs);
+  background: common.get-var(surface, primary);
+  flex-shrink: 0;
+}
+
+.tab-link {
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  text-decoration: none;
+  color: common.get-var(text, secondary);
+  @include fonts.fontSizeBody(md);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: common.get-var(text, primary);
+  }
+
+  &.active {
+    color: common.get-var(text, brand);
+    border-bottom-color: common.get-var(brand, 500);
+    font-weight: 600;
+  }
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+}

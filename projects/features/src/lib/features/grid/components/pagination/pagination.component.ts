@@ -1,7 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 
+import { FontIconComponent } from '@ta/icons';
 import { TypedTemplateDirective } from '@ta/utils';
 
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -15,7 +15,7 @@ type PageNumber = {
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
   standalone: true,
-  imports: [MatIcon, NgTemplateOutlet, TypedTemplateDirective],
+  imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective],
 })
 export class PaginationComponent extends TaAbstractGridComponent<any> {
   readonly PageNumber!: { pagenumber: PageNumber };
@@ -38,7 +38,7 @@ export class PaginationComponent extends TaAbstractGridComponent<any> {
     }
     const last = this.paginationGetTotalPages;
 
-    if (last < this.maxPageNumber) {
+    if (last <= this.maxPageNumber) {
       return this._computedPageNumbers(2, last);
     }
 
@@ -47,9 +47,9 @@ export class PaginationComponent extends TaAbstractGridComponent<any> {
     const rangeEnd = rangeStart + 10;
 
     return [
-      ...(rangeStart <= 1 ? [] : [{ number: rangeStart - 1, icon: 'more-line' }]),
+      ...(rangeStart <= 1 ? [] : [{ number: rangeStart - 1, icon: 'more_horiz' }]),
       ...this._computedPageNumbers(rangeStart > 1 ? rangeStart : 2, rangeEnd < last ? rangeEnd : last),
-      ...(rangeEnd > last ? [] : [{ number: rangeEnd, icon: 'more-line' }]),
+      ...(rangeEnd > last ? [] : [{ number: rangeEnd, icon: 'more_horiz' }]),
     ];
   }
 

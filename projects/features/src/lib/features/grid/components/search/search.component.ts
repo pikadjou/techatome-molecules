@@ -1,10 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { SearchFieldComponent } from '@ta/form-input';
 import { InputTextBox } from '@ta/form-model';
 
 import { Filter } from '../../models/types';
-import { TaGridSessionService } from '../../services/grid-session.services';
 import { gridSearchFieldsName } from '../../services/grid-view.service';
 import { TaAbstractGridComponent } from '../abstract.component';
 
@@ -16,12 +15,9 @@ import { TaAbstractGridComponent } from '../abstract.component';
   styleUrl: './search.component.scss',
 })
 export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
-  outOfBox = input<boolean>(false);
   placeholder = input<string>('grid.search.placeholder');
 
   public searchInput = new InputTextBox();
-
-  private _session = inject(TaGridSessionService);
 
   public valueChanged(value: string) {
     const trimmed = (value ?? '').trim();
@@ -29,10 +25,6 @@ export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
       ? [{ field: gridSearchFieldsName, type: 'like', value: trimmed }]
       : [];
 
-    if (this.outOfBox()) {
-      this._session.setFilter(this.gridId(), filters);
-    } else {
-      this.grid.filters?.apply(filters);
-    }
+    this.grid.filters?.apply(filters);
   }
 }

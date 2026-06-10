@@ -35,6 +35,8 @@ export class TaGridData<T> {
   public readonly isReady$ = new BehaviorSubject(false);
   public readonly isDataReady$ = new BehaviorSubject(false);
 
+  private _tableSubs: Array<{ unsubscribe(): void }> = [];
+
   public readonly displayType = signal<ViewType>('card');
 
   public groupBy: keyof T | null = null;
@@ -49,6 +51,12 @@ export class TaGridData<T> {
     initialFilter?: Filter[];
     preset?: Preset[];
   }) {
+    if (this.table) {
+      this._tableSubs.forEach(s => s.unsubscribe());
+      this._tableSubs = [];
+      this.table.destroy();
+    }
+
     this._buildCols(params.colsMetaData);
 
     this.table = new TaTableState<T>();
@@ -62,16 +70,16 @@ export class TaGridData<T> {
 
     this.filters = new TaGridFilters(this.scope, this.table, params.preset);
 
-    this.table.isReady$.subscribe(ready => {
-      if (ready) this.isReady$.next(true);
-    });
-    this.table.isDataReady$.subscribe(ready => {
-      if (ready) this.isDataReady$.next(true);
-    });
-    this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row));
+    this._tableSubs.push(
+      this.table.isReady$.subscribe(ready => { if (ready) this.isReady$.next(true); }),
+      this.table.isDataReady$.subscribe(ready => { if (ready) this.isDataReady$.next(true); }),
+      this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)),
+    );
   }
 
   public destroy() {
+    this._tableSubs.forEach(s => s.unsubscribe());
+    this._tableSubs = [];
     this.filters?.destroy();
     this.table?.destroy();
     this.rowClicked$.complete();
