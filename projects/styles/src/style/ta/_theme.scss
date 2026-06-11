@@ -68,11 +68,19 @@ $_default-neutral: (
 $_default-semantic: (
   red-light: transparentize(#e74c3c, 0.5),
   red: #e74c3c,
+  red-dark: #a93226,
   orange-light: transparentize(#f39c12, 0.5),
   orange: #f39c12,
+  orange-dark: #9c640c,
+  yellow-light: transparentize(#ffd166, 0.5),
   yellow: #ffd166,
+  yellow-dark: #8a6d1a,
   green-light: transparentize(#38a172, 0.5),
   green: #38a172,
+  green-dark: #256a4b,
+  purple-light: transparentize(#8e44ad, 0.5),
+  purple: #8e44ad,
+  purple-dark: #5b2c6f,
   accent: #e74c3c,
 );
 
@@ -119,10 +127,10 @@ $_default-semantic: (
   $result: ();
 
   // Merge provided values with defaults to have complete palettes
-  $b: map.merge($_default-brand, $brand);
-  $sc: map.merge($_default-second, $second);
-  $n: map.merge($_default-neutral, $neutral);
-  $se: map.merge($_default-semantic, $semantic);
+  $b: map.deep-merge($_default-brand, $brand);
+  $sc: map.deep-merge($_default-second, $second);
+  $n: map.deep-merge($_default-neutral, $neutral);
+  $se: map.deep-merge($_default-semantic, $semantic);
 
   // Add foundation overrides (only what changed)
   @if length($brand) > 0 {

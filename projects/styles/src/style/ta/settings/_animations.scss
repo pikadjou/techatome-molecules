@@ -5,7 +5,7 @@
 /** Animations Settings **/
 
 // Animation configurations
-$animations: map.merge(
+$animations: map.deep-merge(
   (
     fadeIn: (
       from: (
@@ -105,7 +105,7 @@ $animations: map.merge(
 );
 
 // Animation durations
-$animation-durations: map.merge(
+$animation-durations: map.deep-merge(
   (
     fast: 0.15s,
     normal: 0.3s,
@@ -116,7 +116,7 @@ $animation-durations: map.merge(
 );
 
 // Animation easings
-$animation-easings: map.merge(
+$animation-easings: map.deep-merge(
   (
     ease: ease,
     ease-in: ease-in,

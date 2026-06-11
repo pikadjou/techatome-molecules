@@ -20,18 +20,18 @@
   }
 
   &--warning {
-    background-color: common.get-var(semantic, orange-light);
-    color: common.get-var(semantic, orange);
+    background-color: common.get-var(surface, warning);
+    color: common.get-var(neutral, white);
   }
 
   &--success {
-    background-color: common.get-var(semantic, green-light);
-    color: common.get-var(semantic, green);
+    background-color: common.get-var(surface, success);
+    color: common.get-var(neutral, white);
   }
 
   &--alert {
-    background-color: common.get-var(semantic, red-light);
-    color: common.get-var(semantic, red);
+    background-color: common.get-var(surface, alert);
+    color: common.get-var(neutral, white);
   }
 
   &--default {
