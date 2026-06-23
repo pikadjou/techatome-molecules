@@ -1,50 +1,32 @@
 import { AfterViewInit, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { InputAddress, InputBase, InputTextBox } from '@ta/form-model';
+import { InputAddress, InputBase, InputDropdown, InputTextBox } from '@ta/form-model';
 import { TaAbstractInputComponent } from '@ta/form-input';
 import * as i0 from "@angular/core";
-interface AddressSnapshot {
-    city: string;
-    country: string;
-    floor: string;
-    latitude: number;
-    longitude: number;
-    number: string;
-    placeId: string;
-    street: string;
-    zipCode: string;
-}
-type AddressFormState = 'empty' | 'locked' | 'manual';
 export declare class InputAddressComponent extends TaAbstractInputComponent<InputAddress> implements OnInit, AfterViewInit, OnDestroy {
     googleSearchInput?: ElementRef<HTMLInputElement>;
+    searchEnabled: boolean;
     cityInput: InputTextBox<string>;
     complementInput: InputTextBox<string>;
-    countryInput: InputTextBox<string>;
+    countryInput: InputDropdown<string>;
     detailsInputs: InputBase<any>[];
     numberInput: InputTextBox<string>;
-    snapshot: import("@angular/core").WritableSignal<AddressSnapshot | null>;
-    state: import("@angular/core").WritableSignal<AddressFormState>;
     streetInput: InputTextBox<string>;
     zipCodeInput: InputTextBox<string>;
-    readonly currentPlaceId: import("@angular/core").Signal<string>;
-    private readonly _injector;
+    private readonly _translate;
     private _autocomplete;
-    private _isApplyingSnapshot;
-    private _lastBoundInput?;
+    private _geo;
+    private _isApplyingValue;
     constructor();
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
     onSubInputChanged(): void;
-    revertToOriginal(): void;
-    unlockManual(): void;
-    private _applySnapshotToFields;
     private _applyValueToFields;
+    private _isGoogleAvailable;
     private _bindAutocomplete;
     private _parseAddress;
-    private _rebindAutocompleteIfNeeded;
-    private _setDetailsLocked;
+    private _setFields;
     private _updateValueFromInputs;
     static ɵfac: i0.ɵɵFactoryDeclaration<InputAddressComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<InputAddressComponent, "ta-input-address", never, {}, {}, never, never, true, never>;
 }
-export {};

@@ -10,6 +10,7 @@ export interface Address {
 }
 export declare class AddressComponent {
     address: import("@angular/core").InputSignal<Address>;
+    countryName: import("@angular/core").Signal<string>;
     static ɵfac: i0.ɵɵFactoryDeclaration<AddressComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<AddressComponent, "ta-address", never, { "address": { "alias": "address"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

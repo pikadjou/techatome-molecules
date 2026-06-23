@@ -1,22 +1,47 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 :host {
   display: block;
 }
 
-.address-form__banner {
-  background: common.get-var(surface, secondary);
-  border-radius: common.get-var(radius, minimal);
-  color: common.get-var(text, brand);
+.address-search {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, sm);
   padding: common.get-var(space, sm) common.get-var(space, md);
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, primary);
+  transition: border-color common.get-var(transition, fast),
+    box-shadow common.get-var(transition, fast);
+
+  &:focus-within {
+    border-color: common.get-var(border, brand, primary);
+    box-shadow: 0 0 0 3px common.get-var(brand, 100);
+  }
+
+  &__icon {
+    flex: 0 0 auto;
+    color: common.get-var(icon, brand);
+  }
+
+  &__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: common.get-var(text, primary);
+    @include fonts.fontSizeBody(md);
+
+    &::placeholder {
+      color: common.get-var(text, tertiary);
+    }
+  }
 }
 
-.address-form__section-header {
-  margin-bottom: common.get-var(space, xs);
-}
-
-.address-form__bottom-action {
-  background: common.get-var(surface, secondary);
-  border-radius: common.get-var(radius, minimal);
-  padding: common.get-var(space, sm) common.get-var(space, md);
+.address-search__hint {
+  color: common.get-var(text, secondary);
+  @include fonts.fontSizeBody(sm);
 }

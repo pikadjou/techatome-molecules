@@ -1,16 +1,17 @@
 import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, signal, computed, inject, Injector, effect, afterNextRender, ViewChild, Component, input, output, ElementRef, HostListener } from '@angular/core';
+import { Injectable, inject, ViewChild, Component, input, output, signal, ElementRef, HostListener } from '@angular/core';
 import * as i1$1 from '@angular/forms';
 import { Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
-import { distinctUntilChanged, BehaviorSubject } from 'rxjs';
+import { of, distinctUntilChanged, BehaviorSubject } from 'rxjs';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { BadgeComponent, ButtonComponent, CardComponent, CardContentComponent, LinkComponent, TextComponent, TitleComponent, LoaderComponent } from '@ta/ui';
-import { TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
-import { TaAbstractInputComponent, FormLabelComponent, TextBoxComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
-import { InputTextBox } from '@ta/form-model';
+import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent } from '@ta/ui';
+import { getCountryList, TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
+import { TaAbstractInputComponent, DropdownComponent, FormLabelComponent, TextBoxComponent, CheckboxComponent, InputChoicesComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
+import { TranslateService } from '@ngx-translate/core';
+import { InputTextBox, InputDropdown } from '@ta/form-model';
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
@@ -33,45 +34,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class InputAddressComponent extends TaAbstractInputComponent {
     constructor() {
         super();
+        // La recherche Google n'est affichée que si l'API Maps/Places a bien été
+        // injectée dans l'application (via provideGoogleMaps()).
+        this.searchEnabled = false;
         this.cityInput = new InputTextBox({
             key: 'displayCity',
             label: 'form.address.city',
-            readonly: true,
             validators: [Validators.required],
         });
         this.complementInput = new InputTextBox({
             key: 'displayFloor',
             label: 'form.address.floor',
         });
-        this.countryInput = new InputTextBox({
-            key: 'displayCountry',
-            label: 'form.address.country',
-            readonly: true,
-            validators: [Validators.required],
-        });
         this.numberInput = new InputTextBox({
             key: 'displayNumber',
             label: 'form.address.number',
-            readonly: true,
         });
-        this.snapshot = signal(null);
-        this.state = signal('empty');
         this.streetInput = new InputTextBox({
             key: 'displayStreet',
             label: 'form.address.street',
-            readonly: true,
             validators: [Validators.required],
         });
         this.zipCodeInput = new InputTextBox({
             key: 'displayZipCode',
             label: 'form.address.zipCode',
-            readonly: true,
             validators: [Validators.required],
         });
-        this.currentPlaceId = computed(() => this.snapshot()?.placeId ?? '');
-        this._injector = inject(Injector);
-        this._isApplyingSnapshot = false;
+        this._translate = inject(TranslateService);
+        this._geo = { latitude: null, longitude: null, placeId: null };
+        this._isApplyingValue = false;
         TaTranslationForm.getInstance();
+        this.countryInput = new InputDropdown({
+            key: 'displayCountry',
+            label: 'form.address.country',
+            options$: of([]),
+            validators: [Validators.required],
+            withSearch: true,
+        });
         this.detailsInputs = [
             this.cityInput,
             this.complementInput,
@@ -80,24 +79,23 @@ class InputAddressComponent extends TaAbstractInputComponent {
             this.streetInput,
             this.zipCodeInput,
         ];
-        effect(() => {
-            const currentState = this.state();
-            if (currentState !== 'empty' && currentState !== 'locked' && currentState !== 'manual') {
-                return;
-            }
-            afterNextRender(() => this._rebindAutocompleteIfNeeded(), { injector: this._injector });
-        });
     }
     ngOnInit() {
         super.ngOnInit();
+        this.searchEnabled = this._isGoogleAvailable();
+        this.countryInput.options$ = of(getCountryList(this._translate.currentLang, this.input.priorityCountries).map(c => ({
+            id: c.code,
+            name: c.name,
+        })));
         if (this.input.value) {
             this._applyValueToFields(this.input.value);
-            this.state.set('locked');
         }
     }
     ngAfterViewInit() {
         super.ngAfterViewInit();
-        this._bindAutocomplete(this.googleSearchInput?.nativeElement);
+        if (this.searchEnabled) {
+            this._bindAutocomplete(this.googleSearchInput?.nativeElement);
+        }
     }
     ngOnDestroy() {
         if (this._autocomplete) {
@@ -108,51 +106,29 @@ class InputAddressComponent extends TaAbstractInputComponent {
         super.ngOnDestroy();
     }
     onSubInputChanged() {
-        if (this._isApplyingSnapshot) {
+        if (this._isApplyingValue) {
             return;
         }
         this._updateValueFromInputs();
         this.input.formControl?.setErrors(this.detailsInputs.some(i => i.formControl?.invalid ?? false) ? { invalid: true } : null);
     }
-    revertToOriginal() {
-        const snap = this.snapshot();
-        if (!snap) {
-            return;
-        }
-        this._applySnapshotToFields(snap);
-        this._setDetailsLocked(true);
-        this.state.set('locked');
-        this._updateValueFromInputs();
-    }
-    unlockManual() {
-        this._setDetailsLocked(false);
-        this.state.set('manual');
-    }
-    _applySnapshotToFields(snap) {
-        this._isApplyingSnapshot = true;
-        this.cityInput.value = snap.city;
-        this.complementInput.value = snap.floor;
-        this.countryInput.value = snap.country;
-        this.numberInput.value = snap.number;
-        this.streetInput.value = snap.street;
-        this.zipCodeInput.value = snap.zipCode;
-        this._isApplyingSnapshot = false;
-    }
     _applyValueToFields(value) {
-        const snap = {
+        this._geo = {
+            latitude: value.latitude ?? null,
+            longitude: value.longitude ?? null,
+            placeId: value.placeId ?? null,
+        };
+        this._setFields({
             city: value.city ?? '',
             country: value.country ?? '',
             floor: value.floor ?? '',
-            latitude: value.latitude ?? 0,
-            longitude: value.longitude ?? 0,
             number: value.number ?? '',
-            placeId: value.placeId ?? '',
             street: value.street ?? '',
             zipCode: value.zipCode ?? '',
-        };
-        this.snapshot.set(snap);
-        this._applySnapshotToFields(snap);
-        this._setDetailsLocked(true);
+        });
+    }
+    _isGoogleAvailable() {
+        return typeof google !== 'undefined' && !!google?.maps?.places?.Autocomplete;
     }
     _bindAutocomplete(el) {
         if (!el) {
@@ -173,7 +149,6 @@ class InputAddressComponent extends TaAbstractInputComponent {
                 this._parseAddress(place);
             }
         });
-        this._lastBoundInput = el;
     }
     _parseAddress(place) {
         const addressComponents = place.address_components;
@@ -182,76 +157,61 @@ class InputAddressComponent extends TaAbstractInputComponent {
             const component = addressComponents?.find((c) => c.types.includes(type));
             return component ? component[nameType] : '';
         };
-        const snap = {
+        this._geo = {
+            latitude: geometry?.location?.lat() ?? null,
+            longitude: geometry?.location?.lng() ?? null,
+            placeId: place.place_id ?? null,
+        };
+        // La recherche est une aide : elle préremplit les champs sans les figer,
+        // et on conserve le complément (étage/appartement) déjà saisi.
+        this._setFields({
             city: getComponent('locality'),
-            country: getComponent('country'),
+            country: getComponent('country', 'short_name'),
             floor: this.complementInput.value ?? '',
-            latitude: geometry?.location?.lat() ?? 0,
-            longitude: geometry?.location?.lng() ?? 0,
             number: getComponent('street_number'),
-            placeId: place.place_id ?? '',
             street: getComponent('route'),
             zipCode: getComponent('postal_code'),
-        };
-        this.snapshot.set(snap);
-        this._applySnapshotToFields(snap);
-        this._setDetailsLocked(true);
-        this.state.set('locked');
-        this.input.value = {
-            city: snap.city || null,
-            country: snap.country || null,
-            floor: snap.floor || null,
-            latitude: snap.latitude,
-            longitude: snap.longitude,
-            number: snap.number || null,
-            placeId: snap.placeId || null,
-            street: snap.street || null,
-            zipCode: snap.zipCode || null,
-        };
-    }
-    _rebindAutocompleteIfNeeded() {
-        const el = this.googleSearchInput?.nativeElement;
-        if (!el || el === this._lastBoundInput) {
-            return;
+        });
+        this._updateValueFromInputs();
+        if (this.googleSearchInput?.nativeElement) {
+            this.googleSearchInput.nativeElement.value = '';
         }
-        this._bindAutocomplete(el);
     }
-    _setDetailsLocked(locked) {
-        this.detailsInputs.forEach(i => i.setReadonly(locked));
-        this.complementInput.setReadonly(false);
+    _setFields(fields) {
+        this._isApplyingValue = true;
+        this.cityInput.value = fields.city;
+        this.complementInput.value = fields.floor;
+        this.countryInput.value = fields.country;
+        this.numberInput.value = fields.number;
+        this.streetInput.value = fields.street;
+        this.zipCodeInput.value = fields.zipCode;
+        this._isApplyingValue = false;
     }
     _updateValueFromInputs() {
-        const snap = this.snapshot();
         this.input.value = {
             city: this.cityInput.value ?? null,
             country: this.countryInput.value ?? null,
             floor: this.complementInput.value ?? null,
-            latitude: snap?.latitude ?? null,
-            longitude: snap?.longitude ?? null,
+            latitude: this._geo.latitude,
+            longitude: this._geo.longitude,
             number: this.numberInput.value ?? null,
-            placeId: snap?.placeId ?? null,
+            placeId: this._geo.placeId,
             street: this.streetInput.value ?? null,
             zipCode: this.zipCodeInput.value ?? null,
         };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", viewQueries: [{ propertyName: "googleSearchInput", first: true, predicate: ["googleSearchInput"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n<div class=\"address-form flex-column g-space-md\">\n  <input\n    #googleSearchInput\n    class=\"form-control\"\n    [placeholder]=\"'form.address.search-google' | translate\"\n  />\n\n  @if (this.state() === 'empty') {\n    <ta-link [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n      {{ 'form.address.fill-manually' | translate }}\n    </ta-link>\n  }\n\n  @if (this.state() === 'locked' && this.currentPlaceId()) {\n    <div class=\"address-form__banner flex-row g-space-sm align-center\">\n      <ta-font-icon name=\"check-circle\" type=\"sm\"></ta-font-icon>\n      <ta-text [isBold]=\"true\">{{ 'form.address.verified' | translate }}</ta-text>\n    </div>\n  }\n\n  @if (this.state() !== 'empty') {\n    <ta-card>\n      <ta-card-content>\n        <div class=\"address-form__section flex-column g-space-sm\">\n          <div class=\"address-form__section-header flex-row space-between align-center\">\n            <ta-title [level]=\"4\">{{ 'form.address.section-details' | translate }}</ta-title>\n            @if (this.state() === 'locked') {\n              <ta-badge [value]=\"'form.address.readonly'\" [icon]=\"'lock'\" type=\"secondary\"></ta-badge>\n            }\n            @if (this.state() === 'manual') {\n              <ta-badge [value]=\"'form.address.manual'\" [icon]=\"'edit'\" type=\"warning\"></ta-badge>\n            }\n          </div>\n\n          <div class=\"grid g-space-sm\">\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.streetInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.numberInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.zipCodeInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.cityInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.countryInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.complementInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n          </div>\n\n          @if (this.state() === 'locked') {\n            <div class=\"address-form__bottom-action flex-row space-between align-center\">\n              <ta-text>{{ 'form.address.does-not-match' | translate }}</ta-text>\n              <ta-button type=\"secondary\" [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n                {{ 'form.address.edit-manually' | translate }}\n              </ta-button>\n            </div>\n          }\n\n          @if (this.state() === 'manual' && this.snapshot() !== null) {\n            <ta-link [icon]=\"'arrow-left'\" (action)=\"this.revertToOriginal()\">\n              {{ 'form.address.revert' | translate }}\n            </ta-link>\n          }\n        </div>\n      </ta-card-content>\n    </ta-card>\n  }\n</div>\n", styles: [":host{display:block}.address-form__banner{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-brand);padding:var(--ta-space-sm) var(--ta-space-md)}.address-form__section-header{margin-bottom:var(--ta-space-xs)}.address-form__bottom-action{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}\n"], dependencies: [{ kind: "component", type: BadgeComponent, selector: "ta-badge", inputs: ["value", "type", "showClickOption", "icon"], outputs: ["clickAction"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: CardComponent, selector: "ta-card", inputs: ["highlight", "shadow", "fullHeight", "noContent", "directionCard", "isNew"], outputs: ["click"] }, { kind: "component", type: CardContentComponent, selector: "ta-card-content" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: LinkComponent, selector: "ta-link", inputs: ["state", "underline", "bold", "size", "icon"], outputs: ["action"] }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", viewQueries: [{ propertyName: "googleSearchInput", first: true, predicate: ["googleSearchInput"], descendants: true }], usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div class=\"address-form flex-column g-space-md\">\n  @if (this.searchEnabled) {\n    <div class=\"address-search\">\n      <ta-font-icon class=\"address-search__icon\" name=\"search\" type=\"sm\"></ta-font-icon>\n      <input\n        #googleSearchInput\n        class=\"address-search__input\"\n        type=\"text\"\n        autocomplete=\"off\"\n        [placeholder]=\"'form.address.search-google' | translate\"\n      />\n    </div>\n    <span class=\"address-search__hint\">{{ 'form.address.search-hint' | translate }}</span>\n  }\n\n  <div class=\"grid g-space-sm\">\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.streetInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.numberInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.zipCodeInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.cityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"full\">\n      <ta-input-dropdown\n        [input]=\"this.countryInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-dropdown>\n    </div>\n    <div class=\"full\">\n      <ta-input-textbox\n        [input]=\"this.complementInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n  </div>\n</div>\n", styles: [":host{display:block}.address-search{display:flex;align-items:center;gap:var(--ta-space-sm);padding:var(--ta-space-sm) var(--ta-space-md);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);background:var(--ta-surface-primary);transition:border-color var(--ta-transition-fast),box-shadow var(--ta-transition-fast)}.address-search:focus-within{border-color:var(--ta-border-brand-primary);box-shadow:0 0 0 3px var(--ta-brand-100)}.address-search__icon{flex:0 0 auto;color:var(--ta-icon-brand)}.address-search__input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.address-search__input::placeholder{color:var(--ta-text-tertiary)}.address-search__hint{color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}\n"], dependencies: [{ kind: "component", type: DropdownComponent, selector: "ta-input-dropdown", inputs: ["space"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom"] }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, decorators: [{
             type: Component,
             args: [{ imports: [
-                        BadgeComponent,
-                        ButtonComponent,
-                        CardComponent,
-                        CardContentComponent,
+                        DropdownComponent,
                         FontIconComponent,
                         FormLabelComponent,
-                        LinkComponent,
                         TextBoxComponent,
-                        TextComponent,
-                        TitleComponent,
                         TranslatePipe,
-                    ], selector: 'ta-input-address', standalone: true, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n<div class=\"address-form flex-column g-space-md\">\n  <input\n    #googleSearchInput\n    class=\"form-control\"\n    [placeholder]=\"'form.address.search-google' | translate\"\n  />\n\n  @if (this.state() === 'empty') {\n    <ta-link [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n      {{ 'form.address.fill-manually' | translate }}\n    </ta-link>\n  }\n\n  @if (this.state() === 'locked' && this.currentPlaceId()) {\n    <div class=\"address-form__banner flex-row g-space-sm align-center\">\n      <ta-font-icon name=\"check-circle\" type=\"sm\"></ta-font-icon>\n      <ta-text [isBold]=\"true\">{{ 'form.address.verified' | translate }}</ta-text>\n    </div>\n  }\n\n  @if (this.state() !== 'empty') {\n    <ta-card>\n      <ta-card-content>\n        <div class=\"address-form__section flex-column g-space-sm\">\n          <div class=\"address-form__section-header flex-row space-between align-center\">\n            <ta-title [level]=\"4\">{{ 'form.address.section-details' | translate }}</ta-title>\n            @if (this.state() === 'locked') {\n              <ta-badge [value]=\"'form.address.readonly'\" [icon]=\"'lock'\" type=\"secondary\"></ta-badge>\n            }\n            @if (this.state() === 'manual') {\n              <ta-badge [value]=\"'form.address.manual'\" [icon]=\"'edit'\" type=\"warning\"></ta-badge>\n            }\n          </div>\n\n          <div class=\"grid g-space-sm\">\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.streetInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.numberInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"one-third\">\n              <ta-input-textbox\n                [input]=\"this.zipCodeInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"two-thirds\">\n              <ta-input-textbox\n                [input]=\"this.cityInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.countryInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n            <div class=\"full\">\n              <ta-input-textbox\n                [input]=\"this.complementInput\"\n                [standalone]=\"true\"\n                (valueChanged)=\"this.onSubInputChanged()\"\n              ></ta-input-textbox>\n            </div>\n          </div>\n\n          @if (this.state() === 'locked') {\n            <div class=\"address-form__bottom-action flex-row space-between align-center\">\n              <ta-text>{{ 'form.address.does-not-match' | translate }}</ta-text>\n              <ta-button type=\"secondary\" [icon]=\"'edit'\" (action)=\"this.unlockManual()\">\n                {{ 'form.address.edit-manually' | translate }}\n              </ta-button>\n            </div>\n          }\n\n          @if (this.state() === 'manual' && this.snapshot() !== null) {\n            <ta-link [icon]=\"'arrow-left'\" (action)=\"this.revertToOriginal()\">\n              {{ 'form.address.revert' | translate }}\n            </ta-link>\n          }\n        </div>\n      </ta-card-content>\n    </ta-card>\n  }\n</div>\n", styles: [":host{display:block}.address-form__banner{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-brand);padding:var(--ta-space-sm) var(--ta-space-md)}.address-form__section-header{margin-bottom:var(--ta-space-xs)}.address-form__bottom-action{background:var(--ta-surface-secondary);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}\n"] }]
+                    ], selector: 'ta-input-address', standalone: true, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div class=\"address-form flex-column g-space-md\">\n  @if (this.searchEnabled) {\n    <div class=\"address-search\">\n      <ta-font-icon class=\"address-search__icon\" name=\"search\" type=\"sm\"></ta-font-icon>\n      <input\n        #googleSearchInput\n        class=\"address-search__input\"\n        type=\"text\"\n        autocomplete=\"off\"\n        [placeholder]=\"'form.address.search-google' | translate\"\n      />\n    </div>\n    <span class=\"address-search__hint\">{{ 'form.address.search-hint' | translate }}</span>\n  }\n\n  <div class=\"grid g-space-sm\">\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.streetInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.numberInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.zipCodeInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.cityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"full\">\n      <ta-input-dropdown\n        [input]=\"this.countryInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-dropdown>\n    </div>\n    <div class=\"full\">\n      <ta-input-textbox\n        [input]=\"this.complementInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n  </div>\n</div>\n", styles: [":host{display:block}.address-search{display:flex;align-items:center;gap:var(--ta-space-sm);padding:var(--ta-space-sm) var(--ta-space-md);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);background:var(--ta-surface-primary);transition:border-color var(--ta-transition-fast),box-shadow var(--ta-transition-fast)}.address-search:focus-within{border-color:var(--ta-border-brand-primary);box-shadow:0 0 0 3px var(--ta-brand-100)}.address-search__icon{flex:0 0 auto;color:var(--ta-icon-brand)}.address-search__input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.address-search__input::placeholder{color:var(--ta-text-tertiary)}.address-search__hint{color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { googleSearchInput: [{
                 type: ViewChild,
                 args: ['googleSearchInput']

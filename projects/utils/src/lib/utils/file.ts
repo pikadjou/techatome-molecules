@@ -1,4 +1,4 @@
-import { Camera } from "@capacitor/camera";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import Compressor from "compressorjs";
 
 import { FileStructure } from "../types/files/temporary-files";
@@ -80,6 +80,32 @@ export const pickImages = async (): Promise<FileStructure[]> => {
   }
 
   return pics;
+};
+
+/**
+ * Capture une photo via l'appareil. Par défaut, la source `Prompt` laisse
+ * l'utilisateur choisir entre l'appareil photo et la galerie ; passer
+ * `CameraSource.Camera` pour forcer la prise de vue en direct.
+ */
+export const takePhoto = async (
+  source: CameraSource = CameraSource.Prompt
+): Promise<FileStructure | null> => {
+  const photo = await Camera.getPhoto({
+    quality: 60,
+    resultType: CameraResultType.Uri,
+    source,
+  });
+
+  const file: FileStructure = {
+    file: await pathToFile(photo),
+    localUrl: photo.webPath ?? null,
+  };
+
+  if (!file.file) {
+    return null;
+  }
+
+  return file;
 };
 
 export const pathToFile = async (pic: {

@@ -24,9 +24,25 @@
     </div>
     }
     <div class="flex-start">
-      <ta-button type="tertiary" (action)="this.openDialog()" icon="add_a_photo">
-        Ajouter
-      </ta-button>
+      <ta-overlay-panel #addPanel [panelConfig]="{ manualTrigger: true, matchTriggerWidth: false }">
+        <ng-template #panelTrigger>
+          <ta-button type="tertiary" icon="add_a_photo" (action)="addPanel.open(true)">
+            {{ 'input.images.add' | translate }}
+          </ta-button>
+        </ng-template>
+        <ng-template #panelContent>
+          <div class="add-image-menu flex-column">
+            <button type="button" class="add-image-option" (click)="this.takePhoto(); addPanel.close()">
+              <ta-font-icon name="add_a_photo" type="sm"></ta-font-icon>
+              <span>{{ 'input.images.take-photo' | translate }}</span>
+            </button>
+            <button type="button" class="add-image-option" (click)="this.openGallery(); addPanel.close()">
+              <ta-font-icon name="image" type="sm"></ta-font-icon>
+              <span>{{ 'input.images.gallery' | translate }}</span>
+            </button>
+          </div>
+        </ng-template>
+      </ta-overlay-panel>
     </div>
   </div>
 </ta-loader>

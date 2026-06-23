@@ -1,12 +1,12 @@
 import * as i0 from '@angular/core';
-import { Component, Injectable, input, EventEmitter, Output, output, ViewChild, inject, ViewEncapsulation, CUSTOM_ELEMENTS_SCHEMA, signal, InjectionToken, Injector, Optional, Inject, ContentChild } from '@angular/core';
+import { Component, Injectable, input, EventEmitter, Output, output, ViewChild, inject, computed, ViewEncapsulation, CUSTOM_ELEMENTS_SCHEMA, signal, InjectionToken, Injector, Optional, Inject, ContentChild } from '@angular/core';
 import * as i1$2 from '@angular/common';
 import { NgClass, DatePipe, DecimalPipe, NgTemplateOutlet, NgStyle, AsyncPipe, CommonModule } from '@angular/common';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent, isFontIcon, getFontIcon, isLocalIcon, LocalIconComponent, MaterialIconComponent, TaIconType } from '@ta/icons';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, createRange } from '@ta/utils';
+import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, getCountryName, createRange } from '@ta/utils';
 import { intervalToDuration, differenceInCalendarDays } from 'date-fns';
 import * as i1$1 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -1658,13 +1658,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 class AddressComponent {
     constructor() {
         this.address = input.required();
+        // Le pays est stocké sous forme de code ISO (ex. "BE") ; on l'affiche localisé.
+        this.countryName = computed(() => getCountryName(this.address().country));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AddressComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: AddressComponent, isStandalone: true, selector: "ta-address", inputs: { address: { classPropertyName: "address", publicName: "address", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<div>\n  {{ this.address().street }} {{ this.address().number }},\n  {{ this.address().zipCode }} {{ this.address().city }},\n  {{ this.address().country }}\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.bold{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: AddressComponent, isStandalone: true, selector: "ta-address", inputs: { address: { classPropertyName: "address", publicName: "address", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0, template: "<div>\n  {{ this.address().street }} {{ this.address().number }},\n  {{ this.address().zipCode }} {{ this.address().city }},\n  {{ this.countryName() }}\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.bold{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: AddressComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-address", standalone: true, template: "<div>\n  {{ this.address().street }} {{ this.address().number }},\n  {{ this.address().zipCode }} {{ this.address().city }},\n  {{ this.address().country }}\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.bold{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}\n"] }]
+            args: [{ selector: "ta-address", standalone: true, template: "<div>\n  {{ this.address().street }} {{ this.address().number }},\n  {{ this.address().zipCode }} {{ this.address().city }},\n  {{ this.countryName() }}\n</div>\n", styles: [".text{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.sm{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.xs{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight)}.bold{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight)}\n"] }]
         }] });
 
 class SwiperComponent {
@@ -2876,11 +2878,11 @@ class TaOverlayPanelComponent extends TaBaseComponent {
         this._overlayService.closeMenu();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaOverlayPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: { classPropertyName: "panelConfig", publicName: "panelConfig", isSignal: true, isRequired: true, transformFunction: null }, position: { classPropertyName: "position", publicName: "position", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-fill\" #triggerHost (click)=\"this.open()\">\n  <ng-container [ngTemplateOutlet]=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$2.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaOverlayPanelComponent, isStandalone: true, selector: "ta-overlay-panel", inputs: { panelConfig: { classPropertyName: "panelConfig", publicName: "panelConfig", isSignal: true, isRequired: true, transformFunction: null }, position: { classPropertyName: "position", publicName: "position", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closed: "closed" }, queries: [{ propertyName: "triggerTpl", first: true, predicate: ["panelTrigger"], descendants: true }, { propertyName: "contentTpl", first: true, predicate: ["panelContent"], descendants: true }], viewQueries: [{ propertyName: "triggerHostRef", first: true, predicate: ["triggerHost"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div #triggerHost (click)=\"this.open()\">\n  <ng-container [ngTemplateOutlet]=\"this.triggerTpl\"></ng-container>\n</div>\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$2.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaOverlayPanelComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-overlay-panel", standalone: true, imports: [CommonModule], encapsulation: ViewEncapsulation.None, template: "<div class=\"flex-fill\" #triggerHost (click)=\"this.open()\">\n  <ng-container [ngTemplateOutlet]=\"this.triggerTpl\"></ng-container>\n</div>\n" }]
+            args: [{ selector: "ta-overlay-panel", standalone: true, imports: [CommonModule], encapsulation: ViewEncapsulation.None, template: "<div #triggerHost (click)=\"this.open()\">\n  <ng-container [ngTemplateOutlet]=\"this.triggerTpl\"></ng-container>\n</div>\n" }]
         }], ctorParameters: () => [], propDecorators: { triggerTpl: [{
                 type: ContentChild,
                 args: ["panelTrigger"]

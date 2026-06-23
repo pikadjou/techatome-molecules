@@ -24,14 +24,19 @@ export interface IAddressValue {
   zipCode: string | null;
 }
 
-export interface IInputAddress extends IInputBase<Partial<IAddressValue>> {}
+export interface IInputAddress extends IInputBase<Partial<IAddressValue>> {
+  /** Codes pays ISO alpha-2 à mettre en évidence en tête de liste (ex. ['BE', 'FR']). */
+  priorityCountries?: string[];
+}
 
 export class InputAddress extends InputBase<Partial<IAddressValue>> {
   override controlType = 'address';
+  priorityCountries: string[];
 
   constructor(options: IInputAddress = {}) {
     super(options);
     this.type = 'address';
+    this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
   }
 
   public static formatAddressForm(data: any) {

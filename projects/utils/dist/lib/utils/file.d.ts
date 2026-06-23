@@ -1,3 +1,4 @@
+import { CameraSource } from "@capacitor/camera";
 import { FileStructure } from "../types/files/temporary-files";
 export declare const octetsToMo: (octets: number) => number;
 export declare const extractExtension: (name: string) => "docx" | "pdf" | "xlsx" | string;
@@ -6,6 +7,12 @@ export declare const getBlobImage: (base64: string) => Promise<Blob>;
 export declare const compressImage: (blob: Blob) => Promise<Blob>;
 export declare const downloadFile: (url: string, filename?: string) => void;
 export declare const pickImages: () => Promise<FileStructure[]>;
+/**
+ * Capture une photo via l'appareil. Par défaut, la source `Prompt` laisse
+ * l'utilisateur choisir entre l'appareil photo et la galerie ; passer
+ * `CameraSource.Camera` pour forcer la prise de vue en direct.
+ */
+export declare const takePhoto: (source?: CameraSource) => Promise<FileStructure | null>;
 export declare const pathToFile: (pic: {
     webPath?: string;
     format: string;

@@ -537,6 +537,7 @@ class InputAddress extends InputBase {
         super(options);
         this.controlType = 'address';
         this.type = 'address';
+        this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
     }
     static formatAddressForm(data) {
         if (!data) {

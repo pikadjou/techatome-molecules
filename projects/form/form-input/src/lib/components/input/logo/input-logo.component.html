@@ -2,19 +2,35 @@
 
 <ta-loader [isLoading]="this.requestState.isLoading()" size="sm">
   <div class="logo-wrapper">
-    <div class="logo-preview" [class.has-value]="!!this.input.value" (click)="this.openDialog()">
-      @if (this.input.value) {
-        <img [src]="this.input.value.url" class="logo-image" />
-        <div class="logo-overlay">
-          <ta-font-icon name="edit" type="md"></ta-font-icon>
+    <ta-overlay-panel #logoPanel [panelConfig]="{ matchTriggerWidth: false }">
+      <ng-template #panelTrigger>
+        <div class="logo-preview" [class.has-value]="!!this.input.value">
+          @if (this.input.value) {
+            <img [src]="this.input.value.url" class="logo-image" />
+            <div class="logo-overlay">
+              <ta-font-icon name="edit" type="md"></ta-font-icon>
+            </div>
+          } @else {
+            <div class="logo-placeholder">
+              <ta-font-icon name="add_a_photo" type="lg"></ta-font-icon>
+              <span class="logo-placeholder-text">{{ 'input.logo.add' | translate }}</span>
+            </div>
+          }
         </div>
-      } @else {
-        <div class="logo-placeholder">
-          <ta-font-icon name="add_a_photo" type="lg"></ta-font-icon>
-          <span class="logo-placeholder-text">{{ 'input.logo.add' | translate }}</span>
+      </ng-template>
+      <ng-template #panelContent>
+        <div class="logo-menu flex-column">
+          <button type="button" class="logo-option" (click)="this.openCamera(); logoPanel.close()">
+            <ta-font-icon name="add_a_photo" type="sm"></ta-font-icon>
+            <span>{{ 'input.logo.take-photo' | translate }}</span>
+          </button>
+          <button type="button" class="logo-option" (click)="this.openGallery(); logoPanel.close()">
+            <ta-font-icon name="image" type="sm"></ta-font-icon>
+            <span>{{ 'input.logo.gallery' | translate }}</span>
+          </button>
         </div>
-      }
-    </div>
+      </ng-template>
+    </ta-overlay-panel>
 
     @if (this.input.value) {
       <ta-button type="danger" size="small" icon="delete" (action)="this.removeLogo()">

@@ -1,6 +1,7 @@
 @use 'ta/utils/mixins/flex';
 @use 'ta/utils/mixins/fonts';
 @use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 .element-list {
   gap: common.get-var(space, md);
@@ -16,6 +17,30 @@
   &.vertical {
     display: flex;
     flex-direction: column;
+  }
+
+  // Sur mobile, on laisse les items garder leur taille naturelle et on
+  // permet de scroller horizontalement à l'intérieur de la navigation.
+  @include mq.to-key(md) {
+    &:not(.vertical) {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      // Un peu d'air autour des items dans la zone scrollable.
+      padding: common.get-var(space, xs) common.get-var(space, sm);
+
+      // On force chaque item à prendre la largeur de son contenu réel
+      // (icône + label + ta-label) au lieu du flex-full qui le comprimait
+      // et faisait déborder le ta-label sur l'item voisin.
+      .element {
+        flex: 0 0 auto;
+        width: max-content;
+      }
+
+      .item .label {
+        white-space: nowrap;
+      }
+    }
   }
 }
 

@@ -1,4 +1,6 @@
-import { Component, input } from "@angular/core";
+import { Component, computed, input } from "@angular/core";
+
+import { getCountryName } from "@ta/utils";
 
 export interface Address {
   id: string;
@@ -18,4 +20,7 @@ export interface Address {
 })
 export class AddressComponent {
   address = input.required<Address>();
+
+  // Le pays est stocké sous forme de code ISO (ex. "BE") ; on l'affiche localisé.
+  countryName = computed(() => getCountryName(this.address().country));
 }

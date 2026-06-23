@@ -1,4 +1,36 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+
+.add-image-menu {
+  padding: common.get-var(space, xs);
+  background-color: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  box-shadow: common.get-var(shadow, black, sm);
+}
+
+.add-image-option {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, sm);
+  width: 100%;
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  border: none;
+  background: transparent;
+  border-radius: common.get-var(radius, minimal);
+  color: common.get-var(text, primary);
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: left;
+  @include fonts.fontSizeBody(md);
+  transition: background-color common.get-var(transition, fast),
+    color common.get-var(transition, fast);
+
+  &:hover {
+    color: common.get-var(text, brand, primary);
+    background-color: common.get-var(surface, hover);
+  }
+}
 
 .image-preview-wrapper {
   position: relative;
