@@ -100,18 +100,20 @@
           <ta-loader [isLoading]="this.requestState.isLoading()">
             @if (this.input.choiceTemplate.one) {
               <ta-empty [isEmpty]="(this.filteredOptions$ | async)?.length === 0">
-                @for (option of this.filteredOptions$ | async; track option) {
-                  <div
-                    class="flex-row pointer m-space-sm p-space-sm"
-                    [class.is-selected]="this.isSelected(option)"
-                    (click)="this.select(option)"
-                  >
-                    <ng-template
-                      [ngTemplateOutlet]="this.input.choiceTemplate.one"
-                      [ngTemplateOutletContext]="{ item: option.data }"
-                    ></ng-template>
-                  </div>
-                }
+                <div class="flex-column flex-full">
+                  @for (option of this.filteredOptions$ | async; track option) {
+                    <div
+                      class="flex-row pointer m-space-sm p-space-sm"
+                      [class.is-selected]="this.isSelected(option)"
+                      (click)="this.select(option)"
+                    >
+                      <ng-template
+                        [ngTemplateOutlet]="this.input.choiceTemplate.one"
+                        [ngTemplateOutletContext]="{ item: option.data }"
+                      ></ng-template>
+                    </div>
+                  }
+                </div>
               </ta-empty>
             } @else if (this.input.choiceTemplate.list) {
               <ng-template

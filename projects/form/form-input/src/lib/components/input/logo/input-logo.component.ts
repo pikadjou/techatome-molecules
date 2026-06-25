@@ -7,7 +7,7 @@ import { FontIconComponent } from '@ta/icons';
 import { TaDocumentsService } from '@ta/services';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent, LoaderComponent, TaOverlayPanelComponent } from '@ta/ui';
-import { takePhoto } from '@ta/utils';
+import { canTakePhoto, takePhoto } from '@ta/utils';
 
 import { TaTranslationInput } from '../../../translation.service';
 import { TaAbstractInputComponent } from '../../abstract.component';
@@ -28,11 +28,18 @@ import { FormLabelComponent } from '../../label/label.component';
   ],
 })
 export class InputLogoComponent extends TaAbstractInputComponent<InputLogo> implements OnInit {
+  public showTakePhoto = false;
+
   private _documentsService = inject(TaDocumentsService);
 
   constructor() {
     super();
     TaTranslationInput.getInstance();
+  }
+
+  public override async ngOnInit() {
+    super.ngOnInit();
+    this.showTakePhoto = await canTakePhoto();
   }
 
   public async openCamera() {

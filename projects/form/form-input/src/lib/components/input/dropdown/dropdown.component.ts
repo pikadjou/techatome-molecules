@@ -33,9 +33,13 @@ export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<an
     this._registerSubscription(
       this.input.options$.subscribe(options => {
         this.optionsList = options;
-        this.filteredOptions = this.optionsList;
+        this.filteredOptions = this._cap(this.optionsList);
       })
     );
+  }
+
+  private _cap(options: { id: string; name: string; disabled?: boolean }[]) {
+    return this.input.maxResults ? options.slice(0, this.input.maxResults) : options;
   }
 
   public getOptionName(id: any): string {
@@ -59,7 +63,7 @@ export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<an
   }
 
   public onOverlayClosed(): void {
-    this.filteredOptions = this.optionsList;
+    this.filteredOptions = this._cap(this.optionsList);
   }
 
   public isSelected(id: any): boolean {
@@ -75,9 +79,10 @@ export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<an
     if (!this.input.withSearch) return;
     const target = event.target as HTMLInputElement;
     const searchTerm = target.value.trim();
-    this.filteredOptions =
+    const filtered =
       searchTerm.length >= 0
         ? this.optionsList.filter(opt => opt.name.toLowerCase().includes(searchTerm.toLowerCase()))
         : this.optionsList;
+    this.filteredOptions = this._cap(filtered);
   }
 }

@@ -7,6 +7,8 @@ export interface IInputDropdown<T> extends IInputBase<T> {
   multiple?: boolean;
   showNothingOption?: boolean;
   withSearch?: boolean;
+  /** Nombre maximum d'options affichées (le filtre de recherche reste sur la liste complète). */
+  maxResults?: number;
   width?: string;
   valueChanged?: (data?: string) => void;
 }
@@ -16,6 +18,7 @@ export class InputDropdown<T = string | string[]> extends InputBase<T> {
   multiple: boolean;
   showNothingOption: boolean = false;
   withSearch: boolean = false;
+  maxResults?: number;
   width?: string;
 
   constructor(options: IInputDropdown<T> = {}) {
@@ -27,5 +30,6 @@ export class InputDropdown<T = string | string[]> extends InputBase<T> {
       : false;
     this.width = options.width || "100%";
     this.withSearch = options.withSearch || false;
+    this.maxResults = options.maxResults;
   }
 }

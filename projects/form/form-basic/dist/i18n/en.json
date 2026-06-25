@@ -2,6 +2,7 @@
   "address.city": "City",
   "address.country": "Country",
   "address.floor": "Floor / Apartment",
+  "address.locality": "Postal code / City",
   "address.number": "Number",
   "address.search-google": "Search for an address",
   "address.search-hint": "Search for an address to prefill the fields below. You can edit them freely.",

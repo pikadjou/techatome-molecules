@@ -3,8 +3,10 @@ import { InputLogo } from '@ta/form-model';
 import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class InputLogoComponent extends TaAbstractInputComponent<InputLogo> implements OnInit {
+    showTakePhoto: boolean;
     private _documentsService;
     constructor();
+    ngOnInit(): Promise<void>;
     openCamera(): Promise<void>;
     openGallery(): Promise<void>;
     removeLogo(): void;

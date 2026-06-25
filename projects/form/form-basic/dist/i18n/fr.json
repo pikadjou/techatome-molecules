@@ -2,6 +2,7 @@
   "address.city": "Ville",
   "address.country": "Pays",
   "address.floor": "Étage / Appartement",
+  "address.locality": "Code postal / Commune",
   "address.number": "Numéro",
   "address.search-google": "Rechercher une adresse",
   "address.search-hint": "Recherchez une adresse pour préremplir les champs ci-dessous. Vous pouvez les modifier librement.",

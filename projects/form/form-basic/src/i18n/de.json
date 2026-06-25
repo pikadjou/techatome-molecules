@@ -2,6 +2,7 @@
   "address.city": "Stadt",
   "address.country": "Land",
   "address.floor": "Stockwerk / Wohnung",
+  "address.locality": "Postleitzahl / Gemeinde",
   "address.number": "Nummer",
   "address.search-google": "Adresse suchen",
   "address.search-hint": "Suchen Sie eine Adresse, um die Felder unten vorauszufüllen. Sie können sie frei bearbeiten.",

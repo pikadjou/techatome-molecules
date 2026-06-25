@@ -16,47 +16,67 @@
   }
 
   <div class="grid g-space-sm">
-    <div class="two-thirds">
+    <div class="one-half">
       <ta-input-textbox
         [input]="this.streetInput"
         [standalone]="true"
         (valueChanged)="this.onSubInputChanged()"
       ></ta-input-textbox>
     </div>
-    <div class="one-third">
+    <div class="one-fourth">
       <ta-input-textbox
         [input]="this.numberInput"
         [standalone]="true"
         (valueChanged)="this.onSubInputChanged()"
       ></ta-input-textbox>
     </div>
-    <div class="one-third">
-      <ta-input-textbox
-        [input]="this.zipCodeInput"
-        [standalone]="true"
-        (valueChanged)="this.onSubInputChanged()"
-      ></ta-input-textbox>
-    </div>
-    <div class="two-thirds">
-      <ta-input-textbox
-        [input]="this.cityInput"
-        [standalone]="true"
-        (valueChanged)="this.onSubInputChanged()"
-      ></ta-input-textbox>
-    </div>
-    <div class="full">
-      <ta-input-dropdown
-        [input]="this.countryInput"
-        [standalone]="true"
-        (valueChanged)="this.onSubInputChanged()"
-      ></ta-input-dropdown>
-    </div>
-    <div class="full">
+    <div class="one-fourth">
       <ta-input-textbox
         [input]="this.complementInput"
         [standalone]="true"
         (valueChanged)="this.onSubInputChanged()"
       ></ta-input-textbox>
     </div>
+
+    @if (this.localityAvailable) {
+      <div class="full">
+        <ta-input-choices
+          [input]="this.localityInput"
+          [standalone]="true"
+          (valueChanged)="this.onLocalitySelected()"
+        ></ta-input-choices>
+      </div>
+    } @else {
+      <div class="one-third">
+        <ta-input-textbox
+          [input]="this.zipCodeInput"
+          [standalone]="true"
+          (valueChanged)="this.onSubInputChanged()"
+        ></ta-input-textbox>
+      </div>
+      <div class="two-thirds">
+        <ta-input-textbox
+          [input]="this.cityInput"
+          [standalone]="true"
+          (valueChanged)="this.onSubInputChanged()"
+        ></ta-input-textbox>
+      </div>
+    }
+
+    <div class="full">
+      <ta-input-choices
+        [input]="this.countryInput"
+        [standalone]="true"
+        (valueChanged)="this.onSubInputChanged()"
+      ></ta-input-choices>
+    </div>
   </div>
 </div>
+
+<ng-template #localityItemTpl let-item="item">
+  <span class="locality-option">{{ item.zipCode }} {{ item.city }}</span>
+</ng-template>
+
+<ng-template #countryItemTpl let-item="item">
+  <span class="locality-option">{{ item.name }}</span>
+</ng-template>

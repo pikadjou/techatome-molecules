@@ -6,6 +6,13 @@ export declare const getBase64FromFile: (file: File) => Promise<string>;
 export declare const getBlobImage: (base64: string) => Promise<Blob>;
 export declare const compressImage: (blob: Blob) => Promise<Blob>;
 export declare const downloadFile: (url: string, filename?: string) => void;
+/**
+ * Indique si l'appareil courant peut prendre une photo.
+ *
+ * - Toujours `true` sur une plateforme native (iOS/Android via Capacitor).
+ * - Sur le web, `true` uniquement si une caméra (videoinput) est détectée.
+ */
+export declare const canTakePhoto: () => Promise<boolean>;
 export declare const pickImages: () => Promise<FileStructure[]>;
 /**
  * Capture une photo via l'appareil. Par défaut, la source `Prompt` laisse

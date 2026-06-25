@@ -17,6 +17,7 @@ export declare class DropdownComponent extends TaAbstractInputComponent<InputDro
     }[];
     constructor();
     ngOnInit(): void;
+    private _cap;
     getOptionName(id: any): string;
     onMenuSelect(selectedId: any): void;
     onOverlayClosed(): void;

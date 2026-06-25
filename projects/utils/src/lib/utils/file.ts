@@ -1,3 +1,4 @@
+import { Capacitor } from "@capacitor/core";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import Compressor from "compressorjs";
 
@@ -59,6 +60,27 @@ export const downloadFile = (url: string, filename?: string) => {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+};
+
+/**
+ * Indique si l'appareil courant peut prendre une photo.
+ *
+ * - Toujours `true` sur une plateforme native (iOS/Android via Capacitor).
+ * - Sur le web, `true` uniquement si une caméra (videoinput) est détectée.
+ */
+export const canTakePhoto = async (): Promise<boolean> => {
+  if (Capacitor.isNativePlatform()) {
+    return true;
+  }
+  if (typeof navigator === "undefined" || !navigator.mediaDevices?.enumerateDevices) {
+    return false;
+  }
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    return devices.some((device) => device.kind === "videoinput");
+  } catch {
+    return false;
+  }
 };
 
 export const pickImages = async (): Promise<FileStructure[]> => {

@@ -2,6 +2,7 @@
   "address.city": "Stad",
   "address.country": "Land",
   "address.floor": "Verdieping / Appartement",
+  "address.locality": "Postcode / Gemeente",
   "address.number": "Nummer",
   "address.search-google": "Zoek een adres",
   "address.search-hint": "Zoek een adres om de onderstaande velden voor in te vullen. U kunt ze vrij aanpassen.",

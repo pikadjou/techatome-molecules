@@ -188,6 +188,7 @@ class InputDropdown extends InputBase {
             : false;
         this.width = options.width || "100%";
         this.withSearch = options.withSearch || false;
+        this.maxResults = options.maxResults;
     }
 }
 

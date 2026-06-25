@@ -20,10 +20,12 @@
       </ng-template>
       <ng-template #panelContent>
         <div class="logo-menu flex-column">
-          <button type="button" class="logo-option" (click)="this.openCamera(); logoPanel.close()">
-            <ta-font-icon name="add_a_photo" type="sm"></ta-font-icon>
-            <span>{{ 'input.logo.take-photo' | translate }}</span>
-          </button>
+          @if (this.showTakePhoto) {
+            <button type="button" class="logo-option" (click)="this.openCamera(); logoPanel.close()">
+              <ta-font-icon name="add_a_photo" type="sm"></ta-font-icon>
+              <span>{{ 'input.logo.take-photo' | translate }}</span>
+            </button>
+          }
           <button type="button" class="logo-option" (click)="this.openGallery(); logoPanel.close()">
             <ta-font-icon name="image" type="sm"></ta-font-icon>
             <span>{{ 'input.logo.gallery' | translate }}</span>

@@ -32,10 +32,12 @@
         </ng-template>
         <ng-template #panelContent>
           <div class="add-image-menu flex-column">
-            <button type="button" class="add-image-option" (click)="this.takePhoto(); addPanel.close()">
-              <ta-font-icon name="add_a_photo" type="sm"></ta-font-icon>
-              <span>{{ 'input.images.take-photo' | translate }}</span>
-            </button>
+            @if (this.showTakePhoto) {
+              <button type="button" class="add-image-option" (click)="this.takePhoto(); addPanel.close()">
+                <ta-font-icon name="add_a_photo" type="sm"></ta-font-icon>
+                <span>{{ 'input.images.take-photo' | translate }}</span>
+              </button>
+            }
             <button type="button" class="add-image-option" (click)="this.openGallery(); addPanel.close()">
               <ta-font-icon name="image" type="sm"></ta-font-icon>
               <span>{{ 'input.images.gallery' | translate }}</span>

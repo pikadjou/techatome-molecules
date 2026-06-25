@@ -45,3 +45,8 @@
   color: common.get-var(text, secondary);
   @include fonts.fontSizeBody(sm);
 }
+
+.locality-option {
+  color: common.get-var(text, primary);
+  @include fonts.fontSizeBody(md);
+}

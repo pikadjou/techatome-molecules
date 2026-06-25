@@ -7,10 +7,12 @@ import { TaIconType } from '@ta/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { differenceInMinutes, parseISO, isValid } from 'date-fns';
+import { Capacitor } from '@capacitor/core';
 import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 import Compressor from 'compressorjs';
 import slugify from 'slugify';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { of, map as map$1, catchError, shareReplay, BehaviorSubject } from 'rxjs';
 
 class StopPropagationDirective {
     constructor() {
@@ -857,6 +859,27 @@ const downloadFile = (url, filename) => {
     a.click();
     document.body.removeChild(a);
 };
+/**
+ * Indique si l'appareil courant peut prendre une photo.
+ *
+ * - Toujours `true` sur une plateforme native (iOS/Android via Capacitor).
+ * - Sur le web, `true` uniquement si une caméra (videoinput) est détectée.
+ */
+const canTakePhoto = async () => {
+    if (Capacitor.isNativePlatform()) {
+        return true;
+    }
+    if (typeof navigator === "undefined" || !navigator.mediaDevices?.enumerateDevices) {
+        return false;
+    }
+    try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        return devices.some((device) => device.kind === "videoinput");
+    }
+    catch {
+        return false;
+    }
+};
 const pickImages = async () => {
     const gallery = await Camera.pickImages({
         quality: 60,
@@ -1129,6 +1152,78 @@ class HorizontalScroll {
     }
 }
 
+/**
+ * Récupère l'intégralité des codes postaux / communes d'un pays.
+ *
+ * Source : dataset GeoNames `geonames-postal-code` servi par l'API publique
+ * OpenDataSoft (aucune clé requise). L'endpoint `/exports/json` renvoie tous
+ * les enregistrements filtrés en une seule requête ; la recherche se fait
+ * ensuite côté client. Les résultats sont mis en cache par pays.
+ */
+class TaAddressLookupService {
+    constructor() {
+        this._http = inject(HttpClient);
+        this._baseUrl = 'https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-postal-code/exports/json';
+        this._cache = new Map();
+    }
+    /**
+     * Renvoie tous les codes postaux / communes du pays donné, triés par code
+     * postal puis par nom. Renvoie une liste vide si le pays est inconnu ou en
+     * cas d'erreur réseau (le consommateur peut alors basculer en saisie libre).
+     *
+     * @param country Code pays ISO alpha-2 (ex. "BE").
+     */
+    getCountryPostalCodes(country) {
+        const code = country?.trim().toUpperCase();
+        if (!code) {
+            return of([]);
+        }
+        const cached = this._cache.get(code);
+        if (cached) {
+            return cached;
+        }
+        const request = this._http
+            .get(this._baseUrl, {
+            params: {
+                select: 'postal_code,place_name',
+                where: `country_code="${code}"`,
+            },
+        })
+            .pipe(map$1(records => this._mapRecords(records, code)), catchError(() => of([])), shareReplay(1));
+        this._cache.set(code, request);
+        return request;
+    }
+    _mapRecords(records, country) {
+        const localities = (records ?? [])
+            .filter(record => !!record.postal_code && !!record.place_name)
+            .map(record => ({
+            city: record.place_name ?? '',
+            country,
+            latitude: record.latitude ?? null,
+            longitude: record.longitude ?? null,
+            zipCode: record.postal_code ?? '',
+        }));
+        // Déduplication sur le couple code postal + commune.
+        const seen = new Set();
+        const unique = localities.filter(locality => {
+            const key = `${locality.zipCode}__${locality.city}`;
+            if (seen.has(key)) {
+                return false;
+            }
+            seen.add(key);
+            return true;
+        });
+        unique.sort((a, b) => a.zipCode.localeCompare(b.zipCode) || a.city.localeCompare(b.city));
+        return unique;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAddressLookupService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAddressLookupService, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAddressLookupService, decorators: [{
+            type: Injectable,
+            args: [{ providedIn: 'root' }]
+        }] });
+
 class ReadOnlyContextService {
     constructor() {
         this._readonly$ = new BehaviorSubject(false);
@@ -1157,5 +1252,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaBaseComponent, TaBaseModal, TaBasePage, TemporaryFile, TypedTemplateDirective, call, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map

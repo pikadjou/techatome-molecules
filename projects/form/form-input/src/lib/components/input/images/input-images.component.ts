@@ -9,7 +9,7 @@ import { FontIconComponent } from "@ta/icons";
 import { DocumentDto, TaDocumentsService } from "@ta/services";
 import { TranslatePipe } from "@ta/translation";
 import { ButtonComponent, LoaderComponent, TaOverlayPanelComponent } from "@ta/ui";
-import { isNonNullable, pickImages, takePhoto } from "@ta/utils";
+import { canTakePhoto, isNonNullable, pickImages, takePhoto } from "@ta/utils";
 
 import { TaTranslationInput } from "../../../translation.service";
 import { TaAbstractInputComponent } from "../../abstract.component";
@@ -33,11 +33,18 @@ export class InputImagesComponent
   extends TaAbstractInputComponent<InputImages>
   implements OnInit
 {
+  public showTakePhoto = false;
+
   private _documentsService = inject(TaDocumentsService);
 
   constructor() {
     super();
     TaTranslationInput.getInstance();
+  }
+
+  public override async ngOnInit() {
+    super.ngOnInit();
+    this.showTakePhoto = await canTakePhoto();
   }
 
   public async openGallery() {

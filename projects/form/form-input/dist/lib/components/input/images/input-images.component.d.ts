@@ -4,8 +4,10 @@ import { DocumentDto } from "@ta/services";
 import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class InputImagesComponent extends TaAbstractInputComponent<InputImages> implements OnInit {
+    showTakePhoto: boolean;
     private _documentsService;
     constructor();
+    ngOnInit(): Promise<void>;
     openGallery(): Promise<void>;
     takePhoto(): Promise<void>;
     onFileDeleted(fileData: DocumentDto): void;
