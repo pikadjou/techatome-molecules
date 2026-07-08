@@ -18,8 +18,7 @@
                 [ngTemplateOutletContext]="{
                   element: element,
                 }"
-              >
-              </ng-template>
+              ></ng-template>
             </div>
           }
         }
@@ -41,8 +40,7 @@
           [ngTemplateOutletContext]="{
             item: element,
           }"
-        >
-        </ng-template>
+        ></ng-template>
       </div>
     } @else {
       <div
@@ -57,15 +55,14 @@
           [ngTemplateOutletContext]="{
             item: element,
           }"
-        >
-        </ng-template>
+        ></ng-template>
       </div>
     }
   </div>
 </ng-template>
 
 <ng-template #Item let-item="item" [typedTemplate]="this.typeItem">
-  <div class="item flex-full flex-start g-space-sm" [class.disabled]="item.disabled">
+  <div class="item flex-full flex-row g-space-sm" [class.disabled]="item.disabled">
     @if (this.hasFontIcon(item)) {
       <div class="icon">
         <ta-font-icon [name]="this.getFontIcon(item)"></ta-font-icon>

@@ -39,8 +39,17 @@
 
       .item .label {
         white-space: nowrap;
+        display: flex;
       }
     }
+  }
+}
+
+// Sur mobile et tablette, le badge de notification (ta-label) flotte
+// en haut à droite de l'item au lieu d'être en flux à côté du label.
+@include mq.to-key(lg) {
+  .item {
+    position: relative;
   }
 }
 
@@ -58,9 +67,10 @@
       border-radius: common.get-var(radius, label);
       @include fonts.fontSizeBody(sm);
       font-weight: 500;
-      transition: background-color common.get-var(transition, fast),
-                  border-color common.get-var(transition, fast),
-                  color common.get-var(transition, fast);
+      transition:
+        background-color common.get-var(transition, fast),
+        border-color common.get-var(transition, fast),
+        color common.get-var(transition, fast);
     }
 
     &.disabled .item {
@@ -93,8 +103,9 @@
       border-bottom: 2px solid transparent;
       color: common.get-var(text, secondary);
       @include fonts.fontSizeBody(sm);
-      transition: color common.get-var(transition, fast),
-                  border-bottom-color common.get-var(transition, fast);
+      transition:
+        color common.get-var(transition, fast),
+        border-bottom-color common.get-var(transition, fast);
     }
 
     &.disabled {
@@ -134,8 +145,9 @@
       border-radius: common.get-var(radius, minimal);
       color: common.get-var(text, secondary);
       @include fonts.fontSizeBody(md);
-      transition: background-color common.get-var(transition, fast),
-                  color common.get-var(transition, fast);
+      transition:
+        background-color common.get-var(transition, fast),
+        color common.get-var(transition, fast);
     }
 
     &.disabled {
@@ -157,13 +169,5 @@
 :host ::ng-deep {
   .swiper-container {
     gap: common.get-var(space, sm) !important;
-  }
-  ta-font-icon {
-    margin-top: -6px;
-    display: block;
-    i {
-      height: 18px !important;
-      @include fonts.fontSizeBody(lg);
-    }
   }
 }

@@ -2,11 +2,10 @@
 
 .swiper-container {
   overflow-x: auto;
-  overflow-y: hidden;
   white-space: nowrap;
   scroll-behavior: smooth;
 
   @include mediaQueriesRanges.to-key(tablette) {
-    width: calc(100vw - 20px);
+    width: 100%;
   }
 }

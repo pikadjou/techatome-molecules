@@ -1671,11 +1671,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class SwiperComponent {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwiperComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: SwiperComponent, isStandalone: true, selector: "ta-swiper", ngImport: i0, template: "<div class=\"swiper-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".swiper-container{overflow-x:auto;overflow-y:hidden;white-space:nowrap;scroll-behavior:smooth}@media screen and (max-width: 768px){.swiper-container{width:calc(100vw - 20px)}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: SwiperComponent, isStandalone: true, selector: "ta-swiper", ngImport: i0, template: "<div class=\"swiper-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".swiper-container{overflow-x:auto;white-space:nowrap;scroll-behavior:smooth}@media screen and (max-width: 768px){.swiper-container{width:100%}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SwiperComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-swiper', standalone: true, schemas: [CUSTOM_ELEMENTS_SCHEMA], encapsulation: ViewEncapsulation.None, imports: [CommonModule], template: "<div class=\"swiper-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".swiper-container{overflow-x:auto;overflow-y:hidden;white-space:nowrap;scroll-behavior:smooth}@media screen and (max-width: 768px){.swiper-container{width:calc(100vw - 20px)}}\n"] }]
+            args: [{ selector: 'ta-swiper', standalone: true, schemas: [CUSTOM_ELEMENTS_SCHEMA], encapsulation: ViewEncapsulation.None, imports: [CommonModule], template: "<div class=\"swiper-container\">\n  <ng-content></ng-content>\n</div>\n", styles: [".swiper-container{overflow-x:auto;white-space:nowrap;scroll-behavior:smooth}@media screen and (max-width: 768px){.swiper-container{width:100%}}\n"] }]
         }] });
 
 /**
