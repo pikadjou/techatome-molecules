@@ -1,5 +1,9 @@
 {
   "documents.upload.dialog.description": "Dokumentbeschreibung",
   "documents.upload.dialog.document-type": "Dokumenttyp",
-  "documents.upload.dialog.title": "Dokument hochladen"
+  "documents.upload.dialog.title": "Dokument hochladen",
+  "preview.title": "Dateivorschau",
+  "slide.download": "Herunterladen",
+  "slide.delete": "Löschen",
+  "slide.no-viewer": "Für diesen Dateityp ist keine Vorschau verfügbar"
 }

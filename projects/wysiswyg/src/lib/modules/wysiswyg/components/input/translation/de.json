@@ -2,6 +2,7 @@
   "editorjs": {
     "placeholder": "Beginnen Sie zu schreiben...",
     "i18n": {
+      "direction": "ltr",
       "messages": {
         "ui": {
           "blockTunes": {
@@ -14,6 +15,11 @@
             "converter": {
               "Convert to": "Umwandeln in"
             }
+          },
+          "popover": {
+            "Filter": "Filtern",
+            "Nothing found": "Nichts gefunden",
+            "Convert to": "Umwandeln in"
           },
           "toolbar": {
             "toolbox": {
@@ -39,6 +45,10 @@
           "InlineCode": "Inline-Code"
         },
         "tools": {
+          "quote": {
+            "Enter a quote": "Zitat",
+            "Enter a caption": "Nachricht"
+          },
           "warning": {
             "Title": "Titel",
             "Message": "Nachricht"
@@ -62,6 +72,10 @@
           }
         }
       }
+    },
+    "colortool": {
+      "backgroundColorLabel": "Hervorhebung",
+      "frontColorLabel": "Farbe"
     }
   }
 }
