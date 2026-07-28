@@ -8,9 +8,11 @@ import { provideRouter } from "@angular/router";
 
 import { LAZY_SERVICE_TOKEN, TaNotificationService } from "@ta/notification";
 import { provideServer } from "@ta/server";
+import { provideHarnessCases } from "@ta/testing";
 import { provideTranslation, TranslationSourceType } from "@ta/translation";
 
 import { environment } from "../environments/environment";
+import { HARNESS_CASES } from "./e2e-harness/harness-cases";
 import { routes } from "./app.routes";
 
 export const appConfig: ApplicationConfig = {
@@ -32,5 +34,6 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     { provide: LAZY_SERVICE_TOKEN, useExisting: TaNotificationService },
+    provideHarnessCases(HARNESS_CASES),
   ],
 };

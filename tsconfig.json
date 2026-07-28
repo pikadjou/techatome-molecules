@@ -104,6 +104,12 @@
       ],
       "@ta/features": [
         "projects/features"
+      ],
+      "@ta/testing": [
+        "projects/testing"
+      ],
+      "@ta/testing/e2e": [
+        "projects/testing/e2e/src/public-api.ts"
       ]
     },
     "lib": [

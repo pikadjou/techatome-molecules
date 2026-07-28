@@ -190,5 +190,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import("./showcase/user/user.component").then((c) => c.UserPage),
   },
+  {
+    path: "e2e-harness/:caseId",
+    loadComponent: () => import("@ta/testing").then((c) => c.TaHarnessComponent),
+  },
   { path: "**", redirectTo: "/home" },
 ];
