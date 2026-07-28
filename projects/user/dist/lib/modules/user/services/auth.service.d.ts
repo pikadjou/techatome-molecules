@@ -11,6 +11,7 @@ export declare abstract class TaAuthService extends TaBaseService {
     user$: BehaviorSubject<unknown>;
     readonly isLoading$: Subject<boolean>;
     abstract get userProfile$(): Observable<UserProfile | null>;
+    abstract changePassword$(): Observable<string>;
     abstract fetchUserProfile$(): Observable<UserProfile>;
     abstract load(): void;
     abstract login(): void;

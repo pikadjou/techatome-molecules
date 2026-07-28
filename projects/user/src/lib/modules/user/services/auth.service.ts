@@ -22,6 +22,7 @@ export abstract class TaAuthService extends TaBaseService {
 
   abstract get userProfile$(): Observable<UserProfile | null>;
 
+  abstract changePassword$(): Observable<string>;
   abstract fetchUserProfile$(): Observable<UserProfile>;
   abstract load(): void;
   abstract login(): void;

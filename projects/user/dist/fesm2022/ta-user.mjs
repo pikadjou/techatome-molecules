@@ -3,15 +3,15 @@ import { Injectable, inject, InjectionToken, Component, input, output, signal } 
 import { Router } from '@angular/router';
 import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
-import { BehaviorSubject, filter, map, Subject, switchMap, distinct, tap } from 'rxjs';
+import { BehaviorSubject, filter, map, Subject, switchMap, distinct, tap, take } from 'rxjs';
 import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
 import { GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest, Logger } from '@ta/server';
 import { TranslatePipe, TaLazyTranslationService, TaTranslationService } from '@ta/translation';
 import { CardComponent, CardContentComponent, ButtonComponent, LoaderComponent, ErrorComponent, EmptyComponent, InlineProfileDataComponent, ListContainerComponent, ListElementComponent, ListTagComponent, ListTitleComponent, TaOverlayPanelComponent } from '@ta/ui';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { FontIconComponent, TaIconType, FlagIconComponent } from '@ta/icons';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthService, provideAuth0 as provideAuth0$1, AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService, AuthClientConfig, provideAuth0 as provideAuth0$1, AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 class TaPermissionsService {
     get received() {
@@ -541,6 +541,8 @@ class TaAuth0Service extends TaAuthService {
         this._auth = inject(AuthService);
         this._userService = inject(TA_USER_SERVICE);
         this._translation = inject(TaTranslationService);
+        this._http = inject(HttpClient);
+        this._authClientConfig = inject(AuthClientConfig);
         this._auth.user$
             .pipe(filter(isNonNullable), distinct(user => user?.sub), tap(user => this.user$.next(user || null)), tap(user => {
             Logger.LogInfo('user info', user);
@@ -575,6 +577,14 @@ class TaAuth0Service extends TaAuthService {
     }
     fetchUserProfile$() {
         return this._userService.fetchUserProfile$().pipe(tap(() => this.isLoading$.next(false)));
+    }
+    changePassword$() {
+        const config = this._authClientConfig.get();
+        return this._auth.user$.pipe(filter(isNonNullable), take(1), switchMap((user) => this._http.post(`https://${config.domain}/dbconnections/change_password`, {
+            client_id: config.clientId,
+            connection: 'Username-Password-Authentication',
+            email: user.email,
+        }, { responseType: 'text' })));
     }
     load() { }
     login() {

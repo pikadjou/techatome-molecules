@@ -1,12 +1,16 @@
+import { Observable } from 'rxjs';
 import { TaAuthService } from '../../user/services/auth.service';
 import * as i0 from "@angular/core";
 export declare class TaAuth0Service extends TaAuthService {
-    get userProfile$(): import("rxjs").Observable<import("@ta/user").UserProfile | null>;
+    get userProfile$(): Observable<import("@ta/user").UserProfile | null>;
     private _auth;
     private _userService;
     private _translation;
+    private _http;
+    private _authClientConfig;
     constructor();
-    fetchUserProfile$(): import("rxjs").Observable<import("@ta/user").UserProfile>;
+    fetchUserProfile$(): Observable<import("@ta/user").UserProfile>;
+    changePassword$(): Observable<string>;
     load(): void;
     login(): void;
     signin(): void;

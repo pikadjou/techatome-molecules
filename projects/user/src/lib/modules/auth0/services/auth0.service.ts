@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
-import { AuthService } from '@auth0/auth0-angular';
-import { distinct, filter, tap } from 'rxjs';
+import { AuthClientConfig, AuthService, User } from '@auth0/auth0-angular';
+import { Observable, distinct, filter, switchMap, take, tap } from 'rxjs';
 
 import { Logger } from '@ta/server';
 import { TaTranslationService } from '@ta/translation';
@@ -20,6 +21,8 @@ export class TaAuth0Service extends TaAuthService {
   private _auth = inject(AuthService);
   private _userService = inject(TA_USER_SERVICE);
   private _translation = inject(TaTranslationService);
+  private _http = inject(HttpClient);
+  private _authClientConfig = inject(AuthClientConfig);
 
   constructor() {
     super();
@@ -73,6 +76,26 @@ export class TaAuth0Service extends TaAuthService {
 
   public fetchUserProfile$() {
     return this._userService.fetchUserProfile$().pipe(tap(() => this.isLoading$.next(false)));
+  }
+
+  public changePassword$(): Observable<string> {
+    const config = this._authClientConfig.get();
+
+    return this._auth.user$.pipe(
+      filter(isNonNullable),
+      take(1),
+      switchMap((user: User) =>
+        this._http.post(
+          `https://${config.domain}/dbconnections/change_password`,
+          {
+            client_id: config.clientId,
+            connection: 'Username-Password-Authentication',
+            email: user.email,
+          },
+          { responseType: 'text' }
+        )
+      )
+    );
   }
 
   public load() {}
