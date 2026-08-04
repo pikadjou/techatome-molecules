@@ -24,5 +24,6 @@
   "placeholder.text": "Voer tekst in...",
   "upload.add": "Een document toevoegen",
   "upload.confirm": "Bevestigen",
-  "upload.dragndrop": "Sleep uw bestanden hierheen of klik om te uploaden"
+  "upload.dragndrop": "Sleep uw bestanden hierheen of klik om te uploaden",
+  "validate": "Bevestigen"
 }
