@@ -1,5 +1,9 @@
 {
   "documents.upload.dialog.description": "Documentbeschrijving",
   "documents.upload.dialog.document-type": "Documenttype",
-  "documents.upload.dialog.title": "Document uploaden"
+  "documents.upload.dialog.title": "Document uploaden",
+  "preview.title": "Bestandsvoorbeeld",
+  "slide.download": "Downloaden",
+  "slide.delete": "Verwijderen",
+  "slide.no-viewer": "Geen viewer beschikbaar voor dit bestandstype"
 }
