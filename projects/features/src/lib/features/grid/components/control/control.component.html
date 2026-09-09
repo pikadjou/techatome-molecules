@@ -1,24 +1,93 @@
 @if (this.isReady$ | async) {
-  <div class="grid-control">
+  <div class="grid-control" [class.grid-control--compact]="this.compact()">
     @if (this.show().filters) {
       <ta-button
-        icon="filter"
-        type="secondary"
-        [options]="{ circular: 'small' }"
+        [type]="this.activeFiltersCount > 0 ? 'secondary' : 'tertiary'"
+        icon="filter_alt"
         (action)="this.openFilters()"
-      ></ta-button>
+      >
+        <span class="grid-control__label">{{ 'grid.control.filters' | translate }}</span>
+        @if (this.activeFiltersCount > 0) {
+          <span class="grid-control__count">{{ this.activeFiltersCount }}</span>
+        }
+      </ta-button>
     }
 
-    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {
+    @if (this.show().preset && this.hasPresets) {
       <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
         <ng-template #panelTrigger>
-          <ta-button type="secondary" icon="tune" [options]="{ circular: 'small' }"></ta-button>
+          <!-- Le clic doit atteindre le déclencheur de l'overlay : pas de stopPropagation. -->
+          <ta-button
+            [type]="this.activePresetName ? 'secondary' : 'tertiary'"
+            icon="tune"
+            [stopPropagationActivation]="false"
+          >
+            <span class="grid-control__label">
+              {{ this.activePresetName ?? ('grid.control.presets' | translate) }}
+            </span>
+          </ta-button>
         </ng-template>
+
         <ng-template #panelContent>
           <div class="preset-menu">
+            <div class="preset-menu__title">{{ 'grid.control.presets' | translate }}</div>
             @for (preset of this.grid.filters?.preset; track preset.name) {
-              <div class="preset-menu__item c-pointer" (click)="this.setPreset(preset)">
-                {{ preset.name }}
+              <div
+                class="preset-menu__item c-pointer"
+                [class.is-active]="this.isPresetActive(preset)"
+                (click)="this.setPreset(preset)"
+              >
+                <span class="preset-menu__item-label">{{ preset.name }}</span>
+                @if (this.isPresetActive(preset)) {
+                  <ta-font-icon name="check" type="sm"></ta-font-icon>
+                }
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-overlay-panel>
+    }
+
+    @if (this.show().group && this.hasGroupableCols) {
+      <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
+        <ng-template #panelTrigger>
+          <!-- Le clic doit atteindre le déclencheur de l'overlay : pas de stopPropagation. -->
+          <ta-button
+            [type]="this.activeGroup ? 'secondary' : 'tertiary'"
+            icon="workspaces"
+            [stopPropagationActivation]="false"
+          >
+            <span class="grid-control__label">
+              {{ this.activeGroupLabel ? (this.activeGroupLabel | translate) : ('grid.control.group' | translate) }}
+            </span>
+          </ta-button>
+        </ng-template>
+
+        <ng-template #panelContent>
+          <div class="preset-menu">
+            <div class="preset-menu__title">{{ 'grid.control.group' | translate }}</div>
+
+            <div
+              class="preset-menu__item c-pointer"
+              [class.is-active]="!this.activeGroup"
+              (click)="this.setGroup(null)"
+            >
+              <span class="preset-menu__item-label">{{ 'grid.control.groupNone' | translate }}</span>
+              @if (!this.activeGroup) {
+                <ta-font-icon name="check" type="sm"></ta-font-icon>
+              }
+            </div>
+
+            @for (col of this.groupableCols; track col.key) {
+              <div
+                class="preset-menu__item c-pointer"
+                [class.is-active]="this.activeGroup === col.key"
+                (click)="this.setGroup(col.key)"
+              >
+                <span class="preset-menu__item-label">{{ col.label | translate }}</span>
+                @if (this.activeGroup === col.key) {
+                  <ta-font-icon name="check" type="sm"></ta-font-icon>
+                }
               </div>
             }
           </div>
@@ -27,26 +96,25 @@
     }
 
     @if (this.show().switchView) {
-      <div class="grid-control__toggle">
-        <ta-button
-          icon="view_list"
-          [type]="this.displayType() === 'grid' ? 'primary' : 'tertiary'"
-          [options]="{ circular: 'small', border: this.displayType() !== 'grid' }"
-          (action)="this.switchView('grid')"
-        ></ta-button>
-        <ta-button
-          icon="grid_view"
-          [type]="this.displayType() === 'card' ? 'primary' : 'tertiary'"
-          [options]="{ circular: 'small', border: this.displayType() !== 'card' }"
-          (action)="this.switchView('card')"
-        ></ta-button>
+      <div class="grid-control__switch" role="group">
+        <div class="grid-control__segment" [class.is-active]="this.displayType() === 'grid'">
+          <ta-button type="tertiary" icon="view_list" size="small" (action)="this.switchView('grid')">
+            <span class="grid-control__label">{{ 'grid.control.table' | translate }}</span>
+          </ta-button>
+        </div>
+        <div class="grid-control__segment" [class.is-active]="this.displayType() === 'card'">
+          <ta-button type="tertiary" icon="grid_view" size="small" (action)="this.switchView('card')">
+            <span class="grid-control__label">{{ 'grid.control.card' | translate }}</span>
+          </ta-button>
+        </div>
       </div>
     }
   </div>
 }
 
-<ta-grid-filters-modal
-  [open]="this.isFiltersOpen()"
-  [gridId]="this.gridId()"
-  (closeEvent)="this.isFiltersOpen.set(false)"
-></ta-grid-filters-modal>
+@if (this.isFiltersOpen()) {
+  <ta-grid-filters-panel
+    [gridId]="this.gridId()"
+    (closeEvent)="this.isFiltersOpen.set(false)"
+  ></ta-grid-filters-panel>
+}

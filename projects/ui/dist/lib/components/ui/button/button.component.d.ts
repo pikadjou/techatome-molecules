@@ -16,10 +16,12 @@ export declare class ButtonComponent {
      * Outline - Draw a border around the button when true
      * Rounded - Make button rounded when true
      * Circular - Make button circular when true
+     * Square - Make button a rounded square (icon only) when true
      */
     options: import("@angular/core").InputSignal<{
         class?: string | undefined;
         circular?: boolean | "big" | "small" | undefined;
+        square?: boolean | "big" | "small" | undefined;
         border?: boolean | undefined;
     } | null>;
     stopPropagationActivation: import("@angular/core").InputSignal<boolean>;

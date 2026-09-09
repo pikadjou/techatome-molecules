@@ -17,10 +17,10 @@ Question ou tâche : $ARGUMENTS
 Avant de répondre à la question :
 
 1. **Identifie** dans le catalogue ci-dessous l'élément concerné (helper, mock, pattern de test…).
-2. **Lis la fiche de référence** via `Read` (chemin : `references/testing/<name>.md`).
-3. **Réponds à partir du contenu lu** — ne **devine pas** les helpers disponibles ou les patterns.
+2. **La référence détaillée `references/testing/<name>.md` n'existe pas encore** — le paquet `@ta/testing`, lui, existe bien (`projects/testing/`) : fie-toi au catalogue ci-dessous et, au besoin, à ses sources.
+3. **Réponds à partir de ce que tu as vérifié** — ne **devine pas** les helpers disponibles ou les patterns.
 
-Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
+Si plusieurs éléments sont concernés, vérifie-les tous avant de répondre.
 
 ---
 

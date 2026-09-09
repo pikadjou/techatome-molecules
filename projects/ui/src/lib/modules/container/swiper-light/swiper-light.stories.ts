@@ -11,15 +11,12 @@ export default {
       props,
       template: `
         <style>
-        :host ::ng-deep {
-          .swiper-class {
-            color: red;
-          }
+        .swiper-class {
+          color: red;
+        }
 
-          .container-class {
-            color: green;
-          }
-          
+        .container-class {
+          color: green;
         }
         .border {
           border: 1px solid red;

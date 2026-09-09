@@ -10,6 +10,8 @@ export declare class TaGridComponent<T extends {
         selectedIds: Set<number>;
     }>>;
     showSelection: import("@angular/core").InputSignal<boolean>;
+    /** Hauteur de ligne : confortable par défaut, compacte pour les longues listes. */
+    density: import("@angular/core").InputSignal<"comfortable" | "compact">;
     rowClicked: import("@angular/core").OutputEmitterRef<T>;
     selectionChanged: import("@angular/core").OutputEmitterRef<T[]>;
     constructor();
@@ -20,14 +22,21 @@ export declare class TaGridComponent<T extends {
     get sortDir(): 'asc' | 'desc';
     get isLoading(): boolean;
     get errorMessage(): string;
+    /** Largeur d'une ligne d'en-tête de groupe, colonne de sélection comprise. */
+    get colspan(): number;
     get selectedIds(): Set<number>;
     isSelected(id: number): boolean;
     isAllPageSelected(): boolean;
     toggleRow(row: T): void;
     toggleAll(): void;
+    /**
+     * Libellé d'un groupe : `groupBy` produit des chaînes, on repasse par le
+     * formatteur de la colonne pour retrouver dates et booléens lisibles.
+     */
+    groupLabel(value: string): string;
     getCellValue(row: T, key: string): any;
     onRowClick(row: T): void;
     onSort(col: ColConfig): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridComponent<any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridComponent<any>, "ta-grid", never, { "cardTemplate": { "alias": "cardTemplate"; "required": true; "isSignal": true; }; "showSelection": { "alias": "showSelection"; "required": false; "isSignal": true; }; }, { "rowClicked": "rowClicked"; "selectionChanged": "selectionChanged"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridComponent<any>, "ta-grid", never, { "cardTemplate": { "alias": "cardTemplate"; "required": true; "isSignal": true; }; "showSelection": { "alias": "showSelection"; "required": false; "isSignal": true; }; "density": { "alias": "density"; "required": false; "isSignal": true; }; }, { "rowClicked": "rowClicked"; "selectionChanged": "selectionChanged"; }, never, never, true, never>;
 }

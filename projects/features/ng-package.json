@@ -1,7 +1,14 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "allowedNonPeerDependencies": ["@ta", "tabulator-tables"],
-  "assets": ["node_modules/tabulator-tables/dist/css/tabulator.min.css"],
+  "assets": [
+    "node_modules/tabulator-tables/dist/css/tabulator.min.css",
+    {
+      "glob": "**/*.json",
+      "input": "src/i18n",
+      "output": "i18n"
+    }
+  ],
   "dest": "dist",
   "lib": {
     "entryFile": "src/public-api.ts",

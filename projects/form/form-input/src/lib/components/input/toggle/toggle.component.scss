@@ -1,4 +1,7 @@
 @use "ta/utils/mixins/common";
+
+// Comme pour la case, le libellé énonce le choix : c'est la variante `choice`
+// de `ta-form-label` qui le dit, pas une règle qui traverse l'encapsulation.
 .toggle-switch {
   display: inline-flex;
   align-items: center;
@@ -10,41 +13,80 @@
   display: none;
 
   &:checked + .slider {
-    background-color: common.get-var(surface, brand, primary);
+    background-color: common.get-var(
+      components,
+      control,
+      switch,
+      checked,
+      track-background
+    );
   }
 
   &:checked + .slider:before {
-    transform: translateX(14px);
+    background-color: common.get-var(
+      components,
+      control,
+      switch,
+      checked,
+      thumb-background
+    );
+    transform: translateX(
+      calc(
+        common.get-var(components, control, switch, track-width) -
+          common.get-var(components, control, switch, thumb-size) - 2 *
+          common.get-var(components, control, switch, thumb-offset)
+      )
+    );
   }
 
   &:disabled + .slider {
-    border-color: common.get-var(neutral, 300);
+    background-color: common.get-var(components, control, disabled, background);
+    border-color: common.get-var(components, control, disabled, border-color);
     cursor: not-allowed;
   }
 
   &:disabled + .slider:before {
-    border-color: common.get-var(neutral, 200);
+    background-color: common.get-var(
+      components,
+      control,
+      disabled,
+      border-color
+    );
   }
 }
 
+/// Seule forme du catalogue à conserver la piste entièrement arrondie :
+/// l'interrupteur doit se lire comme une glissière, pas comme un bouton.
 .slider {
   position: relative;
-  width: 30px;
-  height: 16px;
-  background-color: common.get-var(neutral, 300);
-  border-radius: common.get-var(radius, rounded);
-  transition: background-color 0.2s ease;
+  flex: none;
+  width: common.get-var(components, control, switch, track-width);
+  height: common.get-var(components, control, switch, track-height);
+  background-color: common.get-var(
+    components,
+    control,
+    switch,
+    track-background
+  );
+  border-radius: common.get-var(components, control, switch, track-radius);
+  transition: background-color common.get-var(transition, base);
   margin-right: common.get-var(space, sm);
 
   &:before {
     content: "";
     position: absolute;
-    width: 12px;
-    height: 12px;
-    left: 2px;
-    top: 2px;
-    background-color: common.get-var(neutral, white);
+    width: common.get-var(components, control, switch, thumb-size);
+    height: common.get-var(components, control, switch, thumb-size);
+    left: common.get-var(components, control, switch, thumb-offset);
+    top: common.get-var(components, control, switch, thumb-offset);
+    background-color: common.get-var(
+      components,
+      control,
+      switch,
+      thumb-background
+    );
     border-radius: common.get-var(radius, full);
-    transition: transform 0.2s ease;
+    transition: transform common.get-var(transition, base),
+      background-color common.get-var(transition, base);
   }
 }

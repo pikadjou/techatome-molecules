@@ -40,11 +40,6 @@ const SIZE_MAP: Record<string, string> = {
       border-radius: 2px;
       overflow: hidden;
       line-height: 0;
-
-      ::ng-deep svg {
-        width: 100%;
-        height: auto;
-      }
     }
   `,
   standalone: true,

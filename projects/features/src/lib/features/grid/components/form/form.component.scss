@@ -1,5 +1,6 @@
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 :host {
   display: block;
@@ -10,12 +11,18 @@
   gap: common.get-var(space, md);
 
   &__header {
-    padding-bottom: common.get-var(space, sm);
-    border-bottom: 1px solid common.get-var(border, secondary);
+    @include flex.simple-flex();
+    @include flex.align-center();
+    @include flex.space-between();
 
-    ta-font-icon {
-      color: common.get-var(icon, brand, primary);
-    }
+    gap: common.get-var(space, md);
+    padding-bottom: common.get-var(space, sm);
+  }
+
+  &__count {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, secondary);
+    white-space: nowrap;
   }
 
   &__body {
@@ -23,16 +30,33 @@
     gap: common.get-var(space, md);
   }
 
-  &__section {
-    padding: common.get-var(space, md);
-    background: common.get-var(surface, secondary);
-    border-radius: common.get-var(radius, rounded);
+  // Sections séparées par un filet plutôt que par des blocs gris :
+  // les champs restent l'élément le plus visible du panneau.
+  &__section + &__section {
+    padding-top: common.get-var(space, md);
+    border-top: 1px solid common.get-var(border, tertiary);
+  }
+
+  // La disposition du formulaire est demandée à `ta-form` par son API
+  // (`contentClass` des panneaux, cf. grid-form.services.ts) : un critère par
+  // ligne. Le composant n'est pas retouché depuis ici.
+
+  &__section-title {
+    @include fonts.fontSizeBody(xs);
+    margin-bottom: common.get-var(space, sm);
+    color: common.get-var(text, secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: common.get-var(font, weight, bold);
   }
 
   &__footer {
     @include flex.simple-flex();
+    @include flex.align-center();
     justify-content: flex-end;
     padding-top: common.get-var(space, sm);
-    border-top: 1px solid common.get-var(border, secondary);
+    border-top: 1px solid common.get-var(border, tertiary);
+
+    // Les actions sont des `ta-button` standards : aucune n'est retouchée ici.
   }
 }

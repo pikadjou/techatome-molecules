@@ -37,7 +37,7 @@
 
   &_title {
     @include fonts.fontSizeBody(md);
-    font-weight: 600;
+    font-weight: common.get-var(font, weight, bold);
   }
 
   &_close {

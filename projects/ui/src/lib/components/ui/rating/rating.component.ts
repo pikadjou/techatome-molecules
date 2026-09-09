@@ -33,14 +33,16 @@ export class RatingComponent {
   size = input<number>(24);
 
   /**
-   * Color of filled stars
+   * Color of filled stars. `null` (default) lets the design system's rating
+   * token apply through the stylesheet.
    */
-  color = input<string>('#fbbf24');
+  color = input<string | null>(null);
 
   /**
-   * Color of empty stars
+   * Color of empty stars. `null` (default) lets the design system's rating
+   * token apply through the stylesheet.
    */
-  emptyColor = input<string>('#d1d5db');
+  emptyColor = input<string | null>(null);
 
   /**
    * Read-only mode (no click interactions)

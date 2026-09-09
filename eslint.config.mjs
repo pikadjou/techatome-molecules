@@ -1,3 +1,3 @@
 import eslintConfig from "./projects/config/eslint-config/index.mjs";
 
-export default eslintConfig;
+export default [...eslintConfig, { ignores: ["src/app/showcase/generated/**"] }];

@@ -2,6 +2,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
 import { TypedTemplateDirective } from '@ta/utils';
 
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -15,7 +16,7 @@ type PageNumber = {
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective],
+  imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe],
 })
 export class PaginationComponent extends TaAbstractGridComponent<any> {
   readonly PageNumber!: { pagenumber: PageNumber };

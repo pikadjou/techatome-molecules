@@ -1,8 +1,7 @@
 @use "ta/utils/mixins/common";
 
-:host ::ng-deep .form-control {
-  width: 100%;
-}
+// `.form-control` est habillé globalement par @ta/styles, largeur pleine
+// comprise : ce composant n'a plus rien à y ajouter.
 
 .disabled {
   border-color: common.get-var(neutral, 300);

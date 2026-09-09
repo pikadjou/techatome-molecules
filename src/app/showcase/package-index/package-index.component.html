@@ -1,0 +1,25 @@
+<app-page-layout
+  [eyebrow]="this.pkg()"
+  [title]="this.pkg()"
+  description="Un composant par carte. Chaque page présente ses variantes, son API et son code."
+>
+  <div class="sections">
+    @for (group of this.groups(); track group.name) {
+      <section data-testid="index-group">
+        <ta-title [level]="2">{{ group.name }}</ta-title>
+        <div class="index-grid">
+          @for (entry of group.entries; track entry.id) {
+            <a
+              class="index-card"
+              data-testid="index-card"
+              [routerLink]="['/', entry.short, entry.id]"
+            >
+              <ta-title [level]="3">{{ entry.id }}</ta-title>
+              <ta-text size="sm">{{ this.summaryOf(entry.id) }}</ta-text>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  </div>
+</app-page-layout>

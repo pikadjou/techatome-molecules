@@ -1,19 +1,13 @@
 @use "ta/utils/mixins/common";
 
-:host ::ng-deep {
-  .list-container {
-    ta-list-element {
-      .list-border {
-        border-bottom: 1px solid common.get-var(border, primary);
-      }
-      display: block;
-
-      &:last-child {
-        border: none;
-      }
-      &:first-child {
-        padding-top: none;
-      }
-    }
-  }
+/// Le conteneur porte la forme — rayon, fond, ombre — et rogne ses enfants, ce
+/// qui laisse aux lignes un filet gauche à fleur du bord.
+///
+/// Le séparateur entre lignes appartient à `ta-list-element` : il le dessine
+/// sur son propre élément, ce qui évite d'avoir à l'atteindre d'ici.
+.list-container {
+  border-radius: common.get-var(components, list, radius);
+  background-color: common.get-var(components, list, background);
+  box-shadow: common.get-var(components, list, shadow);
+  overflow: hidden;
 }

@@ -3,12 +3,8 @@
   display: flex;
 }
 
-:host ::ng-deep {
-  svg {
-    width: 100% !important;
-    height: auto !important;
-  }
-}
+// Le SVG est injecté par `innerHTML` : il ne porte pas d'attribut
+// d'encapsulation, son habillage vit donc dans @ta/styles (`ta/vendors`).
 
 .is-rotation {
   animation: rotation 2s infinite linear;

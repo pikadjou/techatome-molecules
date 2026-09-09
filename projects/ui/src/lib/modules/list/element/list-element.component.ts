@@ -9,6 +9,9 @@ import { Component, EventEmitter, input, Output } from "@angular/core";
 export class ListElementComponent {
   withSeparator = input<boolean>(true);
 
+  /** Signale l'élément courant par un filet jaune sur le bord gauche. */
+  highlight = input<boolean>(false);
+
   flexColumn = input<boolean>(false);
 
   @Output()

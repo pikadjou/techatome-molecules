@@ -30,6 +30,8 @@ export interface ColMetaData<T = unknown> {
         value: any;
     }>;
     width?: string;
+    /** Alignement du contenu de la colonne — les montants se lisent à droite. */
+    align?: 'left' | 'center' | 'right';
 }
 export type FilterType = '=' | '!=' | 'like' | '<' | '>' | '<=' | '>=' | 'in' | 'regex' | 'starts' | 'ends';
 export interface Filter {
@@ -42,6 +44,7 @@ export interface ColConfig {
     title: string;
     sortable: boolean;
     width?: string;
+    align?: 'left' | 'center' | 'right';
     template?: TemplateRef<any>;
 }
 export type ActiveFilter = {

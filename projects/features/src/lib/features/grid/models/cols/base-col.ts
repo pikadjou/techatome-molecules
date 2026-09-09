@@ -50,6 +50,7 @@ export class BaseCol<T> {
       title: this.inputLabel,
       sortable: true,
       width: this.data.col.width,
+      align: this.data.col.align,
       template: this.data.col.template,
     };
   }

@@ -16,7 +16,7 @@ $messenger-disabled-color: #a0a0a0;
   padding: common.get-var(space, sm) common.get-var(space, lg);
   background: linear-gradient(180deg, $messenger-purple 0%, $messenger-blue 100%);
   color: #ffffff;
-  font-weight: 600;
+  font-weight: common.get-var(font, weight, bold);
   transition: opacity 0.2s ease, transform 0.1s ease;
 
   @include fonts.fontSizeBody(md);

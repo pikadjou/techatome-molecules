@@ -4,7 +4,14 @@ import * as i0 from "@angular/core";
 export declare class TaGridTagsComponent extends TaAbstractGridComponent<unknown> {
     get group(): null;
     get activeFilters(): import("../../models/types").ActiveFilter[];
-    ngOnInit(): void;
+    get hasActiveFilters(): boolean;
+    /** Clé de traduction du libellé d'un critère — le champ de recherche n'est pas une colonne. */
+    labelKey(key: string): string;
+    /**
+     * Suffixe lisible du chip : « : Electronics », « ≥ 100 », « : « book » ».
+     * L'opérateur n'apparaît que lorsqu'il porte du sens.
+     */
+    formatValue(filter: Filter): string;
     remove(filter: Filter): void;
     removeGroup(): void;
     clear(): void;

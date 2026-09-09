@@ -15,5 +15,12 @@ export class FormLabelComponent {
 
   withMarginBottom = input<boolean>(true);
 
+  /**
+   * `field` intitule un champ de saisie ; `choice` enonce l'option d'une case,
+   * d'un radio ou d'un interrupteur — c'est alors du texte courant, pas un
+   * intitule, et il se lit a la taille du corps de texte.
+   */
+  variant = input<"field" | "choice">("field");
+
   public readonly validators = Validators;
 }

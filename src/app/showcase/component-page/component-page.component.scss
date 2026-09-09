@@ -1,0 +1,29 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+.identity,
+.notes,
+.not-renderable,
+.load-error {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, lg);
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+}
+
+.identity-import {
+  overflow-x: auto;
+  margin: 0;
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, secondary);
+
+  code {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, primary);
+    font-family: "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  }
+}

@@ -18,6 +18,24 @@
     @include fonts.fontSizeBody(xs);
   }
 }
+
+/// Carte inversée : l'en-tête lit la variante sur son ancêtre `.card`.
+///
+/// `:host-context()` est indispensable ici — un simple `.invert &` ne
+/// fonctionnerait pas : l'encapsulation émulée appose l'attribut de CE composant
+/// sur *chaque* sélecteur de la chaîne, y compris `.invert`, qui appartient au
+/// template de `ta-card` et porte donc un autre attribut. `:host-context()` est
+/// la seule forme qu'Angular laisse non qualifiée, et elle lit vers le haut sans
+/// rien percer vers le bas.
+:host-context(.invert) {
+  .header-title {
+    border-bottom-color: common.get-var(components, card, invert, separator);
+  }
+
+  .subtitle {
+    color: common.get-var(components, card, invert, secondary);
+  }
+}
 .no-card-border {
   .header-title {
     border-width: 0px;

@@ -1,0 +1,4 @@
+# Fichiers produits par scripts/generate-showcase-metadata.mjs : les reformater
+# ferait diverger le contenu du dépôt de celui que le générateur produit, et le
+# contrôle `showcase:metadata:check` échouerait en boucle.
+src/app/showcase/generated/

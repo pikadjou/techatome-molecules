@@ -1,0 +1,169 @@
+<section class="api" data-testid="api-table">
+  <ta-title [level]="2">API</ta-title>
+
+  @if (this.hasNoMembers()) {
+    <p class="api-empty-message" data-testid="api-empty-message">
+      Ce composant n'expose aucune API publique : il sert de conteneur à du contenu projeté.
+    </p>
+  } @else {
+
+  @if (this.inputsOf(this.own()).length > 0) {
+    <div class="api-table-scroll">
+      <table class="api-table">
+        <caption>Inputs</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Type</th>
+            <th scope="col">Défaut</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (member of this.inputsOf(this.own()); track member.name) {
+            <tr [attr.data-testid]="'api-row-' + member.name">
+              <td>
+                <code>{{ member.name }}</code>
+                @if (member.required) {
+                  <span class="api-required" data-testid="api-required">requis</span>
+                }
+              </td>
+              <td><code [attr.title]="this.typeTitle(member.type)">{{ this.typeLabel(member.type) }}</code></td>
+              <td>
+                @if (member.default) {
+                  <code>{{ member.default }}</code>
+                } @else {
+                  <span class="api-empty">—</span>
+                }
+              </td>
+              <td>{{ member.doc ?? "" }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (this.outputsOf(this.own()).length > 0) {
+    <div class="api-table-scroll">
+      <table class="api-table">
+        <caption>Outputs</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Charge utile</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (member of this.outputsOf(this.own()); track member.name) {
+            <tr [attr.data-testid]="'api-row-' + member.name">
+              <td><code>{{ member.name }}</code></td>
+              <td><code [attr.title]="this.typeTitle(member.type)">{{ this.typeLabel(member.type) }}</code></td>
+              <td>{{ member.doc ?? "" }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (this.propertiesOf(this.own()).length > 0) {
+    <div class="api-table-scroll">
+      <table class="api-table">
+        <caption>Propriétés et accesseurs</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Type</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (member of this.propertiesOf(this.own()); track member.name) {
+            <tr [attr.data-testid]="'api-row-' + member.name">
+              <td><code>{{ member.name }}</code></td>
+              <td><code [attr.title]="this.typeTitle(member.type)">{{ this.typeLabel(member.type) }}</code></td>
+              <td>{{ member.doc ?? "" }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (this.methodsOf(this.own()).length > 0) {
+    <div class="api-table-scroll">
+      <table class="api-table">
+        <caption>Méthodes publiques</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Signature</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (member of this.methodsOf(this.own()); track member.name) {
+            <tr [attr.data-testid]="'api-row-' + member.name">
+              <td><code>{{ member.name }}</code></td>
+              <td><code [attr.title]="this.typeTitle(member.type)">{{ this.typeLabel(member.type) }}</code></td>
+              <td>{{ member.doc ?? "" }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (this.inherited().length > 0) {
+    <button
+      type="button"
+      class="api-toggle"
+      data-testid="toggle-inherited"
+      [attr.aria-expanded]="this.showInherited()"
+      (click)="this.toggleInherited()"
+    >
+      {{ this.showInherited() ? "Masquer" : "Afficher" }} les {{ this.inherited().length }} membres hérités
+    </button>
+
+    @if (this.showInherited()) {
+      <div class="api-table-scroll">
+        <table class="api-table" data-testid="api-inherited">
+          <caption>Membres hérités</caption>
+          <thead>
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Type</th>
+              <th scope="col">Défaut</th>
+              <th scope="col">Hérité de</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of this.inherited(); track member.name) {
+              <tr [attr.data-testid]="'api-row-' + member.name">
+                <td>
+                  <code>{{ member.name }}</code>
+                  @if (member.required) {
+                    <span class="api-required">requis</span>
+                  }
+                </td>
+                <td><code [attr.title]="this.typeTitle(member.type)">{{ this.typeLabel(member.type) }}</code></td>
+                <td>
+                  @if (member.default) {
+                    <code>{{ member.default }}</code>
+                  } @else {
+                    <span class="api-empty">—</span>
+                  }
+                </td>
+                <td><code>{{ member.inheritedFrom }}</code></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+
+  }
+</section>

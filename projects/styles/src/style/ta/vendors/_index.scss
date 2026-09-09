@@ -1,0 +1,119 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+// ============================================================================
+// Habillage du DOM tiers
+// ============================================================================
+//
+// Angular Material, Swiper, EditorJS, intl-tel-input et les SVG injectés par
+// `innerHTML` produisent des nœuds qui ne portent aucun attribut d'encapsulation
+// (`_ngcontent-…`). Une feuille de composant ne peut donc pas les atteindre
+// sans percer son encapsulation, ce que le projet s'interdit.
+//
+// Ces règles vivent donc ici, à portée globale — mais chacune reste préfixée par
+// le sélecteur du composant @ta qui l'utilise : la portée effective reste celle
+// de ce composant, sans qu'aucune encapsulation soit percée.
+//
+// N'ajouter ici que ce qui vise du DOM tiers. Tout ce qui appartient à un
+// composant @ta se style chez lui.
+
+// --- SVG injectés (@ta/icons) -----------------------------------------------
+ta-local-icon svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
+ta-flag-icon .flag-icon svg {
+  width: 100%;
+  height: auto;
+}
+
+// --- Swiper (@ta/menu — ta-menu-navigation) ---------------------------------
+ta-menu-navigation .swiper-container {
+  gap: common.get-var(space, sm) !important;
+}
+
+// --- Angular Material : panneau dépliant (@ta/ui — ta-expansion-panel) ------
+ta-expansion-panel {
+  .mat-content {
+    overflow: visible !important;
+  }
+
+  .mat-expansion-panel {
+    box-shadow: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid common.get-var(border, tertiary);
+    padding: common.get-var(space, sm) 0;
+    background-color: common.get-var(surface, primary);
+    transition: box-shadow common.get-var(transition, base),
+      border-radius common.get-var(transition, base);
+
+    &.mat-expanded {
+      box-shadow: common.get-var(shadow, black, md);
+      border-radius: common.get-var(radius, rounded) !important;
+    }
+  }
+
+  .mat-expansion-panel-header,
+  .mat-expansion-panel-body {
+    padding: common.get-var(space, xs) !important;
+  }
+}
+
+// --- intl-tel-input + Material (@ta/form-input — ta-input-phone) ------------
+ta-input-phone {
+  .mdc-text-field {
+    overflow: visible;
+  }
+
+  .iti__search-icon {
+    display: none;
+  }
+
+  .iti__search-input-wrapper {
+    @include flex.align-center();
+  }
+
+  // Le champ de recherche du sélecteur de pays est fourni par la bibliothèque :
+  // il ne porte pas `.form-control` et doit donc être habillé à part.
+  .iti__search-input {
+    @include fonts.fontSizeBody(md);
+    border-radius: common.get-var(radius, rounded);
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    outline: none;
+    border: 1px solid common.get-var(neutral, 300);
+    background-color: common.get-var(neutral, white);
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 40px;
+  }
+}
+
+// --- EditorJS (@ta/wysiswyg — ta-cms-editor-input) --------------------------
+ta-cms-editor-input {
+  .ce-inline-tool--color__actions-container {
+    @include flex.flex-column();
+    gap: common.get-var(space, sm);
+
+    .ce-inline-tool--color__action-list {
+      @include flex.flex-start();
+      list-style-type: none;
+      margin: 0;
+      padding: common.get-var(space, sm);
+      gap: common.get-var(space, sm);
+
+      .ce-inline-tool--color__action-list-item {
+        width: 20px;
+        height: 20px;
+        border: 1px solid common.get-var(neutral, black);
+        text-align: center;
+        justify-content: center;
+
+        &:first-child {
+          content-visibility: hidden;
+        }
+      }
+    }
+  }
+}

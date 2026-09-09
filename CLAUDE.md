@@ -88,7 +88,7 @@ The project is organized into specialized libraries under the `projects/` direct
 - **Core Libraries**: `@ta/core`, `@ta/server`, `@ta/services`, `@ta/utils`
 - **UI Components**: `@ta/ui`, `@ta/icons`, `@ta/styles`, `@ta/menu`, `@ta/notification`
 - **Form System**: `@ta/form-basic`, `@ta/form-input`, `@ta/form-model` (specialized form handling)
-- **Feature Libraries**: `@ta/calendar`, `@ta/charts`, `@ta/wysiswyg`, `@ta/translation`, `@ta/features`
+- **Feature Libraries**: `@ta/charts`, `@ta/wysiswyg`, `@ta/translation`, `@ta/features`
 - **File Management**: `@ta/files-basic`, `@ta/files-extended`
 - **Configuration**: `@ta/eslint-config`, `@ta/prettier-config`
 - **Integration**: `@ta/capacitor`, `@ta/cms`, `@ta/user`
@@ -101,7 +101,7 @@ Layer 1: @ta/icons → @ta/utils
 Layer 2: @ta/notification, @ta/translation, @ta/form-model, @ta/server
 Layer 3: @ta/ui, @ta/services, @ta/menu
 Layer 4: @ta/form-input → @ta/form-basic
-Layer 5: @ta/core, @ta/user, @ta/calendar, @ta/charts, @ta/files-basic
+Layer 5: @ta/core, @ta/user, @ta/charts, @ta/files-basic
 Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
 ```
 
@@ -413,7 +413,6 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 | `@ta/notification` | `projects/notification/src/lib/` |
 | `@ta/translation` | `projects/translation/src/lib/` |
 | `@ta/menu` | `projects/menu/src/lib/` |
-| `@ta/calendar` | `projects/calendar/src/lib/` |
 | `@ta/charts` | `projects/charts/src/lib/` |
 | `@ta/user` | `projects/user/src/lib/` |
 | `@ta/cms` | `projects/cms/src/lib/` |

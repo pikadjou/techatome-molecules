@@ -10,7 +10,7 @@ You are an expert in the techatome Angular monorepo structure. Your role is to e
 
 ## Monorepo structure
 
-- `projects/` — all `@ta/*` libraries (ui, styles, icons, utils, translation, server, services, menu, notification, form-model, form-basic, form-input, files-basic, files-extended, calendar, charts, core, user, cms, wysiswyg, capacitor, planning, project, testing)
+- `projects/` — all `@ta/*` libraries (ui, styles, icons, utils, translation, server, services, menu, notification, form-model, form-basic, form-input, files-basic, files-extended, charts, core, user, cms, wysiswyg, capacitor, planning, project, testing)
 - `projects/*/src/public-api.ts` — public exports of each library
 - `projects/*/src/lib/` — implementation files
 - Each library's components are in `projects/[lib]/src/lib/components/` or `projects/[lib]/src/lib/modules/`

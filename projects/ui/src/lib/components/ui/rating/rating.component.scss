@@ -1,3 +1,5 @@
+@use "ta/utils/mixins/common";
+
 .ta-rating-container {
   display: inline-flex;
   align-items: center;
@@ -29,6 +31,17 @@
 
 .ta-rating-star-fg {
   transition: clip-path 0.2s ease;
+}
+
+/// Couleurs par défaut des étoiles : elles suivent le thème. `:not([fill])`
+/// laisse la main aux entrées `color` / `emptyColor` — une propriété CSS
+/// l'emporterait sinon sur l'attribut de présentation SVG.
+.ta-rating-star-fg path:not([fill]) {
+  fill: common.get-var(components, control, rating, color);
+}
+
+.ta-rating-star-bg path:not([fill]) {
+  fill: common.get-var(components, control, rating, empty);
 }
 
 .no-rating {

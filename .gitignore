@@ -54,3 +54,9 @@ Thumbs.db
 # Compodoc
 documentation.json
 scripts/app.config.js
+
+# Playwright / e2e
+/test-results
+/playwright-report
+/playwright/.cache
+projects/testing/dist-e2e

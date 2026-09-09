@@ -1,35 +1,66 @@
 @use "ta/utils/mixins/common";
 @use "ta/utils/mixins/transitions";
 
+// Le libellé de la case est un énoncé de choix : `ta-form-label` le sait par sa
+// variante `choice`, plutôt que d'être repeint d'ici à travers l'encapsulation.
 .custom-checkbox {
-  border-color: common.get-var(border, tertiary);
-  border-radius: 5px;
-  @include transitions.transition-border-focus();
-
-  &:hover {
-    border-color: common.get-var(border, brand, primary);
-  }
+  display: flex;
+  gap: common.get-var(space, sm);
 }
 
-.input {
-  border-radius: 5px;
+/// Case dessinée : carré de 20px au radius `minimal`, rempli navy à l'état
+/// coché, la coche tracée en jaune pour rester lisible sur le fond sombre.
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  margin: 0;
+  width: common.get-var(components, control, size);
+  height: common.get-var(components, control, size);
+  border: common.get-var(components, control, border-width) solid
+    common.get-var(components, control, border-color);
+  border-radius: common.get-var(components, control, checkbox, radius);
+  background-color: common.get-var(components, control, background);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
   @include transitions.transition-interactive();
 
-  &:checked {
-    background-color: common.get-var(surface, brand, primary);
-    border-color: common.get-var(surface, brand, primary);
+  &::after {
+    content: "";
+    width: 5px;
+    height: 9px;
+    margin-top: -2px;
+    border: solid transparent;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
   }
 
-  &:not(:disabled) {
-    border-color: common.get-var(border, tertiary);
+  &:hover:not(:disabled) {
+    border-color: common.get-var(border, brand, primary);
+  }
 
-    &:hover {
-      border-color: common.get-var(border, brand, primary);
+  &:checked {
+    background-color: common.get-var(components, control, checked, background);
+    border-color: common.get-var(components, control, checked, border-color);
+
+    &::after {
+      border-color: common.get-var(components, control, checked, color);
     }
   }
 
   &:focus-visible {
-    @include transitions.focus-outline();
-    @include transitions.focus-ring();
+    outline: none;
+    box-shadow: common.get-var(shadow, focus);
+  }
+
+  &:disabled {
+    border-color: common.get-var(components, control, disabled, border-color);
+    background-color: common.get-var(components, control, disabled, background);
+    cursor: not-allowed;
+
+    &::after {
+      border-color: common.get-var(components, control, disabled, color);
+    }
   }
 }

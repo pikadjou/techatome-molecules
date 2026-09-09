@@ -21,10 +21,17 @@ export class TaGridData<T> {
     return this.table?.getData() ?? [];
   }
   get dataByGroup() {
-    return groupBy(this.groupBy, this.data);
+    return groupBy(this._groupBy(), this.data);
   }
   get isGroup() {
-    return this.groupBy !== null;
+    return this._groupBy() !== null;
+  }
+  /**
+   * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
+   * il notifie les composants même sous un parent en OnPush.
+   */
+  get groupBy(): keyof T | null {
+    return this._groupBy();
   }
 
   public readonly rowClicked$ = new Subject<T>();
@@ -39,7 +46,7 @@ export class TaGridData<T> {
 
   public readonly displayType = signal<ViewType>('card');
 
-  public groupBy: keyof T | null = null;
+  private readonly _groupBy = signal<keyof T | null>(null);
   public readonly totalItems = signal(0);
 
   constructor(public readonly scope: string) {}
@@ -88,11 +95,11 @@ export class TaGridData<T> {
   }
 
   public setGroupBy(field: string) {
-    this.groupBy = field as keyof T;
+    this._groupBy.set(field as keyof T);
     this.table?.setGroupBy(field);
   }
   public clearGroupBy() {
-    this.groupBy = null;
+    this._groupBy.set(null);
     this.table?.setGroupBy(null);
   }
 
