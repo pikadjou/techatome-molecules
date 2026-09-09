@@ -12,7 +12,6 @@
       "@ta/utils": ["projects/utils/src/public-api.ts"],
       "@ta/notification": ["projects/notification/src/public-api.ts"],
       "@ta/menu": ["projects/menu/src/public-api.ts"],
-      "@ta/calendar": ["projects/calendar/src/public-api.ts"],
       "@ta/translation": ["projects/translation/src/public-api.ts"],
       "@ta/form-input": ["projects/form/form-input/src/public-api.ts"],
       "@ta/form-model": ["projects/form/form-model/src/public-api.ts"],

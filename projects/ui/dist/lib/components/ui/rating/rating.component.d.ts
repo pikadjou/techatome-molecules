@@ -14,13 +14,15 @@ export declare class RatingComponent {
      */
     size: import("@angular/core").InputSignal<number>;
     /**
-     * Color of filled stars
+     * Color of filled stars. `null` (default) lets the design system's rating
+     * token apply through the stylesheet.
      */
-    color: import("@angular/core").InputSignal<string>;
+    color: import("@angular/core").InputSignal<string | null>;
     /**
-     * Color of empty stars
+     * Color of empty stars. `null` (default) lets the design system's rating
+     * token apply through the stylesheet.
      */
-    emptyColor: import("@angular/core").InputSignal<string>;
+    emptyColor: import("@angular/core").InputSignal<string | null>;
     /**
      * Read-only mode (no click interactions)
      */

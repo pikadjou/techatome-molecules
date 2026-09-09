@@ -1,0 +1,37 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+:host {
+  display: block;
+}
+
+.grid-tags {
+  @include flex.simple-flex();
+  @include flex.align-center();
+
+  flex-wrap: wrap;
+  gap: common.get-var(space, sm) common.get-var(space, md);
+  padding: common.get-var(space, sm) 0;
+
+  // Le nombre de résultats est l'information principale de la barre.
+  &__results {
+    @include fonts.fontSizeBody(md, true);
+    color: common.get-var(text, primary);
+    white-space: nowrap;
+  }
+
+  &__list {
+    @include flex.simple-flex();
+    @include flex.align-center();
+
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: common.get-var(space, sm);
+    min-width: 0;
+  }
+
+  // Les pastilles de critères sont des `ta-badge`, l'action de remise à zéro un
+  // `ta-button` : ni l'un ni l'autre n'est retouché ici. Un composant garde la
+  // même apparence partout, c'est ce qui fait tenir la cohérence.
+}

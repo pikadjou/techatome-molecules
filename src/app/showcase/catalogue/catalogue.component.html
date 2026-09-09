@@ -1,0 +1,319 @@
+<app-page-layout
+  eyebrow="Design system"
+  title="Catalogue UI"
+  description="Les molécules @ta dans la direction retenue : navy en surface, jaune second-400 en appel à l'action, champs remplis soulignés, rayon rounded (10) sur les boutons, chips et segments — seule la piste de l'interrupteur reste arrondie."
+>
+  <div class="planches">
+    <!-- ======================================================== -->
+    <!-- A · Boutons                                              -->
+    <!-- ======================================================== -->
+    <section class="planche" id="boutons" data-testid="planche">
+      <header class="planche__header">
+        <span class="planche__overline">Direction B · rayon 10</span>
+        <span class="planche__title">Boutons</span>
+      </header>
+      <div class="planche__body">
+        <div class="matrix">
+          <div></div>
+          <span class="matrix__head">Défaut</span>
+          <span class="matrix__head">Désactivé</span>
+
+          @for (row of this.buttonRows; track row.type) {
+          <span class="matrix__label">{{ row.label }}</span>
+          <ta-button [type]="row.type" [attr.data-testid]="'btn-' + row.type">{{
+            row.text
+          }}</ta-button>
+          <ta-button [type]="row.type" state="disabled">{{
+            row.text
+          }}</ta-button>
+          }
+        </div>
+
+        <p class="matrix__note">
+          Le survol et le focus ne sont pas reproduits ici : ils se constatent
+          en survolant un bouton, et en le rejoignant au clavier. Les rejouer
+          demanderait de repeindre le composant depuis cette page — ce que le
+          projet s'interdit, pour qu'un bouton se présente partout à
+          l'identique.
+        </p>
+
+        <div class="rule"></div>
+
+        <span class="planche__overline planche__overline--dark">Tailles</span>
+        <div class="row">
+          <ta-button type="secondary" size="small">small</ta-button>
+          <ta-button type="secondary" size="medium">medium</ta-button>
+          <ta-button type="secondary" size="large">large</ta-button>
+        </div>
+
+        <span class="planche__overline planche__overline--dark"
+          >Avec icône & carrés arrondis</span
+        >
+        <div class="row">
+          <ta-button type="secondary" icon="add">Nouveau dossier</ta-button>
+          <ta-button type="primary" icon="download">Exporter</ta-button>
+          <ta-button
+            type="primary"
+            icon="edit"
+            [options]="{ square: true }"
+          ></ta-button>
+          <ta-button
+            type="tertiary"
+            icon="more_horiz"
+            [options]="{ square: 'small' }"
+          ></ta-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- B · Étiquettes, badges & chips                           -->
+    <!-- ======================================================== -->
+    <section class="planche" id="etiquettes" data-testid="planche">
+      <header class="planche__header">
+        <span class="planche__title">Étiquettes</span>
+      </header>
+      <div class="planche__body">
+        <span class="planche__overline planche__overline--dark"
+          >Étiquettes pleines — ta-label</span
+        >
+        <div class="row row--tight">
+          <ta-label type="default">Prioritaire</ta-label>
+          <ta-label type="secondary">Interne</ta-label>
+          <ta-label type="success">Validé</ta-label>
+          <ta-label type="warning">En attente</ta-label>
+          <ta-label type="alert">Rejeté</ta-label>
+          <ta-label type="purple">Audit</ta-label>
+        </div>
+
+        <span class="planche__overline planche__overline--dark"
+          >Badges teintés — ta-badge, contraste ≥ 4,5:1</span
+        >
+        <div class="row row--tight">
+          <ta-badge value="Brouillon" type="primary"></ta-badge>
+          <ta-badge value="Validé" type="success"></ta-badge>
+          <ta-badge value="En attente" type="warning"></ta-badge>
+          <ta-badge value="Rejeté" type="danger"></ta-badge>
+          <ta-badge value="Audit" type="purple"></ta-badge>
+          <ta-badge value="Urgent" type="secondary"></ta-badge>
+        </div>
+
+        <span class="planche__overline planche__overline--dark"
+          >Chips supprimables & compteur</span
+        >
+        <div class="row row--tight">
+          <span class="chip">
+            Technique
+            <ta-font-icon name="close" class="chip__close"></ta-font-icon>
+          </span>
+          <span class="chip">
+            Commercial
+            <ta-font-icon name="close" class="chip__close"></ta-font-icon>
+          </span>
+          <span class="counter">12</span>
+          <span class="counter counter--alert">3</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- C · Champs                                               -->
+    <!-- ======================================================== -->
+    <section class="planche" id="champs" data-testid="planche">
+      <header class="planche__header">
+        <span class="planche__title">Champs</span>
+      </header>
+      <div class="planche__body">
+        <ta-text size="sm">
+          Le trait bas de 2 px porte l'état : gris au repos, navy au focus,
+          rouge en erreur, effacé quand le champ est désactivé. Le rayon ne
+          touche que les deux coins hauts.
+        </ta-text>
+        <ta-form
+          [inputs]="this.fieldInputs"
+          [canDisplayButton]="false"
+          [border]="false"
+        ></ta-form>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- D · Sélection & bascule                                  -->
+    <!-- ======================================================== -->
+    <section class="planche" id="selection" data-testid="planche">
+      <header class="planche__header">
+        <span class="planche__title">Sélection</span>
+      </header>
+      <div class="planche__body">
+        <ta-form
+          [inputs]="this.selectionInputs"
+          [canDisplayButton]="false"
+          [border]="false"
+        ></ta-form>
+
+        <span class="planche__overline planche__overline--dark">Notation</span>
+        <ta-rating [value]="4" [size]="28" [readonly]="true"></ta-rating>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- E · Formulaire complet                                   -->
+    <!-- ======================================================== -->
+    <section
+      class="planche planche--muted"
+      id="formulaire"
+      data-testid="planche"
+    >
+      <header class="planche__header">
+        <span class="planche__overline">Étape 2 sur 3</span>
+        <span class="planche__title">Nouveau dossier</span>
+      </header>
+      <div class="planche__body">
+        <ta-form
+          [inputs]="this.formInputs"
+          [canDisplayButton]="false"
+          [border]="false"
+          (valid)="this.submitted.set($event)"
+        ></ta-form>
+
+        <ta-toast [code]="2">
+          <div class="feedback-line">
+            <ta-font-icon name="warning"></ta-font-icon>
+            Un champ obligatoire reste à compléter.
+          </div>
+        </ta-toast>
+
+        <div class="cta-row">
+          <ta-button type="tertiary">Retour</ta-button>
+          <ta-button type="secondary" class="cta-row__main"
+            >Continuer</ta-button
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- F · Cards, listes & feedback                             -->
+    <!-- ======================================================== -->
+    <section class="planche planche--muted" id="cards" data-testid="planche">
+      <header class="planche__header">
+        <span class="planche__title">Cards & listes</span>
+      </header>
+      <div class="planche__body">
+        <ta-card [invert]="true">
+          <ta-card-header>
+            <ta-card-title>Rénovation toiture</ta-card-title>
+            <ta-card-subtitle>DOS-2026-0184 · Claire Moreau</ta-card-subtitle>
+          </ta-card-header>
+          <ta-card-content>
+            <div class="separator"></div>
+            <div class="kpi">
+              <span class="kpi__value"
+                >68 %<span class="kpi__unit">avancement</span></span
+              >
+            </div>
+          </ta-card-content>
+          <ta-card-cta>
+            <ta-button type="secondary" size="small">Ouvrir</ta-button>
+          </ta-card-cta>
+        </ta-card>
+
+        <ta-card>
+          <ta-card-header>
+            <ta-card-title>Mise en conformité électrique</ta-card-title>
+            <ta-card-subtitle
+              >Marc Lefèvre · échéance 02/11/2026</ta-card-subtitle
+            >
+          </ta-card-header>
+          <ta-card-content>
+            <div class="row row--tight">
+              <ta-badge value="Brouillon" type="primary"></ta-badge>
+              <ta-badge value="Audit" type="purple"></ta-badge>
+            </div>
+          </ta-card-content>
+        </ta-card>
+
+        <span class="planche__overline planche__overline--dark">Liste</span>
+        <ta-list-container>
+          @for (dossier of this.dossiers; track dossier.title) {
+          <ta-list-element [highlight]="dossier.current">
+            <ta-list-title>{{ dossier.title }}</ta-list-title>
+            <ta-list-sub-title>{{ dossier.meta }}</ta-list-sub-title>
+            <ta-list-tag>
+              <ta-badge
+                [value]="dossier.tag"
+                [type]="dossier.tagType"
+              ></ta-badge>
+            </ta-list-tag>
+          </ta-list-element>
+          }
+        </ta-list-container>
+
+        <span class="planche__overline planche__overline--dark"
+          >Toasts & bannières</span
+        >
+        <div class="stack">
+          @for (toast of this.toasts; track toast.code) {
+          <ta-toast [code]="toast.code">{{ toast.message }}</ta-toast>
+          }
+          <ta-banner
+            [inline]="true"
+            type="default"
+            message="Maintenance planifiée le 12/09 de 22h à 23h"
+          ></ta-banner>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- G · Mobile — 390 px                                      -->
+    <!-- ======================================================== -->
+    <section class="planche" id="mobile" data-testid="planche">
+      <header class="planche__header">
+        <span class="planche__title">Mobile — 390 px</span>
+      </header>
+      <div class="planche__body planche__body--center">
+        <div class="phone">
+          <div class="phone__screen">
+            <div class="phone__status">
+              <span>9:41</span>
+              <span class="phone__status-icons">
+                <ta-font-icon name="signal_cellular_alt"></ta-font-icon>
+                <ta-font-icon name="battery_full"></ta-font-icon>
+              </span>
+            </div>
+            <header class="planche__header planche__header--compact">
+              <ta-font-icon
+                name="arrow_back"
+                class="phone__back"
+              ></ta-font-icon>
+              <span class="phone__heading">
+                <span class="planche__overline">Étape 2 sur 3</span>
+                <span class="planche__title">Nouveau dossier</span>
+              </span>
+            </header>
+            <div class="phone__content">
+              <div class="phone__card">
+                <ta-form
+                  [inputs]="this.mobileInputs"
+                  [canDisplayButton]="false"
+                  [border]="false"
+                ></ta-form>
+              </div>
+              <ta-toast [code]="2">
+                <div class="feedback-line">
+                  <ta-font-icon name="warning"></ta-font-icon>
+                  Un champ obligatoire est vide.
+                </div>
+              </ta-toast>
+              <div class="phone__cta">
+                <ta-button type="secondary">Continuer</ta-button>
+                <ta-button type="tertiary">Retour</ta-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</app-page-layout>

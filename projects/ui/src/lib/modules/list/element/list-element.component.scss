@@ -1,10 +1,31 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/transitions";
 
+:host {
+  display: block;
+}
+
+/// Le séparateur est porté par la ligne elle-même, et la dernière du conteneur
+/// le retire : le conteneur n'a donc rien à atteindre chez ses enfants.
+.list-border {
+  border-bottom: 1px solid common.get-var(components, list, separator);
+}
+
+:host:last-child .list-border {
+  border-bottom: none;
+}
+
+/// Chaque ligne réserve la place du filet gauche, même quand il est
+/// transparent : l'élément courant se signale sans décaler le texte des
+/// autres lignes.
 .list-element {
   @include flex.space-between();
-  padding-top: common.get-var(space, xs);
-  padding-bottom: common.get-var(space, xs);
+  padding: common.get-var(components, list, item, padding-vertical)
+    common.get-var(components, list, item, padding-horizontal);
+  border-left: common.get-var(components, list, item, accent-width) solid
+    transparent;
+  @include transitions.transition-colors();
 
   .titles-container {
     margin: auto 0;
@@ -18,8 +39,12 @@
     }
   }
   &:hover {
-    background-color: common.get-var(surface, brand, tertiary);
+    background-color: common.get-var(components, list, item, hover, background);
     cursor: pointer;
+  }
+
+  &.highlight {
+    border-left-color: common.get-var(components, list, item, accent-color);
   }
 }
 

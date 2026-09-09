@@ -1,0 +1,66 @@
+@if (this.entry(); as entry) {
+  <app-page-layout
+    [eyebrow]="this.api()?.pkg"
+    [title]="entry.id"
+    [description]="this.demo()?.summary ?? ''"
+  >
+    <div class="sections">
+      @if (this.api(); as api) {
+        <section class="identity" data-testid="component-identity">
+          <ta-title [level]="2">Import</ta-title>
+          <pre class="identity-import" data-testid="import-line"><code>{{ this.importLine() }}</code></pre>
+          <ta-text size="sm">
+            Classe <code>{{ api.className }}</code> — source
+            <code>{{ api.file }}</code>
+          </ta-text>
+          @if (api.doc) {
+            <ta-text size="sm">{{ api.doc }}</ta-text>
+          }
+        </section>
+      }
+
+      @if (this.demo(); as demo) {
+        @if (demo.notRenderable; as blocked) {
+          <section class="not-renderable" data-testid="not-renderable">
+            <ta-title [level]="2">Pas de rendu isolé</ta-title>
+            <ta-text size="sm">{{ blocked.reason }}</ta-text>
+            <pre class="identity-import"><code>{{ blocked.usage }}</code></pre>
+          </section>
+        }
+
+        @for (example of demo.examples; track example.title) {
+          <app-example-block
+            [heading]="example.title"
+            [description]="example.description ?? ''"
+            [example]="example.component"
+            [source]="this.sourceOf(example.title)"
+            [layout]="example.layout ?? 'row'"
+          ></app-example-block>
+        }
+
+        @if (demo.notes) {
+          <section class="notes" data-testid="component-notes">
+            <ta-title [level]="2">Notes</ta-title>
+            <ta-text size="sm">{{ demo.notes }}</ta-text>
+          </section>
+        }
+      } @else if (this.loadFailed()) {
+        <section class="load-error" data-testid="demo-load-error">
+          <ta-title [level]="2">Démonstration indisponible</ta-title>
+          <ta-text size="sm">
+            Le chargement de cette démonstration a échoué. Le tableau d'API ci-dessous
+            reste exact, et la navigation vers les autres composants fonctionne.
+          </ta-text>
+        </section>
+      } @else {
+        <section class="load-error" data-testid="demo-loading">
+          <ta-text size="sm">Chargement de la démonstration…</ta-text>
+        </section>
+      }
+
+      @if (this.api(); as api) {
+        <app-api-table [entry]="api"></app-api-table>
+      }
+    </div>
+  </app-page-layout>
+}

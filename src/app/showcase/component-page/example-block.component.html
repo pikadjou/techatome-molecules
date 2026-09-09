@@ -1,0 +1,51 @@
+<section class="example" data-testid="example-block">
+  <header class="example-header">
+    <ta-title [level]="3">{{ this.heading() }}</ta-title>
+    <div class="example-actions">
+      @if (this.source().template) {
+        <button
+          type="button"
+          data-testid="toggle-source"
+          [attr.aria-expanded]="this.showSource()"
+          (click)="this.toggleSource()"
+        >
+          {{ this.showSource() ? "Masquer le code" : "Voir le code" }}
+        </button>
+        <button type="button" data-testid="copy-source" (click)="this.copySource()">
+          @switch (this.copyState()) {
+            @case ("copied") {
+              Copié
+            }
+            @case ("failed") {
+              Échec de la copie
+            }
+            @default {
+              Copier
+            }
+          }
+        </button>
+      }
+    </div>
+  </header>
+
+  @if (this.description()) {
+    <p class="example-description">{{ this.description() }}</p>
+  }
+
+  <div
+    class="example-render"
+    data-testid="example-render"
+    [class.is-stacked]="this.layout() === 'stack'"
+  >
+    <ng-container *ngComponentOutlet="this.example()"></ng-container>
+  </div>
+
+  @if (this.showSource()) {
+    @if (this.source().members) {
+      <p class="example-source-label">Classe</p>
+      <pre class="example-source" data-testid="example-source-members"><code>{{ this.source().members }}</code></pre>
+    }
+    <p class="example-source-label">Template</p>
+    <pre class="example-source" data-testid="example-source"><code>{{ this.source().template }}</code></pre>
+  }
+</section>

@@ -82,4 +82,17 @@ export const HARNESS_CASES: HarnessCase[] = [
   { id: "cms", component: CmsCase },
   // divers (strapi-cms, pwa, google-maps)
   { id: "misc", component: MiscCase },
+  // Témoin permanent du mécanisme de chargement paresseux, dont dépend le
+  // catalogue de démos de la vitrine. Ne pas supprimer.
+  {
+    id: "lazy-smoke",
+    label: "Chargement paresseux (témoin)",
+    load: () => import("./cases/ui-button.case").then((m) => m.UiButtonCase),
+  },
+  // Témoin permanent de la gestion d'échec du chargement paresseux. Ne pas supprimer.
+  {
+    id: "lazy-broken",
+    label: "Chargement paresseux en échec (témoin)",
+    load: () => Promise.reject(new Error("échec de chargement simulé")),
+  },
 ];

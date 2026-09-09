@@ -1,39 +1,35 @@
-<div class="space-between align-center g-space-md">
-  <div class="list-tag flex-start g-space-sm">
-    <div class="group-tag flex-start g-space-xs align-center">
-      @if (this.group) {
-        {{ 'grid.core.groupBy' | translate }}:
-        <ta-badge [value]="this.group" type="primary" icon="close" (clickAction)="this.removeGroup()"></ta-badge>
-      }
-    </div>
+<div class="grid-tags">
+  <ta-text class="grid-tags__results">
+    {{ 'grid.tag.results' | pluralTranslate: this.grid.totalItems() | translate: { nb: this.grid.totalItems() } }}
+  </ta-text>
 
-    @for (tag of this.activeFilters; track tag.key) {
-      <div class="item-tag flex-start g-space-xs align-center">
-        <div class="tag-title">{{ 'grid.' + this.gridId() + '.core.' + tag.key | translate }}:</div>
-        @for (value of tag.values; track value.field) {
+  @if (this.hasActiveFilters) {
+    <div class="grid-tags__list">
+      @if (this.group) {
+        <ta-badge
+          class="grid-tags__chip grid-tags__chip--group"
+          [value]="('grid.tag.group' | translate) + ' : ' + (this.labelKey(this.group) | translate)"
+          type="secondary"
+          icon="close"
+          (clickAction)="this.removeGroup()"
+        ></ta-badge>
+      }
+
+      @for (tag of this.activeFilters; track tag.key) {
+        @for (value of tag.values; track value.type + value.value) {
           <ta-badge
-            [value]="value.type + ' ' + value.value"
+            class="grid-tags__chip"
+            [value]="(this.labelKey(tag.key) | translate) + this.formatValue(value)"
             type="primary"
             icon="close"
             (clickAction)="this.remove(value)"
           ></ta-badge>
         }
-      </div>
-    }
-  </div>
-
-  <div class="reset-n-result flex-start g-space-md align-center">
-    @if (this.activeFilters.length > 0) {
-      <div class="reset">
-        <ta-button (action)="this.clear()">
-          {{ 'grid.tag.reset' | translate }}
-        </ta-button>
-      </div>
-    }
-    <div class="result">
-      <ta-text>
-        {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}
-      </ta-text>
+      }
     </div>
-  </div>
+
+    <ta-button class="grid-tags__clear" type="tertiary" size="small" (action)="this.clear()">
+      {{ 'grid.tag.reset' | translate }}
+    </ta-button>
+  }
 </div>

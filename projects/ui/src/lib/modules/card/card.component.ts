@@ -16,6 +16,9 @@ import { NewComponent } from '../../components/ui/new/new.component';
 export class CardComponent {
   highlight = input<boolean>(false);
 
+  /** Carte navy : surface inversée, chiffres et actions en jaune. */
+  invert = input<boolean>(false);
+
   shadow = input<boolean>(true);
 
   fullHeight = input<boolean>(false);

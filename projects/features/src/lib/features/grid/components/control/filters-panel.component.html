@@ -1,0 +1,19 @@
+<ta-layout-full-panel
+  width="420px"
+  [title]="'grid.filters.title' | translate"
+  (closeEvent)="this.closeEvent.emit()"
+>
+  <div panel-content>
+    <ta-grid-form [gridId]="this.gridId()" [showTitle]="false" [showReset]="false"></ta-grid-form>
+  </div>
+
+  <div panel-footer class="filters-panel__footer">
+    <ta-button type="tertiary" (action)="this.reset()">
+      {{ 'grid.form.reset' | translate }}
+    </ta-button>
+
+    <ta-button (action)="this.closeEvent.emit()">
+      {{ 'grid.filters.applyCount' | pluralTranslate: this.resultCount | translate: { nb: this.resultCount } }}
+    </ta-button>
+  </div>
+</ta-layout-full-panel>

@@ -8,8 +8,16 @@ export interface HarnessCase {
     id: string;
     /** Libellé lisible optionnel */
     label?: string;
-    /** Composant standalone à monter */
-    component: Type<unknown>;
+    /**
+     * Composant standalone monté directement. Exclusif avec `load`.
+     * Les applications existantes ne renseignent que ce champ.
+     */
+    component?: Type<unknown>;
+    /**
+     * Chargement paresseux du composant. Exclusif avec `component`. Permet à un
+     * catalogue de plusieurs centaines d'entrées de ne rien importer au démarrage.
+     */
+    load?: () => Promise<Type<unknown>>;
 }
 /** Token DI portant la liste des cas harness enregistrés par l'application. */
 export declare const TA_HARNESS_CASES: InjectionToken<HarnessCase[]>;

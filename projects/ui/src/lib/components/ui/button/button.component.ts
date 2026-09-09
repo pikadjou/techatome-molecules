@@ -31,10 +31,12 @@ export class ButtonComponent {
    * Outline - Draw a border around the button when true
    * Rounded - Make button rounded when true
    * Circular - Make button circular when true
+   * Square - Make button a rounded square (icon only) when true
    */
   options = input<{
     class?: string;
     circular?: boolean | "big" | "small";
+    square?: boolean | "big" | "small";
     border?: boolean;
   } | null>(null);
 
@@ -68,6 +70,15 @@ export class ButtonComponent {
     }
     if (this.options()?.circular === "small") {
       css["circular small"] = true;
+    }
+    if (this.options()?.square === true) {
+      css["square"] = true;
+    }
+    if (this.options()?.square === "big") {
+      css["square big"] = true;
+    }
+    if (this.options()?.square === "small") {
+      css["square small"] = true;
     }
     if (this.options()?.class) {
       css[this.options()!.class!] = true;

@@ -34,7 +34,7 @@
   .language-code {
     @include fonts.fontSizeBody(sm);
     color: common.get-var(text, secondary);
-    font-weight: 600;
+    font-weight: common.get-var(font, weight, bold);
     text-transform: uppercase;
   }
 
@@ -87,7 +87,7 @@
 
   .trigger-code {
     @include fonts.fontSizeBody(sm);
-    font-weight: 600;
+    font-weight: common.get-var(font, weight, bold);
     color: common.get-var(text, primary);
   }
 

@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 
 import { TranslateLoader } from "@ngx-translate/core";
-import { Observable, forkJoin, map, of } from "rxjs";
+import { Observable, catchError, forkJoin, map, of } from "rxjs";
 
 import { TaTranslationRegistryService } from "./translation-registry.service";
 
@@ -14,7 +14,11 @@ export class TaTranslationLoader implements TranslateLoader {
     if (sources.length === 0) {
       return of({});
     }
-    return forkJoin(sources).pipe(
+    // Un module dont le fichier est absent ou en erreur ne doit pas priver
+    // l'application de toutes ses autres traductions.
+    return forkJoin(
+      sources.map((source$) => source$.pipe(catchError(() => of(null))))
+    ).pipe(
       map((translations) =>
         translations.reduce<object>((acc, translation) => {
           if (!translation) {

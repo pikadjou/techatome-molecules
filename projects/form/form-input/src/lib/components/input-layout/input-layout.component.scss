@@ -8,39 +8,12 @@
 }
 
 .error-message {
-  color: common.get-var(semantic, red-dark);
+  color: common.get-var(components, input, error, color);
   @include fonts.fontSizeBody(sm);
   margin-top: common.get-var(space, xs);
 }
 
-:host ::ng-deep {
-  .form-control {
-    @include fonts.fontSizeBody(md);
-    border-radius: common.get-var(radius, rounded);
-    padding: common.get-var(space, sm) common.get-var(space, md);
-    outline: none;
-    border: 1px solid;
-    border-color: common.get-var(neutral, 300);
-    background-color: common.get-var(neutral, white);
-    width: 100%;
-    cursor: pointer;
-    box-sizing: border-box;
-    min-height: 40px;
-
-    &:hover:not(:disabled) {
-      border-color: common.get-var(border, brand, primary);
-    }
-
-    &:focus:not(:disabled) {
-      border-color: common.get-var(border, brand);
-    }
-
-    &:required:not(:disabled) {
-      border-color: common.get-var(semantic, red-dark);
-    }
-
-    &:disabled {
-      border-color: common.get-var(neutral, 300);
-    }
-  }
-}
+// Le champ lui-même (`.form-control`) est *projeté* dans ce layout par chaque
+// composant de saisie : le styler d'ici demanderait de percer l'encapsulation.
+// Comme classe partagée du design system, sa règle vit dans @ta/styles
+// (`generateComponents()`), à portée globale.

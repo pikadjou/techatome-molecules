@@ -51,9 +51,6 @@
       "@ta/menu": [
         "projects/menu"
       ],
-      "@ta/calendar": [
-        "projects/calendar"
-      ],
       "@ta/translation": [
         "projects/translation"
       ],

@@ -1,5 +1,9 @@
 @if(this.inputModel().label) {
-<label class="form-label" [class.mb-space-sm]="this.withMarginBottom()">
+<label
+  class="form-label"
+  [class.form-label--choice]="this.variant() === 'choice'"
+  [class.mb-space-sm]="this.withMarginBottom()"
+>
   {{ this.inputModel().label | translate }}
   @for (validator of this.inputModel().validators; track validator) {
   <span>

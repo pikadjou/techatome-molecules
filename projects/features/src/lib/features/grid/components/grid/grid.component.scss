@@ -12,11 +12,18 @@
   border-collapse: collapse;
   @include fonts.fontSizeBody(sm);
 
+  // En-tête : libellés courts en capitales, posés sur un filet fin. Le trait
+  // épais d'origine écrasait tout le tableau.
   .ta-grid-th {
+    @include fonts.fontSizeBody(xs);
+
     padding: common.get-var(space, sm) common.get-var(space, md);
     text-align: left;
-    border-bottom: 2px solid common.get-var(border, primary);
+    border-bottom: 1px solid common.get-var(border, tertiary);
     color: common.get-var(text, secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: common.get-var(font, weight, bold);
     white-space: nowrap;
     user-select: none;
 
@@ -25,12 +32,12 @@
 
       &:hover {
         color: common.get-var(text, primary);
-        background: common.get-var(surface, hover);
+        background: common.get-var(surface, hover, primary);
       }
     }
 
     &.is-sorted {
-      color: common.get-var(text, brand);
+      color: common.get-var(text, brand, primary);
     }
 
     &__inner {
@@ -40,17 +47,97 @@
     }
   }
 
+  // Les lignes ne sont plus soulignées d'un gris moyen : un filet très clair
+  // suffit à les distinguer, le survol fait le reste.
   .ta-grid-tr {
-    border-bottom: 1px solid common.get-var(border, secondary);
+    border-bottom: 1px solid common.get-var(border, tertiary);
+    transition: background-color 0.12s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
 
     &:hover {
-      background: common.get-var(surface, hover);
+      background: common.get-var(surface, secondary);
+    }
+
+    &.is-selected {
+      background: common.get-var(surface, tertiary);
     }
   }
 
   .ta-grid-td {
+    @include fonts.fontSizeBody(sm);
+
     padding: common.get-var(space, sm) common.get-var(space, md);
     color: common.get-var(text, primary);
     vertical-align: middle;
+  }
+
+  // Colonne de sélection : au strict nécessaire.
+  .ta-grid-th--select,
+  .ta-grid-td--select {
+    width: 1%;
+    padding-right: 0;
+    color: common.get-var(icon, secondary);
+  }
+}
+
+// Densité réduite pour les longues listes : mêmes règles, moins d'air.
+.ta-grid-table.is-compact {
+  .ta-grid-th,
+  .ta-grid-td {
+    padding-top: common.get-var(space, xs);
+    padding-bottom: common.get-var(space, xs);
+  }
+}
+
+// Ligne d'en-tête de groupe en vue tableau : elle rythme la liste sans
+// concurrencer les en-têtes de colonnes.
+.ta-grid-group-row {
+  // Le fond doit courir sur toute la ligne : la cellule reste une cellule,
+  // la mise en page passe par un conteneur interne.
+  &__cell {
+    padding: common.get-var(space, sm) common.get-var(space, md);
+    background: common.get-var(surface, secondary);
+    border-bottom: 1px solid common.get-var(border, tertiary);
+  }
+
+  &__inner {
+    @include flex.simple-flex();
+    @include flex.align-center();
+    gap: common.get-var(space, sm);
+  }
+
+  &__label {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, primary);
+    font-weight: common.get-var(font, weight, bold);
+  }
+
+  &__count {
+    @include fonts.fontSizeBody(xs);
+    padding: 0 common.get-var(space, sm);
+    border-radius: common.get-var(radius, full);
+    background: common.get-var(surface, primary);
+    color: common.get-var(text, secondary);
+    font-weight: common.get-var(font, weight, bold);
+  }
+}
+
+// Même traitement du compteur au-dessus de chaque grappe de cartes.
+.ta-grid-group-header {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+  padding-top: common.get-var(space, md);
+
+  &__count {
+    @include fonts.fontSizeBody(xs);
+    padding: 0 common.get-var(space, sm);
+    border-radius: common.get-var(radius, full);
+    background: common.get-var(surface, secondary);
+    color: common.get-var(text, secondary);
+    font-weight: common.get-var(font, weight, bold);
   }
 }

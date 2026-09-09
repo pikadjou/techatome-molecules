@@ -10,7 +10,7 @@
   height: calc(1.5em + 0.75rem + 2px);
   padding: common.get-var(space, xs) common.get-var(space, sm);
   @include fonts.fontSizeBody(sm);
-  font-weight: 400;
+  font-weight: common.get-var(font, weight, regular);
   line-height: 1.5;
   color: common.get-var(text, primary);
   background: common.get-var(surface, primary);

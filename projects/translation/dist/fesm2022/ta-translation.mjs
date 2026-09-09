@@ -2,7 +2,7 @@ import { TranslateService, provideTranslateService, TranslateLoader } from '@ngx
 export { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import * as i0 from '@angular/core';
 import { Injectable, inject, Optional, Inject, InjectionToken, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
-import { Subject, BehaviorSubject, debounceTime, mergeMap, map, of, forkJoin } from 'rxjs';
+import { Subject, BehaviorSubject, debounceTime, mergeMap, map, of, forkJoin, catchError } from 'rxjs';
 import { LocalStorage } from 'storage-manager-js';
 import { HttpClient } from '@angular/common/http';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService } from '@ta/server';
@@ -219,7 +219,9 @@ class TaTranslationLoader {
         if (sources.length === 0) {
             return of({});
         }
-        return forkJoin(sources).pipe(map((translations) => translations.reduce((acc, translation) => {
+        // Un module dont le fichier est absent ou en erreur ne doit pas priver
+        // l'application de toutes ses autres traductions.
+        return forkJoin(sources.map((source$) => source$.pipe(catchError(() => of(null))))).pipe(map((translations) => translations.reduce((acc, translation) => {
             if (!translation) {
                 return acc;
             }

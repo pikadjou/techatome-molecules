@@ -4,14 +4,14 @@
       <ta-empty [isEmpty]="this.rows.length === 0">
         @if (this.displayType() === 'grid') {
           <div class="ta-grid-table-wrapper">
-            <table class="ta-grid-table">
+            <table class="ta-grid-table" [class.is-compact]="this.density() === 'compact'">
               <thead>
                 <tr>
                   @if (this.showSelection()) {
                     <th class="ta-grid-th ta-grid-th--select" (click)="this.toggleAll()">
                       <ta-font-icon
                         class="c-pointer"
-                        [icon]="this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'"
+                        [name]="this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'"
                       />
                     </th>
                   }
@@ -21,6 +21,7 @@
                       [class.is-sortable]="col.sortable"
                       [class.is-sorted]="this.sortField === col.key"
                       [style.width]="col.width ?? 'auto'"
+                      [style.text-align]="col.align ?? 'left'"
                       (click)="this.onSort(col)"
                     >
                       <div class="ta-grid-th__inner">
@@ -28,7 +29,7 @@
                         @if (this.sortField === col.key) {
                           <ta-font-icon
                             class="ta-grid-th__sort-icon"
-                            [icon]="this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'"
+                            [name]="this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'"
                           />
                         }
                       </div>
@@ -37,33 +38,31 @@
                 </tr>
               </thead>
               <tbody>
-                @for (row of this.rows; track row.id) {
-                  <tr
-                    class="ta-grid-tr c-pointer"
-                    [class.is-selected]="this.isSelected(row.id)"
-                    (click)="this.onRowClick(row)"
-                  >
-                    @if (this.showSelection()) {
-                      <td class="ta-grid-td ta-grid-td--select" (click)="$event.stopPropagation(); this.toggleRow(row)">
-                        <ta-font-icon
-                          class="c-pointer"
-                          [icon]="this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'"
-                        />
+                @if (this.isGroup) {
+                  <!-- Regroupement : une ligne d'en-tête introduit chaque groupe. -->
+                  @for (group of this.dataByGroup; track group.key) {
+                    <tr class="ta-grid-group-row">
+                      <td class="ta-grid-group-row__cell" [attr.colspan]="this.colspan">
+                        <div class="ta-grid-group-row__inner">
+                          <span class="ta-grid-group-row__label">{{ this.groupLabel(group.key) }}</span>
+                          <span class="ta-grid-group-row__count">{{ group.data.length }}</span>
+                        </div>
                       </td>
+                    </tr>
+                    @for (row of group.data; track row.id) {
+                      <ng-container
+                        [ngTemplateOutlet]="rowTpl"
+                        [ngTemplateOutletContext]="{ $implicit: row }"
+                      ></ng-container>
                     }
-                    @for (col of this.visibleCols(); track col.key) {
-                      <td class="ta-grid-td">
-                        @if (col.template) {
-                          <ng-container
-                            [ngTemplateOutlet]="col.template"
-                            [ngTemplateOutletContext]="{ $implicit: row, value: this.getCellValue(row, col.key) }"
-                          ></ng-container>
-                        } @else {
-                          {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}
-                        }
-                      </td>
-                    }
-                  </tr>
+                  }
+                } @else {
+                  @for (row of this.rows; track row.id) {
+                    <ng-container
+                      [ngTemplateOutlet]="rowTpl"
+                      [ngTemplateOutletContext]="{ $implicit: row }"
+                    ></ng-container>
+                  }
                 }
               </tbody>
             </table>
@@ -73,7 +72,10 @@
         @if (this.displayType() === 'card') {
           @if (this.isGroup) {
             @for (group of this.dataByGroup; track group.key) {
-              <ta-title [level]="3">{{ group.key }}</ta-title>
+              <div class="ta-grid-group-header">
+                <ta-title [level]="3">{{ this.groupLabel(group.key) }}</ta-title>
+                <span class="ta-grid-group-header__count">{{ group.data.length }}</span>
+              </div>
               <div class="py-space-md">
                 <ng-template
                   [ngTemplateOutlet]="this.cardTemplate()"
@@ -96,3 +98,32 @@
     </ta-error>
   </ta-loader>
 }
+
+<ng-template #rowTpl let-row>
+  <tr
+    class="ta-grid-tr c-pointer"
+    [class.is-selected]="this.isSelected(row.id)"
+    (click)="this.onRowClick(row)"
+  >
+    @if (this.showSelection()) {
+      <td class="ta-grid-td ta-grid-td--select" (click)="$event.stopPropagation(); this.toggleRow(row)">
+        <ta-font-icon
+          class="c-pointer"
+          [name]="this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'"
+        />
+      </td>
+    }
+    @for (col of this.visibleCols(); track col.key) {
+      <td class="ta-grid-td" [style.text-align]="col.align ?? 'left'">
+        @if (col.template) {
+          <ng-container
+            [ngTemplateOutlet]="col.template"
+            [ngTemplateOutletContext]="{ $implicit: row, value: this.getCellValue(row, col.key) }"
+          ></ng-container>
+        } @else {
+          {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}
+        }
+      </td>
+    }
+  </tr>
+</ng-template>

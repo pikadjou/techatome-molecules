@@ -22,6 +22,9 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
   cardTemplate = input.required<TemplateRef<{ items: T[]; selectedIds: Set<number> }>>();
   showSelection = input<boolean>(false);
 
+  /** Hauteur de ligne : confortable par défaut, compacte pour les longues listes. */
+  density = input<'comfortable' | 'compact'>('comfortable');
+
   rowClicked = output<T>();
   selectionChanged = output<T[]>();
 
@@ -70,6 +73,11 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
     return this._grid.table?.errorMessage() ?? '';
   }
 
+  /** Largeur d'une ligne d'en-tête de groupe, colonne de sélection comprise. */
+  get colspan(): number {
+    return this.visibleCols().length + (this.showSelection() ? 1 : 0);
+  }
+
   get selectedIds(): Set<number> {
     return this._grid.table?.selectedIds() ?? new Set();
   }
@@ -88,6 +96,20 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
 
   toggleAll(): void {
     this._grid.table?.toggleAll();
+  }
+
+  /**
+   * Libellé d'un groupe : `groupBy` produit des chaînes, on repasse par le
+   * formatteur de la colonne pour retrouver dates et booléens lisibles.
+   */
+  groupLabel(value: string): string {
+    const field = this._grid.groupBy as string;
+    const col = field ? this._grid.cols[field] : null;
+    if (!col) {
+      return value;
+    }
+    const casted = value === 'true' ? true : value === 'false' ? false : value;
+    return col.defaultFormatter({ [field]: casted }) || value;
   }
 
   getCellValue(row: T, key: string): any {

@@ -3,9 +3,36 @@
 @use "ta/utils/mixins/fonts";
 @use "ta/utils/mixins/transitions";
 
+/// Chaque variante est décrite par le même quatuor de jetons : la couleur du
+/// texte, le fond, la bordure et l'anneau de focus. Le contour est toujours
+/// dessiné — transparent sur les variantes pleines — pour que le gabarit ne
+/// bouge pas d'un type à l'autre.
+@mixin button-variant($type) {
+  color: common.get-var(components, button, $type, color);
+  background-color: common.get-var(components, button, $type, background);
+  border-color: common.get-var(components, button, $type, border);
+
+  &:hover:not(.disabled):not(.inactive) {
+    color: common.get-var(components, button, $type, hover, color);
+    background-color: common.get-var(components, button, $type, hover, background);
+    border-color: common.get-var(components, button, $type, hover, border);
+  }
+
+  &:focus-visible {
+    box-shadow: common.get-var(components, button, $type, focus, shadow);
+  }
+
+  &.disabled {
+    color: common.get-var(components, button, $type, disabled, color);
+    background-color: common.get-var(components, button, $type, disabled, background);
+    border-color: common.get-var(components, button, $type, disabled, border);
+    box-shadow: none;
+  }
+}
+
 .button {
   width: 100%;
-  border: none;
+  border: common.get-var(components, button, border-width) solid transparent;
   border-radius: common.get-var(components, button, radius);
   padding: common.get-var(components, button, padding-vertical)
     common.get-var(components, button, padding-horizontal);
@@ -22,7 +49,7 @@
   @include transitions.transition-interactive();
 
   &:focus-visible {
-    @include transitions.focus-outline();
+    outline: none;
   }
 
   &.small {
@@ -31,11 +58,12 @@
       common.get-var(components, button, small, padding-horizontal);
   }
   &.large {
+    font-size: common.get-var(components, button, large, font-size);
     padding: common.get-var(components, button, large, padding-vertical)
       common.get-var(components, button, large, padding-horizontal);
   }
   &.no-border {
-    border: none;
+    border-color: transparent;
   }
   &.disabled,
   &.inactive {
@@ -43,71 +71,44 @@
   }
 
   &.primary {
-    color: common.get-var(components, button, primary, color);
-    background-color: common.get-var(components, button, primary, background);
-    box-shadow: common.get-var(shadow, brand, sm);
+    @include button-variant(primary);
 
-    &:hover:not(.disabled):not(.inactive) {
-      color: common.get-var(components, button, primary, hover, color);
-      background-color: common.get-var(components, button, primary, hover, background);
-      border: 1px solid common.get-var(components, button, primary, hover, border);
-      box-shadow: common.get-var(shadow, brand, md);
-      @include transitions.hover-lift();
-    }
-    &.disabled {
-      color: common.get-var(components, button, primary, disabled, color);
-      background-color: common.get-var(components, button, primary, disabled, background);
-      box-shadow: none;
-    }
-    &.inactive {
-      color: common.get-var(components, button, primary, inactive, color);
-      background-color: common.get-var(components, button, primary, inactive, background);
-      box-shadow: none;
+    ta-font-icon {
+      color: common.get-var(components, button, primary, icon, color);
     }
   }
 
   &.secondary {
-    color: common.get-var(components, button, secondary, color);
-    background-color: common.get-var(components, button, secondary, background);
-    border: 1.5px solid common.get-var(components, button, secondary, border);
-    box-shadow: common.get-var(shadow, black, sm);
+    @include button-variant(secondary);
 
     &:hover:not(.disabled):not(.inactive) {
-      border-color: common.get-var(components, button, secondary, hover, border);
-      box-shadow: common.get-var(shadow, black, md);
-      @include transitions.hover-lift();
+      box-shadow: common.get-var(shadow, brand, md);
     }
-    &.disabled {
-      color: common.get-var(components, button, secondary, disabled, color);
-      border-color: common.get-var(components, button, secondary, disabled, border);
-      box-shadow: none;
-    }
-    &.inactive {
-      border-color: common.get-var(components, button, secondary, inactive, border);
-      box-shadow: none;
-    }
+
     ta-font-icon {
       color: common.get-var(components, button, secondary, icon, color);
     }
   }
 
   &.tertiary {
-    color: common.get-var(components, button, tertiary, color);
-    background-color: common.get-var(components, button, tertiary, background);
-    border: 1.5px solid common.get-var(components, button, tertiary, border);
+    @include button-variant(tertiary);
 
-    &:hover:not(.disabled):not(.inactive) {
-      color: common.get-var(components, button, tertiary, hover, color);
-      background-color: common.get-var(components, button, tertiary, hover, background);
-      border-color: common.get-var(components, button, tertiary, hover, border);
-    }
-    &.disabled {
-      color: common.get-var(components, button, tertiary, disabled, color);
-      border-color: common.get-var(components, button, tertiary, disabled, border);
-    }
     &.inactive {
       color: common.get-var(components, button, tertiary, inactive, color);
       background-color: common.get-var(components, button, tertiary, inactive, background);
+    }
+  }
+
+  &.danger {
+    @include button-variant(danger);
+
+    ta-font-icon {
+      color: inherit;
+    }
+
+    &.inactive {
+      color: common.get-var(components, button, danger, inactive, color);
+      background-color: common.get-var(components, button, danger, inactive, background);
     }
   }
 }
@@ -125,5 +126,24 @@
   &.small {
     height: common.get-var(components, button, circular, small, height);
     width: common.get-var(components, button, circular, small, width);
+  }
+}
+
+/// Bouton icône carré arrondi — même radius que les boutons texte.
+.square {
+  height: common.get-var(components, button, square, height);
+  width: common.get-var(components, button, square, width);
+  border-radius: common.get-var(components, button, square, radius);
+  padding: common.get-var(components, button, square, padding);
+  flex: none;
+
+  &.big {
+    height: common.get-var(components, button, square, big, height);
+    width: common.get-var(components, button, square, big, width);
+  }
+  &.small {
+    height: common.get-var(components, button, square, small, height);
+    width: common.get-var(components, button, square, small, width);
+    padding: common.get-var(components, button, square, padding);
   }
 }

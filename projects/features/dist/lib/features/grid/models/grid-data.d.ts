@@ -12,6 +12,11 @@ export declare class TaGridData<T> {
         data: T[];
     }[];
     get isGroup(): boolean;
+    /**
+     * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
+     * il notifie les composants même sous un parent en OnPush.
+     */
+    get groupBy(): keyof T | null;
     readonly rowClicked$: Subject<T>;
     table: TaTableState<T> | null;
     cols: {
@@ -22,7 +27,7 @@ export declare class TaGridData<T> {
     readonly isDataReady$: BehaviorSubject<boolean>;
     private _tableSubs;
     readonly displayType: import("@angular/core").WritableSignal<ViewType>;
-    groupBy: keyof T | null;
+    private readonly _groupBy;
     readonly totalItems: import("@angular/core").WritableSignal<number>;
     constructor(scope: string);
     init(params: {

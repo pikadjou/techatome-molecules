@@ -4,6 +4,7 @@ import { Observable, distinctUntilChanged, filter } from 'rxjs';
 
 import { TaBaseComponent } from '@ta/utils';
 
+import { TaTranslationGrid } from '../../../translation.service';
 import { TaGridData } from '../models/grid-data';
 import { TaGridInstanceService } from '../services/grid-instance.service';
 
@@ -34,6 +35,7 @@ export abstract class TaAbstractGridComponent<T> extends TaBaseComponent impleme
 
   constructor() {
     super();
+    TaTranslationGrid.getInstance();
   }
 
   ngOnInit() {

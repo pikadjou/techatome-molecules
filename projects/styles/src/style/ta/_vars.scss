@@ -260,7 +260,11 @@ $shadow: map.deep-merge(
       md: 0px 4px 14px 0px rgba(18, 30, 56, 0.2),
       lg: 0px 8px 24px 0px rgba(18, 30, 56, 0.18),
     ),
-    focus: 0 0 0 3px rgba(18, 30, 56, 0.1),
+    // Anneaux de focus : 4px, un par famille de surface.
+    // `focus` sur fond clair, `invert` sur fond navy, `alert` sur les actions destructrices.
+    focus: 0 0 0 4px rgba(18, 30, 56, 0.18),
+    focus-invert: 0 0 0 4px rgba(242, 195, 23, 0.55),
+    focus-alert: 0 0 0 4px rgba(169, 50, 38, 0.22),
   ),
   $shadow
 );
@@ -270,6 +274,13 @@ $font: map.deep-merge(
     family: (
       'Roboto',
       sans-serif,
+    ),
+    // Échelle de graisses, transverse aux paliers de taille : toute graisse
+    // écrite dans une feuille vient d'ici, jamais d'un littéral.
+    weight: (
+      regular: 400,
+      medium: 500,
+      bold: 600,
     ),
     h1: (
       default: (
@@ -431,55 +442,82 @@ $components: map.deep-merge(
     max-width: 1200px,
     header: (
       top: $space-base * 5,
+      // Bandeau navy signé par un filet jaune plein sur le bord gauche.
+      background: map.get($surface, brand, primary),
+      color: map.get($text, invert, primary),
+      accent-width: 6px,
+      accent-color: map.get($surface, brand, secondary),
+      padding-vertical: map.get($space, lg),
+      padding-horizontal: 28px,
+      overline: (
+        color: map.get($surface, brand, secondary),
+        letter-spacing: 0.1em,
+      ),
     ),
     button: (
       radius: map.get($radius, rounded),
-      gap: map.get($space, md),
-      font-weight: 600,
+      gap: map.get($space, sm),
+      font-weight: map.get($font, body, md, bold, weight),
       letter-spacing: 0.01em,
-      padding-vertical: map.get($space, sm),
-      padding-horizontal: map.get($space, md),
+      border-width: 1.5px,
+      // Gabarits hors grille 8px : la hauteur de frappe prime sur l'alignement
+      // des espacements, comme relevé sur les planches du catalogue.
+      padding-vertical: 12px,
+      padding-horizontal: 22px,
       small: (
-        padding-vertical: map.get($space, xs),
-        padding-horizontal: map.get($space, sm),
+        padding-vertical: 7px,
+        padding-horizontal: map.get($space, md),
       ),
 
       large: (
         padding-vertical: map.get($space, md),
-        padding-horizontal: map.get($space, lg),
+        padding-horizontal: 30px,
+        font-size: map.get($font, key, md, default, size),
       ),
 
+      // Fond navy plein — action structurante.
       primary: (
         color: map.get($text, invert, primary),
         background: map.get($surface, brand, primary),
         border: map.get($border, brand, primary),
         hover: (
-          color: map.get($text, primary),
-          background: map.get($surface, primary),
-          border: map.get($border, primary),
+          color: map.get($text, invert, primary),
+          background: map.get($brand, 700),
+          border: map.get($brand, 700),
+        ),
+        focus: (
+          shadow: map.get($shadow, focus-invert),
         ),
         disabled: (
           color: map.get($text, tertiary),
-          border: map.get($border, disabled),
+          background: map.get($surface, secondary),
+          border: transparent,
         ),
         inactive: (
           border: map.get($border, primary),
         ),
         icon: (
-          color: map.get($icon, invert, primary),
+          color: map.get($icon, brand, secondary),
         ),
       ),
 
+      // Jaune second-400 — appel à l'action principal.
       secondary: (
         color: map.get($text, brand, primary),
         background: map.get($surface, brand, secondary),
-        border: map.get($border, brand, secondary),
+        border: map.get($surface, brand, secondary),
         hover: (
-          border: map.get($border, invert, secondary),
+          color: map.get($text, brand, primary),
+          background: map.get($second, 500),
+          border: map.get($second, 500),
+        ),
+        focus: (
+          shadow: map.get($shadow, focus),
         ),
         disabled: (
           color: map.get($text, tertiary),
-          border: map.get($border, disabled),
+          background: map.get($surface, secondary),
+          border: transparent,
         ),
         inactive: (
           border: map.get($border, primary),
@@ -488,22 +526,55 @@ $components: map.deep-merge(
           color: map.get($icon, brand, primary),
         ),
       ),
+
+      // Contour navy sur fond transparent — action secondaire.
       tertiary: (
         color: map.get($text, brand, primary),
-        background: map.get($surface, primary),
+        background: transparent,
         border: map.get($border, brand, primary),
         hover: (
-          color: map.get($text, invert, primary),
-          background: map.get($surface, hover, primary),
-          border: map.get($border, hover, primary),
+          color: map.get($text, brand, primary),
+          background: map.get($brand, 50),
+          border: map.get($border, brand, primary),
+        ),
+        focus: (
+          shadow: map.get($shadow, focus),
         ),
         disabled: (
-          color: map.get($text, brand, secondary),
-          background: map.get($surface, hover, secondary),
+          color: map.get($text, tertiary),
+          background: transparent,
+          border: map.get($border, disabled),
         ),
         inactive: (
           color: map.get($text, primary),
           background: map.get($surface, tertiary),
+        ),
+      ),
+
+      // Contour rouge qui se remplit au survol — action destructrice.
+      danger: (
+        color: map.get($semantic, red-dark),
+        background: map.get($surface, primary),
+        border: map.get($semantic, red-dark),
+        hover: (
+          color: map.get($text, invert, primary),
+          background: map.get($semantic, red-dark),
+          border: map.get($semantic, red-dark),
+        ),
+        focus: (
+          shadow: map.get($shadow, focus-alert),
+        ),
+        disabled: (
+          color: map.get($text, tertiary),
+          background: map.get($surface, primary),
+          border: map.get($border, disabled),
+        ),
+        inactive: (
+          color: map.get($text, tertiary),
+          background: map.get($surface, primary),
+        ),
+        icon: (
+          color: map.get($semantic, red-dark),
         ),
       ),
 
@@ -522,38 +593,54 @@ $components: map.deep-merge(
             width: 40px,
           ),
         ),
+
+      // Scope .square — bouton icône carré arrondi (radius rounded).
+      square: (
+          height: 48px,
+          width: 48px,
+          radius: map.get($radius, rounded),
+          padding: 0,
+          big: (
+            height: 56px,
+            width: 56px,
+          ),
+          small: (
+            height: 40px,
+            width: 40px,
+          ),
+        ),
     ),
     label: (
-      // Base
-      radius: map.get($radius, label),
-      padding-vertical: map.get($space, sm),
-      padding-horizontal: map.get($space, md),
-      font-weight: 600,
+      // Base — étiquette pleine, radius `rounded` et non plus la pilule `label`.
+      radius: map.get($radius, rounded),
+      padding-vertical: 6px,
+      padding-horizontal: 14px,
+      font-weight: map.get($font, body, sm, bold, weight),
       letter-spacing: 0.03em,
       // Sizes
       xs: (
           padding-vertical: map.get($space, xs),
-          padding-horizontal: map.get($space, md),
+          padding-horizontal: map.get($space, sm),
         ),
       sm: (
         padding-vertical: map.get($space, xs),
-        padding-horizontal: map.get($space, lg),
+        padding-horizontal: 10px,
       ),
       lg: (
         padding-vertical: map.get($space, sm),
-        padding-horizontal: map.get($space, lg),
+        padding-horizontal: map.get($space, md),
       ),
 
-      // Variants
+      // Variants — pleines et opaques, texte à contraste garanti.
       default: (
           color: map.get($text, brand, primary),
-          background: map.get($surface, default),
-          border: map.get($border, brand, primary),
+          background: map.get($surface, brand, secondary),
+          border: map.get($surface, brand, secondary),
         ),
       secondary: (
-        color: map.get($text, body),
-        background: map.get($surface, secondary),
-        border: map.get($neutral, 600),
+        color: map.get($text, invert, primary),
+        background: map.get($surface, brand, primary),
+        border: map.get($surface, brand, primary),
       ),
       success: (
         color: map.get($neutral, white),
@@ -571,14 +658,265 @@ $components: map.deep-merge(
         border: map.get($border, alert),
       ),
       purple: (
-        color: map.get($semantic, purple-dark),
-        background: map.get($semantic, purple-light),
-        border: map.get($semantic, purple-dark),
+        color: map.get($neutral, white),
+        background: map.get($semantic, purple),
+        border: map.get($semantic, purple),
       ),
     ),
+
+    // Badge teinté — pastille d'état à faible emphase, contraste >= 4,5:1.
+    badge: (
+      radius: map.get($radius, rounded),
+      padding-vertical: map.get($space, xs),
+      padding-horizontal: 10px,
+      font-weight: map.get($font, body, xs, bold, weight),
+      letter-spacing: 0.04em,
+      gap: map.get($space, xs),
+      primary: (
+        color: map.get($brand, 800),
+        background: map.get($brand, 50),
+      ),
+      secondary: (
+        color: map.get($text, brand, primary),
+        background: rgba(242, 195, 23, 0.4),
+      ),
+      success: (
+        color: map.get($semantic, green-dark),
+        background: rgba(56, 161, 114, 0.16),
+      ),
+      warning: (
+        color: map.get($semantic, orange-dark),
+        background: rgba(243, 156, 18, 0.18),
+      ),
+      danger: (
+        color: map.get($semantic, red-dark),
+        background: rgba(231, 76, 60, 0.14),
+      ),
+      purple: (
+        color: map.get($semantic, purple-dark),
+        background: rgba(142, 68, 173, 0.16),
+      ),
+      orange: (
+        color: map.get($semantic, orange-dark),
+        background: rgba(243, 156, 18, 0.18),
+      ),
+      info: (
+        color: map.get($semantic, purple-dark),
+        background: rgba(142, 68, 173, 0.16),
+      ),
+      // Compteur circulaire-ish : pastille chiffrée.
+      counter: (
+        min-width: 22px,
+        height: 22px,
+        color: map.get($text, brand, primary),
+        background: map.get($surface, brand, secondary),
+        alert: (
+          color: map.get($text, invert, primary),
+          background: map.get($surface, alert),
+        ),
+      ),
+    ),
+
+    // Chip supprimable — même gabarit que l'étiquette, fond neutre.
+    chip: (
+      radius: map.get($radius, rounded),
+      padding: 6px map.get($space, sm) 6px 14px,
+      gap: 6px,
+      color: map.get($text, brand, primary),
+      background: map.get($brand, 50),
+      hover: (
+        background: map.get($brand, 100),
+      ),
+      icon: (
+        color: map.get($brand, 400),
+        size: 16px,
+      ),
+    ),
+    // Champ de saisie — rempli et souligné : pas de contour, un trait bas de 2px
+    // qui porte l'état, et un radius seulement sur les deux coins hauts.
+    input: (
+      radius: map.get($radius, rounded) map.get($radius, rounded) 0 0,
+      padding-vertical: 11px,
+      padding-horizontal: 14px,
+      min-height: 44px,
+      border-width: 2px,
+      border-color: map.get($brand, 100),
+      background: map.get($surface, secondary),
+      color: map.get($text, brand, primary),
+      placeholder: map.get($brand, 300),
+      gap: map.get($space, sm),
+      icon: (
+        color: map.get($brand, 400),
+      ),
+      hover: (
+        border-color: map.get($brand, 400),
+      ),
+      focus: (
+        border-color: map.get($border, brand, primary),
+        background: map.get($surface, primary),
+        shadow: map.get($shadow, black, sm),
+        icon: (
+          color: map.get($brand, 900),
+        ),
+      ),
+      error: (
+        border-color: map.get($semantic, red-dark),
+        color: map.get($semantic, red-dark),
+      ),
+      disabled: (
+        border-color: map.get($border, disabled),
+        background: map.get($neutral, 100),
+        color: map.get($text, tertiary),
+      ),
+      // Libellé au-dessus du champ.
+      label: (
+        color: map.get($brand, 400),
+        margin-bottom: 6px,
+        required: map.get($semantic, red-dark),
+        disabled: map.get($text, tertiary),
+      ),
+      // Panneau déroulant du dropdown.
+      panel: (
+        radius: map.get($radius, rounded),
+        shadow: map.get($shadow, brand, md),
+        background: map.get($surface, primary),
+        padding-vertical: 10px,
+        padding-horizontal: 14px,
+        hover: (
+          background: map.get($surface, secondary),
+        ),
+        selected: (
+          color: map.get($text, brand, primary),
+          background: map.get($surface, brand, secondary),
+        ),
+        disabled: (
+          color: map.get($text, tertiary),
+        ),
+      ),
+      // Zone de dépôt de fichiers.
+      dropzone: (
+        radius: map.get($radius, rounded),
+        border: map.get($brand, 100),
+        border-width: 2px,
+        background: map.get($surface, secondary),
+        color: map.get($brand, 400),
+        padding: map.get($space, lg),
+      ),
+    ),
+
+    // Segments et cartes de choix.
+    segment: (
+      radius: map.get($radius, rounded),
+      gap: 6px,
+      padding-vertical: 11px,
+      font-weight: map.get($font, body, md, bold, weight),
+      color: map.get($text, brand, primary),
+      background: map.get($brand, 50),
+      hover: (
+        background: map.get($brand, 100),
+      ),
+      selected: (
+        color: map.get($text, brand, primary),
+        background: map.get($surface, brand, secondary),
+      ),
+      disabled: (
+        color: map.get($text, tertiary),
+        background: map.get($neutral, 100),
+      ),
+    ),
+
+    // Bascules : case, radio et interrupteur.
+    control: (
+      size: 20px,
+      border-width: 2px,
+      border-color: map.get($brand, 100),
+      background: map.get($surface, primary),
+      checked: (
+        color: map.get($surface, brand, secondary),
+        background: map.get($surface, brand, primary),
+        border-color: map.get($border, brand, primary),
+      ),
+      disabled: (
+        border-color: map.get($border, disabled),
+        background: map.get($neutral, 100),
+        color: map.get($text, tertiary),
+      ),
+      checkbox: (
+        radius: map.get($radius, minimal),
+      ),
+      radio: (
+        radius: map.get($radius, full),
+        dot-size: 10px,
+      ),
+      // Interrupteur : seule forme qui conserve la piste arrondie.
+      switch: (
+        track-width: 44px,
+        track-height: 24px,
+        track-radius: map.get($radius, full),
+        track-background: map.get($brand, 100),
+        thumb-size: 18px,
+        thumb-offset: 3px,
+        thumb-background: map.get($surface, primary),
+        checked: (
+          track-background: map.get($surface, brand, primary),
+          thumb-background: map.get($surface, brand, secondary),
+        ),
+      ),
+      rating: (
+        color: map.get($surface, brand, secondary),
+        empty: map.get($brand, 50),
+        size: 28px,
+      ),
+    ),
+
+    // Liste — conteneur plein, filet gauche sur l'item actif.
+    list: (
+      radius: map.get($radius, rounded),
+      background: map.get($surface, primary),
+      shadow: map.get($shadow, black, sm),
+      separator: map.get($brand, 50),
+      item: (
+        padding-vertical: 14px,
+        padding-horizontal: 18px,
+        accent-width: map.get($space, xs),
+        accent-color: map.get($surface, brand, secondary),
+        hover: (
+          background: map.get($surface, secondary),
+        ),
+      ),
+    ),
+
+    // Feedback — toast, bannière et notification, filet gauche de 6px.
+    feedback: (
+      radius: map.get($radius, rounded),
+      padding-vertical: 14px,
+      padding-horizontal: 18px,
+      gap: map.get($space, sm),
+      accent-width: 6px,
+      background: map.get($surface, primary),
+      color: map.get($text, brand, primary),
+      shadow: map.get($shadow, brand, md),
+      success: map.get($semantic, green),
+      warning: map.get($semantic, orange),
+      alert: map.get($semantic, red),
+      info: map.get($surface, brand, secondary),
+      invert: (
+        background: map.get($surface, brand, primary),
+        color: map.get($text, invert, primary),
+        accent-color: map.get($surface, brand, secondary),
+      ),
+      // Bandeau pleine largeur.
+      banner: (
+        background: map.get($surface, brand, secondary),
+        color: map.get($text, brand, primary),
+        padding-vertical: 10px,
+        padding-horizontal: 18px,
+      ),
+    ),
+
     card: (
       // Styles de base .card
-      border-radius: map.get($space, md),
+      border-radius: map.get($radius, rounded),
       padding: map.get($space, md),
       background: map.get($surface, primary),
       color: map.get($text, primary),
@@ -586,6 +924,17 @@ $components: map.deep-merge(
       // Scope .hover
       hover: (
           background: map.get($surface, hover, primary),
+        ),
+
+      // Scope .invert — carte navy, chiffres et actions en jaune.
+      invert: (
+          background: map.get($surface, brand, primary),
+          color: map.get($text, invert, primary),
+          border: map.get($surface, brand, primary),
+          shadow: map.get($shadow, brand, md),
+          separator: rgba(255, 255, 255, 0.15),
+          secondary: map.get($brand, 100),
+          accent: map.get($surface, brand, secondary),
         ),
 
       // Scope .full-height

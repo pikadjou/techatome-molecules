@@ -66,7 +66,7 @@
       border-color: common.get-var(surface, tertiary);
       border-radius: common.get-var(radius, label);
       @include fonts.fontSizeBody(sm);
-      font-weight: 500;
+      font-weight: common.get-var(font, weight, medium);
       transition:
         background-color common.get-var(transition, fast),
         border-color common.get-var(transition, fast),
@@ -82,7 +82,7 @@
       color: common.get-var(text, brand, primary);
       background-color: common.get-var(surface, default);
       border-color: common.get-var(border, brand, primary);
-      font-weight: 600;
+      font-weight: common.get-var(font, weight, bold);
     }
     &:not(.disabled):not(.active):hover .item {
       border-color: common.get-var(border, hover, secondary);
@@ -114,7 +114,7 @@
     &.active .item {
       color: common.get-var(text, brand, primary);
       border-bottom-color: common.get-var(border, brand, primary);
-      font-weight: 600;
+      font-weight: common.get-var(font, weight, bold);
     }
     &:not(.disabled):not(.active):hover .item {
       color: common.get-var(text, primary);
@@ -166,8 +166,5 @@
   }
 }
 
-:host ::ng-deep {
-  .swiper-container {
-    gap: common.get-var(space, sm) !important;
-  }
-}
+// Le conteneur Swiper est du DOM tiers : son habillage vit dans @ta/styles
+// (`ta/vendors`), hors de portée de l'encapsulation de ce composant.

@@ -31,7 +31,6 @@ Un assistant contextuel par librairie `@ta/*` + un assistant patterns.
 | `/form-input`          | `@ta/form-input` — Champs individuels                                    |
 | `/files-basic`         | `@ta/files-basic` — Upload de fichiers                                   |
 | `/files-extended`      | `@ta/files-extended` — Gestion fichiers avancée                          |
-| `/calendar`            | `@ta/calendar` — Bryntum calendar/scheduler                              |
 | `/charts`              | `@ta/charts` — Composants graphiques                                     |
 | `/core`                | `@ta/core` — AG Grid, taGridMetaDataService, maps                        |
 | `/user`                | `@ta/user` — Auth0, AuthGuard, FeatureGuard                              |

@@ -1,4 +1,5 @@
 @use "bases";
+@use "showcase";
 @use "ta/utils/mixins/common";
 
 html,
@@ -11,7 +12,9 @@ body {
 
 body {
   font-family: "Roboto", "Helvetica Neue", sans-serif;
-  background-color: common.get-var(surface, primary);
+  // Le fond de l'application est légèrement teinté : les surfaces blanches des
+  // démonstrations s'en détachent sans qu'on ait besoin de les encadrer.
+  background-color: common.get-var(surface, secondary);
   color: common.get-var(text, primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -25,24 +28,28 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid common.get-var(brand, 500);
+  outline: 2px solid common.get-var(border, brand, primary);
   outline-offset: 2px;
   border-radius: common.get-var(radius, minimal);
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: common.get-var(surface, primary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: common.get-var(text, tertiary);
-  border-radius: common.get-var(radius, minimal);
+  background: common.get-var(border, tertiary);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: common.get-var(radius, full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: common.get-var(text, secondary);
+  background: common.get-var(text, tertiary);
+  background-clip: content-box;
 }

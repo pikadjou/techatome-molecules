@@ -44,7 +44,7 @@ class FlagIconComponent {
         class="flag-icon"
       ></div>
     }
-  `, isInline: true, styles: [":host{display:inline-flex}.flag-icon{display:flex;border-radius:2px;overflow:hidden;line-height:0;::ng-deep svg{width:100%;height:auto}}\n"] }); }
+  `, isInline: true, styles: [":host{display:inline-flex}.flag-icon{display:flex;border-radius:2px;overflow:hidden;line-height:0}\n"] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: FlagIconComponent, decorators: [{
             type: Component,
@@ -56,7 +56,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         class="flag-icon"
       ></div>
     }
-  `, standalone: true, styles: [":host{display:inline-flex}.flag-icon{display:flex;border-radius:2px;overflow:hidden;line-height:0;::ng-deep svg{width:100%;height:auto}}\n"] }]
+  `, standalone: true, styles: [":host{display:inline-flex}.flag-icon{display:flex;border-radius:2px;overflow:hidden;line-height:0}\n"] }]
         }], ctorParameters: () => [{ type: i1.DomSanitizer }] });
 
 class TaIconsService {
@@ -296,11 +296,11 @@ class LocalIconComponent {
         return "auto";
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LocalIconComponent, deps: [{ token: TaIconsService }, { token: i1.DomSanitizer }], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: LocalIconComponent, isStandalone: true, selector: "ta-local-icon", inputs: { type: { classPropertyName: "type", publicName: "type", isSignal: true, isRequired: true, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, rotation: { classPropertyName: "rotation", publicName: "rotation", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "@if (this.type()) {\n  <div\n    [innerHTML]=\"this.getSvgIcon()\"\n    [style.width]=\"this.getSize()\"\n    [ngClass]=\"{ 'is-rotation': this.rotation() }\"\n    class=\"internal-icon\"\n  ></div>\n}\n", styles: [".internal-icon{margin:auto;display:flex}:host ::ng-deep svg{width:100%!important;height:auto!important}.is-rotation{animation:rotation 2s infinite linear}@keyframes rotation{0%{transform:rotate(0)}to{transform:rotate(359deg)}}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: LocalIconComponent, isStandalone: true, selector: "ta-local-icon", inputs: { type: { classPropertyName: "type", publicName: "type", isSignal: true, isRequired: true, transformFunction: null }, size: { classPropertyName: "size", publicName: "size", isSignal: true, isRequired: false, transformFunction: null }, rotation: { classPropertyName: "rotation", publicName: "rotation", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "@if (this.type()) {\n  <div\n    [innerHTML]=\"this.getSvgIcon()\"\n    [style.width]=\"this.getSize()\"\n    [ngClass]=\"{ 'is-rotation': this.rotation() }\"\n    class=\"internal-icon\"\n  ></div>\n}\n", styles: [".internal-icon{margin:auto;display:flex}.is-rotation{animation:rotation 2s infinite linear}@keyframes rotation{0%{transform:rotate(0)}to{transform:rotate(359deg)}}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LocalIconComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-local-icon", standalone: true, imports: [NgClass], template: "@if (this.type()) {\n  <div\n    [innerHTML]=\"this.getSvgIcon()\"\n    [style.width]=\"this.getSize()\"\n    [ngClass]=\"{ 'is-rotation': this.rotation() }\"\n    class=\"internal-icon\"\n  ></div>\n}\n", styles: [".internal-icon{margin:auto;display:flex}:host ::ng-deep svg{width:100%!important;height:auto!important}.is-rotation{animation:rotation 2s infinite linear}@keyframes rotation{0%{transform:rotate(0)}to{transform:rotate(359deg)}}\n"] }]
+            args: [{ selector: "ta-local-icon", standalone: true, imports: [NgClass], template: "@if (this.type()) {\n  <div\n    [innerHTML]=\"this.getSvgIcon()\"\n    [style.width]=\"this.getSize()\"\n    [ngClass]=\"{ 'is-rotation': this.rotation() }\"\n    class=\"internal-icon\"\n  ></div>\n}\n", styles: [".internal-icon{margin:auto;display:flex}.is-rotation{animation:rotation 2s infinite linear}@keyframes rotation{0%{transform:rotate(0)}to{transform:rotate(359deg)}}\n"] }]
         }], ctorParameters: () => [{ type: TaIconsService }, { type: i1.DomSanitizer }] });
 
 /**

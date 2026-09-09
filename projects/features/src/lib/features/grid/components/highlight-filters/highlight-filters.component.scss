@@ -7,108 +7,71 @@
   display: block;
 }
 
+// Barre de filtres rapides : une seule surface posée au-dessus de la liste.
+// Chaque critère est un segment de cette barre — pas un champ de formulaire
+// encadré dans un autre cadre : le libellé surmonte la valeur, et seul le
+// survol ou le focus dessine une pastille.
 .highlight-filters {
-  display: flex;
-  align-items: center;
-  gap: common.get-var(space, md);
-  padding: common.get-var(space, sm) common.get-var(space, md);
-  background: common.get-var(surface, secondary);
-  border: 1px solid common.get-var(border, secondary);
-  border-radius: common.get-var(radius, rounded);
+  @include flex.simple-flex();
+  @include flex.align-center();
+
+  gap: common.get-var(space, xs);
+  padding: common.get-var(space, xs);
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, full);
+  box-shadow: common.get-var(shadow, black, sm);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
-  &--active {
-    border-color: common.get-var(brand, 300);
-    box-shadow: 0 0 0 1px common.get-var(brand, 100);
+  &:hover {
+    box-shadow: common.get-var(shadow, black, md);
   }
 
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: common.get-var(space, xl);
-    height: common.get-var(space, xl);
-    min-width: common.get-var(space, xl);
-    border-radius: common.get-var(radius, minimal);
-    background: common.get-var(brand, 50);
-    color: common.get-var(icon, brand, primary);
+  &--active {
+    border-color: common.get-var(border, brand, primary);
   }
 
   &__form {
-    flex: 1;
+    @include flex.flex-full();
     min-width: 0;
 
-    ::ng-deep {
-      ta-form {
-        .ta-form {
-          gap: 0;
-        }
-      }
-
-      .ta-panel {
-        padding: 0;
-        background: transparent;
-      }
-
-      .grid {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-end;
-        gap: common.get-var(space, sm);
-      }
-
-      .g-col-6 {
-        flex: 1 1 160px;
-        min-width: 140px;
-        max-width: 240px;
-      }
-
-      .mat-mdc-form-field {
-        width: 100%;
-      }
-
-      ta-inputs {
-        margin-bottom: 0;
-      }
-    }
+    // Filet de séparation entre segments, comme sur une barre de recherche.
   }
 
-  &__actions {
-    display: flex;
-    align-items: center;
+  &__meta {
+    @include flex.simple-flex();
+    @include flex.align-center();
+
+    gap: common.get-var(space, sm);
     flex-shrink: 0;
+    padding: 0 common.get-var(space, md);
+    border-left: 1px solid common.get-var(border, tertiary);
+
   }
 
   &__count {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    padding-left: common.get-var(space, sm);
-    border-left: 1px solid common.get-var(border, secondary);
-    color: common.get-var(text, secondary);
-    white-space: nowrap;
     @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, primary);
+    font-weight: common.get-var(font, weight, bold);
+    white-space: nowrap;
   }
 
   @include mq.to(768px) {
     flex-wrap: wrap;
-
-    &__icon {
-      display: none;
-    }
+    padding: common.get-var(space, sm);
+    border-radius: common.get-var(radius, rounded);
 
     &__form {
       flex-basis: 100%;
 
-      ::ng-deep .g-col-6 {
-        flex: 1 1 100%;
-        max-width: none;
-      }
     }
 
-    &__count {
+    &__meta {
+      width: 100%;
+      justify-content: space-between;
+      padding: common.get-var(space, xs) common.get-var(space, sm) 0;
       border-left: none;
-      padding-left: 0;
+      border-top: 1px solid common.get-var(border, tertiary);
     }
   }
 }

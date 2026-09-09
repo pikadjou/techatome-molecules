@@ -17,10 +17,10 @@ Question ou tâche : $ARGUMENTS
 Avant de répondre à la question :
 
 1. **Identifie** dans le catalogue ci-dessous l'élément concerné (composant, service, DTO…).
-2. **Lis la fiche de référence** via `Read` (chemin : `references/planning/<name>.md`).
-3. **Réponds à partir du contenu lu** — ne **devine pas** les inputs, méthodes ou les types.
+2. **La référence détaillée `references/planning/<name>.md` n'existe pas encore** — fie-toi au catalogue ci-dessous et, au besoin, aux sources du paquet (`projects/features/planning/`).
+3. **Réponds à partir de ce que tu as vérifié** — ne **devine pas** les inputs, méthodes ou les types.
 
-Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
+Si plusieurs éléments sont concernés, vérifie-les tous avant de répondre.
 
 ---
 
