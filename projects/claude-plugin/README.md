@@ -14,33 +14,33 @@ Plugin Claude Code pour le développement sur le monorepo Angular **techatome** 
 
 Un assistant contextuel par librairie `@ta/*` + un assistant patterns.
 
-| Commande                | Librairie / Sujet                                                        |
-| ----------------------- | ------------------------------------------------------------------------ |
-| **`/ta-first`**        | **⭐ Règle prioritaire — composants `@ta/*` obligatoires + SCSS tokens** |
-| `/ui`                  | `@ta/ui` — Cards, layouts, containers, listes                            |
-| `/icons`               | `@ta/icons` — FontIcon, MaterialIcon, LocalIcon                          |
-| `/styles`              | `@ta/styles` — Mixins SCSS, classes CSS, tokens de design                |
-| `/utils`               | `@ta/utils` — Pipes, directives, BaseComponent, helpers                  |
-| `/translation`         | `@ta/translation` — i18n, TranslatePipe, fichiers JSON                   |
-| `/server`              | `@ta/server` — taBaseService, GraphQL, HandleRequest                     |
-| `/services`            | `@ta/services` — Services applicatifs partagés                           |
-| `/menu`                | `@ta/menu` — taRoutes, MenuIcon, MenuCollapse, MenuPanel                 |
-| `/notification`        | `@ta/notification` — Toast, ENotificationCode                            |
-| `/form-model`          | `@ta/form-model` — InputBase, InputTextBox, InputChoices…                |
-| `/form-basic`          | `@ta/form-basic` — ta-form, FormComponent                                |
-| `/form-input`          | `@ta/form-input` — Champs individuels                                    |
-| `/files-basic`         | `@ta/files-basic` — Upload de fichiers                                   |
-| `/files-extended`      | `@ta/files-extended` — Gestion fichiers avancée                          |
-| `/charts`              | `@ta/charts` — Composants graphiques                                     |
-| `/core`                | `@ta/core` — AG Grid, taGridMetaDataService, maps                        |
-| `/user`                | `@ta/user` — Auth0, AuthGuard, FeatureGuard                              |
-| `/cms`                 | `@ta/cms` — Strapi CMS integration                                       |
-| `/wysiswyg`            | `@ta/wysiswyg` — EditorJS WYSIWYG                                        |
-| `/capacitor`           | `@ta/capacitor` — Mobile/Capacitor                                       |
-| `/planning`            | `@ta/planning` — Feature planning                                        |
-| `/project`             | `@ta/project` — Feature project                                          |
-| `/testing`             | `@ta/testing` — Utilitaires de test                                      |
-| `/patterns`            | Patterns & conventions — TOC vers le skill `techatome-patterns` (routing, forms, menus, layout, AG Grid…) |
+| Commande          | Librairie / Sujet                                                                                         |
+| ----------------- | --------------------------------------------------------------------------------------------------------- |
+| **`/ta-first`**   | **⭐ Règle prioritaire — composants `@ta/*` obligatoires + SCSS tokens**                                  |
+| `/ui`             | `@ta/ui` — Cards, layouts, containers, listes                                                             |
+| `/icons`          | `@ta/icons` — FontIcon, MaterialIcon, LocalIcon                                                           |
+| `/styles`         | `@ta/styles` — Mixins SCSS, classes CSS, tokens de design                                                 |
+| `/utils`          | `@ta/utils` — Pipes, directives, BaseComponent, helpers                                                   |
+| `/translation`    | `@ta/translation` — i18n, TranslatePipe, fichiers JSON                                                    |
+| `/server`         | `@ta/server` — taBaseService, GraphQL, HandleRequest                                                      |
+| `/services`       | `@ta/services` — Services applicatifs partagés                                                            |
+| `/menu`           | `@ta/menu` — taRoutes, MenuIcon, MenuCollapse, MenuPanel                                                  |
+| `/notification`   | `@ta/notification` — Toast, ENotificationCode                                                             |
+| `/form-model`     | `@ta/form-model` — InputBase, InputTextBox, InputChoices…                                                 |
+| `/form-basic`     | `@ta/form-basic` — ta-form, FormComponent                                                                 |
+| `/form-input`     | `@ta/form-input` — Champs individuels                                                                     |
+| `/files-basic`    | `@ta/files-basic` — Upload de fichiers                                                                    |
+| `/files-extended` | `@ta/files-extended` — Gestion fichiers avancée                                                           |
+| `/charts`         | `@ta/charts` — Composants graphiques                                                                      |
+| `/core`           | `@ta/core` — AG Grid, taGridMetaDataService, maps                                                         |
+| `/user`           | `@ta/user` — Auth0, AuthGuard, FeatureGuard                                                               |
+| `/cms`            | `@ta/cms` — Strapi CMS integration                                                                        |
+| `/wysiswyg`       | `@ta/wysiswyg` — EditorJS WYSIWYG                                                                         |
+| `/capacitor`      | `@ta/capacitor` — Mobile/Capacitor                                                                        |
+| `/planning`       | `@ta/planning` — Feature planning                                                                         |
+| `/project`        | `@ta/project` — Feature project                                                                           |
+| `/testing`        | `@ta/testing` — Utilitaires de test                                                                       |
+| `/patterns`       | Patterns & conventions — TOC vers le skill `techatome-patterns` (routing, forms, menus, layout, AG Grid…) |
 
 **Usage** : chaque commande accepte un argument libre
 
@@ -63,20 +63,23 @@ Les agents sont invoqués automatiquement par Claude Code via le `Task` tool ou 
 
 ### Skill
 
-| Skill                | Description                                                                                                                                                                                         |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `techatome-patterns` | **Source de vérité** pour tous les patterns Angular du projet : composants @ta/* obligatoires, SCSS tokens, conventions de code, routing, formulaires, menus, layout, modales, AG Grid, GraphQL, états. Le command `/patterns` en est le point d'entrée. |
+| Skill                | Description                                                                                                                                                                                                                                               |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `techatome-patterns` | **Source de vérité** pour tous les patterns Angular du projet : composants @ta/\* obligatoires, SCSS tokens, conventions de code, routing, formulaires, menus, layout, modales, AG Grid, GraphQL, états. Le command `/patterns` en est le point d'entrée. |
 
 ### Hooks
 
-Un hook `PreToolUse` s'active avant chaque écriture de fichier Angular (`.ts`, `.component.html`) et avertit sur :
+Un hook `PreToolUse` s'active avant chaque écriture de fichier Angular (`.ts`, `.component.html`, `.scss` hors `_vars.scss` / `_theme.scss`) et avertit sur :
 
 - **`sort-keys`** — clés d'objets non triées alphabétiquement
 - **Hardcoded URLs** — routes non passées par `taRoutes`
 - **HttpClient direct** — sans `taBaseService`
 - **`standalone: true` manquant** — dans le décorateur `@Component`
+- **`host: { '[class.x]' }`** — variantes à poser par `[ngClass]="this.getClass()"` + SCSS
 - **Subscriptions sans `_registerSubscription()`**
-- **`this.` manquant** dans les templates HTML
+- **`this.` manquant** dans les templates HTML (les variables de bloc `@for`, `@if … as`, `@let` sont reconnues)
+- **Assertion non-null `!`** dans les templates — `@if (…; as x)` à la place
+- **SCSS** : `var(--ta-…)` écrit à la main, réassignation `--ta-*` d'un composant enfant, couleur brute (hex / `rgb()` / `rgba()`), px brut sur `padding` / `margin` / `gap`, `font-family` / `font-size` / `font-weight` / `letter-spacing` à la main, `display: flex` sans les mixins `flex.*`, `::ng-deep`
 
 ## Structure du plugin
 

@@ -538,23 +538,60 @@ var EAddressValues;
 class InputAddress extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = 'address';
-        this.type = 'address';
-        this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
+        this.controlType = "address";
+        this.type = "address";
+        this.priorityCountries = options.priorityCountries ?? [
+            "BE",
+            "FR",
+            "DE",
+            "NL",
+        ];
     }
+    /**
+     * Valeur brute du formulaire → adresse normalisée.
+     *
+     * Les chaînes sont détourées : une recherche Google ou une saisie manuelle
+     * laisse volontiers une espace en tête ou en fin, et chaque consommateur
+     * refaisait le travail de son côté. Le reste passe tel quel — coordonnées et
+     * `placeId` compris, à charge de l'appelant de ne transmettre que ce que son
+     * API accepte.
+     */
     static formatAddressForm(data) {
         if (!data) {
             return null;
         }
         return {
-            city: data[EAddressValues.city],
-            country: data[EAddressValues.country],
-            floor: data[EAddressValues.floor],
-            number: data[EAddressValues.number],
+            city: InputAddress._trim(data[EAddressValues.city]),
+            country: InputAddress._trim(data[EAddressValues.country]),
+            floor: InputAddress._trim(data[EAddressValues.floor]),
+            number: InputAddress._trim(data[EAddressValues.number]),
             placeId: data[EAddressValues.placeId],
-            street: data[EAddressValues.street],
-            zipCode: data[EAddressValues.zipCode],
+            street: InputAddress._trim(data[EAddressValues.street]),
+            zipCode: InputAddress._trim(data[EAddressValues.zipCode]),
         };
+    }
+    /**
+     * L'adresse porte-t-elle de quoi écrire une enveloppe ?
+     *
+     * `Validators.required` posé sur le champ ne garantit que la présence d'une
+     * valeur, pas celle de ses parties : une recherche abandonnée en cours de
+     * route rend une adresse partielle, qu'une API postale rejettera. `floor`
+     * reste facultatif — un immeuble n'en a pas toujours.
+     */
+    static isComplete(address) {
+        if (!address) {
+            return false;
+        }
+        return [
+            address.street,
+            address.number,
+            address.zipCode,
+            address.city,
+            address.country,
+        ].every((value) => !!InputAddress._trim(value));
+    }
+    static _trim(value) {
+        return typeof value === "string" ? value.trim() : value;
     }
 }
 

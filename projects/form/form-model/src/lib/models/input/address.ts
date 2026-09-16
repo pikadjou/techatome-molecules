@@ -1,15 +1,15 @@
-import { IInputBase, InputBase } from './base';
+import { IInputBase, InputBase } from "./base";
 
 export enum EAddressValues {
-  city = 'city',
-  country = 'country',
-  floor = 'floor',
-  latitude = 'latitude',
-  longitude = 'longitude',
-  number = 'number',
-  placeId = 'placeId',
-  street = 'street',
-  zipCode = 'zipCode',
+  city = "city",
+  country = "country",
+  floor = "floor",
+  latitude = "latitude",
+  longitude = "longitude",
+  number = "number",
+  placeId = "placeId",
+  street = "street",
+  zipCode = "zipCode",
 }
 
 export interface IAddressValue {
@@ -24,33 +24,88 @@ export interface IAddressValue {
   zipCode: string | null;
 }
 
+/**
+ * Adresse dont toutes les parties postales sont renseignées.
+ *
+ * `floor` reste facultatif — un immeuble n'en a pas toujours — et les repères
+ * géographiques ne participent pas à l'acheminement.
+ */
+export type IPostalAddress = Partial<IAddressValue> & {
+  city: string;
+  country: string;
+  number: string;
+  street: string;
+  zipCode: string;
+};
+
 export interface IInputAddress extends IInputBase<Partial<IAddressValue>> {
   /** Codes pays ISO alpha-2 à mettre en évidence en tête de liste (ex. ['BE', 'FR']). */
   priorityCountries?: string[];
 }
 
 export class InputAddress extends InputBase<Partial<IAddressValue>> {
-  override controlType = 'address';
+  override controlType = "address";
   priorityCountries: string[];
 
   constructor(options: IInputAddress = {}) {
     super(options);
-    this.type = 'address';
-    this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
+    this.type = "address";
+    this.priorityCountries = options.priorityCountries ?? [
+      "BE",
+      "FR",
+      "DE",
+      "NL",
+    ];
   }
 
+  /**
+   * Valeur brute du formulaire → adresse normalisée.
+   *
+   * Les chaînes sont détourées : une recherche Google ou une saisie manuelle
+   * laisse volontiers une espace en tête ou en fin, et chaque consommateur
+   * refaisait le travail de son côté. Le reste passe tel quel — coordonnées et
+   * `placeId` compris, à charge de l'appelant de ne transmettre que ce que son
+   * API accepte.
+   */
   public static formatAddressForm(data: any) {
     if (!data) {
       return null;
     }
     return {
-      city: data[EAddressValues.city],
-      country: data[EAddressValues.country],
-      floor: data[EAddressValues.floor],
-      number: data[EAddressValues.number],
+      city: InputAddress._trim(data[EAddressValues.city]),
+      country: InputAddress._trim(data[EAddressValues.country]),
+      floor: InputAddress._trim(data[EAddressValues.floor]),
+      number: InputAddress._trim(data[EAddressValues.number]),
       placeId: data[EAddressValues.placeId],
-      street: data[EAddressValues.street],
-      zipCode: data[EAddressValues.zipCode],
+      street: InputAddress._trim(data[EAddressValues.street]),
+      zipCode: InputAddress._trim(data[EAddressValues.zipCode]),
     };
+  }
+
+  /**
+   * L'adresse porte-t-elle de quoi écrire une enveloppe ?
+   *
+   * `Validators.required` posé sur le champ ne garantit que la présence d'une
+   * valeur, pas celle de ses parties : une recherche abandonnée en cours de
+   * route rend une adresse partielle, qu'une API postale rejettera. `floor`
+   * reste facultatif — un immeuble n'en a pas toujours.
+   */
+  public static isComplete(
+    address: Partial<IAddressValue> | null | undefined
+  ): address is IPostalAddress {
+    if (!address) {
+      return false;
+    }
+    return [
+      address.street,
+      address.number,
+      address.zipCode,
+      address.city,
+      address.country,
+    ].every((value) => !!InputAddress._trim(value));
+  }
+
+  private static _trim<T>(value: T): T {
+    return typeof value === "string" ? (value.trim() as T) : value;
   }
 }

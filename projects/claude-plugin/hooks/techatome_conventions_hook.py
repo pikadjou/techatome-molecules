@@ -4,7 +4,11 @@ techatome Conventions Hook for Claude Code.
 Warns about common violations before writing Angular/TypeScript files:
 - Object keys not sorted alphabetically (sort-keys ESLint rule)
 - Missing this. prefix in HTML templates
+- Non-null assertion (!) in HTML templates
+- host: { '[class.x]': ... } bindings for component variants (use [ngClass] + SCSS)
 - Non-lazy route imports
+- SCSS: hand-written var(--ta-...), --ta-* reassignment, raw colors, raw px,
+  font-family / letter-spacing overrides, display: flex without the flex.* mixins
 """
 
 import json
@@ -70,6 +74,22 @@ All components must have standalone: true in their @Component decorator.
 })""",
     },
     {
+        "name": "host_class_binding",
+        "description": "Variant classes bound in the @Component host metadata",
+        "substrings": ["'[class.", '"[class.', "'[attr.data-"],
+        "reminder": """⚠️ techatome Convention: variants via [ngClass] in the template, rules in the SCSS
+Do not toggle variant classes with host: { '[class.x]': ... } in the decorator.
+The template root carries [ngClass]="this.getClass()" and the SCSS does the rest
+(pattern of ta-label, ta-button, ta-data-grid).
+
+Instead of:
+  host: { '[class.row]': "this.orientation() === 'row'" }   // ❌
+
+Use:
+  public getClass(): string { return `data-grid-${this.orientation()}`; }   // ✅
+  <div class="data-grid" [ngClass]="this.getClass()">""",
+    },
+    {
         "name": "subscribe_without_register",
         "description": "Direct .subscribe() without _registerSubscription",
         "substrings": [").subscribe(", "$.subscribe("],
@@ -85,6 +105,22 @@ Use:
 ]
 
 HTML_PATTERNS = [
+    {
+        "name": "non_null_assertion_in_template",
+        "description": "Non-null assertion operator in a template binding",
+        "reminder": """⚠️ techatome Convention: no non-null assertion (!) in templates
+Let the @if block capture the value instead of asserting it.
+
+Instead of:
+  @if (this.menuUser()) {
+    <ta-menu [menu]="this.menuUser()!"></ta-menu>     // ❌
+  }
+
+Use:
+  @if (this.menuUser(); as menuUser) {
+    <ta-menu [menu]="menuUser"></ta-menu>             // ✅
+  }""",
+    },
     {
         "name": "missing_this_in_template",
         "description": "Template bindings should use this. prefix",
@@ -108,12 +144,110 @@ Exception: @for/@let block variables do NOT use this.:
 ]
 
 
+SCSS_PATTERNS = [
+    {
+        "name": "hand_written_css_var",
+        "regex": r"var\(\s*--ta-",
+        "reminder": """⚠️ techatome Convention: tokens are read with common.get-var(), never var(--ta-…)
+No hand-written var(--ta-xxx), with or without a fallback value.
+
+Instead of:
+  padding: var(--ta-card-padding, #{common.get-var(space, md)});   // ❌
+
+Use:
+  padding: common.get-var(components, card, padding);              // ✅
+A missing token is added to _vars.scss (map components.<component>), never replaced by a raw value.""",
+    },
+    {
+        "name": "token_reassignment",
+        "regex": r"^\s*--ta-[a-z0-9-]+\s*:",
+        "reminder": """⚠️ techatome Convention: no reassignment of a component's tokens from outside
+Setting --ta-xxx: … on a child component (ta-label { --ta-label-radius: … }) restyles it from the
+place that uses it — forbidden, like ::ng-deep. Add a variant to the component instead
+(type, shape, variant…) and use it: <ta-label shape="pill" type="neutral">.""",
+    },
+    {
+        "name": "raw_color",
+        "regex": r"(?<![\w-])#[0-9a-fA-F]{3,8}\b|\brgba?\(",
+        "reminder": """⚠️ techatome Convention: no raw color (hex, rgb(), rgba())
+Every color is a token: common.get-var(text|surface|border|icon, …).
+Translucent white on a dark surface → common.get-var(surface, veil, xs|sm|md|lg).
+A color specific to one component → components.<component> in _vars.scss
+(derived tones with color.change(map.get($brand, 900), $alpha: …)).
+
+Instead of:
+  background: #0b1426;                              // ❌
+  border: 1px solid rgba(255, 255, 255, 0.14);      // ❌
+
+Use:
+  background: common.get-var(components, lightbox, background);   // ✅
+  border: 1px solid common.get-var(surface, veil, md);            // ✅""",
+    },
+    {
+        "name": "raw_spacing",
+        "regex": r"^\s*(padding|margin|gap|row-gap|column-gap)(-[a-z]+)?\s*:[^;]*\b(?!0px)(?!1px)(?!2px)\d+px",
+        "reminder": """⚠️ techatome Convention: no raw px on padding / margin / gap
+Use common.get-var(space, xs|sm|md|lg|xl|xxl) or add a components.<component> token to _vars.scss.
+An "eyeballed" value (11px, 13px, 22px) is not an exception.
+
+Instead of:
+  padding: 11px 16px;                                                   // ❌
+
+Use:
+  padding: common.get-var(components, tab-bar, pill, padding-vertical)
+    common.get-var(components, tab-bar, pill, padding-horizontal);      // ✅""",
+    },
+    {
+        "name": "font_override",
+        "regex": r"^\s*(font-family|letter-spacing|font-size|font-weight)\s*:\s*(?!\s|common\.get-var|inherit)",
+        "reminder": """⚠️ techatome Convention: we do not change the font
+No hand-written font-family, font-size, font-weight or letter-spacing.
+Size and weight come from the mixins, the family from the theme.
+
+Instead of:
+  font-family: ui-monospace, Menlo, monospace;   // ❌
+  font-size: 13px; font-weight: 600;             // ❌
+
+Use:
+  @include fonts.fontSizeBody(sm, true);                 // ✅
+  font-family: common.get-var(font, display, family);    // ✅ only alternative family""",
+    },
+    {
+        "name": "flex_without_mixin",
+        "regex": r"display\s*:\s*flex\s*;[\s\S]{0,80}?(flex-direction|justify-content|align-items)\s*:",
+        "reminder": """⚠️ techatome Convention: flexbox via the flex.* mixins
+Do not write display: flex; flex-direction: … by hand.
+
+Instead of:
+  display: flex;
+  flex-direction: column;      // ❌
+
+Use:
+  @include flex.flex-column();       // ✅
+  @include flex.space-between();     // ✅  (row + justify-content: space-between)
+  @include flex.align-center();      // ✅  (display: flex; align-items: center)""",
+    },
+    {
+        "name": "ng_deep",
+        "regex": r"::ng-deep",
+        "reminder": """⚠️ techatome Convention: no ::ng-deep
+A component is never restyled from the place that uses it. Add a variant to the component,
+or style third-party DOM from @ta/styles (ta/vendors) prefixed by the component selector.""",
+    },
+]
+
+
 def is_typescript_file(file_path: str) -> bool:
     return file_path.endswith(".ts") and not file_path.endswith(".spec.ts")
 
 
 def is_html_template(file_path: str) -> bool:
     return file_path.endswith(".component.html")
+
+
+def is_scss_file(file_path: str) -> bool:
+    # Token maps themselves (_vars.scss, _theme.scss) legitimately hold raw values.
+    return file_path.endswith(".scss") and not file_path.replace("\\", "/").split("/")[-1].startswith("_")
 
 
 def is_techatome_file(file_path: str) -> bool:
@@ -131,6 +265,8 @@ def check_typescript(content: str) -> list[dict]:
     issues = []
 
     for pattern in TYPESCRIPT_PATTERNS:
+        if pattern["name"] == "missing_standalone" and "standalone: true" in content:
+            continue
         if "substrings" in pattern:
             for substring in pattern["substrings"]:
                 if substring in content:
@@ -140,19 +276,41 @@ def check_typescript(content: str) -> list[dict]:
     return issues
 
 
-def check_html(content: str) -> list[dict]:
-    """Check HTML template for missing this. prefix."""
+def check_scss(content: str) -> list[dict]:
+    """Check SCSS content for raw values and hand-written tokens."""
     issues = []
+
+    for pattern in SCSS_PATTERNS:
+        if re.search(pattern["regex"], content, re.MULTILINE):
+            issues.append(pattern)
+
+    return issues
+
+
+def check_html(content: str) -> list[dict]:
+    """Check HTML template for non-null assertions and missing this. prefix."""
+    issues = []
+
+    # e.g. [menu]="this.menuUser()!"  or  {{ this.user()!.name }}
+    if re.search(r'\)!(?=\s*["\].|)])', content):
+        issues.append(HTML_PATTERNS[0])
 
     # Look for binding patterns without this.
     # e.g. [input]="myVar" or (action)="myMethod()" or *ngIf="myVar"
-    binding_without_this = re.search(
-        r'(?:\[[\w\-]+\]|@if|@for)\s*=\s*"(?!this\.|\'|&|!this\.)(?!\d)(?!true|false|null|undefined)[a-z]',
-        content
-    )
+    # Block variables never take this.: @for (x of …), @if (…; as x), @let x = …, let-x, #x
+    block_vars = set(re.findall(r"@for\s*\(\s*(\w+)\s+of", content))
+    block_vars |= set(re.findall(r";\s*as\s+(\w+)\s*\)", content))
+    block_vars |= set(re.findall(r"@let\s+(\w+)\s*=", content))
+    block_vars |= set(re.findall(r"let-(\w+)", content))
+    block_vars |= set(re.findall(r"#(\w+)", content))
 
-    if binding_without_this:
-        issues.append(HTML_PATTERNS[0])
+    for match in re.finditer(
+        r'(?:\[[\w\-]+\]|\([\w\-]+\))\s*=\s*"(?!this\.|\'|&|!this\.)(?!\d)(?!true|false|null|undefined)([a-zA-Z_$][\w$]*)',
+        content,
+    ):
+        if match.group(1) not in block_vars:
+            issues.append(HTML_PATTERNS[1])
+            break
 
     return issues
 
@@ -196,6 +354,9 @@ def main():
 
     elif is_html_template(file_path):
         issues = check_html(content)
+
+    elif is_scss_file(file_path):
+        issues = check_scss(content)
 
     if issues:
         # Show only the first issue to avoid noise
