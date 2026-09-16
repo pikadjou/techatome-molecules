@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
   LayoutModalComponent,
@@ -7,8 +7,8 @@ import {
   TaOverlayPanelComponent,
   TemplateModalContainer,
   ValidationModal,
-} from "@ta/ui";
-import { TaTestIdDirective } from "@ta/utils";
+} from '@ta/ui';
+import { ModalState, TaTestIdDirective } from '@ta/utils';
 
 /**
  * Galerie « overlays » @ta/ui — modales (rendu inline via `[open]`) et overlay-panel.
@@ -16,7 +16,7 @@ import { TaTestIdDirective } from "@ta/utils";
  */
 @Component({
   standalone: true,
-  selector: "app-case-ui-overlays",
+  selector: 'app-case-ui-overlays',
   imports: [
     LayoutModalComponent,
     TaModalComponent,
@@ -30,7 +30,7 @@ import { TaTestIdDirective } from "@ta/utils";
       <div modal-content>Contenu de la modale</div>
     </ta-modal>
 
-    <ta-validation-modal taTestId="ta-validation-modal" [open]="true" [params]="validationParams"></ta-validation-modal>
+    <ta-validation-modal taTestId="ta-validation-modal" [modalState]="this.validationModal"></ta-validation-modal>
 
     <ta-template-modal-container
       taTestId="ta-template-modal-container"
@@ -49,5 +49,9 @@ import { TaTestIdDirective } from "@ta/utils";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiOverlaysCase {
-  readonly validationParams: ModalParameter = { title: "Confirmer", subtitle: "Êtes-vous sûr ?" };
+  readonly validationModal = new ModalState<ModalParameter | undefined, boolean>();
+
+  constructor() {
+    this.validationModal.asked({ title: 'Confirmer', subtitle: 'Êtes-vous sûr ?' });
+  }
 }

@@ -27,6 +27,23 @@ You are a strict code reviewer for the techatome Angular monorepo. You enforce e
 - [ ] Signal input values read with `this.myProp()` (not `this.myProp`) in `.ts` and templates
 - [ ] `this.` prefix on ALL template bindings (e.g. `[input]="this.myProp"`, `(event)="this.myMethod()"`)
 - [ ] No `this.` on `@for`/`@let` block variables
+- [ ] No non-null assertion `!` in templates — use `@if (this.x(); as x) { … }` and bind `x`
+- [ ] Component variants via `[ngClass]="this.getClass()"` in the template + SCSS rules — never `host: { '[class.x]': … }` bindings in the decorator
+- [ ] Comments: one short JSDoc line per input / public method at most; no section banners, no paragraphs justifying design choices
+- [ ] Dates: `date` pipe only with Angular's predefined formats (`shortDate`, `mediumDate`, `fullDate`, `shortTime`…) or `<ta-hour-date-line>` / `<ta-time-ago>` / `<ta-duration>` — never a hand-written pattern (`'EEEE d MMMM'`, `'dd/MM/yyyy'`), never a locale argument (`: undefined : this.locale`)
+
+### SCSS (hard errors)
+
+- [ ] No hand-written `var(--ta-…)`, with or without fallback — only `common.get-var(...)` (name via `common.get-var-name(...)`)
+- [ ] No reassignment `--ta-xxx: …` of a child component's token from a parent stylesheet — add a variant (`type`, `shape`, `variant`…) to the component instead
+- [ ] No `::ng-deep`
+- [ ] No raw color: hex, `rgb()`, `rgba()`, named colors — use `text|surface|border|icon` tokens, `surface.veil.*` for translucent white on dark surfaces, or a `components.<component>` token added to `_vars.scss`
+- [ ] No raw px on padding / margin / gap, including "eyeballed" values (`11px`, `13px`, `22px`) — `space.*` or a `components.<component>` token added to `_vars.scss`
+- [ ] No hand-written `font-family`, `font-size`, `font-weight`, `letter-spacing` — `fonts.fontSizeBody/Header/Key()`; the only alternative family is `common.get-var(font, display, family)`
+- [ ] No hand-written `display: flex; flex-direction: …` — `flex.flex-column()`, `flex.flex-row()`, `flex.space-between()`, `flex.align-center()`…
+- [ ] No raw `@media` — `mq.from()` / `mq.to()`
+- [ ] `box-shadow` tokens take 3 args: `common.get-var(shadow, black, sm)`
+- [ ] Native `<button>` is tolerated only in `ta-files-preview-modal` and the `@ta/wysiswyg` toolbar (accepted exceptions) — everywhere else `<ta-button>`
 
 ### Class member order
 
@@ -46,6 +63,8 @@ You are a strict code reviewer for the techatome Angular monorepo. You enforce e
 - [ ] All subscriptions use `this._registerSubscription()`
 - [ ] `requestState.asked()` before fetch, `requestState.completed()` on complete, `requestState.onError()` on error
 - [ ] Template uses `ta-loader > ta-error > ta-empty` pattern
+- [ ] Modals: `XxxModal extends TaBaseModal<In, Out>` with an embedded `<ta-modal [open]="this.isOpen()" (closeEvent)="this.dismiss()">`; the parent owns a `ModalState<In, Out>` and binds only `[modalState]` + `(closeEvent)` — never `MatDialog`, never `isModalOpen = signal(false)` with ad hoc `open`/`saved` inputs and outputs
+- [ ] Modal input read lazily via `this.modalState()?.input()` (getter / effect), never in `ngOnInit`
 - [ ] `taContainerModule` imported if using ta-loader/ta-error/ta-empty
 - [ ] Routing uses `taRoutes.addRoute()` + enum, no hardcoded strings
 - [ ] `loadComponent` with lazy import on all routes

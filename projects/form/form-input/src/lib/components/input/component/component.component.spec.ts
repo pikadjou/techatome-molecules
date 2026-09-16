@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
@@ -11,11 +10,8 @@ describe('ComponentInputComponent', () => {
   let component: ComponentInputComponent;
   let fixture: ComponentFixture<ComponentInputComponent>;
   let inputModel: InputComponent;
-  let dialogSpy: jasmine.SpyObj<MatDialog>;
 
   beforeEach(async () => {
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-
     inputModel = new InputComponent({ key: 'comp', label: 'Component' });
     inputModel.createFormControl();
 
@@ -24,10 +20,8 @@ describe('ComponentInputComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
         }),
-        MatDialogModule,
         ComponentInputComponent,
       ],
-      providers: [{ provide: MatDialog, useValue: dialogSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ComponentInputComponent);
@@ -45,8 +39,9 @@ describe('ComponentInputComponent', () => {
     expect(component.input.controlType).toBe('component');
   });
 
-  it('should open dialog when open is called', () => {
+  it('should open the selector modal with the input model when open is called', () => {
     component.open();
-    expect(dialogSpy.open).toHaveBeenCalled();
+    expect(component.selectorModal.open()).toBe(true);
+    expect(component.selectorModal.input()).toBe(inputModel);
   });
 });

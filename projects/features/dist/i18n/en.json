@@ -4,6 +4,8 @@
   "control.group": "Group",
   "control.groupNone": "No grouping",
   "control.presets": "Quick views",
+  "control.sort": "Sort",
+  "control.sortNone": "Default order",
   "control.table": "Table",
   "core.groupBy": "Group by",
   "error.fetch": "Unable to load the data.",

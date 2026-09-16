@@ -1,4 +1,5 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
 
 // Comme pour la case, le libellé énonce le choix : c'est la variante `choice`
 // de `ta-form-label` qui le dit, pas une règle qui traverse l'encapsulation.
@@ -13,28 +14,20 @@
   display: none;
 
   &:checked + .slider {
-    background-color: common.get-var(
-      components,
-      control,
-      switch,
-      checked,
-      track-background
-    );
+    background-color: common.get-var(components, control, switch, checked, track-background);
   }
 
   &:checked + .slider:before {
-    background-color: common.get-var(
-      components,
-      control,
-      switch,
-      checked,
-      thumb-background
-    );
+    background-color: common.get-var(components, control, switch, checked, thumb-background);
     transform: translateX(
       calc(
-        common.get-var(components, control, switch, track-width) -
-          common.get-var(components, control, switch, thumb-size) - 2 *
-          common.get-var(components, control, switch, thumb-offset)
+        common.get-var(components, control, switch, track-width) - common.get-var(
+            components,
+            control,
+            switch,
+            thumb-size
+          ) -
+          2 * common.get-var(components, control, switch, thumb-offset)
       )
     );
   }
@@ -46,12 +39,22 @@
   }
 
   &:disabled + .slider:before {
-    background-color: common.get-var(
-      components,
-      control,
-      disabled,
-      border-color
-    );
+    background-color: common.get-var(components, control, disabled, border-color);
+  }
+}
+
+// Nom de l'état en petites capitales, coloré une fois l'interrupteur ouvert.
+.toggle-state {
+  @include fonts.fontSizeBody(xs);
+  font-weight: common.get-var(font, weight, bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: common.get-var(text, tertiary);
+  margin-right: common.get-var(space, sm);
+  white-space: nowrap;
+
+  &.is-on {
+    color: common.get-var(text, success);
   }
 }
 
@@ -62,31 +65,22 @@
   flex: none;
   width: common.get-var(components, control, switch, track-width);
   height: common.get-var(components, control, switch, track-height);
-  background-color: common.get-var(
-    components,
-    control,
-    switch,
-    track-background
-  );
+  background-color: common.get-var(components, control, switch, track-background);
   border-radius: common.get-var(components, control, switch, track-radius);
   transition: background-color common.get-var(transition, base);
   margin-right: common.get-var(space, sm);
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     width: common.get-var(components, control, switch, thumb-size);
     height: common.get-var(components, control, switch, thumb-size);
     left: common.get-var(components, control, switch, thumb-offset);
     top: common.get-var(components, control, switch, thumb-offset);
-    background-color: common.get-var(
-      components,
-      control,
-      switch,
-      thumb-background
-    );
+    background-color: common.get-var(components, control, switch, thumb-background);
     border-radius: common.get-var(radius, full);
-    transition: transform common.get-var(transition, base),
+    transition:
+      transform common.get-var(transition, base),
       background-color common.get-var(transition, base);
   }
 }

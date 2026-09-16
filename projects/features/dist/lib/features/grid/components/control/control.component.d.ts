@@ -20,6 +20,7 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
         filters?: boolean | undefined;
         preset?: boolean | undefined;
         group?: boolean | undefined;
+        sort?: boolean | undefined;
     }>;
     /** Masque les libellés textuels : ne restent que les icônes. */
     compact: import("@angular/core").InputSignal<boolean>;
@@ -32,6 +33,15 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
         label: string;
     }[];
     get hasGroupableCols(): boolean;
+    /** Colonnes triables, pour les vues sans en-têtes (cartes). */
+    get sortableCols(): {
+        key: string;
+        label: string;
+    }[];
+    get hasSortableCols(): boolean;
+    get activeSort(): string | null;
+    get activeSortDir(): 'asc' | 'desc';
+    get activeSortLabel(): string | null;
     get activeGroup(): string | null;
     get activeGroupLabel(): string | null;
     get hasPresets(): boolean;
@@ -40,6 +50,8 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     switchView(type: ViewType): void;
     openFilters(): void;
     setPreset(preset: Preset): void;
+    /** Rejouer le même critère inverse le sens. */
+    setSort(key: string | null): void;
     setGroup(key: string | null): void;
     isPresetActive(preset: Preset): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridControlComponent, never>;

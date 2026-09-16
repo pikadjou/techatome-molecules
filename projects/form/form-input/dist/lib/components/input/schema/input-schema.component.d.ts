@@ -1,9 +1,11 @@
-import { InputSchema } from "@ta/form-model";
-import { FileData, FileStructure } from "@ta/utils";
-import { TaAbstractInputComponent } from "../../abstract.component";
+import { InputSchema } from '@ta/form-model';
+import { FileData, FileStructure, ModalState } from '@ta/utils';
+import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class InputSchemaComponent extends TaAbstractInputComponent<InputSchema> {
-    isModalOpen: import("@angular/core").WritableSignal<boolean>;
+    schemaModal: ModalState<null, {
+        file: FileStructure;
+    }>;
     get pics(): FileData[] | null;
     get isCircularButton(): boolean;
     set selection(value: string);

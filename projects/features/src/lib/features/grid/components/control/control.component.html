@@ -16,7 +16,7 @@
     @if (this.show().preset && this.hasPresets) {
       <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
         <ng-template #panelTrigger>
-          <!-- Le clic doit atteindre le déclencheur de l'overlay : pas de stopPropagation. -->
+          <!-- Pas de stopPropagation : le clic doit atteindre l'overlay. -->
           <ta-button
             [type]="this.activePresetName ? 'secondary' : 'tertiary'"
             icon="tune"
@@ -40,6 +40,52 @@
                 <span class="preset-menu__item-label">{{ preset.name }}</span>
                 @if (this.isPresetActive(preset)) {
                   <ta-font-icon name="check" type="sm"></ta-font-icon>
+                }
+              </div>
+            }
+          </div>
+        </ng-template>
+      </ta-overlay-panel>
+    }
+
+    @if (this.show().sort && this.hasSortableCols) {
+      <ta-overlay-panel [panelConfig]="{ matchTriggerWidth: false }">
+        <ng-template #panelTrigger>
+          <!-- Le clic doit atteindre le déclencheur de l'overlay : pas de stopPropagation. -->
+          <ta-button
+            [type]="this.activeSort ? 'secondary' : 'tertiary'"
+            [icon]="this.activeSort && this.activeSortDir === 'desc' ? 'arrow_downward' : 'arrow_upward'"
+            [stopPropagationActivation]="false"
+          >
+            <span class="grid-control__label">
+              {{ this.activeSortLabel ? (this.activeSortLabel | translate) : ('grid.control.sort' | translate) }}
+            </span>
+          </ta-button>
+        </ng-template>
+
+        <ng-template #panelContent>
+          <div class="preset-menu">
+            <div class="preset-menu__title">{{ 'grid.control.sort' | translate }}</div>
+
+            <div class="preset-menu__item c-pointer" [class.is-active]="!this.activeSort" (click)="this.setSort(null)">
+              <span class="preset-menu__item-label">{{ 'grid.control.sortNone' | translate }}</span>
+              @if (!this.activeSort) {
+                <ta-font-icon name="check" type="sm"></ta-font-icon>
+              }
+            </div>
+
+            @for (col of this.sortableCols; track col.key) {
+              <div
+                class="preset-menu__item c-pointer"
+                [class.is-active]="this.activeSort === col.key"
+                (click)="this.setSort(col.key)"
+              >
+                <span class="preset-menu__item-label">{{ col.label | translate }}</span>
+                @if (this.activeSort === col.key) {
+                  <ta-font-icon
+                    [name]="this.activeSortDir === 'desc' ? 'arrow_downward' : 'arrow_upward'"
+                    type="sm"
+                  ></ta-font-icon>
                 }
               </div>
             }
@@ -113,8 +159,5 @@
 }
 
 @if (this.isFiltersOpen()) {
-  <ta-grid-filters-panel
-    [gridId]="this.gridId()"
-    (closeEvent)="this.isFiltersOpen.set(false)"
-  ></ta-grid-filters-panel>
+  <ta-grid-filters-panel [gridId]="this.gridId()" (closeEvent)="this.isFiltersOpen.set(false)"></ta-grid-filters-panel>
 }

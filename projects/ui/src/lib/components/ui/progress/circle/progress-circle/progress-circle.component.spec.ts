@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { ProgressCircleComponent } from './progress-circle.component';
@@ -49,5 +50,18 @@ describe('ProgressCircleComponent', () => {
 
   it('should default downTitle to undefined', () => {
     expect(component.downTitle()).toBeUndefined();
+  });
+
+  it('should keep the ring inside the viewBox when the thickness changes', () => {
+    fixture.componentRef.setInput('thickness', 8);
+    fixture.detectChanges();
+    expect(component.radius).toBe(46);
+    expect(component.circumference).toBeCloseTo(2 * Math.PI * 46);
+  });
+
+  it('should hide the traced percentage when hideValue is set', () => {
+    fixture.componentRef.setInput('hideValue', true);
+    fixture.detectChanges();
+    expect(component.canDisplayText).toBeFalse();
   });
 });

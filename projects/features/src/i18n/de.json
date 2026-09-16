@@ -4,6 +4,8 @@
   "control.group": "Gruppieren",
   "control.groupNone": "Keine Gruppierung",
   "control.presets": "Schnellansichten",
+  "control.sort": "Sortieren",
+  "control.sortNone": "Standardreihenfolge",
   "control.table": "Tabelle",
   "core.groupBy": "Gruppieren nach",
   "error.fetch": "Die Daten können nicht geladen werden.",

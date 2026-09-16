@@ -1,9 +1,4 @@
-<ta-modal
-  [open]="this.open()"
-  size="medium"
-  title="Server Errors"
-  (closeEvent)="this.closeEvent.emit()"
->
+<ta-modal [open]="this.isOpen()" size="medium" title="Server Errors" (closeEvent)="this.dismiss()">
   <div modal-content class="flex-column">
     @for (entity of this.errorList(); track entity; let i = $index) {
       <ta-title [level]="3">{{ entity.error.name }}</ta-title>

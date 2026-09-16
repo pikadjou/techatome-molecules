@@ -1,9 +1,4 @@
-<ta-modal
-  [open]="this.open()"
-  size="fullscreen"
-  title=""
-  (closeEvent)="this.closeEvent.emit()"
->
+<ta-modal [open]="this.isOpen()" size="fullscreen" title="" (closeEvent)="this.dismiss()">
   <div modal-content class="input-image-container">
     @if (this.tempFiles.files.length > 0) {
       <ta-files-list [files]="this.tempFiles.files"></ta-files-list>

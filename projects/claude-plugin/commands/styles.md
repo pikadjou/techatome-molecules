@@ -41,7 +41,7 @@ Format : nom — description courte. Le fichier de référence est `references/s
 - `taSizes` — `'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'big'`
 - `taState` — `'classic' | 'disabled' | 'inactive' | 'selected' | 'unselected'`
 
-### Mixins SCSS (`references/styles/mixins.md`)
+### Mixins SCSS (`references/styles/mixin-flex.md`, `mixin-fonts.md`, `mixin-text.md`, `mixin-common.md`, `mixin-media-queries.md`)
 
 - `flex` — mixins flexbox (flex-row, flex-column, flex-full, space-between, align-center…)
 - `fonts` — mixins typographie (fontSizeBody, fontSizeHeader, fontSizeKey)
@@ -49,7 +49,7 @@ Format : nom — description courte. Le fichier de référence est `references/s
 - `common` — mixins couleurs, ombres, grid, hauteur écran + fonction `get-var()`
 - `mediaQueriesRanges` — mixins media queries (from, to, between, in-context)
 
-### Classes CSS utilitaires (`references/styles/css-classes.md`)
+### Classes CSS utilitaires (`references/styles/css-classes-flexbox.md`, `css-classes-spacing.md`, `css-classes-grid.md`, `css-classes-text.md`)
 
 - `flex-*` — classes flexbox (flex-row, flex-column, flex-full, space-between, align-center…)
 - `g-space-*` / `p-space-*` / `m-space-*` — espacements gap/padding/margin (xs→xxxl)
@@ -65,15 +65,16 @@ Format : nom — description courte. Le fichier de référence est `references/s
 - `classic-modal` / `big-modal` / `full-modal` — panelClass Material Dialog
 - `visit-type` / `vt-*` — colorisation par type de visite
 
-### Tokens CSS Variables (`references/styles/tokens.md`)
+### Tokens CSS Variables (`references/styles/design-tokens.md`)
 
 - `--ta-space-*` — espacements (xs=4px → xxxl=104px)
-- `--ta-radius-*` — rayons (minimal=4px → full=40px)
+- `--ta-radius-*` — rayons (minimal=4px → full=40px, + `card`, `panel`, `pill`=999px)
 - `--ta-shadow-*` — ombres
 - `--ta-transition-*` — transitions
-- `--ta-text-*` / `--ta-surface-*` / `--ta-border-*` / `--ta-icon-*` — tokens sémantiques
+- `--ta-text-*` / `--ta-surface-*` / `--ta-border-*` / `--ta-icon-*` — tokens sémantiques (+ `text-muted`, `surface-ground`, `surface-veil-xs|sm|md|lg` : voiles blancs sur fond sombre)
 - `--ta-brand-*` / `--ta-second-*` / `--ta-neutral-*` / `--ta-semantic-*` — foundations
-- `--ta-font-*` — typographie
+- `--ta-font-*` — typographie (`font-display-family` : police d'affichage du thème)
+- `--ta-components-<composant>-*` — jetons propres à un composant (`card`, `label`, `tab-bar`, `lightbox`, `header`, `button`, `chip`, `segment`, `badge`…) — **c'est là qu'on ajoute un jeton manquant**, dans `_vars.scss`
 
 ### Theming partenaire (`references/styles/theming.md`)
 
@@ -82,7 +83,10 @@ Format : nom — description courte. Le fichier de référence est `references/s
 
 ## Conventions
 
-- **Ne jamais hardcoder** une couleur, taille ou ombre — utiliser `common.get-var()` ou les classes utilitaires.
+- **Ne jamais hardcoder** une couleur (hex, `rgb()`, `rgba()`), une taille ou une ombre — utiliser `common.get-var()` ou les classes utilitaires. Un px « ajusté » (`11px`, `22px`) n'est pas une exception : palier `space` ou jeton `components.<composant>` ajouté dans `_vars.scss`.
+- **Jamais `var(--ta-…)` à la main**, ni réassignation `--ta-xxx: …` d'un composant enfant depuis le parent : un composant ne se retouche pas de l'extérieur, on lui ajoute une variante.
+- **On ne change pas la police** : `font-size` / `font-weight` par les mixins `fonts.*`, pas de `font-family` ni de `letter-spacing` à la main (seule famille alternative : `common.get-var(font, display, family)`).
+- **Flex par les mixins** `flex.*`, jamais `display: flex; flex-direction: …` à la main.
 - **Mixins > classes** dans les composants SCSS (encapsulation Angular).
 - **Classes CSS globales** s'utilisent dans les templates HTML.
 - **Import SCSS** : `@use "ta/utils/mixins/common"` (pas de `@import` deprecated).

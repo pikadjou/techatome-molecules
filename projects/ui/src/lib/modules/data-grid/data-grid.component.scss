@@ -1,0 +1,29 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
+
+:host {
+  display: block;
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  // Le fond du conteneur dessine le filet entre les cellules.
+  gap: 1px;
+  background: common.get-var(surface, default);
+  border: 1px solid common.get-var(surface, default);
+  border-radius: common.get-var(radius, label);
+  overflow: hidden;
+}
+
+@include mq.from-key(mobile) {
+  .data-grid.columns-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .data-grid.columns-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .data-grid.columns-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

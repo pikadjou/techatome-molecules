@@ -1,4 +1,4 @@
-import { TaState } from "@ta/styles";
+import { TaState } from '@ta/styles';
 import * as i0 from "@angular/core";
 export declare class ButtonComponent {
     /**
@@ -8,7 +8,7 @@ export declare class ButtonComponent {
     /**
      * Indicate the button type
      */
-    type: import("@angular/core").InputSignal<"danger" | "primary" | "secondary" | "tertiary">;
+    type: import("@angular/core").InputSignal<"danger" | "primary" | "secondary" | "tertiary" | "invert">;
     size: import("@angular/core").InputSignal<"small" | "medium" | "large">;
     icon: import("@angular/core").InputSignal<string | null>;
     /**

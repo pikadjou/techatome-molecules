@@ -1,3 +1,7 @@
+<ng-template #defaultLogo>
+  <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
+</ng-template>
+
 @if (this.breakpoints.isMobile) {
   <!-- Mobile layout with custom panel -->
   @if (this.isPanelOpen) {
@@ -12,21 +16,21 @@
       <div class="mobile-menu-nav">
         <ta-menu class="menu" [menu]="this.menuMain()" [container]="'main'"></ta-menu>
       </div>
-      @if (this.menuUser()) {
+      @if (this.menuUser(); as menuUser) {
         <div class="mobile-user-nav">
           <div class="sep"></div>
-          <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
+          <ta-menu class="menu" [menu]="menuUser" [container]="'main'"></ta-menu>
         </div>
       }
     </div>
   </div>
 
-  <div class="main-nav-container">
+  <div class="main-nav-container" [class.tone-brand]="this.tone() === 'brand'">
     <div class="max-container">
       <div class="main-nav align-center mobile-nav">
         <ta-font-icon name="menu" class="hamburger-icon" (click)="this.toggleMobilePanel()"></ta-font-icon>
         <div class="logo" (click)="this.navigateToHome()">
-          <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
+          <ng-template [ngTemplateOutlet]="this.logoTemplate() ?? defaultLogo"></ng-template>
         </div>
         @if (this.userMenuTemplate()) {
           <div class="user-template">
@@ -38,20 +42,20 @@
   </div>
 } @else {
   <!-- Desktop layout -->
-  <div class="main-nav-container">
+  <div class="main-nav-container" [class.tone-brand]="this.tone() === 'brand'">
     <div class="max-container">
       <div class="main-nav align-center" [ngClass]="this.direction()">
         <div class="logo" (click)="this.navigateToHome()">
-          <ta-logo class="oneline" [type]="'oneline'"></ta-logo>
+          <ng-template [ngTemplateOutlet]="this.logoTemplate() ?? defaultLogo"></ng-template>
         </div>
         <div class="menu-nav">
           <ta-menu class="menu" [menu]="this.menuMain()" [container]="'main'"></ta-menu>
         </div>
         <div>
-          @if (this.menuUser()) {
+          @if (this.menuUser(); as menuUser) {
             <div class="user-nav">
               <div class="sep"></div>
-              <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
+              <ta-menu class="menu" [menu]="menuUser" [container]="'main'"></ta-menu>
             </div>
           }
           @if (this.userMenuTemplate()) {

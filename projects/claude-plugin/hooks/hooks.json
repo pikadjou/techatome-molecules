@@ -1,5 +1,5 @@
 {
-  "description": "techatome code quality hooks — warns about sort-keys violations and missing this. in templates when editing Angular files",
+  "description": "techatome code quality hooks — warns about sort-keys, missing this. and non-null assertions in templates, host class bindings, and SCSS raw values or hand-written tokens when editing Angular files",
   "hooks": {
     "PreToolUse": [
       {

@@ -1,4 +1,16 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+
+:host(.full-height) {
+  @include flex.flex-column();
+  min-height: 100vh;
+
+  .layout-page-content {
+    flex: 1 1 auto;
+    // Les marges auto de `max-container` annulent l'étirement flex sans largeur explicite.
+    width: 100%;
+  }
+}
 
 .layout-page-content {
   padding: common.get-var(space, sm);

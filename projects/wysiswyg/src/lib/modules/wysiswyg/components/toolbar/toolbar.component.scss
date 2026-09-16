@@ -1,0 +1,86 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/transitions';
+
+/// Contrôles propres à l'éditeur ; SVG injecté par `innerHTML`, hors encapsulation.
+ta-cms-editor-toolbar {
+  display: block;
+
+  .editor-toolbar {
+    @include flex.align-center();
+    flex-wrap: wrap;
+    gap: common.get-var(space, xs);
+    padding: common.get-var(space, xs);
+    background-color: common.get-var(surface, secondary);
+    border-radius: common.get-var(radius, rounded);
+
+    &__group {
+      @include flex.align-center();
+      gap: common.get-var(space, xs);
+
+      &--end {
+        margin-left: auto;
+      }
+    }
+
+    &__separator {
+      width: 1px;
+      height: common.get-var(space, md);
+      background-color: common.get-var(border, tertiary);
+      margin: 0 common.get-var(space, xs);
+    }
+
+    &__button {
+      @include flex.align-center();
+      @include flex.justify-center();
+
+      gap: common.get-var(space, xs);
+      min-width: 32px;
+      height: 32px;
+      padding: 0 common.get-var(space, xs);
+      border: none;
+      border-radius: common.get-var(radius, minimal);
+      background-color: transparent;
+      color: common.get-var(text, secondary);
+      cursor: pointer;
+      @include transitions.transition-colors();
+
+      &:hover {
+        background-color: common.get-var(surface, hover, primary);
+        color: common.get-var(text, brand, primary);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: common.get-var(shadow, focus);
+      }
+
+      // Outil du bloc sous le curseur.
+      &.is-active {
+        background-color: common.get-var(surface, brand, secondary);
+        color: common.get-var(text, brand, primary);
+      }
+
+      &--danger:hover {
+        color: common.get-var(semantic, red-dark);
+      }
+    }
+
+    &__icon {
+      @include flex.align-center();
+      @include flex.justify-center();
+
+      // SVG `@codexteam/icons` sans dimension propre.
+      svg {
+        display: block;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &__text {
+      @include fonts.fontSizeBody(sm, true);
+    }
+  }
+}

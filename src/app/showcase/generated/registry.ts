@@ -143,6 +143,13 @@ export const REGISTRY: RegistryEntry[] = [
     load: () => import("../demos/features/ta-grid-control.demo"),
   },
   {
+    id: "ta-grid-count",
+    pkg: "@ta/features",
+    short: "features",
+    group: "Grilles",
+    load: () => import("../demos/features/ta-grid-count.demo"),
+  },
+  {
     id: "ta-grid-filters-panel",
     pkg: "@ta/features",
     short: "features",
@@ -1107,6 +1114,13 @@ export const REGISTRY: RegistryEntry[] = [
     short: "ui",
     group: "Progression",
     load: () => import("../demos/ui/ta-rating.demo"),
+  },
+  {
+    id: "ta-rating-distribution",
+    pkg: "@ta/ui",
+    short: "ui",
+    group: "Progression",
+    load: () => import("../demos/ui/ta-rating-distribution.demo"),
   },
   {
     id: "ta-share-button",

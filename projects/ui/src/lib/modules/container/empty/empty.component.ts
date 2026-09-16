@@ -8,6 +8,9 @@ import { TaBaseComponent } from '@ta/utils';
 
 import { TaTranslationUI } from '../../../translation.service';
 
+/** `filled` : encart plein ; `dashed` : contour pointillé sur fond de carte. */
+export type EmptyVariant = 'filled' | 'dashed';
+
 @Component({
   selector: 'ta-empty',
   templateUrl: './empty.component.html',
@@ -17,6 +20,7 @@ import { TaTranslationUI } from '../../../translation.service';
 })
 export class EmptyComponent extends TaBaseComponent {
   isEmpty = input<boolean>(true);
+  variant = input<EmptyVariant>('filled');
   isLight = input<boolean>(false);
   showMessage = input<boolean>(true);
 

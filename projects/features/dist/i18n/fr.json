@@ -4,6 +4,8 @@
   "control.group": "Regrouper",
   "control.groupNone": "Aucun regroupement",
   "control.presets": "Vues rapides",
+  "control.sort": "Trier",
+  "control.sortNone": "Ordre par défaut",
   "control.table": "Tableau",
   "core.groupBy": "Regrouper par",
   "error.fetch": "Impossible de charger les données.",

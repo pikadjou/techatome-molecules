@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { input, HostListener, Directive, effect, EventEmitter, Output, HostBinding, Pipe, inject, Injectable, signal, Component, InjectionToken } from '@angular/core';
+import { input, HostListener, Directive, effect, EventEmitter, Output, HostBinding, Pipe, inject, Injectable, signal, Component, output, InjectionToken } from '@angular/core';
 import * as i1 from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
@@ -593,16 +593,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ template: "" }]
         }], ctorParameters: () => [] });
 
+/** Contenu d'une modale piloté par un `ModalState<T, U>` : entrée `T` lue via `modalState().input()`, résultat `U` rendu par `confirm()`. */
 class TaBaseModal extends TaAbstractComponent {
     constructor() {
         super();
+        this.modalState = input(null);
+        this.closeEvent = output();
+    }
+    isOpen() {
+        return this.modalState()?.open() ?? false;
+    }
+    /** Ferme avec un résultat : `completed()` sur l'état, puis `closeEvent`. */
+    confirm(output) {
+        this.modalState()?.completed(output);
+        this.closeEvent.emit(output);
+    }
+    /** Ferme sans résultat. */
+    dismiss() {
+        this.modalState()?.dismissed();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", inputs: { modalState: { classPropertyName: "modalState", publicName: "modalState", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, decorators: [{
             type: Component,
-            args: [{ template: "" }]
+            args: [{ template: '' }]
         }], ctorParameters: () => [] });
 
 const isArray = (variable) => {
@@ -1056,28 +1071,37 @@ const sort = (array, options) => {
 };
 
 const getFileExtension = (filePath) => {
-    const extension = getFullFileNameFromUrl(filePath)?.split(".").pop()?.toLowerCase() || null;
+    // Ignore la query string et l'ancre (`photo.jpg?token=…`).
+    const name = getFullFileNameFromUrl(filePath)?.split(/[?#]/)[0] ?? null;
+    const extension = name?.split('.').pop()?.toLowerCase() || null;
     switch (extension) {
-        case "pdf":
+        case 'pdf':
             return EFileExtension.PDF;
-        case "docx":
+        case 'doc':
+        case 'docx':
             return EFileExtension.Word;
-        case "xls":
-        case "xlsx":
+        case 'xls':
+        case 'xlsx':
             return EFileExtension.Excel;
-        case "jpg":
-        case "jpeg":
-        case "png":
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'gif':
+        case 'webp':
+        case 'avif':
+        case 'bmp':
+        case 'svg':
+        case 'heic':
             return EFileExtension.Image;
     }
     return EFileExtension.Unknown;
 };
 const getFullFileNameFromUrl = (url) => {
-    return url.split("/").pop() || null;
+    return url.split('/').pop() || null;
 };
 const trigram = (name) => {
     if (!name) {
-        return "";
+        return '';
     }
     if (name.length < 4) {
         return name;
@@ -1089,7 +1113,7 @@ const capitalizeFirstLetter = (value) => {
         return value;
     return value.charAt(0).toUpperCase() + value.slice(1);
 };
-const convertToNumber = (values) => values?.map((value) => Number(value)) || [];
+const convertToNumber = (values) => values?.map(value => Number(value)) || [];
 const isURL = (str) => {
     // Expression régulière pour vérifier une URL
     const pattern = /^https?:\/\//; // Fragment d'URL
@@ -1170,6 +1194,28 @@ class HorizontalScroll {
         this._elementRef.addEventListener("mousemove", this.mouseMove);
         this._elementRef.addEventListener("mouseleave", this.mouseLeft);
         this._elementRef.addEventListener("mouseup", this.mouseLeft);
+    }
+}
+
+/** État partagé entre un parent et une modale : entrée `T` poussée à l'ouverture, résultat `U` rendu à la fermeture. */
+class ModalState {
+    constructor() {
+        this.open = signal(false);
+        this.input = signal(null);
+        this.output = signal(null);
+    }
+    asked(input) {
+        this.input.set(input);
+        this.output.set(null);
+        this.open.set(true);
+    }
+    completed(output) {
+        this.output.set(output);
+        this.open.set(false);
+    }
+    /** Fermeture sans résultat. */
+    dismissed() {
+        this.open.set(false);
     }
 }
 
@@ -1273,5 +1319,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map

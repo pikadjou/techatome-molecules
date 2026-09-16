@@ -1,4 +1,4 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
 
 .ta-rating-container {
   display: inline-flex;
@@ -42,6 +42,22 @@
 
 .ta-rating-star-bg path:not([fill]) {
   fill: common.get-var(components, control, rating, empty);
+}
+
+.ta-rating-compact {
+  display: inline-flex;
+  align-items: center;
+  gap: common.get-var(space, xs);
+}
+
+.ta-rating-compact-star path:not([fill]) {
+  fill: common.get-var(components, control, rating, color);
+}
+
+.ta-rating-compact-value {
+  font-family: common.get-var(font, display, family);
+  font-weight: common.get-var(font, body, sm, bold, weight);
+  color: common.get-var(text, primary);
 }
 
 .no-rating {

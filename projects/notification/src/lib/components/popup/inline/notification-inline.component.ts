@@ -1,31 +1,25 @@
-import { NgClass } from "@angular/common";
-import {
-  Component,
-  effect,
-  input,
-  output,
-  signal,
-} from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, effect, input, output } from '@angular/core';
 
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
-import { FontIconComponent } from "@ta/icons";
-import { LinkComponent } from "@ta/ui";
-import { TaBaseComponent } from "@ta/utils";
+import { FontIconComponent } from '@ta/icons';
+import { LinkComponent } from '@ta/ui';
+import { ModalState, TaBaseComponent } from '@ta/utils';
 
-import { ENotificationCode } from "../../../enum";
-import { TaTranslationNotification } from "../../../translation.service";
-import { ErrorBoxModal } from "../../error-box/error-box.component";
+import { ENotificationCode } from '../../../enum';
+import { TaTranslationNotification } from '../../../translation.service';
+import { ErrorBoxModal } from '../../error-box/error-box.component';
 
 @Component({
-  selector: "ta-notification-inline",
-  templateUrl: "./notification-inline.component.html",
-  styleUrls: ["./notification-inline.component.scss"],
+  selector: 'ta-notification-inline',
+  templateUrl: './notification-inline.component.html',
+  styleUrls: ['./notification-inline.component.scss'],
   standalone: true,
   imports: [ErrorBoxModal, FontIconComponent, LinkComponent, NgClass, TranslateModule],
 })
 export class NotificationInlineComponent extends TaBaseComponent {
-  messageInput = input<string>("", { alias: "message" });
+  messageInput = input<string>('', { alias: 'message' });
 
   code = input<ENotificationCode>(ENotificationCode.information);
 
@@ -35,7 +29,7 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   public showMessage = false;
 
-  public isErrorModalOpen = signal(false);
+  public errorModal = new ModalState<null, null>();
 
   get message(): string {
     return this.messageInput();
@@ -67,48 +61,48 @@ export class NotificationInlineComponent extends TaBaseComponent {
 
   public getIcon(): string {
     if (this.isError) {
-      return "close-tool";
+      return 'close-tool';
     }
     if (this.isWarning) {
-      return "warning";
+      return 'warning';
     }
     if (this.isSuccess) {
-      return "checked";
+      return 'checked';
     }
-    return "help";
+    return 'help';
   }
 
   public getTypeClass(): string {
     if (this.isError) {
-      return "danger";
+      return 'danger';
     } else if (this.isWarning) {
-      return "warning";
+      return 'warning';
     } else if (this.isInformation) {
-      return "info";
+      return 'info';
     } else if (this.isSuccess) {
-      return "success";
+      return 'success';
     } else {
-      return "";
+      return '';
     }
   }
 
   public getTypeKey(): string {
-    if (this.isError) return "error";
-    if (this.isWarning) return "warning";
-    if (this.isInformation) return "info";
-    if (this.isSuccess) return "success";
-    return "";
+    if (this.isError) return 'error';
+    if (this.isWarning) return 'warning';
+    if (this.isInformation) return 'info';
+    if (this.isSuccess) return 'success';
+    return '';
   }
 
   public getTypeLabel(): string {
-    return "notification.type." + this.getTypeKey();
+    return 'notification.type.' + this.getTypeKey();
   }
 
   public getDefaultMessageKey(): string {
-    return "notification.inline.label." + this.getTypeKey();
+    return 'notification.inline.label.' + this.getTypeKey();
   }
 
   public openErrorBox(): void {
-    this.isErrorModalOpen.set(true);
+    this.errorModal.asked(null);
   }
 }

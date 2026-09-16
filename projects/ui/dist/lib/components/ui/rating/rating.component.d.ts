@@ -5,6 +5,10 @@ export declare class RatingComponent {
      * Current rating value (supports decimals for partial stars)
      */
     value: import("@angular/core").InputSignal<number>;
+    /** `compact` : une étoile et la note. */
+    variant: import("@angular/core").InputSignal<"stars" | "compact">;
+    /** Masque le rappel « note sur maximum » à côté des étoiles. */
+    showValue: import("@angular/core").InputSignal<boolean>;
     /**
      * Maximum number of stars
      */
@@ -66,5 +70,5 @@ export declare class RatingComponent {
      */
     getCursorStyle(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<RatingComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<RatingComponent, "ta-rating", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "emptyColor": { "alias": "emptyColor"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "showHover": { "alias": "showHover"; "required": false; "isSignal": true; }; "containerClass": { "alias": "containerClass"; "required": false; "isSignal": true; }; }, { "ratingChange": "ratingChange"; "hoverChange": "hoverChange"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<RatingComponent, "ta-rating", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "variant": { "alias": "variant"; "required": false; "isSignal": true; }; "showValue": { "alias": "showValue"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "emptyColor": { "alias": "emptyColor"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "showHover": { "alias": "showHover"; "required": false; "isSignal": true; }; "containerClass": { "alias": "containerClass"; "required": false; "isSignal": true; }; }, { "ratingChange": "ratingChange"; "hoverChange": "hoverChange"; }, never, never, true, never>;
 }

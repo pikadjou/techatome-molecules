@@ -99,11 +99,15 @@
   &.responsive {
     @media screen and (max-width: 575px) {
       @include menu-item-horizontal();
-      .ending-icon-container { display: none; }
+      .ending-icon-container {
+        display: none;
+      }
     }
     @media screen and (min-width: 576px) {
       @include menu-item-horizontal();
-      .ending-icon-container { display: none; }
+      .ending-icon-container {
+        display: none;
+      }
     }
     @media screen and (min-width: 992px) {
       @include menu-item-vertical();
@@ -135,6 +139,67 @@
   .ending-icon-container {
     @include flex.align-center();
     justify-content: flex-end;
+  }
+}
+
+// Navigation inversée (`ta-main-menu` en `tone="brand"`) : actif enveloppé d'un voile, icône en couleur de marque.
+:host-context(.tone-brand) .link {
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  border-radius: common.get-var(radius, rounded);
+
+  .title {
+    font-family: common.get-var(font, display, family);
+    color: common.get-var(text, invert, secondary);
+  }
+
+  .icon {
+    color: common.get-var(icon, invert, secondary);
+  }
+
+  &:hover:not(.active) {
+    background-color: common.get-var(surface, veil, xs);
+
+    .title {
+      color: common.get-var(text, invert, primary);
+    }
+  }
+
+  &.active {
+    background-color: common.get-var(surface, veil, sm);
+
+    .title {
+      color: common.get-var(text, invert, primary);
+    }
+
+    .icon {
+      color: common.get-var(surface, brand, secondary);
+    }
+  }
+}
+
+// Navigation de pied de page : colonne de liens sans pastille, fond ni icône.
+:host-context(.tone-footer) .link {
+  padding: common.get-var(space, xs) 0;
+  background: none;
+
+  .icon {
+    display: none;
+  }
+
+  .title {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, invert, secondary);
+  }
+
+  &:hover .title,
+  &.active .title {
+    color: common.get-var(text, invert, primary);
+  }
+
+  &:hover:not(.active),
+  &.active {
+    background: none;
   }
 }
 

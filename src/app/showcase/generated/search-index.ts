@@ -114,7 +114,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-component-selector-modal": {
     "className": "ComponentSelectorModal",
-    "summary": "Modale générique qui projette le `TemplateRef` porté par un modèle `InputComponent` ; c'est elle que `ta-input-component` ouvre en interne, mais elle se pilote aussi seule via `open`/`inputData`/`closeEvent`."
+    "summary": "Modale générique qui projette le `TemplateRef` porté par un modèle `InputComponent` ; c'est elle que `ta-input-component` ouvre en interne, mais elle se pilote aussi seule via un `ModalState<InputComponent, string>` : `asked(model)` l'ouvre, `closeEvent` rend la valeur choisie."
   },
   "ta-contact-information": {
     "className": "ContactInformationComponent",
@@ -122,7 +122,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-container-validation": {
     "className": "ContainerValidationComponent",
-    "summary": "Enrobe un contenu projeté (typiquement un bouton) d'une modale de confirmation ouverte au clic."
+    "summary": "Enrobe un contenu projeté (typiquement un bouton) d'une confirmation ouverte au clic — en modale, ou dans le flux."
   },
   "ta-context-menu": {
     "className": "ContextMenuComponent",
@@ -222,7 +222,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-files-preview-modal": {
     "className": "PreviewModal",
-    "summary": "`ta-files-preview` posé dans un `ta-modal` (taille `large`, contenu ajusté)."
+    "summary": "Visionneuse plein écran : une pièce isolée, ou une galerie parcourable."
   },
   "ta-files-upload": {
     "className": "UploadComponent",
@@ -274,7 +274,11 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-grid-control": {
     "className": "TaGridControlComponent",
-    "summary": "Barre d'actions d'une grille — filtres, vues rapides, regroupement et bascule carte/tableau — pilotée par les colonnes déclarées sur le `ta-grid-container` partageant le même `gridId`."
+    "summary": "Barre d'actions d'une grille — filtres, tri, vues rapides, regroupement et bascule carte/tableau — pilotée par les colonnes déclarées sur le `ta-grid-container` partageant le même `gridId`."
+  },
+  "ta-grid-count": {
+    "className": "TaGridCountComponent",
+    "summary": "Nombre de résultats d'une grille, à poser au-dessus de la liste — lit le `ta-grid-container` partageant le même `gridId`."
   },
   "ta-grid-filters-panel": {
     "className": "TaGridFiltersPanel",
@@ -414,7 +418,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-label": {
     "className": "LabelComponent",
-    "summary": "Étiquette de contenu projeté, déclinée en sept intentions de couleur et sept tailles."
+    "summary": "Étiquette de contenu projeté, déclinée en sept intentions de couleur et sept tailles, avec pictogramme optionnel."
   },
   "ta-layout-content": {
     "className": "LayoutContentComponent",
@@ -636,6 +640,10 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
     "className": "RatingComponent",
     "summary": "Étoiles de notation cliquables, avec remplissage partiel décimal, en lecture seule ou personnalisées (couleurs, taille)."
   },
+  "ta-rating-distribution": {
+    "className": "RatingDistributionComponent",
+    "summary": "Répartition des notes reçues, une barre par échelon — ce que la moyenne seule ne dit pas."
+  },
   "ta-sale": {
     "className": "SaleComponent",
     "summary": "Contenu Strapi « conditions de vente » avec case à cocher d'acceptation, émise sur `acceptation`."
@@ -730,7 +738,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-validation-modal": {
     "className": "ValidationModal",
-    "summary": "Modale de confirmation Oui/Non, entièrement pilotée depuis l'extérieur par `[open]` et `[params]`."
+    "summary": "Modale de confirmation Oui/Non pilotée par un `ModalState<ModalParameter | undefined, boolean>`."
   },
   "ta-veriff-button": {
     "className": "VeriffButtonComponent",

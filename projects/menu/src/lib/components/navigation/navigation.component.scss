@@ -53,20 +53,21 @@
   }
 }
 
+// Filtres capsulés, même présentation que `ta-tab-bar` en `pill`.
 .tags {
   .item-container {
     .item {
       @include flex.flex-row();
       @include flex.align-center();
-      gap: common.get-var(space, xs);
-      padding: common.get-var(space, sm) common.get-var(space, md);
-      border: 1px solid transparent;
-      color: common.get-var(text, tertiary);
-      background-color: common.get-var(surface, tertiary);
-      border-color: common.get-var(surface, tertiary);
-      border-radius: common.get-var(radius, label);
-      @include fonts.fontSizeBody(sm);
-      font-weight: common.get-var(font, weight, medium);
+      gap: common.get-var(space, sm);
+      padding: common.get-var(components, tab-bar, pill, padding-vertical)
+        common.get-var(components, tab-bar, pill, padding-horizontal);
+      border: 1px solid common.get-var(border, disabled);
+      border-radius: common.get-var(radius, pill);
+      background-color: common.get-var(surface, primary);
+      color: common.get-var(text, secondary);
+      font-family: common.get-var(font, display, family);
+      @include fonts.fontSizeBody(sm, true);
       transition:
         background-color common.get-var(transition, fast),
         border-color common.get-var(transition, fast),
@@ -79,30 +80,34 @@
       opacity: 0.5;
     }
     &.active .item {
-      color: common.get-var(text, brand, primary);
-      background-color: common.get-var(surface, default);
+      color: common.get-var(text, invert, primary);
+      background-color: common.get-var(surface, brand, primary);
       border-color: common.get-var(border, brand, primary);
-      font-weight: common.get-var(font, weight, bold);
     }
     &:not(.disabled):not(.active):hover .item {
-      border-color: common.get-var(border, hover, secondary);
+      border-color: common.get-var(border, brand, primary);
+      color: common.get-var(text, primary);
     }
   }
 }
 
 .tab {
   .list {
-    border-bottom: 1px solid common.get-var(border, tertiary);
+    border-bottom: 1px solid common.get-var(border, disabled);
   }
   .item-container {
     .item {
       @include flex.flex-row();
       @include flex.align-center();
-      gap: common.get-var(space, xs);
-      padding: common.get-var(space, sm) common.get-var(space, md);
+      gap: common.get-var(space, sm);
+      padding: common.get-var(components, tab-bar, underline, padding-vertical)
+        common.get-var(components, tab-bar, underline, padding-horizontal);
+      // Décalage d'un pixel : le filet actif recouvre celui du conteneur.
+      margin-bottom: -1px;
       border-bottom: 2px solid transparent;
-      color: common.get-var(text, secondary);
-      @include fonts.fontSizeBody(sm);
+      font-family: common.get-var(font, display, family);
+      color: common.get-var(text, muted);
+      @include fonts.fontSizeBody(md, true);
       transition:
         color common.get-var(transition, fast),
         border-bottom-color common.get-var(transition, fast);
@@ -112,9 +117,8 @@
       opacity: 0.5;
     }
     &.active .item {
-      color: common.get-var(text, brand, primary);
+      color: common.get-var(text, primary);
       border-bottom-color: common.get-var(border, brand, primary);
-      font-weight: common.get-var(font, weight, bold);
     }
     &:not(.disabled):not(.active):hover .item {
       color: common.get-var(text, primary);

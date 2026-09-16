@@ -1,5 +1,5 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
 
 .ta-modal-backdrop {
   position: fixed;
@@ -19,7 +19,7 @@
   transform: translate(-50%, -50%);
   z-index: 1000;
   background-color: common.get-var(surface, primary);
-  border-radius: common.get-var(radius, rounded);
+  border-radius: common.get-var(radius, panel);
   box-shadow: common.get-var(shadow, black, lg);
   @include flex.flex-column();
   max-width: 90vw;
@@ -63,14 +63,37 @@
 .ta-modal-header {
   @include flex.flex-row();
   @include flex.space-between();
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
+  gap: common.get-var(space, md);
   padding: common.get-var(space, md);
   border-bottom: 1px solid common.get-var(border, secondary);
 
   .ta-modal-close {
     cursor: pointer;
     color: common.get-var(icon, primary);
+  }
+}
+
+.ta-modal-heading {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+  min-width: 0;
+}
+
+// Bandeau de marque : pas de filet, corps sur la nappe.
+.ta-modal--tone-brand {
+  background-color: common.get-var(surface, ground);
+
+  .ta-modal-header {
+    padding: common.get-var(components, header, padding-vertical) common.get-var(components, header, padding-horizontal);
+    border-bottom: none;
+    background-color: common.get-var(components, header, background);
+    color: common.get-var(components, header, color);
+  }
+
+  .ta-modal-close {
+    color: common.get-var(text, invert, primary);
   }
 }
 

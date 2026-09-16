@@ -1,20 +1,57 @@
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+
+.circle-progress-bar-frame {
+  position: relative;
+  display: block;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Contenu projeté au centre ; le clic passe à l'anneau.
+.circle-progress-bar-content {
+  @include flex.flex-column();
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
 
 .circle-progress-bar .circle-progress-bar-bg {
   fill: none;
   stroke: common.get-var(neutral, 300);
-  stroke-width: 10;
 }
 
 .circle-progress-bar .circle-progress-bar-progress {
   fill: none;
   stroke: common.get-var(surface, brand, primary);
-  stroke-width: 10;
-  stroke-linecap: round;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   transition: stroke-dashoffset 0.5s ease-out;
+}
+
+.circle-progress-bar.accent .circle-progress-bar-progress {
+  stroke: common.get-var(surface, accent);
+}
+
+.circle-progress-bar.highlight .circle-progress-bar-progress {
+  stroke: common.get-var(surface, brand, secondary);
+}
+
+.circle-progress-bar.success .circle-progress-bar-progress {
+  stroke: common.get-var(surface, success);
+}
+
+// Piste translucide pour surface sombre.
+:host(.invert) .circle-progress-bar .circle-progress-bar-bg {
+  stroke: common.get-var(surface, veil, md);
 }
 
 .circle-progress-bar .circle-progress-bar-text {

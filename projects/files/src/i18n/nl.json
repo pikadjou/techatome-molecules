@@ -2,8 +2,13 @@
   "documents.upload.dialog.description": "Documentbeschrijving",
   "documents.upload.dialog.document-type": "Documenttype",
   "documents.upload.dialog.title": "Document uploaden",
+  "preview.close": "Sluiten",
+  "preview.hint_browse": "om te bladeren",
+  "preview.hint_close": "om te sluiten",
+  "preview.next": "Volgende",
+  "preview.previous": "Vorige",
   "preview.title": "Bestandsvoorbeeld",
-  "slide.download": "Downloaden",
   "slide.delete": "Verwijderen",
+  "slide.download": "Downloaden",
   "slide.no-viewer": "Geen viewer beschikbaar voor dit bestandstype"
 }

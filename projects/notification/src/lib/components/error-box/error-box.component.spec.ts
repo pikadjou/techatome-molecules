@@ -1,13 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
-
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ServerError, TaServerErrorService } from '@ta/server';
+import { ModalState } from '@ta/utils';
 
 import { ENotificationCode } from '../../enum';
 import { LAZY_SERVICE_TOKEN, TaNotificationService } from '../../services/notification.service';
-import { ErrorBoxModal, openErrorModal } from './error-box.component';
+import { ErrorBoxModal } from './error-box.component';
 
 describe('ErrorBoxModal', () => {
   let component: ErrorBoxModal;
@@ -16,20 +15,17 @@ describe('ErrorBoxModal', () => {
   let mockErrorService: Partial<TaServerErrorService>;
 
   beforeEach(async () => {
-    mockNotificationService = jasmine.createSpyObj('TaNotificationService', [
-      'addNotification',
-    ]);
+    mockNotificationService = jasmine.createSpyObj('TaNotificationService', ['addNotification']);
 
     mockErrorService = {
       notifications: signal<ServerError[]>([]),
     };
 
     await TestBed.configureTestingModule({
-      imports: [ErrorBoxModal, MatDialogModule],
+      imports: [ErrorBoxModal],
       providers: [
         { provide: LAZY_SERVICE_TOKEN, useValue: mockNotificationService },
         { provide: TaServerErrorService, useValue: mockErrorService },
-        { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open', 'close']) },
       ],
     })
       .overrideComponent(ErrorBoxModal, {
@@ -58,18 +54,15 @@ describe('ErrorBoxModal', () => {
     expect(component.copyContent).toBeDefined();
     expect(typeof component.copyContent).toBe('function');
   });
-});
 
-describe('openErrorModal', () => {
-  it('should open a dialog with ErrorBoxModal', () => {
-    const mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
-    mockDialog.open.and.returnValue({} as any);
+  it('should follow its modal state', () => {
+    const state = new ModalState<null, null>();
+    fixture.componentRef.setInput('modalState', state);
 
-    openErrorModal(mockDialog);
-
-    expect(mockDialog.open).toHaveBeenCalledWith(ErrorBoxModal, {
-      width: '600px',
-      maxHeight: '80vh',
-    });
+    expect(component.isOpen()).toBe(false);
+    state.asked(null);
+    expect(component.isOpen()).toBe(true);
+    component.dismiss();
+    expect(component.isOpen()).toBe(false);
   });
 });

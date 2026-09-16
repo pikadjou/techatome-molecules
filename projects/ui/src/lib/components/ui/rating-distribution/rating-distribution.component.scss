@@ -1,0 +1,45 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+
+:host {
+  display: block;
+}
+
+.rating-distribution {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+}
+
+.rating-distribution-row {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+
+  ta-font-icon {
+    color: common.get-var(surface, brand, secondary);
+  }
+}
+
+// Largeurs fixes pour aligner les barres d'un échelon à l'autre.
+.rating-distribution-note {
+  width: 12px;
+  flex-shrink: 0;
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeBody(sm);
+  font-weight: common.get-var(font, weight, bold);
+  color: common.get-var(text, secondary);
+}
+
+.rating-distribution-bar {
+  @include flex.flex-full();
+  min-width: 0;
+}
+
+.rating-distribution-count {
+  width: 22px;
+  flex-shrink: 0;
+  text-align: right;
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, muted);
+}

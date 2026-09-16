@@ -13,8 +13,4 @@
   }
 </ta-input-layout>
 
-<ta-input-schema-modal
-  [open]="this.isModalOpen()"
-  (savedFile)="this.onSavedFile($event)"
-  (closeEvent)="this.isModalOpen.set(false)"
-></ta-input-schema-modal>
+<ta-input-schema-modal [modalState]="this.schemaModal" (closeEvent)="this.onSavedFile($event)"></ta-input-schema-modal>

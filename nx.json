@@ -1,18 +1,39 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "postpublish"]
-      }
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "analytics": true,
+  "pluginsConfig": {
+    "@nx/js": {
+      "//": "Le plugin @nx/js est requis par `nx release version`. Mais il déduit AUSSI le graphe de projets des imports du code, ce qui fait remonter un import circulaire réel — `services/src/lib/services/network.service.ts` importe @ta/notification, alors que notification -> ui -> services — sous forme de cycle dans le graphe de tâches, ce qui bloque tout build. On revient donc au graphe déduit des seuls package.json, qui est acyclique. À remettre à true une fois cet import résolu dans le code : @ta/services ne déclare d'ailleurs pas @ta/notification dans ses dépendances.",
+      "analyzeSourceFiles": false
+    }
+  },
+  "release": {
+    "projects": ["*"],
+    "projectsRelationship": "fixed",
+    "releaseTagPattern": "v{version}",
+    "version": {
+      "//": "PAS de conventionalCommits : le dépôt n'écrit pas ses messages dans ce format, l'activer ne produirait jamais de bump. La version est passée explicitement, par la CI ou à la main, via --specifier.",
+      "//preserveMatchingDependencyRanges": "false = les plages @ta/* internes sont réécrites à chaque release, comme le faisait lerna. Par défaut nx laisse la plage inchangée dès qu'elle satisfait encore la nouvelle version, et les package.json publiés restent figés sur une vieille borne.",
+      "currentVersionResolver": "disk",
+      "preserveMatchingDependencyRanges": false
+    },
+    "changelog": {
+      "workspaceChangelog": false,
+      "projectChangelogs": true
     }
   },
   "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"]
+    "nx-release-publish": {
+      "//": "On publie la sortie ng-packagr, PAS le dossier projet. Le package.json source n'a ni `exports`, ni `typings`, ni `module` : publié tel quel, le paquet n'est pas résolvable par son nom, car aucun outil ne relit un package.json imbriqué quand `main` pointe vers un dossier. Seul dist/package.json est un manifeste valide. Les 3 paquets sans ng-packagr (claude-plugin, eslint-config, prettier-config) surchargent cette valeur dans leur propre package.json.",
+      "options": {
+        "packageRoot": "{projectRoot}/dist"
+      }
     },
-    "postpublish": {
-      "dependsOn": ["^postpublish"]
+    "build": {
+      "//outputs": "ng-packagr écrit dans le dossier du projet, pas dans un dist/ racine. Sans cette déclaration Nx traite `dist` comme une source : reconstruire une lib invalide alors le cache de toutes celles qui en dépendent, en cascade, et il ne reste plus rien à réutiliser.",
+      "dependsOn": ["^build"],
+      "cache": true,
+      "outputs": ["{projectRoot}/dist"]
     }
   }
 }

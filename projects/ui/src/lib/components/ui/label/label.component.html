@@ -1,3 +1,6 @@
 <span class="label-container align-center" [ngClass]="this.getClass()">
+  @if (this.icon(); as icon) {
+    <ta-font-icon [name]="icon" type="sm"></ta-font-icon>
+  }
   <ng-content></ng-content>
 </span>

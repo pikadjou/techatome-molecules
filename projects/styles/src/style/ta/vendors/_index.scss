@@ -1,12 +1,12 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 // ============================================================================
 // Habillage du DOM tiers
 // ============================================================================
 //
-// Angular Material, Swiper, EditorJS, intl-tel-input et les SVG injectés par
+// Angular Material, Swiper, intl-tel-input et les SVG injectés par
 // `innerHTML` produisent des nœuds qui ne portent aucun attribut d'encapsulation
 // (`_ngcontent-…`). Une feuille de composant ne peut donc pas les atteindre
 // sans percer son encapsulation, ce que le projet s'interdit.
@@ -46,7 +46,8 @@ ta-expansion-panel {
     border-bottom: 1px solid common.get-var(border, tertiary);
     padding: common.get-var(space, sm) 0;
     background-color: common.get-var(surface, primary);
-    transition: box-shadow common.get-var(transition, base),
+    transition:
+      box-shadow common.get-var(transition, base),
       border-radius common.get-var(transition, base);
 
     &.mat-expanded {
@@ -87,33 +88,5 @@ ta-input-phone {
     width: 100%;
     box-sizing: border-box;
     min-height: 40px;
-  }
-}
-
-// --- EditorJS (@ta/wysiswyg — ta-cms-editor-input) --------------------------
-ta-cms-editor-input {
-  .ce-inline-tool--color__actions-container {
-    @include flex.flex-column();
-    gap: common.get-var(space, sm);
-
-    .ce-inline-tool--color__action-list {
-      @include flex.flex-start();
-      list-style-type: none;
-      margin: 0;
-      padding: common.get-var(space, sm);
-      gap: common.get-var(space, sm);
-
-      .ce-inline-tool--color__action-list-item {
-        width: 20px;
-        height: 20px;
-        border: 1px solid common.get-var(neutral, black);
-        text-align: center;
-        justify-content: center;
-
-        &:first-child {
-          content-visibility: hidden;
-        }
-      }
-    }
   }
 }

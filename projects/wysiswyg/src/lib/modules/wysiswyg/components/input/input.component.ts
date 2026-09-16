@@ -6,74 +6,86 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ViewEncapsulation,
   inject,
   input,
-} from "@angular/core";
+  signal,
+} from '@angular/core';
 
-import Delimiter from "@editorjs/delimiter";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
+import Delimiter from '@editorjs/delimiter';
+import EditorJS, { BlockAPI } from '@editorjs/editorjs';
+import Header from '@editorjs/header';
 // @ts-ignore
-import ImageTool from "@editorjs/image";
-import List from "@editorjs/list";
-import Quote from "@editorjs/quote";
-import Warning from "@editorjs/warning";
-import { ColorTool } from "editorjs-color";
-import { Observable, firstValueFrom } from "rxjs";
+import ImageTool from '@editorjs/image';
+import List from '@editorjs/list';
+import Quote from '@editorjs/quote';
+import Warning from '@editorjs/warning';
+import { ColorTool } from 'editorjs-color';
+import { Observable, firstValueFrom, fromEvent, merge } from 'rxjs';
 
-import { TaDocumentsService } from "@ta/services";
-import { TaTranslationService } from "@ta/translation";
-import { TaBaseComponent, isNonNullable, isNotEmptyObject } from "@ta/utils";
+import { TaDocumentsService } from '@ta/services';
+import { TaTranslationService } from '@ta/translation';
+import { TaBaseComponent, isNonNullable, isNotEmptyObject } from '@ta/utils';
 
-import { WysiswgBlockData, convertBlocksToHtml } from "../../public-api";
-import { TagTool } from "../plugins/tag-editor/tag-editor";
-import * as en from "./translation/en.json";
-import * as es from "./translation/es.json";
-import * as fr from "./translation/fr.json";
-import * as nl from "./translation/nl.json";
+import { WysiswgBlockData, convertBlocksToHtml } from '../../public-api';
+import { TagTool } from '../plugins/tag-editor/tag-editor';
+import {
+  EditorToolbarBlockCommand,
+  EditorToolbarBlockTool,
+  EditorToolbarComponent,
+} from '../toolbar/toolbar.component';
+import { EDITOR_ALL_TOOLS, EditorToolType } from './editor-tools';
+import * as de from './translation/de.json';
+import * as en from './translation/en.json';
+import * as es from './translation/es.json';
+import * as fr from './translation/fr.json';
+import * as nl from './translation/nl.json';
 
 export type EditorInputSavedData = {
   blocks: WysiswgBlockData[];
   tags: string[];
 };
 
-export type EditorToolType =
-  | "header"
-  | "list"
-  | "quote"
-  | "delimiter"
-  | "warning"
-  | "color"
-  | "image"
-  | "mention";
+export { EDITOR_ALL_TOOLS };
+export type { EditorToolType };
 
-export const EDITOR_ALL_TOOLS: EditorToolType[] = [
-  "header",
-  "list",
-  "quote",
-  "delimiter",
-  "warning",
-  "color",
-  "image",
-  "mention",
-];
+/** Ce que chaque outil de la barre pose comme bloc EditorJS. */
+const TOOLBAR_BLOCK_CONFIG: {
+  [tool in EditorToolbarBlockTool]: {
+    data?: { [key: string]: string | number };
+    type: string;
+  };
+} = {
+  'delimiter': { type: 'delimiter' },
+  'header-1': { data: { level: 1 }, type: 'header' },
+  'header-2': { data: { level: 2 }, type: 'header' },
+  'header-3': { data: { level: 3 }, type: 'header' },
+  'image': { type: 'image' },
+  'list-ordered': { data: { style: 'ordered' }, type: 'list' },
+  'list-unordered': { data: { style: 'unordered' }, type: 'list' },
+  'paragraph': { type: 'paragraph' },
+  'quote': { type: 'quote' },
+  'warning': { type: 'warning' },
+};
 
 @Component({
-  selector: "ta-cms-editor-input",
-  templateUrl: "./input.component.html",
-  styleUrls: ["./input.component.scss"],
+  selector: 'ta-cms-editor-input',
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss'],
   standalone: true,
+  imports: [EditorToolbarComponent],
+  // DOM EditorJS hors encapsulation : chaque règle SCSS est préfixée par le sélecteur du composant.
+  encapsulation: ViewEncapsulation.None,
 })
-export class EditorInputComponent
-  extends TaBaseComponent
-  implements OnInit, AfterViewInit
-{
+export class EditorInputComponent extends TaBaseComponent implements OnInit, AfterViewInit {
   initValue = input<WysiswgBlockData[] | null>();
 
-  setNewValue$ = input<Observable<{
-    blocks: WysiswgBlockData[] | string | null;
-    saveAfter?: boolean;
-  }>>();
+  setNewValue$ = input<
+    Observable<{
+      blocks: WysiswgBlockData[] | string | null;
+      saveAfter?: boolean;
+    }>
+  >();
 
   requestSave$ = input<Observable<void>>();
 
@@ -89,16 +101,34 @@ export class EditorInputComponent
 
   placeholder = input<string>();
 
+  /** Affiche la barre d'outils au-dessus de la zone d'édition. */
+  showToolbar = input<boolean>(true);
+
+  /** Supprime la réserve d'espace basse d'EditorJS, pour les champs courts. */
+  isCompact = input<boolean>(false);
+
+  /** Laisse l'utilisateur régler la hauteur de la zone d'édition. */
+  resizable = input<boolean>(true);
+
   @Output()
   changed = new EventEmitter<{ blocks: WysiswgBlockData[] }>();
 
   @Output()
   saved = new EventEmitter<EditorInputSavedData>();
 
+  /** Outil du bloc sous le curseur, que la barre met en évidence. */
+  public readonly activeTool = signal<string | null>(null);
+
+  public toolbarLabels: { [key: string]: string } = {};
+
   private _translationService = inject(TaTranslationService);
   public readonly languages: {
-    [index: string]: { editorjs: { i18n: Object } & any };
+    [index: string]: {
+      editorjs: { i18n: Object } & any;
+      toolbar?: { [key: string]: string };
+    };
   } = {
+    de: de,
     en: en,
     es: es,
     fr: fr,
@@ -108,7 +138,7 @@ export class EditorInputComponent
   private readonly _documentsService = inject(TaDocumentsService);
   private _saveAfter = false;
 
-  @ViewChild("editorjs", { static: true })
+  @ViewChild('editorjs', { static: true })
   editorjs!: ElementRef;
 
   public editorInstance: EditorJS | null = null;
@@ -117,6 +147,7 @@ export class EditorInputComponent
   }
 
   ngOnInit() {
+    this.toolbarLabels = this._getLanguagePack()?.toolbar ?? {};
     const requestSave = this.requestSave$();
     if (requestSave) {
       this._registerSubscription(
@@ -140,7 +171,7 @@ export class EditorInputComponent
           next: ({ blocks, saveAfter }) => {
             this._saveAfter = saveAfter ?? false;
             if (this.editorInstance && blocks) {
-              if (typeof blocks === "string") {
+              if (typeof blocks === 'string') {
                 this.editorInstance.blocks.renderFromHTML(blocks);
               } else {
                 this.editorInstance.render({ blocks: blocks });
@@ -154,10 +185,14 @@ export class EditorInputComponent
 
   ngAfterViewInit() {
     this.editorInstance = this.init();
+    this._trackActiveBlock();
   }
 
   override ngOnDestroy(): void {
+    // `super` coupe les souscriptions posées par `_trackActiveBlock`.
+    super.ngOnDestroy();
     this.editorInstance?.destroy();
+    this.editorInstance = null;
   }
   public async save() {
     if (isNotEmptyObject(this.editorInstance)) {
@@ -179,7 +214,7 @@ export class EditorInputComponent
       holder: this.editorjs.nativeElement,
       minHeight: 100,
       data: { blocks: this.initValue() },
-      placeholder: this.placeholder() ?? translations["placeholder"],
+      placeholder: this.placeholder() ?? translations['placeholder'],
       tools,
       onChange: this._onChange,
       ...translations,
@@ -190,33 +225,32 @@ export class EditorInputComponent
     const enabled = new Set(this.enabledTools());
     const tools: Record<string, any> = {};
 
-    if (enabled.has("header")) {
-      tools["header"] = Header;
+    if (enabled.has('header')) {
+      tools['header'] = Header;
     }
-    if (enabled.has("list")) {
-      tools["list"] = List;
+    if (enabled.has('list')) {
+      tools['list'] = List;
     }
-    if (enabled.has("quote")) {
-      tools["quote"] = Quote;
+    if (enabled.has('quote')) {
+      tools['quote'] = Quote;
     }
-    if (enabled.has("delimiter")) {
-      tools["delimiter"] = Delimiter;
+    if (enabled.has('delimiter')) {
+      tools['delimiter'] = Delimiter;
     }
-    if (enabled.has("warning")) {
-      tools["warning"] = Warning;
+    if (enabled.has('warning')) {
+      tools['warning'] = Warning;
     }
-    if (enabled.has("color")) {
-      tools["TextColor"] = {
+    if (enabled.has('color')) {
+      tools['TextColor'] = {
         class: ColorTool,
         config: {
-          backgroundColorLabel:
-            translations["colortool.backgroundColorLabel"],
-          frontColorLabel: translations["colortool.frontColorLabel"],
+          backgroundColorLabel: translations['colortool.backgroundColorLabel'],
+          frontColorLabel: translations['colortool.frontColorLabel'],
         },
       };
     }
-    if (enabled.has("image")) {
-      tools["image"] = {
+    if (enabled.has('image')) {
+      tools['image'] = {
         class: ImageTool,
         config: {
           uploader: {
@@ -227,8 +261,8 @@ export class EditorInputComponent
         },
       };
     }
-    if (enabled.has("mention")) {
-      tools["mention"] = {
+    if (enabled.has('mention')) {
+      tools['mention'] = {
         class: TagTool,
         config: {
           users: this.users(),
@@ -239,10 +273,124 @@ export class EditorInputComponent
     return tools;
   }
 
-  public uploadByFile = async (file: File) => {
-    const doc = await firstValueFrom(
-      this._documentsService.addDocument$({ file })
+  /** Convertit le bloc courant si EditorJS le permet, sinon insère (ou remplace un bloc vide). */
+  public async applyBlockTool(tool: EditorToolbarBlockTool) {
+    const editor = this.editorInstance;
+    if (!editor) {
+      return;
+    }
+    const { data, type } = TOOLBAR_BLOCK_CONFIG[tool];
+    const block = this._getCurrentBlock();
+    if (!block) {
+      editor.blocks.insert(type, data, undefined, editor.blocks.getBlocksCount(), true);
+      this._updateActiveTool();
+      return;
+    }
+    const index = editor.blocks.getCurrentBlockIndex();
+    if (block.name === type) {
+      if (data) {
+        await editor.blocks.update(block.id, data);
+        editor.caret.setToBlock(index, 'end');
+      }
+    } else {
+      try {
+        await editor.blocks.convert(block.id, type, data);
+        editor.caret.setToBlock(index, 'end');
+      } catch {
+        editor.blocks.insert(type, data, undefined, block.isEmpty ? index : index + 1, true, block.isEmpty);
+      }
+    }
+    this._updateActiveTool();
+  }
+
+  /** Déplace ou supprime le bloc courant. */
+  public applyBlockCommand(command: EditorToolbarBlockCommand) {
+    const editor = this.editorInstance;
+    if (!editor) {
+      return;
+    }
+    const index = editor.blocks.getCurrentBlockIndex();
+    if (index < 0) {
+      return;
+    }
+    switch (command) {
+      case 'delete': {
+        editor.blocks.delete(index);
+        break;
+      }
+      case 'move-down': {
+        if (index < editor.blocks.getBlocksCount() - 1) {
+          editor.blocks.move(index + 1);
+          editor.caret.setToBlock(index + 1, 'end');
+        }
+        break;
+      }
+      case 'move-up': {
+        if (index > 0) {
+          editor.blocks.move(index - 1);
+          editor.caret.setToBlock(index - 1, 'end');
+        }
+        break;
+      }
+    }
+    this._updateActiveTool();
+  }
+
+  /** Relit le bloc courant à chaque clic ou frappe ; `Tab` et `/` sont retenus pour ne pas ouvrir la palette EditorJS. */
+  private _trackActiveBlock() {
+    const holder = this.editorjs.nativeElement as HTMLElement;
+    this._registerSubscription(
+      merge(fromEvent(holder, 'click'), fromEvent(holder, 'keyup')).subscribe(() => this._updateActiveTool())
     );
+    this._registerSubscription(
+      fromEvent<KeyboardEvent>(holder, 'keydown', { capture: true }).subscribe(event => {
+        if (event.key === 'Tab' || event.key === '/') {
+          event.stopPropagation();
+        }
+      })
+    );
+  }
+
+  private _updateActiveTool() {
+    const block = this._getCurrentBlock();
+    this.activeTool.set(block ? this._resolveToolId(block) : null);
+  }
+
+  private _getCurrentBlock(): BlockAPI | undefined {
+    // `blocks` n'existe ni avant `isReady` ni après `destroy()`.
+    const blocks = this.editorInstance?.blocks;
+    if (!blocks) {
+      return undefined;
+    }
+    const index = blocks.getCurrentBlockIndex();
+    if (index < 0) {
+      return undefined;
+    }
+    return blocks.getBlockByIndex(index);
+  }
+
+  /** Un titre ou une liste ne disent pas leur variante : on lit le DOM rendu. */
+  private _resolveToolId(block: BlockAPI): string {
+    if (block.name === 'header') {
+      const heading = block.holder.querySelector('h1, h2, h3, h4, h5, h6');
+      return heading ? `header-${heading.tagName.charAt(1)}` : 'header-2';
+    }
+    if (block.name === 'list') {
+      return block.holder.querySelector('ol') ? 'list-ordered' : 'list-unordered';
+    }
+    return block.name;
+  }
+
+  private _getLanguagePack() {
+    const language = this._translationService.getLanguage();
+    if (!isNonNullable(language)) {
+      return null;
+    }
+    return this.languages[language] ?? null;
+  }
+
+  public uploadByFile = async (file: File) => {
+    const doc = await firstValueFrom(this._documentsService.addDocument$({ file }));
 
     return {
       success: 1,
@@ -260,6 +408,7 @@ export class EditorInputComponent
       }
       this.changed.emit({ blocks: data.blocks });
     }
+    this._updateActiveTool();
     if (this.saveOnChange()) {
       this.save();
     }
@@ -269,10 +418,7 @@ export class EditorInputComponent
     }
   };
   private _getTranslation() {
-    if (!isNonNullable(this._translationService.getLanguage())) {
-      return {};
-    }
-    return this.languages[this._translationService.getLanguage()].editorjs ?? {};
+    return this._getLanguagePack()?.editorjs ?? {};
   }
 
   private async _extractWithColorTokenStyles() {
@@ -282,9 +428,7 @@ export class EditorInputComponent
     }
 
     const styledSpans = Array.from(
-      this.editorjs.nativeElement.innerHTML.matchAll(
-        /<span class="ce-inline-tool--color__token"(.*?)>/gs
-      )
+      this.editorjs.nativeElement.innerHTML.matchAll(/<span class="ce-inline-tool--color__token"(.*?)>/gs)
     ).map((match: any) => ({
       style: match[1].trim(), // `style`
     }));
@@ -294,21 +438,18 @@ export class EditorInputComponent
     }
 
     let spanIndex = 0;
-    const updatedBlocks = output.blocks.map((block) => {
-      if (block.type !== "paragraph" || !block.data?.text) {
+    const updatedBlocks = output.blocks.map(block => {
+      if (block.type !== 'paragraph' || !block.data?.text) {
         return block;
       }
 
-      const newText = block.data.text.replace(
-        /<span class="ce-inline-tool--color__token">/gs,
-        (match: unknown) => {
-          const styled = styledSpans[spanIndex++];
-          if (!styled) {
-            return match;
-          }
-          return `<span class="ce-inline-tool--color__token" ${styled.style}>`;
+      const newText = block.data.text.replace(/<span class="ce-inline-tool--color__token">/gs, (match: unknown) => {
+        const styled = styledSpans[spanIndex++];
+        if (!styled) {
+          return match;
         }
-      );
+        return `<span class="ce-inline-tool--color__token" ${styled.style}>`;
+      });
 
       return {
         ...block,
@@ -328,6 +469,6 @@ export class EditorInputComponent
     const html = convertBlocksToHtml(blocks);
     const regex = /data-user-id="([^"]+)"/g;
     // Extraction des IDs sous forme de tableau
-    return [...html.matchAll(regex)].map((match) => match[1]);
+    return [...html.matchAll(regex)].map(match => match[1]);
   }
 }

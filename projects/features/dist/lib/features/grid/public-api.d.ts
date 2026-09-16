@@ -5,4 +5,5 @@ export * from './components/highlight-filters/highlight-filters.component';
 export * from './components/tags/tags.component';
 export * from './components/control/control.component';
 export * from './components/search/search.component';
+export * from './components/count/count.component';
 export * from './components/container/container.component';

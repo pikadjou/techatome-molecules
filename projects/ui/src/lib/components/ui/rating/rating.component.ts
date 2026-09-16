@@ -1,4 +1,4 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { DecimalPipe, NgClass, NgStyle } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { TextComponent } from '../text/text.component';
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss'],
   standalone: true,
-  imports: [NgClass, NgStyle, TextComponent, TranslateModule],
+  imports: [DecimalPipe, NgClass, NgStyle, TextComponent, TranslateModule],
 })
 export class RatingComponent {
   constructor() {
@@ -21,6 +21,12 @@ export class RatingComponent {
    * Current rating value (supports decimals for partial stars)
    */
   value = input<number>(0);
+
+  /** `compact` : une étoile et la note. */
+  variant = input<'stars' | 'compact'>('stars');
+
+  /** Masque le rappel « note sur maximum » à côté des étoiles. */
+  showValue = input<boolean>(true);
 
   /**
    * Maximum number of stars

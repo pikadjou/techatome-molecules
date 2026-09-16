@@ -20,13 +20,7 @@ import { TaGridFormComponent } from '../form/form.component';
   templateUrl: './filters-panel.component.html',
   styleUrls: ['./filters-panel.component.scss'],
   standalone: true,
-  imports: [
-    TaGridFormComponent,
-    ButtonComponent,
-    LayoutFullPanelComponent,
-    TranslatePipe,
-    PluralTranslatePipe,
-  ],
+  imports: [TaGridFormComponent, ButtonComponent, LayoutFullPanelComponent, TranslatePipe, PluralTranslatePipe],
 })
 export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
   closeEvent = output<void>();
@@ -49,11 +43,18 @@ export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
   imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaGridFiltersPanel, TranslatePipe],
 })
 export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
-  show = input<{ switchView?: boolean; filters?: boolean; preset?: boolean; group?: boolean }>({
-    switchView: true,
+  show = input<{
+    switchView?: boolean;
+    filters?: boolean;
+    preset?: boolean;
+    group?: boolean;
+    sort?: boolean;
+  }>({
     filters: true,
-    preset: true,
     group: true,
+    preset: true,
+    sort: true,
+    switchView: true,
   });
 
   /** Masque les libellés textuels : ne restent que les icônes. */
@@ -77,6 +78,30 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   get hasGroupableCols(): boolean {
     return this.groupableCols.length > 0;
+  }
+
+  /** Colonnes triables, pour les vues sans en-têtes (cartes). */
+  get sortableCols(): { key: string; label: string }[] {
+    return Object.values(this.grid?.cols ?? {})
+      .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
+      .map(col => ({ key: col.key, label: col.inputLabel }));
+  }
+
+  get hasSortableCols(): boolean {
+    return this.sortableCols.length > 0;
+  }
+
+  get activeSort(): string | null {
+    return this.grid?.table?.sortField() ?? null;
+  }
+
+  get activeSortDir(): 'asc' | 'desc' {
+    return this.grid?.table?.sortDir() ?? 'asc';
+  }
+
+  get activeSortLabel(): string | null {
+    const key = this.activeSort;
+    return key ? (this.grid?.cols[key]?.inputLabel ?? key) : null;
   }
 
   get activeGroup(): string | null {
@@ -113,6 +138,16 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   public setPreset(preset: Preset) {
     this.grid.filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
+  }
+
+  /** Rejouer le même critère inverse le sens. */
+  public setSort(key: string | null) {
+    if (!key) {
+      this.grid?.table?.setSort(null, 'asc');
+      return;
+    }
+    const dir = key === this.activeSort && this.activeSortDir === 'asc' ? 'desc' : 'asc';
+    this.grid?.table?.setSort(key, dir);
   }
 
   public setGroup(key: string | null) {

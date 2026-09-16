@@ -68,5 +68,69 @@ describe('InputAddress', () => {
     it('should return null for null input', () => {
       expect(InputAddress.formatAddressForm(null)).toBeNull();
     });
+
+    // Une recherche Google ou une saisie manuelle laisse volontiers une espace
+    // en bordure : chaque consommateur la retirait de son cote.
+    it('should trim string fields', () => {
+      const result = InputAddress.formatAddressForm({
+        [EAddressValues.city]: '  Brussels ',
+        [EAddressValues.country]: ' Belgium',
+        [EAddressValues.number]: ' 42 ',
+        [EAddressValues.street]: '	Main Street  ',
+        [EAddressValues.zipCode]: ' 1000 ',
+      });
+
+      expect(result).toEqual(
+        jasmine.objectContaining({
+          city: 'Brussels',
+          country: 'Belgium',
+          number: '42',
+          street: 'Main Street',
+          zipCode: '1000',
+        })
+      );
+    });
+
+    it('should leave non-string fields untouched', () => {
+      const result = InputAddress.formatAddressForm({
+        [EAddressValues.city]: null,
+        [EAddressValues.placeId]: 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ',
+      });
+
+      expect(result?.city).toBeNull();
+      expect(result?.placeId).toBe('ChIJD7fiBh9u5kcRYJSMaMOCCwQ');
+    });
+  });
+
+  describe('isComplete (static)', () => {
+    const full: Partial<IAddressValue> = {
+      city: 'Brussels',
+      country: 'Belgium',
+      number: '42',
+      street: 'Main Street',
+      zipCode: '1000',
+    };
+
+    it('should accept an address carrying every postal part', () => {
+      expect(InputAddress.isComplete(full)).toBeTrue();
+    });
+
+    // `floor` est facultatif : un immeuble n'en a pas toujours.
+    it('should not require the floor', () => {
+      expect(InputAddress.isComplete({ ...full, floor: undefined })).toBeTrue();
+    });
+
+    // Le cas qui justifie la fonction : `Validators.required` laisse passer une
+    // recherche abandonnee en cours de route.
+    it('should reject a partial address', () => {
+      expect(InputAddress.isComplete({ ...full, number: null })).toBeFalse();
+      expect(InputAddress.isComplete({ ...full, street: '' })).toBeFalse();
+      expect(InputAddress.isComplete({ ...full, country: '   ' })).toBeFalse();
+    });
+
+    it('should reject nothing at all', () => {
+      expect(InputAddress.isComplete(null)).toBeFalse();
+      expect(InputAddress.isComplete(undefined)).toBeFalse();
+    });
   });
 });

@@ -77,5 +77,20 @@
       "backgroundColorLabel": "Hervorhebung",
       "frontColorLabel": "Farbe"
     }
+  },
+  "toolbar": {
+    "delete": "Block löschen",
+    "delimiter": "Trennlinie",
+    "header1": "Haupttitel",
+    "header2": "Titel",
+    "header3": "Untertitel",
+    "image": "Bild",
+    "listOrdered": "Nummerierte Liste",
+    "listUnordered": "Aufzählungsliste",
+    "moveDown": "Nach unten verschieben",
+    "moveUp": "Nach oben verschieben",
+    "paragraph": "Text",
+    "quote": "Zitat",
+    "warning": "Warnung"
   }
 }

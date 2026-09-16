@@ -1,67 +1,50 @@
-import { AsyncPipe } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output, input } from "@angular/core";
+import { AsyncPipe } from '@angular/common';
+import { Component, effect } from '@angular/core';
 
-import { map } from "rxjs";
-import { Observable } from "rxjs";
+import { Observable, Subscription, map } from 'rxjs';
 
-import { FileListComponent } from "@ta/files-basic";
-import { DualButtonComponent, TaModalComponent } from "@ta/ui";
-import { FileData, FileStructure, TaBaseComponent, TemporaryFile, pickImages } from "@ta/utils";
+import { FileListComponent } from '@ta/files-basic';
+import { DualButtonComponent, TaModalComponent } from '@ta/ui';
+import { FileData, FileStructure, TaBaseModal, TemporaryFile, pickImages } from '@ta/utils';
 
-export interface DialogData {
-  selection: string[];
-  input: {
-    files$?: Observable<FileData[]>;
-    update?: (files: FileStructure[]) => void;
-  };
-}
+export type InputImagesModalInput = {
+  initialSelection: string[];
+  files$?: Observable<FileData[]>;
+  update?: (files: FileStructure[]) => void;
+};
 
+/** Sélection d'images dans une galerie ; rend les URL choisies. */
 @Component({
-  selector: "ta-input-images-modal",
-  styleUrls: ["./input-images-modal.component.scss"],
-  templateUrl: "./input-images-modal.component.html",
+  selector: 'ta-input-images-modal',
+  styleUrls: ['./input-images-modal.component.scss'],
+  templateUrl: './input-images-modal.component.html',
   standalone: true,
   imports: [AsyncPipe, DualButtonComponent, FileListComponent, TaModalComponent],
 })
-export class InputImageModal extends TaBaseComponent implements OnInit {
-  open = input.required<boolean>();
-  initialSelection = input<string[]>([]);
-  files$ = input<Observable<FileData[]> | undefined>(undefined);
-  updateFn = input<((files: FileStructure[]) => void) | undefined>(undefined);
-
-  @Output() saved = new EventEmitter<string[]>();
-  @Output() closeEvent = new EventEmitter<void>();
-
+export class InputImageModal extends TaBaseModal<InputImagesModalInput, string[]> {
   public selection: string[] = [];
   public tempFiles = new TemporaryFile();
 
+  private _filesSubscription?: Subscription;
+
   constructor() {
     super();
-  }
-
-  ngOnInit() {
-    this.selection = [...this.initialSelection()];
-    if (this.files$()) {
-      this._registerSubscription(
-        this.files$()!.subscribe(() => this.tempFiles.removeAll())
-      );
-    }
+    effect(() => {
+      if (this.isOpen()) {
+        this._init(this.modalState()?.input());
+      }
+    });
   }
 
   public getPics$() {
-    return this.files$()?.pipe(
-      map((files) =>
-        files.map((file) => ({
-          ...file,
-          isSelected: this.selection.includes(file.url),
-        }))
-      )
-    );
+    return this.modalState()
+      ?.input()
+      ?.files$?.pipe(map(files => files.map(file => ({ ...file, isSelected: this.selection.includes(file.url) }))));
   }
 
   public onFileSelected(file: FileData) {
     if (this.selection.includes(file.url)) {
-      this.selection = this.selection.filter((url) => file.url !== url);
+      this.selection = this.selection.filter(url => file.url !== url);
     } else {
       this.selection = [...this.selection, file.url];
     }
@@ -69,7 +52,7 @@ export class InputImageModal extends TaBaseComponent implements OnInit {
 
   public uploadPics = async () => {
     const pics = await pickImages();
-    const fn = this.updateFn();
+    const fn = this.modalState()?.input()?.update;
     if (fn) {
       this.tempFiles.addFiles(pics);
       fn(pics);
@@ -77,7 +60,16 @@ export class InputImageModal extends TaBaseComponent implements OnInit {
   };
 
   public selected = () => {
-    this.saved.emit(this.selection);
-    this.closeEvent.emit();
+    this.confirm(this.selection);
   };
+
+  /** Repart de l'entrée à chaque ouverture. */
+  private _init(data: InputImagesModalInput | null | undefined) {
+    this.selection = [...(data?.initialSelection ?? [])];
+    this._filesSubscription?.unsubscribe();
+    if (data?.files$) {
+      this._filesSubscription = data.files$.subscribe(() => this.tempFiles.removeAll());
+      this._registerSubscription(this._filesSubscription);
+    }
+  }
 }

@@ -10,6 +10,9 @@ import { TaBaseComponent } from '@ta/utils';
 import { Menu } from '../../models/menu/menu';
 import { MenuComponent } from '../menu/menu.component';
 
+/** `surface` : bandeau blanc ; `brand` : bandeau de marque plein, navigation inversée. */
+export type MainMenuTone = 'surface' | 'brand';
+
 @Component({
   selector: 'ta-main-menu',
   templateUrl: './main-menu.component.html',
@@ -19,6 +22,11 @@ import { MenuComponent } from '../menu/menu.component';
 })
 export class MainMenuComponent extends TaBaseComponent {
   menuMain = input.required<Menu>();
+
+  tone = input<MainMenuTone>('surface');
+
+  /** Bloc de marque projeté à la place du logo. */
+  logoTemplate = input<TemplateRef<any>>();
 
   menuUser = input<Menu>();
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **Techatome Molecules** (internally called "Taelot"), an Angular monorepo that follows a micro-library architecture pattern. The project is managed using Lerna and Angular CLI, containing 20+ specialized Angular libraries that can be used independently or together to build applications.
+This is **Techatome Molecules** (internally called "Taelot"), an Angular monorepo that follows a micro-library architecture pattern. The project is managed using Nx and Angular CLI, containing 20+ specialized Angular libraries that can be used independently or together to build applications.
 
 The repository uses the `@ta/` namespace for all published packages and follows a structured approach to component library development with Storybook for documentation and testing.
 
@@ -39,15 +39,17 @@ yarn checkfiles                 # Verify installed dependencies
 ```bash
 yarn start                      # Start main application dev server
 yarn start-local                # Start with local environment config
-yarn build                     # Build all libraries with dependencies using Lerna
+yarn build                     # Clean every dist, then build all libraries in dependency order (Nx)
 yarn watch                     # Watch for changes and rebuild + start dev server
 ```
 
 ### Library Development
 
 ```bash
-lerna run build --include-dependencies    # Build all libraries with their dependencies
-ng build @ta/[LibName]                    # Build specific library
+nx run-many --target=build --all          # Build every library, in dependency order
+nx run @ta/[LibName]:build                # Build one library and whatever it depends on
+ng build @ta/[LibName]                    # Build one library alone, without its dependencies
+yarn watch:lib                            # Rebuild only the libraries affected by each change
 ```
 
 ### Quality Assurance
@@ -66,7 +68,7 @@ yarn storybook                  # Start Storybook dev server on port 6006
 yarn build-storybook           # Build Storybook for production
 ```
 
-### Publishing (Lerna-managed)
+### Publishing (Nx-managed)
 
 ```bash
 yarn version                    # Bump versions for all packages
@@ -107,7 +109,12 @@ Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
 
 ### Package Management
 
-- Uses **Lerna** for monorepo management with Yarn workspaces
+- Uses **Nx** for task orchestration (graph, ordering, caching) over Yarn workspaces
+- The dependency graph is read from each library's `package.json` — `analyzeSourceFiles`
+  is off in `nx.json`, because the source imports contain a real cycle
+  (`@ta/services` imports `@ta/notification`, while `notification → ui → services`).
+  A library that gains a dependency must therefore declare it in its `package.json`,
+  or Nx will build it too early.
 - All packages follow the `@ta/` namespace convention
 - Each library has its own `package.json`, `ng-package.json`, and TypeScript configurations
 - Dependencies are managed at both root and individual library levels
@@ -351,8 +358,8 @@ Types: `GraphPayload`, `GraphMutationPayload`, `GraphQueryInput<T>`, `WhereType<
 Providers: `provideServer()`, `provideStrapi()`
 
 ### @ta/utils
-**Classes**: `TaAbstractComponent`, `TaBaseComponent`, `TaBasePage`, `TaBaseModal`
-**Helpers**: `SubscriberHandler`, `RequestState`, `BreakpointDetection`, `HorizontalScroll`
+**Classes**: `TaAbstractComponent`, `TaBaseComponent`, `TaBasePage`, `TaBaseModal<In, Out>` (modal content: `modalState` input, `closeEvent` output, `isOpen()` / `confirm()` / `dismiss()`)
+**Helpers**: `SubscriberHandler`, `RequestState`, `ModalState<In, Out>` (signals `open` / `input` / `output`, `asked()` / `completed()` / `dismissed()`), `BreakpointDetection`, `HorizontalScroll`
 **Directives**: `StopPropagationDirective`, `DndDirective`, `LetDirective`, `OnRenderDirective`, `TypedTemplateDirective`
 **Pipes**: `FileSizePipe`, `JoinPipe`, `PluralTranslatePipe`, `SafePipe`
 **Functions**: `isNonNullable()`, `getUniqueArray()`, `toArray()`, `filterNonNullableItems()`, `capitalizeFirstLetter()`, `isURL()`, `newGuid()`, `merge()`, `compare()`, `getModifiedValues()`, `copyTextToClipboard()`, `isLight()`, `extractEnum()`, `fullName()`, `compressImage()`, `downloadFile()`, `octetsToMo()`, `search()`, `sort()`, `createRange()`, `percentage()`, `roundToDecimal()`
@@ -455,7 +462,7 @@ Follow the documented process in README.md or use `/ta-library`:
 
 ### Building and Testing
 
-- Always build with dependencies: `lerna run build --include-dependencies`
+- Always build with dependencies: `nx run-many --target=build --all` (or `yarn build`)
 - Test individual libraries: `ng test @ta/[LibName]`
 - Use Storybook for component development and documentation
 

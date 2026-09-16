@@ -80,6 +80,7 @@ export const COVERAGE: ShowcaseCoverage = {
     "ta-grid",
     "ta-grid-container",
     "ta-grid-control",
+    "ta-grid-count",
     "ta-grid-filters-panel",
     "ta-grid-form",
     "ta-grid-highlight-filters",
@@ -170,6 +171,7 @@ export const COVERAGE: ShowcaseCoverage = {
     "ta-progress-circle",
     "ta-pwa",
     "ta-rating",
+    "ta-rating-distribution",
     "ta-sale",
     "ta-search-displayer",
     "ta-search-field",
@@ -199,7 +201,15 @@ export const COVERAGE: ShowcaseCoverage = {
     "ta-word-viewer",
     "ta-wrapped-icon"
   ],
-  "missing": [],
+  "missing": [
+    "ta-checkbox",
+    "ta-cms-editor-toolbar",
+    "ta-data-grid",
+    "ta-data-grid-item",
+    "ta-overline",
+    "ta-stat-tile",
+    "ta-tab-bar"
+  ],
   "unresolvedMembers": [
     "TaDevicePositionService.currentPosition (type non annoté)",
     "TaDevicePositionService.canAccessPosition (type non annoté)",
@@ -229,6 +239,7 @@ export const COVERAGE: ShowcaseCoverage = {
     "PictureInfoMessageComponent.displayedText (type non annoté)",
     "ProgressCircleComponent.circumference (type non annoté)",
     "ProgressCircleComponent.canDisplayText (type non annoté)",
+    "ProgressCircleComponent.radius (type non annoté)",
     "ProgressBarDataComponent.progressValue (type non annoté)",
     "RatingComponent.stars (type non annoté)",
     "TimeAgoComponent.absDays (type non annoté)",

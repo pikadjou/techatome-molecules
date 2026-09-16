@@ -1,0 +1,107 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.data-grid-item {
+  height: 100%;
+  box-sizing: border-box;
+  padding: common.get-var(space, md);
+  background: common.get-var(surface, primary);
+}
+
+.data-grid-item-label {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+  min-width: 0;
+  color: common.get-var(icon, secondary);
+}
+
+.data-grid-item-value {
+  display: block;
+  color: common.get-var(text, primary);
+  overflow-wrap: break-word;
+}
+
+// row
+:host-context(.data-grid-row) {
+  .data-grid-item {
+    @include flex.simple-flex();
+    @include flex.align-center();
+    @include flex.space-between();
+    gap: common.get-var(space, md);
+  }
+
+  .data-grid-item-label-text {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, tertiary);
+  }
+
+  .data-grid-item-value {
+    @include fonts.fontSizeBody(sm, true);
+    font-family: common.get-var(font, display, family);
+    text-align: right;
+  }
+}
+
+// stack
+:host-context(.data-grid-stack) {
+  .data-grid-item {
+    @include flex.flex-column();
+    gap: common.get-var(space, xs);
+  }
+
+  .data-grid-item-label-text {
+    font-family: common.get-var(font, display, family);
+    font-size: common.get-var(font, body, xs, default, size);
+    font-weight: common.get-var(font, body, sm, bold, weight);
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: common.get-var(text, tertiary);
+  }
+
+  .data-grid-item-value {
+    @include fonts.fontSizeBody(md);
+    font-weight: common.get-var(font, weight, medium);
+    line-height: 1.4;
+  }
+}
+
+// fact
+:host-context(.data-grid-fact) {
+  .data-grid-item {
+    @include flex.flex-column();
+    gap: common.get-var(space, xs);
+  }
+
+  // `contents` remonte icône et libellé au niveau de la valeur.
+  .data-grid-item-label {
+    display: contents;
+  }
+
+  ta-font-icon {
+    order: 0;
+    color: common.get-var(icon, accent);
+  }
+
+  .data-grid-item-value {
+    order: 1;
+    font-family: common.get-var(font, display, family);
+    @include fonts.fontSizeBody(md, true);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .data-grid-item-label-text {
+    order: 2;
+    @include fonts.fontSizeBody(sm);
+    line-height: 1;
+    color: common.get-var(text, muted);
+  }
+}
