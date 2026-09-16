@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from '@playwright/test';
 
 /**
  * @ta/features — la page thématique héritée `/features` a été retirée (tâche 17
@@ -13,20 +13,20 @@ import { test, expect } from "@playwright/test";
 // `public-api.ts` : pas de page générée pour lui. `ta-grid` le rend toujours lui-même
 // (`grid.component.html`), donc la page de `ta-grid` suffit à le monter aussi.
 const GRID_COMPONENT_PAGES: Record<string, string> = {
-  "ta-grid": "/features/ta-grid",
-  "ta-grid-container": "/features/ta-grid-container",
-  "ta-grid-control": "/features/ta-grid-control",
-  "ta-grid-form": "/features/ta-grid-form",
-  "ta-grid-highlight-filters": "/features/ta-grid-highlight-filters",
-  "ta-grid-search": "/features/ta-grid-search",
-  "ta-grid-tags": "/features/ta-grid-tags",
-  "ta-grid-pagination": "/features/ta-grid",
+  'ta-grid': '/features/ta-grid',
+  'ta-grid-container': '/features/ta-grid-container',
+  'ta-grid-control': '/features/ta-grid-control',
+  'ta-grid-form': '/features/ta-grid-form',
+  'ta-grid-highlight-filters': '/features/ta-grid-highlight-filters',
+  'ta-grid-search': '/features/ta-grid-search',
+  'ta-grid-tags': '/features/ta-grid-tags',
+  'ta-grid-pagination': '/features/ta-grid',
 };
 
-test.describe("@ta/features — Grid (pages générées /features/<id>)", () => {
+test.describe('@ta/features — Grid (pages générées /features/<id>)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.route("**/*graphql*", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ data: {} }) }),
+    await page.route('**/*graphql*', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ data: {} }) })
     );
   });
 
@@ -37,24 +37,18 @@ test.describe("@ta/features — Grid (pages générées /features/<id>)", () => 
     });
   }
 
-  // Échec préexistant connu, pas à corriger ici : `ta-grid-filters-panel` a été
-  // renommé depuis `ta-grid-filters-modal` par une refonte non commitée de
-  // @ta/features (voir le champ `notes` de
-  // src/app/showcase/demos/features/ta-grid-filters-panel.demo.ts, qui documente
-  // déjà ce cas). Le bouton "Ouvrir les filtres" est cliqué pour reproduire le
-  // seul chemin qui monte ce composant — il n'échoue donc que sur le nom, pas sur
-  // l'absence d'interaction.
-  test("ta-grid-filters-modal est monté", async ({ page }) => {
-    await page.goto("/features/ta-grid-filters-panel");
-    await page.getByText("Ouvrir les filtres").first().click();
+  // Le panneau n'est monté qu'après clic sur « Ouvrir les filtres ».
+  test('ta-grid-filters-panel est monté', async ({ page }) => {
+    await page.goto('/features/ta-grid-filters-panel');
+    await page.getByText('Ouvrir les filtres').first().click();
 
-    await expect(page.locator("ta-grid-filters-modal").first()).toBeAttached();
+    await expect(page.locator('ta-grid-filters-panel').first()).toBeAttached();
   });
 
-  test("le grid affiche des lignes de données locales", async ({ page }) => {
-    await page.goto("/features/ta-grid");
+  test('le grid affiche des lignes de données locales', async ({ page }) => {
+    await page.goto('/features/ta-grid');
 
-    await expect(page.locator("ta-grid").first()).toBeVisible();
-    await expect(page.getByText("Amélie Laurent").first()).toBeVisible();
+    await expect(page.locator('ta-grid').first()).toBeVisible();
+    await expect(page.getByText('Amélie Laurent').first()).toBeVisible();
   });
 });

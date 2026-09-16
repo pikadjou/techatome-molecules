@@ -81,6 +81,7 @@ Format : `selector` (`Class`) — description courte. Le fichier de référence 
 - `ta-overlay-panel` (`TaOverlayPanelComponent`) — Panneau overlay.
 
 ### Module Card
+
 Pattern composé : `references/ui/_composed/card.md`.
 
 - `ta-card` (`CardComponent`) — Conteneur de contenu structuré.
@@ -94,6 +95,7 @@ Pattern composé : `references/ui/_composed/card.md`.
 - `ta-dashboard` (`DashboardComponent`) — Carte de dashboard.
 
 ### Module Layout
+
 Patterns composés : `references/ui/_composed/layout-page.md`, `references/ui/_composed/layout-with-panel.md`.
 
 - `ta-layout-page` (`LayoutPageComponent`) — Racine d'une page applicative.
@@ -110,10 +112,12 @@ Patterns composés : `references/ui/_composed/layout-page.md`, `references/ui/_c
 - `ta-layout-full-panel` (`LayoutFullPanelComponent`) — Panneau plein écran.
 - `ta-layout-with-panel` (`LayoutWithPanelComponent`) — Page avec drawer latéral.
 - `ta-layout-with-bottom-nav` (`LayoutWithBottomNavComponent`) — Layout avec nav inférieure.
-- `ta-layout-modal` (`LayoutModalComponent`) — Wrapper interne Material Dialog.
+- `ta-modal` (`TaModalComponent`) — **conteneur de toute modale**, embarqué dans un `XxxModal extends TaBaseModal<In, Out>` et lié à `this.isOpen()` (`references/ui/modal.md`, pattern dans `references/utils/ta-base-modal.md`).
+- `ta-layout-modal` (`LayoutModalComponent`) — contenu de modale avec en-tête (titre + fermer) et zone scrollable.
 - `ta-layout-modal-container` (`LayoutModalContainerComponent`) — **Composant interne**.
 
 ### Module List
+
 Pattern composé : `references/ui/_composed/list.md`.
 
 - `ta-list-container` (`ListContainerComponent`) — Racine d'une liste.
@@ -124,13 +128,14 @@ Pattern composé : `references/ui/_composed/list.md`.
 - `ta-list-extra-information` (`ListExtraInformationComponent`) — Info secondaire.
 
 ### Module Container
+
 Pattern composé : `references/ui/_composed/container.md`.
 
 - `ta-empty` (`EmptyComponent`) — État vide.
 - `ta-error` (`ErrorComponent`) — Erreur avec code HTTP.
 - `ta-loader` (`LoaderComponent`) — Chargement.
 - `ta-container-validation` (`ContainerValidationComponent`) — Bouton avec confirmation.
-- `ta-modal-validation` (`ModalValidationComponent`) — **Composant interne**.
+- `ta-validation-modal` (`ValidationModal`) — confirmation Oui/Non, `TaBaseModal<ModalParameter | undefined, boolean>` (`references/ui/modal-validation.md`).
 
 ## Conventions
 

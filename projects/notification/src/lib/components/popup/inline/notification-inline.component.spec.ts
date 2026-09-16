@@ -1,12 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {
-  TranslateFakeLoader,
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-
-import { MatDialog } from '@angular/material/dialog';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { ENotificationCode } from '../../../enum';
 import { NotificationInlineComponent } from './notification-inline.component';
@@ -14,11 +8,8 @@ import { NotificationInlineComponent } from './notification-inline.component';
 describe('NotificationInlineComponent', () => {
   let component: NotificationInlineComponent;
   let fixture: ComponentFixture<NotificationInlineComponent>;
-  let mockMatDialog: jasmine.SpyObj<MatDialog>;
 
   beforeEach(async () => {
-    mockMatDialog = jasmine.createSpyObj('MatDialog', ['open']);
-
     await TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot({
@@ -26,9 +17,7 @@ describe('NotificationInlineComponent', () => {
         }),
         NotificationInlineComponent,
       ],
-      providers: [
-        { provide: MatDialog, useValue: mockMatDialog },
-      ],
+      providers: [],
     })
       .overrideComponent(NotificationInlineComponent, {
         set: {
@@ -176,9 +165,9 @@ describe('NotificationInlineComponent', () => {
   });
 
   describe('openErrorBox', () => {
-    it('should open the error modal dialog', () => {
+    it('should open the error modal', () => {
       component.openErrorBox();
-      expect(mockMatDialog.open).toHaveBeenCalled();
+      expect(component.errorModal.open()).toBe(true);
     });
   });
 });

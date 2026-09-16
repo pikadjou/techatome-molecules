@@ -358,8 +358,8 @@ Types: `GraphPayload`, `GraphMutationPayload`, `GraphQueryInput<T>`, `WhereType<
 Providers: `provideServer()`, `provideStrapi()`
 
 ### @ta/utils
-**Classes**: `TaAbstractComponent`, `TaBaseComponent`, `TaBasePage`, `TaBaseModal`
-**Helpers**: `SubscriberHandler`, `RequestState`, `BreakpointDetection`, `HorizontalScroll`
+**Classes**: `TaAbstractComponent`, `TaBaseComponent`, `TaBasePage`, `TaBaseModal<In, Out>` (modal content: `modalState` input, `closeEvent` output, `isOpen()` / `confirm()` / `dismiss()`)
+**Helpers**: `SubscriberHandler`, `RequestState`, `ModalState<In, Out>` (signals `open` / `input` / `output`, `asked()` / `completed()` / `dismissed()`), `BreakpointDetection`, `HorizontalScroll`
 **Directives**: `StopPropagationDirective`, `DndDirective`, `LetDirective`, `OnRenderDirective`, `TypedTemplateDirective`
 **Pipes**: `FileSizePipe`, `JoinPipe`, `PluralTranslatePipe`, `SafePipe`
 **Functions**: `isNonNullable()`, `getUniqueArray()`, `toArray()`, `filterNonNullableItems()`, `capitalizeFirstLetter()`, `isURL()`, `newGuid()`, `merge()`, `compare()`, `getModifiedValues()`, `copyTextToClipboard()`, `isLight()`, `extractEnum()`, `fullName()`, `compressImage()`, `downloadFile()`, `octetsToMo()`, `search()`, `sort()`, `createRange()`, `percentage()`, `roundToDecimal()`

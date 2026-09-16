@@ -6,7 +6,7 @@ import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent, isFontIcon, getFontIcon, isLocalIcon, LocalIconComponent, MaterialIconComponent, TaIconType } from '@ta/icons';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
-import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, getCountryName, createRange } from '@ta/utils';
+import { StopPropagationDirective, Civility, PluralTranslatePipe, TaBaseComponent, extractExtension, roundToDecimal, octetsToMo, getCountryName, TaBaseModal, createRange } from '@ta/utils';
 import { intervalToDuration, differenceInCalendarDays } from 'date-fns';
 import * as i1$1 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -2451,39 +2451,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 type: Output
             }] } });
 
-class ValidationModal extends TaBaseComponent {
+/** Confirmation Oui/Non : `confirm(true)` sur Oui, `dismiss()` sur Non ou fermeture. */
+class ValidationModal extends TaBaseModal {
     get title() {
-        return this.params()?.title ?? "validation.modal.title";
+        return this.modalState()?.input()?.title ?? 'validation.modal.title';
     }
     get subtitle() {
-        return this.params()?.subtitle ?? "validation.modal.content";
+        return this.modalState()?.input()?.subtitle ?? 'validation.modal.content';
     }
     constructor() {
         super();
-        this.open = input.required();
-        this.params = input(undefined);
-        this.validated = new EventEmitter();
-        this.closeEvent = new EventEmitter();
         TaTranslationUI.getInstance();
     }
     onNoClick() {
-        this.closeEvent.emit();
+        this.dismiss();
     }
     onYesClick() {
-        this.validated.emit();
-        this.closeEvent.emit();
+        this.confirm(true);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ValidationModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: ValidationModal, isStandalone: true, selector: "ta-validation-modal", inputs: { open: { classPropertyName: "open", publicName: "open", isSignal: true, isRequired: true, transformFunction: null }, params: { classPropertyName: "params", publicName: "params", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { validated: "validated", closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: "<ta-modal\n  [open]=\"this.open()\"\n  size=\"small\"\n  [title]=\"this.title | translate\"\n  [closeOnBackdrop]=\"false\"\n  (closeEvent)=\"this.onNoClick()\"\n>\n  <div modal-content>\n    <ta-text>{{ this.subtitle | translate }}</ta-text>\n  </div>\n  <div modal-footer>\n    <ta-button type=\"danger\" (action)=\"this.onNoClick()\">\n      {{ \"ui.container.validation.modal.cta.cancel\" | translate }}\n    </ta-button>\n    <ta-button type=\"primary\" (action)=\"this.onYesClick()\">\n      {{ \"ui.container.validation.modal.cta.ok\" | translate }}\n    </ta-button>\n  </div>\n</ta-modal>\n", styles: [".container{padding-top:10px;padding-bottom:10px}.container .subtitle{padding-top:.7em;padding-bottom:1.3em}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "overline", "tone", "showClose", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ValidationModal, isStandalone: true, selector: "ta-validation-modal", usesInheritance: true, ngImport: i0, template: "<ta-modal\n  [open]=\"this.isOpen()\"\n  size=\"small\"\n  [title]=\"this.title | translate\"\n  [closeOnBackdrop]=\"false\"\n  (closeEvent)=\"this.onNoClick()\"\n>\n  <div modal-content>\n    <ta-text>{{ this.subtitle | translate }}</ta-text>\n  </div>\n  <div modal-footer>\n    <ta-button type=\"danger\" (action)=\"this.onNoClick()\">\n      {{ 'ui.container.validation.modal.cta.cancel' | translate }}\n    </ta-button>\n    <ta-button type=\"primary\" (action)=\"this.onYesClick()\">\n      {{ 'ui.container.validation.modal.cta.ok' | translate }}\n    </ta-button>\n  </div>\n</ta-modal>\n", styles: [".container{padding-top:10px;padding-bottom:10px}.container .subtitle{padding-top:.7em;padding-bottom:1.3em}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "overline", "tone", "showClose", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ValidationModal, decorators: [{
             type: Component,
-            args: [{ selector: "ta-validation-modal", standalone: true, imports: [TranslateModule, ButtonComponent, TextComponent, TaModalComponent], template: "<ta-modal\n  [open]=\"this.open()\"\n  size=\"small\"\n  [title]=\"this.title | translate\"\n  [closeOnBackdrop]=\"false\"\n  (closeEvent)=\"this.onNoClick()\"\n>\n  <div modal-content>\n    <ta-text>{{ this.subtitle | translate }}</ta-text>\n  </div>\n  <div modal-footer>\n    <ta-button type=\"danger\" (action)=\"this.onNoClick()\">\n      {{ \"ui.container.validation.modal.cta.cancel\" | translate }}\n    </ta-button>\n    <ta-button type=\"primary\" (action)=\"this.onYesClick()\">\n      {{ \"ui.container.validation.modal.cta.ok\" | translate }}\n    </ta-button>\n  </div>\n</ta-modal>\n", styles: [".container{padding-top:10px;padding-bottom:10px}.container .subtitle{padding-top:.7em;padding-bottom:1.3em}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { validated: [{
-                type: Output
-            }], closeEvent: [{
-                type: Output
-            }] } });
+            args: [{ selector: 'ta-validation-modal', standalone: true, imports: [TranslateModule, ButtonComponent, TextComponent, TaModalComponent], template: "<ta-modal\n  [open]=\"this.isOpen()\"\n  size=\"small\"\n  [title]=\"this.title | translate\"\n  [closeOnBackdrop]=\"false\"\n  (closeEvent)=\"this.onNoClick()\"\n>\n  <div modal-content>\n    <ta-text>{{ this.subtitle | translate }}</ta-text>\n  </div>\n  <div modal-footer>\n    <ta-button type=\"danger\" (action)=\"this.onNoClick()\">\n      {{ 'ui.container.validation.modal.cta.cancel' | translate }}\n    </ta-button>\n    <ta-button type=\"primary\" (action)=\"this.onYesClick()\">\n      {{ 'ui.container.validation.modal.cta.ok' | translate }}\n    </ta-button>\n  </div>\n</ta-modal>\n", styles: [".container{padding-top:10px;padding-bottom:10px}.container .subtitle{padding-top:.7em;padding-bottom:1.3em}\n"] }]
+        }], ctorParameters: () => [] });
 
 class EmptyComponent extends TaBaseComponent {
     constructor() {

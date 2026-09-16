@@ -1,45 +1,49 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ButtonComponent, ModalParameter, ValidationModal } from "@ta/ui";
+import { ButtonComponent, ModalParameter, ValidationModal } from '@ta/ui';
+import { ModalState } from '@ta/utils';
 
-import { ComponentDemo } from "../../demo.types";
+import { ComponentDemo } from '../../demo.types';
 
 @Component({
   standalone: true,
-  selector: "app-ex-ta-validation-modal-external",
+  selector: 'app-ex-ta-validation-modal-external',
   imports: [ButtonComponent, ValidationModal],
   template: `
-    <ta-button type="danger" icon="delete" (action)="this.isOpen = true">Supprimer le compte</ta-button>
+    <ta-button type="danger" icon="delete" (action)="this.deleteModal.asked(this.params)"
+      >Supprimer le compte</ta-button
+    >
 
     <ta-validation-modal
-      [open]="this.isOpen"
-      [params]="this.params"
-      (validated)="this.confirmations = this.confirmations + 1"
-      (closeEvent)="this.isOpen = false"
+      [modalState]="this.deleteModal"
+      (closeEvent)="this.confirmations = this.confirmations + 1"
     ></ta-validation-modal>
     <p>Suppressions confirmées : {{ this.confirmations }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaValidationModalExternalExample {
-  readonly params: ModalParameter = { title: "Supprimer le compte ?", subtitle: "Toutes les données associées seront perdues." };
+  readonly params: ModalParameter = {
+    title: 'Supprimer le compte ?',
+    subtitle: 'Toutes les données associées seront perdues.',
+  };
 
-  isOpen = false;
+  deleteModal = new ModalState<ModalParameter | undefined, boolean>();
   confirmations = 0;
 }
 
 export const DEMO: ComponentDemo = {
-  id: "ta-validation-modal",
-  group: "Overlays",
-  summary: "Modale de confirmation Oui/Non, entièrement pilotée depuis l'extérieur par `[open]` et `[params]`.",
+  id: 'ta-validation-modal',
+  group: 'Overlays',
+  summary: 'Modale de confirmation Oui/Non pilotée par un `ModalState<ModalParameter | undefined, boolean>`.',
   examples: [
     {
-      title: "Confirmation externe",
+      title: 'Confirmation externe',
       description:
-        "`onYesClick()` émet `validated` puis `closeEvent` ; `onNoClick()` émet seulement `closeEvent`. Sans `params`, `title`/`subtitle` retombent sur les clés `validation.modal.title`/`.content`.",
+        "Le parent crée un `ModalState` et l'ouvre par `asked(params)`. Oui appelle `confirm(true)` : `output()` passe à `true` et `closeEvent` émet ; Non appelle `dismiss()` : la modale se ferme sans résultat ni événement. Sans `params`, `title`/`subtitle` retombent sur les clés `validation.modal.title`/`.content`.",
       component: TaValidationModalExternalExample,
     },
   ],
   notes:
-    "À la différence de `ta-container-validation`, qui enrobe un contenu projeté et gère lui-même son état d'ouverture au clic, `ta-validation-modal` n'a ni contenu projeté ni état interne : c'est au consommateur de porter le booléen `open` (ici `isOpen`) et de le remettre à faux sur `closeEvent`. La modale affichée est un `ta-modal` de taille `small` : position `fixed`, centrée, fond assombri qui recouvre toute la page — pas seulement la carte de cet exemple. Comme pour `ta-container-validation` (mêmes clés `ui.container.validation.modal.cta.cancel`/`.ok`), les boutons de cette vitrine affichent « Cancel »/« OK » plutôt que « Annuler »/« OK » en français — vérifié à l'exécution, comportement de la bibliothèque non corrigé ici.",
+    "À la différence de `ta-container-validation`, qui enrobe un contenu projeté et gère lui-même son état d'ouverture au clic, `ta-validation-modal` n'a ni contenu projeté ni état interne : c'est le `ModalState` du parent qui porte l'ouverture, l'entrée et le résultat (pattern `TaBaseModal<In, Out>`). La modale affichée est un `ta-modal` de taille `small` : position `fixed`, centrée, fond assombri qui recouvre toute la page — pas seulement la carte de cet exemple. Comme pour `ta-container-validation` (mêmes clés `ui.container.validation.modal.cta.cancel`/`.ok`), les boutons de cette vitrine affichent « Cancel »/« OK » plutôt que « Annuler »/« OK » en français — vérifié à l'exécution, comportement de la bibliothèque non corrigé ici.",
 };

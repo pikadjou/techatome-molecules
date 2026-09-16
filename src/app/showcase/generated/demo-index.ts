@@ -448,7 +448,7 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
       }
     ],
     "notRenderable": false,
-    "summary": "Modale générique qui projette le `TemplateRef` porté par un modèle `InputComponent` ; c'est elle que `ta-input-component` ouvre en interne, mais elle se pilote aussi seule via `open`/`inputData`/`closeEvent`."
+    "summary": "Modale générique qui projette le `TemplateRef` porté par un modèle `InputComponent` ; c'est elle que `ta-input-component` ouvre en interne, mais elle se pilote aussi seule via un `ModalState<InputComponent, string>` : `asked(model)` l'ouvre, `closeEvent` rend la valeur choisie."
   },
   "ta-contact-information": {
     "examples": [
@@ -3167,7 +3167,7 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
       }
     ],
     "notRenderable": false,
-    "summary": "Modale de confirmation Oui/Non, entièrement pilotée depuis l'extérieur par `[open]` et `[params]`."
+    "summary": "Modale de confirmation Oui/Non pilotée par un `ModalState<ModalParameter | undefined, boolean>`."
   },
   "ta-veriff-button": {
     "examples": [

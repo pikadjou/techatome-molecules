@@ -398,25 +398,21 @@ onSaved(data: EditorInputSavedData) {
   "TaCmsErrorExample": { template: `<ta-cms [contentType]="'privacy-policy'"></ta-cms> `, members: `` },
   "TaCmsLoadedExample": { template: `<ta-cms [contentType]="'privacy-policy'"></ta-cms> `, members: `` },
   "TaCmsLoadingExample": { template: `<ta-cms [contentType]="'privacy-policy'"></ta-cms> `, members: `` },
-  "TaComponentSelectorModalBasicExample": { template: `<ta-button (action)="this.isOpen.set(true)">Choisir une couleur</ta-button>
-<ta-component-selector-modal
-  [open]="this.isOpen()"
-  [inputData]="this.model"
-  (closeEvent)="this.isOpen.set(false)"
-></ta-component-selector-modal>
+  "TaComponentSelectorModalBasicExample": { template: `<ta-button (action)="this.selectorModal.asked(this.model)">Choisir une couleur</ta-button>
+<ta-component-selector-modal [modalState]="this.selectorModal"></ta-component-selector-modal>
 <ng-template #picker let-selectedValue$="selectedValue$">
   <div class="flex-column g-space-sm p-space-md">
     @for (option of this.options; track option) {
       <div class="pointer p-space-sm" (click)="selectedValue$.next(option)">{{ option }}</div>
     }
   </div>
-</ng-template>`, members: `@ViewChild("picker") private _picker!: TemplateRef<TypeComponentInputToken>;
+</ng-template>`, members: `@ViewChild('picker') private _picker!: TemplateRef<TypeComponentInputToken>;
 
-readonly options = ["Rouge", "Vert", "Bleu"];
+readonly options = ['Rouge', 'Vert', 'Bleu'];
 
-isOpen = signal(false);
+selectorModal = new ModalState<InputComponent, string>();
 
-model = new InputComponent({ key: "color", label: "Couleur" });
+model = new InputComponent({ key: 'color', label: 'Couleur' });
 
 ngAfterViewInit(): void {
     this.model.template = this._picker;
@@ -893,29 +889,29 @@ initial = signal<PreviewDocumentDto | null>(null);
 
 documents: PreviewDocumentDto[] = [
     {
-      filename: "Séjour",
+      filename: 'Séjour',
       description: "Séjour traversant, parquet d'origine",
-      url: "/assets/partners/icon/512.png",
+      url: '/assets/partners/icon/512.png',
     },
     {
-      filename: "Cuisine",
-      description: "Cuisine équipée ouverte sur le séjour",
-      url: "/assets/partners/icon/384.png",
+      filename: 'Cuisine',
+      description: 'Cuisine équipée ouverte sur le séjour',
+      url: '/assets/partners/icon/384.png',
     },
     {
-      filename: "Chambre 1",
-      description: "Chambre principale, exposition sud-ouest",
-      url: "/assets/partners/icon/192.png",
+      filename: 'Chambre 1',
+      description: 'Chambre principale, exposition sud-ouest',
+      url: '/assets/partners/icon/192.png',
     },
     {
-      filename: "Chambre 2",
-      description: "Seconde chambre, vue sur le jardin",
-      url: "/assets/partners/icon/152.png",
+      filename: 'Chambre 2',
+      description: 'Seconde chambre, vue sur le jardin',
+      url: '/assets/partners/icon/152.png',
     },
     {
-      filename: "Salle de bain",
-      description: "Salle de bain avec baignoire",
-      url: "/assets/partners/icon/144.png",
+      filename: 'Salle de bain',
+      description: 'Salle de bain avec baignoire',
+      url: '/assets/partners/icon/144.png',
     },
   ];
 
@@ -931,8 +927,8 @@ public openAt(index: number) {
 ></ta-files-preview-modal>`, members: `open = signal(false);
 
 initial: PreviewDocumentDto = {
-    filename: "vue-exterieure.png",
-    url: "/assets/partners/icon/512.png?token=demo&v=2",
+    filename: 'vue-exterieure.png',
+    url: '/assets/partners/icon/512.png?token=demo&v=2',
   };` },
   "TaFilesPreviewModalToggleExample": { template: `<ta-button (action)="this.open.set(true)">Ouvrir l'aperçu</ta-button>
 <ta-files-preview-modal
@@ -942,10 +938,10 @@ initial: PreviewDocumentDto = {
 ></ta-files-preview-modal>`, members: `open = signal(false);
 
 initial: PreviewDocumentDto = {
-    filename: "rapport-financier-2025.pdf",
-    url: "/assets/showcase/files-basic/rapport-financier-2025.pdf",
+    filename: 'rapport-financier-2025.pdf',
+    url: '/assets/showcase/files-basic/rapport-financier-2025.pdf',
     size: 842_311,
-    uploadedDate: "2025-11-03T09:15:00",
+    uploadedDate: '2025-11-03T09:15:00',
   };` },
   "TaFilesPreviewPdfExample": { template: `<div style="height: 460px">
   <ta-files-preview style="height: 100%" [initial]="this.initial"></ta-files-preview>
@@ -1289,7 +1285,12 @@ readonly columns: ColMetaData<Member>[] = [
     { name: "role", type: ParameterType.Enum, enumValues: ROLES, showOnSearch: true },
     { name: "active", type: ParameterType.Boolean, showOnSearch: true },
   ];` },
-  "TaGridControlCompactExample": { template: `<ta-grid-container [gridId]="this.gridId" [initialData]="this.orders" [colsMetaData]="this.columns" [preset]="this.presets">
+  "TaGridControlCompactExample": { template: `<ta-grid-container
+  [gridId]="this.gridId"
+  [initialData]="this.orders"
+  [colsMetaData]="this.columns"
+  [preset]="this.presets"
+>
   <ta-grid-control
     [gridId]="this.gridId"
     [compact]="true"
@@ -1302,14 +1303,19 @@ readonly columns: ColMetaData<Member>[] = [
       <p>{{ order.reference }}</p>
     }
   </ng-template>
-</ta-grid-container>`, members: `readonly gridId = "demo-grid-control-compact";
+</ta-grid-container>`, members: `readonly gridId = 'demo-grid-control-compact';
 
 readonly orders = ORDERS;
 
 readonly columns = COLUMNS;
 
 readonly presets = PRESETS;` },
-  "TaGridControlFullExample": { template: `<ta-grid-container [gridId]="this.gridId" [initialData]="this.orders" [colsMetaData]="this.columns" [preset]="this.presets">
+  "TaGridControlFullExample": { template: `<ta-grid-container
+  [gridId]="this.gridId"
+  [initialData]="this.orders"
+  [colsMetaData]="this.columns"
+  [preset]="this.presets"
+>
   <ta-grid-control [gridId]="this.gridId"></ta-grid-control>
   <ta-grid-tags [gridId]="this.gridId"></ta-grid-tags>
   <ta-grid [gridId]="this.gridId" [cardTemplate]="cardTpl"></ta-grid>
@@ -1319,7 +1325,7 @@ readonly presets = PRESETS;` },
       <p>{{ order.reference }} — {{ order.customer }}</p>
     }
   </ng-template>
-</ta-grid-container>`, members: `readonly gridId = "demo-grid-control-full";
+</ta-grid-container>`, members: `readonly gridId = 'demo-grid-control-full';
 
 readonly orders = ORDERS;
 
@@ -1338,7 +1344,7 @@ readonly presets = PRESETS;` },
       <p>{{ estate.name }} — {{ estate.city }}</p>
     }
   </ng-template>
-</ta-grid-container>`, members: `readonly gridId = "demo-grid-count";
+</ta-grid-container>`, members: `readonly gridId = 'demo-grid-count';
 
 readonly estates = ESTATES;
 
@@ -1352,7 +1358,7 @@ readonly columns = COLUMNS;` },
       <p>{{ estate.name }}</p>
     }
   </ng-template>
-</ta-grid-container>`, members: `readonly gridId = "demo-grid-count-label";
+</ta-grid-container>`, members: `readonly gridId = 'demo-grid-count-label';
 
 readonly estates = ESTATES;
 
@@ -1924,19 +1930,19 @@ constructor() {
   "TaInputTimePickerBasicExample": { template: `<ta-input-time-picker [input]="this.model" [standalone]="true"></ta-input-time-picker> `, members: `model = new InputTimePicker({ key: "time", label: "Heure de rendez-vous", value: "09:30" });` },
   "TaInputTimePickerDisabledExample": { template: `<ta-input-time-picker [input]="this.model" [standalone]="true"></ta-input-time-picker> `, members: `model = new InputTimePicker({ key: "time-disabled", label: "Heure verrouillée", value: "14:00", disabled: true });` },
   "TaInputTimePickerRequiredExample": { template: `<ta-input-time-picker [input]="this.model" [standalone]="true"></ta-input-time-picker> `, members: `model = new InputTimePicker({ key: "time-required", label: "Heure de fin", validators: [Validators.required] });` },
-  "TaInputToggleDisabledExample": { template: `<ta-input-toggle [input]="this.model" [standalone]="true"></ta-input-toggle> `, members: `model = new InputCheckBox({ key: "toggle-disabled", label: "Verrouillé", toggle: true, value: true, disabled: true });` },
+  "TaInputToggleDisabledExample": { template: `<ta-input-toggle [input]="this.model" [standalone]="true"></ta-input-toggle> `, members: `model = new InputCheckBox({ key: 'toggle-disabled', label: 'Verrouillé', toggle: true, value: true, disabled: true });` },
   "TaInputToggleStateLabelsExample": { template: `<ta-input-toggle [input]="this.model" [standalone]="true"></ta-input-toggle> `, members: `model = new InputCheckBox({
-    key: "toggle-visibility",
-    label: "Adresse e-mail",
-    offLabel: "Privé",
-    onLabel: "Public",
+    key: 'toggle-visibility',
+    label: 'Adresse e-mail',
+    offLabel: 'Privé',
+    onLabel: 'Public',
     toggle: true,
     value: true,
   });` },
   "TaInputToggleStatesExample": { template: `<ta-input-toggle [input]="this.on" [standalone]="true"></ta-input-toggle>
-<ta-input-toggle [input]="this.off" [standalone]="true"></ta-input-toggle>`, members: `on = new InputCheckBox({ key: "notifications-on", label: "Notifications", toggle: true, value: true });
+<ta-input-toggle [input]="this.off" [standalone]="true"></ta-input-toggle>`, members: `on = new InputCheckBox({ key: 'notifications-on', label: 'Notifications', toggle: true, value: true });
 
-off = new InputCheckBox({ key: "notifications-off", label: "Notifications", toggle: true, value: false });` },
+off = new InputCheckBox({ key: 'notifications-off', label: 'Notifications', toggle: true, value: false });` },
   "TaInputUploadBasicExample": { template: `<ta-input-upload [input]="this.model" [standalone]="true"></ta-input-upload> `, members: `model = new InputUpload({ key: "documents", label: "Documents" });` },
   "TaInputUploadConfirmExample": { template: `<ta-input-upload [input]="this.model" [standalone]="true"></ta-input-upload> `, members: `model = new InputUpload({ key: "documents-confirm", label: "Documents (validation manuelle)", confirmButton: true });` },
   "TaInputWysiswygEmptyExample": { template: `<ta-input-wysiswyg [input]="this.model" [standalone]="true"></ta-input-wysiswyg> `, members: `model = new InputWysiswyg({ key: "content", label: "Contenu", placeholder: "Rédigez votre article…" });` },
@@ -3153,17 +3159,20 @@ readonly bo: UserLogoData = { firstname: "Bo", lastname: "Lambert" };` },
     { firstname: "Bo", lastname: "Lambert" },
     { firstname: "Claire", lastname: "Bernard" },
   ]);` },
-  "TaValidationModalExternalExample": { template: `<ta-button type="danger" icon="delete" (action)="this.isOpen = true">Supprimer le compte</ta-button>
+  "TaValidationModalExternalExample": { template: `<ta-button type="danger" icon="delete" (action)="this.deleteModal.asked(this.params)"
+  >Supprimer le compte</ta-button
+>
 
 <ta-validation-modal
-  [open]="this.isOpen"
-  [params]="this.params"
-  (validated)="this.confirmations = this.confirmations + 1"
-  (closeEvent)="this.isOpen = false"
+  [modalState]="this.deleteModal"
+  (closeEvent)="this.confirmations = this.confirmations + 1"
 ></ta-validation-modal>
-<p>Suppressions confirmées : {{ this.confirmations }}</p>`, members: `readonly params: ModalParameter = { title: "Supprimer le compte ?", subtitle: "Toutes les données associées seront perdues." };
+<p>Suppressions confirmées : {{ this.confirmations }}</p>`, members: `readonly params: ModalParameter = {
+    title: 'Supprimer le compte ?',
+    subtitle: 'Toutes les données associées seront perdues.',
+  };
 
-isOpen = false;
+deleteModal = new ModalState<ModalParameter | undefined, boolean>();
 
 confirmations = 0;` },
   "TaVeriffButtonModesExample": { template: `<ta-veriff-button mode="full">Vérifier mon identité</ta-veriff-button>

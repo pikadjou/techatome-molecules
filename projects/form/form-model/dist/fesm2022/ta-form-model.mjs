@@ -538,14 +538,9 @@ var EAddressValues;
 class InputAddress extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = "address";
-        this.type = "address";
-        this.priorityCountries = options.priorityCountries ?? [
-            "BE",
-            "FR",
-            "DE",
-            "NL",
-        ];
+        this.controlType = 'address';
+        this.type = 'address';
+        this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
     }
     /**
      * Valeur brute du formulaire → adresse normalisée.
@@ -582,16 +577,10 @@ class InputAddress extends InputBase {
         if (!address) {
             return false;
         }
-        return [
-            address.street,
-            address.number,
-            address.zipCode,
-            address.city,
-            address.country,
-        ].every((value) => !!InputAddress._trim(value));
+        return [address.street, address.number, address.zipCode, address.city, address.country].every(value => !!InputAddress._trim(value));
     }
     static _trim(value) {
-        return typeof value === "string" ? value.trim() : value;
+        return typeof value === 'string' ? value.trim() : value;
     }
 }
 

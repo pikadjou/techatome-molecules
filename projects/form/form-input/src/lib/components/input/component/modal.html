@@ -1,13 +1,8 @@
-<ta-modal
-  [open]="this.open()"
-  size="medium"
-  title="input.component.modal.title"
-  (closeEvent)="this.closeEvent.emit()"
->
+<ta-modal [open]="this.isOpen()" size="medium" title="input.component.modal.title" (closeEvent)="this.dismiss()">
   <div modal-content>
-    @if (this.inputData().template) {
+    @if (this.modalState()?.input()?.template; as template) {
       <ng-template
-        [ngTemplateOutlet]="this.inputData().template"
+        [ngTemplateOutlet]="template"
         [ngTemplateOutletContext]="{ selectedValue$: this.selectedValue$ }"
       ></ng-template>
     }

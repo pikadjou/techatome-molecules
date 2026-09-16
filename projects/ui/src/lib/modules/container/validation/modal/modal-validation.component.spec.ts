@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { ModalState } from '@ta/utils';
+
+import { ModalParameter } from '../common-modal';
 import { ValidationModal } from './modal-validation.component';
 
 describe('ValidationModal', () => {
   let component: ValidationModal;
   let fixture: ComponentFixture<ValidationModal>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<ValidationModal>>;
+  let state: ModalState<ModalParameter | undefined, boolean>;
 
   beforeEach(async () => {
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close', 'addPanelClass']);
-
     await TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot({
@@ -21,15 +21,13 @@ describe('ValidationModal', () => {
         }),
         ValidationModal,
       ],
-      providers: [
-        provideRouter([]),
-        { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: undefined },
-      ],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ValidationModal);
     component = fixture.componentInstance;
+    state = new ModalState<ModalParameter | undefined, boolean>();
+    fixture.componentRef.setInput('modalState', state);
     fixture.detectChanges();
   });
 
@@ -37,56 +35,45 @@ describe('ValidationModal', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should return default title when data is undefined', () => {
-    expect(component.title).toBe('validation.modal.title');
+  it('should be closed until asked', () => {
+    expect(component.isOpen()).toBe(false);
+    state.asked(undefined);
+    expect(component.isOpen()).toBe(true);
   });
 
-  it('should return default subtitle when data is undefined', () => {
+  it('should return default title and subtitle without params', () => {
+    state.asked(undefined);
+    expect(component.title).toBe('validation.modal.title');
     expect(component.subtitle).toBe('validation.modal.content');
   });
 
-  it('should close dialog with false when onNoClick is called', () => {
-    component.onNoClick();
-    expect(mockDialogRef.close).toHaveBeenCalledWith(false);
-  });
-
-  it('should close dialog with true when onYesClick is called', () => {
-    component.onYesClick();
-    expect(mockDialogRef.close).toHaveBeenCalledWith(true);
-  });
-});
-
-describe('ValidationModal with custom data', () => {
-  let component: ValidationModal;
-  let fixture: ComponentFixture<ValidationModal>;
-
-  beforeEach(async () => {
-    const mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close', 'addPanelClass']);
-
-    await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
-        }),
-        ValidationModal,
-      ],
-      providers: [
-        provideRouter([]),
-        { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: { title: 'Custom Title', subtitle: 'Custom Subtitle' } },
-      ],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(ValidationModal);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should return custom title from data', () => {
+  it('should return the title and subtitle given as input', () => {
+    state.asked({ title: 'Custom Title', subtitle: 'Custom Subtitle' });
     expect(component.title).toBe('Custom Title');
+    expect(component.subtitle).toBe('Custom Subtitle');
   });
 
-  it('should return custom subtitle from data', () => {
-    expect(component.subtitle).toBe('Custom Subtitle');
+  it('should dismiss without result when onNoClick is called', () => {
+    const emitted: boolean[] = [];
+    component.closeEvent.subscribe(value => emitted.push(value));
+    state.asked(undefined);
+
+    component.onNoClick();
+
+    expect(state.open()).toBe(false);
+    expect(state.output()).toBeNull();
+    expect(emitted).toEqual([]);
+  });
+
+  it('should confirm with true when onYesClick is called', () => {
+    const emitted: boolean[] = [];
+    component.closeEvent.subscribe(value => emitted.push(value));
+    state.asked(undefined);
+
+    component.onYesClick();
+
+    expect(state.open()).toBe(false);
+    expect(state.output()).toBe(true);
+    expect(emitted).toEqual([true]);
   });
 });

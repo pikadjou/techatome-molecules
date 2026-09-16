@@ -1,10 +1,10 @@
 import * as i0 from '@angular/core';
-import { input, output, ElementRef, ViewChild, Component, Injectable, inject, EventEmitter, Output, signal, HostListener, importProvidersFrom } from '@angular/core';
+import { input, output, ElementRef, ViewChild, Component, Injectable, inject, EventEmitter, HostListener, Output, signal, importProvidersFrom } from '@angular/core';
 import * as i1 from '@angular/forms';
 import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { delay, combineLatest, Subject, BehaviorSubject, of, take, startWith, filter, map, debounceTime, tap, concatMap } from 'rxjs';
-import { TaBaseComponent, canTakePhoto, pickImages, isNonNullable, takePhoto, newGuid, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, loadStylesheet, downloadFile } from '@ta/utils';
+import { TaBaseComponent, canTakePhoto, pickImages, isNonNullable, takePhoto, TaBaseModal, newGuid, ModalState, getBase64FromFile, StopPropagationDirective, toArray, getUniqueArray, loadStylesheet, downloadFile } from '@ta/utils';
 import { TranslatePipe, TaLazyTranslationService } from '@ta/translation';
 import * as i2 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -599,16 +599,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                     ], template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" size=\"sm\">\n  <div class=\"logo-wrapper\">\n    <ta-overlay-panel #logoPanel [panelConfig]=\"{ matchTriggerWidth: false }\">\n      <ng-template #panelTrigger>\n        <div class=\"logo-preview\" [class.has-value]=\"!!this.input.value\">\n          @if (this.input.value) {\n            <img [src]=\"this.input.value.url\" class=\"logo-image\" />\n            <div class=\"logo-overlay\">\n              <ta-font-icon name=\"edit\" type=\"md\"></ta-font-icon>\n            </div>\n          } @else {\n            <div class=\"logo-placeholder\">\n              <ta-font-icon name=\"add_a_photo\" type=\"lg\"></ta-font-icon>\n              <span class=\"logo-placeholder-text\">{{ 'input.logo.add' | translate }}</span>\n            </div>\n          }\n        </div>\n      </ng-template>\n      <ng-template #panelContent>\n        <div class=\"logo-menu flex-column\">\n          @if (this.showTakePhoto) {\n            <button type=\"button\" class=\"logo-option\" (click)=\"this.openCamera(); logoPanel.close()\">\n              <ta-font-icon name=\"add_a_photo\" type=\"sm\"></ta-font-icon>\n              <span>{{ 'input.logo.take-photo' | translate }}</span>\n            </button>\n          }\n          <button type=\"button\" class=\"logo-option\" (click)=\"this.openGallery(); logoPanel.close()\">\n            <ta-font-icon name=\"image\" type=\"sm\"></ta-font-icon>\n            <span>{{ 'input.logo.gallery' | translate }}</span>\n          </button>\n        </div>\n      </ng-template>\n    </ta-overlay-panel>\n\n    @if (this.input.value) {\n      <ta-button type=\"danger\" size=\"small\" icon=\"delete\" (action)=\"this.removeLogo()\">\n        {{ 'input.logo.remove' | translate }}\n      </ta-button>\n    }\n  </div>\n</ta-loader>\n", styles: [":host{display:block}.logo-wrapper{flex-direction:column;display:flex;align-items:center;gap:var(--ta-space-sm)}.logo-preview{position:relative;width:120px;height:120px;border-radius:var(--ta-radius-label);overflow:hidden;cursor:pointer;border:2px dashed var(--ta-border-secondary);background-color:var(--ta-surface-secondary);transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease}.logo-preview:hover{border-color:var(--ta-brand-500);background-color:var(--ta-surface-hover)}.logo-preview:hover .logo-overlay{opacity:1}.logo-preview:hover .logo-placeholder{color:var(--ta-text-brand)}.logo-preview:hover .logo-placeholder ta-font-icon{transform:scale(1.1)}.logo-preview.has-value{border-style:solid;border-color:var(--ta-border-primary);background-color:var(--ta-surface-primary)}.logo-preview.has-value:hover{box-shadow:var(--ta-shadow-brand-sm);border-color:var(--ta-brand-500)}.logo-menu{padding:var(--ta-space-xs);background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);box-shadow:var(--ta-shadow-black-sm)}.logo-option{display:flex;align-items:center;gap:var(--ta-space-sm);width:100%;padding:var(--ta-space-sm) var(--ta-space-md);border:none;background:transparent;border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);cursor:pointer;white-space:nowrap;text-align:left;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);transition:background-color var(--ta-transition-fast),color var(--ta-transition-fast)}.logo-option:hover{color:var(--ta-text-brand-primary);background-color:var(--ta-surface-hover)}.logo-image{width:100%;height:100%;object-fit:cover;display:block}.logo-overlay{position:absolute;inset:0;background-color:#0006;flex-direction:column;align-items:center;display:flex;justify-content:center;margin:auto;opacity:0;transition:opacity .2s ease;color:var(--ta-text-inverse)}.logo-placeholder{width:100%;height:100%;flex-direction:column;align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-space-sm);color:var(--ta-text-tertiary);transition:color .2s ease}.logo-placeholder ta-font-icon{transition:transform .2s ease}.logo-placeholder-text{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight)}\n"] }]
         }], ctorParameters: () => [] });
 
-class InputSchemaModal extends TaBaseComponent {
+/** Éditeur de schéma plein écran ; rend le fichier dessiné. */
+class InputSchemaModal extends TaBaseModal {
     constructor() {
         super();
-        this.open = input.required();
-        this.savedFile = new EventEmitter();
-        this.closeEvent = new EventEmitter();
         this.askImage$ = new Subject();
-        this.imagePath = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoAQMAAAB3bUanAAAABlBMVEUAAAD8/vwnjUF/AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAcVJREFUeJztzTEBAAAMAiD7l9YYOwYFSC/Fbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xb7g32cNHwzdl5x4gAAAABJRU5ErkJggg==";
+        this.imagePath = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoAQMAAAB3bUanAAAABlBMVEUAAAD8/vwnjUF/AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAcVJREFUeJztzTEBAAAMAiD7l9YYOwYFSC/Fbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xb7g32cNHwzdl5x4gAAAABJRU5ErkJggg==';
         this.close = () => {
-            this.closeEvent.emit();
+            this.dismiss();
         };
         this.selected = () => {
             this.askImage$.next(null);
@@ -616,26 +614,21 @@ class InputSchemaModal extends TaBaseComponent {
     }
     savedImage(blob) {
         const file = new File([blob], newGuid(), { type: blob.type });
-        this.savedFile.emit({ file: { file, localUrl: this.imagePath } });
-        this.closeEvent.emit();
+        this.confirm({ file: { file, localUrl: this.imagePath } });
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: InputSchemaModal, isStandalone: true, selector: "ta-input-schema-modal", inputs: { open: { classPropertyName: "open", publicName: "open", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { savedFile: "savedFile", closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: "<ta-modal\n  [open]=\"this.open()\"\n  size=\"fullscreen\"\n  title=\"\"\n  (closeEvent)=\"this.close()\"\n>\n  <div modal-content class=\"edit-schema-container\">\n    <ta-files-edit\n      [imagePath]=\"this.imagePath\"\n      [saveImage$]=\"this.askImage$\"\n      (savedImage)=\"this.savedImage($event)\"\n    ></ta-files-edit>\n  </div>\n</ta-modal>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"], dependencies: [{ kind: "component", type: FileEditComponent, selector: "ta-files-edit", inputs: ["imagePath", "saveImage$"], outputs: ["savedImage"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "overline", "tone", "showClose", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: InputSchemaModal, isStandalone: true, selector: "ta-input-schema-modal", usesInheritance: true, ngImport: i0, template: "<ta-modal [open]=\"this.isOpen()\" size=\"fullscreen\" title=\"\" (closeEvent)=\"this.close()\">\n  <div modal-content class=\"edit-schema-container\">\n    <ta-files-edit\n      [imagePath]=\"this.imagePath\"\n      [saveImage$]=\"this.askImage$\"\n      (savedImage)=\"this.savedImage($event)\"\n    ></ta-files-edit>\n  </div>\n</ta-modal>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"], dependencies: [{ kind: "component", type: FileEditComponent, selector: "ta-files-edit", inputs: ["imagePath", "saveImage$"], outputs: ["savedImage"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "overline", "tone", "showClose", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaModal, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-schema-modal", standalone: true, imports: [FileEditComponent, TaModalComponent], template: "<ta-modal\n  [open]=\"this.open()\"\n  size=\"fullscreen\"\n  title=\"\"\n  (closeEvent)=\"this.close()\"\n>\n  <div modal-content class=\"edit-schema-container\">\n    <ta-files-edit\n      [imagePath]=\"this.imagePath\"\n      [saveImage$]=\"this.askImage$\"\n      (savedImage)=\"this.savedImage($event)\"\n    ></ta-files-edit>\n  </div>\n</ta-modal>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"] }]
-        }], ctorParameters: () => [], propDecorators: { savedFile: [{
-                type: Output
-            }], closeEvent: [{
-                type: Output
-            }] } });
+            args: [{ selector: 'ta-input-schema-modal', standalone: true, imports: [FileEditComponent, TaModalComponent], template: "<ta-modal [open]=\"this.isOpen()\" size=\"fullscreen\" title=\"\" (closeEvent)=\"this.close()\">\n  <div modal-content class=\"edit-schema-container\">\n    <ta-files-edit\n      [imagePath]=\"this.imagePath\"\n      [saveImage$]=\"this.askImage$\"\n      (savedImage)=\"this.savedImage($event)\"\n    ></ta-files-edit>\n  </div>\n</ta-modal>\n", styles: [".edit-schema-container{height:80vh;padding-bottom:70px}\n"] }]
+        }], ctorParameters: () => [] });
 
 class InputSchemaComponent extends TaAbstractInputComponent {
     get pics() {
         if (!this.input.value)
             return null;
-        return [{ id: 0, type: "Image", url: this.input.value }];
+        return [{ id: 0, type: 'Image', url: this.input.value }];
     }
     get isCircularButton() {
         return !!this.pics && this.pics.length > 0;
@@ -645,10 +638,10 @@ class InputSchemaComponent extends TaAbstractInputComponent {
     }
     constructor() {
         super();
-        this.isModalOpen = signal(false);
+        this.schemaModal = new ModalState();
     }
     openDialog() {
-        this.isModalOpen.set(true);
+        this.schemaModal.asked(null);
     }
     async onSavedFile(data) {
         if (!data?.file)
@@ -661,17 +654,11 @@ class InputSchemaComponent extends TaAbstractInputComponent {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputSchemaComponent, isStandalone: true, selector: "ta-input-schema", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n    <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n\n<ta-input-schema-modal\n  [open]=\"this.isModalOpen()\"\n  (savedFile)=\"this.onSavedFile($event)\"\n  (closeEvent)=\"this.isModalOpen.set(false)\"\n></ta-input-schema-modal>\n", styles: [""], dependencies: [{ kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input"] }, { kind: "component", type: InputSchemaModal, selector: "ta-input-schema-modal", inputs: ["open"], outputs: ["savedFile", "closeEvent"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputSchemaComponent, isStandalone: true, selector: "ta-input-schema", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n    <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n\n<ta-input-schema-modal [modalState]=\"this.schemaModal\" (closeEvent)=\"this.onSavedFile($event)\"></ta-input-schema-modal>\n", styles: [""], dependencies: [{ kind: "component", type: LocalIconComponent, selector: "ta-local-icon", inputs: ["type", "size", "rotation"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FileListComponent, selector: "ta-files-list", inputs: ["files", "canDeleteFile"], outputs: ["fileSelected", "moreInformationSelected", "fileDeleted"] }, { kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input"] }, { kind: "component", type: InputSchemaModal, selector: "ta-input-schema-modal" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputSchemaComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-input-schema", standalone: true, imports: [
-                        LocalIconComponent,
-                        ButtonComponent,
-                        FileListComponent,
-                        InputLayoutComponent,
-                        InputSchemaModal,
-                    ], template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n    <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n\n<ta-input-schema-modal\n  [open]=\"this.isModalOpen()\"\n  (savedFile)=\"this.onSavedFile($event)\"\n  (closeEvent)=\"this.isModalOpen.set(false)\"\n></ta-input-schema-modal>\n" }]
+            args: [{ selector: 'ta-input-schema', standalone: true, imports: [LocalIconComponent, ButtonComponent, FileListComponent, InputLayoutComponent, InputSchemaModal], template: "<ta-input-layout [input]=\"this.input\">\n  <ta-button\n    #focusedElement\n    (action)=\"this.openDialog()\"\n    [options]=\"{ circular: this.isCircularButton }\"\n    [style]=\"'secondary'\"\n  >\n    <ta-local-icon [type]=\"this.icon.Pencil\"></ta-local-icon>\n  </ta-button>\n\n  @if (this.pics) {\n    <ta-files-list [files]=\"this.pics\"></ta-files-list>\n  }\n</ta-input-layout>\n\n<ta-input-schema-modal [modalState]=\"this.schemaModal\" (closeEvent)=\"this.onSavedFile($event)\"></ta-input-schema-modal>\n" }]
         }], ctorParameters: () => [] });
 
 class SearchFieldComponent extends TaAbstractInputComponent {
@@ -1137,42 +1124,38 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ selector: "ta-input-culture", standalone: true, imports: [DropdownComponent], template: "<ta-input-dropdown [input]=\"this.input\"></ta-input-dropdown>\n" }]
         }], ctorParameters: () => [] });
 
-class ComponentSelectorModal extends TaBaseComponent {
+/** Projette le `TemplateRef` du modèle `InputComponent` reçu en entrée ; rend la valeur choisie. */
+class ComponentSelectorModal extends TaBaseModal {
     constructor() {
         super();
-        this.open = input.required();
-        this.inputData = input.required();
-        this.closeEvent = new EventEmitter();
         this.selectedValue$ = new Subject();
         this._registerSubscription(this.selectedValue$.subscribe({ next: value => this.select(value) }));
     }
     select(value) {
-        this.inputData().selectedValue$.next(value);
-        this.closeEvent.emit();
+        this.modalState()?.input()?.selectedValue$.next(value);
+        this.confirm(value);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentSelectorModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ComponentSelectorModal, isStandalone: true, selector: "ta-component-selector-modal", inputs: { open: { classPropertyName: "open", publicName: "open", isSignal: true, isRequired: true, transformFunction: null }, inputData: { classPropertyName: "inputData", publicName: "inputData", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: "<ta-modal\n  [open]=\"this.open()\"\n  size=\"medium\"\n  title=\"input.component.modal.title\"\n  (closeEvent)=\"this.closeEvent.emit()\"\n>\n  <div modal-content>\n    @if (this.inputData().template) {\n      <ng-template\n        [ngTemplateOutlet]=\"this.inputData().template\"\n        [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n      ></ng-template>\n    }\n  </div>\n</ta-modal>\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "overline", "tone", "showClose", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: ComponentSelectorModal, isStandalone: true, selector: "ta-component-selector-modal", usesInheritance: true, ngImport: i0, template: "<ta-modal [open]=\"this.isOpen()\" size=\"medium\" title=\"input.component.modal.title\" (closeEvent)=\"this.dismiss()\">\n  <div modal-content>\n    @if (this.modalState()?.input()?.template; as template) {\n      <ng-template\n        [ngTemplateOutlet]=\"template\"\n        [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n      ></ng-template>\n    }\n  </div>\n</ta-modal>\n", dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "overline", "tone", "showClose", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentSelectorModal, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-component-selector-modal', standalone: true, imports: [NgTemplateOutlet, TaModalComponent], template: "<ta-modal\n  [open]=\"this.open()\"\n  size=\"medium\"\n  title=\"input.component.modal.title\"\n  (closeEvent)=\"this.closeEvent.emit()\"\n>\n  <div modal-content>\n    @if (this.inputData().template) {\n      <ng-template\n        [ngTemplateOutlet]=\"this.inputData().template\"\n        [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n      ></ng-template>\n    }\n  </div>\n</ta-modal>\n" }]
-        }], ctorParameters: () => [], propDecorators: { closeEvent: [{
-                type: Output
-            }] } });
+            args: [{ selector: 'ta-component-selector-modal', standalone: true, imports: [NgTemplateOutlet, TaModalComponent], template: "<ta-modal [open]=\"this.isOpen()\" size=\"medium\" title=\"input.component.modal.title\" (closeEvent)=\"this.dismiss()\">\n  <div modal-content>\n    @if (this.modalState()?.input()?.template; as template) {\n      <ng-template\n        [ngTemplateOutlet]=\"template\"\n        [ngTemplateOutletContext]=\"{ selectedValue$: this.selectedValue$ }\"\n      ></ng-template>\n    }\n  </div>\n</ta-modal>\n" }]
+        }], ctorParameters: () => [] });
 class ComponentInputComponent extends TaAbstractInputComponent {
     constructor() {
         super(...arguments);
-        this.isModalOpen = signal(false);
+        this.selectorModal = new ModalState();
     }
     open() {
-        this.isModalOpen.set(true);
+        this.selectorModal.asked(this.input);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n\n<ta-component-selector-modal\n  [open]=\"this.isModalOpen()\"\n  [inputData]=\"this.input\"\n  (closeEvent)=\"this.isModalOpen.set(false)\"\n></ta-component-selector-modal>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ComponentSelectorModal, selector: "ta-component-selector-modal", inputs: ["open", "inputData"], outputs: ["closeEvent"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: ComponentInputComponent, isStandalone: true, selector: "ta-input-component", usesInheritance: true, ngImport: i0, template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n\n<ta-component-selector-modal [modalState]=\"this.selectorModal\"></ta-component-selector-modal>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"], dependencies: [{ kind: "component", type: InputLayoutComponent, selector: "ta-input-layout", inputs: ["input"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ComponentSelectorModal, selector: "ta-component-selector-modal" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ComponentInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, FontIconComponent, ComponentSelectorModal], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n\n<ta-component-selector-modal\n  [open]=\"this.isModalOpen()\"\n  [inputData]=\"this.input\"\n  (closeEvent)=\"this.isModalOpen.set(false)\"\n></ta-component-selector-modal>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
+            args: [{ selector: 'ta-input-component', standalone: true, imports: [InputLayoutComponent, ReactiveFormsModule, FontIconComponent, ComponentSelectorModal], template: "<ta-input-layout [input]=\"this.input\">\n  <div class=\"component-container\">\n    <input\n      #box\n      #focusedElement\n      class=\"form-control\"\n      [value]=\"this.input.value\"\n      [formControl]=\"$any(this.input.formControl)\"\n      [readonly]=\"this.input.disabled\"\n      type=\"text\"\n    />\n    <div class=\"cta\" (click)=\"this.open()\">\n      <ta-font-icon name=\"ressources\"></ta-font-icon>\n    </div>\n  </div>\n</ta-input-layout>\n\n<ta-component-selector-modal [modalState]=\"this.selectorModal\"></ta-component-selector-modal>\n", styles: [".component-container{position:relative}.cta{position:absolute;top:0;right:0;padding:var(--ta-space-sm)}\n"] }]
         }] });
 
 const provideForm = () => [

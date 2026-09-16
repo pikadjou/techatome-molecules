@@ -8,7 +8,7 @@ description: Bonnes pratiques et patterns Angular pour le développement sur les
 **L'utilisation d'un élément HTML natif ou d'un composant tiers est INTERDITE lorsqu'un équivalent `@ta/*` existe.** Cette règle est sans exception.
 
 | Besoin             | Composant obligatoire                                                                 | Interdit                                |
-| ------------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
+| ------------------ | ------------------------------------------------------------------------------------- | --------------------------------------- | ---------- | ----------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Bouton / CTA       | `<ta-button>`                                                                         | `<button>`, `<a>` stylisé               |
 | Titre / heading    | `<ta-title [level]="N">`                                                              | `<h1>`–`<h6>`                           |
 | Texte / paragraphe | `<ta-text>`                                                                           | `<p>`, `<span>`                         |
@@ -23,8 +23,9 @@ description: Bonnes pratiques et patterns Angular pour le développement sur les
 | Formulaire         | `<ta-form>` + `<ta-input-*>`                                                          | `<form>`, `<input>`, `<select>` natifs  |
 | Notification       | `NotificationService` (`@ta/notification`)                                            | `alert()`, `mat-snackbar` direct        |
 | Progression        | `<ta-progress-bar>`, `<ta-progress-circle>`                                           | `<mat-progress-bar>` direct             |
-| Modal centrée      | `<ta-modal>` (`@ta/ui`)                                                               | `MatDialog.open()`, divs custom         |
+| Modal centrée      | `TaBaseModal<In, Out>` + `ModalState` + `<ta-modal>` (§5a)                            | `MatDialog.open()`, divs custom         |
 | Panneau latéral    | `<ta-layout-full-panel>` (`@ta/ui`)                                                   | `mat-drawer`, divs custom               |
+| Date / heure       | `date: 'shortDate'                                                                    | 'mediumDate'                            | 'fullDate' | 'shortTime' | …`, `<ta-hour-date-line>`, `<ta-time-ago>`, `<ta-duration>` | `date: 'EEEE d MMMM'`, `date: … : undefined : this.locale`, formatage à la main |
 
 En cas de doute, vérifier les APIs publiques de `@ta/ui`, `@ta/form-basic`, `@ta/form-input`, `@ta/icons`, `@ta/notification` avant d'utiliser un élément natif ou tiers.
 
@@ -484,7 +485,7 @@ export class ViewPage extends BasePage implements AfterViewInit {
 | ---------------------- | ------------- | ---------------------------------------------- |
 | Page chargée par route | `Page`        | `TeamsPage`, `AllTasksListPage`                |
 | Composant réutilisable | `Component`   | `AllListComponent`, `EditComponent`            |
-| Modale MatDialog       | `Modal`       | `DocumentAttachmentModal`                      |
+| Modale (`TaBaseModal`) | `Modal`       | `DocumentAttachmentModal`                      |
 | Service métier         | `Service`     | `AppTasksService`, `AppTeamsService`           |
 | Service de formulaire  | `FormService` | `AppTasksFormService`, `taColorSetFormService` |
 
@@ -539,7 +540,22 @@ export class DataGridComponent {
 :host-context(.data-grid-row) { … } // depuis un enfant
 ```
 
-### 0.8 Commentaires : courts et factuels
+### 0.8 Dates : formats déjà prévus, jamais de motif à la main
+
+```html
+<!-- ❌ Interdit : motif maison, locale passée en argument -->
+{{ visit.startAt | date: 'EEEE d MMMM' : undefined : this.locale }}
+
+<!-- ✅ Correct : formats prédéfinis d'Angular, qui suivent LOCALE_ID -->
+{{ visit.startAt | date: 'fullDate' }} {{ visit.startAt | date: 'shortTime' }}
+<ta-hour-date-line [startDate]="visit.startAt" [endDate]="visit.endAt"></ta-hour-date-line>
+<ta-time-ago [date]="visit.updatedAt"></ta-time-ago>
+```
+
+Formats admis : `short`, `medium`, `long`, `full`, `shortDate`, `mediumDate`, `longDate`, `fullDate`,
+`shortTime`, `mediumTime`, `longTime`, `fullTime`. Pas de locale en argument : `LOCALE_ID` s'en charge.
+
+### 0.9 Commentaires : courts et factuels
 
 Une ligne de JSDoc par input, output ou méthode publique quand le nom ne suffit pas. Pas de bannière de
 section (`// ---- Scène ----`), pas de paragraphe qui justifie un choix de design, pas de commentaire qui
@@ -1111,72 +1127,120 @@ export class TeamsPage extends BaseListPage<Team> {}
 
 ## 5. MODALES ET PANNEAUX LATÉRAUX
 
-### 5a. `ta-modal` — modale déclarative (approche préférée)
+### 5a. Modale = `ModalState` + `TaBaseModal<In, Out>` + `ta-modal` (pattern unique)
 
-`ta-modal` est un composant standalone de `@ta/ui` qui remplace `MatDialog` pour les cas courants. Il est contrôlé par un signal `open` passé depuis le parent — **pas de service, pas d'injection**.
-
-**Inputs :**
-| Input | Type | Défaut | Description |
-|---|---|---|---|
-| `open` | `boolean` (required) | — | Contrôle l'affichage |
-| `size` | `'small' \| 'medium' \| 'large' \| 'fullscreen'` | `undefined` | Largeur fixe (sinon contenu) |
-| `title` | `string` | `''` | Titre affiché dans le header |
-| `closeOnBackdrop` | `boolean` | `true` | Fermer au clic sur le backdrop |
-
-**Output :** `closeEvent: EventEmitter<void>`
-
-**Slots de contenu :**
-
-- `[modal-content]` — zone scrollable principale
-- `[modal-footer]` — pied de modale fixe (masqué si vide)
-
-**Tailles :**
-| Valeur | Largeur |
-|---|---|
-| `small` | 400px |
-| `medium` | 600px |
-| `large` | 900px |
-| `fullscreen` | 100vw / 100dvh |
-| _(absent)_ | Pilotée par le contenu (max 90vw / 85vh) |
-
-**Usage complet :**
+Une modale est un composant de **contenu** qui hérite de `TaBaseModal<In, Out>` (`@ta/utils`), embarque son
+`<ta-modal>` (`@ta/ui`) et est piloté par un `ModalState<In, Out>` que le parent possède. Le parent pousse
+l'entrée avec `asked(input)`, la modale rend son résultat avec `confirm(output)` — même contrat que
+`CamBaseModal` / `ModalState` côté Camelot. **Pas de service, pas d'injection, pas de `MatDialog`.**
 
 ```typescript
-// mon-composant.component.ts
-public isModalOpen = signal(false);
-public openModal(): void { this.isModalOpen.set(true); }
-public closeModal(): void { this.isModalOpen.set(false); }
+// @ta/utils
+class ModalState<T, U> {
+  open: WritableSignal<boolean>; // false
+  input: WritableSignal<T | null | undefined>; // null
+  output: WritableSignal<U | null>; // null
+  asked(input: T): void; // input := input ; output := null ; open := true
+  completed(output: U): void; // output := output ; open := false
+  dismissed(): void; // open := false
+}
+
+abstract class TaBaseModal<T, U> extends TaAbstractComponent {
+  modalState = input<ModalState<T, U> | null>(null);
+  closeEvent = output<U>();
+  isOpen(): boolean; // modalState()?.open() ?? false
+  confirm(output: U): void; // completed(output) + closeEvent.emit(output)
+  dismiss(): void; // dismissed(), sans événement
+}
+```
+
+**La modale** (contenu + `ta-modal` embarqué) :
+
+```typescript
+export type DeleteAccountInput = { accountName: string };
+
+@Component({
+  selector: 'app-delete-account-modal',
+  templateUrl: './delete-account-modal.component.html',
+  styleUrls: ['./delete-account-modal.component.scss'],
+  standalone: true,
+  imports: [ButtonComponent, TaModalComponent, TextComponent, TranslateModule],
+})
+export class DeleteAccountModal extends TaBaseModal<DeleteAccountInput, boolean> {
+  public get accountName(): string {
+    return this.modalState()?.input()?.accountName ?? '';
+  }
+
+  public onYes(): void {
+    this.confirm(true);
+  }
+}
 ```
 
 ```html
-<!-- mon-composant.component.html -->
-<ta-button type="secondary" (action)="this.openModal()">Ouvrir</ta-button>
-
-<ta-modal [open]="this.isModalOpen()" size="medium" title="Titre de la modale" (closeEvent)="this.closeModal()">
+<ta-modal
+  [open]="this.isOpen()"
+  size="small"
+  [title]="'account.delete.title' | translate"
+  (closeEvent)="this.dismiss()"
+>
   <div modal-content>
-    <ta-text>Contenu principal scrollable.</ta-text>
+    <ta-text>{{ 'account.delete.content' | translate: { name: this.accountName } }}</ta-text>
   </div>
   <div modal-footer>
-    <ta-button type="secondary" (action)="this.closeModal()">Annuler</ta-button>
-    <ta-button type="primary" (action)="this.confirm()">Confirmer</ta-button>
+    <ta-button type="secondary" (action)="this.dismiss()">{{ 'common.cancel' | translate }}</ta-button>
+    <ta-button type="danger" (action)="this.onYes()">{{ 'common.delete' | translate }}</ta-button>
   </div>
 </ta-modal>
 ```
 
-**Import dans le composant :**
+**Le parent** :
 
 ```typescript
-import { TaModalComponent } from '@ta/ui';
-// ou
-import { ModalSize, TaModalComponent } from '@ta/ui'; // si besoin du type ModalSize
+public deleteModal = new ModalState<DeleteAccountInput, boolean>();
+
+public askDelete(account: Account): void {
+  this.deleteModal.asked({ accountName: account.name });
+}
+
+public onDeleteConfirmed(): void {
+  this._accountsService.delete$(this.account.id).subscribe(…);
+}
 ```
+
+```html
+<ta-button type="danger" icon="delete" (action)="this.askDelete(this.account)"
+  >{{ 'common.delete' | translate }}</ta-button
+>
+<app-delete-account-modal
+  [modalState]="this.deleteModal"
+  (closeEvent)="this.onDeleteConfirmed()"
+></app-delete-account-modal>
+```
+
+**`ta-modal` (le conteneur, embarqué dans la modale) :**
+
+| Input             | Type                 | Défaut   | Description                                                                |
+| ----------------- | -------------------- | -------- | -------------------------------------------------------------------------- | -------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
+| `open`            | `boolean` (required) | —        | Lier `this.isOpen()`                                                       |
+| `size`            | `'small'             | 'medium' | 'large'                                                                    | 'fullscreen'`                                                  | `undefined` | 400 / 600 / 900 px / plein écran ; absent = piloté par le contenu |
+| `title`           | `string`             | `''`     | Chaîne déjà traduite : `[title]="'key'                                     | translate"`                                                    |
+| `overline`        | `string`             | `''`     | Surtitre en capitales                                                      |
+| `tone`            | `'surface'           | 'brand'` | `'surface'`                                                                | `brand` : bandeau de marque plein, pour les modales bloquantes |
+| `showClose`       | `boolean`            | `true`   | `false` : la modale projette sa propre action dans `[modal-header-action]` |
+| `closeOnBackdrop` | `boolean`            | `true`   | Fermer au clic sur le fond                                                 |
+| `contentFit`      | `boolean`            | `false`  | Contenu qui remplit la hauteur (visionneuse, éditeur)                      |
+
+**Output :** `closeEvent` (croix ou fond) → `(closeEvent)="this.dismiss()"`.
+**Slots :** `[modal-content]` (zone scrollable), `[modal-footer]` (pied fixe, masqué si vide), `[modal-header-action]`.
 
 **Règles :**
 
-- Utiliser `ta-modal` pour toutes les **nouvelles** modales — éviter `MatDialog` sauf pour les cas complexes (formulaire avec `@ViewChild`, résultat typé via `afterClosed()`)
-- Toujours passer les slots via `<div modal-content>` et `<div modal-footer>`
-- Le `title` est une chaîne brute (pas une clé de traduction) — utiliser le pipe `translate` si nécessaire : `[title]="'key' | translate"`
-- Ne **pas** utiliser `TranslateModule` dans `ta-modal` — les traductions se font côté parent
+- Une modale = une classe `XxxModal extends TaBaseModal<In, Out>` ; `In`/`Out` toujours explicites, `null` s'il n'y a rien.
+- L'entrée se lit à la demande (`this.modalState()?.input()`), pas dans `ngOnInit` — le composant reste monté, seul `open()` bouge. État local à réinitialiser à chaque ouverture → `effect(() => { if (this.isOpen()) this._init(this.modalState()?.input()); })` dans le constructeur, champs simples uniquement.
+- Le parent ne connaît que `[modalState]` et `(closeEvent)` ; jamais de `[open]` + inputs/outputs ad hoc par modale, jamais de `isModalOpen = signal(false)`.
+- Annuler = `dismiss()` (rien n'est émis) ; confirmer = `confirm(result)`.
+- Fiches : `references/utils/ta-base-modal.md`, `references/utils/modal-state.md`, `references/ui/layout-modal.md`.
 
 ---
 
@@ -1228,46 +1292,11 @@ import { LayoutFullPanelComponent } from '@ta/ui';
 
 ---
 
-### 5c. `MatDialog` — modales complexes (legacy / cas spéciaux)
+### 5c. `MatDialog` — legacy uniquement
 
-Réserver `MatDialog` aux cas où `ta-modal` ne suffit pas : résultat typé via `afterClosed()`, `@ViewChild` sur un composant interne, ou formulaire avec cycle de vie complexe.
-
-```typescript
-import { MatDialog } from '@angular/material/dialog';
-
-import { AttachmentsResult, DocumentAttachmentModal } from './document-attachment-modal.component';
-
-export class ParentComponent extends BaseComponent {
-  private _dialog = inject(MatDialog);
-
-  public openAttachmentModal() {
-    const ref = this._dialog.open<DocumentAttachmentModal, void, AttachmentsResult | null>(DocumentAttachmentModal, {
-      panelClass: 'classic-modal',
-    });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      // traiter result.files, etc.
-    });
-  }
-}
-```
-
-```typescript
-import { taBaseModal } from '@ta/utils';
-
-export class MyModal extends taBaseModal {
-  constructor(public dialogRef: MatDialogRef<MyModal, MyModalResult | null>) {
-    super();
-    this.dialogRef.addPanelClass('classic-modal');
-  }
-  public onSave(files: InputUploadValue[]) {
-    this.dialogRef.close({ files });
-  }
-  public onCancel() {
-    this.dialogRef.close(null);
-  }
-}
-```
+Plus aucune modale des libs `@ta/*` n'utilise `MatDialog`. Ne pas en créer de nouvelle ; une modale legacy
+rencontrée dans l'app se migre vers 5a (le `dialogRef.close(result)` devient `confirm(result)`, le
+`MAT_DIALOG_DATA` devient `modalState().input()`).
 
 ---
 
@@ -1740,7 +1769,7 @@ taAbstractComponent (@ta/utils)
 - Composant simple → étend `BaseComponent`
 - Page → étend `BasePage`
 - Page avec liste + panneau latéral → étend `BaseListPage<MonType>`
-- Modale MatDialog → étend `taBaseModal` (de `@ta/utils`)
+- Modale → étend `TaBaseModal<In, Out>` (de `@ta/utils`), pilotée par un `ModalState` du parent (§5a)
 - Toujours utiliser `this._registerSubscription()` pour les subscriptions (auto-unsubscribe)
 - `requestState.asked()` / `requestState.completed()` pour gérer l'état de chargement
 
@@ -1827,7 +1856,7 @@ Les notifications affichent : barre latérale colorée (4px) + icône + titre ty
 - [ ] `HandleSimpleRequest` vs `HandleComplexRequest` : utiliser la bonne selon le besoin
 - [ ] `standalone: true` sur tous les nouveaux composants
 - [ ] `selector: ''` sur les pages (pas de sélecteur HTML pour les routes)
-- [ ] Modales : utiliser `<ta-modal>` (déclaratif) plutôt que `MatDialog` pour les cas simples
+- [ ] Modales : `XxxModal extends TaBaseModal<In, Out>` + `ModalState` côté parent + `<ta-modal>` embarqué ; jamais `MatDialog`, jamais `isModalOpen = signal(false)` + inputs/outputs ad hoc
 - [ ] Panneaux latéraux : utiliser `<ta-layout-full-panel>` avec slots `[panel-content]` et `[panel-footer]`
 - [ ] `this.` devant toutes les variables/méthodes dans les templates HTML
 - [ ] Ordre des membres : signal inputs/outputs / `@ViewChild` → publics → readonly → getters → services privés → constructor → lifecycle → méthodes publiques → méthodes privées
@@ -1835,6 +1864,7 @@ Les notifications affichent : barre latérale colorée (4px) + icône + titre ty
 - [ ] Propriétés/méthodes privées préfixées par `_`
 - [ ] Services injectés : `private readonly`
 - [ ] Aucune assertion non-null `!` dans les templates → `@if (…; as x)`
+- [ ] Dates : formats prédéfinis (`shortDate`, `fullDate`…) ou `ta-hour-date-line` / `ta-time-ago` / `ta-duration` ; aucun motif à la main ni locale en argument
 - [ ] Variantes de composant via `[ngClass]="this.getClass()"` + SCSS, pas de `host: { '[class.x]' }`
 - [ ] Commentaires : une ligne par input / méthode publique, pas de bannière ni de paragraphe de justification
 

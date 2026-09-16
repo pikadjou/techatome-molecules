@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
 
 import { InputSchema } from '@ta/form-model';
 
@@ -12,11 +10,8 @@ describe('InputSchemaComponent', () => {
   let component: InputSchemaComponent;
   let fixture: ComponentFixture<InputSchemaComponent>;
   let inputModel: InputSchema;
-  let dialogSpy: jasmine.SpyObj<MatDialog>;
 
   beforeEach(async () => {
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-
     inputModel = new InputSchema({ key: 'schema', label: 'Schema' });
     inputModel.createFormControl();
 
@@ -25,10 +20,8 @@ describe('InputSchemaComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
         }),
-        MatDialogModule,
         InputSchemaComponent,
       ],
-      providers: [{ provide: MatDialog, useValue: dialogSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputSchemaComponent);
@@ -53,9 +46,7 @@ describe('InputSchemaComponent', () => {
 
   it('should return pics array when value is set', () => {
     inputModel.value = 'data:image/png;base64,abc123';
-    expect(component.pics).toEqual([
-      { id: 0, type: 'Image', url: 'data:image/png;base64,abc123' },
-    ]);
+    expect(component.pics).toEqual([{ id: 0, type: 'Image', url: 'data:image/png;base64,abc123' }]);
   });
 
   it('should return false for isCircularButton when no pics', () => {
@@ -73,9 +64,8 @@ describe('InputSchemaComponent', () => {
     expect(inputModel.formControl?.value).toBe('new-value');
   });
 
-  it('should open dialog when openDialog is called', () => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(null) } as any);
+  it('should open the schema modal when openDialog is called', () => {
     component.openDialog();
-    expect(dialogSpy.open).toHaveBeenCalled();
+    expect(component.schemaModal.open()).toBe(true);
   });
 });

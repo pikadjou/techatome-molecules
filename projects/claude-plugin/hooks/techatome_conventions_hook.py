@@ -5,6 +5,7 @@ Warns about common violations before writing Angular/TypeScript files:
 - Object keys not sorted alphabetically (sort-keys ESLint rule)
 - Missing this. prefix in HTML templates
 - Non-null assertion (!) in HTML templates
+- Hand-written date formats or explicit locale in the date pipe
 - host: { '[class.x]': ... } bindings for component variants (use [ngClass] + SCSS)
 - Non-lazy route imports
 - SCSS: hand-written var(--ta-...), --ta-* reassignment, raw colors, raw px,
@@ -120,6 +121,23 @@ Use:
   @if (this.menuUser(); as menuUser) {
     <ta-menu [menu]="menuUser"></ta-menu>             // ✅
   }""",
+    },
+    {
+        "name": "date_format_by_hand",
+        "description": "Custom date pattern or explicit locale passed to the date pipe",
+        "reminder": """⚠️ techatome Convention: use the date formats already provided
+The date pipe only takes Angular's predefined formats — they follow LOCALE_ID and the theme.
+No hand-written pattern, no locale argument.
+
+Instead of:
+  {{ visit.startAt | date: 'EEEE d MMMM' : undefined : this.locale }}   // ❌
+
+Use:
+  {{ visit.startAt | date: 'fullDate' }}                                 // ✅
+  {{ visit.startAt | date: 'shortTime' }}                                // ✅
+  <ta-hour-date-line [startDate]="…" [endDate]="…">                      // ✅ date + plage horaire
+  <ta-time-ago [date]="…">                                               // ✅ « il y a 2 jours »
+Allowed: short|medium|long|full, shortDate|mediumDate|longDate|fullDate, shortTime|mediumTime|longTime|fullTime.""",
     },
     {
         "name": "missing_this_in_template",
@@ -295,6 +313,13 @@ def check_html(content: str) -> list[dict]:
     if re.search(r'\)!(?=\s*["\].|)])', content):
         issues.append(HTML_PATTERNS[0])
 
+    # e.g. | date: 'EEEE d MMMM'  or  | date: 'shortDate' : undefined : this.locale
+    predefined = r"(short|medium|long|full)(Date|Time)?"
+    if re.search(r"\|\s*date\s*:\s*['\"](?!" + predefined + r"['\"])", content) or re.search(
+        r"\|\s*date\s*:[^}|]*:[^}|]*:", content
+    ):
+        issues.append(HTML_PATTERNS[1])
+
     # Look for binding patterns without this.
     # e.g. [input]="myVar" or (action)="myMethod()" or *ngIf="myVar"
     # Block variables never take this.: @for (x of …), @if (…; as x), @let x = …, let-x, #x
@@ -309,7 +334,7 @@ def check_html(content: str) -> list[dict]:
         content,
     ):
         if match.group(1) not in block_vars:
-            issues.append(HTML_PATTERNS[1])
+            issues.append(HTML_PATTERNS[2])
             break
 
     return issues

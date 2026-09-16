@@ -306,6 +306,70 @@ export const TA_API: Record<string, TaApiEntry> = {
     ],
     "pkg": "@ta/user"
   },
+  "TaBaseModal": {
+    "className": "TaBaseModal",
+    "doc": "Contenu d'une modale piloté par un `ModalState<T, U>` : entrée `T` lue via `modalState().input()`, résultat `U` rendu par `confirm()`.",
+    "file": "projects/utils/src/lib/abstract/baseModal.ts",
+    "id": "TaBaseModal",
+    "kind": "directive",
+    "members": [
+      {
+        "default": "null",
+        "kind": "input",
+        "name": "modalState",
+        "propertyName": "modalState",
+        "required": false,
+        "type": "ModalState<T, U> | null"
+      },
+      {
+        "kind": "output",
+        "name": "closeEvent",
+        "propertyName": "closeEvent",
+        "required": false,
+        "type": "U"
+      },
+      {
+        "kind": "method",
+        "name": "isOpen",
+        "propertyName": "isOpen",
+        "required": false,
+        "type": "() => boolean"
+      },
+      {
+        "doc": "Ferme avec un résultat : `completed()` sur l'état, puis `closeEvent`.",
+        "kind": "method",
+        "name": "confirm",
+        "propertyName": "confirm",
+        "required": false,
+        "type": "(output: U) => void"
+      },
+      {
+        "doc": "Ferme sans résultat.",
+        "kind": "method",
+        "name": "dismiss",
+        "propertyName": "dismiss",
+        "required": false,
+        "type": "() => void"
+      },
+      {
+        "inheritedFrom": "TaAbstractComponent",
+        "kind": "property",
+        "name": "isMobile",
+        "propertyName": "isMobile",
+        "required": false,
+        "type": "unknown"
+      },
+      {
+        "inheritedFrom": "TaAbstractComponent",
+        "kind": "property",
+        "name": "isDesktop",
+        "propertyName": "isDesktop",
+        "required": false,
+        "type": "unknown"
+      }
+    ],
+    "pkg": "@ta/utils"
+  },
   "TaBaseService": {
     "className": "TaBaseService",
     "file": "projects/server/src/lib/services/server/baseService.ts",
@@ -1390,7 +1454,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "default": "\"sm\"",
+        "default": "'sm'",
         "kind": "input",
         "name": "size",
         "propertyName": "size",
@@ -1398,13 +1462,13 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "TaSizes"
       },
       {
-        "default": "\"default\"",
-        "doc": "`notif` : pastille de comptage sur la surface de marque. `notif-highlight` : même pastille, dans la couleur secondaire de marque — la seule qui reste visible posée sur un bandeau de marque.",
+        "default": "'default'",
+        "doc": "`notif` : pastille de comptage ; `notif-highlight` : en couleur secondaire de marque, pour un bandeau de marque.",
         "kind": "input",
         "name": "type",
         "propertyName": "type",
         "required": false,
-        "type": "ColorType | \"notif\" | \"notif-highlight\""
+        "type": "ColorType | 'notif' | 'notif-highlight'"
       },
       {
         "kind": "method",
@@ -1423,7 +1487,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "default": "\"classic\"",
+        "default": "'classic'",
         "doc": "Is button type",
         "kind": "input",
         "name": "state",
@@ -1432,21 +1496,21 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "TaState"
       },
       {
-        "default": "\"primary\"",
+        "default": "'primary'",
         "doc": "Indicate the button type",
         "kind": "input",
         "name": "type",
         "propertyName": "type",
         "required": false,
-        "type": "\"primary\" | \"secondary\" | \"tertiary\" | \"danger\" | \"invert\""
+        "type": "'primary' | 'secondary' | 'tertiary' | 'danger' | 'invert'"
       },
       {
-        "default": "\"medium\"",
+        "default": "'medium'",
         "kind": "input",
         "name": "size",
         "propertyName": "size",
         "required": false,
-        "type": "\"small\" | \"medium\" | \"large\""
+        "type": "'small' | 'medium' | 'large'"
       },
       {
         "default": "null",
@@ -1463,7 +1527,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "options",
         "propertyName": "options",
         "required": false,
-        "type": "{\n    class?: string;\n    circular?: boolean | \"big\" | \"small\";\n    square?: boolean | \"big\" | \"small\";\n    border?: boolean;\n  } | null"
+        "type": "{\n    class?: string;\n    circular?: boolean | 'big' | 'small';\n    square?: boolean | 'big' | 'small';\n    border?: boolean;\n  } | null"
       },
       {
         "default": "true",
@@ -1724,7 +1788,7 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-checkbox": {
     "className": "CheckboxComponent",
-    "doc": "Case à cocher autonome, hors formulaire : consentement, filtre, bascule d'une option isolée. Dans un formulaire, c'est `ta-input-checkbox` qui s'impose — lui seul est relié au modèle.",
+    "doc": "Case à cocher hors formulaire ; dans un formulaire, utiliser `ta-input-checkbox`.",
     "file": "projects/ui/src/lib/components/ui/checkbox/checkbox.component.ts",
     "id": "ta-checkbox",
     "kind": "component",
@@ -2018,7 +2082,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "() => EditorJS"
       },
       {
-        "doc": "Applique un outil de la barre au bloc courant : on convertit le bloc en place quand EditorJS le permet, sinon on en insère un nouveau — un bloc vide est alors remplacé plutôt que doublé.",
+        "doc": "Convertit le bloc courant si EditorJS le permet, sinon insère (ou remplace un bloc vide).",
         "kind": "method",
         "name": "applyBlockTool",
         "propertyName": "applyBlockTool",
@@ -2093,7 +2157,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "EDITOR_ALL_TOOLS",
-        "doc": "Outils réellement montés dans l'éditeur : la barre n'offre que ceux-là.",
+        "doc": "Outils montés dans l'éditeur ; la barre n'offre que ceux-là.",
         "kind": "input",
         "name": "enabledTools",
         "propertyName": "enabledTools",
@@ -2138,27 +2202,6 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "kind": "input",
-        "name": "open",
-        "propertyName": "open",
-        "required": true,
-        "type": "boolean"
-      },
-      {
-        "kind": "input",
-        "name": "inputData",
-        "propertyName": "inputData",
-        "required": true,
-        "type": "InputComponent"
-      },
-      {
-        "kind": "output",
-        "name": "closeEvent",
-        "propertyName": "closeEvent",
-        "required": false,
-        "type": "void"
-      },
-      {
         "kind": "method",
         "name": "select",
         "propertyName": "select",
@@ -2166,20 +2209,47 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "(value: string) => void"
       },
       {
-        "inheritedFrom": "TaBaseComponent",
-        "kind": "method",
-        "name": "trackById",
-        "propertyName": "trackById",
+        "default": "null",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "input",
+        "name": "modalState",
+        "propertyName": "modalState",
         "required": false,
-        "type": "(_: any, item: { id: number | string }) => void"
+        "type": "ModalState<T, U> | null"
       },
       {
-        "inheritedFrom": "TaBaseComponent",
-        "kind": "method",
-        "name": "trackByKey",
-        "propertyName": "trackByKey",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "output",
+        "name": "closeEvent",
+        "propertyName": "closeEvent",
         "required": false,
-        "type": "(_: any, item: { key: string }) => void"
+        "type": "U"
+      },
+      {
+        "inheritedFrom": "TaBaseModal",
+        "kind": "method",
+        "name": "isOpen",
+        "propertyName": "isOpen",
+        "required": false,
+        "type": "() => boolean"
+      },
+      {
+        "doc": "Ferme avec un résultat : `completed()` sur l'état, puis `closeEvent`.",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "method",
+        "name": "confirm",
+        "propertyName": "confirm",
+        "required": false,
+        "type": "(output: U) => void"
+      },
+      {
+        "doc": "Ferme sans résultat.",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "method",
+        "name": "dismiss",
+        "propertyName": "dismiss",
+        "required": false,
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractComponent",
@@ -2235,7 +2305,7 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-container-validation": {
     "className": "ContainerValidationComponent",
-    "doc": "Demande confirmation avant de laisser passer l'action qu'il enveloppe. `modal` interrompt : c'est la forme qui convient quand la conséquence dépasse ce qui est à l'écran. `inline` remplace le déclencheur par un encart de confirmation, et garde visible ce sur quoi on agit — la ligne, la carte, la personne — là où une modale l'aurait recouvert.",
+    "doc": "Demande confirmation avant l'action : `modal` interrompt, `inline` remplace le déclencheur par un encart.",
     "file": "projects/ui/src/lib/modules/container/validation/cta/container-validation.component.ts",
     "id": "ta-container-validation",
     "kind": "component",
@@ -2249,7 +2319,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "default": "\"validation.modal.title\"",
+        "default": "'validation.modal.title'",
         "kind": "input",
         "name": "title",
         "propertyName": "title",
@@ -2257,7 +2327,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"validation.modal.content\"",
+        "default": "'validation.modal.content'",
         "kind": "input",
         "name": "subtitle",
         "propertyName": "subtitle",
@@ -2265,12 +2335,12 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"modal\"",
+        "default": "'modal'",
         "kind": "input",
         "name": "variant",
         "propertyName": "variant",
         "required": false,
-        "type": "\"modal\" | \"inline\""
+        "type": "'modal' | 'inline'"
       },
       {
         "kind": "output",
@@ -2562,14 +2632,14 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-data-grid": {
     "className": "DataGridComponent",
-    "doc": "Grille de couples libellé / valeur séparés par une gouttière d'un pixel. Le filet n'est pas une bordure : c'est le fond du conteneur qui affleure entre des cellules opaques. Les items s'alignent sur l'orientation portée par le conteneur, qu'ils lisent via `:host-context()`.",
+    "doc": "Grille libellé / valeur ; les items lisent l'orientation via `:host-context()`.",
     "file": "projects/ui/src/lib/modules/data-grid/data-grid.component.ts",
     "id": "ta-data-grid",
     "kind": "component",
     "members": [
       {
         "default": "2",
-        "doc": "Nombre de colonnes au-delà du point de rupture mobile (1 à 4).",
+        "doc": "Colonnes en desktop (1 à 4).",
         "kind": "input",
         "name": "columns",
         "propertyName": "columns",
@@ -2577,26 +2647,33 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "1 | 2 | 3 | 4"
       },
       {
-        "default": "\"row\"",
+        "default": "'row'",
         "kind": "input",
         "name": "orientation",
         "propertyName": "orientation",
         "required": false,
         "type": "DataGridOrientation"
+      },
+      {
+        "kind": "method",
+        "name": "getClass",
+        "propertyName": "getClass",
+        "required": false,
+        "type": "() => string"
       }
     ],
     "pkg": "@ta/ui"
   },
   "ta-data-grid-item": {
     "className": "DataGridItemComponent",
-    "doc": "Une cellule de `ta-data-grid` : un libellé, une valeur projetée.",
+    "doc": "Cellule de `ta-data-grid` : un libellé, une valeur projetée.",
     "file": "projects/ui/src/lib/modules/data-grid/item/data-grid-item.component.ts",
     "id": "ta-data-grid-item",
     "kind": "component",
     "members": [
       {
         "default": "undefined",
-        "doc": "Icône facultative, affichée avant le libellé.",
+        "doc": "Icône affichée avant le libellé.",
         "kind": "input",
         "name": "icon",
         "propertyName": "icon",
@@ -3103,7 +3180,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "default": "\"filled\"",
+        "default": "'filled'",
         "kind": "input",
         "name": "variant",
         "propertyName": "variant",
@@ -3127,7 +3204,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "default": "\"ui.container.empty.title\"",
+        "default": "'ui.container.empty.title'",
         "kind": "input",
         "name": "text",
         "propertyName": "text",
@@ -3135,7 +3212,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"\"",
+        "default": "''",
         "kind": "input",
         "name": "subtitle",
         "propertyName": "subtitle",
@@ -3143,7 +3220,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"sentiment_dissatisfied\"",
+        "default": "'sentiment_dissatisfied'",
         "kind": "input",
         "name": "emptyIcon",
         "propertyName": "emptyIcon",
@@ -3151,12 +3228,12 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"xl\"",
+        "default": "'xl'",
         "kind": "input",
         "name": "iconSize",
         "propertyName": "iconSize",
         "required": false,
-        "type": "TaSizes | \"xl\""
+        "type": "TaSizes | 'xl'"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -3886,7 +3963,7 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-files-preview-modal": {
     "className": "PreviewModal",
-    "doc": "Visionneuse plein écran. Le fond sombre n'est pas décoratif : une image se juge sur un fond neutre, et la page qui l'entoure fausserait la lecture des couleurs. La modale claire du gabarit commun ne convient donc pas ici — la visionneuse pose son propre calque et sa propre barre d'outils. `documents` transforme la visionneuse en galerie : flèches, compteur, pellicule et raccourcis clavier n'apparaissent qu'à partir de deux éléments. Sans elle, `initial` seul affiche une pièce isolée.",
+    "doc": "Visionneuse plein écran ; avec `documents`, navigation en galerie.",
     "file": "projects/files/files-basic/src/lib/components/preview/modal/preview-modal.component.ts",
     "id": "ta-files-preview-modal",
     "kind": "component",
@@ -3908,7 +3985,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "null",
-        "doc": "L'ensemble parcourable. Vide, la visionneuse se limite à `initial`.",
+        "doc": "Documents parcourables ; vide, seul `initial` est affiché.",
         "kind": "input",
         "name": "documents",
         "propertyName": "documents",
@@ -3916,8 +3993,8 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "PreviewDocumentDto[] | null"
       },
       {
-        "default": "\"\"",
-        "doc": "Contexte affiché en surtitre : le bien, le dossier, la personne.",
+        "default": "''",
+        "doc": "Surtitre de contexte (bien, dossier, personne).",
         "kind": "input",
         "name": "overline",
         "propertyName": "overline",
@@ -5056,7 +5133,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "default": "{\r\n    switchView: true,\r\n    filters: true,\r\n    preset: true,\r\n    group: true,\r\n    sort: true,\r\n  }",
+        "default": "{\r\n    filters: true,\r\n    group: true,\r\n    preset: true,\r\n    sort: true,\r\n    switchView: true,\r\n  }",
         "kind": "input",
         "name": "show",
         "propertyName": "show",
@@ -5096,7 +5173,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "doc": "Colonnes sur lesquelles un tri a du sens. Le tableau se trie par ses en-têtes ; la vue cartes n'en a pas, et restait donc figée sur l'ordre du serveur.",
+        "doc": "Colonnes triables, pour les vues sans en-têtes (cartes).",
         "kind": "property",
         "name": "sortableCols",
         "propertyName": "sortableCols",
@@ -5181,7 +5258,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "(preset: Preset) => void"
       },
       {
-        "doc": "Un même critère rejoué bascule le sens : croissant, puis décroissant.",
+        "doc": "Rejouer le même critère inverse le sens.",
         "kind": "method",
         "name": "setSort",
         "propertyName": "setSort",
@@ -5287,14 +5364,14 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-grid-count": {
     "className": "TaGridCountComponent",
-    "doc": "Nombre de résultats de la liste. Le panneau de filtres l'annonce déjà à côté de son titre, mais il vit dans un tiroir : posé au-dessus des résultats, le compte dit tout de suite ce que les filtres ont laissé passer.",
+    "doc": "Nombre de résultats de la liste, affiché au-dessus des résultats.",
     "file": "projects/features/src/lib/features/grid/components/count/count.component.ts",
     "id": "ta-grid-count",
     "kind": "component",
     "members": [
       {
         "default": "'grid.tag.results'",
-        "doc": "Clé de traduction pluralisée du décompte. La valeur par défaut compte des résultats ; un appelant qui sait ce qu'il liste compte des biens, des personnes ou des dossiers.",
+        "doc": "Clé de traduction pluralisée du décompte (résultats par défaut).",
         "kind": "input",
         "name": "label",
         "propertyName": "label",
@@ -8290,7 +8367,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "doc": "Le nom de l'état courant, si l'appelant a nommé les deux.",
+        "doc": "Nom de l'état courant, si `onLabel` / `offLabel` sont définis.",
         "kind": "method",
         "name": "stateLabel",
         "propertyName": "stateLabel",
@@ -8791,13 +8868,12 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-label": {
     "className": "LabelComponent",
-    "doc": "Étiquette : un mot posé sur un fond teinté — un état, une catégorie, un attribut. Le contenu est projeté, la couleur vient de `type`.",
     "file": "projects/ui/src/lib/components/ui/label/label.component.ts",
     "id": "ta-label",
     "kind": "component",
     "members": [
       {
-        "default": "\"md\"",
+        "default": "'md'",
         "kind": "input",
         "name": "size",
         "propertyName": "size",
@@ -8805,16 +8881,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "TaSizes"
       },
       {
-        "default": "\"default\"",
+        "default": "'default'",
         "kind": "input",
         "name": "type",
         "propertyName": "type",
         "required": false,
-        "type": "ColorType"
+        "type": "LabelType"
       },
       {
         "default": "undefined",
-        "doc": "Pictogramme posé devant le texte.",
+        "doc": "Icône affichée devant le contenu.",
         "kind": "input",
         "name": "icon",
         "propertyName": "icon",
@@ -8822,13 +8898,13 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string | undefined"
       },
       {
-        "default": "\"theme\"",
-        "doc": "`theme` suit le rayon fixé par le thème pour les étiquettes ; `pill` force la capsule, pour une étiquette qui longe un avatar ou une photo, où un angle laisserait un vide.",
+        "default": "'theme'",
+        "doc": "`pill` force la capsule, `theme` suit le rayon du thème.",
         "kind": "input",
         "name": "shape",
         "propertyName": "shape",
         "required": false,
-        "type": "\"theme\" | \"pill\""
+        "type": "'theme' | 'pill'"
       },
       {
         "kind": "method",
@@ -9322,14 +9398,14 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-layout-page": {
     "className": "LayoutPageComponent",
-    "doc": "Racine d'une page applicative : en-tête, titre, contenu, navigation basse.",
+    "doc": "Racine d'une page : en-tête, titre, contenu, navigation basse.",
     "file": "projects/ui/src/lib/modules/layout/layout-page/layout-page.component.ts",
     "id": "ta-layout-page",
     "kind": "component",
     "members": [
       {
         "default": "false",
-        "doc": "Étire la page sur la hauteur de la fenêtre et pousse la navigation basse en bas, même quand le contenu est court. Sans cela, une page courte laisse le pied remonter au milieu de l'écran.",
+        "doc": "Étire la page sur la hauteur de la fenêtre, navigation basse en bas.",
         "kind": "input",
         "name": "fullHeight",
         "propertyName": "fullHeight",
@@ -9338,7 +9414,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "false",
-        "doc": "Laisse le contenu occuper toute la largeur au lieu d'être ramené dans la colonne du gabarit. À réserver aux pages qui gèrent elles-mêmes leur centrage — une page d'accueil dont les sections vont d'un bord à l'autre.",
+        "doc": "Contenu pleine largeur, hors colonne du gabarit.",
         "kind": "input",
         "name": "bleed",
         "propertyName": "bleed",
@@ -9862,7 +9938,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "Menu"
       },
       {
-        "default": "\"surface\"",
+        "default": "'surface'",
         "kind": "input",
         "name": "tone",
         "propertyName": "tone",
@@ -9870,7 +9946,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "MainMenuTone"
       },
       {
-        "doc": "Verrou de marque : un projet peut remplacer le logo par son propre bloc (marque + signature), sans redéfinir tout le bandeau.",
+        "doc": "Bloc de marque projeté à la place du logo.",
         "kind": "input",
         "name": "logoTemplate",
         "propertyName": "logoTemplate",
@@ -9892,12 +9968,12 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "TemplateRef<any>"
       },
       {
-        "default": "\"vertical\"",
+        "default": "'vertical'",
         "kind": "input",
         "name": "direction",
         "propertyName": "direction",
         "required": false,
-        "type": "\"horizontal\" | \"vertical\""
+        "type": "'horizontal' | 'vertical'"
       },
       {
         "kind": "method",
@@ -10501,7 +10577,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "ModalSize | undefined"
       },
       {
-        "default": "\"\"",
+        "default": "''",
         "kind": "input",
         "name": "title",
         "propertyName": "title",
@@ -10509,7 +10585,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"\"",
+        "default": "''",
         "doc": "Surtitre en capitales, au-dessus du titre.",
         "kind": "input",
         "name": "overline",
@@ -10518,7 +10594,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "default": "\"surface\"",
+        "default": "'surface'",
         "kind": "input",
         "name": "tone",
         "propertyName": "tone",
@@ -10527,7 +10603,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "true",
-        "doc": "Masque la croix. Une modale bloquante projette alors sa propre action dans `[modal-header-action]` — se déconnecter, par exemple — plutôt que d'offrir une sortie qui ne mène nulle part.",
+        "doc": "Masque la croix ; la modale projette alors sa propre action dans `[modal-header-action]`.",
         "kind": "input",
         "name": "showClose",
         "propertyName": "showClose",
@@ -10926,7 +11002,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "default": "\"\"",
+        "default": "''",
         "kind": "input",
         "name": "message",
         "propertyName": "messageInput",
@@ -11154,7 +11230,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "'md'",
-        "doc": "`sm` pour un surtitre interne à une carte, `md` pour une tête de section.",
+        "doc": "`sm` dans une carte, `md` en tête de section.",
         "kind": "input",
         "name": "size",
         "propertyName": "size",
@@ -11405,16 +11481,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "number"
       },
       {
-        "default": "\"sm\"",
-        "doc": "`sm` : filet de 2 px, à ras d'un titre. `md` : jauge de 7 px arrondie, lisible seule dans une carte.",
+        "default": "'sm'",
+        "doc": "`sm` : filet de 2 px ; `md` : jauge de 7 px arrondie.",
         "kind": "input",
         "name": "size",
         "propertyName": "size",
         "required": false,
-        "type": "\"sm\" | \"md\" | \"lg\""
+        "type": "'sm' | 'md' | 'lg'"
       },
       {
-        "default": "\"brand\"",
+        "default": "'brand'",
         "kind": "input",
         "name": "tone",
         "propertyName": "tone",
@@ -11529,7 +11605,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "null",
-        "doc": "Diamètre en pixels. `null` laisse l'anneau remplir son conteneur.",
+        "doc": "Diamètre en pixels ; `null` remplit le conteneur.",
         "kind": "input",
         "name": "size",
         "propertyName": "size",
@@ -11538,7 +11614,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "10",
-        "doc": "Épaisseur de l'anneau, exprimée dans le repère du `viewBox` (100 unités).",
+        "doc": "Épaisseur de l'anneau, dans le repère du `viewBox` (100 unités).",
         "kind": "input",
         "name": "thickness",
         "propertyName": "thickness",
@@ -11547,7 +11623,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "false",
-        "doc": "Masque le pourcentage tracé dans l'anneau : à utiliser dès qu'un contenu est projeté au centre.",
+        "doc": "Masque le pourcentage, quand un contenu est projeté au centre.",
         "kind": "input",
         "name": "hideValue",
         "propertyName": "hideValue",
@@ -11555,15 +11631,15 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "default": "\"round\"",
+        "default": "'round'",
         "kind": "input",
         "name": "linecap",
         "propertyName": "linecap",
         "required": false,
-        "type": "\"round\" | \"butt\""
+        "type": "'round' | 'butt'"
       },
       {
-        "default": "\"brand\"",
+        "default": "'brand'",
         "kind": "input",
         "name": "tone",
         "propertyName": "tone",
@@ -11571,7 +11647,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "ProgressCircleTone"
       },
       {
-        "default": "\"default\"",
+        "default": "'default'",
         "kind": "input",
         "name": "track",
         "propertyName": "track",
@@ -11593,7 +11669,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "unknown"
       },
       {
-        "doc": "Le rayon suit l'épaisseur pour que l'anneau reste dans le `viewBox`.",
+        "doc": "Rayon ajusté à l'épaisseur pour rester dans le `viewBox`.",
         "kind": "property",
         "name": "radius",
         "propertyName": "radius",
@@ -11688,13 +11764,13 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "number"
       },
       {
-        "default": "\"stars\"",
-        "doc": "`compact` : une étoile et la note. C'est la forme qui tient dans une carte, où cinq étoiles prendraient la place d'une ligne de texte.",
+        "default": "'stars'",
+        "doc": "`compact` : une étoile et la note.",
         "kind": "input",
         "name": "variant",
         "propertyName": "variant",
         "required": false,
-        "type": "\"stars\" | \"compact\""
+        "type": "'stars' | 'compact'"
       },
       {
         "default": "true",
@@ -11760,7 +11836,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "default": "\"flex-row\"",
+        "default": "'flex-row'",
         "doc": "Show hover effect",
         "kind": "input",
         "name": "containerClass",
@@ -11836,13 +11912,13 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-rating-distribution": {
     "className": "RatingDistributionComponent",
-    "doc": "Répartition des notes reçues, une barre par échelon. Une moyenne cache sa dispersion : quatre étoiles peuvent recouvrir un accord unanime comme un partage entre enthousiastes et déçus. L'échelle montre laquelle des deux on lit.",
+    "doc": "Répartition des notes reçues, une barre par échelon.",
     "file": "projects/ui/src/lib/components/ui/rating-distribution/rating-distribution.component.ts",
     "id": "ta-rating-distribution",
     "kind": "component",
     "members": [
       {
-        "doc": "Les notes reçues, une entrée par évaluation.",
+        "doc": "Notes reçues, une entrée par évaluation.",
         "kind": "input",
         "name": "values",
         "propertyName": "values",
@@ -11851,7 +11927,7 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "default": "5",
-        "doc": "Hauteur de l'échelle. Cinq échelons par défaut, comme les étoiles.",
+        "doc": "Nombre d'échelons.",
         "kind": "input",
         "name": "max",
         "propertyName": "max",
@@ -12461,13 +12537,13 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "default": "\"inline\"",
-        "doc": "`compact` : la simple rangée de codes de langue, sans drapeau ni panneau. C'est la forme qui tient dans un pied de page, où le choix de langue ne doit pas peser plus qu'une mention légale.",
+        "default": "'inline'",
+        "doc": "`compact` : rangée de codes de langue, sans drapeau ni panneau (pied de page).",
         "kind": "input",
         "name": "mode",
         "propertyName": "mode",
         "required": false,
-        "type": "\"inline\" | \"dropdown\" | \"modal\" | \"compact\""
+        "type": "'inline' | 'dropdown' | 'modal' | 'compact'"
       },
       {
         "kind": "method",
@@ -12954,16 +13030,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "number"
       },
       {
-        "default": "\"circle\"",
-        "doc": "`squircle` : carré arrondi, pour un avatar aligné sur des cartes.",
+        "default": "'circle'",
+        "doc": "`squircle` : carré arrondi.",
         "kind": "input",
         "name": "shape",
         "propertyName": "shape",
         "required": false,
-        "type": "\"circle\" | \"squircle\""
+        "type": "'circle' | 'squircle'"
       },
       {
-        "default": "\"brand\"",
+        "default": "'brand'",
         "kind": "input",
         "name": "tone",
         "propertyName": "tone",
@@ -13031,7 +13107,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "UserLogoData"
       },
       {
-        "default": "\"lg\"",
+        "default": "'lg'",
         "doc": "Size of user logo desired",
         "kind": "input",
         "name": "size",
@@ -13048,25 +13124,25 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "number | undefined"
       },
       {
-        "default": "\"font\"",
-        "doc": "Repli quand l'utilisateur n'a pas de photo. `initials` : les initiales prénom + nom, la forme la plus lisible dès que l'on affiche plusieurs personnes côte à côte.",
+        "default": "'font'",
+        "doc": "Repli sans photo : `initials` (prénom + nom) ou trigramme.",
         "kind": "input",
         "name": "defaultType",
         "propertyName": "defaultType",
         "required": false,
-        "type": "\"font\" | \"trigram\" | \"initials\""
+        "type": "'font' | 'trigram' | 'initials'"
       },
       {
-        "default": "\"circle\"",
+        "default": "'circle'",
         "doc": "Forme et teinte du repli textuel.",
         "kind": "input",
         "name": "shape",
         "propertyName": "shape",
         "required": false,
-        "type": "\"circle\" | \"squircle\""
+        "type": "'circle' | 'squircle'"
       },
       {
-        "default": "\"brand\"",
+        "default": "'brand'",
         "kind": "input",
         "name": "tone",
         "propertyName": "tone",
@@ -13115,39 +13191,11 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "ta-validation-modal": {
     "className": "ValidationModal",
+    "doc": "Confirmation Oui/Non : `confirm(true)` sur Oui, `dismiss()` sur Non ou fermeture.",
     "file": "projects/ui/src/lib/modules/container/validation/modal/modal-validation.component.ts",
     "id": "ta-validation-modal",
     "kind": "component",
     "members": [
-      {
-        "kind": "input",
-        "name": "open",
-        "propertyName": "open",
-        "required": true,
-        "type": "boolean"
-      },
-      {
-        "default": "undefined",
-        "kind": "input",
-        "name": "params",
-        "propertyName": "params",
-        "required": false,
-        "type": "ModalParameter | undefined"
-      },
-      {
-        "kind": "output",
-        "name": "validated",
-        "propertyName": "validated",
-        "required": false,
-        "type": "void"
-      },
-      {
-        "kind": "output",
-        "name": "closeEvent",
-        "propertyName": "closeEvent",
-        "required": false,
-        "type": "void"
-      },
       {
         "kind": "property",
         "name": "title",
@@ -13177,20 +13225,47 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "() => void"
       },
       {
-        "inheritedFrom": "TaBaseComponent",
-        "kind": "method",
-        "name": "trackById",
-        "propertyName": "trackById",
+        "default": "null",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "input",
+        "name": "modalState",
+        "propertyName": "modalState",
         "required": false,
-        "type": "(_: any, item: { id: number | string }) => void"
+        "type": "ModalState<T, U> | null"
       },
       {
-        "inheritedFrom": "TaBaseComponent",
-        "kind": "method",
-        "name": "trackByKey",
-        "propertyName": "trackByKey",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "output",
+        "name": "closeEvent",
+        "propertyName": "closeEvent",
         "required": false,
-        "type": "(_: any, item: { key: string }) => void"
+        "type": "U"
+      },
+      {
+        "inheritedFrom": "TaBaseModal",
+        "kind": "method",
+        "name": "isOpen",
+        "propertyName": "isOpen",
+        "required": false,
+        "type": "() => boolean"
+      },
+      {
+        "doc": "Ferme avec un résultat : `completed()` sur l'état, puis `closeEvent`.",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "method",
+        "name": "confirm",
+        "propertyName": "confirm",
+        "required": false,
+        "type": "(output: U) => void"
+      },
+      {
+        "doc": "Ferme sans résultat.",
+        "inheritedFrom": "TaBaseModal",
+        "kind": "method",
+        "name": "dismiss",
+        "propertyName": "dismiss",
+        "required": false,
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractComponent",

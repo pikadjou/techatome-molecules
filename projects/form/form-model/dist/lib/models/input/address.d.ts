@@ -1,4 +1,4 @@
-import { IInputBase, InputBase } from "./base";
+import { IInputBase, InputBase } from './base';
 export declare enum EAddressValues {
     city = "city",
     country = "country",

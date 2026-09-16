@@ -79,6 +79,7 @@ Un hook `PreToolUse` s'active avant chaque écriture de fichier Angular (`.ts`, 
 - **Subscriptions sans `_registerSubscription()`**
 - **`this.` manquant** dans les templates HTML (les variables de bloc `@for`, `@if … as`, `@let` sont reconnues)
 - **Assertion non-null `!`** dans les templates — `@if (…; as x)` à la place
+- **Formats de date à la main** (`date: 'EEEE d MMMM'`, locale en argument) — formats prédéfinis ou `ta-hour-date-line` / `ta-time-ago`
 - **SCSS** : `var(--ta-…)` écrit à la main, réassignation `--ta-*` d'un composant enfant, couleur brute (hex / `rgb()` / `rgba()`), px brut sur `padding` / `margin` / `gap`, `font-family` / `font-size` / `font-weight` / `letter-spacing` à la main, `display: flex` sans les mixins `flex.*`, `::ng-deep`
 
 ## Structure du plugin

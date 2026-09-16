@@ -39,12 +39,13 @@ Format : nom (`Class/Function`) — description courte. Le fichier de référenc
 - `TaAbstractComponent` — base minimale pour tous les composants Angular.
 - `TaBaseComponent` — composant de base avec gestion du cycle de vie et subscriptions.
 - `TaBasePage` — base pour les pages (étend TaBaseComponent).
-- `TaBaseModal` — base pour les modales (étend TaBaseComponent).
+- `TaBaseModal<In, Out>` — base du contenu d'une modale : `modalState` input, `closeEvent` output, `isOpen()` / `confirm()` / `dismiss()` (`references/utils/ta-base-modal.md`).
 
 ### Helpers de classe (`references/utils/helpers.md`)
 
 - `SubscriberHandler` — gestion centralisée des subscriptions RxJS.
 - `RequestState` — machine d'état pour les opérations asynchrones (asked/completed/onError/isLoading).
+- `ModalState<In, Out>` — état partagé parent ↔ modale : signaux `open` / `input` / `output`, `asked()` / `completed()` / `dismissed()` (`references/utils/modal-state.md`).
 - `BreakpointDetection` — détection responsive des breakpoints.
 - `HorizontalScroll` — gestion du scroll horizontal.
 

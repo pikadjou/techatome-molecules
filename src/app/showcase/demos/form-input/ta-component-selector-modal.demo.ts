@@ -1,22 +1,19 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, TemplateRef, ViewChild, signal } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, TemplateRef, ViewChild } from '@angular/core';
 
-import { ComponentSelectorModal } from "@ta/form-input";
-import { InputComponent, TypeComponentInputToken } from "@ta/form-model";
-import { ButtonComponent } from "@ta/ui";
+import { ComponentSelectorModal } from '@ta/form-input';
+import { InputComponent, TypeComponentInputToken } from '@ta/form-model';
+import { ButtonComponent } from '@ta/ui';
+import { ModalState } from '@ta/utils';
 
-import { ComponentDemo } from "../../demo.types";
+import { ComponentDemo } from '../../demo.types';
 
 @Component({
   standalone: true,
-  selector: "app-ex-ta-component-selector-modal-basic",
+  selector: 'app-ex-ta-component-selector-modal-basic',
   imports: [ComponentSelectorModal, ButtonComponent],
   template: `
-    <ta-button (action)="this.isOpen.set(true)">Choisir une couleur</ta-button>
-    <ta-component-selector-modal
-      [open]="this.isOpen()"
-      [inputData]="this.model"
-      (closeEvent)="this.isOpen.set(false)"
-    ></ta-component-selector-modal>
+    <ta-button (action)="this.selectorModal.asked(this.model)">Choisir une couleur</ta-button>
+    <ta-component-selector-modal [modalState]="this.selectorModal"></ta-component-selector-modal>
     <ng-template #picker let-selectedValue$="selectedValue$">
       <div class="flex-column g-space-sm p-space-md">
         @for (option of this.options; track option) {
@@ -28,12 +25,12 @@ import { ComponentDemo } from "../../demo.types";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaComponentSelectorModalBasicExample implements AfterViewInit {
-  @ViewChild("picker") private _picker!: TemplateRef<TypeComponentInputToken>;
+  @ViewChild('picker') private _picker!: TemplateRef<TypeComponentInputToken>;
 
-  readonly options = ["Rouge", "Vert", "Bleu"];
+  readonly options = ['Rouge', 'Vert', 'Bleu'];
 
-  isOpen = signal(false);
-  model = new InputComponent({ key: "color", label: "Couleur" });
+  selectorModal = new ModalState<InputComponent, string>();
+  model = new InputComponent({ key: 'color', label: 'Couleur' });
 
   ngAfterViewInit(): void {
     this.model.template = this._picker;
@@ -41,15 +38,15 @@ export class TaComponentSelectorModalBasicExample implements AfterViewInit {
 }
 
 export const DEMO: ComponentDemo = {
-  id: "ta-component-selector-modal",
-  group: "Avancé",
+  id: 'ta-component-selector-modal',
+  group: 'Avancé',
   summary:
-    "Modale générique qui projette le `TemplateRef` porté par un modèle `InputComponent` ; c'est elle que `ta-input-component` ouvre en interne, mais elle se pilote aussi seule via `open`/`inputData`/`closeEvent`.",
+    "Modale générique qui projette le `TemplateRef` porté par un modèle `InputComponent` ; c'est elle que `ta-input-component` ouvre en interne, mais elle se pilote aussi seule via un `ModalState<InputComponent, string>` : `asked(model)` l'ouvre, `closeEvent` rend la valeur choisie.",
   examples: [
     {
-      title: "Sélection dans une modale",
+      title: 'Sélection dans une modale',
       description:
-        "`select(value)` pousse `value` dans `inputData().selectedValue$` — ce qui met à jour `model.value`, via l'abonnement fait dans le constructeur d'`InputComponent` — puis émet `closeEvent`.",
+        "`select(value)` pousse `value` dans `modalState().input().selectedValue$` — ce qui met à jour `model.value`, via l'abonnement fait dans le constructeur d'`InputComponent` — puis `confirm(value)` ferme la modale et émet `closeEvent` avec la valeur.",
       component: TaComponentSelectorModalBasicExample,
     },
   ],

@@ -167,6 +167,29 @@ composants, `ta-button` n'ayant pas d'état « pressé ». Partout ailleurs la r
 | -------------------------------- | --------------------------------------------------------------- |
 | `alert()`, `mat-snackbar` direct | `TaNotificationService.addNotification()` de `@ta/notification` |
 
+### Dates — formats déjà prévus, jamais de motif à la main
+
+| ❌ Interdit                                                              | ✅ Obligatoire                                                                                 |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `date: 'EEEE d MMMM'`, `date: 'dd/MM/yyyy'` — motif écrit à la main      | `date: 'shortDate' \| 'mediumDate' \| 'longDate' \| 'fullDate' \| 'shortTime' \| 'short' \| …` |
+| `date: 'fullDate' : undefined : this.locale` — locale passée en argument | rien : `LOCALE_ID` s'en charge                                                                 |
+| Date + plage horaire composée à la main                                  | `<ta-hour-date-line [startDate] [endDate]>`                                                    |
+| « il y a 2 jours », « hier » calculés à la main                          | `<ta-time-ago [date]>`                                                                         |
+| Durée formatée à la main                                                 | `<ta-duration>`                                                                                |
+
+```html
+<!-- ❌ -->
+{{ visit.startAt | date: 'EEEE d MMMM' : undefined : this.locale }}
+
+<!-- ✅ -->
+{{ visit.startAt | date: 'fullDate' }}
+<ta-hour-date-line [startDate]="visit.startAt" [endDate]="visit.endAt"></ta-hour-date-line>
+```
+
+Les formats prédéfinis d'Angular (`short`, `medium`, `long`, `full`, `shortDate`, `mediumDate`, `longDate`,
+`fullDate`, `shortTime`, `mediumTime`, `longTime`, `fullTime`) suivent la locale et le thème ; un motif
+maison ne suit ni l'un ni l'autre.
+
 ---
 
 ## 2. SCSS OBLIGATOIRE — TOKENS & CLASSES
@@ -406,6 +429,7 @@ Avant de soumettre tout code HTML/SCSS, vérifier :
 - [ ] Aucune div "vide" custom → `<ta-empty>`
 - [ ] Aucune div "erreur" custom → `<ta-error>`
 - [ ] Aucun `<form>`/`<input>` natif → `<ta-form>` + composants `@ta/form-input`
+- [ ] Aucun motif de date à la main (`date: 'EEEE d MMMM'`) ni locale en argument → formats prédéfinis (`shortDate`, `fullDate`…), `<ta-hour-date-line>`, `<ta-time-ago>`, `<ta-duration>`
 
 **SCSS :**
 
