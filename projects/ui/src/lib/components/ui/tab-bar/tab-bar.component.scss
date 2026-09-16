@@ -1,0 +1,114 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+
+:host {
+  display: block;
+}
+
+.tab-bar {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.tab-bar-item {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+  font-family: common.get-var(font, display, family);
+  font-weight: common.get-var(font, body, sm, bold, weight);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all common.get-var(transition, base);
+
+  &:disabled {
+    cursor: default;
+    color: common.get-var(text, tertiary);
+  }
+}
+
+.tab-bar-count {
+  font-family: common.get-var(font, display, family);
+  font-size: common.get-var(font, body, xs, desktop, size);
+  font-weight: common.get-var(font, body, sm, bold, weight);
+  line-height: 1;
+  padding: common.get-var(space, xs) 7px;
+  border-radius: common.get-var(radius, pill);
+}
+
+// ---------------------------------------------------------------------------
+// Onglets soulignés. Le conteneur porte le filet de base, l'onglet actif le
+// recouvre : le margin-bottom négatif fait chevaucher les deux traits.
+// ---------------------------------------------------------------------------
+.underline {
+  gap: common.get-var(space, xs);
+  border-bottom: 1px solid common.get-var(border, disabled);
+
+  .tab-bar-item {
+    @include fonts.fontSizeBody(md, true);
+    padding: 13px common.get-var(space, md);
+    margin-bottom: -1px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: common.get-var(text, muted);
+
+    &:hover:not(:disabled) {
+      color: common.get-var(text, primary);
+    }
+
+    &.active {
+      color: common.get-var(text, primary);
+      border-bottom-color: common.get-var(border, brand, primary);
+    }
+  }
+
+  .tab-bar-count {
+    background: common.get-var(surface, secondary);
+    color: common.get-var(text, secondary);
+  }
+
+  .active .tab-bar-count {
+    background: common.get-var(surface, brand, primary);
+    color: common.get-var(text, invert, primary);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Filtres capsulés : blanc cerclé au repos, surface de marque pleine si actif.
+// ---------------------------------------------------------------------------
+.pill {
+  gap: common.get-var(space, sm);
+
+  .tab-bar-item {
+    @include fonts.fontSizeBody(sm, true);
+    padding: 11px common.get-var(space, md);
+    border: 1px solid common.get-var(border, disabled);
+    border-radius: common.get-var(radius, pill);
+    background: common.get-var(surface, primary);
+    color: common.get-var(text, secondary);
+
+    &:hover:not(:disabled) {
+      border-color: common.get-var(border, brand, primary);
+      color: common.get-var(text, primary);
+    }
+
+    &.active {
+      border-color: common.get-var(border, brand, primary);
+      background: common.get-var(surface, brand, primary);
+      color: common.get-var(text, invert, primary);
+    }
+  }
+
+  .tab-bar-count {
+    background: common.get-var(surface, secondary);
+    color: common.get-var(text, secondary);
+  }
+
+  .active .tab-bar-count {
+    background: rgba(255, 255, 255, 0.18);
+    color: common.get-var(text, invert, primary);
+  }
+}

@@ -1,0 +1,296 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+
+// Le calque couvre tout : pas de fond de page visible, pas de comparaison
+// possible entre l'image et l'interface qui l'entoure.
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: #0b1426;
+  display: flex;
+  padding: common.get-var(space, lg);
+  overflow: auto;
+}
+
+.lightbox-inner {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, md);
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  min-height: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Barre de tête
+// ---------------------------------------------------------------------------
+.lightbox-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: common.get-var(space, md);
+  flex-shrink: 0;
+}
+
+.lightbox-heading {
+  display: flex;
+  flex-direction: column;
+  gap: common.get-var(space, xs);
+  min-width: 0;
+}
+
+.lightbox-title {
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeKey(md, true);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: common.get-var(text, invert, primary);
+  overflow-wrap: anywhere;
+}
+
+.lightbox-actions {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, sm);
+  flex-shrink: 0;
+}
+
+// Le compteur est une donnée, pas un titre : chasse fixe, pour qu'il ne danse
+// pas d'une image à l'autre.
+.lightbox-counter {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  @include fonts.fontSizeBody(sm);
+  letter-spacing: 0.06em;
+  color: common.get-var(text, invert, secondary);
+  margin-right: common.get-var(space, xs);
+}
+
+.lightbox-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: common.get-var(radius, rounded);
+  background: rgba(255, 255, 255, 0.08);
+  color: common.get-var(text, invert, primary);
+  cursor: pointer;
+  transition: background common.get-var(transition, fast);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  // Fermer est l'action de sortie : elle seule est pleine, pour se distinguer
+  // au premier regard des outils de la visionneuse.
+  &--close {
+    background: common.get-var(neutral, white);
+    border-color: common.get-var(neutral, white);
+    color: common.get-var(text, brand, primary);
+
+    &:hover {
+      background: common.get-var(neutral, 200);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Scène
+// ---------------------------------------------------------------------------
+.lightbox-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border-radius: common.get-var(radius, label);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+
+  ta-image-viewer,
+  ta-pdf-viewer,
+  ta-word-viewer,
+  ta-excel-viewer {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.lightbox-no-viewer {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: common.get-var(text, invert, secondary);
+}
+
+// Les flèches se posent sur l'image, à mi-hauteur : la main reste au même
+// endroit quand on parcourt une série.
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(11, 20, 38, 0.72);
+  color: common.get-var(text, invert, primary);
+  cursor: pointer;
+  transition: background common.get-var(transition, fast);
+
+  &:hover {
+    background: rgba(11, 20, 38, 0.92);
+  }
+
+  &--prev {
+    left: common.get-var(space, md);
+  }
+
+  &--next {
+    right: common.get-var(space, md);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Légende et raccourcis
+// ---------------------------------------------------------------------------
+.lightbox-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: common.get-var(space, md);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.lightbox-caption {
+  @include fonts.fontSizeBody(md);
+  color: common.get-var(text, invert, primary);
+  min-width: 0;
+}
+
+.lightbox-hints {
+  display: flex;
+  align-items: center;
+  gap: common.get-var(space, xs);
+  flex-shrink: 0;
+}
+
+.lightbox-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 common.get-var(space, xs);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: common.get-var(radius, minimal);
+  background: rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  @include fonts.fontSizeBody(xs);
+  color: common.get-var(text, invert, primary);
+}
+
+.lightbox-hint-label {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, invert, secondary);
+  margin-right: common.get-var(space, sm);
+}
+
+// ---------------------------------------------------------------------------
+// Pellicule
+// ---------------------------------------------------------------------------
+.lightbox-film {
+  display: flex;
+  gap: common.get-var(space, sm);
+  overflow-x: auto;
+  padding-bottom: common.get-var(space, xs);
+  flex-shrink: 0;
+}
+
+.lightbox-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 104px;
+  height: 64px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: common.get-var(radius, rounded);
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color common.get-var(transition, fast);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  // La vignette active est cernée de jaune : c'est le seul repère de position
+  // quand la pellicule défile.
+  &.active {
+    border-color: common.get-var(surface, brand, secondary);
+
+    .lightbox-thumb-label {
+      color: common.get-var(surface, brand, secondary);
+    }
+  }
+}
+
+// Un voile sous l'étiquette : sans lui, un libellé blanc posé sur une photo
+// claire devient illisible.
+.lightbox-thumb::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(11, 20, 38, 0.85), transparent);
+  pointer-events: none;
+}
+
+.lightbox-thumb-label {
+  position: absolute;
+  z-index: 1;
+  left: common.get-var(space, sm);
+  right: common.get-var(space, xs);
+  bottom: 6px;
+  font-family: common.get-var(font, display, family);
+  font-size: common.get-var(font, body, xs, default, size);
+  font-weight: common.get-var(font, body, sm, bold, weight);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+  color: common.get-var(text, invert, primary);
+  text-shadow: 0 1px 3px rgba(11, 20, 38, 0.9);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@include mq.to-key(mobile) {
+  .lightbox {
+    padding: common.get-var(space, md);
+  }
+
+  .lightbox-nav {
+    width: 38px;
+    height: 38px;
+  }
+
+  .lightbox-hints {
+    display: none;
+  }
+}

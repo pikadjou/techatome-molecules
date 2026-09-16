@@ -1,0 +1,11 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+
+// Le nombre porte l'information, le mot ne fait que la qualifier : c'est le
+// chiffre qui doit accrocher l'oeil, d'où la graisse du titrage sur l'ensemble.
+.grid-count {
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeBody(md);
+  font-weight: common.get-var(font, weight, bold);
+  color: common.get-var(text, primary);
+}

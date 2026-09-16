@@ -7,6 +7,9 @@
     [attr.aria-invalid]="this.input.formControl?.invalid"
   />
   <span class="slider"></span>
+  @if (this.stateLabel(); as stateLabel) {
+    <span class="toggle-state" [class.is-on]="this.input.value">{{ stateLabel | translate }}</span>
+  }
   <ta-form-label
     [input]="input"
     [withMarginBottom]="false"

@@ -24,8 +24,13 @@
 </h6>
 } }
 
+<!--
+  Le titre reste du texte : il ne passe en rangée flex que pour aligner une
+  icône. Sinon un titre composé (une portion mise en couleur, par exemple) se
+  briserait en colonnes au lieu de se replier ligne à ligne.
+-->
 <ng-template #contentTemplate>
-  <div class="align-center g-space-sm">
+  <div class="title-content" [class.with-icon]="!!this.icon()">
     @if(this.icon(); as i) {
     <ta-font-icon [name]="i" size="md"></ta-font-icon>
     }

@@ -26,5 +26,15 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-unused-imports": "^3.0.1"
   },
-  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e",
+  "nx": {
+    "targets": {
+      "nx-release-publish": {
+        "executor": "@nx/js:release-publish",
+        "options": {
+          "packageRoot": "{projectRoot}"
+        }
+      }
+    }
+  }
 }

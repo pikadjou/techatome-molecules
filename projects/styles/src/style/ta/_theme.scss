@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use 'ta/utils/mixins/common';
+@use "sass:map";
+@use "ta/utils/mixins/common";
 
 // ============================================================================
 // Theme API for @ta/styles
@@ -66,15 +66,18 @@ $_default-neutral: (
 );
 
 $_default-semantic: (
+  red-subtle: transparentize(#e74c3c, 0.93),
   red-light: transparentize(#e74c3c, 0.5),
   red: #e74c3c,
   red-dark: #a93226,
+  orange-subtle: transparentize(#f39c12, 0.93),
   orange-light: transparentize(#f39c12, 0.5),
   orange: #f39c12,
   orange-dark: #9c640c,
   yellow-light: transparentize(#ffd166, 0.5),
   yellow: #ffd166,
   yellow-dark: #8a6d1a,
+  green-subtle: transparentize(#38a172, 0.93),
   green-light: transparentize(#38a172, 0.5),
   green: #38a172,
   green-dark: #256a4b,
@@ -96,7 +99,7 @@ $_default-semantic: (
 ///   icon, text, surface, semantic-token, border,
 ///   space, radius, shadow, font, components
 /// @param {String} $selector [':root'] - CSS selector scope for the overrides.
-@mixin apply-theme($overrides, $selector: ':root') {
+@mixin apply-theme($overrides, $selector: ":root") {
   @if $overrides and length($overrides) > 0 {
     #{$selector} {
       @each $category, $values in $overrides {
@@ -147,93 +150,119 @@ $_default-semantic: (
   }
 
   // Recalculate icon tokens
-  $result: map.set($result, icon, (
-    primary: map.get($n, black),
-    secondary: map.get($n, 500),
-    tertiary: map.get($n, 400),
-    brand: (
-      primary: map.get($b, 900),
-      secondary: map.get($sc, 600),
-    ),
-    invert: (
-      primary: map.get($n, white),
-      secondary: map.get($b, 600),
-    ),
-    disabled: map.get($n, 300),
-    success: map.get($se, green),
-    alert: map.get($se, red),
-  ));
+  $result: map.set(
+    $result,
+    icon,
+    (
+      primary: map.get($n, black),
+      secondary: map.get($n, 500),
+      tertiary: map.get($n, 400),
+      brand: (
+        primary: map.get($b, 900),
+        secondary: map.get($sc, 600),
+      ),
+      invert: (
+        primary: map.get($n, white),
+        secondary: map.get($b, 600),
+      ),
+      disabled: map.get($n, 300),
+      success: map.get($se, green),
+      alert: map.get($se, red),
+      accent: map.get($se, accent),
+    )
+  );
 
   // Recalculate text tokens
-  $result: map.set($result, text, (
-    primary: map.get($n, black),
-    secondary: map.get($n, 500),
-    tertiary: map.get($n, 400),
-    brand: (
-      primary: map.get($b, 900),
-      secondary: map.get($sc, 800),
-    ),
-    invert: (
-      primary: map.get($n, white),
-      secondary: map.get($n, white),
-    ),
-    body: map.get($n, 600),
-    success: map.get($se, green),
-    warning: map.get($se, orange),
-    alert: map.get($se, red),
-    link: map.get($b, 800),
-  ));
+  $result: map.set(
+    $result,
+    text,
+    (
+      primary: map.get($n, black),
+      secondary: map.get($n, 500),
+      tertiary: map.get($n, 400),
+      brand: (
+        primary: map.get($b, 900),
+        secondary: map.get($sc, 800),
+      ),
+      invert: (
+        primary: map.get($n, white),
+        secondary: map.get($n, white),
+      ),
+      body: map.get($n, 600),
+      success: map.get($se, green),
+      warning: map.get($se, orange),
+      alert: map.get($se, red),
+      link: map.get($b, 800),
+      accent: map.get($se, accent),
+      muted: map.get($n, 500),
+    )
+  );
 
   // Recalculate surface tokens
-  $result: map.set($result, surface, (
-    default: map.get($n, 300),
-    primary: map.get($n, white),
-    secondary: map.get($n, 200),
-    tertiary: map.get($b, 50),
-    brand: (
-      primary: map.get($b, 900),
-      secondary: map.get($sc, 400),
-      tertiary: map.get($b, 100),
-    ),
-    hover: (
-      primary: map.get($n, 200),
-      secondary: map.get($sc, 800),
-    ),
-    invert: map.get($b, 900),
-    success: map.get($se, green),
-    warning: map.get($se, orange),
-    alert: map.get($se, red),
-  ));
+  $result: map.set(
+    $result,
+    surface,
+    (
+      default: map.get($n, 300),
+      primary: map.get($n, white),
+      secondary: map.get($n, 200),
+      tertiary: map.get($b, 50),
+      brand: (
+        primary: map.get($b, 900),
+        secondary: map.get($sc, 400),
+        tertiary: map.get($b, 100),
+      ),
+      hover: (
+        primary: map.get($n, 200),
+        secondary: map.get($sc, 800),
+      ),
+      invert: map.get($b, 900),
+      success: map.get($se, green),
+      warning: map.get($se, orange),
+      alert: map.get($se, red),
+      ground: map.get($n, 200),
+      accent: map.get($se, accent),
+    )
+  );
 
   // Recalculate semantic-token
-  $result: map.set($result, semantic-token, (
-    success: map.get($se, green),
-    alert: map.get($se, red),
-    warning: map.get($se, orange),
-    link: map.get($b, 800),
-  ));
+  $result: map.set(
+    $result,
+    semantic-token,
+    (
+      success: map.get($se, green),
+      alert: map.get($se, red),
+      warning: map.get($se, orange),
+      link: map.get($b, 800),
+    )
+  );
 
   // Recalculate border tokens
-  $result: map.set($result, border, (
-    primary: map.get($n, black),
-    secondary: map.get($n, 500),
-    tertiary: map.get($n, 300),
-    brand: (
-      primary: map.get($b, 900),
-      secondary: map.get($sc, 600),
-    ),
-    hover: (
-      primary: map.get($b, 800),
-      secondary: map.get($b, 300),
-    ),
-    invert: (
-      primary: map.get($n, white),
-      secondary: map.get($sc, 900),
-    ),
-    disabled: map.get($n, 300),
-    success: map.get($se, green),
-    alert: map.get($se, red),
-  ));
+  $result: map.set(
+    $result,
+    border,
+    (
+      primary: map.get($n, black),
+      secondary: map.get($n, 500),
+      tertiary: map.get($n, 300),
+      brand: (
+        primary: map.get($b, 900),
+        secondary: map.get($sc, 600),
+      ),
+      hover: (
+        primary: map.get($b, 800),
+        secondary: map.get($b, 300),
+      ),
+      invert: (
+        primary: map.get($n, white),
+        secondary: map.get($sc, 900),
+      ),
+      disabled: map.get($n, 300),
+      success: map.get($se, green),
+      alert: map.get($se, red),
+      accent: map.get($se, accent),
+    )
+  );
 
   @return $result;
 }

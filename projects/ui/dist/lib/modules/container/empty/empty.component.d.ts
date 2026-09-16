@@ -1,8 +1,15 @@
-import { TaSizes } from '@ta/styles';
-import { TaBaseComponent } from '@ta/utils';
+import { TaSizes } from "@ta/styles";
+import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
+/**
+ * `filled` : encart plein, l'état vide occupe la place d'une carte.
+ * `dashed` : contour pointillé sur fond de carte — la place est réservée, elle
+ * attend d'être remplie.
+ */
+export type EmptyVariant = "filled" | "dashed";
 export declare class EmptyComponent extends TaBaseComponent {
     isEmpty: import("@angular/core").InputSignal<boolean>;
+    variant: import("@angular/core").InputSignal<EmptyVariant>;
     isLight: import("@angular/core").InputSignal<boolean>;
     showMessage: import("@angular/core").InputSignal<boolean>;
     text: import("@angular/core").InputSignal<string>;
@@ -11,5 +18,5 @@ export declare class EmptyComponent extends TaBaseComponent {
     iconSize: import("@angular/core").InputSignal<TaSizes>;
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<EmptyComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<EmptyComponent, "ta-empty", never, { "isEmpty": { "alias": "isEmpty"; "required": false; "isSignal": true; }; "isLight": { "alias": "isLight"; "required": false; "isSignal": true; }; "showMessage": { "alias": "showMessage"; "required": false; "isSignal": true; }; "text": { "alias": "text"; "required": false; "isSignal": true; }; "subtitle": { "alias": "subtitle"; "required": false; "isSignal": true; }; "emptyIcon": { "alias": "emptyIcon"; "required": false; "isSignal": true; }; "iconSize": { "alias": "iconSize"; "required": false; "isSignal": true; }; }, {}, never, ["[emptyAction]", "*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<EmptyComponent, "ta-empty", never, { "isEmpty": { "alias": "isEmpty"; "required": false; "isSignal": true; }; "variant": { "alias": "variant"; "required": false; "isSignal": true; }; "isLight": { "alias": "isLight"; "required": false; "isSignal": true; }; "showMessage": { "alias": "showMessage"; "required": false; "isSignal": true; }; "text": { "alias": "text"; "required": false; "isSignal": true; }; "subtitle": { "alias": "subtitle"; "required": false; "isSignal": true; }; "emptyIcon": { "alias": "emptyIcon"; "required": false; "isSignal": true; }; "iconSize": { "alias": "iconSize"; "required": false; "isSignal": true; }; }, {}, never, ["[emptyAction]", "*"], true, never>;
 }

@@ -4,14 +4,35 @@
 :host {
   display: flex;
 }
+// L'allure vient du thème et de `type`. Ces variables existent pour les
+// endroits où l'étiquette joue un autre rôle — un compteur d'onglet, par
+// exemple — et se règlent depuis l'élément `ta-label`.
 .label-container {
-  padding: common.get-var(components, label, padding-vertical) common.get-var(components, label, padding-horizontal);
+  padding: var(
+    --ta-label-padding,
+    #{common.get-var(components, label, padding-vertical)} #{common.get-var(components, label, padding-horizontal)}
+  );
   @include fonts.fontSizeBody(sm);
+  font-family: var(--ta-label-font-family, inherit);
   font-weight: common.get-var(components, label, font-weight);
   letter-spacing: common.get-var(components, label, letter-spacing);
 
-  border-radius: common.get-var(components, label, radius);
+  border-radius: var(--ta-label-radius, #{common.get-var(components, label, radius)});
   border: 1px solid transparent;
+  color: var(--ta-label-color, var(--ta-label-type-color));
+  background: var(--ta-label-background, var(--ta-label-type-background));
+  border-color: var(--ta-label-border-color, var(--ta-label-type-border));
+  gap: common.get-var(space, xs);
+
+  // Le pictogramme prend l'encre du texte : l'étiquette est d'un seul ton.
+  ta-font-icon {
+    flex-shrink: 0;
+    color: inherit;
+  }
+
+  &.pill {
+    border-radius: common.get-var(radius, pill);
+  }
 
   &.xs {
     padding: common.get-var(components, label, xs, padding-vertical)
@@ -32,37 +53,37 @@
   }
 }
 .label-default {
-  color: common.get-var(components, label, default, color);
-  background: common.get-var(components, label, default, background);
-  border-color: common.get-var(components, label, default, border);
+  --ta-label-type-color: #{common.get-var(components, label, default, color)};
+  --ta-label-type-background: #{common.get-var(components, label, default, background)};
+  --ta-label-type-border: #{common.get-var(components, label, default, border)};
 }
 
 .label-secondary {
-  color: common.get-var(components, label, secondary, color);
-  background: common.get-var(components, label, secondary, background);
-  border-color: common.get-var(components, label, secondary, border);
+  --ta-label-type-color: #{common.get-var(components, label, secondary, color)};
+  --ta-label-type-background: #{common.get-var(components, label, secondary, background)};
+  --ta-label-type-border: #{common.get-var(components, label, secondary, border)};
 }
 
 .label-success {
-  color: common.get-var(components, label, success, color);
-  background: common.get-var(components, label, success, background);
-  border-color: common.get-var(components, label, success, border);
+  --ta-label-type-color: #{common.get-var(components, label, success, color)};
+  --ta-label-type-background: #{common.get-var(components, label, success, background)};
+  --ta-label-type-border: #{common.get-var(components, label, success, border)};
 }
 
 .label-warning {
-  color: common.get-var(components, label, warning, color);
-  background: common.get-var(components, label, warning, background);
-  border-color: common.get-var(components, label, warning, border);
+  --ta-label-type-color: #{common.get-var(components, label, warning, color)};
+  --ta-label-type-background: #{common.get-var(components, label, warning, background)};
+  --ta-label-type-border: #{common.get-var(components, label, warning, border)};
 }
 
 .label-alert {
-  color: common.get-var(components, label, alert, color);
-  background: common.get-var(components, label, alert, background);
-  border-color: common.get-var(components, label, alert, border);
+  --ta-label-type-color: #{common.get-var(components, label, alert, color)};
+  --ta-label-type-background: #{common.get-var(components, label, alert, background)};
+  --ta-label-type-border: #{common.get-var(components, label, alert, border)};
 }
 
 .label-purple {
-  color: common.get-var(components, label, purple, color);
-  background: common.get-var(components, label, purple, background);
-  border-color: common.get-var(components, label, purple, border);
+  --ta-label-type-color: #{common.get-var(components, label, purple, color)};
+  --ta-label-type-background: #{common.get-var(components, label, purple, background)};
+  --ta-label-type-border: #{common.get-var(components, label, purple, border)};
 }

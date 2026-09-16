@@ -7,7 +7,12 @@ export type TaLanguageConfig = {
 };
 export declare const TA_LANGUAGES: InjectionToken<TaLanguageConfig[]>;
 export declare class SwitchLanguageComponent {
-    mode: import("@angular/core").InputSignal<"inline" | "dropdown" | "modal">;
+    /**
+     * `compact` : la simple rangée de codes de langue, sans drapeau ni panneau.
+     * C'est la forme qui tient dans un pied de page, où le choix de langue ne doit
+     * pas peser plus qu'une mention légale.
+     */
+    mode: import("@angular/core").InputSignal<"inline" | "dropdown" | "modal" | "compact">;
     private _translateService;
     readonly languages: TaLanguageConfig[];
     activeLanguage: string;

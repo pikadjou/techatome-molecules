@@ -3,11 +3,9 @@
 
 .trigram {
   @include fonts.fontSizeBody(md);
+  font-family: common.get-var(font, display, family);
+  font-weight: common.get-var(font, body, sm, bold, weight);
 
-  background-color: common.get-var(surface, brand, primary);
-  color: common.get-var(neutral, 100);
-
-  border-radius: 100%;
   width: 36px;
   height: 36px;
   line-height: 36px;
@@ -15,4 +13,36 @@
   vertical-align: middle;
 
   margin: auto;
+
+  &.circle {
+    border-radius: 100%;
+  }
+
+  // Le carré arrondi reprend le rayon des cartes : l'avatar s'y range comme une
+  // vignette, pas comme une pastille.
+  &.squircle {
+    border-radius: common.get-var(radius, minimal);
+  }
+
+  &.brand {
+    background-color: common.get-var(surface, brand, primary);
+    color: common.get-var(neutral, 100);
+  }
+
+  &.highlight {
+    background-color: common.get-var(surface, brand, secondary);
+    color: common.get-var(text, brand, primary);
+  }
+
+  &.surface {
+    background-color: common.get-var(surface, secondary);
+    color: common.get-var(text, brand, primary);
+  }
+
+  // Sur fond sombre, la pastille se contente d'un voile : c'est le texte qui
+  // porte la couleur de marque.
+  &.invert {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: common.get-var(surface, brand, secondary);
+  }
 }

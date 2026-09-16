@@ -1,0 +1,39 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+// Un encart teinté d'alerte, pas un bloc rouge plein : il doit arrêter le geste
+// sans faire croire que le dommage est déjà fait.
+.validation-inline {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, md);
+  border: 1px solid common.get-var(border, alert);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(semantic, red-subtle);
+
+  &__title {
+    font-family: common.get-var(font, display, family);
+    @include fonts.fontSizeBody(md, true);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: common.get-var(text, alert);
+  }
+
+  &__body {
+    @include fonts.fontSizeBody(sm);
+    line-height: 1.55;
+    color: common.get-var(text, secondary);
+    text-wrap: pretty;
+  }
+
+  // Les deux issues à droite, l'abandon en premier : le geste destructeur reste
+  // le plus loin du bord où la main arrive.
+  &__actions {
+    @include flex.simple-flex();
+    @include flex.align-center();
+    justify-content: flex-end;
+    gap: common.get-var(space, sm);
+    flex-wrap: wrap;
+  }
+}

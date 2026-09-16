@@ -13,7 +13,12 @@ import { ColorType, TaSizes } from "@ta/styles";
 export class BulletComponent {
   size = input<TaSizes>("sm");
 
-  type = input<ColorType | "notif">("default");
+  /**
+   * `notif` : pastille de comptage sur la surface de marque.
+   * `notif-highlight` : même pastille, dans la couleur secondaire de marque —
+   * la seule qui reste visible posée sur un bandeau de marque.
+   */
+  type = input<ColorType | "notif" | "notif-highlight">("default");
 
   public getClass(): string {
     return `bullet-${this.type()} ${this.size()}`;

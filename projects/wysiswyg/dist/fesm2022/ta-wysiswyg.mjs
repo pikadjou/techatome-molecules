@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { input, Component, EventEmitter, inject, ViewChild, Output } from '@angular/core';
+import { input, Component, output, inject, computed, ViewEncapsulation, EventEmitter, signal, ViewChild, Output } from '@angular/core';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TitleComponent, TextComponent, ToastComponent } from '@ta/ui';
 import { TaBaseComponent, SafePipe, isNotEmptyObject, isNonNullable } from '@ta/utils';
@@ -11,9 +11,11 @@ import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Warning from '@editorjs/warning';
 import { ColorTool } from 'editorjs-color';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, merge, fromEvent } from 'rxjs';
 import { TaDocumentsService } from '@ta/services';
 import { TaTranslationService } from '@ta/translation';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IconText, IconListBulleted, IconListNumbered, IconQuote, IconWarning, IconDelimiter, IconPicture, IconChevronUp, IconChevronDown, IconTrash } from '@codexteam/icons';
 import edjsHTML from 'editorjs-html';
 
 class BlockTextComponent extends TaBaseComponent {
@@ -35,6 +37,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         ToastComponent,
                     ], template: "@for (block of this.blocks(); track block.id) { @switch (block.type) { @case\n('header') {\n<ta-title [level]=\"block.data.level\">\n  {{ block.data.text }}\n</ta-title>\n} @case ('paragraph') {\n<ta-text>\n  <div [innerHTML]=\"block.data.text | safe : 'html'\"></div>\n</ta-text>\n} @case ('list') { @if (block.data.style === 'ordered') {\n<ol>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ol>\n} @else if (block.data.style === 'unordered') {\n<ul>\n  @for (item of block.data.items; track item) {\n  <li>\n    {{ item }}\n  </li>\n  }\n</ul>\n} } @case ('delimiter') {\n<hr />\n} @case ('image') {\n<img [src]=\"block.data.file.url\" style=\"max-width: 100%\" />\n} @case ('quote') {\n<div class=\"flex-start g-space-xs\">\n  @if (block.data.caption) {\n  <div>{{ block.data.caption }}:</div>\n  }\n  <q [innerHTML]=\"block.data.text | safe : 'html'\"></q>\n</div>\n} @case ('warning') {\n<ta-toast>\n  <ta-notification-inline\n    [message]=\"block.data.message\"\n    [code]=\"this.ENotificationCode.warning\"\n    [showClose]=\"false\"\n  ></ta-notification-inline>\n</ta-toast>\n} } }\n" }]
         }] });
+
+const EDITOR_ALL_TOOLS = [
+    "header",
+    "list",
+    "quote",
+    "delimiter",
+    "warning",
+    "color",
+    "image",
+    "mention",
+];
 
 class TagTool {
     static get isInline() {
@@ -223,6 +236,180 @@ class TagTool {
     }
 }
 
+class EditorToolbarComponent {
+    constructor() {
+        /** Identifiant du bloc sous le curseur, pour marquer l'outil correspondant. */
+        this.activeTool = input(null);
+        this.labels = input({});
+        /** Outils réellement montés dans l'éditeur : la barre n'offre que ceux-là. */
+        this.enabledTools = input(EDITOR_ALL_TOOLS);
+        this.blockCommand = output();
+        this.blockTool = output();
+        this._sanitizer = inject(DomSanitizer);
+        this.blockTools = computed(() => {
+            const enabled = new Set(this.enabledTools());
+            return this._allBlockTools.filter((entry) => !entry.requires || enabled.has(entry.requires));
+        });
+        this._allBlockTools = [
+            { icon: this._trust(IconText), id: "paragraph", labelKey: "paragraph" },
+            { icon: null, id: "header-1", labelKey: "header1", requires: "header", text: "H1" },
+            { icon: null, id: "header-2", labelKey: "header2", requires: "header", text: "H2" },
+            { icon: null, id: "header-3", labelKey: "header3", requires: "header", text: "H3" },
+            {
+                icon: this._trust(IconListBulleted),
+                id: "list-unordered",
+                labelKey: "listUnordered",
+                requires: "list",
+            },
+            {
+                icon: this._trust(IconListNumbered),
+                id: "list-ordered",
+                labelKey: "listOrdered",
+                requires: "list",
+            },
+            { icon: this._trust(IconQuote), id: "quote", labelKey: "quote", requires: "quote" },
+            { icon: this._trust(IconWarning), id: "warning", labelKey: "warning", requires: "warning" },
+            {
+                icon: this._trust(IconDelimiter),
+                id: "delimiter",
+                labelKey: "delimiter",
+                requires: "delimiter",
+            },
+            { icon: this._trust(IconPicture), id: "image", labelKey: "image", requires: "image" },
+        ];
+        this.blockCommands = [
+            { icon: this._trust(IconChevronUp), id: "move-up", labelKey: "moveUp" },
+            { icon: this._trust(IconChevronDown), id: "move-down", labelKey: "moveDown" },
+        ];
+        this.deleteCommand = {
+            icon: this._trust(IconTrash),
+            id: "delete",
+            labelKey: "delete",
+        };
+    }
+    getLabel(entry) {
+        return this.labels()[entry.labelKey] ?? "";
+    }
+    isActive(id) {
+        return this.activeTool() === id;
+    }
+    _trust(icon) {
+        return this._sanitizer.bypassSecurityTrustHtml(icon);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorToolbarComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: EditorToolbarComponent, isStandalone: true, selector: "ta-cms-editor-toolbar", inputs: { activeTool: { classPropertyName: "activeTool", publicName: "activeTool", isSignal: true, isRequired: false, transformFunction: null }, labels: { classPropertyName: "labels", publicName: "labels", isSignal: true, isRequired: false, transformFunction: null }, enabledTools: { classPropertyName: "enabledTools", publicName: "enabledTools", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { blockCommand: "blockCommand", blockTool: "blockTool" }, ngImport: i0, template: "<div class=\"editor-toolbar\" role=\"toolbar\">\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockTools(); track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [class.is-active]=\"this.isActive(entry.id)\"\n        [attr.aria-pressed]=\"this.isActive(entry.id)\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockTool.emit(entry.id)\"\n      >\n        @if (entry.icon) {\n          <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n        }\n        @if (entry.text) {\n          <span class=\"editor-toolbar__text\">{{ entry.text }}</span>\n        }\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__separator\"></div>\n\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockCommands; track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockCommand.emit(entry.id)\"\n      >\n        <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__group editor-toolbar__group--end\">\n    <button\n      type=\"button\"\n      class=\"editor-toolbar__button editor-toolbar__button--danger\"\n      [title]=\"this.getLabel(this.deleteCommand)\"\n      [attr.aria-label]=\"this.getLabel(this.deleteCommand)\"\n      (click)=\"this.blockCommand.emit(this.deleteCommand.id)\"\n    >\n      <span class=\"editor-toolbar__icon\" [innerHTML]=\"this.deleteCommand.icon\"></span>\n    </button>\n  </div>\n</div>\n", styles: ["ta-cms-editor-toolbar{display:block}ta-cms-editor-toolbar .editor-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--ta-space-xs);padding:var(--ta-space-xs);background-color:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}ta-cms-editor-toolbar .editor-toolbar__group{display:flex;align-items:center;gap:var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__group--end{margin-left:auto}ta-cms-editor-toolbar .editor-toolbar__separator{width:1px;height:var(--ta-space-md);background-color:var(--ta-border-tertiary);margin:0 var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__button{align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-space-xs);min-width:32px;height:32px;padding:0 var(--ta-space-xs);border:none;border-radius:var(--ta-radius-minimal);background-color:transparent;color:var(--ta-text-secondary);cursor:pointer;transition:color var(--ta-transition-fast),background-color var(--ta-transition-fast),border-color var(--ta-transition-fast)}ta-cms-editor-toolbar .editor-toolbar__button:hover{background-color:var(--ta-surface-hover-primary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button:focus-visible{outline:none;box-shadow:var(--ta-shadow-focus)}ta-cms-editor-toolbar .editor-toolbar__button.is-active{background-color:var(--ta-surface-brand-secondary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button--danger:hover{color:var(--ta-semantic-red-dark)}ta-cms-editor-toolbar .editor-toolbar__icon{align-items:center;display:flex;justify-content:center;margin:auto}ta-cms-editor-toolbar .editor-toolbar__icon svg{display:block;width:20px;height:20px}ta-cms-editor-toolbar .editor-toolbar__text{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight)}\n"], encapsulation: i0.ViewEncapsulation.None }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorToolbarComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "ta-cms-editor-toolbar", standalone: true, encapsulation: ViewEncapsulation.None, template: "<div class=\"editor-toolbar\" role=\"toolbar\">\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockTools(); track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [class.is-active]=\"this.isActive(entry.id)\"\n        [attr.aria-pressed]=\"this.isActive(entry.id)\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockTool.emit(entry.id)\"\n      >\n        @if (entry.icon) {\n          <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n        }\n        @if (entry.text) {\n          <span class=\"editor-toolbar__text\">{{ entry.text }}</span>\n        }\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__separator\"></div>\n\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockCommands; track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockCommand.emit(entry.id)\"\n      >\n        <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__group editor-toolbar__group--end\">\n    <button\n      type=\"button\"\n      class=\"editor-toolbar__button editor-toolbar__button--danger\"\n      [title]=\"this.getLabel(this.deleteCommand)\"\n      [attr.aria-label]=\"this.getLabel(this.deleteCommand)\"\n      (click)=\"this.blockCommand.emit(this.deleteCommand.id)\"\n    >\n      <span class=\"editor-toolbar__icon\" [innerHTML]=\"this.deleteCommand.icon\"></span>\n    </button>\n  </div>\n</div>\n", styles: ["ta-cms-editor-toolbar{display:block}ta-cms-editor-toolbar .editor-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--ta-space-xs);padding:var(--ta-space-xs);background-color:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}ta-cms-editor-toolbar .editor-toolbar__group{display:flex;align-items:center;gap:var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__group--end{margin-left:auto}ta-cms-editor-toolbar .editor-toolbar__separator{width:1px;height:var(--ta-space-md);background-color:var(--ta-border-tertiary);margin:0 var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__button{align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-space-xs);min-width:32px;height:32px;padding:0 var(--ta-space-xs);border:none;border-radius:var(--ta-radius-minimal);background-color:transparent;color:var(--ta-text-secondary);cursor:pointer;transition:color var(--ta-transition-fast),background-color var(--ta-transition-fast),border-color var(--ta-transition-fast)}ta-cms-editor-toolbar .editor-toolbar__button:hover{background-color:var(--ta-surface-hover-primary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button:focus-visible{outline:none;box-shadow:var(--ta-shadow-focus)}ta-cms-editor-toolbar .editor-toolbar__button.is-active{background-color:var(--ta-surface-brand-secondary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button--danger:hover{color:var(--ta-semantic-red-dark)}ta-cms-editor-toolbar .editor-toolbar__icon{align-items:center;display:flex;justify-content:center;margin:auto}ta-cms-editor-toolbar .editor-toolbar__icon svg{display:block;width:20px;height:20px}ta-cms-editor-toolbar .editor-toolbar__text{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight)}\n"] }]
+        }], ctorParameters: () => [] });
+
+var editorjs$4 = {
+	placeholder: "Beginnen Sie zu schreiben...",
+	i18n: {
+		direction: "ltr",
+		messages: {
+			ui: {
+				blockTunes: {
+					toggler: {
+						"Click to tune": "Klicken zum Anpassen",
+						"or drag to move": "oder ziehen zum Verschieben"
+					}
+				},
+				inlineToolbar: {
+					converter: {
+						"Convert to": "Umwandeln in"
+					}
+				},
+				popover: {
+					Filter: "Filtern",
+					"Nothing found": "Nichts gefunden",
+					"Convert to": "Umwandeln in"
+				},
+				toolbar: {
+					toolbox: {
+						Add: "Hinzufügen"
+					}
+				}
+			},
+			toolNames: {
+				Text: "Text",
+				Heading: "Überschrift",
+				List: "Liste",
+				Warning: "Warnung",
+				Checklist: "Checkliste",
+				Quote: "Zitat",
+				Code: "Code",
+				Delimiter: "Trennlinie",
+				"Raw HTML": "Roh-HTML",
+				Table: "Tabelle",
+				Link: "Link",
+				Marker: "Markierung",
+				Bold: "Fett",
+				Italic: "Kursiv",
+				InlineCode: "Inline-Code"
+			},
+			tools: {
+				quote: {
+					"Enter a quote": "Zitat",
+					"Enter a caption": "Nachricht"
+				},
+				warning: {
+					Title: "Titel",
+					Message: "Nachricht"
+				},
+				link: {
+					"Add a link": "Link hinzufügen"
+				},
+				stub: {
+					"The block can not be displayed correctly.": "Der Block kann nicht korrekt angezeigt werden."
+				}
+			},
+			blockTunes: {
+				"delete": {
+					Delete: "Löschen"
+				},
+				moveUp: {
+					"Move up": "Nach oben"
+				},
+				moveDown: {
+					"Move down": "Nach unten"
+				}
+			}
+		}
+	},
+	colortool: {
+		backgroundColorLabel: "Hervorhebung",
+		frontColorLabel: "Farbe"
+	}
+};
+var toolbar$4 = {
+	"delete": "Block löschen",
+	delimiter: "Trennlinie",
+	header1: "Haupttitel",
+	header2: "Titel",
+	header3: "Untertitel",
+	image: "Bild",
+	listOrdered: "Nummerierte Liste",
+	listUnordered: "Aufzählungsliste",
+	moveDown: "Nach unten verschieben",
+	moveUp: "Nach oben verschieben",
+	paragraph: "Text",
+	quote: "Zitat",
+	warning: "Warnung"
+};
+var de = {
+	editorjs: editorjs$4,
+	toolbar: toolbar$4
+};
+
+var de$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: de,
+    editorjs: editorjs$4,
+    toolbar: toolbar$4
+});
+
 var editorjs$3 = {
 	placeholder: "Start writing...",
 	i18n: {
@@ -288,14 +475,31 @@ var editorjs$3 = {
 		}
 	}
 };
+var toolbar$3 = {
+	"delete": "Delete block",
+	delimiter: "Separator",
+	header1: "Main heading",
+	header2: "Heading",
+	header3: "Subheading",
+	image: "Image",
+	listOrdered: "Numbered list",
+	listUnordered: "Bulleted list",
+	moveDown: "Move down",
+	moveUp: "Move up",
+	paragraph: "Text",
+	quote: "Quote",
+	warning: "Warning"
+};
 var en = {
-	editorjs: editorjs$3
+	editorjs: editorjs$3,
+	toolbar: toolbar$3
 };
 
 var en$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: en,
-    editorjs: editorjs$3
+    editorjs: editorjs$3,
+    toolbar: toolbar$3
 });
 
 var editorjs$2 = {
@@ -362,14 +566,31 @@ var editorjs$2 = {
 		}
 	}
 };
+var toolbar$2 = {
+	"delete": "Eliminar bloque",
+	delimiter: "Separador",
+	header1: "Título principal",
+	header2: "Título",
+	header3: "Subtítulo",
+	image: "Imagen",
+	listOrdered: "Lista numerada",
+	listUnordered: "Lista con viñetas",
+	moveDown: "Mover hacia abajo",
+	moveUp: "Mover hacia arriba",
+	paragraph: "Texto",
+	quote: "Cita",
+	warning: "Advertencia"
+};
 var es = {
-	editorjs: editorjs$2
+	editorjs: editorjs$2,
+	toolbar: toolbar$2
 };
 
 var es$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: es,
-    editorjs: editorjs$2
+    editorjs: editorjs$2,
+    toolbar: toolbar$2
 });
 
 var editorjs$1 = {
@@ -451,19 +672,37 @@ var editorjs$1 = {
 		frontColorLabel: "couleur"
 	}
 };
+var toolbar$1 = {
+	"delete": "Supprimer le bloc",
+	delimiter: "Séparateur",
+	header1: "Titre principal",
+	header2: "Titre",
+	header3: "Sous-titre",
+	image: "Image",
+	listOrdered: "Liste numérotée",
+	listUnordered: "Liste à puces",
+	moveDown: "Déplacer vers le bas",
+	moveUp: "Déplacer vers le haut",
+	paragraph: "Texte",
+	quote: "Citation",
+	warning: "Avertissement"
+};
 var fr = {
-	editorjs: editorjs$1
+	editorjs: editorjs$1,
+	toolbar: toolbar$1
 };
 
 var fr$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: fr,
-    editorjs: editorjs$1
+    editorjs: editorjs$1,
+    toolbar: toolbar$1
 });
 
 var editorjs = {
 	placeholder: "Begin te schrijven...",
 	i18n: {
+		direction: "ltr",
 		messages: {
 			ui: {
 				blockTunes: {
@@ -476,6 +715,11 @@ var editorjs = {
 					converter: {
 						"Convert to": "Converteren naar"
 					}
+				},
+				popover: {
+					Filter: "Filteren",
+					"Nothing found": "Niets gevonden",
+					"Convert to": "Converteren naar"
 				},
 				toolbar: {
 					toolbox: {
@@ -501,6 +745,10 @@ var editorjs = {
 				InlineCode: "Inline code"
 			},
 			tools: {
+				quote: {
+					"Enter a quote": "Citaat",
+					"Enter a caption": "Bericht"
+				},
 				warning: {
 					Title: "Titel",
 					Message: "Bericht"
@@ -524,28 +772,52 @@ var editorjs = {
 				}
 			}
 		}
+	},
+	colortool: {
+		backgroundColorLabel: "markering",
+		frontColorLabel: "kleur"
 	}
 };
+var toolbar = {
+	"delete": "Blok verwijderen",
+	delimiter: "Scheidingslijn",
+	header1: "Hoofdtitel",
+	header2: "Titel",
+	header3: "Subtitel",
+	image: "Afbeelding",
+	listOrdered: "Genummerde lijst",
+	listUnordered: "Lijst met opsommingstekens",
+	moveDown: "Omlaag verplaatsen",
+	moveUp: "Omhoog verplaatsen",
+	paragraph: "Tekst",
+	quote: "Citaat",
+	warning: "Waarschuwing"
+};
 var nl = {
-	editorjs: editorjs
+	editorjs: editorjs,
+	toolbar: toolbar
 };
 
 var nl$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: nl,
-    editorjs: editorjs
+    editorjs: editorjs,
+    toolbar: toolbar
 });
 
-const EDITOR_ALL_TOOLS = [
-    "header",
-    "list",
-    "quote",
-    "delimiter",
-    "warning",
-    "color",
-    "image",
-    "mention",
-];
+/** Ce que chaque outil de la barre pose comme bloc EditorJS. */
+const TOOLBAR_BLOCK_CONFIG = {
+    delimiter: { type: "delimiter" },
+    "header-1": { data: { level: 1 }, type: "header" },
+    "header-2": { data: { level: 2 }, type: "header" },
+    "header-3": { data: { level: 3 }, type: "header" },
+    image: { type: "image" },
+    "list-ordered": { data: { style: "ordered" }, type: "list" },
+    "list-unordered": { data: { style: "unordered" }, type: "list" },
+    paragraph: { type: "paragraph" },
+    quote: { type: "quote" },
+    warning: { type: "warning" },
+};
 class EditorInputComponent extends TaBaseComponent {
     constructor() {
         super();
@@ -558,10 +830,20 @@ class EditorInputComponent extends TaBaseComponent {
         this.maxHeight = input(false);
         this.enabledTools = input(EDITOR_ALL_TOOLS);
         this.placeholder = input();
+        /** Affiche la barre d'outils au-dessus de la zone d'édition. */
+        this.showToolbar = input(true);
+        /** Supprime la réserve d'espace basse d'EditorJS, pour les champs courts. */
+        this.isCompact = input(false);
+        /** Laisse l'utilisateur régler la hauteur de la zone d'édition. */
+        this.resizable = input(true);
         this.changed = new EventEmitter();
         this.saved = new EventEmitter();
+        /** Outil du bloc sous le curseur, que la barre met en évidence. */
+        this.activeTool = signal(null);
+        this.toolbarLabels = {};
         this._translationService = inject(TaTranslationService);
         this.languages = {
+            de: de$1,
             en: en$1,
             es: es$1,
             fr: fr$1,
@@ -587,6 +869,7 @@ class EditorInputComponent extends TaBaseComponent {
                 }
                 this.changed.emit({ blocks: data.blocks });
             }
+            this._updateActiveTool();
             if (this.saveOnChange()) {
                 this.save();
             }
@@ -597,6 +880,7 @@ class EditorInputComponent extends TaBaseComponent {
         };
     }
     ngOnInit() {
+        this.toolbarLabels = this._getLanguagePack()?.toolbar ?? {};
         const requestSave = this.requestSave$();
         if (requestSave) {
             this._registerSubscription(requestSave.subscribe({
@@ -628,9 +912,14 @@ class EditorInputComponent extends TaBaseComponent {
     }
     ngAfterViewInit() {
         this.editorInstance = this.init();
+        this._trackActiveBlock();
     }
     ngOnDestroy() {
+        // `super` d'abord : c'est lui qui coupe les souscriptions, dont celles que
+        // `_trackActiveBlock` a posées sur l'élément hôte.
+        super.ngOnDestroy();
         this.editorInstance?.destroy();
+        this.editorInstance = null;
     }
     async save() {
         if (isNotEmptyObject(this.editorInstance)) {
@@ -706,11 +995,126 @@ class EditorInputComponent extends TaBaseComponent {
         }
         return tools;
     }
-    _getTranslation() {
-        if (!isNonNullable(this._translationService.getLanguage())) {
-            return {};
+    /**
+     * Applique un outil de la barre au bloc courant : on convertit le bloc en
+     * place quand EditorJS le permet, sinon on en insère un nouveau — un bloc vide
+     * est alors remplacé plutôt que doublé.
+     */
+    async applyBlockTool(tool) {
+        const editor = this.editorInstance;
+        if (!editor) {
+            return;
         }
-        return this.languages[this._translationService.getLanguage()].editorjs ?? {};
+        const { data, type } = TOOLBAR_BLOCK_CONFIG[tool];
+        const block = this._getCurrentBlock();
+        if (!block) {
+            editor.blocks.insert(type, data, undefined, editor.blocks.getBlocksCount(), true);
+            this._updateActiveTool();
+            return;
+        }
+        const index = editor.blocks.getCurrentBlockIndex();
+        if (block.name === type) {
+            if (data) {
+                await editor.blocks.update(block.id, data);
+                editor.caret.setToBlock(index, "end");
+            }
+        }
+        else {
+            try {
+                await editor.blocks.convert(block.id, type, data);
+                editor.caret.setToBlock(index, "end");
+            }
+            catch {
+                editor.blocks.insert(type, data, undefined, block.isEmpty ? index : index + 1, true, block.isEmpty);
+            }
+        }
+        this._updateActiveTool();
+    }
+    /** Déplace ou supprime le bloc courant. */
+    applyBlockCommand(command) {
+        const editor = this.editorInstance;
+        if (!editor) {
+            return;
+        }
+        const index = editor.blocks.getCurrentBlockIndex();
+        if (index < 0) {
+            return;
+        }
+        switch (command) {
+            case "delete": {
+                editor.blocks.delete(index);
+                break;
+            }
+            case "move-down": {
+                if (index < editor.blocks.getBlocksCount() - 1) {
+                    editor.blocks.move(index + 1);
+                    editor.caret.setToBlock(index + 1, "end");
+                }
+                break;
+            }
+            case "move-up": {
+                if (index > 0) {
+                    editor.blocks.move(index - 1);
+                    editor.caret.setToBlock(index - 1, "end");
+                }
+                break;
+            }
+        }
+        this._updateActiveTool();
+    }
+    /**
+     * Le bloc courant n'est pas observable : on le relit après chaque clic ou
+     * frappe. `Tab` et `/` sont retenus au passage, faute de quoi EditorJS ouvre
+     * sa propre palette par-dessus la barre.
+     */
+    _trackActiveBlock() {
+        const holder = this.editorjs.nativeElement;
+        this._registerSubscription(merge(fromEvent(holder, "click"), fromEvent(holder, "keyup")).subscribe(() => this._updateActiveTool()));
+        this._registerSubscription(fromEvent(holder, "keydown", { capture: true }).subscribe((event) => {
+            if (event.key === "Tab" || event.key === "/") {
+                event.stopPropagation();
+            }
+        }));
+    }
+    _updateActiveTool() {
+        const block = this._getCurrentBlock();
+        this.activeTool.set(block ? this._resolveToolId(block) : null);
+    }
+    _getCurrentBlock() {
+        // L'API `blocks` n'existe ni avant `isReady` ni après `destroy()` : tester
+        // l'instance ne suffit pas.
+        const blocks = this.editorInstance?.blocks;
+        if (!blocks) {
+            return undefined;
+        }
+        const index = blocks.getCurrentBlockIndex();
+        if (index < 0) {
+            return undefined;
+        }
+        return blocks.getBlockByIndex(index);
+    }
+    /** Un titre ou une liste ne disent pas leur variante : on lit le DOM rendu. */
+    _resolveToolId(block) {
+        if (block.name === "header") {
+            const heading = block.holder.querySelector("h1, h2, h3, h4, h5, h6");
+            return heading ? `header-${heading.tagName.charAt(1)}` : "header-2";
+        }
+        if (block.name === "list") {
+            return block.holder.querySelector("ol")
+                ? "list-ordered"
+                : "list-unordered";
+        }
+        return block.name;
+    }
+    _getLanguagePack() {
+        const language = this._translationService.getLanguage();
+        if (!isNonNullable(language)) {
+            return null;
+        }
+        return this.languages[language] ?? null;
+    }
+    _getTranslation() {
+        return this._getLanguagePack()?.editorjs ?? {};
     }
     async _extractWithColorTokenStyles() {
         const output = await this.editorInstance?.save();
@@ -755,11 +1159,11 @@ class EditorInputComponent extends TaBaseComponent {
         return [...html.matchAll(regex)].map((match) => match[1]);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null }, enabledTools: { classPropertyName: "enabledTools", publicName: "enabledTools", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}\n"] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null }, enabledTools: { classPropertyName: "enabledTools", publicName: "enabledTools", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, showToolbar: { classPropertyName: "showToolbar", publicName: "showToolbar", isSignal: true, isRequired: false, transformFunction: null }, isCompact: { classPropertyName: "isCompact", publicName: "isCompact", isSignal: true, isRequired: false, transformFunction: null }, resizable: { classPropertyName: "resizable", publicName: "resizable", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\" [class.is-compact]=\"this.isCompact()\">\n  @if (this.showToolbar()) {\n  <ta-cms-editor-toolbar\n    [activeTool]=\"this.activeTool()\"\n    [labels]=\"this.toolbarLabels\"\n    [enabledTools]=\"this.enabledTools()\"\n    (blockTool)=\"this.applyBlockTool($event)\"\n    (blockCommand)=\"this.applyBlockCommand($event)\"\n  ></ta-cms-editor-toolbar>\n  }\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n    [class.resizable]=\"this.resizable()\"\n  ></div>\n</div>\n", styles: ["ta-cms-editor-input .editor-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-body);max-height:250px;overflow:auto}ta-cms-editor-input .editor-container.resizable{resize:vertical;min-height:60px}ta-cms-editor-input .editor-container.max-height{max-height:300px}ta-cms-editor-input .editor-container .ce-toolbar{display:none}ta-cms-editor-input .editor-container .cdx-block{max-width:100%!important}ta-cms-editor-input .editor-container .ce-block__content,ta-cms-editor-input .editor-container .ce-toolbar__content{max-width:100%!important;margin:0!important}ta-cms-editor-input .editor-container .ce-block--selected .ce-block__content{background-color:var(--ta-surface-hover-primary);border-radius:var(--ta-radius-minimal)}ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder]:empty:before,ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder-active]:before{color:var(--ta-text-tertiary)}ta-cms-editor-input .editor-container .ce-header{color:var(--ta-text-primary)}ta-cms-editor-input .editor-container h1.ce-header{font-size:var(--ta-font-h1-default-size);font-weight:var(--ta-font-h1-default-weight)}ta-cms-editor-input .editor-container h2.ce-header{font-size:var(--ta-font-h2-default-size);font-weight:var(--ta-font-h2-default-weight)}ta-cms-editor-input .editor-container h3.ce-header{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight)}ta-cms-editor-input .editor-container h4.ce-header{font-size:var(--ta-font-h4-default-size);font-weight:var(--ta-font-h4-default-weight)}ta-cms-editor-input .editor-container .cdx-quote{border-left:3px solid var(--ta-border-brand-primary);padding-left:var(--ta-space-md)}ta-cms-editor-input .editor-container .cdx-warning{background-color:var(--ta-surface-warning);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}ta-cms-editor-input .editor-container .ce-popover{--border-radius: var(--ta-radius-rounded);--color-background: var(--ta-surface-primary);--color-background-item-focus: var(--ta-surface-hover-primary);--color-background-item-hover: var(--ta-surface-secondary);--color-border: var(--ta-border-tertiary);--color-text-primary: var(--ta-text-primary);--color-text-secondary: var(--ta-text-secondary)}ta-cms-editor-input .editor-container .ce-inline-toolbar{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);box-shadow:var(--ta-shadow-black-sm)}ta-cms-editor-input .is-compact .codex-editor__redactor{padding-bottom:0!important}ta-cms-editor-input .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid var(--ta-border-tertiary);text-align:center;justify-content:center}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"], dependencies: [{ kind: "component", type: EditorToolbarComponent, selector: "ta-cms-editor-toolbar", inputs: ["activeTool", "labels", "enabledTools"], outputs: ["blockCommand", "blockTool"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-cms-editor-input", standalone: true, template: "<div class=\"flex-column g-space-md\">\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n  ></div>\n</div>\n", styles: [".max-height{max-height:300px;overflow:auto}.cdx-block{max-width:100%!important}\n"] }]
+            args: [{ selector: "ta-cms-editor-input", standalone: true, imports: [EditorToolbarComponent], encapsulation: ViewEncapsulation.None, template: "<div class=\"flex-column g-space-md\" [class.is-compact]=\"this.isCompact()\">\n  @if (this.showToolbar()) {\n  <ta-cms-editor-toolbar\n    [activeTool]=\"this.activeTool()\"\n    [labels]=\"this.toolbarLabels\"\n    [enabledTools]=\"this.enabledTools()\"\n    (blockTool)=\"this.applyBlockTool($event)\"\n    (blockCommand)=\"this.applyBlockCommand($event)\"\n  ></ta-cms-editor-toolbar>\n  }\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n    [class.resizable]=\"this.resizable()\"\n  ></div>\n</div>\n", styles: ["ta-cms-editor-input .editor-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-body);max-height:250px;overflow:auto}ta-cms-editor-input .editor-container.resizable{resize:vertical;min-height:60px}ta-cms-editor-input .editor-container.max-height{max-height:300px}ta-cms-editor-input .editor-container .ce-toolbar{display:none}ta-cms-editor-input .editor-container .cdx-block{max-width:100%!important}ta-cms-editor-input .editor-container .ce-block__content,ta-cms-editor-input .editor-container .ce-toolbar__content{max-width:100%!important;margin:0!important}ta-cms-editor-input .editor-container .ce-block--selected .ce-block__content{background-color:var(--ta-surface-hover-primary);border-radius:var(--ta-radius-minimal)}ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder]:empty:before,ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder-active]:before{color:var(--ta-text-tertiary)}ta-cms-editor-input .editor-container .ce-header{color:var(--ta-text-primary)}ta-cms-editor-input .editor-container h1.ce-header{font-size:var(--ta-font-h1-default-size);font-weight:var(--ta-font-h1-default-weight)}ta-cms-editor-input .editor-container h2.ce-header{font-size:var(--ta-font-h2-default-size);font-weight:var(--ta-font-h2-default-weight)}ta-cms-editor-input .editor-container h3.ce-header{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight)}ta-cms-editor-input .editor-container h4.ce-header{font-size:var(--ta-font-h4-default-size);font-weight:var(--ta-font-h4-default-weight)}ta-cms-editor-input .editor-container .cdx-quote{border-left:3px solid var(--ta-border-brand-primary);padding-left:var(--ta-space-md)}ta-cms-editor-input .editor-container .cdx-warning{background-color:var(--ta-surface-warning);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}ta-cms-editor-input .editor-container .ce-popover{--border-radius: var(--ta-radius-rounded);--color-background: var(--ta-surface-primary);--color-background-item-focus: var(--ta-surface-hover-primary);--color-background-item-hover: var(--ta-surface-secondary);--color-border: var(--ta-border-tertiary);--color-text-primary: var(--ta-text-primary);--color-text-secondary: var(--ta-text-secondary)}ta-cms-editor-input .editor-container .ce-inline-toolbar{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);box-shadow:var(--ta-shadow-black-sm)}ta-cms-editor-input .is-compact .codex-editor__redactor{padding-bottom:0!important}ta-cms-editor-input .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid var(--ta-border-tertiary);text-align:center;justify-content:center}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }]
         }], ctorParameters: () => [], propDecorators: { changed: [{
                 type: Output
             }], saved: [{
@@ -786,5 +1190,5 @@ const convertBlocksToHtml = (blocks) => {
  * Generated bundle index. Do not edit.
  */
 
-export { BlockTextComponent, EDITOR_ALL_TOOLS, EditorInputComponent, convertBlocksToHtml };
+export { BlockTextComponent, EDITOR_ALL_TOOLS, EditorInputComponent, EditorToolbarComponent, convertBlocksToHtml };
 //# sourceMappingURL=ta-wysiswyg.mjs.map

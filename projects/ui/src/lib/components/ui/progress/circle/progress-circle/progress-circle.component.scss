@@ -1,20 +1,59 @@
 @use "ta/utils/mixins/fonts";
 @use "ta/utils/mixins/common";
 
+.circle-progress-bar-frame {
+  position: relative;
+  display: block;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Le contenu projeté se superpose au centre. `pointer-events: none` laisse le
+// clic passer à l'élément qui porte l'anneau.
+.circle-progress-bar-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
 .circle-progress-bar .circle-progress-bar-bg {
   fill: none;
   stroke: common.get-var(neutral, 300);
-  stroke-width: 10;
 }
 
 .circle-progress-bar .circle-progress-bar-progress {
   fill: none;
   stroke: common.get-var(surface, brand, primary);
-  stroke-width: 10;
-  stroke-linecap: round;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   transition: stroke-dashoffset 0.5s ease-out;
+}
+
+.circle-progress-bar.accent .circle-progress-bar-progress {
+  stroke: common.get-var(surface, accent);
+}
+
+.circle-progress-bar.highlight .circle-progress-bar-progress {
+  stroke: common.get-var(surface, brand, secondary);
+}
+
+.circle-progress-bar.success .circle-progress-bar-progress {
+  stroke: common.get-var(surface, success);
+}
+
+// Piste translucide : le seul réglage qui tienne sur une surface sombre, où un
+// gris opaque se lirait comme un second anneau.
+:host(.invert) .circle-progress-bar .circle-progress-bar-bg {
+  stroke: rgba(255, 255, 255, 0.14);
 }
 
 .circle-progress-bar .circle-progress-bar-text {

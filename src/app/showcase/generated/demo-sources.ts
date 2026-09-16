@@ -442,6 +442,20 @@ ngAfterViewInit(): void {
   <ta-button type="danger" icon="delete" [stopPropagationActivation]="false">Supprimer (désactivé)</ta-button>
 </ta-container-validation>
 <p>Suppressions confirmées : {{ this.confirmations }}</p>`, members: `confirmations = 0;` },
+  "TaContainerValidationInlineExample": { template: `<div class="card-like">
+  <p><strong>Sophie Lenoir</strong> — sophie.lenoir&#64;mail.be</p>
+  <ta-container-validation
+    variant="inline"
+    title="Retirer ce représentant ?"
+    subtitle="La personne perdra l'accès aux biens de la société."
+    (validated)="this.confirmations = this.confirmations + 1"
+  >
+    <ta-button type="danger" icon="person_remove" size="small" [stopPropagationActivation]="false">
+      Retirer
+    </ta-button>
+  </ta-container-validation>
+</div>
+<p>Retraits confirmés : {{ this.confirmations }}</p>`, members: `confirmations = 0;` },
   "TaContextMenuGridExample": { template: `<ta-context-menu [menu]="this.menu"></ta-context-menu>`, members: `readonly menu = new Menu<MenuIcon>({
     elements: [
       new MenuIcon({ key: "home", label: "Tableau de bord", icon: "home" }),
@@ -866,6 +880,60 @@ onMoreInformation(file: FileData) {
     size: 24_600,
     uploadedDate: "2025-09-30T08:47:00",
   };` },
+  "TaFilesPreviewModalGalleryExample": { template: `<ta-button (action)="this.openAt(2)">Ouvrir la galerie</ta-button>
+<ta-files-preview-modal
+  [open]="this.open()"
+  [initial]="this.initial()"
+  [documents]="this.documents"
+  overline="Rue du Bailli 84"
+  (closeEvent)="this.open.set(false)"
+></ta-files-preview-modal>`, members: `open = signal(false);
+
+initial = signal<PreviewDocumentDto | null>(null);
+
+documents: PreviewDocumentDto[] = [
+    {
+      filename: "Séjour",
+      description: "Séjour traversant, parquet d'origine",
+      url: "/assets/partners/icon/512.png",
+    },
+    {
+      filename: "Cuisine",
+      description: "Cuisine équipée ouverte sur le séjour",
+      url: "/assets/partners/icon/384.png",
+    },
+    {
+      filename: "Chambre 1",
+      description: "Chambre principale, exposition sud-ouest",
+      url: "/assets/partners/icon/192.png",
+    },
+    {
+      filename: "Chambre 2",
+      description: "Seconde chambre, vue sur le jardin",
+      url: "/assets/partners/icon/152.png",
+    },
+    {
+      filename: "Salle de bain",
+      description: "Salle de bain avec baignoire",
+      url: "/assets/partners/icon/144.png",
+    },
+  ];
+
+public openAt(index: number) {
+    this.initial.set(this.documents[index]);
+    this.open.set(true);
+  }` },
+  "TaFilesPreviewModalSignedExample": { template: `<ta-button (action)="this.open.set(true)">Ouvrir une adresse signée</ta-button>
+<ta-files-preview-modal
+  [open]="this.open()"
+  [initial]="this.initial"
+  (closeEvent)="this.open.set(false)"
+></ta-files-preview-modal>`, members: `open = signal(false);
+
+initial: PreviewDocumentDto = {
+    filename: "vue-exterieure.png",
+    url: "/assets/partners/icon/512.png?token=demo&v=2",
+  };` },
   "TaFilesPreviewModalToggleExample": { template: `<ta-button (action)="this.open.set(true)">Ouvrir l'aperçu</ta-button>
 <ta-files-preview-modal
   [open]="this.open()"
@@ -1225,7 +1293,7 @@ readonly columns: ColMetaData<Member>[] = [
   <ta-grid-control
     [gridId]="this.gridId"
     [compact]="true"
-    [show]="{ switchView: true, filters: true, preset: true, group: false }"
+    [show]="{ switchView: true, filters: true, preset: true, group: false, sort: true }"
   ></ta-grid-control>
   <ta-grid [gridId]="this.gridId" [cardTemplate]="cardTpl"></ta-grid>
 
@@ -1258,6 +1326,37 @@ readonly orders = ORDERS;
 readonly columns = COLUMNS;
 
 readonly presets = PRESETS;` },
+  "TaGridCountDefaultExample": { template: `<ta-grid-container [gridId]="this.gridId" [initialData]="this.estates" [colsMetaData]="this.columns">
+  <div class="flex-row g-space-sm align-center">
+    <ta-grid-search [gridId]="this.gridId"></ta-grid-search>
+    <ta-grid-count [gridId]="this.gridId"></ta-grid-count>
+  </div>
+  <ta-grid [gridId]="this.gridId" [cardTemplate]="cardTpl"></ta-grid>
+
+  <ng-template #cardTpl let-items="items">
+    @for (estate of items; track estate.id) {
+      <p>{{ estate.name }} — {{ estate.city }}</p>
+    }
+  </ng-template>
+</ta-grid-container>`, members: `readonly gridId = "demo-grid-count";
+
+readonly estates = ESTATES;
+
+readonly columns = COLUMNS;` },
+  "TaGridCountLabelExample": { template: `<ta-grid-container [gridId]="this.gridId" [initialData]="this.estates" [colsMetaData]="this.columns">
+  <ta-grid-count [gridId]="this.gridId" label="demo.grid.count.estates"></ta-grid-count>
+  <ta-grid [gridId]="this.gridId" [cardTemplate]="cardTpl"></ta-grid>
+
+  <ng-template #cardTpl let-items="items">
+    @for (estate of items; track estate.id) {
+      <p>{{ estate.name }}</p>
+    }
+  </ng-template>
+</ta-grid-container>`, members: `readonly gridId = "demo-grid-count-label";
+
+readonly estates = ESTATES;
+
+readonly columns = COLUMNS;` },
   "TaGridDensityExample": { template: `<p class="p-space-sm">Confortable (par défaut)</p>
 <ta-grid-container [gridId]="this.comfortableId" [initialData]="this.orders" [colsMetaData]="this.columns">
   <ta-grid-control
@@ -1826,6 +1925,14 @@ constructor() {
   "TaInputTimePickerDisabledExample": { template: `<ta-input-time-picker [input]="this.model" [standalone]="true"></ta-input-time-picker> `, members: `model = new InputTimePicker({ key: "time-disabled", label: "Heure verrouillée", value: "14:00", disabled: true });` },
   "TaInputTimePickerRequiredExample": { template: `<ta-input-time-picker [input]="this.model" [standalone]="true"></ta-input-time-picker> `, members: `model = new InputTimePicker({ key: "time-required", label: "Heure de fin", validators: [Validators.required] });` },
   "TaInputToggleDisabledExample": { template: `<ta-input-toggle [input]="this.model" [standalone]="true"></ta-input-toggle> `, members: `model = new InputCheckBox({ key: "toggle-disabled", label: "Verrouillé", toggle: true, value: true, disabled: true });` },
+  "TaInputToggleStateLabelsExample": { template: `<ta-input-toggle [input]="this.model" [standalone]="true"></ta-input-toggle> `, members: `model = new InputCheckBox({
+    key: "toggle-visibility",
+    label: "Adresse e-mail",
+    offLabel: "Privé",
+    onLabel: "Public",
+    toggle: true,
+    value: true,
+  });` },
   "TaInputToggleStatesExample": { template: `<ta-input-toggle [input]="this.on" [standalone]="true"></ta-input-toggle>
 <ta-input-toggle [input]="this.off" [standalone]="true"></ta-input-toggle>`, members: `on = new InputCheckBox({ key: "notifications-on", label: "Notifications", toggle: true, value: true });
 
@@ -1870,6 +1977,10 @@ checkboxModel = new InputCheckBox({ key: "active", label: "Actif", value: true }
 <ta-itsme-button state="disabled" mode="logo" (action)="this.clicks = this.clicks + 1"></ta-itsme-button>
 <ta-itsme-button state="inactive" mode="logo" (action)="this.clicks = this.clicks + 1"></ta-itsme-button>
 <p>Clics émis : {{ this.clicks }}</p>`, members: `clicks = 0;` },
+  "TaLabelIconShapeExample": { template: `<ta-label icon="wifi" size="sm">Wi-Fi</ta-label>
+<ta-label icon="local_parking" size="sm">Parking</ta-label>
+<ta-label icon="verified" type="success" size="sm">Bail vérifié</ta-label>
+<ta-label shape="pill" size="sm">Capsule</ta-label>`, members: `` },
   "TaLabelSizesExample": { template: `<ta-label size="xs">xs</ta-label>
 <ta-label size="sm">sm</ta-label>
 <ta-label size="md">md</ta-label>
@@ -2753,6 +2864,9 @@ datasets: ChartDataset[] = [
     LocalStorage.delete("askForPwaAbility");
   }` },
   "TaRatingColorsExample": { template: `<ta-rating [value]="4" [readonly]="true" color="#22c55e" emptyColor="#e5e7eb" [size]="32"></ta-rating>`, members: `` },
+  "TaRatingDistributionDefaultExample": { template: `<ta-rating-distribution [values]="this.values"></ta-rating-distribution>`, members: `readonly values = [5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 3, 5, 5, 4, 2];` },
+  "TaRatingDistributionEmptyExample": { template: `<ta-rating-distribution [values]="[]"></ta-rating-distribution>`, members: `` },
+  "TaRatingDistributionScaleExample": { template: `<ta-rating-distribution [values]="this.values" [max]="10"></ta-rating-distribution>`, members: `readonly values = [10, 9, 9, 8, 8, 8, 7, 6, 10, 9];` },
   "TaRatingInteractiveExample": { template: `<ta-rating [value]="this.value" (ratingChange)="this.value = $event"></ta-rating>
 <p>Note choisie : {{ this.value }} / 5</p>`, members: `value = 3;` },
   "TaRatingReadonlyExample": { template: `<div class="flex-column g-space-sm">
@@ -3004,6 +3118,14 @@ selected = "email";` },
   "TaTrigramSizesExample": { template: `<ta-trigram value="CB" [size]="24"></ta-trigram>
 <ta-trigram value="CB" [size]="35"></ta-trigram>
 <ta-trigram value="CB" [size]="60"></ta-trigram>`, members: `` },
+  "TaTrigramTonesExample": { template: `<div class="tones">
+  <ta-trigram value="CB" tone="brand" [size]="48"></ta-trigram>
+  <ta-trigram value="CB" tone="highlight" [size]="48"></ta-trigram>
+  <ta-trigram value="CB" tone="surface" [size]="48"></ta-trigram>
+</div>
+<div class="tones tones--dark">
+  <ta-trigram value="CB" tone="invert" [size]="48"></ta-trigram>
+</div>`, members: `` },
   "TaTrigramValuesExample": { template: `<ta-trigram value="AMB"></ta-trigram>
 <ta-trigram value="JD"></ta-trigram>
 <ta-trigram [value]="null"></ta-trigram>`, members: `` },

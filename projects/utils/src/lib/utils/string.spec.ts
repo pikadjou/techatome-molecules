@@ -38,8 +38,32 @@ describe('string utils', () => {
       expect(getFileExtension('photo.png')).toBe(EFileExtension.Image);
     });
 
+    it('should return Image for modern image formats', () => {
+      expect(getFileExtension('photo.webp')).toBe(EFileExtension.Image);
+      expect(getFileExtension('photo.gif')).toBe(EFileExtension.Image);
+      expect(getFileExtension('photo.avif')).toBe(EFileExtension.Image);
+    });
+
+    it('should return Word for legacy .doc files', () => {
+      expect(getFileExtension('document.doc')).toBe(EFileExtension.Word);
+    });
+
+    it('should ignore a query string', () => {
+      expect(getFileExtension('https://cdn.example.com/photo.jpg?token=abc&v=2')).toBe(
+        EFileExtension.Image
+      );
+    });
+
+    it('should ignore a fragment', () => {
+      expect(getFileExtension('https://example.com/doc.pdf#page=3')).toBe(EFileExtension.PDF);
+    });
+
     it('should return Unknown for unrecognized extensions', () => {
       expect(getFileExtension('file.txt')).toBe(EFileExtension.Unknown);
+    });
+
+    it('should return Unknown when the address carries no extension', () => {
+      expect(getFileExtension('https://api.example.com/media/42')).toBe(EFileExtension.Unknown);
     });
 
     it('should handle file paths with directories', () => {

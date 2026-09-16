@@ -38,12 +38,33 @@ export class TaLabelTypesExample {}
 })
 export class TaLabelSizesExample {}
 
+@Component({
+  standalone: true,
+  selector: "app-ex-ta-label-icon-shape",
+  imports: [LabelComponent],
+  template: `
+    <ta-label icon="wifi" size="sm">Wi-Fi</ta-label>
+    <ta-label icon="local_parking" size="sm">Parking</ta-label>
+    <ta-label icon="verified" type="success" size="sm">Bail vérifié</ta-label>
+    <ta-label shape="pill" size="sm">Capsule</ta-label>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TaLabelIconShapeExample {}
+
 export const DEMO: ComponentDemo = {
   id: "ta-label",
   group: "Bases",
-  summary: "Étiquette de contenu projeté, déclinée en sept intentions de couleur et sept tailles.",
+  summary: "Étiquette de contenu projeté, déclinée en sept intentions de couleur et sept tailles, avec pictogramme optionnel.",
   examples: [
     { title: "Types", description: "Les sept valeurs de `type`.", component: TaLabelTypesExample },
     { title: "Tailles", description: "Les sept valeurs de `size`.", component: TaLabelSizesExample },
+    {
+      title: "Pictogramme et forme",
+      layout: "stack",
+      description:
+        "`icon` pose un pictogramme devant le texte projeté ; il prend l'encre de l'étiquette, sans réglage. `shape=\"pill\"` force la capsule là où le thème fixe un autre rayon — utile quand l'étiquette longe un avatar ou une photo, où un angle laisserait un vide. `shape=\"theme\"` (défaut) suit `components.label.radius`, et donne donc un rendu différent d'un thème à l'autre.",
+      component: TaLabelIconShapeExample,
+    },
   ],
 };

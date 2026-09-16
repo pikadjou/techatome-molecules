@@ -1,6 +1,7 @@
 @if (this.value()) {
 <div
   class="trigram"
+  [ngClass]="this.getClasses()"
   [ngStyle]="{
     'width.px': this.size(),
     'height.px': this.size(),

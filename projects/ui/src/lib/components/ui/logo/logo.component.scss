@@ -1,3 +1,10 @@
+// Le logo se centre dans la place qu'on lui laisse. Une enseigne qui l'enferme
+// dans une pastille de taille fixe règle ces variables depuis l'élément
+// `ta-logo`, plutôt que d'aller viser l'image.
 img {
-  margin: auto;
+  display: block;
+  margin: var(--ta-logo-margin, auto);
+  width: var(--ta-logo-width, auto);
+  height: var(--ta-logo-height, auto);
+  object-fit: var(--ta-logo-fit, fill);
 }

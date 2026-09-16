@@ -7,8 +7,8 @@ import { ButtonComponent } from "@ta/ui";
 
 import { ComponentDemo } from "../../demo.types";
 
-// `PreviewModal` embarque `ta-files-preview`, qui affiche `uploadedDate | date:
-// 'shortDate'`. Sans `registerLocaleData`, absent de `app.config.ts`/`main.ts`
+// `PreviewModal` affiche `uploadedDate | date: 'shortDate'` par l'intermédiaire
+// de ses visualiseurs. Sans `registerLocaleData`, absent de `app.config.ts`/`main.ts`
 // alors que `LOCALE_ID` vaut `fr`, `DatePipe` lève `NG0701` et la page ne rend rien.
 registerLocaleData(localeFr);
 
@@ -37,18 +37,112 @@ export class TaFilesPreviewModalToggleExample {
   };
 }
 
+@Component({
+  standalone: true,
+  selector: "app-ex-ta-files-preview-modal-gallery",
+  imports: [ButtonComponent, PreviewModal],
+  template: `
+    <ta-button (action)="this.openAt(2)">Ouvrir la galerie</ta-button>
+    <ta-files-preview-modal
+      [open]="this.open()"
+      [initial]="this.initial()"
+      [documents]="this.documents"
+      overline="Rue du Bailli 84"
+      (closeEvent)="this.open.set(false)"
+    ></ta-files-preview-modal>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TaFilesPreviewModalGalleryExample {
+  open = signal(false);
+  initial = signal<PreviewDocumentDto | null>(null);
+
+  documents: PreviewDocumentDto[] = [
+    {
+      filename: "Séjour",
+      description: "Séjour traversant, parquet d'origine",
+      url: "/assets/partners/icon/512.png",
+    },
+    {
+      filename: "Cuisine",
+      description: "Cuisine équipée ouverte sur le séjour",
+      url: "/assets/partners/icon/384.png",
+    },
+    {
+      filename: "Chambre 1",
+      description: "Chambre principale, exposition sud-ouest",
+      url: "/assets/partners/icon/192.png",
+    },
+    {
+      filename: "Chambre 2",
+      description: "Seconde chambre, vue sur le jardin",
+      url: "/assets/partners/icon/152.png",
+    },
+    {
+      filename: "Salle de bain",
+      description: "Salle de bain avec baignoire",
+      url: "/assets/partners/icon/144.png",
+    },
+  ];
+
+  public openAt(index: number) {
+    this.initial.set(this.documents[index]);
+    this.open.set(true);
+  }
+}
+
+@Component({
+  standalone: true,
+  selector: "app-ex-ta-files-preview-modal-signed",
+  imports: [ButtonComponent, PreviewModal],
+  template: `
+    <ta-button (action)="this.open.set(true)">Ouvrir une adresse signée</ta-button>
+    <ta-files-preview-modal
+      [open]="this.open()"
+      [initial]="this.initial"
+      (closeEvent)="this.open.set(false)"
+    ></ta-files-preview-modal>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TaFilesPreviewModalSignedExample {
+  open = signal(false);
+
+  // L'adresse ne porte pas l'extension — elle est suivie d'une signature, comme
+  // en produisent les stockages de fichiers. Seul `filename` dit ce que c'est.
+  initial: PreviewDocumentDto = {
+    filename: "vue-exterieure.png",
+    url: "/assets/partners/icon/512.png?token=demo&v=2",
+  };
+}
+
 export const DEMO: ComponentDemo = {
   id: "ta-files-preview-modal",
   group: "Visionneuses",
-  summary: "`ta-files-preview` posé dans un `ta-modal` (taille `large`, contenu ajusté).",
+  summary: "Visionneuse plein écran : une pièce isolée, ou une galerie parcourable.",
   examples: [
     {
       title: "Ouverture / fermeture",
       layout: "stack",
-      description: "`open` est piloté par le parent ; fermer la modale (croix ou fond) émet `closeEvent`.",
+      description:
+        "`open` est piloté par le parent ; fermer la visionneuse (croix ou touche `Esc`) émet `closeEvent`. Sans `documents`, ni flèches ni pellicule.",
       component: TaFilesPreviewModalToggleExample,
+    },
+    {
+      title: "Galerie",
+      layout: "stack",
+      description:
+        "`documents` fournit la série ; `initial` désigne la pièce ouverte en premier. Le compteur, les flèches, la pellicule et les raccourcis clavier n'apparaissent qu'à partir de deux éléments.",
+      component: TaFilesPreviewModalGalleryExample,
+    },
+    {
+      title: "Adresse sans extension",
+      layout: "stack",
+      description:
+        "L'URL se termine ici par une signature (`?token=…`) : lue seule, elle ne dit pas de quel type est la pièce. `filename` tranche, et la photo s'affiche au lieu du message « aucun visualiseur ».",
+      component: TaFilesPreviewModalSignedExample,
     },
   ],
   notes:
-    "`PreviewModal` n'a pas de titre fixe : il traduit `files.preview.title`. Comme pour `ta-files-preview`, `initial.url` doit se terminer par une extension reconnue par `getFileExtension()` pour qu'un visualiseur s'affiche. Le nom du fichier (`filename`) ne s'affiche jamais à l'intérieur, pour la même raison que sur la page `ta-files-preview` : `<ta-title [level]=\"'3'\">` reçoit une chaîne alors que `TitleComponent.level` attend un nombre, et le `@switch` interne ne sélectionne donc aucun gabarit (voir les notes de `ta-files-preview.demo.ts`) — un défaut de la bibliothèque, hors du périmètre de cette vitrine. La mise en page interne de `PreviewModal` (`.preview-modal-content ta-files-preview { flex: 1; min-height: 0 }`, dans `preview.component.ts`) donne en revanche une vraie hauteur à `ta-files-preview` sans qu'il faille rien ajouter ici. Ce fichier appelle aussi `registerLocaleData(localeFr)` en tête de module, pour la même raison que `ta-files-preview.demo.ts` (voir ses notes) : l'application elle-même en a toujours besoin, hors du périmètre de cette vitrine.",
+    "Le visualiseur est choisi d'après `filename` en priorité, l'adresse ne servant que de repli : une pièce servie par une API ou derrière une adresse signée n'a pas d'extension dans son URL, et s'en remettre à celle-ci ferait passer une photo pour un format inconnu. La visionneuse pose son propre calque sombre plein écran : elle n'utilise pas `ta-modal`, dont la surface claire fausserait la lecture des couleurs d'une image. `filename` sert de titre et d'étiquette de vignette, `description` de légende sous la scène. `url` doit se terminer par une extension reconnue par `getFileExtension()` pour qu'un visualiseur s'affiche. Le clavier pilote la visionneuse : flèches gauche/droite pour parcourir, `Esc` pour fermer. Ce fichier appelle `registerLocaleData(localeFr)` en tête de module, pour la même raison que `ta-files-preview.demo.ts` (voir ses notes) : l'application elle-même en a toujours besoin, hors du périmètre de cette vitrine.",
 };

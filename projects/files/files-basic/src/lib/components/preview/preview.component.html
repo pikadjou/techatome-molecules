@@ -14,7 +14,7 @@
   </div>
 
   <div class="preview-body">
-    @switch (this.getFileExtension(this.initial().url)) {
+    @switch (this.getDocumentExtension(this.initial())) {
       @case (EFileExtension.Image) {
         <ta-image-viewer [file]="this.initial()"></ta-image-viewer>
       }

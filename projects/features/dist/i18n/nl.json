@@ -4,6 +4,8 @@
   "control.group": "Groeperen",
   "control.groupNone": "Geen groepering",
   "control.presets": "Snelle weergaven",
+  "control.sort": "Sorteren",
+  "control.sortNone": "Standaardvolgorde",
   "control.table": "Tabel",
   "core.groupBy": "Groeperen op",
   "error.fetch": "De gegevens kunnen niet worden geladen.",

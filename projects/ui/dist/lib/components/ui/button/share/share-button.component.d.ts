@@ -9,7 +9,7 @@ export declare class ShareButtonComponent {
     /**
      * Button size
      */
-    size: import("@angular/core").InputSignal<"small" | "medium" | "large">;
+    size: import("@angular/core").InputSignal<"large" | "medium" | "small">;
     /**
      * Title for the native share dialog
      */

@@ -1,0 +1,5 @@
+@if (this.isReady$ | async) {
+  <span class="grid-count">
+    {{ this.label() | pluralTranslate: this.total | translate: { nb: this.total } }}
+  </span>
+}

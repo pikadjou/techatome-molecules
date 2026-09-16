@@ -21,7 +21,9 @@ export class ButtonComponent {
   /**
    * Indicate the button type
    */
-  type = input<"primary" | "secondary" | "tertiary" | "danger">("primary");
+  type = input<"primary" | "secondary" | "tertiary" | "danger" | "invert">(
+    "primary"
+  );
 
   size = input<"small" | "medium" | "large">("medium");
 

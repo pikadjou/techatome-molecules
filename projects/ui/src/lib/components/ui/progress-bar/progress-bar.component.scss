@@ -2,14 +2,70 @@
 
 .progress-bar {
   appearance: none;
+  display: block;
   width: 100%;
   height: 2px;
+  border: none;
+
+  &.md {
+    height: 7px;
+    border-radius: common.get-var(radius, pill);
+  }
+
+  &.lg {
+    height: 10px;
+    border-radius: common.get-var(radius, pill);
+  }
 }
 
-progress::-webkit-progress-bar {
+// Les deux pseudo-éléments doivent être écrits séparément : un sélecteur
+// groupant `-webkit-` et `-moz-` est rejeté en bloc par les deux moteurs.
+progress.progress-bar::-webkit-progress-bar {
   background-color: common.get-var(neutral, 300);
+  border-radius: inherit;
 }
 
-progress::-webkit-progress-value {
+progress.progress-bar::-webkit-progress-value {
   background-color: common.get-var(surface, brand, primary);
+  border-radius: inherit;
+}
+
+progress.progress-bar::-moz-progress-bar {
+  background-color: common.get-var(surface, brand, primary);
+  border-radius: inherit;
+}
+
+progress.progress-bar.accent::-webkit-progress-value {
+  background-color: common.get-var(surface, accent);
+}
+progress.progress-bar.accent::-moz-progress-bar {
+  background-color: common.get-var(surface, accent);
+}
+
+progress.progress-bar.highlight::-webkit-progress-value {
+  background-color: common.get-var(surface, brand, secondary);
+}
+progress.progress-bar.highlight::-moz-progress-bar {
+  background-color: common.get-var(surface, brand, secondary);
+}
+
+progress.progress-bar.success::-webkit-progress-value {
+  background-color: common.get-var(surface, success);
+}
+progress.progress-bar.success::-moz-progress-bar {
+  background-color: common.get-var(surface, success);
+}
+
+progress.progress-bar.warning::-webkit-progress-value {
+  background-color: common.get-var(surface, warning);
+}
+progress.progress-bar.warning::-moz-progress-bar {
+  background-color: common.get-var(surface, warning);
+}
+
+progress.progress-bar.alert::-webkit-progress-value {
+  background-color: common.get-var(surface, alert);
+}
+progress.progress-bar.alert::-moz-progress-bar {
+  background-color: common.get-var(surface, alert);
 }

@@ -3,6 +3,13 @@
 .user-image {
   border-radius: 100%;
   border: 1px solid common.get-var(border, tertiary);
+  object-fit: cover;
+
+  // La photo suit la forme du repli : sans quoi une liste mêlant photos et
+  // initiales alignerait des ronds et des carrés.
+  &.squircle {
+    border-radius: common.get-var(radius, minimal);
+  }
 }
 
 .img-container {

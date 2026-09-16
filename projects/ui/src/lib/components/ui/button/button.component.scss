@@ -14,7 +14,13 @@
 
   &:hover:not(.disabled):not(.inactive) {
     color: common.get-var(components, button, $type, hover, color);
-    background-color: common.get-var(components, button, $type, hover, background);
+    background-color: common.get-var(
+      components,
+      button,
+      $type,
+      hover,
+      background
+    );
     border-color: common.get-var(components, button, $type, hover, border);
   }
 
@@ -24,7 +30,13 @@
 
   &.disabled {
     color: common.get-var(components, button, $type, disabled, color);
-    background-color: common.get-var(components, button, $type, disabled, background);
+    background-color: common.get-var(
+      components,
+      button,
+      $type,
+      disabled,
+      background
+    );
     border-color: common.get-var(components, button, $type, disabled, border);
     box-shadow: none;
   }
@@ -33,7 +45,9 @@
 .button {
   width: 100%;
   border: common.get-var(components, button, border-width) solid transparent;
-  border-radius: common.get-var(components, button, radius);
+  // Le rayon vient du thème ; un appelant ne le change que pour une raison de
+  // forme — un bouton carré qui équilibre un titre, par exemple.
+  border-radius: var(--ta-button-radius, #{common.get-var(components, button, radius)});
   padding: common.get-var(components, button, padding-vertical)
     common.get-var(components, button, padding-horizontal);
 
@@ -95,7 +109,21 @@
 
     &.inactive {
       color: common.get-var(components, button, tertiary, inactive, color);
-      background-color: common.get-var(components, button, tertiary, inactive, background);
+      background-color: common.get-var(
+        components,
+        button,
+        tertiary,
+        inactive,
+        background
+      );
+    }
+  }
+
+  &.invert {
+    @include button-variant(invert);
+
+    ta-font-icon {
+      color: common.get-var(components, button, invert, icon, color);
     }
   }
 
@@ -108,7 +136,13 @@
 
     &.inactive {
       color: common.get-var(components, button, danger, inactive, color);
-      background-color: common.get-var(components, button, danger, inactive, background);
+      background-color: common.get-var(
+        components,
+        button,
+        danger,
+        inactive,
+        background
+      );
     }
   }
 }

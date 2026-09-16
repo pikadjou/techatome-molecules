@@ -70,15 +70,24 @@
   border-color: common.get-var(surface, brand, primary);
 }
 
-.bullet-notif {
+.bullet-notif,
+.bullet-notif-highlight {
   height: 16px;
   width: 16px;
-
-  background: common.get-var(surface, brand, primary);
-  border-color: common.get-var(surface, brand, primary);
 
   div {
     @include flex.align-center();
     @include flex.justify-center();
   }
+}
+
+.bullet-notif {
+  background: common.get-var(surface, brand, primary);
+  border-color: common.get-var(surface, brand, primary);
+}
+
+.bullet-notif-highlight {
+  color: common.get-var(text, brand, primary);
+  background: common.get-var(surface, brand, secondary);
+  border-color: common.get-var(surface, brand, secondary);
 }

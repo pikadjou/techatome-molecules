@@ -1,19 +1,36 @@
 @if (this.open()) {
-  <div class="ta-modal-backdrop" (click)="this.onBackdropClick()"></div>
-  <div class="ta-modal-container" [class]="this.containerClass()">
-    <div class="ta-modal-header">
-      <ta-text [isBold]="true">{{ this.title() }}</ta-text>
-      <div class="ta-modal-close" (click)="this.close()">
-        <ta-font-icon name="close"></ta-font-icon>
-      </div>
+<div class="ta-modal-backdrop" (click)="this.onBackdropClick()"></div>
+<div class="ta-modal-container" [class]="this.containerClass()">
+  <div class="ta-modal-header">
+    <div class="ta-modal-heading">
+      @if (this.overline()) {
+      <ta-overline
+        size="sm"
+        [tone]="this.tone() === 'brand' ? 'highlight' : 'muted'"
+      >
+        {{ this.overline() }}
+      </ta-overline>
+      }
+      <ta-title [level]="3">{{ this.title() }}</ta-title>
     </div>
 
-    <div class="ta-modal-content" [class.ta-modal-content--fit]="this.contentFit()">
-      <ng-content select="[modal-content]"></ng-content>
+    <ng-content select="[modal-header-action]"></ng-content>
+    @if (this.showClose()) {
+    <div class="ta-modal-close" (click)="this.close()">
+      <ta-font-icon name="close"></ta-font-icon>
     </div>
-
-    <div class="ta-modal-footer">
-      <ng-content select="[modal-footer]"></ng-content>
-    </div>
+    }
   </div>
+
+  <div
+    class="ta-modal-content"
+    [class.ta-modal-content--fit]="this.contentFit()"
+  >
+    <ng-content select="[modal-content]"></ng-content>
+  </div>
+
+  <div class="ta-modal-footer">
+    <ng-content select="[modal-footer]"></ng-content>
+  </div>
+</div>
 }

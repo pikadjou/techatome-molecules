@@ -2,8 +2,13 @@
   "documents.upload.dialog.description": "Dokumentbeschreibung",
   "documents.upload.dialog.document-type": "Dokumenttyp",
   "documents.upload.dialog.title": "Dokument hochladen",
+  "preview.close": "Schließen",
+  "preview.hint_browse": "zum Blättern",
+  "preview.hint_close": "zum Schließen",
+  "preview.next": "Weiter",
+  "preview.previous": "Zurück",
   "preview.title": "Dateivorschau",
-  "slide.download": "Herunterladen",
   "slide.delete": "Löschen",
+  "slide.download": "Herunterladen",
   "slide.no-viewer": "Für diesen Dateityp ist keine Vorschau verfügbar"
 }

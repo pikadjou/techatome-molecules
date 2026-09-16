@@ -1,0 +1,111 @@
+@if (this.open()) {
+  <div class="lightbox">
+    <div class="lightbox-inner">
+      <header class="lightbox-header">
+        <div class="lightbox-heading">
+          @if (this.overline()) {
+            <ta-overline size="sm" tone="highlight">{{ this.overline() }}</ta-overline>
+          }
+          <span class="lightbox-title">{{ this.current()?.filename }}</span>
+        </div>
+
+        <div class="lightbox-actions">
+          @if (this.hasGallery()) {
+            <span class="lightbox-counter">{{ this.index() + 1 }} / {{ this.items().length }}</span>
+          }
+          <button
+            type="button"
+            class="lightbox-button"
+            [attr.aria-label]="'files.slide.download' | translate"
+            (click)="this.download()"
+          >
+            <ta-font-icon name="download"></ta-font-icon>
+          </button>
+          <button
+            type="button"
+            class="lightbox-button lightbox-button--close"
+            [attr.aria-label]="'files.preview.close' | translate"
+            (click)="this.close()"
+          >
+            <ta-font-icon name="close"></ta-font-icon>
+          </button>
+        </div>
+      </header>
+
+      <div class="lightbox-stage">
+        @if (this.current(); as document) {
+          @switch (this.getDocumentExtension(document)) {
+            @case (EFileExtension.Image) {
+              <ta-image-viewer [file]="document"></ta-image-viewer>
+            }
+            @case (EFileExtension.PDF) {
+              <ta-pdf-viewer [file]="document"></ta-pdf-viewer>
+            }
+            @case (EFileExtension.Excel) {
+              <ta-excel-viewer [file]="document"></ta-excel-viewer>
+            }
+            @case (EFileExtension.Word) {
+              <ta-word-viewer [file]="document"></ta-word-viewer>
+            }
+            @default {
+              <span class="lightbox-no-viewer">{{ 'files.slide.no-viewer' | translate }}</span>
+            }
+          }
+        }
+
+        @if (this.hasGallery()) {
+          <button
+            type="button"
+            class="lightbox-nav lightbox-nav--prev"
+            [attr.aria-label]="'files.preview.previous' | translate"
+            (click)="this.previous()"
+          >
+            <ta-font-icon name="chevron_left"></ta-font-icon>
+          </button>
+          <button
+            type="button"
+            class="lightbox-nav lightbox-nav--next"
+            [attr.aria-label]="'files.preview.next' | translate"
+            (click)="this.next()"
+          >
+            <ta-font-icon name="chevron_right"></ta-font-icon>
+          </button>
+        }
+      </div>
+
+      <div class="lightbox-meta">
+        <span class="lightbox-caption">{{ this.current()?.description }}</span>
+
+        <!-- Les raccourcis sont affichés, pas devinés : la visionneuse se
+             pilote au clavier, autant le dire. -->
+        <span class="lightbox-hints">
+          @if (this.hasGallery()) {
+            <kbd class="lightbox-key">&larr;</kbd>
+            <kbd class="lightbox-key">&rarr;</kbd>
+            <span class="lightbox-hint-label">{{ 'files.preview.hint_browse' | translate }}</span>
+          }
+          <kbd class="lightbox-key">Esc</kbd>
+          <span class="lightbox-hint-label">{{ 'files.preview.hint_close' | translate }}</span>
+        </span>
+      </div>
+
+      @if (this.hasGallery()) {
+        <div class="lightbox-film">
+          @for (item of this.items(); track item.url) {
+            <button
+              type="button"
+              class="lightbox-thumb"
+              [class.active]="$index === this.index()"
+              (click)="this.select($index)"
+            >
+              @if (this.getDocumentExtension(item) === EFileExtension.Image) {
+                <img [src]="item.url" [alt]="item.filename ?? ''" loading="lazy" />
+              }
+              <span class="lightbox-thumb-label">{{ item.filename }}</span>
+            </button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

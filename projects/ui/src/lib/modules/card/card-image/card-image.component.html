@@ -1,3 +1,13 @@
 <div class="img-container">
   <img [src]="this.src()" class="img" />
+  <!--
+    Deux ancrages en haut de l'image : à gauche l'état de l'objet, à droite un
+    signalement. Posés sur l'image, ils se lisent avant le titre.
+  -->
+  <div class="img-overlay img-overlay-start">
+    <ng-content select="[imageOverlayStart]"></ng-content>
+  </div>
+  <div class="img-overlay img-overlay-end">
+    <ng-content select="[imageOverlayEnd]"></ng-content>
+  </div>
 </div>

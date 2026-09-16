@@ -42,7 +42,12 @@ export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>(
   ],
 })
 export class SwitchLanguageComponent {
-  mode = input<"inline" | "dropdown" | "modal">("inline");
+  /**
+   * `compact` : la simple rangée de codes de langue, sans drapeau ni panneau.
+   * C'est la forme qui tient dans un pied de page, où le choix de langue ne doit
+   * pas peser plus qu'une mention légale.
+   */
+  mode = input<"inline" | "dropdown" | "modal" | "compact">("inline");
 
   private _translateService = inject(TaTranslationService);
   readonly languages = inject(TA_LANGUAGES);

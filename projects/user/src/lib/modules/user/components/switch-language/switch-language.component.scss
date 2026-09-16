@@ -2,6 +2,37 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/fonts";
 
+// ── Compact mode ──
+// Rangée de codes : la langue active se distingue par la couleur, pas par un
+// cadre. Les couleurs sont héritées, pour que la rangée s'adapte au pied de
+// page qui la porte, clair comme sombre.
+.language-compact {
+  @include flex.flex-row();
+  @include flex.align-center();
+  gap: common.get-var(space, md);
+}
+
+.language-compact-item {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeBody(sm, true);
+  line-height: 1;
+  color: inherit;
+  opacity: 0.65;
+  transition: opacity common.get-var(transition, fast);
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}
+
 // ── Inline mode ──
 .language-inline {
   @include flex.flex-row();

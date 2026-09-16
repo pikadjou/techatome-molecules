@@ -481,10 +481,16 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
         "skipHarness": false,
         "slug": "desactive",
         "title": "Désactivé"
+      },
+      {
+        "className": "TaContainerValidationInlineExample",
+        "skipHarness": false,
+        "slug": "confirmation-dans-le-flux",
+        "title": "Confirmation dans le flux"
       }
     ],
     "notRenderable": false,
-    "summary": "Enrobe un contenu projeté (typiquement un bouton) d'une modale de confirmation ouverte au clic."
+    "summary": "Enrobe un contenu projeté (typiquement un bouton) d'une confirmation ouverte au clic — en modale, ou dans le flux."
   },
   "ta-context-menu": {
     "examples": [
@@ -931,10 +937,22 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
         "skipHarness": false,
         "slug": "ouverture-fermeture",
         "title": "Ouverture / fermeture"
+      },
+      {
+        "className": "TaFilesPreviewModalGalleryExample",
+        "skipHarness": false,
+        "slug": "galerie",
+        "title": "Galerie"
+      },
+      {
+        "className": "TaFilesPreviewModalSignedExample",
+        "skipHarness": false,
+        "slug": "adresse-sans-extension",
+        "title": "Adresse sans extension"
       }
     ],
     "notRenderable": false,
-    "summary": "`ta-files-preview` posé dans un `ta-modal` (taille `large`, contenu ajusté)."
+    "summary": "Visionneuse plein écran : une pièce isolée, ou une galerie parcourable."
   },
   "ta-files-upload": {
     "examples": [
@@ -1148,7 +1166,25 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
       }
     ],
     "notRenderable": false,
-    "summary": "Barre d'actions d'une grille — filtres, vues rapides, regroupement et bascule carte/tableau — pilotée par les colonnes déclarées sur le `ta-grid-container` partageant le même `gridId`."
+    "summary": "Barre d'actions d'une grille — filtres, tri, vues rapides, regroupement et bascule carte/tableau — pilotée par les colonnes déclarées sur le `ta-grid-container` partageant le même `gridId`."
+  },
+  "ta-grid-count": {
+    "examples": [
+      {
+        "className": "TaGridCountDefaultExample",
+        "skipHarness": false,
+        "slug": "decompte-des-resultats",
+        "title": "Décompte des résultats"
+      },
+      {
+        "className": "TaGridCountLabelExample",
+        "skipHarness": false,
+        "slug": "libelle-metier",
+        "title": "Libellé métier"
+      }
+    ],
+    "notRenderable": false,
+    "summary": "Nombre de résultats d'une grille, à poser au-dessus de la liste — lit le `ta-grid-container` partageant le même `gridId`."
   },
   "ta-grid-filters-panel": {
     "examples": [
@@ -1763,6 +1799,12 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
         "skipHarness": false,
         "slug": "desactive",
         "title": "Désactivé"
+      },
+      {
+        "className": "TaInputToggleStateLabelsExample",
+        "skipHarness": false,
+        "slug": "etats-nommes",
+        "title": "États nommés"
       }
     ],
     "notRenderable": false,
@@ -1859,10 +1901,16 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
         "skipHarness": false,
         "slug": "tailles",
         "title": "Tailles"
+      },
+      {
+        "className": "TaLabelIconShapeExample",
+        "skipHarness": false,
+        "slug": "pictogramme-et-forme",
+        "title": "Pictogramme et forme"
       }
     ],
     "notRenderable": false,
-    "summary": "Étiquette de contenu projeté, déclinée en sept intentions de couleur et sept tailles."
+    "summary": "Étiquette de contenu projeté, déclinée en sept intentions de couleur et sept tailles, avec pictogramme optionnel."
   },
   "ta-layout-content": {
     "examples": [
@@ -2733,6 +2781,30 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
     "notRenderable": false,
     "summary": "Étoiles de notation cliquables, avec remplissage partiel décimal, en lecture seule ou personnalisées (couleurs, taille)."
   },
+  "ta-rating-distribution": {
+    "examples": [
+      {
+        "className": "TaRatingDistributionDefaultExample",
+        "skipHarness": false,
+        "slug": "repartition",
+        "title": "Répartition"
+      },
+      {
+        "className": "TaRatingDistributionEmptyExample",
+        "skipHarness": false,
+        "slug": "aucune-evaluation",
+        "title": "Aucune évaluation"
+      },
+      {
+        "className": "TaRatingDistributionScaleExample",
+        "skipHarness": false,
+        "slug": "autre-echelle",
+        "title": "Autre échelle"
+      }
+    ],
+    "notRenderable": false,
+    "summary": "Répartition des notes reçues, une barre par échelon — ce que la moyenne seule ne dit pas."
+  },
   "ta-sale": {
     "examples": [],
     "notRenderable": true,
@@ -3020,6 +3092,12 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
         "skipHarness": false,
         "slug": "tailles",
         "title": "Tailles"
+      },
+      {
+        "className": "TaTrigramTonesExample",
+        "skipHarness": false,
+        "slug": "tons",
+        "title": "Tons"
       }
     ],
     "notRenderable": false,

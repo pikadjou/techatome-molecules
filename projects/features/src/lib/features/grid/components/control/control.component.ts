@@ -49,11 +49,18 @@ export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
   imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaGridFiltersPanel, TranslatePipe],
 })
 export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
-  show = input<{ switchView?: boolean; filters?: boolean; preset?: boolean; group?: boolean }>({
+  show = input<{
+    switchView?: boolean;
+    filters?: boolean;
+    preset?: boolean;
+    group?: boolean;
+    sort?: boolean;
+  }>({
     switchView: true,
     filters: true,
     preset: true,
     group: true,
+    sort: true,
   });
 
   /** Masque les libellés textuels : ne restent que les icônes. */
@@ -77,6 +84,35 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   get hasGroupableCols(): boolean {
     return this.groupableCols.length > 0;
+  }
+
+  /**
+   * Colonnes sur lesquelles un tri a du sens.
+   *
+   * Le tableau se trie par ses en-têtes ; la vue cartes n'en a pas, et restait
+   * donc figée sur l'ordre du serveur.
+   */
+  get sortableCols(): { key: string; label: string }[] {
+    return Object.values(this.grid?.cols ?? {})
+      .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
+      .map(col => ({ key: col.key, label: col.inputLabel }));
+  }
+
+  get hasSortableCols(): boolean {
+    return this.sortableCols.length > 0;
+  }
+
+  get activeSort(): string | null {
+    return this.grid?.table?.sortField() ?? null;
+  }
+
+  get activeSortDir(): 'asc' | 'desc' {
+    return this.grid?.table?.sortDir() ?? 'asc';
+  }
+
+  get activeSortLabel(): string | null {
+    const key = this.activeSort;
+    return key ? (this.grid?.cols[key]?.inputLabel ?? key) : null;
   }
 
   get activeGroup(): string | null {
@@ -113,6 +149,16 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   public setPreset(preset: Preset) {
     this.grid.filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
+  }
+
+  /** Un même critère rejoué bascule le sens : croissant, puis décroissant. */
+  public setSort(key: string | null) {
+    if (!key) {
+      this.grid?.table?.setSort(null, 'asc');
+      return;
+    }
+    const dir = key === this.activeSort && this.activeSortDir === 'asc' ? 'desc' : 'asc';
+    this.grid?.table?.setSort(key, dir);
   }
 
   public setGroup(key: string | null) {

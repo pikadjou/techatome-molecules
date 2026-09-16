@@ -1,6 +1,6 @@
-@use 'ta/utils/mixins/common';
-@use 'ta/utils/mixins/flex';
-@use 'ta/utils/mixins/fonts';
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
 
 :host {
   display: block;
@@ -21,6 +21,13 @@
     background: common.get-var(surface, primary);
     padding: common.get-var(space, md);
   }
+
+  &--dashed {
+    background: common.get-var(surface, primary);
+    border: 1px dashed common.get-var(border, disabled);
+    border-radius: common.get-var(radius, card);
+    padding: common.get-var(space, xxl) common.get-var(space, lg);
+  }
 }
 
 .empty-icon {
@@ -31,6 +38,14 @@
 .empty-title {
   @include fonts.fontSizeBody(lg);
   color: common.get-var(text, primary);
+}
+
+// Sur un contour pointillé, le titre porte seul la hiérarchie : il passe en
+// police d'affichage pour se détacher du sous-titre.
+.empty-container--dashed .empty-title {
+  font-family: common.get-var(font, display, family);
+  letter-spacing: common.get-var(font, display, tracking);
+  font-weight: common.get-var(font, h4, default, weight);
 }
 
 .empty-subtitle {

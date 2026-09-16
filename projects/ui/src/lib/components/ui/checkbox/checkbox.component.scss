@@ -1,0 +1,51 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+
+:host {
+  display: block;
+}
+
+// Toute la ligne est la cible : cocher une case ne doit pas demander de viser
+// un carré de vingt pixels.
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: common.get-var(space, sm) 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.checkbox-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: common.get-var(components, control, border-width) solid
+    common.get-var(components, control, border-color);
+  border-radius: common.get-var(components, control, checkbox, radius);
+  background: common.get-var(components, control, background);
+  transition: all common.get-var(transition, fast);
+
+  &.checked {
+    border-color: common.get-var(components, control, checked, border-color);
+    background: common.get-var(components, control, checked, background);
+    color: common.get-var(components, control, checked, color);
+  }
+}
+
+.checkbox-label {
+  @include fonts.fontSizeBody(md);
+  line-height: 1.5;
+  color: common.get-var(text, body);
+}

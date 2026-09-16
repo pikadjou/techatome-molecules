@@ -1,12 +1,16 @@
 import { EFileExtension } from "../types/files/file-extension";
 
 export const getFileExtension = (filePath: string): EFileExtension => {
-  const extension: string | null =
-    getFullFileNameFromUrl(filePath)?.split(".").pop()?.toLowerCase() || null;
+  // Une adresse de fichier porte souvent une signature ou une ancre :
+  // `photo.jpg?token=…`. Sans les retirer, l'extension lue vaut
+  // `jpg?token=…` et le fichier passe pour inconnu.
+  const name = getFullFileNameFromUrl(filePath)?.split(/[?#]/)[0] ?? null;
+  const extension: string | null = name?.split(".").pop()?.toLowerCase() || null;
 
   switch (extension) {
     case "pdf":
       return EFileExtension.PDF;
+    case "doc":
     case "docx":
       return EFileExtension.Word;
     case "xls":
@@ -15,6 +19,12 @@ export const getFileExtension = (filePath: string): EFileExtension => {
     case "jpg":
     case "jpeg":
     case "png":
+    case "gif":
+    case "webp":
+    case "avif":
+    case "bmp":
+    case "svg":
+    case "heic":
       return EFileExtension.Image;
   }
 

@@ -1,4 +1,5 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/fonts";
 
 // Comme pour la case, le libellé énonce le choix : c'est la variante `choice`
 // de `ta-form-label` qui le dit, pas une règle qui traverse l'encapsulation.
@@ -52,6 +53,22 @@
       disabled,
       border-color
     );
+  }
+}
+
+// Le nom de l'état se lit d'un coup d'oeil : petites capitales, et la couleur
+// ne change qu'une fois l'interrupteur ouvert.
+.toggle-state {
+  @include fonts.fontSizeBody(xs);
+  font-weight: common.get-var(font, weight, bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: common.get-var(text, tertiary);
+  margin-right: common.get-var(space, sm);
+  white-space: nowrap;
+
+  &.is-on {
+    color: common.get-var(text, success);
   }
 }
 

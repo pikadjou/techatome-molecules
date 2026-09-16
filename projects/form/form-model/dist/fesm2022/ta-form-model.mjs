@@ -148,6 +148,8 @@ class InputCheckBox extends InputBase {
     constructor(options = {}) {
         super(options);
         this.controlType = "checkbox";
+        this.onLabel = options.onLabel;
+        this.offLabel = options.offLabel;
         if (options.toggle === true) {
             this.controlType = "toggle";
         }

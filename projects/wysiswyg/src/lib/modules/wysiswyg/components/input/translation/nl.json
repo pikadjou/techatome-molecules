@@ -77,5 +77,20 @@
       "backgroundColorLabel": "markering",
       "frontColorLabel": "kleur"
     }
+  },
+  "toolbar": {
+    "delete": "Blok verwijderen",
+    "delimiter": "Scheidingslijn",
+    "header1": "Hoofdtitel",
+    "header2": "Titel",
+    "header3": "Subtitel",
+    "image": "Afbeelding",
+    "listOrdered": "Genummerde lijst",
+    "listUnordered": "Lijst met opsommingstekens",
+    "moveDown": "Omlaag verplaatsen",
+    "moveUp": "Omhoog verplaatsen",
+    "paragraph": "Tekst",
+    "quote": "Citaat",
+    "warning": "Waarschuwing"
   }
 }

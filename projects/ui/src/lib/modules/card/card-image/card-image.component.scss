@@ -1,11 +1,43 @@
 @use "ta/utils/mixins/common";
 
+// La vignette suit le thème par défaut. Une page qui aligne ses cartes sur une
+// bande de hauteur fixe, ou qui veut une image à fond perdu, règle ces
+// variables depuis l'élément `ta-card` — voir `card.component.scss`.
 .img-container {
-  aspect-ratio: common.get-var(components, card-image, aspect-ratio);
+  position: relative;
+  aspect-ratio: var(--ta-card-image-aspect-ratio, #{common.get-var(components, card-image, aspect-ratio)});
+  height: var(--ta-card-image-height, auto);
+  min-height: var(--ta-card-image-min-height, 0);
+  width: var(--ta-card-image-width, auto);
   overflow: hidden;
-  border-radius: common.get-var(components, card-image, border-radius);
+  border-radius: var(--ta-card-image-radius, #{common.get-var(components, card-image, border-radius)});
 
   .img {
+    display: block;
     width: 100%;
+    height: 100%;
+    // Le cadrage prime sur la déformation : une carte aligne des vignettes de
+    // même gabarit, quelle que soit la proportion des images d'origine.
+    object-fit: cover;
   }
+}
+
+.img-overlay {
+  position: absolute;
+  top: common.get-var(space, sm);
+  display: flex;
+  gap: common.get-var(space, xs);
+
+  // Sans contenu projeté, l'ancrage ne doit pas intercepter le clic sur l'image.
+  &:empty {
+    display: none;
+  }
+}
+
+.img-overlay-start {
+  left: common.get-var(space, sm);
+}
+
+.img-overlay-end {
+  right: common.get-var(space, sm);
 }

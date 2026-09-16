@@ -20,6 +20,7 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
         filters?: boolean | undefined;
         preset?: boolean | undefined;
         group?: boolean | undefined;
+        sort?: boolean | undefined;
     }>;
     /** Masque les libellés textuels : ne restent que les icônes. */
     compact: import("@angular/core").InputSignal<boolean>;
@@ -32,6 +33,20 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
         label: string;
     }[];
     get hasGroupableCols(): boolean;
+    /**
+     * Colonnes sur lesquelles un tri a du sens.
+     *
+     * Le tableau se trie par ses en-têtes ; la vue cartes n'en a pas, et restait
+     * donc figée sur l'ordre du serveur.
+     */
+    get sortableCols(): {
+        key: string;
+        label: string;
+    }[];
+    get hasSortableCols(): boolean;
+    get activeSort(): string | null;
+    get activeSortDir(): 'asc' | 'desc';
+    get activeSortLabel(): string | null;
     get activeGroup(): string | null;
     get activeGroupLabel(): string | null;
     get hasPresets(): boolean;
@@ -40,6 +55,8 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     switchView(type: ViewType): void;
     openFilters(): void;
     setPreset(preset: Preset): void;
+    /** Un même critère rejoué bascule le sens : croissant, puis décroissant. */
+    setSort(key: string | null): void;
     setGroup(key: string | null): void;
     isPresetActive(preset: Preset): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridControlComponent, never>;

@@ -1,14 +1,137 @@
-@use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/shadows";
 
-.max-height {
-  max-height: 300px;
-  overflow: auto;
+/// EditorJS construit son DOM hors du template : ses nœuds ne portent aucun
+/// attribut d'encapsulation. Le composant passe donc en `ViewEncapsulation.None`
+/// et chaque règle est préfixée par son sélecteur, ce qui lui rend exactement la
+/// portée qu'elle aurait eue — sans percer l'encapsulation d'un autre composant.
+ta-cms-editor-input {
+  .editor-container {
+    position: relative;
+    @include fonts.fontSizeBody(md);
+    color: common.get-var(text, body);
+    max-height: 250px;
+    overflow: auto;
+
+    &.resizable {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    &.max-height {
+      max-height: 300px;
+    }
+
+    // La barre flottante native fait doublon avec la nôtre.
+    .ce-toolbar {
+      display: none;
+    }
+
+    .cdx-block {
+      max-width: 100% !important;
+    }
+
+    // EditorJS cape ses blocs à 650px centrés : on veut toute la largeur du champ.
+    .ce-block__content,
+    .ce-toolbar__content {
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+
+    .ce-block--selected .ce-block__content {
+      background-color: common.get-var(surface, hover, primary);
+      border-radius: common.get-var(radius, minimal);
+    }
+
+    .ce-paragraph[data-placeholder]:empty::before,
+    .ce-paragraph[data-placeholder-active]::before {
+      color: common.get-var(text, tertiary);
+    }
+
+    .ce-header {
+      color: common.get-var(text, primary);
+    }
+
+    h1.ce-header {
+      @include fonts.fontSizeHeader(h1);
+    }
+
+    h2.ce-header {
+      @include fonts.fontSizeHeader(h2);
+    }
+
+    h3.ce-header {
+      @include fonts.fontSizeHeader(h3);
+    }
+
+    h4.ce-header {
+      @include fonts.fontSizeHeader(h4);
+    }
+
+    .cdx-quote {
+      border-left: 3px solid common.get-var(border, brand, primary);
+      padding-left: common.get-var(space, md);
+    }
+
+    .cdx-warning {
+      background-color: common.get-var(surface, warning);
+      border-radius: common.get-var(radius, minimal);
+      padding: common.get-var(space, sm) common.get-var(space, md);
+    }
+
+    // Le popover d'EditorJS lit ses propres propriétés personnalisées : on les
+    // alimente avec les jetons plutôt que de réécrire ses règles.
+    .ce-popover {
+      --border-radius: #{common.get-var(radius, rounded)};
+      --color-background: #{common.get-var(surface, primary)};
+      --color-background-item-focus: #{common.get-var(surface, hover, primary)};
+      --color-background-item-hover: #{common.get-var(surface, secondary)};
+      --color-border: #{common.get-var(border, tertiary)};
+      --color-text-primary: #{common.get-var(text, primary)};
+      --color-text-secondary: #{common.get-var(text, secondary)};
+    }
+
+    .ce-inline-toolbar {
+      background-color: common.get-var(surface, primary);
+      border: 1px solid common.get-var(border, tertiary);
+      border-radius: common.get-var(radius, minimal);
+      color: common.get-var(text, primary);
+      @include shadows.shadow-mixin(black, sm);
+    }
+  }
+
+  // Champ court : EditorJS réserve sinon une bande vide sous le dernier bloc.
+  .is-compact {
+    .codex-editor__redactor {
+      padding-bottom: 0px !important;
+    }
+  }
+
+  // Sélecteur de couleur du greffon `editorjs-color`.
+  .ce-inline-tool--color__actions-container {
+    @include flex.flex-column();
+    gap: common.get-var(space, sm);
+
+    .ce-inline-tool--color__action-list {
+      @include flex.flex-start();
+      list-style-type: none;
+      margin: 0;
+      padding: common.get-var(space, sm);
+      gap: common.get-var(space, sm);
+
+      .ce-inline-tool--color__action-list-item {
+        width: 20px;
+        height: 20px;
+        border: 1px solid common.get-var(border, tertiary);
+        text-align: center;
+        justify-content: center;
+
+        &:first-child {
+          content-visibility: hidden;
+        }
+      }
+    }
+  }
 }
-
-.cdx-block {
-  max-width: 100% !important;
-}
-
-// Les outils en ligne d'EditorJS sont du DOM tiers : leur habillage vit dans
-// @ta/styles (`ta/vendors`).

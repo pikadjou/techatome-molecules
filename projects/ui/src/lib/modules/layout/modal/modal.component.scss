@@ -19,7 +19,7 @@
   transform: translate(-50%, -50%);
   z-index: 1000;
   background-color: common.get-var(surface, primary);
-  border-radius: common.get-var(radius, rounded);
+  border-radius: common.get-var(radius, panel);
   box-shadow: common.get-var(shadow, black, lg);
   @include flex.flex-column();
   max-width: 90vw;
@@ -63,8 +63,9 @@
 .ta-modal-header {
   @include flex.flex-row();
   @include flex.space-between();
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
+  gap: common.get-var(space, md);
   padding: common.get-var(space, md);
   border-bottom: 1px solid common.get-var(border, secondary);
 
@@ -74,10 +75,36 @@
   }
 }
 
+.ta-modal-heading {
+  @include flex.flex-column();
+  gap: 9px;
+  min-width: 0;
+}
+
+// Bandeau de marque : le filet de séparation disparaît, c'est le contraste qui
+// détache l'en-tête. Le corps passe sur la nappe pour que les champs blancs
+// s'y détachent à leur tour.
+.ta-modal--tone-brand {
+  background-color: common.get-var(surface, ground);
+
+  .ta-modal-header {
+    padding: 22px common.get-var(space, lg);
+    border-bottom: none;
+    background-color: common.get-var(components, header, background);
+    color: common.get-var(components, header, color);
+  }
+
+  .ta-modal-close {
+    color: common.get-var(text, invert, primary);
+  }
+}
+
 .ta-modal-content {
   flex: 1;
   overflow-y: auto;
-  padding: common.get-var(space, md);
+  // Le rembourrage suit le thème ; une modale au contenu dense — un formulaire
+  // long, une mise en garde illustrée — le règle depuis l'élément `ta-modal`.
+  padding: var(--ta-modal-content-padding, #{common.get-var(space, md)});
 
   &--fit {
     overflow: hidden;

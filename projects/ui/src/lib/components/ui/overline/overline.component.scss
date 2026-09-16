@@ -1,0 +1,42 @@
+@use 'ta/utils/mixins/common';
+
+// Surtitre en capitales : il nomme la section sans lui voler la hiérarchie du
+// titre. Toujours en police d'affichage, toujours très espacé.
+.overline {
+  display: block;
+  font-family: common.get-var(font, display, family);
+  font-weight: common.get-var(font, body, sm, bold, weight);
+  line-height: 1;
+  text-transform: uppercase;
+
+  &.md {
+    font-size: common.get-var(font, body, xs, desktop, size);
+    letter-spacing: 0.16em;
+  }
+
+  &.sm {
+    font-size: common.get-var(font, body, xs, default, size);
+    letter-spacing: 0.12em;
+  }
+
+  &.muted {
+    color: common.get-var(text, muted);
+  }
+
+  &.accent {
+    color: common.get-var(text, accent);
+  }
+
+  &.brand {
+    color: common.get-var(text, brand, primary);
+  }
+
+  &.invert {
+    color: common.get-var(text, invert, secondary);
+  }
+
+  // Sur fond navy, le jaune de marque reprend le rôle du surtitre.
+  &.highlight {
+    color: common.get-var(surface, brand, secondary);
+  }
+}

@@ -75,7 +75,7 @@ export class TaGridControlFullExample {
       <ta-grid-control
         [gridId]="this.gridId"
         [compact]="true"
-        [show]="{ switchView: true, filters: true, preset: true, group: false }"
+        [show]="{ switchView: true, filters: true, preset: true, group: false, sort: true }"
       ></ta-grid-control>
       <ta-grid [gridId]="this.gridId" [cardTemplate]="cardTpl"></ta-grid>
 
@@ -98,13 +98,13 @@ export class TaGridControlCompactExample {
 export const DEMO: ComponentDemo = {
   id: "ta-grid-control",
   group: "Grilles",
-  summary: "Barre d'actions d'une grille — filtres, vues rapides, regroupement et bascule carte/tableau — pilotée par les colonnes déclarées sur le `ta-grid-container` partageant le même `gridId`.",
+  summary: "Barre d'actions d'une grille — filtres, tri, vues rapides, regroupement et bascule carte/tableau — pilotée par les colonnes déclarées sur le `ta-grid-container` partageant le même `gridId`.",
   examples: [
     {
       title: "Barre de contrôle complète",
       layout: "stack",
       description:
-        "`show` (défaut : les quatre à `true`) affiche ici ses quatre boutons. « Filtres » ouvre `ta-grid-filters-panel` (démo dédiée) et porte un badge de comptage (`activeFiltersCount`, qui exclut le filtre de recherche globale). « Vues rapides » n'apparaît que si `preset` contient au moins une entrée (`hasPresets`) ; cliquer une vue active/désactive son `Filter[]`. « Regrouper » ne liste que les colonnes `showOnSearch && !notDisplayable` (`groupableCols`) — `paid` (booléen) y figure alors qu'il n'a aucun input de filtre dans `ta-grid-form` (`BoolCol` n'implémente pas `getInputForm()`) : les deux mécanismes lisent le même `showOnSearch` mais n'ont pas la même exigence. « Tableau / Cartes » appelle `switchView()`.",
+        "`show` (défaut : les cinq à `true`) affiche ici ses cinq boutons. « Trier » liste les colonnes affichables (`sortableCols`) ; rejouer la colonne déjà active bascule le sens, l'entrée « Ordre par défaut » rend la main au serveur. Le tableau se trie par ses en-têtes, la vue cartes n'en a pas — ce menu est le seul tri qu'elle ait. « Filtres » ouvre `ta-grid-filters-panel` (démo dédiée) et porte un badge de comptage (`activeFiltersCount`, qui exclut le filtre de recherche globale). « Vues rapides » n'apparaît que si `preset` contient au moins une entrée (`hasPresets`) ; cliquer une vue active/désactive son `Filter[]`. « Regrouper » ne liste que les colonnes `showOnSearch && !notDisplayable` (`groupableCols`) — `paid` (booléen) y figure alors qu'il n'a aucun input de filtre dans `ta-grid-form` (`BoolCol` n'implémente pas `getInputForm()`) : les deux mécanismes lisent le même `showOnSearch` mais n'ont pas la même exigence. « Tableau / Cartes » appelle `switchView()`.",
       component: TaGridControlFullExample,
     },
     {
