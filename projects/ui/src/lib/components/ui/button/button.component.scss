@@ -1,7 +1,7 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/transitions";
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/transitions';
 
 /// Chaque variante est décrite par le même quatuor de jetons : la couleur du
 /// texte, le fond, la bordure et l'anneau de focus. Le contour est toujours
@@ -14,13 +14,7 @@
 
   &:hover:not(.disabled):not(.inactive) {
     color: common.get-var(components, button, $type, hover, color);
-    background-color: common.get-var(
-      components,
-      button,
-      $type,
-      hover,
-      background
-    );
+    background-color: common.get-var(components, button, $type, hover, background);
     border-color: common.get-var(components, button, $type, hover, border);
   }
 
@@ -30,13 +24,7 @@
 
   &.disabled {
     color: common.get-var(components, button, $type, disabled, color);
-    background-color: common.get-var(
-      components,
-      button,
-      $type,
-      disabled,
-      background
-    );
+    background-color: common.get-var(components, button, $type, disabled, background);
     border-color: common.get-var(components, button, $type, disabled, border);
     box-shadow: none;
   }
@@ -45,11 +33,8 @@
 .button {
   width: 100%;
   border: common.get-var(components, button, border-width) solid transparent;
-  // Le rayon vient du thème ; un appelant ne le change que pour une raison de
-  // forme — un bouton carré qui équilibre un titre, par exemple.
-  border-radius: var(--ta-button-radius, #{common.get-var(components, button, radius)});
-  padding: common.get-var(components, button, padding-vertical)
-    common.get-var(components, button, padding-horizontal);
+  border-radius: common.get-var(components, button, radius);
+  padding: common.get-var(components, button, padding-vertical) common.get-var(components, button, padding-horizontal);
 
   @include fonts.fontSizeBody(md);
   font-weight: common.get-var(components, button, font-weight);
@@ -109,13 +94,7 @@
 
     &.inactive {
       color: common.get-var(components, button, tertiary, inactive, color);
-      background-color: common.get-var(
-        components,
-        button,
-        tertiary,
-        inactive,
-        background
-      );
+      background-color: common.get-var(components, button, tertiary, inactive, background);
     }
   }
 
@@ -136,13 +115,7 @@
 
     &.inactive {
       color: common.get-var(components, button, danger, inactive, color);
-      background-color: common.get-var(
-        components,
-        button,
-        danger,
-        inactive,
-        background
-      );
+      background-color: common.get-var(components, button, danger, inactive, background);
     }
   }
 }

@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           # Nx 22 ne tourne pas sous Node 18 (fin de support).
-          node-version: "20"
+          node-version: '20'
 
       - name: Install dependencies
         run: yarn install

@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 :host {
   display: block;
@@ -40,8 +40,7 @@
   color: common.get-var(text, primary);
 }
 
-// Sur un contour pointillé, le titre porte seul la hiérarchie : il passe en
-// police d'affichage pour se détacher du sous-titre.
+// Titre en police d'affichage pour se détacher du sous-titre.
 .empty-container--dashed .empty-title {
   font-family: common.get-var(font, display, family);
   letter-spacing: common.get-var(font, display, tracking);

@@ -1,14 +1,14 @@
-import { NgClass } from "@angular/common";
-import { Component, input, output } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 
-import { FontIconComponent } from "@ta/icons";
-import { TaState } from "@ta/styles";
-import { StopPropagationDirective } from "@ta/utils";
+import { FontIconComponent } from '@ta/icons';
+import { TaState } from '@ta/styles';
+import { StopPropagationDirective } from '@ta/utils';
 
 @Component({
-  selector: "ta-button",
-  templateUrl: "./button.component.html",
-  styleUrls: ["./button.component.scss"],
+  selector: 'ta-button',
+  templateUrl: './button.component.html',
+  styleUrls: ['./button.component.scss'],
   standalone: true,
   imports: [NgClass, FontIconComponent, StopPropagationDirective],
 })
@@ -16,16 +16,14 @@ export class ButtonComponent {
   /**
    * Is button type
    */
-  state = input<TaState>("classic");
+  state = input<TaState>('classic');
 
   /**
    * Indicate the button type
    */
-  type = input<"primary" | "secondary" | "tertiary" | "danger" | "invert">(
-    "primary"
-  );
+  type = input<'primary' | 'secondary' | 'tertiary' | 'danger' | 'invert'>('primary');
 
-  size = input<"small" | "medium" | "large">("medium");
+  size = input<'small' | 'medium' | 'large'>('medium');
 
   icon = input<string | null>(null);
   /**
@@ -37,8 +35,8 @@ export class ButtonComponent {
    */
   options = input<{
     class?: string;
-    circular?: boolean | "big" | "small";
-    square?: boolean | "big" | "small";
+    circular?: boolean | 'big' | 'small';
+    square?: boolean | 'big' | 'small';
     border?: boolean;
   } | null>(null);
 
@@ -52,7 +50,7 @@ export class ButtonComponent {
   constructor() {}
 
   public handleClick() {
-    if (this.state() === "classic") {
+    if (this.state() === 'classic') {
       this.action.emit();
     }
   }
@@ -65,28 +63,28 @@ export class ButtonComponent {
     css[this.type()] = true;
 
     if (this.options()?.circular === true) {
-      css["circular"] = true;
+      css['circular'] = true;
     }
-    if (this.options()?.circular === "big") {
-      css["circular big"] = true;
+    if (this.options()?.circular === 'big') {
+      css['circular big'] = true;
     }
-    if (this.options()?.circular === "small") {
-      css["circular small"] = true;
+    if (this.options()?.circular === 'small') {
+      css['circular small'] = true;
     }
     if (this.options()?.square === true) {
-      css["square"] = true;
+      css['square'] = true;
     }
-    if (this.options()?.square === "big") {
-      css["square big"] = true;
+    if (this.options()?.square === 'big') {
+      css['square big'] = true;
     }
-    if (this.options()?.square === "small") {
-      css["square small"] = true;
+    if (this.options()?.square === 'small') {
+      css['square small'] = true;
     }
     if (this.options()?.class) {
       css[this.options()!.class!] = true;
     }
     if (this.options()?.border === false) {
-      css["no-border"] = true;
+      css['no-border'] = true;
     }
 
     return css;

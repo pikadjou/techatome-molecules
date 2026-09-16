@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 // ============================================================================
 // Habillage du DOM tiers
@@ -46,7 +46,8 @@ ta-expansion-panel {
     border-bottom: 1px solid common.get-var(border, tertiary);
     padding: common.get-var(space, sm) 0;
     background-color: common.get-var(surface, primary);
-    transition: box-shadow common.get-var(transition, base),
+    transition:
+      box-shadow common.get-var(transition, base),
       border-radius common.get-var(transition, base);
 
     &.mat-expanded {

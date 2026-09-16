@@ -5,14 +5,11 @@ export interface TabBarItem {
     /** Clé de traduction, ou texte déjà traduit. */
     label: string;
     icon?: string;
-    /** Compteur affiché en pastille à droite du libellé. `null` le masque. */
+    /** Compteur en pastille ; `null` le masque. */
     count?: number | string | null;
     disabled?: boolean;
 }
-/**
- * `underline` : onglets soulignés, pour naviguer entre les sections d'une page.
- * `pill` : filtres capsulés, pour restreindre une liste sans changer de section.
- */
+/** `underline` : onglets de section ; `pill` : filtres capsulés. */
 export type TabBarVariant = 'underline' | 'pill';
 export declare class TabBarComponent {
     active: import("@angular/core").InputSignal<string | null>;

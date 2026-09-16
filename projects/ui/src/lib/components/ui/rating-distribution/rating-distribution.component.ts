@@ -1,42 +1,33 @@
-import { Component, computed, input } from "@angular/core";
+import { Component, computed, input } from '@angular/core';
 
-import { FontIconComponent } from "@ta/icons";
+import { FontIconComponent } from '@ta/icons';
 
-import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
-/** Une marche de l'échelle, du haut vers le bas. */
+/** Un échelon de la répartition. */
 export type RatingDistributionStep = {
   note: number;
   count: number;
 };
 
-/**
- * Répartition des notes reçues, une barre par échelon.
- *
- * Une moyenne cache sa dispersion : quatre étoiles peuvent recouvrir un accord
- * unanime comme un partage entre enthousiastes et déçus. L'échelle montre
- * laquelle des deux on lit.
- */
+/** Répartition des notes reçues, une barre par échelon. */
 @Component({
-  selector: "ta-rating-distribution",
-  templateUrl: "./rating-distribution.component.html",
-  styleUrls: ["./rating-distribution.component.scss"],
+  selector: 'ta-rating-distribution',
+  templateUrl: './rating-distribution.component.html',
+  styleUrls: ['./rating-distribution.component.scss'],
   standalone: true,
   imports: [FontIconComponent, ProgressBarComponent],
 })
 export class RatingDistributionComponent {
-  /** Les notes reçues, une entrée par évaluation. */
+  /** Notes reçues, une entrée par évaluation. */
   values = input.required<number[]>();
 
-  /** Hauteur de l'échelle. Cinq échelons par défaut, comme les étoiles. */
+  /** Nombre d'échelons. */
   max = input<number>(5);
 
   readonly total = computed(() => this.values().length);
 
-  /**
-   * Les échelons du plus haut au plus bas : c'est l'ordre dans lequel on lit
-   * une note, et celui de toutes les échelles d'avis.
-   */
+  /** Échelons du plus haut au plus bas. */
   readonly steps = computed<RatingDistributionStep[]>(() => {
     const counts = new Map<number, number>();
     for (const value of this.values()) {
@@ -47,7 +38,7 @@ export class RatingDistributionComponent {
 
     return Array.from({ length: this.max() }, (_, index) => {
       const note = this.max() - index;
-      return { note, count: counts.get(note) ?? 0 };
+      return { count: counts.get(note) ?? 0, note };
     });
   });
 }

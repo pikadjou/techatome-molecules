@@ -3,12 +3,7 @@ import { Component, input } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import {
-  ButtonComponent,
-  MegaoctetComponent,
-  TextComponent,
-  TitleComponent,
-} from '@ta/ui';
+import { ButtonComponent, MegaoctetComponent, TextComponent, TitleComponent } from '@ta/ui';
 import { EFileExtension, TaBaseComponent, downloadFile } from '@ta/utils';
 
 import { TaTranslationFiles } from '../../translation.service';

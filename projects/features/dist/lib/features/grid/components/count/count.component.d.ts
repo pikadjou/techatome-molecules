@@ -1,18 +1,8 @@
 import { TaAbstractGridComponent } from '../abstract.component';
 import * as i0 from "@angular/core";
-/**
- * Nombre de résultats de la liste.
- *
- * Le panneau de filtres l'annonce déjà à côté de son titre, mais il vit dans un
- * tiroir : posé au-dessus des résultats, le compte dit tout de suite ce que les
- * filtres ont laissé passer.
- */
+/** Nombre de résultats de la liste, affiché au-dessus des résultats. */
 export declare class TaGridCountComponent extends TaAbstractGridComponent<unknown> {
-    /**
-     * Clé de traduction pluralisée du décompte. La valeur par défaut compte des
-     * résultats ; un appelant qui sait ce qu'il liste compte des biens, des
-     * personnes ou des dossiers.
-     */
+    /** Clé de traduction pluralisée du décompte (résultats par défaut). */
     label: import("@angular/core").InputSignal<string>;
     get total(): number;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridCountComponent, never>;

@@ -1,27 +1,13 @@
-/**
- * Outils EditorJS montables dans l'éditeur.
- *
- * Ce fichier est séparé de `input.component.ts` parce que la barre d'outils a
- * besoin de ces types pour n'offrir que les outils réellement montés, et que
- * l'éditeur importe la barre : les laisser dans le composant créerait un cycle.
- */
-export type EditorToolType =
-  | "header"
-  | "list"
-  | "quote"
-  | "delimiter"
-  | "warning"
-  | "color"
-  | "image"
-  | "mention";
+/** Outils EditorJS montables ; séparés de `input.component.ts` pour éviter un cycle avec la barre d'outils. */
+export type EditorToolType = 'header' | 'list' | 'quote' | 'delimiter' | 'warning' | 'color' | 'image' | 'mention';
 
 export const EDITOR_ALL_TOOLS: EditorToolType[] = [
-  "header",
-  "list",
-  "quote",
-  "delimiter",
-  "warning",
-  "color",
-  "image",
-  "mention",
+  'header',
+  'list',
+  'quote',
+  'delimiter',
+  'warning',
+  'color',
+  'image',
+  'mention',
 ];

@@ -33,12 +33,7 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
         label: string;
     }[];
     get hasGroupableCols(): boolean;
-    /**
-     * Colonnes sur lesquelles un tri a du sens.
-     *
-     * Le tableau se trie par ses en-têtes ; la vue cartes n'en a pas, et restait
-     * donc figée sur l'ordre du serveur.
-     */
+    /** Colonnes triables, pour les vues sans en-têtes (cartes). */
     get sortableCols(): {
         key: string;
         label: string;
@@ -55,7 +50,7 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     switchView(type: ViewType): void;
     openFilters(): void;
     setPreset(preset: Preset): void;
-    /** Un même critère rejoué bascule le sens : croissant, puis décroissant. */
+    /** Rejouer le même critère inverse le sens. */
     setSort(key: string | null): void;
     setGroup(key: string | null): void;
     isPresetActive(preset: Preset): boolean;

@@ -8,9 +8,15 @@
   <div class="stat-tile-body">
     @if (this.layout() === 'label-first') {
       <ta-overline size="sm">{{ this.label() }}</ta-overline>
-      <span class="stat-tile-value">{{ this.value() }}<ng-content></ng-content></span>
+      <span class="stat-tile-value">
+        {{ this.value() }}
+        <ng-content></ng-content>
+      </span>
     } @else {
-      <span class="stat-tile-value">{{ this.value() }}<ng-content></ng-content></span>
+      <span class="stat-tile-value">
+        {{ this.value() }}
+        <ng-content></ng-content>
+      </span>
       <span class="stat-tile-label">{{ this.label() }}</span>
     }
   </div>

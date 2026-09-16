@@ -10,7 +10,7 @@ export declare class CriticityComponent {
     criticity: import("@angular/core").InputSignal<number>;
     constructor();
     label(): string;
-    type(): "danger" | "warning" | "success" | "primary";
+    type(): "success" | "warning" | "primary" | "danger";
     static ɵfac: i0.ɵɵFactoryDeclaration<CriticityComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<CriticityComponent, "ta-criticity", never, { "criticity": { "alias": "criticity"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

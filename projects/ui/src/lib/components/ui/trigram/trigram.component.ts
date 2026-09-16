@@ -1,20 +1,13 @@
-import { NgClass, NgStyle } from "@angular/common";
-import { Component, input } from "@angular/core";
+import { NgClass, NgStyle } from '@angular/common';
+import { Component, input } from '@angular/core';
 
-/**
- * `brand` : pastille de marque, texte clair.
- * `highlight` : couleur secondaire de marque — c'est la seule qui tienne posée
- * sur une surface de marque pleine.
- * `surface` : pastille neutre, pour une liste posée sur une carte claire.
- * `invert` : pastille translucide, pour un fond sombre — la marque pleine y
- * ferait une tache, un simple voile suffit à détacher les initiales.
- */
-export type TrigramTone = "brand" | "highlight" | "surface" | "invert";
+/** `brand` : marque pleine ; `highlight` : secondaire de marque ; `surface` : neutre ; `invert` : translucide sur fond sombre. */
+export type TrigramTone = 'brand' | 'highlight' | 'surface' | 'invert';
 
 @Component({
-  selector: "ta-trigram",
-  templateUrl: "./trigram.component.html",
-  styleUrls: ["./trigram.component.scss"],
+  selector: 'ta-trigram',
+  templateUrl: './trigram.component.html',
+  styleUrls: ['./trigram.component.scss'],
   standalone: true,
   imports: [NgClass, NgStyle],
 })
@@ -29,10 +22,10 @@ export class TrigramComponent {
    */
   size = input<number>(35);
 
-  /** `squircle` : carré arrondi, pour un avatar aligné sur des cartes. */
-  shape = input<"circle" | "squircle">("circle");
+  /** `squircle` : carré arrondi. */
+  shape = input<'circle' | 'squircle'>('circle');
 
-  tone = input<TrigramTone>("brand");
+  tone = input<TrigramTone>('brand');
 
   constructor() {}
 

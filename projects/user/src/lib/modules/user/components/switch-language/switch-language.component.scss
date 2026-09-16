@@ -1,11 +1,8 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
-// ── Compact mode ──
-// Rangée de codes : la langue active se distingue par la couleur, pas par un
-// cadre. Les couleurs sont héritées, pour que la rangée s'adapte au pied de
-// page qui la porte, clair comme sombre.
+// Couleurs héritées : la rangée suit le pied de page, clair ou sombre.
 .language-compact {
   @include flex.flex-row();
   @include flex.align-center();

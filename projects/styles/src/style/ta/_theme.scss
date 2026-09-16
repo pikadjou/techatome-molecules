@@ -1,5 +1,5 @@
-@use "sass:map";
-@use "ta/utils/mixins/common";
+@use 'sass:map';
+@use 'ta/utils/mixins/common';
 
 // ============================================================================
 // Theme API for @ta/styles
@@ -99,7 +99,7 @@ $_default-semantic: (
 ///   icon, text, surface, semantic-token, border,
 ///   space, radius, shadow, font, components
 /// @param {String} $selector [':root'] - CSS selector scope for the overrides.
-@mixin apply-theme($overrides, $selector: ":root") {
+@mixin apply-theme($overrides, $selector: ':root') {
   @if $overrides and length($overrides) > 0 {
     #{$selector} {
       @each $category, $values in $overrides {

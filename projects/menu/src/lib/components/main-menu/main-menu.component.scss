@@ -1,22 +1,18 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 // Desktop layout
 .main-nav-container {
   padding: common.get-var(space, sm);
-  border-radius: common.get-var(radius, rounded) common.get-var(radius, rounded)
-    0 0;
+  border-radius: common.get-var(radius, rounded) common.get-var(radius, rounded) 0 0;
   background-color: common.get-var(surface, primary);
   box-shadow: common.get-var(shadow, black, sm);
 
-  // Bandeau de marque : plein, à bords francs, il tient toute la largeur.
-  // Les enfants (`ta-menu-item`, gabarit utilisateur) lisent la classe via
-  // `:host-context(.tone-brand)` pour passer en inversé.
+  // Bandeau de marque ; les enfants lisent `:host-context(.tone-brand)`.
   &.tone-brand {
-    padding: common.get-var(components, header, padding-vertical)
-      common.get-var(components, header, padding-horizontal);
+    padding: common.get-var(components, header, padding-vertical) common.get-var(components, header, padding-horizontal);
     border-radius: 0;
     background-color: common.get-var(components, header, background);
     color: common.get-var(components, header, color);

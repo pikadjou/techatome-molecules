@@ -1,12 +1,9 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/shadows";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/shadows';
 
-/// EditorJS construit son DOM hors du template : ses nœuds ne portent aucun
-/// attribut d'encapsulation. Le composant passe donc en `ViewEncapsulation.None`
-/// et chaque règle est préfixée par son sélecteur, ce qui lui rend exactement la
-/// portée qu'elle aurait eue — sans percer l'encapsulation d'un autre composant.
+/// DOM EditorJS hors encapsulation (`ViewEncapsulation.None`) : chaque règle est préfixée par le sélecteur du composant.
 ta-cms-editor-input {
   .editor-container {
     position: relative;
@@ -81,8 +78,7 @@ ta-cms-editor-input {
       padding: common.get-var(space, sm) common.get-var(space, md);
     }
 
-    // Le popover d'EditorJS lit ses propres propriétés personnalisées : on les
-    // alimente avec les jetons plutôt que de réécrire ses règles.
+    // Le popover EditorJS lit ses propres propriétés : on les alimente avec les jetons.
     .ce-popover {
       --border-radius: #{common.get-var(radius, rounded)};
       --color-background: #{common.get-var(surface, primary)};

@@ -5,10 +5,7 @@ export declare class RatingComponent {
      * Current rating value (supports decimals for partial stars)
      */
     value: import("@angular/core").InputSignal<number>;
-    /**
-     * `compact` : une étoile et la note. C'est la forme qui tient dans une carte,
-     * où cinq étoiles prendraient la place d'une ligne de texte.
-     */
+    /** `compact` : une étoile et la note. */
     variant: import("@angular/core").InputSignal<"stars" | "compact">;
     /** Masque le rappel « note sur maximum » à côté des étoiles. */
     showValue: import("@angular/core").InputSignal<boolean>;

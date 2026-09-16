@@ -1,12 +1,9 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/transitions";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/transitions';
 
-/// Les commandes de la barre ne sont pas des `ta-button` : ce sont des contrôles
-/// propres à l'éditeur, denses et sans fond, qu'un bouton du design system
-/// n'a pas vocation à imiter. Les habiller ici évite d'avoir à repeindre un
-/// composant partagé depuis l'extérieur — ce que le projet s'interdit.
+/// Contrôles propres à l'éditeur ; SVG injecté par `innerHTML`, hors encapsulation.
 ta-cms-editor-toolbar {
   display: block;
 
@@ -59,8 +56,7 @@ ta-cms-editor-toolbar {
         box-shadow: common.get-var(shadow, focus);
       }
 
-      // L'outil du bloc sous le curseur : c'est le seul repère de position dans
-      // un éditeur qui n'affiche pas ses propres poignées.
+      // Outil du bloc sous le curseur.
       &.is-active {
         background-color: common.get-var(surface, brand, secondary);
         color: common.get-var(text, brand, primary);
@@ -75,8 +71,7 @@ ta-cms-editor-toolbar {
       @include flex.align-center();
       @include flex.justify-center();
 
-      // Les icônes viennent de `@codexteam/icons`, injectées en SVG brut :
-      // elles n'ont ni dimension propre ni attribut d'encapsulation.
+      // SVG `@codexteam/icons` sans dimension propre.
       svg {
         display: block;
         width: 20px;

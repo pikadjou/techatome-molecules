@@ -1,7 +1,7 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/transitions";
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/transitions';
 
 @mixin menu-item-horizontal() {
   justify-content: center;
@@ -142,11 +142,7 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Navigation inversée — posée sur le bandeau de marque (`ta-main-menu` en
-// `tone="brand"`). L'item actif n'est pas souligné : il est enveloppé d'un
-// voile clair, et son icône reprend le jaune de marque.
-// ---------------------------------------------------------------------------
+// Navigation inversée (`ta-main-menu` en `tone="brand"`) : actif enveloppé d'un voile, icône en couleur de marque.
 :host-context(.tone-brand) .link {
   gap: 7px;
   padding: 9px 11px;
@@ -182,11 +178,7 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Navigation de pied de page — le même menu, dépouillé : ni pastille, ni fond,
-// ni pictogramme. Il ne sert plus à se repérer dans la page mais à lister des
-// destinations, et se lit comme une colonne de liens.
-// ---------------------------------------------------------------------------
+// Navigation de pied de page : colonne de liens sans pastille, fond ni icône.
 :host-context(.tone-footer) .link {
   padding: 3px 0;
   background: none;

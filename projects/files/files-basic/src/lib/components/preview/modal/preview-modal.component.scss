@@ -1,9 +1,7 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
-// Le calque couvre tout : pas de fond de page visible, pas de comparaison
-// possible entre l'image et l'interface qui l'entoure.
 .lightbox {
   position: fixed;
   inset: 0;
@@ -24,9 +22,6 @@
   min-height: 0;
 }
 
-// ---------------------------------------------------------------------------
-// Barre de tête
-// ---------------------------------------------------------------------------
 .lightbox-header {
   display: flex;
   align-items: flex-start;
@@ -58,8 +53,7 @@
   flex-shrink: 0;
 }
 
-// Le compteur est une donnée, pas un titre : chasse fixe, pour qu'il ne danse
-// pas d'une image à l'autre.
+// Chasse fixe : le compteur ne bouge pas d'une image à l'autre.
 .lightbox-counter {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   @include fonts.fontSizeBody(sm);
@@ -85,8 +79,6 @@
     background: rgba(255, 255, 255, 0.16);
   }
 
-  // Fermer est l'action de sortie : elle seule est pleine, pour se distinguer
-  // au premier regard des outils de la visionneuse.
   &--close {
     background: common.get-var(neutral, white);
     border-color: common.get-var(neutral, white);
@@ -98,9 +90,6 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Scène
-// ---------------------------------------------------------------------------
 .lightbox-stage {
   position: relative;
   flex: 1;
@@ -126,8 +115,6 @@
   color: common.get-var(text, invert, secondary);
 }
 
-// Les flèches se posent sur l'image, à mi-hauteur : la main reste au même
-// endroit quand on parcourt une série.
 .lightbox-nav {
   position: absolute;
   top: 50%;
@@ -157,9 +144,6 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Légende et raccourcis
-// ---------------------------------------------------------------------------
 .lightbox-meta {
   display: flex;
   align-items: center;
@@ -203,9 +187,6 @@
   margin-right: common.get-var(space, sm);
 }
 
-// ---------------------------------------------------------------------------
-// Pellicule
-// ---------------------------------------------------------------------------
 .lightbox-film {
   display: flex;
   gap: common.get-var(space, sm);
@@ -238,8 +219,6 @@
     border-color: rgba(255, 255, 255, 0.3);
   }
 
-  // La vignette active est cernée de jaune : c'est le seul repère de position
-  // quand la pellicule défile.
   &.active {
     border-color: common.get-var(surface, brand, secondary);
 
@@ -249,10 +228,8 @@
   }
 }
 
-// Un voile sous l'étiquette : sans lui, un libellé blanc posé sur une photo
-// claire devient illisible.
 .lightbox-thumb::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: auto 0 0 0;
   height: 60%;

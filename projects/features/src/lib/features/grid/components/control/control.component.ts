@@ -20,13 +20,7 @@ import { TaGridFormComponent } from '../form/form.component';
   templateUrl: './filters-panel.component.html',
   styleUrls: ['./filters-panel.component.scss'],
   standalone: true,
-  imports: [
-    TaGridFormComponent,
-    ButtonComponent,
-    LayoutFullPanelComponent,
-    TranslatePipe,
-    PluralTranslatePipe,
-  ],
+  imports: [TaGridFormComponent, ButtonComponent, LayoutFullPanelComponent, TranslatePipe, PluralTranslatePipe],
 })
 export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
   closeEvent = output<void>();
@@ -56,11 +50,11 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     group?: boolean;
     sort?: boolean;
   }>({
-    switchView: true,
     filters: true,
-    preset: true,
     group: true,
+    preset: true,
     sort: true,
+    switchView: true,
   });
 
   /** Masque les libellés textuels : ne restent que les icônes. */
@@ -86,12 +80,7 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     return this.groupableCols.length > 0;
   }
 
-  /**
-   * Colonnes sur lesquelles un tri a du sens.
-   *
-   * Le tableau se trie par ses en-têtes ; la vue cartes n'en a pas, et restait
-   * donc figée sur l'ordre du serveur.
-   */
+  /** Colonnes triables, pour les vues sans en-têtes (cartes). */
   get sortableCols(): { key: string; label: string }[] {
     return Object.values(this.grid?.cols ?? {})
       .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
@@ -151,7 +140,7 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     this.grid.filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
   }
 
-  /** Un même critère rejoué bascule le sens : croissant, puis décroissant. */
+  /** Rejouer le même critère inverse le sens. */
   public setSort(key: string | null) {
     if (!key) {
       this.grid?.table?.setSort(null, 'asc');

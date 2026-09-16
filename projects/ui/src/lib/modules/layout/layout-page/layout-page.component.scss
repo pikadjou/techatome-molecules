@@ -1,7 +1,5 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
 
-// Le gabarit tient la hauteur de la fenêtre quand on le lui demande : le pied
-// reste alors en bas, même sur une page courte.
 :host(.full-height) {
   display: flex;
   flex-direction: column;
@@ -9,13 +7,11 @@
 
   .layout-page-content {
     flex: 1 1 auto;
-    // Indispensable : `max-container` centre par des marges automatiques, et
-    // des marges automatiques sur l'axe transversal annulent l'étirement d'un
-    // élément flexible.
+    // Les marges auto de `max-container` annulent l'étirement flex sans largeur explicite.
     width: 100%;
   }
 }
 
 .layout-page-content {
-  padding: var(--ta-layout-page-content-padding, #{common.get-var(space, sm)});
+  padding: common.get-var(space, sm);
 }

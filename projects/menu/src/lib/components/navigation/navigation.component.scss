@@ -1,7 +1,7 @@
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 .element-list {
   gap: common.get-var(space, md);
@@ -53,9 +53,7 @@
   }
 }
 
-// Filtres capsulés : blanc cerclé au repos, surface de marque pleine si actif.
-// Même présentation que `ta-tab-bar` en variante `pill` — un filtre se lit de
-// la même façon, qu'il vienne d'un menu ou d'une simple liste d'options.
+// Filtres capsulés, même présentation que `ta-tab-bar` en `pill`.
 .tags {
   .item-container {
     .item {
@@ -69,7 +67,8 @@
       color: common.get-var(text, secondary);
       font-family: common.get-var(font, display, family);
       @include fonts.fontSizeBody(sm, true);
-      transition: background-color common.get-var(transition, fast),
+      transition:
+        background-color common.get-var(transition, fast),
         border-color common.get-var(transition, fast),
         color common.get-var(transition, fast);
     }
@@ -101,25 +100,15 @@
       @include flex.align-center();
       gap: common.get-var(space, sm);
       padding: 13px common.get-var(space, md);
-      // Le filet actif recouvre celui du conteneur : sans ce décalage d'un
-      // pixel, les deux traits se superposeraient en doublant l'épaisseur.
+      // Décalage d'un pixel : le filet actif recouvre celui du conteneur.
       margin-bottom: -1px;
       border-bottom: 2px solid transparent;
       font-family: common.get-var(font, display, family);
       color: common.get-var(text, muted);
       @include fonts.fontSizeBody(md, true);
-      transition: color common.get-var(transition, fast),
+      transition:
+        color common.get-var(transition, fast),
         border-bottom-color common.get-var(transition, fast);
-    }
-
-    // Le compteur d'onglet est une pastille neutre : il compte, il n'alerte pas.
-    ta-label {
-      --ta-label-padding: #{common.get-var(space, xs)} 7px;
-      --ta-label-radius: #{common.get-var(radius, pill)};
-      --ta-label-font-family: #{common.get-var(font, display, family)};
-      --ta-label-background: #{common.get-var(surface, secondary)};
-      --ta-label-border-color: #{common.get-var(surface, secondary)};
-      --ta-label-color: #{common.get-var(text, secondary)};
     }
 
     &.disabled {
@@ -128,11 +117,6 @@
     &.active .item {
       color: common.get-var(text, primary);
       border-bottom-color: common.get-var(border, brand, primary);
-    }
-    &.active ta-label {
-      --ta-label-background: #{common.get-var(surface, brand, primary)};
-      --ta-label-border-color: #{common.get-var(surface, brand, primary)};
-      --ta-label-color: #{common.get-var(text, invert, primary)};
     }
     &:not(.disabled):not(.active):hover .item {
       color: common.get-var(text, primary);
@@ -163,7 +147,8 @@
       border-radius: common.get-var(radius, minimal);
       color: common.get-var(text, secondary);
       @include fonts.fontSizeBody(md);
-      transition: background-color common.get-var(transition, fast),
+      transition:
+        background-color common.get-var(transition, fast),
         color common.get-var(transition, fast);
     }
 

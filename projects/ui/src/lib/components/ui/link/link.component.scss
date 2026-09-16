@@ -1,16 +1,13 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
 
-// Le lien prend l'encre du texte courant. Posé sur une surface sombre, c'est au
-// parent de dire quelle encre le remplace : ces deux variables sont là pour ça,
-// et évitent d'avoir à viser l'ancre à l'intérieur du composant.
 .link {
   justify-content: center;
 
-  color: var(--ta-link-color, #{common.get-var(text, primary)});
+  color: common.get-var(text, primary);
 
   &:hover {
-    color: var(--ta-link-hover-color, #{common.get-var(text, brand, primary)});
+    color: common.get-var(text, brand, primary);
   }
   &.disabled,
   &.inactive {

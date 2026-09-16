@@ -5,13 +5,6 @@
 
 $spacing: common.get-var(components, card, padding);
 
-// Points de réglage de la carte.
-//
-// Le thème fixe l'allure commune ; ces variables laissent une page ajuster ce
-// qui lui est propre — une carte-vignette sans marge intérieure, un panneau au
-// rayon plus large, un pied d'actions repoussé en bas d'une grille. Elles se
-// posent sur l'élément `ta-card` depuis la feuille du parent, sans que
-// personne ait à viser l'intérieur du composant.
 :host {
   @include flex.flex-full();
 
@@ -20,19 +13,17 @@ $spacing: common.get-var(components, card, padding);
   }
 }
 .card {
-  overflow: var(--ta-card-overflow, visible);
-  height: var(--ta-card-height, auto);
   &.hover {
     cursor: pointer;
     &:hover {
       background-color: common.get-var(components, card, hover, background);
     }
   }
-  border-radius: var(--ta-card-radius, #{common.get-var(components, card, border-radius)});
+  border-radius: common.get-var(components, card, border-radius);
 
   position: relative;
 
-  padding: var(--ta-card-padding, #{$spacing});
+  padding: $spacing;
 
   background-color: common.get-var(components, card, background);
   color: common.get-var(components, card, color);
@@ -69,34 +60,9 @@ $spacing: common.get-var(components, card, padding);
     }
   }
 
-  .content-container {
-    gap: var(--ta-card-content-gap, 0);
-    padding: var(--ta-card-content-padding, 0);
-    min-width: var(--ta-card-content-min-width, 0);
-    flex-basis: var(--ta-card-content-basis, 100%);
-  }
-
-  // Le pied ne se décolle qu'à la demande : dans une grille, c'est ce qui aligne
-  // les actions de toutes les cartes sur une même ligne.
-  .card-cta-container {
-    display: var(--ta-card-cta-display, block);
-    margin-top: var(--ta-card-cta-margin-top, 0);
-    padding-top: var(--ta-card-cta-padding-top, 0);
-    border-top: var(--ta-card-cta-border-top, none);
-  }
-
-  // La vignette au-dessus du contenu par défaut. `--ta-card-direction: row`
-  // les met côte à côte sans passer par la grille en tiers de
-  // `directionCard="horizontal"` : une carte-registre veut une vignette de
-  // largeur fixe, pas une colonne proportionnelle.
   .responsive-content {
     @include flex.flex-column();
     @include flex.flex-full();
-    flex-direction: var(--ta-card-direction, column);
-    flex-wrap: var(--ta-card-wrap, nowrap);
-    align-items: var(--ta-card-align, stretch);
-    gap: var(--ta-card-gap, 0);
-
     &.horizontal-card {
       @include grid.grid-base();
       gap: common.get-var(space, sm);

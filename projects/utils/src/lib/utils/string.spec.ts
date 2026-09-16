@@ -1,11 +1,11 @@
 import { EFileExtension } from '../types/files/file-extension';
 import {
-  getFileExtension,
-  getFullFileNameFromUrl,
-  trigram,
   capitalizeFirstLetter,
   convertToNumber,
+  getFileExtension,
+  getFullFileNameFromUrl,
   isURL,
+  trigram,
 } from './string';
 
 describe('string utils', () => {
@@ -49,9 +49,7 @@ describe('string utils', () => {
     });
 
     it('should ignore a query string', () => {
-      expect(getFileExtension('https://cdn.example.com/photo.jpg?token=abc&v=2')).toBe(
-        EFileExtension.Image
-      );
+      expect(getFileExtension('https://cdn.example.com/photo.jpg?token=abc&v=2')).toBe(EFileExtension.Image);
     });
 
     it('should ignore a fragment', () => {

@@ -10,9 +10,5 @@
   @if (this.stateLabel(); as stateLabel) {
     <span class="toggle-state" [class.is-on]="this.input.value">{{ stateLabel | translate }}</span>
   }
-  <ta-form-label
-    [input]="input"
-    [withMarginBottom]="false"
-    variant="choice"
-  ></ta-form-label>
+  <ta-form-label [input]="this.input" [withMarginBottom]="false" variant="choice"></ta-form-label>
 </label>

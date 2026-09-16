@@ -7,8 +7,6 @@
   min-width: 0;
 }
 
-// La cellule est opaque : c'est elle qui masque le fond du conteneur partout
-// sauf sur la gouttière d'un pixel.
 .data-grid-item {
   height: 100%;
   box-sizing: border-box;
@@ -30,9 +28,7 @@
   overflow-wrap: break-word;
 }
 
-// ---------------------------------------------------------------------------
-// Libellé à gauche, valeur à droite : les deux sur la même ligne de base.
-// ---------------------------------------------------------------------------
+// row
 :host-context(.row) {
   .data-grid-item {
     @include flex.simple-flex();
@@ -53,9 +49,7 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Libellé en capitales au-dessus de la valeur.
-// ---------------------------------------------------------------------------
+// stack
 :host-context(.stack) {
   .data-grid-item {
     @include flex.flex-column();
@@ -79,20 +73,14 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Relevé de caractéristiques : l'icône, puis le chiffre, puis son intitulé.
-// L'ordre est inversé par rapport aux deux autres dispositions — c'est la
-// valeur que l'on vient chercher, le libellé ne fait que la nommer.
-// ---------------------------------------------------------------------------
+// fact
 :host-context(.fact) {
   .data-grid-item {
     @include flex.flex-column();
     gap: 6px;
   }
 
-  // L'icône et le libellé sont enveloppés ensemble dans le gabarit commun ;
-  // `contents` les remonte au niveau de la valeur, seul moyen de glisser
-  // celle-ci entre les deux.
+  // `contents` remonte icône et libellé au niveau de la valeur.
   .data-grid-item-label {
     display: contents;
   }

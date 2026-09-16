@@ -8,7 +8,7 @@ export declare class DualButtonComponent {
     isFull: import("@angular/core").InputSignal<boolean>;
     first: import("@angular/core").InputSignal<DualButtonInput>;
     second: import("@angular/core").InputSignal<DualButtonInput>;
-    type: import("@angular/core").InputSignal<"primary" | "secondary">;
+    type: import("@angular/core").InputSignal<"secondary" | "primary">;
     constructor();
     getClass(): {
         [index: string]: boolean;

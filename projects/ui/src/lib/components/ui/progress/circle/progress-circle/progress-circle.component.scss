@@ -1,5 +1,5 @@
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 .circle-progress-bar-frame {
   position: relative;
@@ -12,8 +12,7 @@
   }
 }
 
-// Le contenu projeté se superpose au centre. `pointer-events: none` laisse le
-// clic passer à l'élément qui porte l'anneau.
+// Contenu projeté au centre ; le clic passe à l'anneau.
 .circle-progress-bar-content {
   position: absolute;
   inset: 0;
@@ -50,8 +49,7 @@
   stroke: common.get-var(surface, success);
 }
 
-// Piste translucide : le seul réglage qui tienne sur une surface sombre, où un
-// gris opaque se lirait comme un second anneau.
+// Piste translucide pour surface sombre.
 :host(.invert) .circle-progress-bar .circle-progress-bar-bg {
   stroke: rgba(255, 255, 255, 0.14);
 }

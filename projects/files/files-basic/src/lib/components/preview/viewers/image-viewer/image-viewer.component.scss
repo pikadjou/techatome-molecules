@@ -5,9 +5,7 @@
   height: 100%;
 }
 
-// Dans la visionneuse plein écran, c'est la scène qui tient le fond : le
-// visualiseur efface le sien, sinon une dalle claire se rallume derrière chaque
-// image et fausse la lecture des couleurs.
+// Fond transparent dans la visionneuse plein écran.
 :host-context(.lightbox-stage) .image-viewer {
   background-color: transparent;
 }

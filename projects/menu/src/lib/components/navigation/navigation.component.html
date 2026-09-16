@@ -74,7 +74,12 @@
       </div>
     }
     @if (item.options?.notificationBadge?.label) {
-      <ta-label [style]="item.options?.notificationBadge?.style" size="xs" type="warning">
+      <ta-label
+        [style]="item.options?.notificationBadge?.style"
+        size="xs"
+        shape="pill"
+        [type]="this.isActive(item) ? 'secondary' : 'neutral'"
+      >
         {{ item.options?.notificationBadge?.label || 0 }}
       </ta-label>
     }

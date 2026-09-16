@@ -1,5 +1,5 @@
-import { InjectionToken } from "@angular/core";
-import { OverlayMenuConfig } from "@ta/ui";
+import { InjectionToken } from '@angular/core';
+import { OverlayMenuConfig } from '@ta/ui';
 import * as i0 from "@angular/core";
 export type TaLanguageConfig = {
     id: string;
@@ -7,11 +7,7 @@ export type TaLanguageConfig = {
 };
 export declare const TA_LANGUAGES: InjectionToken<TaLanguageConfig[]>;
 export declare class SwitchLanguageComponent {
-    /**
-     * `compact` : la simple rangée de codes de langue, sans drapeau ni panneau.
-     * C'est la forme qui tient dans un pied de page, où le choix de langue ne doit
-     * pas peser plus qu'une mention légale.
-     */
+    /** `compact` : rangée de codes de langue, sans drapeau ni panneau (pied de page). */
     mode: import("@angular/core").InputSignal<"inline" | "dropdown" | "modal" | "compact">;
     private _translateService;
     readonly languages: TaLanguageConfig[];

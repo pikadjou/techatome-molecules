@@ -1,30 +1,28 @@
-import { EFileExtension } from "../types/files/file-extension";
+import { EFileExtension } from '../types/files/file-extension';
 
 export const getFileExtension = (filePath: string): EFileExtension => {
-  // Une adresse de fichier porte souvent une signature ou une ancre :
-  // `photo.jpg?token=…`. Sans les retirer, l'extension lue vaut
-  // `jpg?token=…` et le fichier passe pour inconnu.
+  // Ignore la query string et l'ancre (`photo.jpg?token=…`).
   const name = getFullFileNameFromUrl(filePath)?.split(/[?#]/)[0] ?? null;
-  const extension: string | null = name?.split(".").pop()?.toLowerCase() || null;
+  const extension: string | null = name?.split('.').pop()?.toLowerCase() || null;
 
   switch (extension) {
-    case "pdf":
+    case 'pdf':
       return EFileExtension.PDF;
-    case "doc":
-    case "docx":
+    case 'doc':
+    case 'docx':
       return EFileExtension.Word;
-    case "xls":
-    case "xlsx":
+    case 'xls':
+    case 'xlsx':
       return EFileExtension.Excel;
-    case "jpg":
-    case "jpeg":
-    case "png":
-    case "gif":
-    case "webp":
-    case "avif":
-    case "bmp":
-    case "svg":
-    case "heic":
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'gif':
+    case 'webp':
+    case 'avif':
+    case 'bmp':
+    case 'svg':
+    case 'heic':
       return EFileExtension.Image;
   }
 
@@ -32,12 +30,12 @@ export const getFileExtension = (filePath: string): EFileExtension => {
 };
 
 export const getFullFileNameFromUrl = (url: string): string | null => {
-  return url.split("/").pop() || null;
+  return url.split('/').pop() || null;
 };
 
 export const trigram = (name: string | null | undefined) => {
   if (!name) {
-    return "";
+    return '';
   }
   if (name.length < 4) {
     return name;
@@ -51,8 +49,7 @@ export const capitalizeFirstLetter = (value: string): string => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
-export const convertToNumber = (values?: string[]): number[] =>
-  values?.map((value) => Number(value)) || [];
+export const convertToNumber = (values?: string[]): number[] => values?.map(value => Number(value)) || [];
 
 export const isURL = (str: string) => {
   // Expression régulière pour vérifier une URL

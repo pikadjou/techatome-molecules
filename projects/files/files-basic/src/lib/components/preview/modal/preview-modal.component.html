@@ -35,16 +35,16 @@
       <div class="lightbox-stage">
         @if (this.current(); as document) {
           @switch (this.getDocumentExtension(document)) {
-            @case (EFileExtension.Image) {
+            @case (this.EFileExtension.Image) {
               <ta-image-viewer [file]="document"></ta-image-viewer>
             }
-            @case (EFileExtension.PDF) {
+            @case (this.EFileExtension.PDF) {
               <ta-pdf-viewer [file]="document"></ta-pdf-viewer>
             }
-            @case (EFileExtension.Excel) {
+            @case (this.EFileExtension.Excel) {
               <ta-excel-viewer [file]="document"></ta-excel-viewer>
             }
-            @case (EFileExtension.Word) {
+            @case (this.EFileExtension.Word) {
               <ta-word-viewer [file]="document"></ta-word-viewer>
             }
             @default {
@@ -76,8 +76,6 @@
       <div class="lightbox-meta">
         <span class="lightbox-caption">{{ this.current()?.description }}</span>
 
-        <!-- Les raccourcis sont affichés, pas devinés : la visionneuse se
-             pilote au clavier, autant le dire. -->
         <span class="lightbox-hints">
           @if (this.hasGallery()) {
             <kbd class="lightbox-key">&larr;</kbd>
@@ -98,7 +96,7 @@
               [class.active]="$index === this.index()"
               (click)="this.select($index)"
             >
-              @if (this.getDocumentExtension(item) === EFileExtension.Image) {
+              @if (this.getDocumentExtension(item) === this.EFileExtension.Image) {
                 <img [src]="item.url" [alt]="item.filename ?? ''" loading="lazy" />
               }
               <span class="lightbox-thumb-label">{{ item.filename }}</span>

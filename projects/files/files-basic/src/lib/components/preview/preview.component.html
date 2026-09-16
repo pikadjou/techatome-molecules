@@ -15,16 +15,16 @@
 
   <div class="preview-body">
     @switch (this.getDocumentExtension(this.initial())) {
-      @case (EFileExtension.Image) {
+      @case (this.EFileExtension.Image) {
         <ta-image-viewer [file]="this.initial()"></ta-image-viewer>
       }
-      @case (EFileExtension.PDF) {
+      @case (this.EFileExtension.PDF) {
         <ta-pdf-viewer [file]="this.initial()"></ta-pdf-viewer>
       }
-      @case (EFileExtension.Excel) {
+      @case (this.EFileExtension.Excel) {
         <ta-excel-viewer [file]="this.initial()"></ta-excel-viewer>
       }
-      @case (EFileExtension.Word) {
+      @case (this.EFileExtension.Word) {
         <ta-word-viewer [file]="this.initial()"></ta-word-viewer>
       }
       @default {

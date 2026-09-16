@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/angular';
 
-import { DataGridItemComponent } from './item/data-grid-item.component';
 import { DataGridComponent, DataGridOrientation } from './data-grid.component';
+import { DataGridItemComponent } from './item/data-grid-item.component';
 
 export default {
   title: 'Modules/Data grid',

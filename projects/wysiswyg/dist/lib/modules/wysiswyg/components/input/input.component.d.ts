@@ -1,10 +1,10 @@
-import { AfterViewInit, ElementRef, EventEmitter, OnInit } from "@angular/core";
-import EditorJS from "@editorjs/editorjs";
-import { Observable } from "rxjs";
-import { TaBaseComponent } from "@ta/utils";
-import { WysiswgBlockData } from "../../public-api";
-import { EditorToolbarBlockCommand, EditorToolbarBlockTool } from "../toolbar/toolbar.component";
-import { EDITOR_ALL_TOOLS, EditorToolType } from "./editor-tools";
+import { AfterViewInit, ElementRef, EventEmitter, OnInit } from '@angular/core';
+import EditorJS from '@editorjs/editorjs';
+import { Observable } from 'rxjs';
+import { TaBaseComponent } from '@ta/utils';
+import { WysiswgBlockData } from '../../public-api';
+import { EditorToolbarBlockCommand, EditorToolbarBlockTool } from '../toolbar/toolbar.component';
+import { EDITOR_ALL_TOOLS, EditorToolType } from './editor-tools';
 import * as i0 from "@angular/core";
 export type EditorInputSavedData = {
     blocks: WysiswgBlockData[];
@@ -65,19 +65,11 @@ export declare class EditorInputComponent extends TaBaseComponent implements OnI
     save(): Promise<void>;
     init(): EditorJS;
     private _buildTools;
-    /**
-     * Applique un outil de la barre au bloc courant : on convertit le bloc en
-     * place quand EditorJS le permet, sinon on en insère un nouveau — un bloc vide
-     * est alors remplacé plutôt que doublé.
-     */
+    /** Convertit le bloc courant si EditorJS le permet, sinon insère (ou remplace un bloc vide). */
     applyBlockTool(tool: EditorToolbarBlockTool): Promise<void>;
     /** Déplace ou supprime le bloc courant. */
     applyBlockCommand(command: EditorToolbarBlockCommand): void;
-    /**
-     * Le bloc courant n'est pas observable : on le relit après chaque clic ou
-     * frappe. `Tab` et `/` sont retenus au passage, faute de quoi EditorJS ouvre
-     * sa propre palette par-dessus la barre.
-     */
+    /** Relit le bloc courant à chaque clic ou frappe ; `Tab` et `/` sont retenus pour ne pas ouvrir la palette EditorJS. */
     private _trackActiveBlock;
     private _updateActiveTool;
     private _getCurrentBlock;

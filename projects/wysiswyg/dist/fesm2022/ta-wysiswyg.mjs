@@ -39,14 +39,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         }] });
 
 const EDITOR_ALL_TOOLS = [
-    "header",
-    "list",
-    "quote",
-    "delimiter",
-    "warning",
-    "color",
-    "image",
-    "mention",
+    'header',
+    'list',
+    'quote',
+    'delimiter',
+    'warning',
+    'color',
+    'image',
+    'mention',
 ];
 
 class TagTool {
@@ -241,54 +241,54 @@ class EditorToolbarComponent {
         /** Identifiant du bloc sous le curseur, pour marquer l'outil correspondant. */
         this.activeTool = input(null);
         this.labels = input({});
-        /** Outils réellement montés dans l'éditeur : la barre n'offre que ceux-là. */
+        /** Outils montés dans l'éditeur ; la barre n'offre que ceux-là. */
         this.enabledTools = input(EDITOR_ALL_TOOLS);
         this.blockCommand = output();
         this.blockTool = output();
         this._sanitizer = inject(DomSanitizer);
         this.blockTools = computed(() => {
             const enabled = new Set(this.enabledTools());
-            return this._allBlockTools.filter((entry) => !entry.requires || enabled.has(entry.requires));
+            return this._allBlockTools.filter(entry => !entry.requires || enabled.has(entry.requires));
         });
         this._allBlockTools = [
-            { icon: this._trust(IconText), id: "paragraph", labelKey: "paragraph" },
-            { icon: null, id: "header-1", labelKey: "header1", requires: "header", text: "H1" },
-            { icon: null, id: "header-2", labelKey: "header2", requires: "header", text: "H2" },
-            { icon: null, id: "header-3", labelKey: "header3", requires: "header", text: "H3" },
+            { icon: this._trust(IconText), id: 'paragraph', labelKey: 'paragraph' },
+            { icon: null, id: 'header-1', labelKey: 'header1', requires: 'header', text: 'H1' },
+            { icon: null, id: 'header-2', labelKey: 'header2', requires: 'header', text: 'H2' },
+            { icon: null, id: 'header-3', labelKey: 'header3', requires: 'header', text: 'H3' },
             {
                 icon: this._trust(IconListBulleted),
-                id: "list-unordered",
-                labelKey: "listUnordered",
-                requires: "list",
+                id: 'list-unordered',
+                labelKey: 'listUnordered',
+                requires: 'list',
             },
             {
                 icon: this._trust(IconListNumbered),
-                id: "list-ordered",
-                labelKey: "listOrdered",
-                requires: "list",
+                id: 'list-ordered',
+                labelKey: 'listOrdered',
+                requires: 'list',
             },
-            { icon: this._trust(IconQuote), id: "quote", labelKey: "quote", requires: "quote" },
-            { icon: this._trust(IconWarning), id: "warning", labelKey: "warning", requires: "warning" },
+            { icon: this._trust(IconQuote), id: 'quote', labelKey: 'quote', requires: 'quote' },
+            { icon: this._trust(IconWarning), id: 'warning', labelKey: 'warning', requires: 'warning' },
             {
                 icon: this._trust(IconDelimiter),
-                id: "delimiter",
-                labelKey: "delimiter",
-                requires: "delimiter",
+                id: 'delimiter',
+                labelKey: 'delimiter',
+                requires: 'delimiter',
             },
-            { icon: this._trust(IconPicture), id: "image", labelKey: "image", requires: "image" },
+            { icon: this._trust(IconPicture), id: 'image', labelKey: 'image', requires: 'image' },
         ];
         this.blockCommands = [
-            { icon: this._trust(IconChevronUp), id: "move-up", labelKey: "moveUp" },
-            { icon: this._trust(IconChevronDown), id: "move-down", labelKey: "moveDown" },
+            { icon: this._trust(IconChevronUp), id: 'move-up', labelKey: 'moveUp' },
+            { icon: this._trust(IconChevronDown), id: 'move-down', labelKey: 'moveDown' },
         ];
         this.deleteCommand = {
             icon: this._trust(IconTrash),
-            id: "delete",
-            labelKey: "delete",
+            id: 'delete',
+            labelKey: 'delete',
         };
     }
     getLabel(entry) {
-        return this.labels()[entry.labelKey] ?? "";
+        return this.labels()[entry.labelKey] ?? '';
     }
     isActive(id) {
         return this.activeTool() === id;
@@ -301,7 +301,7 @@ class EditorToolbarComponent {
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorToolbarComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-cms-editor-toolbar", standalone: true, encapsulation: ViewEncapsulation.None, template: "<div class=\"editor-toolbar\" role=\"toolbar\">\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockTools(); track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [class.is-active]=\"this.isActive(entry.id)\"\n        [attr.aria-pressed]=\"this.isActive(entry.id)\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockTool.emit(entry.id)\"\n      >\n        @if (entry.icon) {\n          <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n        }\n        @if (entry.text) {\n          <span class=\"editor-toolbar__text\">{{ entry.text }}</span>\n        }\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__separator\"></div>\n\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockCommands; track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockCommand.emit(entry.id)\"\n      >\n        <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__group editor-toolbar__group--end\">\n    <button\n      type=\"button\"\n      class=\"editor-toolbar__button editor-toolbar__button--danger\"\n      [title]=\"this.getLabel(this.deleteCommand)\"\n      [attr.aria-label]=\"this.getLabel(this.deleteCommand)\"\n      (click)=\"this.blockCommand.emit(this.deleteCommand.id)\"\n    >\n      <span class=\"editor-toolbar__icon\" [innerHTML]=\"this.deleteCommand.icon\"></span>\n    </button>\n  </div>\n</div>\n", styles: ["ta-cms-editor-toolbar{display:block}ta-cms-editor-toolbar .editor-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--ta-space-xs);padding:var(--ta-space-xs);background-color:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}ta-cms-editor-toolbar .editor-toolbar__group{display:flex;align-items:center;gap:var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__group--end{margin-left:auto}ta-cms-editor-toolbar .editor-toolbar__separator{width:1px;height:var(--ta-space-md);background-color:var(--ta-border-tertiary);margin:0 var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__button{align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-space-xs);min-width:32px;height:32px;padding:0 var(--ta-space-xs);border:none;border-radius:var(--ta-radius-minimal);background-color:transparent;color:var(--ta-text-secondary);cursor:pointer;transition:color var(--ta-transition-fast),background-color var(--ta-transition-fast),border-color var(--ta-transition-fast)}ta-cms-editor-toolbar .editor-toolbar__button:hover{background-color:var(--ta-surface-hover-primary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button:focus-visible{outline:none;box-shadow:var(--ta-shadow-focus)}ta-cms-editor-toolbar .editor-toolbar__button.is-active{background-color:var(--ta-surface-brand-secondary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button--danger:hover{color:var(--ta-semantic-red-dark)}ta-cms-editor-toolbar .editor-toolbar__icon{align-items:center;display:flex;justify-content:center;margin:auto}ta-cms-editor-toolbar .editor-toolbar__icon svg{display:block;width:20px;height:20px}ta-cms-editor-toolbar .editor-toolbar__text{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight)}\n"] }]
+            args: [{ selector: 'ta-cms-editor-toolbar', standalone: true, encapsulation: ViewEncapsulation.None, template: "<div class=\"editor-toolbar\" role=\"toolbar\">\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockTools(); track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [class.is-active]=\"this.isActive(entry.id)\"\n        [attr.aria-pressed]=\"this.isActive(entry.id)\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockTool.emit(entry.id)\"\n      >\n        @if (entry.icon) {\n          <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n        }\n        @if (entry.text) {\n          <span class=\"editor-toolbar__text\">{{ entry.text }}</span>\n        }\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__separator\"></div>\n\n  <div class=\"editor-toolbar__group\">\n    @for (entry of this.blockCommands; track entry.id) {\n      <button\n        type=\"button\"\n        class=\"editor-toolbar__button\"\n        [title]=\"this.getLabel(entry)\"\n        [attr.aria-label]=\"this.getLabel(entry)\"\n        (click)=\"this.blockCommand.emit(entry.id)\"\n      >\n        <span class=\"editor-toolbar__icon\" [innerHTML]=\"entry.icon\"></span>\n      </button>\n    }\n  </div>\n\n  <div class=\"editor-toolbar__group editor-toolbar__group--end\">\n    <button\n      type=\"button\"\n      class=\"editor-toolbar__button editor-toolbar__button--danger\"\n      [title]=\"this.getLabel(this.deleteCommand)\"\n      [attr.aria-label]=\"this.getLabel(this.deleteCommand)\"\n      (click)=\"this.blockCommand.emit(this.deleteCommand.id)\"\n    >\n      <span class=\"editor-toolbar__icon\" [innerHTML]=\"this.deleteCommand.icon\"></span>\n    </button>\n  </div>\n</div>\n", styles: ["ta-cms-editor-toolbar{display:block}ta-cms-editor-toolbar .editor-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--ta-space-xs);padding:var(--ta-space-xs);background-color:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}ta-cms-editor-toolbar .editor-toolbar__group{display:flex;align-items:center;gap:var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__group--end{margin-left:auto}ta-cms-editor-toolbar .editor-toolbar__separator{width:1px;height:var(--ta-space-md);background-color:var(--ta-border-tertiary);margin:0 var(--ta-space-xs)}ta-cms-editor-toolbar .editor-toolbar__button{align-items:center;display:flex;justify-content:center;margin:auto;gap:var(--ta-space-xs);min-width:32px;height:32px;padding:0 var(--ta-space-xs);border:none;border-radius:var(--ta-radius-minimal);background-color:transparent;color:var(--ta-text-secondary);cursor:pointer;transition:color var(--ta-transition-fast),background-color var(--ta-transition-fast),border-color var(--ta-transition-fast)}ta-cms-editor-toolbar .editor-toolbar__button:hover{background-color:var(--ta-surface-hover-primary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button:focus-visible{outline:none;box-shadow:var(--ta-shadow-focus)}ta-cms-editor-toolbar .editor-toolbar__button.is-active{background-color:var(--ta-surface-brand-secondary);color:var(--ta-text-brand-primary)}ta-cms-editor-toolbar .editor-toolbar__button--danger:hover{color:var(--ta-semantic-red-dark)}ta-cms-editor-toolbar .editor-toolbar__icon{align-items:center;display:flex;justify-content:center;margin:auto}ta-cms-editor-toolbar .editor-toolbar__icon svg{display:block;width:20px;height:20px}ta-cms-editor-toolbar .editor-toolbar__text{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight)}\n"] }]
         }], ctorParameters: () => [] });
 
 var editorjs$4 = {
@@ -807,16 +807,16 @@ var nl$1 = /*#__PURE__*/Object.freeze({
 
 /** Ce que chaque outil de la barre pose comme bloc EditorJS. */
 const TOOLBAR_BLOCK_CONFIG = {
-    delimiter: { type: "delimiter" },
-    "header-1": { data: { level: 1 }, type: "header" },
-    "header-2": { data: { level: 2 }, type: "header" },
-    "header-3": { data: { level: 3 }, type: "header" },
-    image: { type: "image" },
-    "list-ordered": { data: { style: "ordered" }, type: "list" },
-    "list-unordered": { data: { style: "unordered" }, type: "list" },
-    paragraph: { type: "paragraph" },
-    quote: { type: "quote" },
-    warning: { type: "warning" },
+    'delimiter': { type: 'delimiter' },
+    'header-1': { data: { level: 1 }, type: 'header' },
+    'header-2': { data: { level: 2 }, type: 'header' },
+    'header-3': { data: { level: 3 }, type: 'header' },
+    'image': { type: 'image' },
+    'list-ordered': { data: { style: 'ordered' }, type: 'list' },
+    'list-unordered': { data: { style: 'unordered' }, type: 'list' },
+    'paragraph': { type: 'paragraph' },
+    'quote': { type: 'quote' },
+    'warning': { type: 'warning' },
 };
 class EditorInputComponent extends TaBaseComponent {
     constructor() {
@@ -899,7 +899,7 @@ class EditorInputComponent extends TaBaseComponent {
                 next: ({ blocks, saveAfter }) => {
                     this._saveAfter = saveAfter ?? false;
                     if (this.editorInstance && blocks) {
-                        if (typeof blocks === "string") {
+                        if (typeof blocks === 'string') {
                             this.editorInstance.blocks.renderFromHTML(blocks);
                         }
                         else {
@@ -915,8 +915,7 @@ class EditorInputComponent extends TaBaseComponent {
         this._trackActiveBlock();
     }
     ngOnDestroy() {
-        // `super` d'abord : c'est lui qui coupe les souscriptions, dont celles que
-        // `_trackActiveBlock` a posées sur l'élément hôte.
+        // `super` coupe les souscriptions posées par `_trackActiveBlock`.
         super.ngOnDestroy();
         this.editorInstance?.destroy();
         this.editorInstance = null;
@@ -940,7 +939,7 @@ class EditorInputComponent extends TaBaseComponent {
             holder: this.editorjs.nativeElement,
             minHeight: 100,
             data: { blocks: this.initValue() },
-            placeholder: this.placeholder() ?? translations["placeholder"],
+            placeholder: this.placeholder() ?? translations['placeholder'],
             tools,
             onChange: this._onChange,
             ...translations,
@@ -949,32 +948,32 @@ class EditorInputComponent extends TaBaseComponent {
     _buildTools(translations) {
         const enabled = new Set(this.enabledTools());
         const tools = {};
-        if (enabled.has("header")) {
-            tools["header"] = Header;
+        if (enabled.has('header')) {
+            tools['header'] = Header;
         }
-        if (enabled.has("list")) {
-            tools["list"] = List;
+        if (enabled.has('list')) {
+            tools['list'] = List;
         }
-        if (enabled.has("quote")) {
-            tools["quote"] = Quote;
+        if (enabled.has('quote')) {
+            tools['quote'] = Quote;
         }
-        if (enabled.has("delimiter")) {
-            tools["delimiter"] = Delimiter;
+        if (enabled.has('delimiter')) {
+            tools['delimiter'] = Delimiter;
         }
-        if (enabled.has("warning")) {
-            tools["warning"] = Warning;
+        if (enabled.has('warning')) {
+            tools['warning'] = Warning;
         }
-        if (enabled.has("color")) {
-            tools["TextColor"] = {
+        if (enabled.has('color')) {
+            tools['TextColor'] = {
                 class: ColorTool,
                 config: {
-                    backgroundColorLabel: translations["colortool.backgroundColorLabel"],
-                    frontColorLabel: translations["colortool.frontColorLabel"],
+                    backgroundColorLabel: translations['colortool.backgroundColorLabel'],
+                    frontColorLabel: translations['colortool.frontColorLabel'],
                 },
             };
         }
-        if (enabled.has("image")) {
-            tools["image"] = {
+        if (enabled.has('image')) {
+            tools['image'] = {
                 class: ImageTool,
                 config: {
                     uploader: {
@@ -985,8 +984,8 @@ class EditorInputComponent extends TaBaseComponent {
                 },
             };
         }
-        if (enabled.has("mention")) {
-            tools["mention"] = {
+        if (enabled.has('mention')) {
+            tools['mention'] = {
                 class: TagTool,
                 config: {
                     users: this.users(),
@@ -995,11 +994,7 @@ class EditorInputComponent extends TaBaseComponent {
         }
         return tools;
     }
-    /**
-     * Applique un outil de la barre au bloc courant : on convertit le bloc en
-     * place quand EditorJS le permet, sinon on en insère un nouveau — un bloc vide
-     * est alors remplacé plutôt que doublé.
-     */
+    /** Convertit le bloc courant si EditorJS le permet, sinon insère (ou remplace un bloc vide). */
     async applyBlockTool(tool) {
         const editor = this.editorInstance;
         if (!editor) {
@@ -1016,13 +1011,13 @@ class EditorInputComponent extends TaBaseComponent {
         if (block.name === type) {
             if (data) {
                 await editor.blocks.update(block.id, data);
-                editor.caret.setToBlock(index, "end");
+                editor.caret.setToBlock(index, 'end');
             }
         }
         else {
             try {
                 await editor.blocks.convert(block.id, type, data);
-                editor.caret.setToBlock(index, "end");
+                editor.caret.setToBlock(index, 'end');
             }
             catch {
                 editor.blocks.insert(type, data, undefined, block.isEmpty ? index : index + 1, true, block.isEmpty);
@@ -1041,37 +1036,33 @@ class EditorInputComponent extends TaBaseComponent {
             return;
         }
         switch (command) {
-            case "delete": {
+            case 'delete': {
                 editor.blocks.delete(index);
                 break;
             }
-            case "move-down": {
+            case 'move-down': {
                 if (index < editor.blocks.getBlocksCount() - 1) {
                     editor.blocks.move(index + 1);
-                    editor.caret.setToBlock(index + 1, "end");
+                    editor.caret.setToBlock(index + 1, 'end');
                 }
                 break;
             }
-            case "move-up": {
+            case 'move-up': {
                 if (index > 0) {
                     editor.blocks.move(index - 1);
-                    editor.caret.setToBlock(index - 1, "end");
+                    editor.caret.setToBlock(index - 1, 'end');
                 }
                 break;
             }
         }
         this._updateActiveTool();
     }
-    /**
-     * Le bloc courant n'est pas observable : on le relit après chaque clic ou
-     * frappe. `Tab` et `/` sont retenus au passage, faute de quoi EditorJS ouvre
-     * sa propre palette par-dessus la barre.
-     */
+    /** Relit le bloc courant à chaque clic ou frappe ; `Tab` et `/` sont retenus pour ne pas ouvrir la palette EditorJS. */
     _trackActiveBlock() {
         const holder = this.editorjs.nativeElement;
-        this._registerSubscription(merge(fromEvent(holder, "click"), fromEvent(holder, "keyup")).subscribe(() => this._updateActiveTool()));
-        this._registerSubscription(fromEvent(holder, "keydown", { capture: true }).subscribe((event) => {
-            if (event.key === "Tab" || event.key === "/") {
+        this._registerSubscription(merge(fromEvent(holder, 'click'), fromEvent(holder, 'keyup')).subscribe(() => this._updateActiveTool()));
+        this._registerSubscription(fromEvent(holder, 'keydown', { capture: true }).subscribe(event => {
+            if (event.key === 'Tab' || event.key === '/') {
                 event.stopPropagation();
             }
         }));
@@ -1081,8 +1072,7 @@ class EditorInputComponent extends TaBaseComponent {
         this.activeTool.set(block ? this._resolveToolId(block) : null);
     }
     _getCurrentBlock() {
-        // L'API `blocks` n'existe ni avant `isReady` ni après `destroy()` : tester
-        // l'instance ne suffit pas.
+        // `blocks` n'existe ni avant `isReady` ni après `destroy()`.
         const blocks = this.editorInstance?.blocks;
         if (!blocks) {
             return undefined;
@@ -1095,14 +1085,12 @@ class EditorInputComponent extends TaBaseComponent {
     }
     /** Un titre ou une liste ne disent pas leur variante : on lit le DOM rendu. */
     _resolveToolId(block) {
-        if (block.name === "header") {
-            const heading = block.holder.querySelector("h1, h2, h3, h4, h5, h6");
-            return heading ? `header-${heading.tagName.charAt(1)}` : "header-2";
+        if (block.name === 'header') {
+            const heading = block.holder.querySelector('h1, h2, h3, h4, h5, h6');
+            return heading ? `header-${heading.tagName.charAt(1)}` : 'header-2';
         }
-        if (block.name === "list") {
-            return block.holder.querySelector("ol")
-                ? "list-ordered"
-                : "list-unordered";
+        if (block.name === 'list') {
+            return block.holder.querySelector('ol') ? 'list-ordered' : 'list-unordered';
         }
         return block.name;
     }
@@ -1128,8 +1116,8 @@ class EditorInputComponent extends TaBaseComponent {
             return output;
         }
         let spanIndex = 0;
-        const updatedBlocks = output.blocks.map((block) => {
-            if (block.type !== "paragraph" || !block.data?.text) {
+        const updatedBlocks = output.blocks.map(block => {
+            if (block.type !== 'paragraph' || !block.data?.text) {
                 return block;
             }
             const newText = block.data.text.replace(/<span class="ce-inline-tool--color__token">/gs, (match) => {
@@ -1156,21 +1144,21 @@ class EditorInputComponent extends TaBaseComponent {
         const html = convertBlocksToHtml(blocks);
         const regex = /data-user-id="([^"]+)"/g;
         // Extraction des IDs sous forme de tableau
-        return [...html.matchAll(regex)].map((match) => match[1]);
+        return [...html.matchAll(regex)].map(match => match[1]);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null }, enabledTools: { classPropertyName: "enabledTools", publicName: "enabledTools", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, showToolbar: { classPropertyName: "showToolbar", publicName: "showToolbar", isSignal: true, isRequired: false, transformFunction: null }, isCompact: { classPropertyName: "isCompact", publicName: "isCompact", isSignal: true, isRequired: false, transformFunction: null }, resizable: { classPropertyName: "resizable", publicName: "resizable", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\" [class.is-compact]=\"this.isCompact()\">\n  @if (this.showToolbar()) {\n  <ta-cms-editor-toolbar\n    [activeTool]=\"this.activeTool()\"\n    [labels]=\"this.toolbarLabels\"\n    [enabledTools]=\"this.enabledTools()\"\n    (blockTool)=\"this.applyBlockTool($event)\"\n    (blockCommand)=\"this.applyBlockCommand($event)\"\n  ></ta-cms-editor-toolbar>\n  }\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n    [class.resizable]=\"this.resizable()\"\n  ></div>\n</div>\n", styles: ["ta-cms-editor-input .editor-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-body);max-height:250px;overflow:auto}ta-cms-editor-input .editor-container.resizable{resize:vertical;min-height:60px}ta-cms-editor-input .editor-container.max-height{max-height:300px}ta-cms-editor-input .editor-container .ce-toolbar{display:none}ta-cms-editor-input .editor-container .cdx-block{max-width:100%!important}ta-cms-editor-input .editor-container .ce-block__content,ta-cms-editor-input .editor-container .ce-toolbar__content{max-width:100%!important;margin:0!important}ta-cms-editor-input .editor-container .ce-block--selected .ce-block__content{background-color:var(--ta-surface-hover-primary);border-radius:var(--ta-radius-minimal)}ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder]:empty:before,ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder-active]:before{color:var(--ta-text-tertiary)}ta-cms-editor-input .editor-container .ce-header{color:var(--ta-text-primary)}ta-cms-editor-input .editor-container h1.ce-header{font-size:var(--ta-font-h1-default-size);font-weight:var(--ta-font-h1-default-weight)}ta-cms-editor-input .editor-container h2.ce-header{font-size:var(--ta-font-h2-default-size);font-weight:var(--ta-font-h2-default-weight)}ta-cms-editor-input .editor-container h3.ce-header{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight)}ta-cms-editor-input .editor-container h4.ce-header{font-size:var(--ta-font-h4-default-size);font-weight:var(--ta-font-h4-default-weight)}ta-cms-editor-input .editor-container .cdx-quote{border-left:3px solid var(--ta-border-brand-primary);padding-left:var(--ta-space-md)}ta-cms-editor-input .editor-container .cdx-warning{background-color:var(--ta-surface-warning);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}ta-cms-editor-input .editor-container .ce-popover{--border-radius: var(--ta-radius-rounded);--color-background: var(--ta-surface-primary);--color-background-item-focus: var(--ta-surface-hover-primary);--color-background-item-hover: var(--ta-surface-secondary);--color-border: var(--ta-border-tertiary);--color-text-primary: var(--ta-text-primary);--color-text-secondary: var(--ta-text-secondary)}ta-cms-editor-input .editor-container .ce-inline-toolbar{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);box-shadow:var(--ta-shadow-black-sm)}ta-cms-editor-input .is-compact .codex-editor__redactor{padding-bottom:0!important}ta-cms-editor-input .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid var(--ta-border-tertiary);text-align:center;justify-content:center}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"], dependencies: [{ kind: "component", type: EditorToolbarComponent, selector: "ta-cms-editor-toolbar", inputs: ["activeTool", "labels", "enabledTools"], outputs: ["blockCommand", "blockTool"] }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: EditorInputComponent, isStandalone: true, selector: "ta-cms-editor-input", inputs: { initValue: { classPropertyName: "initValue", publicName: "initValue", isSignal: true, isRequired: false, transformFunction: null }, setNewValue$: { classPropertyName: "setNewValue$", publicName: "setNewValue$", isSignal: true, isRequired: false, transformFunction: null }, requestSave$: { classPropertyName: "requestSave$", publicName: "requestSave$", isSignal: true, isRequired: false, transformFunction: null }, clear$: { classPropertyName: "clear$", publicName: "clear$", isSignal: true, isRequired: false, transformFunction: null }, users: { classPropertyName: "users", publicName: "users", isSignal: true, isRequired: false, transformFunction: null }, saveOnChange: { classPropertyName: "saveOnChange", publicName: "saveOnChange", isSignal: true, isRequired: false, transformFunction: null }, maxHeight: { classPropertyName: "maxHeight", publicName: "maxHeight", isSignal: true, isRequired: false, transformFunction: null }, enabledTools: { classPropertyName: "enabledTools", publicName: "enabledTools", isSignal: true, isRequired: false, transformFunction: null }, placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null }, showToolbar: { classPropertyName: "showToolbar", publicName: "showToolbar", isSignal: true, isRequired: false, transformFunction: null }, isCompact: { classPropertyName: "isCompact", publicName: "isCompact", isSignal: true, isRequired: false, transformFunction: null }, resizable: { classPropertyName: "resizable", publicName: "resizable", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { changed: "changed", saved: "saved" }, viewQueries: [{ propertyName: "editorjs", first: true, predicate: ["editorjs"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<div class=\"flex-column g-space-md\" [class.is-compact]=\"this.isCompact()\">\n  @if (this.showToolbar()) {\n    <ta-cms-editor-toolbar\n      [activeTool]=\"this.activeTool()\"\n      [labels]=\"this.toolbarLabels\"\n      [enabledTools]=\"this.enabledTools()\"\n      (blockTool)=\"this.applyBlockTool($event)\"\n      (blockCommand)=\"this.applyBlockCommand($event)\"\n    ></ta-cms-editor-toolbar>\n  }\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n    [class.resizable]=\"this.resizable()\"\n  ></div>\n</div>\n", styles: ["ta-cms-editor-input .editor-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-body);max-height:250px;overflow:auto}ta-cms-editor-input .editor-container.resizable{resize:vertical;min-height:60px}ta-cms-editor-input .editor-container.max-height{max-height:300px}ta-cms-editor-input .editor-container .ce-toolbar{display:none}ta-cms-editor-input .editor-container .cdx-block{max-width:100%!important}ta-cms-editor-input .editor-container .ce-block__content,ta-cms-editor-input .editor-container .ce-toolbar__content{max-width:100%!important;margin:0!important}ta-cms-editor-input .editor-container .ce-block--selected .ce-block__content{background-color:var(--ta-surface-hover-primary);border-radius:var(--ta-radius-minimal)}ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder]:empty:before,ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder-active]:before{color:var(--ta-text-tertiary)}ta-cms-editor-input .editor-container .ce-header{color:var(--ta-text-primary)}ta-cms-editor-input .editor-container h1.ce-header{font-size:var(--ta-font-h1-default-size);font-weight:var(--ta-font-h1-default-weight)}ta-cms-editor-input .editor-container h2.ce-header{font-size:var(--ta-font-h2-default-size);font-weight:var(--ta-font-h2-default-weight)}ta-cms-editor-input .editor-container h3.ce-header{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight)}ta-cms-editor-input .editor-container h4.ce-header{font-size:var(--ta-font-h4-default-size);font-weight:var(--ta-font-h4-default-weight)}ta-cms-editor-input .editor-container .cdx-quote{border-left:3px solid var(--ta-border-brand-primary);padding-left:var(--ta-space-md)}ta-cms-editor-input .editor-container .cdx-warning{background-color:var(--ta-surface-warning);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}ta-cms-editor-input .editor-container .ce-popover{--border-radius: var(--ta-radius-rounded);--color-background: var(--ta-surface-primary);--color-background-item-focus: var(--ta-surface-hover-primary);--color-background-item-hover: var(--ta-surface-secondary);--color-border: var(--ta-border-tertiary);--color-text-primary: var(--ta-text-primary);--color-text-secondary: var(--ta-text-secondary)}ta-cms-editor-input .editor-container .ce-inline-toolbar{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);box-shadow:var(--ta-shadow-black-sm)}ta-cms-editor-input .is-compact .codex-editor__redactor{padding-bottom:0!important}ta-cms-editor-input .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid var(--ta-border-tertiary);text-align:center;justify-content:center}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"], dependencies: [{ kind: "component", type: EditorToolbarComponent, selector: "ta-cms-editor-toolbar", inputs: ["activeTool", "labels", "enabledTools"], outputs: ["blockCommand", "blockTool"] }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: EditorInputComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-cms-editor-input", standalone: true, imports: [EditorToolbarComponent], encapsulation: ViewEncapsulation.None, template: "<div class=\"flex-column g-space-md\" [class.is-compact]=\"this.isCompact()\">\n  @if (this.showToolbar()) {\n  <ta-cms-editor-toolbar\n    [activeTool]=\"this.activeTool()\"\n    [labels]=\"this.toolbarLabels\"\n    [enabledTools]=\"this.enabledTools()\"\n    (blockTool)=\"this.applyBlockTool($event)\"\n    (blockCommand)=\"this.applyBlockCommand($event)\"\n  ></ta-cms-editor-toolbar>\n  }\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n    [class.resizable]=\"this.resizable()\"\n  ></div>\n</div>\n", styles: ["ta-cms-editor-input .editor-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-body);max-height:250px;overflow:auto}ta-cms-editor-input .editor-container.resizable{resize:vertical;min-height:60px}ta-cms-editor-input .editor-container.max-height{max-height:300px}ta-cms-editor-input .editor-container .ce-toolbar{display:none}ta-cms-editor-input .editor-container .cdx-block{max-width:100%!important}ta-cms-editor-input .editor-container .ce-block__content,ta-cms-editor-input .editor-container .ce-toolbar__content{max-width:100%!important;margin:0!important}ta-cms-editor-input .editor-container .ce-block--selected .ce-block__content{background-color:var(--ta-surface-hover-primary);border-radius:var(--ta-radius-minimal)}ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder]:empty:before,ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder-active]:before{color:var(--ta-text-tertiary)}ta-cms-editor-input .editor-container .ce-header{color:var(--ta-text-primary)}ta-cms-editor-input .editor-container h1.ce-header{font-size:var(--ta-font-h1-default-size);font-weight:var(--ta-font-h1-default-weight)}ta-cms-editor-input .editor-container h2.ce-header{font-size:var(--ta-font-h2-default-size);font-weight:var(--ta-font-h2-default-weight)}ta-cms-editor-input .editor-container h3.ce-header{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight)}ta-cms-editor-input .editor-container h4.ce-header{font-size:var(--ta-font-h4-default-size);font-weight:var(--ta-font-h4-default-weight)}ta-cms-editor-input .editor-container .cdx-quote{border-left:3px solid var(--ta-border-brand-primary);padding-left:var(--ta-space-md)}ta-cms-editor-input .editor-container .cdx-warning{background-color:var(--ta-surface-warning);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}ta-cms-editor-input .editor-container .ce-popover{--border-radius: var(--ta-radius-rounded);--color-background: var(--ta-surface-primary);--color-background-item-focus: var(--ta-surface-hover-primary);--color-background-item-hover: var(--ta-surface-secondary);--color-border: var(--ta-border-tertiary);--color-text-primary: var(--ta-text-primary);--color-text-secondary: var(--ta-text-secondary)}ta-cms-editor-input .editor-container .ce-inline-toolbar{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);box-shadow:var(--ta-shadow-black-sm)}ta-cms-editor-input .is-compact .codex-editor__redactor{padding-bottom:0!important}ta-cms-editor-input .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid var(--ta-border-tertiary);text-align:center;justify-content:center}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }]
+            args: [{ selector: 'ta-cms-editor-input', standalone: true, imports: [EditorToolbarComponent], encapsulation: ViewEncapsulation.None, template: "<div class=\"flex-column g-space-md\" [class.is-compact]=\"this.isCompact()\">\n  @if (this.showToolbar()) {\n    <ta-cms-editor-toolbar\n      [activeTool]=\"this.activeTool()\"\n      [labels]=\"this.toolbarLabels\"\n      [enabledTools]=\"this.enabledTools()\"\n      (blockTool)=\"this.applyBlockTool($event)\"\n      (blockCommand)=\"this.applyBlockCommand($event)\"\n    ></ta-cms-editor-toolbar>\n  }\n  <div\n    #editorjs\n    class=\"editor-container\"\n    [class.max-height]=\"this.maxHeight()\"\n    [class.resizable]=\"this.resizable()\"\n  ></div>\n</div>\n", styles: ["ta-cms-editor-input .editor-container{position:relative;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-body);max-height:250px;overflow:auto}ta-cms-editor-input .editor-container.resizable{resize:vertical;min-height:60px}ta-cms-editor-input .editor-container.max-height{max-height:300px}ta-cms-editor-input .editor-container .ce-toolbar{display:none}ta-cms-editor-input .editor-container .cdx-block{max-width:100%!important}ta-cms-editor-input .editor-container .ce-block__content,ta-cms-editor-input .editor-container .ce-toolbar__content{max-width:100%!important;margin:0!important}ta-cms-editor-input .editor-container .ce-block--selected .ce-block__content{background-color:var(--ta-surface-hover-primary);border-radius:var(--ta-radius-minimal)}ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder]:empty:before,ta-cms-editor-input .editor-container .ce-paragraph[data-placeholder-active]:before{color:var(--ta-text-tertiary)}ta-cms-editor-input .editor-container .ce-header{color:var(--ta-text-primary)}ta-cms-editor-input .editor-container h1.ce-header{font-size:var(--ta-font-h1-default-size);font-weight:var(--ta-font-h1-default-weight)}ta-cms-editor-input .editor-container h2.ce-header{font-size:var(--ta-font-h2-default-size);font-weight:var(--ta-font-h2-default-weight)}ta-cms-editor-input .editor-container h3.ce-header{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight)}ta-cms-editor-input .editor-container h4.ce-header{font-size:var(--ta-font-h4-default-size);font-weight:var(--ta-font-h4-default-weight)}ta-cms-editor-input .editor-container .cdx-quote{border-left:3px solid var(--ta-border-brand-primary);padding-left:var(--ta-space-md)}ta-cms-editor-input .editor-container .cdx-warning{background-color:var(--ta-surface-warning);border-radius:var(--ta-radius-minimal);padding:var(--ta-space-sm) var(--ta-space-md)}ta-cms-editor-input .editor-container .ce-popover{--border-radius: var(--ta-radius-rounded);--color-background: var(--ta-surface-primary);--color-background-item-focus: var(--ta-surface-hover-primary);--color-background-item-hover: var(--ta-surface-secondary);--color-border: var(--ta-border-tertiary);--color-text-primary: var(--ta-text-primary);--color-text-secondary: var(--ta-text-secondary)}ta-cms-editor-input .editor-container .ce-inline-toolbar{background-color:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary);box-shadow:var(--ta-shadow-black-sm)}ta-cms-editor-input .is-compact .codex-editor__redactor{padding-bottom:0!important}ta-cms-editor-input .ce-inline-tool--color__actions-container{display:flex;flex-direction:column;gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list{display:flex;flex-wrap:wrap;justify-content:flex-start;list-style-type:none;margin:0;padding:var(--ta-space-sm);gap:var(--ta-space-sm)}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item{width:20px;height:20px;border:1px solid var(--ta-border-tertiary);text-align:center;justify-content:center}ta-cms-editor-input .ce-inline-tool--color__actions-container .ce-inline-tool--color__action-list .ce-inline-tool--color__action-list-item:first-child{content-visibility:hidden}\n"] }]
         }], ctorParameters: () => [], propDecorators: { changed: [{
                 type: Output
             }], saved: [{
                 type: Output
             }], editorjs: [{
                 type: ViewChild,
-                args: ["editorjs", { static: true }]
+                args: ['editorjs', { static: true }]
             }] } });
 
 const convertBlocksToHtml = (blocks) => {

@@ -1,4 +1,4 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
 
 .progress-bar {
   appearance: none;
@@ -18,8 +18,7 @@
   }
 }
 
-// Les deux pseudo-éléments doivent être écrits séparément : un sélecteur
-// groupant `-webkit-` et `-moz-` est rejeté en bloc par les deux moteurs.
+// Pseudo-éléments séparés : un sélecteur groupant `-webkit-` et `-moz-` est rejeté par les deux moteurs.
 progress.progress-bar::-webkit-progress-bar {
   background-color: common.get-var(neutral, 300);
   border-radius: inherit;

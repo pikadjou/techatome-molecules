@@ -1,15 +1,15 @@
-import { DecimalPipe, NgClass, NgStyle } from "@angular/common";
-import { Component, input, output } from "@angular/core";
+import { DecimalPipe, NgClass, NgStyle } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
-import { TaTranslationUI } from "../../../translation.service";
-import { TextComponent } from "../text/text.component";
+import { TaTranslationUI } from '../../../translation.service';
+import { TextComponent } from '../text/text.component';
 
 @Component({
-  selector: "ta-rating",
-  templateUrl: "./rating.component.html",
-  styleUrls: ["./rating.component.scss"],
+  selector: 'ta-rating',
+  templateUrl: './rating.component.html',
+  styleUrls: ['./rating.component.scss'],
   standalone: true,
   imports: [DecimalPipe, NgClass, NgStyle, TextComponent, TranslateModule],
 })
@@ -22,11 +22,8 @@ export class RatingComponent {
    */
   value = input<number>(0);
 
-  /**
-   * `compact` : une étoile et la note. C'est la forme qui tient dans une carte,
-   * où cinq étoiles prendraient la place d'une ligne de texte.
-   */
-  variant = input<"stars" | "compact">("stars");
+  /** `compact` : une étoile et la note. */
+  variant = input<'stars' | 'compact'>('stars');
 
   /** Masque le rappel « note sur maximum » à côté des étoiles. */
   showValue = input<boolean>(true);
@@ -66,7 +63,7 @@ export class RatingComponent {
   /**
    * Show hover effect
    */
-  containerClass = input<string>("flex-row");
+  containerClass = input<string>('flex-row');
   /**
    * Emits the new rating value when a star is clicked
    */
@@ -130,6 +127,6 @@ export class RatingComponent {
    * Get cursor style
    */
   public getCursorStyle(): string {
-    return this.readonly() ? "default" : "pointer";
+    return this.readonly() ? 'default' : 'pointer';
   }
 }

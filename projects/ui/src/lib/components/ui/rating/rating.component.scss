@@ -1,4 +1,4 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
 
 .ta-rating-container {
   display: inline-flex;
@@ -44,8 +44,6 @@
   fill: common.get-var(components, control, rating, empty);
 }
 
-// Forme compacte : l'étoile n'est plus une jauge, c'est un pictogramme devant
-// un chiffre. Les deux partagent la même ligne de base.
 .ta-rating-compact {
   display: inline-flex;
   align-items: center;
@@ -56,15 +54,10 @@
   fill: common.get-var(components, control, rating, color);
 }
 
-// Le chiffre de la note compacte. Là où il fait office de verdict — en tête
-// d'une évaluation, sur un bandeau sombre — le parent en règle l'échelle et
-// l'encre par ces variables, sans viser l'intérieur du composant.
 .ta-rating-compact-value {
   font-family: common.get-var(font, display, family);
-  font-size: var(--ta-rating-value-size, inherit);
-  font-weight: var(--ta-rating-value-weight, #{common.get-var(font, body, sm, bold, weight)});
-  letter-spacing: var(--ta-rating-value-tracking, normal);
-  color: var(--ta-rating-value-color, #{common.get-var(text, primary)});
+  font-weight: common.get-var(font, body, sm, bold, weight);
+  color: common.get-var(text, primary);
 }
 
 .no-rating {

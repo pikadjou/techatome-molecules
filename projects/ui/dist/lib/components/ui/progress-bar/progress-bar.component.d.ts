@@ -1,13 +1,10 @@
 import * as i0 from "@angular/core";
 /** Couleur de la portion parcourue. */
-export type ProgressBarTone = "brand" | "accent" | "highlight" | "success" | "warning" | "alert";
+export type ProgressBarTone = 'brand' | 'accent' | 'highlight' | 'success' | 'warning' | 'alert';
 export declare class ProgressBarComponent {
     current: import("@angular/core").InputSignal<number>;
     max: import("@angular/core").InputSignal<number>;
-    /**
-     * `sm` : filet de 2 px, à ras d'un titre.
-     * `md` : jauge de 7 px arrondie, lisible seule dans une carte.
-     */
+    /** `sm` : filet de 2 px ; `md` : jauge de 7 px arrondie. */
     size: import("@angular/core").InputSignal<"sm" | "md" | "lg">;
     tone: import("@angular/core").InputSignal<ProgressBarTone>;
     getClasses(): string[];

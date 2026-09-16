@@ -1,7 +1,6 @@
 @use 'ta/utils/mixins/common';
 
-// Surtitre en capitales : il nomme la section sans lui voler la hiérarchie du
-// titre. Toujours en police d'affichage, toujours très espacé.
+// Surtitre en capitales, police d'affichage, très espacé.
 .overline {
   display: block;
   font-family: common.get-var(font, display, family);
@@ -35,7 +34,6 @@
     color: common.get-var(text, invert, secondary);
   }
 
-  // Sur fond navy, le jaune de marque reprend le rôle du surtitre.
   &.highlight {
     color: common.get-var(surface, brand, secondary);
   }

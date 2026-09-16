@@ -17,7 +17,7 @@
   border: 1px solid common.get-var(border, tertiary);
   border-radius: common.get-var(radius, card);
 
-  // Le libellé passe au-dessus : l'icône s'aligne alors sur la première ligne.
+  // Icône alignée sur la première ligne.
   &.label-first {
     align-items: flex-start;
   }
@@ -66,7 +66,6 @@
   color: common.get-var(text, muted);
 }
 
-// Seule l'icône porte la teinte : le chiffre reste lisible en navy.
 .brand .stat-tile-icon {
   color: common.get-var(icon, brand, primary);
 }

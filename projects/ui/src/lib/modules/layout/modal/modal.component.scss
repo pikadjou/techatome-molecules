@@ -1,5 +1,5 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
 
 .ta-modal-backdrop {
   position: fixed;
@@ -81,9 +81,7 @@
   min-width: 0;
 }
 
-// Bandeau de marque : le filet de séparation disparaît, c'est le contraste qui
-// détache l'en-tête. Le corps passe sur la nappe pour que les champs blancs
-// s'y détachent à leur tour.
+// Bandeau de marque : pas de filet, corps sur la nappe.
 .ta-modal--tone-brand {
   background-color: common.get-var(surface, ground);
 
@@ -102,9 +100,7 @@
 .ta-modal-content {
   flex: 1;
   overflow-y: auto;
-  // Le rembourrage suit le thème ; une modale au contenu dense — un formulaire
-  // long, une mise en garde illustrée — le règle depuis l'élément `ta-modal`.
-  padding: var(--ta-modal-content-padding, #{common.get-var(space, md)});
+  padding: common.get-var(space, md);
 
   &--fit {
     overflow: hidden;

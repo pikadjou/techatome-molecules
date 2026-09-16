@@ -1,5 +1,5 @@
-@use "sass:map";
-@use "sass:list";
+@use 'sass:map';
+@use 'sass:list';
 
 /** Vars */
 $container-max-widths: (
@@ -94,8 +94,7 @@ $neutral: map.deep-merge(
 
 $semantic: map.deep-merge(
   (
-    // Les tons `*-subtle` ne servent qu'à teinter un fond : assez pâles pour
-    // qu'un texte y reste lisible, là où `*-light` remplit une pastille.
+    // `*-subtle` : fond teinté lisible ; `*-light` : remplissage de pastille.
     red-subtle: transparentize(#e74c3c, 0.93),
     red-light: transparentize(#e74c3c, 0.5),
     red: #e74c3c,
@@ -115,7 +114,7 @@ $semantic: map.deep-merge(
     purple-light: transparentize(#8e44ad, 0.5),
     purple: #8e44ad,
     purple-dark: #5b2c6f,
-    accent: #e74c3c,
+    accent: #e74c3c
   ),
   $semantic
 );
@@ -186,8 +185,7 @@ $surface: map.deep-merge(
     success: map.get($semantic, green),
     warning: map.get($semantic, orange),
     alert: map.get($semantic, red),
-    // Fond d'écran applicatif : la nappe derrière les cartes. Distinct de
-    // `primary` (la carte) et de `secondary` (l'encart dans la carte).
+    // Nappe derrière les cartes (`primary` = carte, `secondary` = encart).
     ground: map.get($neutral, 200),
     accent: map.get($semantic, accent),
   ),
@@ -249,9 +247,7 @@ $radius: map.deep-merge(
     rounded: $radius-base,
     label: $radius-base * 2,
     full: $space-base * 5,
-    // Surfaces : `card` pour une carte, `panel` pour un bloc structurant
-    // (encart de mise en avant, modale). Alignés sur `rounded` par défaut : un
-    // thème peut les desserrer sans toucher aux composants.
+    // `card` : carte ; `panel` : bloc structurant (encart, modale).
     card: $radius-base,
     panel: $radius-base,
     // Pilule : filtre, statut, chip — toujours parfaitement capsulée.
@@ -293,23 +289,20 @@ $shadow: map.deep-merge(
 $font: map.deep-merge(
   (
     family: (
-      "Roboto",
+      'Roboto',
       sans-serif,
     ),
-    // Police d'affichage : titres et chiffres-clés. Identique au corps de texte
-    // par défaut ; un thème peut y placer une famille serrée avec son tracking.
-    display:
-      (
+    // Police d'affichage (titres, chiffres-clés) ; un thème peut y placer une famille serrée.
+    display: (
         family: (
-          "Roboto",
+          'Roboto',
           sans-serif,
         ),
         tracking: normal,
       ),
     // Échelle de graisses, transverse aux paliers de taille : toute graisse
     // écrite dans une feuille vient d'ici, jamais d'un littéral.
-    weight:
-      (
+    weight: (
         regular: 400,
         medium: 500,
         bold: 600,
@@ -508,8 +501,7 @@ $components: map.deep-merge(
       ),
 
       // Fond navy plein — action structurante.
-      primary:
-        (
+      primary: (
           color: map.get($text, invert, primary),
           background: map.get($surface, brand, primary),
           border: map.get($border, brand, primary),
@@ -535,8 +527,7 @@ $components: map.deep-merge(
         ),
 
       // Jaune second-400 — appel à l'action principal.
-      secondary:
-        (
+      secondary: (
           color: map.get($text, brand, primary),
           background: map.get($surface, brand, secondary),
           border: map.get($surface, brand, secondary),
@@ -562,8 +553,7 @@ $components: map.deep-merge(
         ),
 
       // Contour navy sur fond transparent — action secondaire.
-      tertiary:
-        (
+      tertiary: (
           color: map.get($text, brand, primary),
           background: transparent,
           border: map.get($border, brand, primary),
@@ -586,10 +576,8 @@ $components: map.deep-merge(
           ),
         ),
 
-      // Contour blanc sur fond transparent — la seule action secondaire qui
-      // tienne sur une surface de marque pleine (bandeau, héros, encart navy).
-      invert:
-        (
+      // Contour blanc sur fond transparent, pour une surface de marque pleine.
+      invert: (
           color: map.get($text, invert, primary),
           background: transparent,
           border: rgba(255, 255, 255, 0.32),
@@ -615,8 +603,7 @@ $components: map.deep-merge(
         ),
 
       // Contour rouge qui se remplit au survol — action destructrice.
-      danger:
-        (
+      danger: (
           color: map.get($semantic, red-dark),
           background: map.get($surface, primary),
           border: map.get($semantic, red-dark),
@@ -643,8 +630,7 @@ $components: map.deep-merge(
         ),
 
       // Scope .circular
-      circular:
-        (
+      circular: (
           height: 50px,
           width: 50px,
           radius: 50px,
@@ -660,8 +646,7 @@ $components: map.deep-merge(
         ),
 
       // Scope .square — bouton icône carré arrondi (radius rounded).
-      square:
-        (
+      square: (
           height: 48px,
           width: 48px,
           radius: map.get($radius, rounded),
@@ -684,8 +669,7 @@ $components: map.deep-merge(
       font-weight: map.get($font, body, sm, bold, weight),
       letter-spacing: 0.03em,
       // Sizes
-      xs:
-        (
+      xs: (
           padding-vertical: map.get($space, xs),
           padding-horizontal: map.get($space, sm),
         ),
@@ -699,8 +683,7 @@ $components: map.deep-merge(
       ),
 
       // Variants — pleines et opaques, texte à contraste garanti.
-      default:
-        (
+      default: (
           color: map.get($text, brand, primary),
           background: map.get($surface, brand, secondary),
           border: map.get($surface, brand, secondary),
@@ -730,11 +713,16 @@ $components: map.deep-merge(
         background: map.get($semantic, purple),
         border: map.get($semantic, purple),
       ),
+      // Compteur ou pastille sans alerte : gris sur gris.
+      neutral: (
+          color: map.get($text, secondary),
+          background: map.get($surface, secondary),
+          border: map.get($surface, secondary),
+        ),
     ),
 
     // Badge teinté — pastille d'état à faible emphase, contraste >= 4,5:1.
-    badge:
-      (
+    badge: (
         radius: map.get($radius, rounded),
         padding-vertical: map.get($space, xs),
         padding-horizontal: 10px,
@@ -774,8 +762,7 @@ $components: map.deep-merge(
           background: rgba(142, 68, 173, 0.16),
         ),
         // Compteur circulaire-ish : pastille chiffrée.
-        counter:
-          (
+        counter: (
             min-width: 22px,
             height: 22px,
             color: map.get($text, brand, primary),
@@ -788,8 +775,7 @@ $components: map.deep-merge(
       ),
 
     // Chip supprimable — même gabarit que l'étiquette, fond neutre.
-    chip:
-      (
+    chip: (
         radius: map.get($radius, rounded),
         padding: 6px map.get($space, sm) 6px 14px,
         gap: 6px,
@@ -805,8 +791,7 @@ $components: map.deep-merge(
       ),
     // Champ de saisie — rempli et souligné : pas de contour, un trait bas de 2px
     // qui porte l'état, et un radius seulement sur les deux coins hauts.
-    input:
-      (
+    input: (
         radius: map.get($radius, rounded) map.get($radius, rounded) 0 0,
         padding-vertical: 11px,
         padding-horizontal: 14px,
@@ -841,16 +826,14 @@ $components: map.deep-merge(
           color: map.get($text, tertiary),
         ),
         // Libellé au-dessus du champ.
-        label:
-          (
+        label: (
             color: map.get($brand, 400),
             margin-bottom: 6px,
             required: map.get($semantic, red-dark),
             disabled: map.get($text, tertiary),
           ),
         // Panneau déroulant du dropdown.
-        panel:
-          (
+        panel: (
             radius: map.get($radius, rounded),
             shadow: map.get($shadow, brand, md),
             background: map.get($surface, primary),
@@ -868,8 +851,7 @@ $components: map.deep-merge(
             ),
           ),
         // Zone de dépôt de fichiers.
-        dropzone:
-          (
+        dropzone: (
             radius: map.get($radius, rounded),
             border: map.get($brand, 100),
             border-width: 2px,
@@ -880,8 +862,7 @@ $components: map.deep-merge(
       ),
 
     // Segments et cartes de choix.
-    segment:
-      (
+    segment: (
         radius: map.get($radius, rounded),
         gap: 6px,
         padding-vertical: 11px,
@@ -902,8 +883,7 @@ $components: map.deep-merge(
       ),
 
     // Bascules : case, radio et interrupteur.
-    control:
-      (
+    control: (
         size: 20px,
         border-width: 2px,
         border-color: map.get($brand, 100),
@@ -926,8 +906,7 @@ $components: map.deep-merge(
           dot-size: 10px,
         ),
         // Interrupteur : seule forme qui conserve la piste arrondie.
-        switch:
-          (
+        switch: (
             track-width: 44px,
             track-height: 24px,
             track-radius: map.get($radius, full),
@@ -948,8 +927,7 @@ $components: map.deep-merge(
       ),
 
     // Liste — conteneur plein, filet gauche sur l'item actif.
-    list:
-      (
+    list: (
         radius: map.get($radius, rounded),
         background: map.get($surface, primary),
         shadow: map.get($shadow, black, sm),
@@ -966,8 +944,7 @@ $components: map.deep-merge(
       ),
 
     // Feedback — toast, bannière et notification, filet gauche de 6px.
-    feedback:
-      (
+    feedback: (
         radius: map.get($radius, rounded),
         padding-vertical: 14px,
         padding-horizontal: 18px,
@@ -986,8 +963,7 @@ $components: map.deep-merge(
           accent-color: map.get($surface, brand, secondary),
         ),
         // Bandeau pleine largeur.
-        banner:
-          (
+        banner: (
             background: map.get($surface, brand, secondary),
             color: map.get($text, brand, primary),
             padding-vertical: 10px,
@@ -1003,14 +979,12 @@ $components: map.deep-merge(
       color: map.get($text, primary),
       border: map.get($border, tertiary),
       // Scope .hover
-      hover:
-        (
+      hover: (
           background: map.get($surface, hover, primary),
         ),
 
       // Scope .invert — carte navy, chiffres et actions en jaune.
-      invert:
-        (
+      invert: (
           background: map.get($surface, brand, primary),
           color: map.get($text, invert, primary),
           border: map.get($surface, brand, primary),
@@ -1021,58 +995,52 @@ $components: map.deep-merge(
         ),
 
       // Scope .full-height
-      full-height:
-        (
+      full-height: (
           spacing-offset: map.get($space, md),
         ),
 
       // Scope .highlight
-      highlight:
-        (
+      highlight: (
           color: map.get($surface, hover, secondary),
           border: map.get($surface, hover, secondary),
         ),
 
       // Scope .card-shadow
-      card-shadow:
-        (
+      card-shadow: (
           box-shadow: map.get($shadow, brand, sm),
         ),
     ),
     card-image: (
       // Styles de base .img-container
-      aspect-ratio: "16 / 9",
+      aspect-ratio: '16 / 9',
       border-radius: map.get($radius, rounded),
       // Scope .img
-      img:
-        (
+      img: (
           width: 100%,
         ),
     ),
     text: (
       // Styles de base .text - utilise les mixins fonts existants
-      // Les tailles sont gérées par les mixins fonts.fontSizeBody(),,
+       // Les tailles sont gérées par les mixins fonts.fontSizeBody(),,
     ),
     toggle-card: (
       // Styles de base .toggle-card
       padding: map.get($space, lg),
-      transition: "all 0.2s ease-in-out",
+      transition: 'all 0.2s ease-in-out',
       border: map.get($surface, secondary),
       border-radius: map.get($radius, rounded),
       background: map.get($surface, primary),
-      box-shadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      box-shadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
 
       // Scope hover (non-disabled)
-      hover:
-        (
+      hover: (
           border-color: map.get($brand, 600),
           background: map.get($surface, secondary),
-          box-shadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          box-shadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
         ),
 
       // Scope --active
-      active:
-        (
+      active: (
           border-color: map.get($brand, 700),
           background: map.get($surface, secondary),
           hover: (
@@ -1082,8 +1050,7 @@ $components: map.deep-merge(
         ),
 
       // Scope --disabled
-      disabled:
-        (
+      disabled: (
           background: map.get($surface, tertiary),
           border-color: map.get($surface, secondary),
           opacity: 0.6,
@@ -1091,14 +1058,12 @@ $components: map.deep-merge(
         ),
 
       // Scope __content
-      content:
-        (
+      content: (
           flex: 1,
         ),
 
       // Scope __icon
-      icon:
-        (
+      icon: (
           margin-right: map.get($space, md),
           color: map.get($text, secondary),
           font-size: map.get($font, key, lg, default, size),
@@ -1108,43 +1073,38 @@ $components: map.deep-merge(
         ),
 
       // Scope __text
-      text:
-        (
+      text: (
           flex: 1,
         ),
 
       // Scope __title
-      title:
-        (
+      title: (
           font-size: map.get($font, key, md, default, size),
           font-weight: map.get($font, key, md, bold, weight),
           color: map.get($text, primary),
-          margin: "0 0 #{map.get($space, xs)} 0",
+          margin: '0 0 #{map.get($space, xs)} 0',
         ),
 
       // Scope __description
-      description:
-        (
+      description: (
           font-size: map.get($font, key, sm, default, size),
           color: map.get($text, secondary),
           margin: 0,
         ),
 
       // Scope __indicator
-      indicator:
-        (
+      indicator: (
           margin-left: map.get($space, md),
         ),
 
       // Scope __check
-      check:
-        (
+      check: (
           width: 24px,
           height: 24px,
-          border-radius: "50%",
+          border-radius: '50%',
           border: map.get($surface, secondary),
           background: map.get($surface, primary),
-          transition: "all 0.2s ease-in-out",
+          transition: 'all 0.2s ease-in-out',
           font-size: map.get($font, key, sm, default, size),
           font-weight: map.get($font, key, sm, bold, weight),
           active: (

@@ -8,7 +8,7 @@
 .data-grid {
   display: grid;
   grid-template-columns: 1fr;
-  // La gouttière d'un pixel laisse voir le fond : c'est lui qui dessine le filet.
+  // Le fond du conteneur dessine le filet entre les cellules.
   gap: 1px;
   background: common.get-var(surface, default);
   border: 1px solid common.get-var(surface, default);
@@ -16,7 +16,6 @@
   overflow: hidden;
 }
 
-// Une seule colonne en mobile, quelle que soit la valeur demandée.
 @include mq.from-key(mobile) {
   :host([data-columns='2']) .data-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

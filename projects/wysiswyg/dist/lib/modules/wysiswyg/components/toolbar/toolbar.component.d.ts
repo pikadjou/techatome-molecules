@@ -1,10 +1,10 @@
-import { SafeHtml } from "@angular/platform-browser";
-import { EditorToolType } from "../input/editor-tools";
+import { SafeHtml } from '@angular/platform-browser';
+import { EditorToolType } from '../input/editor-tools';
 import * as i0 from "@angular/core";
 /** Bloc que la barre sait poser sur la sélection courante. */
-export type EditorToolbarBlockTool = "delimiter" | "header-1" | "header-2" | "header-3" | "image" | "list-ordered" | "list-unordered" | "paragraph" | "quote" | "warning";
+export type EditorToolbarBlockTool = 'delimiter' | 'header-1' | 'header-2' | 'header-3' | 'image' | 'list-ordered' | 'list-unordered' | 'paragraph' | 'quote' | 'warning';
 /** Action portant sur le bloc courant, indépendamment de son type. */
-export type EditorToolbarBlockCommand = "delete" | "move-down" | "move-up";
+export type EditorToolbarBlockCommand = 'delete' | 'move-down' | 'move-up';
 type EditorToolbarEntry<T> = {
     icon: SafeHtml | null;
     id: T;
@@ -19,13 +19,13 @@ export declare class EditorToolbarComponent {
     labels: import("@angular/core").InputSignal<{
         [key: string]: string;
     }>;
-    /** Outils réellement montés dans l'éditeur : la barre n'offre que ceux-là. */
+    /** Outils montés dans l'éditeur ; la barre n'offre que ceux-là. */
     enabledTools: import("@angular/core").InputSignal<EditorToolType[]>;
     blockCommand: import("@angular/core").OutputEmitterRef<EditorToolbarBlockCommand>;
     blockTool: import("@angular/core").OutputEmitterRef<EditorToolbarBlockTool>;
     readonly blockCommands: EditorToolbarEntry<EditorToolbarBlockCommand>[];
     readonly deleteCommand: EditorToolbarEntry<EditorToolbarBlockCommand>;
-    /** Le paragraphe n'a pas de dépendance : c'est le bloc de repli d'EditorJS. */
+    /** Le paragraphe est le bloc de repli d'EditorJS. */
     private readonly _allBlockTools;
     private readonly _sanitizer;
     readonly blockTools: import("@angular/core").Signal<EditorToolbarEntry<EditorToolbarBlockTool>[]>;

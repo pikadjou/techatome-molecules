@@ -1,5 +1,5 @@
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 .trigram {
   @include fonts.fontSizeBody(md);
@@ -18,8 +18,7 @@
     border-radius: 100%;
   }
 
-  // Le carré arrondi reprend le rayon des cartes : l'avatar s'y range comme une
-  // vignette, pas comme une pastille.
+  // Même rayon que les cartes.
   &.squircle {
     border-radius: common.get-var(radius, minimal);
   }
@@ -39,8 +38,6 @@
     color: common.get-var(text, brand, primary);
   }
 
-  // Sur fond sombre, la pastille se contente d'un voile : c'est le texte qui
-  // porte la couleur de marque.
   &.invert {
     background-color: rgba(255, 255, 255, 0.1);
     color: common.get-var(surface, brand, secondary);

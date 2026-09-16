@@ -5,16 +5,12 @@
   [class.success]="this.tone() === 'success'"
 >
   @if (this.upTitle()) {
-  <div class="title">
-    {{ this.upTitle() ?? "" | translate }}
-  </div>
+    <div class="title">
+      {{ this.upTitle() ?? '' | translate }}
+    </div>
   }
 
-  <div
-    class="circle-progress-bar-frame"
-    [style.width.px]="this.size()"
-    [style.height.px]="this.size()"
-  >
+  <div class="circle-progress-bar-frame" [style.width.px]="this.size()" [style.height.px]="this.size()">
     <svg viewBox="0 0 100 100">
       <circle
         class="circle-progress-bar-bg"
@@ -32,33 +28,24 @@
         [attr.stroke-width]="this.thickness()"
         [attr.stroke-linecap]="this.linecap()"
         [attr.stroke-dasharray]="this.circumference"
-        [attr.stroke-dashoffset]="
-          this.circumference * (1 - this.progress() / 100)
-        "
+        [attr.stroke-dashoffset]="this.circumference * (1 - this.progress() / 100)"
       ></circle>
 
       @if (this.canDisplayText) {
-      <text
-        class="circle-progress-bar-text"
-        x="50"
-        y="50"
-        dominant-baseline="middle"
-        text-anchor="middle"
-      >
-        {{ this.progress() | number : "1.0-0" }}%
-      </text>
+        <text class="circle-progress-bar-text" x="50" y="50" dominant-baseline="middle" text-anchor="middle">
+          {{ this.progress() | number: '1.0-0' }}%
+        </text>
       }
     </svg>
 
-    <!-- Contenu libre au centre de l'anneau : un score, une fraction, une icône. -->
     <div class="circle-progress-bar-content">
       <ng-content></ng-content>
     </div>
   </div>
 
   @if (this.downTitle()) {
-  <div class="title">
-    {{ this.downTitle() ?? "" | translate }}
-  </div>
+    <div class="title">
+      {{ this.downTitle() ?? '' | translate }}
+    </div>
   }
 </div>

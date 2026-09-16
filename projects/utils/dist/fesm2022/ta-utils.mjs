@@ -1056,39 +1056,37 @@ const sort = (array, options) => {
 };
 
 const getFileExtension = (filePath) => {
-    // Une adresse de fichier porte souvent une signature ou une ancre :
-    // `photo.jpg?token=…`. Sans les retirer, l'extension lue vaut
-    // `jpg?token=…` et le fichier passe pour inconnu.
+    // Ignore la query string et l'ancre (`photo.jpg?token=…`).
     const name = getFullFileNameFromUrl(filePath)?.split(/[?#]/)[0] ?? null;
-    const extension = name?.split(".").pop()?.toLowerCase() || null;
+    const extension = name?.split('.').pop()?.toLowerCase() || null;
     switch (extension) {
-        case "pdf":
+        case 'pdf':
             return EFileExtension.PDF;
-        case "doc":
-        case "docx":
+        case 'doc':
+        case 'docx':
             return EFileExtension.Word;
-        case "xls":
-        case "xlsx":
+        case 'xls':
+        case 'xlsx':
             return EFileExtension.Excel;
-        case "jpg":
-        case "jpeg":
-        case "png":
-        case "gif":
-        case "webp":
-        case "avif":
-        case "bmp":
-        case "svg":
-        case "heic":
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'gif':
+        case 'webp':
+        case 'avif':
+        case 'bmp':
+        case 'svg':
+        case 'heic':
             return EFileExtension.Image;
     }
     return EFileExtension.Unknown;
 };
 const getFullFileNameFromUrl = (url) => {
-    return url.split("/").pop() || null;
+    return url.split('/').pop() || null;
 };
 const trigram = (name) => {
     if (!name) {
-        return "";
+        return '';
     }
     if (name.length < 4) {
         return name;
@@ -1100,7 +1098,7 @@ const capitalizeFirstLetter = (value) => {
         return value;
     return value.charAt(0).toUpperCase() + value.slice(1);
 };
-const convertToNumber = (values) => values?.map((value) => Number(value)) || [];
+const convertToNumber = (values) => values?.map(value => Number(value)) || [];
 const isURL = (str) => {
     // Expression régulière pour vérifier une URL
     const pattern = /^https?:\/\//; // Fragment d'URL

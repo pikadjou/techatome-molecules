@@ -8,11 +8,7 @@ import { OverlineComponent } from '../overline/overline.component';
 /** Teinte de la pastille d'icône. */
 export type StatTileTone = 'brand' | 'accent' | 'success' | 'warning' | 'alert' | 'neutral';
 
-/**
- * `value-first` met le chiffre en avant (compteur de tête de liste).
- * `label-first` met le libellé en capitales au-dessus (fiche de détail, où la
- * valeur est un texte et non un nombre).
- */
+/** `value-first` : chiffre en avant ; `label-first` : libellé en capitales au-dessus. */
 export type StatTileLayout = 'value-first' | 'label-first';
 
 @Component({

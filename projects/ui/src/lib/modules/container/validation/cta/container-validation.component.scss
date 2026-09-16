@@ -1,9 +1,7 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
-// Un encart teinté d'alerte, pas un bloc rouge plein : il doit arrêter le geste
-// sans faire croire que le dommage est déjà fait.
 .validation-inline {
   @include flex.flex-column();
   gap: common.get-var(space, sm);
@@ -27,8 +25,7 @@
     text-wrap: pretty;
   }
 
-  // Les deux issues à droite, l'abandon en premier : le geste destructeur reste
-  // le plus loin du bord où la main arrive.
+  // Abandon d'abord, action destructrice en dernier.
   &__actions {
     @include flex.simple-flex();
     @include flex.align-center();

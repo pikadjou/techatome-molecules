@@ -1,13 +1,6 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
 
-// Tous les niveaux partagent la police d'affichage du thème : par défaut la
-// famille du corps de texte, une famille serrée dès qu'un thème en déclare une.
-//
-// L'échelle vient du thème et n'a pas à être discutée titre par titre. Les
-// variables ci-dessous existent pour les rares endroits qui en sortent
-// légitimement — un titre de héros, un titre posé sur une surface sombre — et
-// se règlent depuis la feuille du parent, sur l'élément `ta-title` lui-même.
 h1,
 h2,
 h3,
@@ -15,30 +8,19 @@ h4,
 h5,
 h6 {
   font-family: common.get-var(font, display, family);
-  letter-spacing: var(--ta-title-tracking, #{common.get-var(font, display, tracking)});
-  color: var(--ta-title-color, inherit);
-  text-wrap: var(--ta-title-wrap, inherit);
+  letter-spacing: common.get-var(font, display, tracking);
 }
 
 h1 {
   @include fonts.fontSizeHeader(h1);
   margin: 0;
-  font-size: var(--ta-title-size, #{common.get-var(font, h1, default, size)});
-  line-height: var(--ta-title-line-height, 1.15);
-  font-weight: var(--ta-title-weight, #{common.get-var(font, h1, default, weight)});
-  max-width: var(--ta-title-max-width, none);
 }
 
 h2 {
   @include fonts.fontSizeHeader(h2);
   margin: 0;
-  font-size: var(--ta-title-size, #{common.get-var(font, h2, default, size)});
-  font-weight: var(--ta-title-weight, #{common.get-var(font, h2, default, weight)});
-  max-width: var(--ta-title-max-width, none);
-
   &.bold {
     @include fonts.fontSizeHeader(h2, true);
-    font-weight: var(--ta-title-weight, #{common.get-var(font, h2, bold, weight)});
   }
 }
 

@@ -5,9 +5,6 @@
 }
 
 @if (this.isInlineOpen()) {
-  <!-- La confirmation prend la place du déclencheur : ce qui l'entoure — la
-       ligne, la carte, la personne concernée — reste sous les yeux, ce qu'une
-       modale masquerait. -->
   <div class="validation-inline">
     <span class="validation-inline__title">{{ this.title() | translate }}</span>
     <ta-text class="validation-inline__body">{{ this.subtitle() | translate }}</ta-text>

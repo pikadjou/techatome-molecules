@@ -1,20 +1,13 @@
-import { TemplateRef } from "@angular/core";
-import { TaBaseComponent } from "@ta/utils";
-import { Menu } from "../../models/menu/menu";
+import { TemplateRef } from '@angular/core';
+import { TaBaseComponent } from '@ta/utils';
+import { Menu } from '../../models/menu/menu';
 import * as i0 from "@angular/core";
-/**
- * `surface` : bandeau blanc posé sur le fond de page.
- * `brand` : bandeau plein de la couleur de marque, la navigation passe en
- * inversé. C'est la seule variante où le bandeau touche les bords de l'écran.
- */
-export type MainMenuTone = "surface" | "brand";
+/** `surface` : bandeau blanc ; `brand` : bandeau de marque plein, navigation inversée. */
+export type MainMenuTone = 'surface' | 'brand';
 export declare class MainMenuComponent extends TaBaseComponent {
     menuMain: import("@angular/core").InputSignal<Menu<import("@ta/menu").MenuBase>>;
     tone: import("@angular/core").InputSignal<MainMenuTone>;
-    /**
-     * Verrou de marque : un projet peut remplacer le logo par son propre bloc
-     * (marque + signature), sans redéfinir tout le bandeau.
-     */
+    /** Bloc de marque projeté à la place du logo. */
     logoTemplate: import("@angular/core").InputSignal<TemplateRef<any> | undefined>;
     menuUser: import("@angular/core").InputSignal<Menu<import("@ta/menu").MenuBase> | undefined>;
     userMenuTemplate: import("@angular/core").InputSignal<TemplateRef<any> | undefined>;

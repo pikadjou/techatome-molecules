@@ -1,12 +1,8 @@
-import { TaBaseComponent } from "@ta/utils";
+import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
-export type ModalSize = "fullscreen" | "large" | "medium" | "small";
-/**
- * `surface` : en-tête clair, séparé du contenu par un filet.
- * `brand` : bandeau de marque plein. À réserver aux modales qui interrompent le
- * parcours — l'en-tête coloré dit qu'on ne passe pas à côté.
- */
-export type ModalTone = "surface" | "brand";
+export type ModalSize = 'fullscreen' | 'large' | 'medium' | 'small';
+/** `surface` : en-tête clair avec filet ; `brand` : bandeau de marque plein, pour les modales bloquantes. */
+export type ModalTone = 'surface' | 'brand';
 export declare class TaModalComponent extends TaBaseComponent {
     open: import("@angular/core").InputSignal<boolean>;
     size: import("@angular/core").InputSignal<ModalSize | undefined>;
@@ -14,11 +10,7 @@ export declare class TaModalComponent extends TaBaseComponent {
     /** Surtitre en capitales, au-dessus du titre. */
     overline: import("@angular/core").InputSignal<string>;
     tone: import("@angular/core").InputSignal<ModalTone>;
-    /**
-     * Masque la croix. Une modale bloquante projette alors sa propre action dans
-     * `[modal-header-action]` — se déconnecter, par exemple — plutôt que d'offrir
-     * une sortie qui ne mène nulle part.
-     */
+    /** Masque la croix ; la modale projette alors sa propre action dans `[modal-header-action]`. */
     showClose: import("@angular/core").InputSignal<boolean>;
     closeOnBackdrop: import("@angular/core").InputSignal<boolean>;
     contentFit: import("@angular/core").InputSignal<boolean>;

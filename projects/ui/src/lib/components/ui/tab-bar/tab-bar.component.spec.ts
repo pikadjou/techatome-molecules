@@ -7,9 +7,9 @@ describe('TabBarComponent', () => {
   let fixture: ComponentFixture<TabBarComponent>;
 
   const items: TabBarItem[] = [
-    { key: 'received', label: 'Reçues', count: 7 },
+    { count: 7, key: 'received', label: 'Reçues' },
     { key: 'given', label: 'Données' },
-    { key: 'locked', label: 'Verrouillé', disabled: true },
+    { disabled: true, key: 'locked', label: 'Verrouillé' },
   ];
 
   beforeEach(async () => {

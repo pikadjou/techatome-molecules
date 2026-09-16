@@ -38,10 +38,7 @@
   border-radius: common.get-var(radius, pill);
 }
 
-// ---------------------------------------------------------------------------
-// Onglets soulignés. Le conteneur porte le filet de base, l'onglet actif le
-// recouvre : le margin-bottom négatif fait chevaucher les deux traits.
-// ---------------------------------------------------------------------------
+// underline : le margin-bottom négatif fait chevaucher le filet de base et celui de l'onglet actif.
 .underline {
   gap: common.get-var(space, xs);
   border-bottom: 1px solid common.get-var(border, disabled);
@@ -76,9 +73,7 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Filtres capsulés : blanc cerclé au repos, surface de marque pleine si actif.
-// ---------------------------------------------------------------------------
+// pill
 .pill {
   gap: common.get-var(space, sm);
 

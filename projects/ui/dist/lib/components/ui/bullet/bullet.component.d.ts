@@ -1,12 +1,8 @@
-import { ColorType, TaSizes } from "@ta/styles";
+import { ColorType, TaSizes } from '@ta/styles';
 import * as i0 from "@angular/core";
 export declare class BulletComponent {
     size: import("@angular/core").InputSignal<TaSizes>;
-    /**
-     * `notif` : pastille de comptage sur la surface de marque.
-     * `notif-highlight` : même pastille, dans la couleur secondaire de marque —
-     * la seule qui reste visible posée sur un bandeau de marque.
-     */
+    /** `notif` : pastille de comptage ; `notif-highlight` : en couleur secondaire de marque, pour un bandeau de marque. */
     type: import("@angular/core").InputSignal<ColorType | "notif" | "notif-highlight">;
     getClass(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<BulletComponent, never>;

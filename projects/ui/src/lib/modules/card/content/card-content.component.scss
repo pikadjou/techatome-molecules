@@ -1,16 +1,12 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
 
 :host {
   @include flex.flex-full();
   min-width: 0;
 }
 
-// Le corps d'une carte empile ce qu'on lui confie et l'étire sur toute la
-// largeur. En rangée — ce qu'il était — chaque bloc projeté se réduisait à la
-// largeur de son propre contenu : un tableau, une liste ou un fil s'arrêtaient
-// au milieu de la carte, laissant le reste vide. Les rares corps qui alignent
-// vraiment leurs éléments côte à côte le disent par un conteneur `flex-row`.
+// Colonne pleine largeur ; un corps en rangée le dit par un conteneur `flex-row`.
 .card-content {
   @include flex.flex-column();
   flex: 1 1 auto;

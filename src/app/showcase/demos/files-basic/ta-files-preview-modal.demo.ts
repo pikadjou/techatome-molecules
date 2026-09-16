@@ -1,20 +1,18 @@
-import { registerLocaleData } from "@angular/common";
-import localeFr from "@angular/common/locales/fr";
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { PreviewDocumentDto, PreviewModal } from "@ta/files-basic";
-import { ButtonComponent } from "@ta/ui";
+import { PreviewDocumentDto, PreviewModal } from '@ta/files-basic';
+import { ButtonComponent } from '@ta/ui';
 
-import { ComponentDemo } from "../../demo.types";
+import { ComponentDemo } from '../../demo.types';
 
-// `PreviewModal` affiche `uploadedDate | date: 'shortDate'` par l'intermédiaire
-// de ses visualiseurs. Sans `registerLocaleData`, absent de `app.config.ts`/`main.ts`
-// alors que `LOCALE_ID` vaut `fr`, `DatePipe` lève `NG0701` et la page ne rend rien.
+// `DatePipe` avec `LOCALE_ID` = `fr` exige `registerLocaleData`, absent de `app.config.ts`.
 registerLocaleData(localeFr);
 
 @Component({
   standalone: true,
-  selector: "app-ex-ta-files-preview-modal-toggle",
+  selector: 'app-ex-ta-files-preview-modal-toggle',
   imports: [ButtonComponent, PreviewModal],
   template: `
     <ta-button (action)="this.open.set(true)">Ouvrir l'aperçu</ta-button>
@@ -30,16 +28,16 @@ export class TaFilesPreviewModalToggleExample {
   open = signal(false);
 
   initial: PreviewDocumentDto = {
-    filename: "rapport-financier-2025.pdf",
-    url: "/assets/showcase/files-basic/rapport-financier-2025.pdf",
+    filename: 'rapport-financier-2025.pdf',
+    url: '/assets/showcase/files-basic/rapport-financier-2025.pdf',
     size: 842_311,
-    uploadedDate: "2025-11-03T09:15:00",
+    uploadedDate: '2025-11-03T09:15:00',
   };
 }
 
 @Component({
   standalone: true,
-  selector: "app-ex-ta-files-preview-modal-gallery",
+  selector: 'app-ex-ta-files-preview-modal-gallery',
   imports: [ButtonComponent, PreviewModal],
   template: `
     <ta-button (action)="this.openAt(2)">Ouvrir la galerie</ta-button>
@@ -59,29 +57,29 @@ export class TaFilesPreviewModalGalleryExample {
 
   documents: PreviewDocumentDto[] = [
     {
-      filename: "Séjour",
+      filename: 'Séjour',
       description: "Séjour traversant, parquet d'origine",
-      url: "/assets/partners/icon/512.png",
+      url: '/assets/partners/icon/512.png',
     },
     {
-      filename: "Cuisine",
-      description: "Cuisine équipée ouverte sur le séjour",
-      url: "/assets/partners/icon/384.png",
+      filename: 'Cuisine',
+      description: 'Cuisine équipée ouverte sur le séjour',
+      url: '/assets/partners/icon/384.png',
     },
     {
-      filename: "Chambre 1",
-      description: "Chambre principale, exposition sud-ouest",
-      url: "/assets/partners/icon/192.png",
+      filename: 'Chambre 1',
+      description: 'Chambre principale, exposition sud-ouest',
+      url: '/assets/partners/icon/192.png',
     },
     {
-      filename: "Chambre 2",
-      description: "Seconde chambre, vue sur le jardin",
-      url: "/assets/partners/icon/152.png",
+      filename: 'Chambre 2',
+      description: 'Seconde chambre, vue sur le jardin',
+      url: '/assets/partners/icon/152.png',
     },
     {
-      filename: "Salle de bain",
-      description: "Salle de bain avec baignoire",
-      url: "/assets/partners/icon/144.png",
+      filename: 'Salle de bain',
+      description: 'Salle de bain avec baignoire',
+      url: '/assets/partners/icon/144.png',
     },
   ];
 
@@ -93,7 +91,7 @@ export class TaFilesPreviewModalGalleryExample {
 
 @Component({
   standalone: true,
-  selector: "app-ex-ta-files-preview-modal-signed",
+  selector: 'app-ex-ta-files-preview-modal-signed',
   imports: [ButtonComponent, PreviewModal],
   template: `
     <ta-button (action)="this.open.set(true)">Ouvrir une adresse signée</ta-button>
@@ -108,36 +106,35 @@ export class TaFilesPreviewModalGalleryExample {
 export class TaFilesPreviewModalSignedExample {
   open = signal(false);
 
-  // L'adresse ne porte pas l'extension — elle est suivie d'une signature, comme
-  // en produisent les stockages de fichiers. Seul `filename` dit ce que c'est.
+  // URL signée sans extension : seul `filename` donne le type.
   initial: PreviewDocumentDto = {
-    filename: "vue-exterieure.png",
-    url: "/assets/partners/icon/512.png?token=demo&v=2",
+    filename: 'vue-exterieure.png',
+    url: '/assets/partners/icon/512.png?token=demo&v=2',
   };
 }
 
 export const DEMO: ComponentDemo = {
-  id: "ta-files-preview-modal",
-  group: "Visionneuses",
-  summary: "Visionneuse plein écran : une pièce isolée, ou une galerie parcourable.",
+  id: 'ta-files-preview-modal',
+  group: 'Visionneuses',
+  summary: 'Visionneuse plein écran : une pièce isolée, ou une galerie parcourable.',
   examples: [
     {
-      title: "Ouverture / fermeture",
-      layout: "stack",
+      title: 'Ouverture / fermeture',
+      layout: 'stack',
       description:
-        "`open` est piloté par le parent ; fermer la visionneuse (croix ou touche `Esc`) émet `closeEvent`. Sans `documents`, ni flèches ni pellicule.",
+        '`open` est piloté par le parent ; fermer la visionneuse (croix ou touche `Esc`) émet `closeEvent`. Sans `documents`, ni flèches ni pellicule.',
       component: TaFilesPreviewModalToggleExample,
     },
     {
-      title: "Galerie",
-      layout: "stack",
+      title: 'Galerie',
+      layout: 'stack',
       description:
         "`documents` fournit la série ; `initial` désigne la pièce ouverte en premier. Le compteur, les flèches, la pellicule et les raccourcis clavier n'apparaissent qu'à partir de deux éléments.",
       component: TaFilesPreviewModalGalleryExample,
     },
     {
-      title: "Adresse sans extension",
-      layout: "stack",
+      title: 'Adresse sans extension',
+      layout: 'stack',
       description:
         "L'URL se termine ici par une signature (`?token=…`) : lue seule, elle ne dit pas de quel type est la pièce. `filename` tranche, et la photo s'affiche au lieu du message « aucun visualiseur ».",
       component: TaFilesPreviewModalSignedExample,

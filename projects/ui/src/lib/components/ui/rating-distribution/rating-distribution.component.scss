@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 :host {
   display: block;
@@ -21,8 +21,7 @@
   }
 }
 
-// Les deux chiffres sont posés sur des largeurs fixes : les barres s'alignent
-// d'un échelon à l'autre, sans quoi l'échelle paraîtrait de travers.
+// Largeurs fixes pour aligner les barres d'un échelon à l'autre.
 .rating-distribution-note {
   width: 12px;
   flex-shrink: 0;

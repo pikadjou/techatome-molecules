@@ -1,9 +1,5 @@
 import * as i0 from "@angular/core";
-/**
- * Case à cocher autonome, hors formulaire : consentement, filtre, bascule d'une
- * option isolée. Dans un formulaire, c'est `ta-input-checkbox` qui s'impose —
- * lui seul est relié au modèle.
- */
+/** Case à cocher hors formulaire ; dans un formulaire, utiliser `ta-input-checkbox`. */
 export declare class CheckboxComponent {
     checked: import("@angular/core").InputSignal<boolean>;
     disabled: import("@angular/core").InputSignal<boolean>;
