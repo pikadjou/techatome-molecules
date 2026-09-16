@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'sass:list';
+@use 'sass:color';
 
 /** Vars */
 $container-max-widths: (
@@ -188,6 +189,13 @@ $surface: map.deep-merge(
     // Nappe derrière les cartes (`primary` = carte, `secondary` = encart).
     ground: map.get($neutral, 200),
     accent: map.get($semantic, accent),
+    // Voiles blancs sur surface sombre : fond, filet, survol, actif.
+    veil: (
+        xs: rgba(255, 255, 255, 0.04),
+        sm: rgba(255, 255, 255, 0.08),
+        md: rgba(255, 255, 255, 0.14),
+        lg: rgba(255, 255, 255, 0.2),
+      ),
   ),
   $surface
 );
@@ -859,6 +867,37 @@ $components: map.deep-merge(
             color: map.get($brand, 400),
             padding: map.get($space, lg),
           ),
+      ),
+
+    // Onglets soulignés, filtres capsulés et leur compteur.
+    tab-bar: (
+        underline: (
+          padding-vertical: 13px,
+          padding-horizontal: map.get($space, md),
+        ),
+        pill: (
+          padding-vertical: 11px,
+          padding-horizontal: map.get($space, md),
+        ),
+        count: (
+          padding-vertical: map.get($space, xs),
+          padding-horizontal: 7px,
+        ),
+      ),
+
+    // Visionneuse plein écran : scène sombre dérivée de la marque.
+    lightbox: (
+        background: map.get($brand, 900),
+        scrim: color.change(map.get($brand, 900), $alpha: 0.72),
+        scrim-hover: color.change(map.get($brand, 900), $alpha: 0.92),
+        thumb-gradient: color.change(map.get($brand, 900), $alpha: 0.85),
+        text-shadow: 0 1px 3px color.change(map.get($brand, 900), $alpha: 0.9),
+        max-width: 1160px,
+        control-size: 44px,
+        control-size-mobile: 38px,
+        key-size: 26px,
+        thumb-width: 104px,
+        thumb-height: 64px,
       ),
 
     // Segments et cartes de choix.

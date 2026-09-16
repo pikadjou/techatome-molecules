@@ -10,7 +10,7 @@
 .data-grid-item {
   height: 100%;
   box-sizing: border-box;
-  padding: common.get-var(space, md) 18px;
+  padding: common.get-var(space, md);
   background: common.get-var(surface, primary);
 }
 
@@ -29,7 +29,7 @@
 }
 
 // row
-:host-context(.row) {
+:host-context(.data-grid-row) {
   .data-grid-item {
     @include flex.simple-flex();
     @include flex.align-center();
@@ -50,10 +50,10 @@
 }
 
 // stack
-:host-context(.stack) {
+:host-context(.data-grid-stack) {
   .data-grid-item {
     @include flex.flex-column();
-    gap: 6px;
+    gap: common.get-var(space, xs);
   }
 
   .data-grid-item-label-text {
@@ -74,10 +74,10 @@
 }
 
 // fact
-:host-context(.fact) {
+:host-context(.data-grid-fact) {
   .data-grid-item {
     @include flex.flex-column();
-    gap: 6px;
+    gap: common.get-var(space, xs);
   }
 
   // `contents` remonte icône et libellé au niveau de la valeur.

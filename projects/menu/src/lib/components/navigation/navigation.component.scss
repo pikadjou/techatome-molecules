@@ -60,7 +60,8 @@
       @include flex.flex-row();
       @include flex.align-center();
       gap: common.get-var(space, sm);
-      padding: 11px common.get-var(space, md);
+      padding: common.get-var(components, tab-bar, pill, padding-vertical)
+        common.get-var(components, tab-bar, pill, padding-horizontal);
       border: 1px solid common.get-var(border, disabled);
       border-radius: common.get-var(radius, pill);
       background-color: common.get-var(surface, primary);
@@ -99,7 +100,8 @@
       @include flex.flex-row();
       @include flex.align-center();
       gap: common.get-var(space, sm);
-      padding: 13px common.get-var(space, md);
+      padding: common.get-var(components, tab-bar, underline, padding-vertical)
+        common.get-var(components, tab-bar, underline, padding-horizontal);
       // Décalage d'un pixel : le filet actif recouvre celui du conteneur.
       margin-bottom: -1px;
       border-bottom: 2px solid transparent;

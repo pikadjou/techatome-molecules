@@ -144,8 +144,8 @@
 
 // Navigation inversée (`ta-main-menu` en `tone="brand"`) : actif enveloppé d'un voile, icône en couleur de marque.
 :host-context(.tone-brand) .link {
-  gap: 7px;
-  padding: 9px 11px;
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, sm) common.get-var(space, md);
   border-radius: common.get-var(radius, rounded);
 
   .title {
@@ -158,7 +158,7 @@
   }
 
   &:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.06);
+    background-color: common.get-var(surface, veil, xs);
 
     .title {
       color: common.get-var(text, invert, primary);
@@ -166,7 +166,7 @@
   }
 
   &.active {
-    background-color: rgba(255, 255, 255, 0.09);
+    background-color: common.get-var(surface, veil, sm);
 
     .title {
       color: common.get-var(text, invert, primary);
@@ -180,7 +180,7 @@
 
 // Navigation de pied de page : colonne de liens sans pastille, fond ni icône.
 :host-context(.tone-footer) .link {
-  padding: 3px 0;
+  padding: common.get-var(space, xs) 0;
   background: none;
 
   .icon {

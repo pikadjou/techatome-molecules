@@ -16,10 +16,10 @@
       <div class="mobile-menu-nav">
         <ta-menu class="menu" [menu]="this.menuMain()" [container]="'main'"></ta-menu>
       </div>
-      @if (this.menuUser()) {
+      @if (this.menuUser(); as menuUser) {
         <div class="mobile-user-nav">
           <div class="sep"></div>
-          <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
+          <ta-menu class="menu" [menu]="menuUser" [container]="'main'"></ta-menu>
         </div>
       }
     </div>
@@ -52,10 +52,10 @@
           <ta-menu class="menu" [menu]="this.menuMain()" [container]="'main'"></ta-menu>
         </div>
         <div>
-          @if (this.menuUser()) {
+          @if (this.menuUser(); as menuUser) {
             <div class="user-nav">
               <div class="sep"></div>
-              <ta-menu class="menu" [menu]="this.menuUser()!" [container]="'main'"></ta-menu>
+              <ta-menu class="menu" [menu]="menuUser" [container]="'main'"></ta-menu>
             </div>
           }
           @if (this.userMenuTemplate()) {

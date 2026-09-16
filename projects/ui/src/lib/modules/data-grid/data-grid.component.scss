@@ -17,13 +17,13 @@
 }
 
 @include mq.from-key(mobile) {
-  :host([data-columns='2']) .data-grid {
+  .data-grid.columns-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  :host([data-columns='3']) .data-grid {
+  .data-grid.columns-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  :host([data-columns='4']) .data-grid {
+  .data-grid.columns-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

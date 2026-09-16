@@ -77,7 +77,7 @@
 
 .ta-modal-heading {
   @include flex.flex-column();
-  gap: 9px;
+  gap: common.get-var(space, sm);
   min-width: 0;
 }
 
@@ -86,7 +86,7 @@
   background-color: common.get-var(surface, ground);
 
   .ta-modal-header {
-    padding: 22px common.get-var(space, lg);
+    padding: common.get-var(components, header, padding-vertical) common.get-var(components, header, padding-horizontal);
     border-bottom: none;
     background-color: common.get-var(components, header, background);
     color: common.get-var(components, header, color);

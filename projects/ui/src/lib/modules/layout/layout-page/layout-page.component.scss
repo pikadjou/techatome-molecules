@@ -1,8 +1,8 @@
 @use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
 
 :host(.full-height) {
-  display: flex;
-  flex-direction: column;
+  @include flex.flex-column();
   min-height: 100vh;
 
   .layout-page-content {

@@ -5,4 +5,4 @@ export declare enum ENotificationCode {
     information = 3,
     success = 4
 }
-export declare const getTypeClass: (code: ENotificationCode) => "success" | "warning" | "" | "danger" | "info";
+export declare const getTypeClass: (code: ENotificationCode) => "danger" | "warning" | "success" | "info" | "";

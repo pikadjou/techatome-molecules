@@ -1,5 +1,6 @@
 @use 'ta/utils/mixins/fonts';
 @use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
 
 .circle-progress-bar-frame {
   position: relative;
@@ -14,10 +15,9 @@
 
 // Contenu projeté au centre ; le clic passe à l'anneau.
 .circle-progress-bar-content {
+  @include flex.flex-column();
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -51,7 +51,7 @@
 
 // Piste translucide pour surface sombre.
 :host(.invert) .circle-progress-bar .circle-progress-bar-bg {
-  stroke: rgba(255, 255, 255, 0.14);
+  stroke: common.get-var(surface, veil, md);
 }
 
 .circle-progress-bar .circle-progress-bar-text {

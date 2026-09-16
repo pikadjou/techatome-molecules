@@ -30,7 +30,7 @@
   }
 
   .user-nav .sep {
-    border-bottom-color: rgba(255, 255, 255, 0.14);
+    border-bottom-color: common.get-var(surface, veil, md);
   }
 }
 
