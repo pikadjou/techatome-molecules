@@ -1,15 +1,15 @@
-import { IInputBase, InputBase } from "./base";
+import { IInputBase, InputBase } from './base';
 
 export enum EAddressValues {
-  city = "city",
-  country = "country",
-  floor = "floor",
-  latitude = "latitude",
-  longitude = "longitude",
-  number = "number",
-  placeId = "placeId",
-  street = "street",
-  zipCode = "zipCode",
+  city = 'city',
+  country = 'country',
+  floor = 'floor',
+  latitude = 'latitude',
+  longitude = 'longitude',
+  number = 'number',
+  placeId = 'placeId',
+  street = 'street',
+  zipCode = 'zipCode',
 }
 
 export interface IAddressValue {
@@ -44,18 +44,13 @@ export interface IInputAddress extends IInputBase<Partial<IAddressValue>> {
 }
 
 export class InputAddress extends InputBase<Partial<IAddressValue>> {
-  override controlType = "address";
+  override controlType = 'address';
   priorityCountries: string[];
 
   constructor(options: IInputAddress = {}) {
     super(options);
-    this.type = "address";
-    this.priorityCountries = options.priorityCountries ?? [
-      "BE",
-      "FR",
-      "DE",
-      "NL",
-    ];
+    this.type = 'address';
+    this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
   }
 
   /**
@@ -90,22 +85,16 @@ export class InputAddress extends InputBase<Partial<IAddressValue>> {
    * route rend une adresse partielle, qu'une API postale rejettera. `floor`
    * reste facultatif — un immeuble n'en a pas toujours.
    */
-  public static isComplete(
-    address: Partial<IAddressValue> | null | undefined
-  ): address is IPostalAddress {
+  public static isComplete(address: Partial<IAddressValue> | null | undefined): address is IPostalAddress {
     if (!address) {
       return false;
     }
-    return [
-      address.street,
-      address.number,
-      address.zipCode,
-      address.city,
-      address.country,
-    ].every((value) => !!InputAddress._trim(value));
+    return [address.street, address.number, address.zipCode, address.city, address.country].every(
+      value => !!InputAddress._trim(value)
+    );
   }
 
   private static _trim<T>(value: T): T {
-    return typeof value === "string" ? (value.trim() as T) : value;
+    return typeof value === 'string' ? (value.trim() as T) : value;
   }
 }
