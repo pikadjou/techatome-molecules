@@ -158,6 +158,19 @@ describe('FormComponent', () => {
       requiredInputs.forEach(i => i.destroy());
     });
 
+    it('should mark every control as touched when submitted invalid, so errors show up', () => {
+      const requiredInputs = [
+        new InputTextBox({ key: 'required', validators: [Validators.required] }),
+      ];
+      fixture.componentRef.setInput('inputs', requiredInputs);
+      fixture.detectChanges();
+
+      component.onSubmit();
+
+      expect(component.form.get('required')?.touched).toBeTrue();
+      requiredInputs.forEach(i => i.destroy());
+    });
+
     it('should not emit when loader is active', () => {
       fixture.componentRef.setInput('loader', true);
       fixture.detectChanges();

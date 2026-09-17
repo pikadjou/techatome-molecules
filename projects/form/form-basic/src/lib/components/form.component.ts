@@ -93,6 +93,9 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
 
   public onSubmit() {
     if (!this.isValid()) {
+      // Sans ça, une soumission externe (askValidation$) échouait en silence : les erreurs
+      // ne s'affichent que sur les champs touchés.
+      this.form.markAllAsTouched();
       return;
     }
     this.valid.emit(this.form.value);

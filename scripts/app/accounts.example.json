@@ -1,0 +1,15 @@
+{
+  "appUrl": "http://localhost:4200",
+  "auth0Domain": "auth.bailo.be",
+  "auth0ClientId": "395ROGYK9aHj4MnUMtRDscY4icWlpsnj",
+  "accounts": {
+    "owner": {
+      "email": "proprietaire@exemple.be",
+      "password": "a-remplacer"
+    },
+    "tenant": {
+      "email": "locataire@exemple.be",
+      "password": "a-remplacer"
+    }
+  }
+}

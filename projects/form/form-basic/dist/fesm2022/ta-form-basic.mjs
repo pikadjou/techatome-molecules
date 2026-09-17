@@ -556,6 +556,9 @@ class FormComponent extends TaBaseComponent {
     }
     onSubmit() {
         if (!this.isValid()) {
+            // Sans ça, une soumission externe (askValidation$) échouait en silence : les erreurs
+            // ne s'affichent que sur les champs touchés.
+            this.form.markAllAsTouched();
             return;
         }
         this.valid.emit(this.form.value);

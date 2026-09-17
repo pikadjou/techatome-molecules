@@ -14,4 +14,6 @@
 
 .layout-page-content {
   padding: common.get-var(space, sm);
+  // Avec `width: 100%`, le padding s'ajoutait à la largeur et créait un défilement horizontal.
+  box-sizing: border-box;
 }

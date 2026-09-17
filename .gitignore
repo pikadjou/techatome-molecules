@@ -60,3 +60,7 @@ scripts/app.config.js
 /playwright-report
 /playwright/.cache
 projects/testing/dist-e2e
+
+# Bascule de compte : identifiants locaux et profil navigateur, jamais versionnés
+/scripts/app/accounts.json
+/scripts/app/.browser-profile/
