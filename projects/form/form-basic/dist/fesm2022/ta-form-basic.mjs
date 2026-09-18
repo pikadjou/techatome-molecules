@@ -2,9 +2,9 @@ import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
 import { Injectable, inject, ViewChild, Component, input, output, signal, ElementRef, HostListener } from '@angular/core';
 import * as i1$1 from '@angular/forms';
-import { Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Validators, TouchedChangeEvent, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
-import { Subject, of, switchMap, distinctUntilChanged, BehaviorSubject } from 'rxjs';
+import { Subject, of, switchMap, filter, distinctUntilChanged, BehaviorSubject } from 'rxjs';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
 import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent } from '@ta/ui';
@@ -101,7 +101,11 @@ class InputAddressComponent extends TaAbstractInputComponent {
     }
     ngOnInit() {
         super.ngOnInit();
-        this.searchEnabled = this._isGoogleAvailable();
+        // Les sous-champs naissent ici : sans ça, une adresse désactivée restait éditable.
+        if (this.input.disabled) {
+            this.detailsInputs.forEach(i => (i.disabled = true));
+        }
+        this.searchEnabled = this._isGoogleAvailable() && !this.input.disabled;
         // Rendu d'une option (le composant gère la boucle et l'empilement vertical).
         this.localityInput.choiceTemplate = { one: this._localityItemTpl };
         this.countryInput.choiceTemplate = { one: this._countryItemTpl };
@@ -136,6 +140,18 @@ class InputAddressComponent extends TaAbstractInputComponent {
             this._bindAutocomplete(this.googleSearchInput?.nativeElement);
         }
         this._choicesRef?.refresh();
+        // Les contrôles des sous-champs n'existent qu'une fois la vue construite : sans ce calcul,
+        // une adresse vide passait pour valide jusqu'à la première saisie. Hors du cycle courant
+        // pour ne pas modifier une valeur déjà vérifiée.
+        queueMicrotask(() => this._refreshValidity());
+        // Une soumission invalide marque le contrôle d'adresse touché : on le répercute aux
+        // sous-champs, sinon leurs messages d'erreur restent invisibles.
+        const control = this.input.formControl;
+        if (control) {
+            this._registerSubscription(control.events
+                .pipe(filter(event => event instanceof TouchedChangeEvent && event.touched))
+                .subscribe(() => this.detailsInputs.forEach(i => i.formControl?.markAsTouched())));
+        }
     }
     ngOnDestroy() {
         if (this._autocomplete) {

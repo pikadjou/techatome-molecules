@@ -9,7 +9,7 @@
       ></ta-swiper-light>
     } @else {
       <div class="element-list" [ngClass]="this.menu().direction + ' ' + this.getSpaceClass()">
-        @for (element of this.menu().elements; track element) {
+        @for (element of this.menu().elements; track element.key || element.label || $index) {
           @let visible = element.visible$ | async;
           @if (visible) {
             <div class="element">

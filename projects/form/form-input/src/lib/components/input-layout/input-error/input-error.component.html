@@ -18,6 +18,25 @@
       <small class="form-text text-danger">
         {{ 'form.text-box.is-mandatory' | translate }}
       </small>
+    } @else if (this.input().formControl?.hasError('email')) {
+      <small class="form-text text-danger">
+        {{ 'form.validation.email' | translate }}
+      </small>
+    } @else if (this.input().formControl?.hasError('min')) {
+      <small class="form-text text-danger">
+        {{ 'form.validation.min' | translate: { min: this.input().formControl?.getError('min')?.min } }}
+      </small>
+    } @else if (this.input().formControl?.hasError('max')) {
+      <small class="form-text text-danger">
+        {{ 'form.validation.max' | translate: { max: this.input().formControl?.getError('max')?.max } }}
+      </small>
+    } @else if (this.input().formControl?.hasError('maxlength')) {
+      <small class="form-text text-danger">
+        {{
+          'form.validation.maxLength'
+            | translate: { maxLength: this.input().formControl?.getError('maxlength')?.requiredLength }
+        }}
+      </small>
     } @else if (this.input().formControl?.errors?.['minlength']) {
       <span>{{ 'form.layout.input-too-short' | translate }}</span>
     } @else if (this.input().formControl?.hasError('validatePhoneNumber')) {

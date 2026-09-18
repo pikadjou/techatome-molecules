@@ -2,7 +2,7 @@ import { TranslateService, provideTranslateService, TranslateLoader } from '@ngx
 export { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import * as i0 from '@angular/core';
 import { Injectable, inject, Optional, Inject, InjectionToken, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
-import { Subject, BehaviorSubject, debounceTime, mergeMap, map, of, forkJoin, catchError } from 'rxjs';
+import { Subject, BehaviorSubject, map, debounceTime, mergeMap, of, forkJoin, catchError } from 'rxjs';
 import { LocalStorage } from 'storage-manager-js';
 import { HttpClient } from '@angular/common/http';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService } from '@ta/server';
@@ -63,6 +63,10 @@ class TaTranslationService {
         this._config = _config;
         this.translateService = inject(TranslateService);
         this._registry = inject(TaTranslationRegistryService);
+        /** Langue active, à chaque changement (les applications n'importent pas ngx-translate). */
+        this.onLangChange$ = this.translateService.onLangChange.pipe(map(({ lang }) => lang));
+        /** Fichiers de traduction (re)chargés sans changement de langue : `reloadLang()`. */
+        this.onTranslationChange$ = this.translateService.onTranslationChange.pipe(map(({ lang }) => lang));
         // this language will be used as a fallback when a translation isn't found in the current language
         this.translateService.setDefaultLang(this._config.default);
         // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -99,6 +103,14 @@ class TaTranslationService {
     }
     get(key, interpolateParams) {
         return this.translateService.get(key, interpolateParams);
+    }
+    /** Traduction immédiate ; rend la clé tant que les fichiers ne sont pas chargés. */
+    instant(key, interpolateParams) {
+        return this.translateService.instant(key, interpolateParams);
+    }
+    /** Traduction qui suit les changements de langue. */
+    stream(key, interpolateParams) {
+        return this.translateService.stream(key, interpolateParams);
     }
     use(lang) {
         return this.translateService.use(lang);

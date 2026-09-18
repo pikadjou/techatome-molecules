@@ -171,6 +171,9 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
     this.input.value = [''];
   }
   public select = (option: { id: string }) => {
+    if (this.input.disabled) {
+      return;
+    }
     const values = this.input.value ?? [];
 
     if (values.includes(option.id)) {

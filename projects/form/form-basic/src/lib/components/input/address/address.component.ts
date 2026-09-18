@@ -1,10 +1,10 @@
 declare var google: any;
 
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { TouchedChangeEvent, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, of, switchMap } from 'rxjs';
+import { Subject, filter, of, switchMap } from 'rxjs';
 
 import {
   IAddressValue,
@@ -130,7 +130,11 @@ export class InputAddressComponent
 
   public override ngOnInit() {
     super.ngOnInit();
-    this.searchEnabled = this._isGoogleAvailable();
+    // Les sous-champs naissent ici : sans ça, une adresse désactivée restait éditable.
+    if (this.input.disabled) {
+      this.detailsInputs.forEach(i => (i.disabled = true));
+    }
+    this.searchEnabled = this._isGoogleAvailable() && !this.input.disabled;
     // Rendu d'une option (le composant gère la boucle et l'empilement vertical).
     this.localityInput.choiceTemplate = { one: this._localityItemTpl };
     this.countryInput.choiceTemplate = { one: this._countryItemTpl };
@@ -169,6 +173,20 @@ export class InputAddressComponent
       this._bindAutocomplete(this.googleSearchInput?.nativeElement);
     }
     this._choicesRef?.refresh();
+    // Les contrôles des sous-champs n'existent qu'une fois la vue construite : sans ce calcul,
+    // une adresse vide passait pour valide jusqu'à la première saisie. Hors du cycle courant
+    // pour ne pas modifier une valeur déjà vérifiée.
+    queueMicrotask(() => this._refreshValidity());
+    // Une soumission invalide marque le contrôle d'adresse touché : on le répercute aux
+    // sous-champs, sinon leurs messages d'erreur restent invisibles.
+    const control = this.input.formControl;
+    if (control) {
+      this._registerSubscription(
+        control.events
+          .pipe(filter(event => event instanceof TouchedChangeEvent && event.touched))
+          .subscribe(() => this.detailsInputs.forEach(i => i.formControl?.markAsTouched()))
+      );
+    }
   }
 
   public override ngOnDestroy() {
