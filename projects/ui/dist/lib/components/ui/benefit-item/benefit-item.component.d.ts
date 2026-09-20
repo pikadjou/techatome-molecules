@@ -13,7 +13,7 @@ export declare class BenefitItemComponent {
     protected config: BenefitConfig;
     protected isInitialized: boolean;
     cssClasses(): ColorType[];
-    icon(): "warning" | "error" | "check";
+    icon(): "error" | "warning" | "check";
     static ɵfac: i0.ɵɵFactoryDeclaration<BenefitItemComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<BenefitItemComponent, "ta-benefit-item", never, { "type": { "alias": "type"; "required": false; "isSignal": true; }; "text": { "alias": "text"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

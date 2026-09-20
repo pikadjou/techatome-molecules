@@ -8,8 +8,8 @@ export declare class ButtonComponent {
     /**
      * Indicate the button type
      */
-    type: import("@angular/core").InputSignal<"danger" | "primary" | "secondary" | "tertiary" | "invert">;
-    size: import("@angular/core").InputSignal<"small" | "medium" | "large">;
+    type: import("@angular/core").InputSignal<"secondary" | "primary" | "tertiary" | "danger" | "invert">;
+    size: import("@angular/core").InputSignal<"large" | "medium" | "small">;
     icon: import("@angular/core").InputSignal<string | null>;
     /**
      * Class - Add custom classes separates by space

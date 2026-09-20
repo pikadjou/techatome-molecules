@@ -5,6 +5,7 @@ import { TranslateModule } from "@ngx-translate/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaSizes } from "@ta/styles";
+import { isNonNullable } from "@ta/utils";
 
 import { TaTranslationUI } from "../../../translation.service";
 
@@ -39,6 +40,6 @@ export class BooleanIconComponent {
   }
 
   public isNullValue(): boolean {
-    return this.value() === null || this.value() === undefined;
+    return !isNonNullable(this.value());
   }
 }

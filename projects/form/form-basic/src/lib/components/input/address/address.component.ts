@@ -4,16 +4,9 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, V
 import { TouchedChangeEvent, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, filter, of, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, of } from 'rxjs';
 
-import {
-  IAddressValue,
-  InputAddress,
-  InputBase,
-  InputChoices,
-  InputChoicesOption,
-  InputTextBox,
-} from '@ta/form-model';
+import { IAddressValue, InputAddress, InputBase, InputChoices, InputLocality, InputTextBox } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
 import {
   FormLabelComponent,
@@ -22,9 +15,10 @@ import {
   TextBoxComponent,
 } from '@ta/form-input';
 import { TranslatePipe } from '@ta/translation';
-import { AddressLocality, TaAddressLookupService, getCountryList } from '@ta/utils';
+import { AddressLocality, getCountryList, isNonNullable, toArray } from '@ta/utils';
 
 import { TaTranslationForm } from '../../../translation.service';
+import { InputLocalityComponent } from '../locality/locality.component';
 
 interface AddressGeo {
   latitude: number | null;
@@ -32,11 +26,14 @@ interface AddressGeo {
   placeId: string | null;
 }
 
+const DEFAULT_COUNTRY = 'BE';
+
 @Component({
   imports: [
     FontIconComponent,
     FormLabelComponent,
     InputChoicesComponent,
+    InputLocalityComponent,
     TextBoxComponent,
     TranslatePipe,
   ],
@@ -50,28 +47,19 @@ export class InputAddressComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild('googleSearchInput') googleSearchInput?: ElementRef<HTMLInputElement>;
-  @ViewChild(InputChoicesComponent) private _choicesRef?: InputChoicesComponent;
-  @ViewChild('localityItemTpl', { static: true }) private _localityItemTpl!: TemplateRef<any>;
   @ViewChild('countryItemTpl', { static: true }) private _countryItemTpl!: TemplateRef<any>;
 
   // La recherche Google n'est affichée que si l'API Maps/Places a bien été
   // injectée dans l'application (via provideGoogleMaps()).
   public searchEnabled = false;
-  // Le choix code postal / commune remplace les champs libres tant que le pays
-  // a des données ; sinon on bascule sur la saisie libre (zipCode + ville).
-  public localityAvailable = true;
-  public cityInput = new InputTextBox({
-    key: 'displayCity',
-    label: 'form.address.city',
-    validators: [Validators.required],
-  });
   public complementInput = new InputTextBox({
     key: 'displayFloor',
     label: 'form.address.floor',
   });
   public countryInput!: InputChoices;
   public detailsInputs: InputBase<any>[];
-  public localityInput!: InputChoices;
+  // Code postal + commune : la brique localité porte la liste du pays et son éventuel repli.
+  public localityInput!: InputLocality;
   public numberInput = new InputTextBox({
     key: 'displayNumber',
     label: 'form.address.number',
@@ -81,21 +69,14 @@ export class InputAddressComponent
     label: 'form.address.street',
     validators: [Validators.required],
   });
-  public zipCodeInput = new InputTextBox({
-    key: 'displayZipCode',
-    label: 'form.address.zipCode',
-    validators: [Validators.required],
-  });
 
-  private readonly _lookup = inject(TaAddressLookupService);
   private readonly _translate = inject(TranslateService);
   private _autocomplete: any;
-  private _country$ = new Subject<string>();
+  private _country$ = new BehaviorSubject<string>(DEFAULT_COUNTRY);
   private _currentCountry: string | null = null;
   private _geo: AddressGeo = { latitude: null, longitude: null, placeId: null };
   private _isApplyingValue = false;
-  private _localities: AddressLocality[] = [];
-  private _localityMap = new Map<string, AddressLocality>();
+  private _locality: AddressLocality | null = null;
 
   constructor() {
     super();
@@ -105,26 +86,21 @@ export class InputAddressComponent
       label: 'form.address.country',
       options$: of([]),
       validators: [Validators.required],
-      value: ['BE'],
+      value: [DEFAULT_COUNTRY],
       withSearch: true,
     });
-    this.localityInput = new InputChoices({
-      // La liste complète du pays est gardée en mémoire ; advancedSearch$ filtre
-      // côté client et plafonne l'affichage.
-      advancedSearch$: (search?: string) => of(this._searchLocalities(search)),
+    this.localityInput = new InputLocality({
+      country$: this._country$,
       key: 'displayLocality',
       label: 'form.address.locality',
       validators: [Validators.required],
-      withSearch: true,
     });
     this.detailsInputs = [
-      this.cityInput,
       this.complementInput,
       this.countryInput,
       this.localityInput,
       this.numberInput,
       this.streetInput,
-      this.zipCodeInput,
     ];
   }
 
@@ -136,7 +112,6 @@ export class InputAddressComponent
     }
     this.searchEnabled = this._isGoogleAvailable() && !this.input.disabled;
     // Rendu d'une option (le composant gère la boucle et l'empilement vertical).
-    this.localityInput.choiceTemplate = { one: this._localityItemTpl };
     this.countryInput.choiceTemplate = { one: this._countryItemTpl };
     this.countryInput.options$ = of(
       getCountryList(this._translate.currentLang, this.input.priorityCountries).map(c => ({
@@ -145,18 +120,6 @@ export class InputAddressComponent
         name: c.name,
       }))
     );
-    // Pour chaque pays, on récupère TOUTE la liste des codes postaux / communes ;
-    // la recherche se fait ensuite côté client (advancedSearch$).
-    this._registerSubscription(
-      this._country$
-        .pipe(switchMap(country => this._lookup.getCountryPostalCodes(country)))
-        .subscribe(localities => {
-          this._localities = localities;
-          this._rebuildLocalityMap(localities);
-          this.localityAvailable = localities.length > 0;
-          this._choicesRef?.refresh();
-        })
-    );
     if (this.input.value) {
       this._applyValueToFields(this.input.value);
     } else {
@@ -164,7 +127,7 @@ export class InputAddressComponent
       this._updateValueFromInputs();
     }
     this._currentCountry = this.countryInput.value?.[0] ?? null;
-    this._country$.next(this.countryInput.value?.[0] ?? '');
+    this._country$.next(this._currentCountry ?? DEFAULT_COUNTRY);
   }
 
   public override ngAfterViewInit() {
@@ -172,7 +135,6 @@ export class InputAddressComponent
     if (this.searchEnabled) {
       this._bindAutocomplete(this.googleSearchInput?.nativeElement);
     }
-    this._choicesRef?.refresh();
     // Les contrôles des sous-champs n'existent qu'une fois la vue construite : sans ce calcul,
     // une adresse vide passait pour valide jusqu'à la première saisie. Hors du cycle courant
     // pour ne pas modifier une valeur déjà vérifiée.
@@ -203,55 +165,29 @@ export class InputAddressComponent
     if (this._isApplyingValue) {
       return;
     }
-    // Si le pays change, on recharge la liste et on réinitialise le choix.
+    // Si le pays change, la brique localité recharge sa liste et vide son choix.
     const country = this.countryInput.value?.[0] ?? null;
     if (country !== this._currentCountry) {
       this._currentCountry = country;
-      this.localityInput.value = [];
       this._country$.next(country ?? '');
     }
     this._updateValueFromInputs();
     this._refreshValidity();
   }
 
-  public onLocalitySelected() {
-    const id = this.localityInput.value?.[0];
-    const locality = id ? this._localityMap.get(id) : undefined;
-    if (!locality) {
+  public onLocalityChanged(value: AddressLocality | AddressLocality[] | null) {
+    if (this._isApplyingValue) {
       return;
     }
-    this._geo = { latitude: locality.latitude, longitude: locality.longitude, placeId: null };
-    this._isApplyingValue = true;
-    this.zipCodeInput.value = locality.zipCode;
-    this.cityInput.value = locality.city;
-    this._isApplyingValue = false;
+    this._locality = toArray(value).filter(isNonNullable)[0] ?? null;
+    // Une localité choisie à la main remplace le repère Google : ses coordonnées font foi.
+    this._geo = {
+      latitude: this._locality?.latitude ?? null,
+      longitude: this._locality?.longitude ?? null,
+      placeId: null,
+    };
     this._updateValueFromInputs();
     this._refreshValidity();
-  }
-
-  private _searchLocalities(search?: string): InputChoicesOption[] {
-    const term = (search ?? '').trim().toLowerCase();
-    const matched = term
-      ? this._localities.filter(locality =>
-          `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term)
-        )
-      : this._localities;
-    return matched.map(locality => this._toOption(locality));
-  }
-
-  private _toOption(locality: AddressLocality): InputChoicesOption {
-    return {
-      data: locality,
-      id: `${locality.zipCode}__${locality.city}`,
-      name: `${locality.zipCode} ${locality.city}`,
-    };
-  }
-
-  private _rebuildLocalityMap(localities: AddressLocality[]) {
-    this._localityMap.clear();
-    localities.forEach(locality =>
-      this._localityMap.set(`${locality.zipCode}__${locality.city}`, locality)
-    );
   }
 
   private _refreshValidity() {
@@ -268,16 +204,12 @@ export class InputAddressComponent
     };
     this._setFields({
       city: value.city ?? '',
-      country: value.country || 'BE',
+      country: value.country || DEFAULT_COUNTRY,
       floor: value.floor ?? '',
       number: value.number ?? '',
       street: value.street ?? '',
       zipCode: value.zipCode ?? '',
     });
-    // Présélection du choix code postal / commune (affiché une fois la liste chargée).
-    if (value.zipCode && value.city) {
-      this.localityInput.value = [`${value.zipCode}__${value.city}`];
-    }
   }
 
   private _isGoogleAvailable(): boolean {
@@ -328,20 +260,18 @@ export class InputAddressComponent
       street: getComponent('route'),
       zipCode: getComponent('postal_code'),
     });
-    // Recharge la liste du pays et présélectionne la localité trouvée.
-    this._currentCountry = this.countryInput.value?.[0] ?? null;
-    this._country$.next(this.countryInput.value?.[0] ?? '');
-    const zipCode = this.zipCodeInput.value;
-    const city = this.cityInput.value;
-    if (zipCode && city) {
-      this.localityInput.value = [`${zipCode}__${city}`];
-    }
     this._updateValueFromInputs();
     if (this.googleSearchInput?.nativeElement) {
       this.googleSearchInput.nativeElement.value = '';
     }
   }
 
+  /**
+   * Pose les champs sans déclencher leurs `valueChanged`.
+   *
+   * Le pays part avant la localité : la brique localité vide son choix à chaque
+   * changement de pays, et écraserait sinon la localité qu'on vient de poser.
+   */
   private _setFields(fields: {
     city: string;
     country: string;
@@ -351,18 +281,23 @@ export class InputAddressComponent
     zipCode: string;
   }) {
     this._isApplyingValue = true;
-    this.cityInput.value = fields.city;
     this.complementInput.value = fields.floor;
-    this.countryInput.value = [fields.country];
     this.numberInput.value = fields.number;
     this.streetInput.value = fields.street;
-    this.zipCodeInput.value = fields.zipCode;
+    this.countryInput.value = [fields.country];
+    this._currentCountry = fields.country;
+    this._country$.next(fields.country);
+    this._locality =
+      fields.zipCode || fields.city
+        ? { city: fields.city, country: fields.country, latitude: null, longitude: null, zipCode: fields.zipCode }
+        : null;
+    this.localityInput.value = this._locality;
     this._isApplyingValue = false;
   }
 
   private _updateValueFromInputs() {
     this.input.value = {
-      city: this.cityInput.value ?? null,
+      city: this._locality?.city ?? null,
       country: this.countryInput.value?.[0] ?? null,
       floor: this.complementInput.value ?? null,
       latitude: this._geo.latitude,
@@ -370,7 +305,7 @@ export class InputAddressComponent
       number: this.numberInput.value ?? null,
       placeId: this._geo.placeId,
       street: this.streetInput.value ?? null,
-      zipCode: this.zipCodeInput.value ?? null,
+      zipCode: this._locality?.zipCode ?? null,
     };
   }
 }

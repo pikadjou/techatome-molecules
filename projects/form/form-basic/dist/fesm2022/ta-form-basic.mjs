@@ -1,17 +1,17 @@
 import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Injectable, inject, ViewChild, Component, input, output, signal, ElementRef, HostListener } from '@angular/core';
+import { Injectable, signal, inject, ViewChild, Component, input, output, ElementRef, HostListener } from '@angular/core';
 import * as i1$1 from '@angular/forms';
-import { Validators, TouchedChangeEvent, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TouchedChangeEvent, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import deepEqual from 'fast-deep-equal';
-import { Subject, of, switchMap, filter, distinctUntilChanged, BehaviorSubject } from 'rxjs';
+import { of, filter, distinctUntilChanged, tap, switchMap, BehaviorSubject } from 'rxjs';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
 import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent } from '@ta/ui';
-import { TaAddressLookupService, getCountryList, TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
-import { TaAbstractInputComponent, FormLabelComponent, InputChoicesComponent, TextBoxComponent, CheckboxComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
+import { TaAddressLookupService, isNonNullable, toArray, getCountryList, TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
+import { TaAbstractInputComponent, InputChoicesComponent, TextBoxComponent, FormLabelComponent, CheckboxComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
 import { TranslateService } from '@ngx-translate/core';
-import { InputTextBox, InputChoices } from '@ta/form-model';
+import { InputChoices, InputTextBox, InputLocality } from '@ta/form-model';
 import { FontIconComponent, LocalIconComponent } from '@ta/icons';
 import * as i1 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
@@ -31,20 +31,166 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
+const DEFAULT_COUNTRY$1 = 'BE';
+/**
+ * Choix d'une localité (code postal + commune) dans la liste officielle du pays.
+ *
+ * La liste complète du pays est gardée en mémoire ; la recherche filtre côté
+ * client. Seul un pays sans données ouvre la saisie libre (code postal + ville).
+ * Le composant porte la valeur métier (`AddressLocality`) : les champs internes
+ * ne manipulent que des identifiants ou du texte.
+ */
+class InputLocalityComponent extends TaAbstractInputComponent {
+    constructor() {
+        super();
+        /** `false` tant que le pays courant n'a pas de liste : on bascule en saisie libre. */
+        this.available = signal(true);
+        this._lookup = inject(TaAddressLookupService);
+        this._currentCountry = null;
+        this._isApplyingValue = false;
+        this._localities = [];
+        this._localityMap = new Map();
+        TaTranslationForm.getInstance();
+    }
+    ngOnInit() {
+        super.ngOnInit();
+        this.choicesInput = new InputChoices({
+            advancedSearch$: (search) => of(this._searchLocalities(search)),
+            disabled: this.input.disabled,
+            key: `${this.input.key}_choices`,
+            label: this.input.label || 'form.address.locality',
+            message: this.input.message,
+            multiple: this.input.multiple,
+            validators: this.input.validators,
+            withSearch: true,
+        });
+        this.choicesInput.choiceTemplate = { one: this._localityItemTpl };
+        this.zipCodeInput = new InputTextBox({
+            disabled: this.input.disabled,
+            key: `${this.input.key}_zipCode`,
+            label: 'form.address.zipCode',
+            validators: this.input.validators,
+        });
+        this.cityInput = new InputTextBox({
+            disabled: this.input.disabled,
+            key: `${this.input.key}_city`,
+            label: 'form.address.city',
+            validators: this.input.validators,
+        });
+        // Une valeur posée de l'extérieur (préremplissage, recherche Google) se reflète dans les champs.
+        this._registerSubscription(this.input.changeValue$.subscribe(() => this._applyValueToFields()));
+        // Une soumission invalide marque le contrôle touché : on le répercute aux champs,
+        // sinon leurs messages d'erreur restent invisibles.
+        const control = this.input.formControl;
+        if (control) {
+            this._registerSubscription(control.events
+                .pipe(filter(event => event instanceof TouchedChangeEvent && event.touched))
+                .subscribe(() => this._fields().forEach(field => field.formControl?.markAsTouched())));
+        }
+        this._registerSubscription((this.input.country$ ?? of(DEFAULT_COUNTRY$1))
+            .pipe(distinctUntilChanged(), 
+        // Le choix est vidé dès que le pays change, avant même que la nouvelle liste
+        // n'arrive : une valeur posée entre-temps n'est ainsi jamais écrasée.
+        tap(country => {
+            if (isNonNullable(this._currentCountry) && country !== this._currentCountry) {
+                this._setValue(null);
+            }
+            this._currentCountry = country;
+        }), switchMap(country => this._lookup.getCountryPostalCodes(country)))
+            .subscribe(localities => {
+            this._localities = localities;
+            this._localityMap = new Map(localities.map(locality => [InputLocality.localityId(locality), locality]));
+            this.available.set(localities.length > 0);
+            this._applyValueToFields();
+            this._choicesRef?.refresh();
+        }));
+    }
+    ngOnDestroy() {
+        this._fields().forEach(field => field.destroy());
+        super.ngOnDestroy();
+    }
+    onChoicesChanged() {
+        if (this._isApplyingValue) {
+            return;
+        }
+        const localities = (this.choicesInput.value ?? []).map(id => this._localityMap.get(id)).filter(isNonNullable);
+        this._setValue(this._pack(localities));
+    }
+    onFreeInputChanged() {
+        if (this._isApplyingValue) {
+            return;
+        }
+        const zipCode = this.zipCodeInput.value?.trim() ?? '';
+        const city = this.cityInput.value?.trim() ?? '';
+        if (!zipCode && !city) {
+            this._setValue(null);
+            return;
+        }
+        this._setValue(this._pack([
+            {
+                city,
+                country: this._currentCountry ?? DEFAULT_COUNTRY$1,
+                latitude: null,
+                longitude: null,
+                zipCode,
+            },
+        ]));
+    }
+    _fields() {
+        return [this.choicesInput, this.cityInput, this.zipCodeInput];
+    }
+    _pack(localities) {
+        return this.input.multiple ? localities : (localities[0] ?? null);
+    }
+    _setValue(value) {
+        this.input.value = value;
+    }
+    /** Reflète `input.value` dans les champs — sans repasser par leurs `valueChanged`. */
+    _applyValueToFields() {
+        const localities = toArray(this.input.value).filter(isNonNullable);
+        this._isApplyingValue = true;
+        const ids = localities.map(locality => InputLocality.localityId(locality));
+        const current = this.choicesInput.value ?? [];
+        if (ids.length !== current.length || ids.some(id => !current.includes(id))) {
+            this.choicesInput.value = ids;
+        }
+        const first = localities[0];
+        this.zipCodeInput.value = first?.zipCode ?? '';
+        this.cityInput.value = first?.city ?? '';
+        this._isApplyingValue = false;
+    }
+    _searchLocalities(search) {
+        const term = (search ?? '').trim().toLowerCase();
+        const matched = term
+            ? this._localities.filter(locality => `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term))
+            : this._localities;
+        return matched.map(locality => ({
+            data: locality,
+            id: InputLocality.localityId(locality),
+            name: `${locality.zipCode} ${locality.city}`,
+        }));
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputLocalityComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputLocalityComponent, isStandalone: true, selector: "ta-input-locality", viewQueries: [{ propertyName: "_choicesRef", first: true, predicate: InputChoicesComponent, descendants: true }, { propertyName: "_localityItemTpl", first: true, predicate: ["localityItemTpl"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "@if (this.available()) {\n  <ta-input-choices\n    [input]=\"this.choicesInput\"\n    [standalone]=\"true\"\n    (valueChanged)=\"this.onChoicesChanged()\"\n  ></ta-input-choices>\n} @else {\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.zipCodeInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onFreeInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.cityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onFreeInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n  </div>\n}\n\n<ng-template #localityItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.zipCode }} {{ item.city }}</span>\n</ng-template>\n", styles: [":host{display:block}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"], dependencies: [{ kind: "component", type: InputChoicesComponent, selector: "ta-input-choices" }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputLocalityComponent, decorators: [{
+            type: Component,
+            args: [{ imports: [InputChoicesComponent, TextBoxComponent], selector: 'ta-input-locality', standalone: true, template: "@if (this.available()) {\n  <ta-input-choices\n    [input]=\"this.choicesInput\"\n    [standalone]=\"true\"\n    (valueChanged)=\"this.onChoicesChanged()\"\n  ></ta-input-choices>\n} @else {\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.zipCodeInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onFreeInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.cityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onFreeInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n  </div>\n}\n\n<ng-template #localityItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.zipCode }} {{ item.city }}</span>\n</ng-template>\n", styles: [":host{display:block}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
+        }], ctorParameters: () => [], propDecorators: { _choicesRef: [{
+                type: ViewChild,
+                args: [InputChoicesComponent]
+            }], _localityItemTpl: [{
+                type: ViewChild,
+                args: ['localityItemTpl', { static: true }]
+            }] } });
+
+const DEFAULT_COUNTRY = 'BE';
 class InputAddressComponent extends TaAbstractInputComponent {
     constructor() {
         super();
         // La recherche Google n'est affichée que si l'API Maps/Places a bien été
         // injectée dans l'application (via provideGoogleMaps()).
         this.searchEnabled = false;
-        // Le choix code postal / commune remplace les champs libres tant que le pays
-        // a des données ; sinon on bascule sur la saisie libre (zipCode + ville).
-        this.localityAvailable = true;
-        this.cityInput = new InputTextBox({
-            key: 'displayCity',
-            label: 'form.address.city',
-            validators: [Validators.required],
-        });
         this.complementInput = new InputTextBox({
             key: 'displayFloor',
             label: 'form.address.floor',
@@ -58,45 +204,33 @@ class InputAddressComponent extends TaAbstractInputComponent {
             label: 'form.address.street',
             validators: [Validators.required],
         });
-        this.zipCodeInput = new InputTextBox({
-            key: 'displayZipCode',
-            label: 'form.address.zipCode',
-            validators: [Validators.required],
-        });
-        this._lookup = inject(TaAddressLookupService);
         this._translate = inject(TranslateService);
-        this._country$ = new Subject();
+        this._country$ = new BehaviorSubject(DEFAULT_COUNTRY);
         this._currentCountry = null;
         this._geo = { latitude: null, longitude: null, placeId: null };
         this._isApplyingValue = false;
-        this._localities = [];
-        this._localityMap = new Map();
+        this._locality = null;
         TaTranslationForm.getInstance();
         this.countryInput = new InputChoices({
             key: 'displayCountry',
             label: 'form.address.country',
             options$: of([]),
             validators: [Validators.required],
-            value: ['BE'],
+            value: [DEFAULT_COUNTRY],
             withSearch: true,
         });
-        this.localityInput = new InputChoices({
-            // La liste complète du pays est gardée en mémoire ; advancedSearch$ filtre
-            // côté client et plafonne l'affichage.
-            advancedSearch$: (search) => of(this._searchLocalities(search)),
+        this.localityInput = new InputLocality({
+            country$: this._country$,
             key: 'displayLocality',
             label: 'form.address.locality',
             validators: [Validators.required],
-            withSearch: true,
         });
         this.detailsInputs = [
-            this.cityInput,
             this.complementInput,
             this.countryInput,
             this.localityInput,
             this.numberInput,
             this.streetInput,
-            this.zipCodeInput,
         ];
     }
     ngOnInit() {
@@ -107,23 +241,12 @@ class InputAddressComponent extends TaAbstractInputComponent {
         }
         this.searchEnabled = this._isGoogleAvailable() && !this.input.disabled;
         // Rendu d'une option (le composant gère la boucle et l'empilement vertical).
-        this.localityInput.choiceTemplate = { one: this._localityItemTpl };
         this.countryInput.choiceTemplate = { one: this._countryItemTpl };
         this.countryInput.options$ = of(getCountryList(this._translate.currentLang, this.input.priorityCountries).map(c => ({
             data: c,
             id: c.code,
             name: c.name,
         })));
-        // Pour chaque pays, on récupère TOUTE la liste des codes postaux / communes ;
-        // la recherche se fait ensuite côté client (advancedSearch$).
-        this._registerSubscription(this._country$
-            .pipe(switchMap(country => this._lookup.getCountryPostalCodes(country)))
-            .subscribe(localities => {
-            this._localities = localities;
-            this._rebuildLocalityMap(localities);
-            this.localityAvailable = localities.length > 0;
-            this._choicesRef?.refresh();
-        }));
         if (this.input.value) {
             this._applyValueToFields(this.input.value);
         }
@@ -132,14 +255,13 @@ class InputAddressComponent extends TaAbstractInputComponent {
             this._updateValueFromInputs();
         }
         this._currentCountry = this.countryInput.value?.[0] ?? null;
-        this._country$.next(this.countryInput.value?.[0] ?? '');
+        this._country$.next(this._currentCountry ?? DEFAULT_COUNTRY);
     }
     ngAfterViewInit() {
         super.ngAfterViewInit();
         if (this.searchEnabled) {
             this._bindAutocomplete(this.googleSearchInput?.nativeElement);
         }
-        this._choicesRef?.refresh();
         // Les contrôles des sous-champs n'existent qu'une fois la vue construite : sans ce calcul,
         // une adresse vide passait pour valide jusqu'à la première saisie. Hors du cycle courant
         // pour ne pas modifier une valeur déjà vérifiée.
@@ -166,47 +288,28 @@ class InputAddressComponent extends TaAbstractInputComponent {
         if (this._isApplyingValue) {
             return;
         }
-        // Si le pays change, on recharge la liste et on réinitialise le choix.
+        // Si le pays change, la brique localité recharge sa liste et vide son choix.
         const country = this.countryInput.value?.[0] ?? null;
         if (country !== this._currentCountry) {
             this._currentCountry = country;
-            this.localityInput.value = [];
             this._country$.next(country ?? '');
         }
         this._updateValueFromInputs();
         this._refreshValidity();
     }
-    onLocalitySelected() {
-        const id = this.localityInput.value?.[0];
-        const locality = id ? this._localityMap.get(id) : undefined;
-        if (!locality) {
+    onLocalityChanged(value) {
+        if (this._isApplyingValue) {
             return;
         }
-        this._geo = { latitude: locality.latitude, longitude: locality.longitude, placeId: null };
-        this._isApplyingValue = true;
-        this.zipCodeInput.value = locality.zipCode;
-        this.cityInput.value = locality.city;
-        this._isApplyingValue = false;
+        this._locality = toArray(value).filter(isNonNullable)[0] ?? null;
+        // Une localité choisie à la main remplace le repère Google : ses coordonnées font foi.
+        this._geo = {
+            latitude: this._locality?.latitude ?? null,
+            longitude: this._locality?.longitude ?? null,
+            placeId: null,
+        };
         this._updateValueFromInputs();
         this._refreshValidity();
-    }
-    _searchLocalities(search) {
-        const term = (search ?? '').trim().toLowerCase();
-        const matched = term
-            ? this._localities.filter(locality => `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term))
-            : this._localities;
-        return matched.map(locality => this._toOption(locality));
-    }
-    _toOption(locality) {
-        return {
-            data: locality,
-            id: `${locality.zipCode}__${locality.city}`,
-            name: `${locality.zipCode} ${locality.city}`,
-        };
-    }
-    _rebuildLocalityMap(localities) {
-        this._localityMap.clear();
-        localities.forEach(locality => this._localityMap.set(`${locality.zipCode}__${locality.city}`, locality));
     }
     _refreshValidity() {
         this.input.formControl?.setErrors(this.detailsInputs.some(i => i.formControl?.invalid ?? false) ? { invalid: true } : null);
@@ -219,16 +322,12 @@ class InputAddressComponent extends TaAbstractInputComponent {
         };
         this._setFields({
             city: value.city ?? '',
-            country: value.country || 'BE',
+            country: value.country || DEFAULT_COUNTRY,
             floor: value.floor ?? '',
             number: value.number ?? '',
             street: value.street ?? '',
             zipCode: value.zipCode ?? '',
         });
-        // Présélection du choix code postal / commune (affiché une fois la liste chargée).
-        if (value.zipCode && value.city) {
-            this.localityInput.value = [`${value.zipCode}__${value.city}`];
-        }
     }
     _isGoogleAvailable() {
         return typeof google !== 'undefined' && !!google?.maps?.places?.Autocomplete;
@@ -275,32 +374,35 @@ class InputAddressComponent extends TaAbstractInputComponent {
             street: getComponent('route'),
             zipCode: getComponent('postal_code'),
         });
-        // Recharge la liste du pays et présélectionne la localité trouvée.
-        this._currentCountry = this.countryInput.value?.[0] ?? null;
-        this._country$.next(this.countryInput.value?.[0] ?? '');
-        const zipCode = this.zipCodeInput.value;
-        const city = this.cityInput.value;
-        if (zipCode && city) {
-            this.localityInput.value = [`${zipCode}__${city}`];
-        }
         this._updateValueFromInputs();
         if (this.googleSearchInput?.nativeElement) {
             this.googleSearchInput.nativeElement.value = '';
         }
     }
+    /**
+     * Pose les champs sans déclencher leurs `valueChanged`.
+     *
+     * Le pays part avant la localité : la brique localité vide son choix à chaque
+     * changement de pays, et écraserait sinon la localité qu'on vient de poser.
+     */
     _setFields(fields) {
         this._isApplyingValue = true;
-        this.cityInput.value = fields.city;
         this.complementInput.value = fields.floor;
-        this.countryInput.value = [fields.country];
         this.numberInput.value = fields.number;
         this.streetInput.value = fields.street;
-        this.zipCodeInput.value = fields.zipCode;
+        this.countryInput.value = [fields.country];
+        this._currentCountry = fields.country;
+        this._country$.next(fields.country);
+        this._locality =
+            fields.zipCode || fields.city
+                ? { city: fields.city, country: fields.country, latitude: null, longitude: null, zipCode: fields.zipCode }
+                : null;
+        this.localityInput.value = this._locality;
         this._isApplyingValue = false;
     }
     _updateValueFromInputs() {
         this.input.value = {
-            city: this.cityInput.value ?? null,
+            city: this._locality?.city ?? null,
             country: this.countryInput.value?.[0] ?? null,
             floor: this.complementInput.value ?? null,
             latitude: this._geo.latitude,
@@ -308,11 +410,11 @@ class InputAddressComponent extends TaAbstractInputComponent {
             number: this.numberInput.value ?? null,
             placeId: this._geo.placeId,
             street: this.streetInput.value ?? null,
-            zipCode: this.zipCodeInput.value ?? null,
+            zipCode: this._locality?.zipCode ?? null,
         };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", viewQueries: [{ propertyName: "googleSearchInput", first: true, predicate: ["googleSearchInput"], descendants: true }, { propertyName: "_choicesRef", first: true, predicate: InputChoicesComponent, descendants: true }, { propertyName: "_localityItemTpl", first: true, predicate: ["localityItemTpl"], descendants: true, static: true }, { propertyName: "_countryItemTpl", first: true, predicate: ["countryItemTpl"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div class=\"address-form flex-column g-space-md\">\n  @if (this.searchEnabled) {\n    <div class=\"address-search\">\n      <ta-font-icon class=\"address-search__icon\" name=\"search\" type=\"sm\"></ta-font-icon>\n      <input\n        #googleSearchInput\n        class=\"address-search__input\"\n        type=\"text\"\n        autocomplete=\"off\"\n        [placeholder]=\"'form.address.search-google' | translate\"\n      />\n    </div>\n    <span class=\"address-search__hint\">{{ 'form.address.search-hint' | translate }}</span>\n  }\n\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-half\">\n      <ta-input-textbox\n        [input]=\"this.streetInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.numberInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.complementInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n\n    @if (this.localityAvailable) {\n      <div class=\"full\">\n        <ta-input-choices\n          [input]=\"this.localityInput\"\n          [standalone]=\"true\"\n          (valueChanged)=\"this.onLocalitySelected()\"\n        ></ta-input-choices>\n      </div>\n    } @else {\n      <div class=\"one-third\">\n        <ta-input-textbox\n          [input]=\"this.zipCodeInput\"\n          [standalone]=\"true\"\n          (valueChanged)=\"this.onSubInputChanged()\"\n        ></ta-input-textbox>\n      </div>\n      <div class=\"two-thirds\">\n        <ta-input-textbox\n          [input]=\"this.cityInput\"\n          [standalone]=\"true\"\n          (valueChanged)=\"this.onSubInputChanged()\"\n        ></ta-input-textbox>\n      </div>\n    }\n\n    <div class=\"full\">\n      <ta-input-choices\n        [input]=\"this.countryInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-choices>\n    </div>\n  </div>\n</div>\n\n<ng-template #localityItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.zipCode }} {{ item.city }}</span>\n</ng-template>\n\n<ng-template #countryItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.name }}</span>\n</ng-template>\n", styles: [":host{display:block}.address-search{display:flex;align-items:center;gap:var(--ta-space-sm);padding:var(--ta-space-sm) var(--ta-space-md);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);background:var(--ta-surface-primary);transition:border-color var(--ta-transition-fast),box-shadow var(--ta-transition-fast)}.address-search:focus-within{border-color:var(--ta-border-brand-primary);box-shadow:0 0 0 3px var(--ta-brand-100)}.address-search__icon{flex:0 0 auto;color:var(--ta-icon-brand)}.address-search__input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.address-search__input::placeholder{color:var(--ta-text-tertiary)}.address-search__hint{color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom", "variant"] }, { kind: "component", type: InputChoicesComponent, selector: "ta-input-choices" }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputAddressComponent, isStandalone: true, selector: "ta-input-address", viewQueries: [{ propertyName: "googleSearchInput", first: true, predicate: ["googleSearchInput"], descendants: true }, { propertyName: "_countryItemTpl", first: true, predicate: ["countryItemTpl"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div class=\"address-form flex-column g-space-md\">\n  @if (this.searchEnabled) {\n    <div class=\"address-search\">\n      <ta-font-icon class=\"address-search__icon\" name=\"search\" type=\"sm\"></ta-font-icon>\n      <input\n        #googleSearchInput\n        class=\"address-search__input\"\n        type=\"text\"\n        autocomplete=\"off\"\n        [placeholder]=\"'form.address.search-google' | translate\"\n      />\n    </div>\n    <span class=\"address-search__hint\">{{ 'form.address.search-hint' | translate }}</span>\n  }\n\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-half\">\n      <ta-input-textbox\n        [input]=\"this.streetInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.numberInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.complementInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n\n    <div class=\"full\">\n      <ta-input-locality\n        [input]=\"this.localityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onLocalityChanged($event)\"\n      ></ta-input-locality>\n    </div>\n\n    <div class=\"full\">\n      <ta-input-choices\n        [input]=\"this.countryInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-choices>\n    </div>\n  </div>\n</div>\n\n<ng-template #countryItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.name }}</span>\n</ng-template>\n", styles: [":host{display:block}.address-search{display:flex;align-items:center;gap:var(--ta-space-sm);padding:var(--ta-space-sm) var(--ta-space-md);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);background:var(--ta-surface-primary);transition:border-color var(--ta-transition-fast),box-shadow var(--ta-transition-fast)}.address-search:focus-within{border-color:var(--ta-border-brand-primary);box-shadow:0 0 0 3px var(--ta-brand-100)}.address-search__icon{flex:0 0 auto;color:var(--ta-icon-brand)}.address-search__input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.address-search__input::placeholder{color:var(--ta-text-tertiary)}.address-search__hint{color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: FormLabelComponent, selector: "ta-form-label", inputs: ["input", "withMarginBottom", "variant"] }, { kind: "component", type: InputChoicesComponent, selector: "ta-input-choices" }, { kind: "component", type: InputLocalityComponent, selector: "ta-input-locality" }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputAddressComponent, decorators: [{
             type: Component,
@@ -320,18 +422,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         FontIconComponent,
                         FormLabelComponent,
                         InputChoicesComponent,
+                        InputLocalityComponent,
                         TextBoxComponent,
                         TranslatePipe,
-                    ], selector: 'ta-input-address', standalone: true, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div class=\"address-form flex-column g-space-md\">\n  @if (this.searchEnabled) {\n    <div class=\"address-search\">\n      <ta-font-icon class=\"address-search__icon\" name=\"search\" type=\"sm\"></ta-font-icon>\n      <input\n        #googleSearchInput\n        class=\"address-search__input\"\n        type=\"text\"\n        autocomplete=\"off\"\n        [placeholder]=\"'form.address.search-google' | translate\"\n      />\n    </div>\n    <span class=\"address-search__hint\">{{ 'form.address.search-hint' | translate }}</span>\n  }\n\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-half\">\n      <ta-input-textbox\n        [input]=\"this.streetInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.numberInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.complementInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n\n    @if (this.localityAvailable) {\n      <div class=\"full\">\n        <ta-input-choices\n          [input]=\"this.localityInput\"\n          [standalone]=\"true\"\n          (valueChanged)=\"this.onLocalitySelected()\"\n        ></ta-input-choices>\n      </div>\n    } @else {\n      <div class=\"one-third\">\n        <ta-input-textbox\n          [input]=\"this.zipCodeInput\"\n          [standalone]=\"true\"\n          (valueChanged)=\"this.onSubInputChanged()\"\n        ></ta-input-textbox>\n      </div>\n      <div class=\"two-thirds\">\n        <ta-input-textbox\n          [input]=\"this.cityInput\"\n          [standalone]=\"true\"\n          (valueChanged)=\"this.onSubInputChanged()\"\n        ></ta-input-textbox>\n      </div>\n    }\n\n    <div class=\"full\">\n      <ta-input-choices\n        [input]=\"this.countryInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-choices>\n    </div>\n  </div>\n</div>\n\n<ng-template #localityItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.zipCode }} {{ item.city }}</span>\n</ng-template>\n\n<ng-template #countryItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.name }}</span>\n</ng-template>\n", styles: [":host{display:block}.address-search{display:flex;align-items:center;gap:var(--ta-space-sm);padding:var(--ta-space-sm) var(--ta-space-md);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);background:var(--ta-surface-primary);transition:border-color var(--ta-transition-fast),box-shadow var(--ta-transition-fast)}.address-search:focus-within{border-color:var(--ta-border-brand-primary);box-shadow:0 0 0 3px var(--ta-brand-100)}.address-search__icon{flex:0 0 auto;color:var(--ta-icon-brand)}.address-search__input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.address-search__input::placeholder{color:var(--ta-text-tertiary)}.address-search__hint{color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
+                    ], selector: 'ta-input-address', standalone: true, template: "<ta-form-label [input]=\"this.input\"></ta-form-label>\n\n<div class=\"address-form flex-column g-space-md\">\n  @if (this.searchEnabled) {\n    <div class=\"address-search\">\n      <ta-font-icon class=\"address-search__icon\" name=\"search\" type=\"sm\"></ta-font-icon>\n      <input\n        #googleSearchInput\n        class=\"address-search__input\"\n        type=\"text\"\n        autocomplete=\"off\"\n        [placeholder]=\"'form.address.search-google' | translate\"\n      />\n    </div>\n    <span class=\"address-search__hint\">{{ 'form.address.search-hint' | translate }}</span>\n  }\n\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-half\">\n      <ta-input-textbox\n        [input]=\"this.streetInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.numberInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"one-fourth\">\n      <ta-input-textbox\n        [input]=\"this.complementInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n\n    <div class=\"full\">\n      <ta-input-locality\n        [input]=\"this.localityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onLocalityChanged($event)\"\n      ></ta-input-locality>\n    </div>\n\n    <div class=\"full\">\n      <ta-input-choices\n        [input]=\"this.countryInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onSubInputChanged()\"\n      ></ta-input-choices>\n    </div>\n  </div>\n</div>\n\n<ng-template #countryItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.name }}</span>\n</ng-template>\n", styles: [":host{display:block}.address-search{display:flex;align-items:center;gap:var(--ta-space-sm);padding:var(--ta-space-sm) var(--ta-space-md);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);background:var(--ta-surface-primary);transition:border-color var(--ta-transition-fast),box-shadow var(--ta-transition-fast)}.address-search:focus-within{border-color:var(--ta-border-brand-primary);box-shadow:0 0 0 3px var(--ta-brand-100)}.address-search__icon{flex:0 0 auto;color:var(--ta-icon-brand)}.address-search__input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.address-search__input::placeholder{color:var(--ta-text-tertiary)}.address-search__hint{color:var(--ta-text-secondary);font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"] }]
         }], ctorParameters: () => [], propDecorators: { googleSearchInput: [{
                 type: ViewChild,
                 args: ['googleSearchInput']
-            }], _choicesRef: [{
-                type: ViewChild,
-                args: [InputChoicesComponent]
-            }], _localityItemTpl: [{
-                type: ViewChild,
-                args: ['localityItemTpl', { static: true }]
             }], _countryItemTpl: [{
                 type: ViewChild,
                 args: ['countryItemTpl', { static: true }]
@@ -492,7 +589,7 @@ class InputsComponent extends TaBaseComponent {
         this.matcher = new MyErrorStateMatcher();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputsComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputsComponent, isStandalone: true, selector: "ta-inputs", inputs: { inputModel: { classPropertyName: "inputModel", publicName: "input", isSignal: true, isRequired: true, transformFunction: null }, standaloneMode: { classPropertyName: "standaloneMode", publicName: "standalone", isSignal: true, isRequired: false, transformFunction: null }, onFocusObs: { classPropertyName: "onFocusObs", publicName: "onFocus", isSignal: true, isRequired: false, transformFunction: null }, space: { classPropertyName: "space", publicName: "space", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-container\n  [ngTemplateOutlet]=\"inputsTemplate\"\n  [ngTemplateOutletContext]=\"{\n    input: this.inputModel(),\n    matcher: this.matcher,\n  }\"\n></ng-container>\n\n<ng-template #inputsTemplate let-input=\"input\" let-matcher=\"matcher\">\n  @switch (input.controlType) {\n    @case ('textbox') {\n      <ta-input-textbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-textbox>\n    }\n    @case ('textarea') {\n      <ta-input-textarea\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-textarea>\n    }\n    @case ('dropdown') {\n      <ta-input-dropdown\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-dropdown>\n    }\n    @case ('datePicker') {\n      <ta-input-date-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-date-picker>\n    }\n    @case ('timePicker') {\n      <ta-input-time-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-time-picker>\n    }\n    @case ('radio') {\n      <ta-input-radio\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-radio>\n    }\n    @case ('dynamic') {\n      <ta-input-dynamic [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-dynamic>\n    }\n    @case ('checkbox') {\n      <ta-input-checkbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-checkbox>\n    }\n    @case ('toggle') {\n      <ta-input-toggle\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-toggle>\n    }\n    @case ('panel') {\n      <ta-form-panel [panel]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-form-panel>\n    }\n    @case ('label') {\n      <ta-input-label [input]=\"input\"></ta-input-label>\n    }\n    @case ('switch') {\n      <ta-input-switch\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-switch>\n    }\n    @case ('images') {\n      <ta-input-images\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-images>\n    }\n    @case ('logo') {\n      <ta-input-logo\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-logo>\n    }\n    @case ('image') {\n      <ta-input-image\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-image>\n    }\n    @case ('schema') {\n      <ta-input-schema\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-schema>\n    }\n    @case ('upload') {\n      <ta-input-upload\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-upload>\n    }\n    @case ('slider') {\n      <ta-input-slider\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-slider>\n    }\n    @case ('choices') {\n      <ta-input-choices\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-choices>\n    }\n    @case ('wysiswyg') {\n      <ta-input-wysiswyg\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-wysiswyg>\n    }\n    @case ('translation') {\n      <ta-input-translation [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-translation>\n    }\n    @case ('phone') {\n      <ta-input-phone\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-phone>\n    }\n    @case ('address') {\n      <ta-input-address\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-address>\n    }\n    @case ('culture') {\n      <ta-input-culture\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-culture>\n    }\n    @case ('component') {\n      <ta-input-component\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-component>\n    }\n    @case ('rating') {\n      <ta-input-rating\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-rating>\n    }\n  }\n</ng-template>\n", styles: [""], dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "component", type: InputChoicesComponent, selector: "ta-input-choices" }, { kind: "component", type: ComponentInputComponent, selector: "ta-input-component" }, { kind: "component", type: CultureComponent, selector: "ta-input-culture" }, { kind: "component", type: DatePickerComponent, selector: "ta-input-date-picker" }, { kind: "component", type: DropdownComponent, selector: "ta-input-dropdown", inputs: ["space"] }, { kind: "component", type: LabelComponent, selector: "ta-input-label" }, { kind: "component", type: InputPhoneComponent, selector: "ta-input-phone" }, { kind: "component", type: RadioComponent, selector: "ta-input-radio" }, { kind: "component", type: InputSchemaComponent, selector: "ta-input-schema" }, { kind: "component", type: SliderComponent, selector: "ta-input-slider" }, { kind: "component", type: SwitchComponent, selector: "ta-input-switch" }, { kind: "component", type: TextareaComponent, selector: "ta-input-textarea" }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: TimePickerComponent, selector: "ta-input-time-picker" }, { kind: "component", type: ToggleComponent, selector: "ta-input-toggle" }, { kind: "component", type: UploadComponent, selector: "ta-input-upload", outputs: ["uploadStatusChanged"] }, { kind: "component", type: InputImageComponent, selector: "ta-input-image" }, { kind: "component", type: InputImagesComponent, selector: "ta-input-images" }, { kind: "component", type: InputLogoComponent, selector: "ta-input-logo" }, { kind: "component", type: WysiswygComponent, selector: "ta-input-wysiswyg" }, { kind: "component", type: DynamicComponent, selector: "ta-input-dynamic", inputs: ["inputsTemplate", "input"] }, { kind: "component", type: PanelComponent, selector: "ta-form-panel", inputs: ["inputsTemplate", "panel"] }, { kind: "component", type: InputTranslationComponent, selector: "ta-input-translation", inputs: ["input", "inputsTemplate"] }, { kind: "component", type: InputAddressComponent, selector: "ta-input-address" }, { kind: "component", type: RatingComponent, selector: "ta-input-rating" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputsComponent, isStandalone: true, selector: "ta-inputs", inputs: { inputModel: { classPropertyName: "inputModel", publicName: "input", isSignal: true, isRequired: true, transformFunction: null }, standaloneMode: { classPropertyName: "standaloneMode", publicName: "standalone", isSignal: true, isRequired: false, transformFunction: null }, onFocusObs: { classPropertyName: "onFocusObs", publicName: "onFocus", isSignal: true, isRequired: false, transformFunction: null }, space: { classPropertyName: "space", publicName: "space", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-container\n  [ngTemplateOutlet]=\"inputsTemplate\"\n  [ngTemplateOutletContext]=\"{\n    input: this.inputModel(),\n    matcher: this.matcher,\n  }\"\n></ng-container>\n\n<ng-template #inputsTemplate let-input=\"input\" let-matcher=\"matcher\">\n  @switch (input.controlType) {\n    @case ('textbox') {\n      <ta-input-textbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-textbox>\n    }\n    @case ('textarea') {\n      <ta-input-textarea\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-textarea>\n    }\n    @case ('dropdown') {\n      <ta-input-dropdown\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-dropdown>\n    }\n    @case ('datePicker') {\n      <ta-input-date-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-date-picker>\n    }\n    @case ('timePicker') {\n      <ta-input-time-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-time-picker>\n    }\n    @case ('radio') {\n      <ta-input-radio\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-radio>\n    }\n    @case ('dynamic') {\n      <ta-input-dynamic [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-dynamic>\n    }\n    @case ('checkbox') {\n      <ta-input-checkbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-checkbox>\n    }\n    @case ('toggle') {\n      <ta-input-toggle\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-toggle>\n    }\n    @case ('panel') {\n      <ta-form-panel [panel]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-form-panel>\n    }\n    @case ('label') {\n      <ta-input-label [input]=\"input\"></ta-input-label>\n    }\n    @case ('switch') {\n      <ta-input-switch\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-switch>\n    }\n    @case ('images') {\n      <ta-input-images\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-images>\n    }\n    @case ('logo') {\n      <ta-input-logo\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-logo>\n    }\n    @case ('image') {\n      <ta-input-image\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-image>\n    }\n    @case ('schema') {\n      <ta-input-schema\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-schema>\n    }\n    @case ('upload') {\n      <ta-input-upload\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-upload>\n    }\n    @case ('slider') {\n      <ta-input-slider\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-slider>\n    }\n    @case ('choices') {\n      <ta-input-choices\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-choices>\n    }\n    @case ('wysiswyg') {\n      <ta-input-wysiswyg\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-wysiswyg>\n    }\n    @case ('translation') {\n      <ta-input-translation [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-translation>\n    }\n    @case ('phone') {\n      <ta-input-phone\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-phone>\n    }\n    @case ('address') {\n      <ta-input-address\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-address>\n    }\n    @case ('locality') {\n      <ta-input-locality\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-locality>\n    }\n    @case ('culture') {\n      <ta-input-culture\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-culture>\n    }\n    @case ('component') {\n      <ta-input-component\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-component>\n    }\n    @case ('rating') {\n      <ta-input-rating\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-rating>\n    }\n  }\n</ng-template>\n", styles: [""], dependencies: [{ kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "component", type: CheckboxComponent, selector: "ta-input-checkbox" }, { kind: "component", type: InputChoicesComponent, selector: "ta-input-choices" }, { kind: "component", type: ComponentInputComponent, selector: "ta-input-component" }, { kind: "component", type: CultureComponent, selector: "ta-input-culture" }, { kind: "component", type: DatePickerComponent, selector: "ta-input-date-picker" }, { kind: "component", type: DropdownComponent, selector: "ta-input-dropdown", inputs: ["space"] }, { kind: "component", type: LabelComponent, selector: "ta-input-label" }, { kind: "component", type: InputPhoneComponent, selector: "ta-input-phone" }, { kind: "component", type: RadioComponent, selector: "ta-input-radio" }, { kind: "component", type: InputSchemaComponent, selector: "ta-input-schema" }, { kind: "component", type: SliderComponent, selector: "ta-input-slider" }, { kind: "component", type: SwitchComponent, selector: "ta-input-switch" }, { kind: "component", type: TextareaComponent, selector: "ta-input-textarea" }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }, { kind: "component", type: TimePickerComponent, selector: "ta-input-time-picker" }, { kind: "component", type: ToggleComponent, selector: "ta-input-toggle" }, { kind: "component", type: UploadComponent, selector: "ta-input-upload", outputs: ["uploadStatusChanged"] }, { kind: "component", type: InputImageComponent, selector: "ta-input-image" }, { kind: "component", type: InputImagesComponent, selector: "ta-input-images" }, { kind: "component", type: InputLogoComponent, selector: "ta-input-logo" }, { kind: "component", type: WysiswygComponent, selector: "ta-input-wysiswyg" }, { kind: "component", type: DynamicComponent, selector: "ta-input-dynamic", inputs: ["inputsTemplate", "input"] }, { kind: "component", type: PanelComponent, selector: "ta-form-panel", inputs: ["inputsTemplate", "panel"] }, { kind: "component", type: InputTranslationComponent, selector: "ta-input-translation", inputs: ["input", "inputsTemplate"] }, { kind: "component", type: InputAddressComponent, selector: "ta-input-address" }, { kind: "component", type: InputLocalityComponent, selector: "ta-input-locality" }, { kind: "component", type: RatingComponent, selector: "ta-input-rating" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputsComponent, decorators: [{
             type: Component,
@@ -523,8 +620,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                         PanelComponent,
                         InputTranslationComponent,
                         InputAddressComponent,
+                        InputLocalityComponent,
                         RatingComponent,
-                    ], template: "<ng-container\n  [ngTemplateOutlet]=\"inputsTemplate\"\n  [ngTemplateOutletContext]=\"{\n    input: this.inputModel(),\n    matcher: this.matcher,\n  }\"\n></ng-container>\n\n<ng-template #inputsTemplate let-input=\"input\" let-matcher=\"matcher\">\n  @switch (input.controlType) {\n    @case ('textbox') {\n      <ta-input-textbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-textbox>\n    }\n    @case ('textarea') {\n      <ta-input-textarea\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-textarea>\n    }\n    @case ('dropdown') {\n      <ta-input-dropdown\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-dropdown>\n    }\n    @case ('datePicker') {\n      <ta-input-date-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-date-picker>\n    }\n    @case ('timePicker') {\n      <ta-input-time-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-time-picker>\n    }\n    @case ('radio') {\n      <ta-input-radio\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-radio>\n    }\n    @case ('dynamic') {\n      <ta-input-dynamic [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-dynamic>\n    }\n    @case ('checkbox') {\n      <ta-input-checkbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-checkbox>\n    }\n    @case ('toggle') {\n      <ta-input-toggle\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-toggle>\n    }\n    @case ('panel') {\n      <ta-form-panel [panel]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-form-panel>\n    }\n    @case ('label') {\n      <ta-input-label [input]=\"input\"></ta-input-label>\n    }\n    @case ('switch') {\n      <ta-input-switch\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-switch>\n    }\n    @case ('images') {\n      <ta-input-images\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-images>\n    }\n    @case ('logo') {\n      <ta-input-logo\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-logo>\n    }\n    @case ('image') {\n      <ta-input-image\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-image>\n    }\n    @case ('schema') {\n      <ta-input-schema\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-schema>\n    }\n    @case ('upload') {\n      <ta-input-upload\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-upload>\n    }\n    @case ('slider') {\n      <ta-input-slider\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-slider>\n    }\n    @case ('choices') {\n      <ta-input-choices\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-choices>\n    }\n    @case ('wysiswyg') {\n      <ta-input-wysiswyg\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-wysiswyg>\n    }\n    @case ('translation') {\n      <ta-input-translation [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-translation>\n    }\n    @case ('phone') {\n      <ta-input-phone\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-phone>\n    }\n    @case ('address') {\n      <ta-input-address\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-address>\n    }\n    @case ('culture') {\n      <ta-input-culture\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-culture>\n    }\n    @case ('component') {\n      <ta-input-component\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-component>\n    }\n    @case ('rating') {\n      <ta-input-rating\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-rating>\n    }\n  }\n</ng-template>\n" }]
+                    ], template: "<ng-container\n  [ngTemplateOutlet]=\"inputsTemplate\"\n  [ngTemplateOutletContext]=\"{\n    input: this.inputModel(),\n    matcher: this.matcher,\n  }\"\n></ng-container>\n\n<ng-template #inputsTemplate let-input=\"input\" let-matcher=\"matcher\">\n  @switch (input.controlType) {\n    @case ('textbox') {\n      <ta-input-textbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-textbox>\n    }\n    @case ('textarea') {\n      <ta-input-textarea\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-textarea>\n    }\n    @case ('dropdown') {\n      <ta-input-dropdown\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n        [space]=\"this.space()\"\n      ></ta-input-dropdown>\n    }\n    @case ('datePicker') {\n      <ta-input-date-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-date-picker>\n    }\n    @case ('timePicker') {\n      <ta-input-time-picker\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-time-picker>\n    }\n    @case ('radio') {\n      <ta-input-radio\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-radio>\n    }\n    @case ('dynamic') {\n      <ta-input-dynamic [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-dynamic>\n    }\n    @case ('checkbox') {\n      <ta-input-checkbox\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-checkbox>\n    }\n    @case ('toggle') {\n      <ta-input-toggle\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-toggle>\n    }\n    @case ('panel') {\n      <ta-form-panel [panel]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-form-panel>\n    }\n    @case ('label') {\n      <ta-input-label [input]=\"input\"></ta-input-label>\n    }\n    @case ('switch') {\n      <ta-input-switch\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-switch>\n    }\n    @case ('images') {\n      <ta-input-images\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-images>\n    }\n    @case ('logo') {\n      <ta-input-logo\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-logo>\n    }\n    @case ('image') {\n      <ta-input-image\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-image>\n    }\n    @case ('schema') {\n      <ta-input-schema\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-schema>\n    }\n    @case ('upload') {\n      <ta-input-upload\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-upload>\n    }\n    @case ('slider') {\n      <ta-input-slider\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-slider>\n    }\n    @case ('choices') {\n      <ta-input-choices\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-choices>\n    }\n    @case ('wysiswyg') {\n      <ta-input-wysiswyg\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-wysiswyg>\n    }\n    @case ('translation') {\n      <ta-input-translation [input]=\"input\" [inputsTemplate]=\"inputsTemplate\"></ta-input-translation>\n    }\n    @case ('phone') {\n      <ta-input-phone\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-phone>\n    }\n    @case ('address') {\n      <ta-input-address\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-address>\n    }\n    @case ('locality') {\n      <ta-input-locality\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-locality>\n    }\n    @case ('culture') {\n      <ta-input-culture\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-culture>\n    }\n    @case ('component') {\n      <ta-input-component\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-component>\n    }\n    @case ('rating') {\n      <ta-input-rating\n        [input]=\"input\"\n        [matcher]=\"matcher\"\n        [onFocus]=\"this.onFocusObs()\"\n        [standalone]=\"this.standaloneMode()\"\n      ></ta-input-rating>\n    }\n  }\n</ng-template>\n" }]
         }] });
 
 class FormComponent extends TaBaseComponent {

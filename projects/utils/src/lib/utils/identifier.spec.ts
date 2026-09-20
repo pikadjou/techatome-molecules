@@ -1,4 +1,4 @@
-import { newGuid, newId, s4 } from './identifier';
+import { newGuid, newId, s4, sameGuid } from './identifier';
 
 describe('identifier utils', () => {
   describe('s4', () => {
@@ -46,6 +46,28 @@ describe('identifier utils', () => {
     it('should return an integer', () => {
       const result = newId();
       expect(Number.isInteger(result)).toBe(true);
+    });
+  });
+
+  describe('sameGuid', () => {
+    // Le cas qui justifie la fonction : l'API rend l'id sans tirets, l'erreur avec.
+    it('should ignore dashes and case', () => {
+      expect(
+        sameGuid('3f2b9c1d4e5a6b7c8d9e0f1a2b3c4d5e', '3F2B9C1D-4E5A-6B7C-8D9E-0F1A2B3C4D5E')
+      ).toBeTrue();
+    });
+
+    it('should tell different guids apart', () => {
+      expect(
+        sameGuid('3f2b9c1d4e5a6b7c8d9e0f1a2b3c4d5e', '9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d')
+      ).toBeFalse();
+    });
+
+    it('should never match an absent value', () => {
+      expect(sameGuid(null, null)).toBeFalse();
+      expect(sameGuid(undefined, undefined)).toBeFalse();
+      expect(sameGuid('', '')).toBeFalse();
+      expect(sameGuid('abc', undefined)).toBeFalse();
     });
   });
 });

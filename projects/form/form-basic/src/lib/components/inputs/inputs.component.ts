@@ -34,6 +34,7 @@ import { TaBaseComponent } from '@ta/utils';
 
 import { InputAddressComponent } from '../input/address/address.component';
 import { DynamicComponent } from '../input/dynamic/dynamic.component';
+import { InputLocalityComponent } from '../input/locality/locality.component';
 import { PanelComponent } from '../input/panel/panel.component';
 import { InputTranslationComponent } from '../input/translation/translation.component';
 
@@ -76,6 +77,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     PanelComponent,
     InputTranslationComponent,
     InputAddressComponent,
+    InputLocalityComponent,
     RatingComponent,
   ],
 })

@@ -584,6 +584,28 @@ class InputAddress extends InputBase {
     }
 }
 
+/**
+ * Code postal + commune choisis dans la liste officielle du pays — jamais saisis
+ * librement. C'est la brique « localité » de l'adresse, utilisable seule : une
+ * zone de recherche, un périmètre d'intervention.
+ *
+ * Valeur : `AddressLocality` (ou `AddressLocality[]` si `multiple`), `null` tant
+ * que rien n'est choisi.
+ */
+class InputLocality extends InputBase {
+    constructor(options = {}) {
+        super(options);
+        this.controlType = 'locality';
+        this.type = 'locality';
+        this.country$ = options.country$ ?? null;
+        this.multiple = options.multiple === true;
+    }
+    /** Identifiant d'une localité dans une liste de choix : le couple code postal + commune. */
+    static localityId(locality) {
+        return `${locality.zipCode}__${locality.city}`;
+    }
+}
+
 class InputTranslation extends InputDynamic {
     constructor(options) {
         super(options);
@@ -649,5 +671,5 @@ class InputComponent extends InputBase {
  * Generated bundle index. Do not edit.
  */
 
-export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
+export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLocality, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
 //# sourceMappingURL=ta-form-model.mjs.map

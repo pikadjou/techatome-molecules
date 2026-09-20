@@ -31,6 +31,7 @@ export * from "./input/schema";
 export * from "./input/choices";
 export * from "./input/wysiswyg";
 export * from "./input/address";
+export * from "./input/locality";
 export * from "./input/upload";
 export * from "./input/translation";
 export * from "./input/culture";

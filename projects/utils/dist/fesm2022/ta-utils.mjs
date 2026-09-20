@@ -839,6 +839,23 @@ const newGuid = () => {
 const newId = () => {
     return Math.floor(Math.random() * 1000000 + 1);
 };
+/**
+ * Deux identifiants désignent-ils le même GUID ?
+ *
+ * Un GUID circule sous plusieurs écritures — avec ou sans tirets, en
+ * majuscules ou en minuscules — selon qu'il sort d'une API, d'une URL ou d'une
+ * extension d'erreur. Une valeur absente ne désigne rien : elle n'est jamais
+ * égale, pas même à une autre valeur absente.
+ */
+const sameGuid = (a, b) => {
+    if (!a || !b) {
+        return false;
+    }
+    return normalizeGuid(a) === normalizeGuid(b);
+};
+const normalizeGuid = (guid) => {
+    return guid.replace(/-/g, "").toLowerCase();
+};
 const s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
@@ -1319,5 +1336,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, sameGuid, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map
