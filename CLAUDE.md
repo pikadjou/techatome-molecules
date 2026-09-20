@@ -457,8 +457,9 @@ Follow the documented process in README.md or use `/ta-library`:
 2. Update `ng-package.json` dest to `'dist'`
 3. Update `package.json` name to `'@ta/[LibName]'`
 4. Add build scripts to package.json
-5. Update angular.json project references
-6. Update tsconfig path mappings
+5. Update angular.json project references (the `test` target needs `"include": ["../../../tests/[LibName]/**/*.spec.ts"]`, one more `../` for nested libs)
+6. Update tsconfig path mappings: `@ta/[LibName]` → `projects/[LibName]` **and** `@lib/[LibName]/*` → `projects/[LibName]/src/lib/*`
+7. Point the library's `tsconfig.spec.json` at `../../tests/[LibName]/**/*.spec.ts` (keep `src/**/*.d.ts`)
 
 ### Building and Testing
 
@@ -494,4 +495,10 @@ Follow the documented process in README.md or use `/ta-library`:
 - Storybook for component documentation and manual testing
 - ESLint + Prettier for code quality
 - Individual library testing is supported
-- Tests are located alongside source files in each library
+- Unit specs are centralized under `tests/<lib>/`, mirroring the library's `src/lib/` tree
+  (e.g. `projects/ui/src/lib/components/ui/button/button.component.ts` → `tests/ui/components/ui/button/button.component.spec.ts`).
+  Never put a `.spec.ts` next to a component.
+- Specs import the code under test through the `@lib/<lib>/*` alias (→ `projects/<lib>/src/lib/*`),
+  e.g. `import { ButtonComponent } from '@lib/ui/components/ui/button/button.component'`.
+  `@ta/<lib>` resolves to the built `dist/`, so it is only for *other* libraries. `@lib/*` is reserved for `tests/`.
+- E2E specs (Playwright) live in `e2e/specs/<lib>/`

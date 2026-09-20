@@ -107,6 +107,72 @@
       ],
       "@ta/testing/e2e": [
         "projects/testing/e2e/src/public-api.ts"
+      ],
+      "@lib/ui/*": [
+        "projects/ui/src/lib/*"
+      ],
+      "@lib/server/*": [
+        "projects/server/src/lib/*"
+      ],
+      "@lib/services/*": [
+        "projects/services/src/lib/*"
+      ],
+      "@lib/utils/*": [
+        "projects/utils/src/lib/*"
+      ],
+      "@lib/notification/*": [
+        "projects/notification/src/lib/*"
+      ],
+      "@lib/menu/*": [
+        "projects/menu/src/lib/*"
+      ],
+      "@lib/translation/*": [
+        "projects/translation/src/lib/*"
+      ],
+      "@lib/form-input/*": [
+        "projects/form/form-input/src/lib/*"
+      ],
+      "@lib/form-model/*": [
+        "projects/form/form-model/src/lib/*"
+      ],
+      "@lib/form-basic/*": [
+        "projects/form/form-basic/src/lib/*"
+      ],
+      "@lib/styles/*": [
+        "projects/styles/src/lib/*"
+      ],
+      "@lib/files-basic/*": [
+        "projects/files/files-basic/src/lib/*"
+      ],
+      "@lib/files-extended/*": [
+        "projects/files/files-extended/src/lib/*"
+      ],
+      "@lib/icons/*": [
+        "projects/icons/src/lib/*"
+      ],
+      "@lib/capacitor/*": [
+        "projects/capacitor/src/lib/*"
+      ],
+      "@lib/core/*": [
+        "projects/core/src/lib/*"
+      ],
+      "@lib/user/*": [
+        "projects/user/src/lib/*"
+      ],
+      "@lib/cms/*": [
+        "projects/cms/src/lib/*"
+      ],
+      "@lib/wysiswyg/*": [
+        "projects/wysiswyg/src/lib/*"
+      ],
+      "@lib/charts/*": [
+        "projects/charts/src/lib/*"
+      ],
+      "@lib/features/*": [
+        "projects/features/src/lib/*"
+      ],
+      "@lib/testing/*": [
+        "projects/testing/src/lib/*"
       ]
     },
     "lib": [

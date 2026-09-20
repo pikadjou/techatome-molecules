@@ -51,6 +51,10 @@ Format : nom — description courte. Le fichier de référence est `references/t
 ## Conventions de test dans techatome
 
 - Pas de génération automatique de `.spec.ts` (`skipTests: true` dans angular.json) — créer manuellement.
+- Specs unitaires centralisés dans `tests/<lib>/`, en miroir de `projects/<lib>/src/lib/` — jamais à côté du composant
+  (`projects/ui/src/lib/components/ui/button/button.component.ts` → `tests/ui/components/ui/button/button.component.spec.ts`).
+- Le code testé s'importe via l'alias `@lib/<lib>/…` (→ `projects/<lib>/src/lib/…`) ; `@ta/<lib>` pointe sur `dist/` et ne sert
+  qu'aux *autres* librairies. `@lib/*` est réservé aux specs.
 - Mocks locaux dans `__mocks__/` dans chaque librairie.
 - Tests standalone importent directement le composant (pas de module NgModule).
 - `httpMock.verify()` à la fin de chaque test avec requêtes HTTP.
