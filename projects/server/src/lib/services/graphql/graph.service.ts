@@ -183,6 +183,50 @@ export class TaGraphService {
     );
   }
 
+  /**
+   * Comme `fetchQueryBuilder`, mais la requête reste ouverte : Apollo la rejoue toutes les
+   * `pollInterval` millisecondes et chaque réponse est émise, sans passer par le cache. Le flux ne
+   * se termine pas de lui-même — c'est à l'appelant de se désabonner quand il a ce qu'il attend.
+   */
+  public watchQueryBuilder<T>(payload: GraphPayload, context: string, pollInterval: number) {
+    Logger.LogInfo('[GraphQL] [Prepare] watchQueryBuilder:', {
+      payload,
+      context,
+      pollInterval,
+    });
+    return this._getWrapper({ context }).pipe(
+      take(1),
+      switchMap(() =>
+        this.apollo
+          .watchQuery<{ [key: string]: T }>({
+            ...this._setupData(payload, context),
+            fetchPolicy: 'network-only',
+            pollInterval,
+          })
+          .valueChanges.pipe(
+            tap(data =>
+              Logger.LogInfo('[GraphQL] [Response] watchQueryBuilder:', {
+                data,
+                context,
+              })
+            ),
+            filter(response => !!response.data),
+            map(response => response.data[payload.name]),
+            catchError((err: ApolloError) => {
+              Logger.LogError('[GraphQL] [Error] watchQueryBuilder:', {
+                payload,
+                context,
+                message: err.message,
+              });
+
+              this._errorServices.addError(payload, err);
+              return throwError(() => err);
+            })
+          )
+      )
+    );
+  }
+
   public fetchQuery<T>(payload: GraphQueryPayload, node: string, context: string) {
     return this._getWrapper({ context }).pipe(
       tap(() =>

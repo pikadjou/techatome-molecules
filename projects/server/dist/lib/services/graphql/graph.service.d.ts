@@ -24,6 +24,12 @@ export declare class TaGraphService {
         items?: T[] | undefined;
     }>;
     fetchQueryBuilder<T>(payload: GraphPayload, context: string): import("rxjs").Observable<T>;
+    /**
+     * Comme `fetchQueryBuilder`, mais la requête reste ouverte : Apollo la rejoue toutes les
+     * `pollInterval` millisecondes et chaque réponse est émise, sans passer par le cache. Le flux ne
+     * se termine pas de lui-même — c'est à l'appelant de se désabonner quand il a ce qu'il attend.
+     */
+    watchQueryBuilder<T>(payload: GraphPayload, context: string, pollInterval: number): import("rxjs").Observable<T>;
     fetchQuery<T>(payload: GraphQueryPayload, node: string, context: string): import("rxjs").Observable<T>;
     mutate<T>(payload: GraphMutationPayload, mutationName: string, context: string, clearCache?: string[]): import("rxjs").Observable<T>;
     registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions): void;
