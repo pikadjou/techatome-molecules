@@ -12,15 +12,15 @@ export const gridSearchFieldsName = 'search';
 const filterTypeToGql: Record<FilterType, string> = {
   '=': 'eq',
   '!=': 'neq',
-  like: 'contains',
+  'like': 'contains',
   '<': 'lt',
   '>': 'gt',
   '<=': 'lte',
   '>=': 'gte',
-  in: 'in',
-  starts: 'startsWith',
-  ends: 'endsWith',
-  regex: 'contains',
+  'in': 'in',
+  'starts': 'startsWith',
+  'ends': 'endsWith',
+  'regex': 'contains',
 };
 
 function buildWhere<T>(filters: Filter[], colsMetaData: ColMetaData<T>[]): WhereType<T> | null {

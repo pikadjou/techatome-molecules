@@ -1,4 +1,7 @@
 export * from './models/types';
+export * from './models/table-state';
+export * from './models/grid-data';
+export * from './services/grid-instance.service';
 export * from './components/form/form.component';
 export * from './components/grid/grid.component';
 export * from './components/highlight-filters/highlight-filters.component';

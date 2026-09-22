@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontIconComponent } from '@ta/icons';
 import { EmptyComponent, ErrorComponent, LoaderComponent, TitleComponent } from '@ta/ui';
 
+import { RowId } from '../../models/table-state';
 import { ColConfig } from '../../models/types';
 import { TaAbstractGridComponent } from '../abstract.component';
 import { PaginationComponent } from '../pagination/pagination.component';
@@ -13,17 +14,32 @@ import { PaginationComponent } from '../pagination/pagination.component';
 @Component({
   selector: 'ta-grid',
   standalone: true,
-  imports: [PaginationComponent, NgTemplateOutlet, AsyncPipe, EmptyComponent, ErrorComponent, FontIconComponent, LoaderComponent, TitleComponent, TranslateModule],
+  imports: [
+    PaginationComponent,
+    NgTemplateOutlet,
+    AsyncPipe,
+    EmptyComponent,
+    ErrorComponent,
+    FontIconComponent,
+    LoaderComponent,
+    TitleComponent,
+    TranslateModule,
+  ],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class TaGridComponent<T extends { id: number }> extends TaAbstractGridComponent<T> {
-  cardTemplate = input.required<TemplateRef<{ items: T[]; selectedIds: Set<number> }>>();
+export class TaGridComponent<T extends { id: RowId }> extends TaAbstractGridComponent<T> {
+  cardTemplate = input.required<TemplateRef<{ items: T[]; selectedIds: Set<RowId> }>>();
   showSelection = input<boolean>(false);
 
   /** Hauteur de ligne : confortable par défaut, compacte pour les longues listes. */
   density = input<'comfortable' | 'compact'>('comfortable');
+
+  /** Ce que dit la grille quand elle ne ramène rien ; l'action se projette sur `[emptyAction]`. */
+  emptyText = input<string>('ui.container.empty.title');
+  emptySubtitle = input<string>('');
+  emptyIcon = input<string>('sentiment_dissatisfied');
 
   rowClicked = output<T>();
   selectionChanged = output<T[]>();
@@ -41,9 +57,7 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
         .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
         .map(col => col.getColConfig())
     );
-    this._registerSubscription(
-      this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) })
-    );
+    this._registerSubscription(this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) }));
     if (this._grid.table) {
       this._registerSubscription(
         this._grid.table.selectionChanged$.subscribe(ids => {
@@ -78,7 +92,7 @@ export class TaGridComponent<T extends { id: number }> extends TaAbstractGridCom
     return this.visibleCols().length + (this.showSelection() ? 1 : 0);
   }
 
-  get selectedIds(): Set<number> {
+  get selectedIds(): Set<RowId> {
     return this._grid.table?.selectedIds() ?? new Set();
   }
 

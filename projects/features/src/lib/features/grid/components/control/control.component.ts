@@ -101,7 +101,7 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   get activeSortLabel(): string | null {
     const key = this.activeSort;
-    return key ? (this.grid?.cols[key]?.inputLabel ?? key) : null;
+    return key ? this.grid?.cols[key]?.inputLabel ?? key : null;
   }
 
   get activeGroup(): string | null {
@@ -110,7 +110,7 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
 
   get activeGroupLabel(): string | null {
     const key = this.activeGroup;
-    return key ? (this.grid?.cols[key]?.inputLabel ?? key) : null;
+    return key ? this.grid?.cols[key]?.inputLabel ?? key : null;
   }
 
   get hasPresets(): boolean {

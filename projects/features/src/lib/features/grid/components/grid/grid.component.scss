@@ -1,6 +1,6 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
 
 .ta-grid-table-wrapper {
   width: 100%;

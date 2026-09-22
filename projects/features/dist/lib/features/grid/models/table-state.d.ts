@@ -1,5 +1,7 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ColMetaData, Filter, PaginationMode, ajaxRequestFuncParams, ajaxResponse } from './types';
+/** Ce qui identifie une ligne : un entier côté SQL, un GUID côté GraphQL. */
+export type RowId = number | string;
 export interface ITableStateServices<T> {
     getData$: (params: ajaxRequestFuncParams) => Observable<ajaxResponse<T>>;
 }
@@ -28,8 +30,9 @@ export declare class TaTableState<T> {
     /** Mode `cursor` : la suite existe-t-elle, et d'où la reprendre. */
     readonly hasNextPage: import("@angular/core").WritableSignal<boolean>;
     readonly endCursor: import("@angular/core").WritableSignal<string | null>;
-    readonly selectedIds: import("@angular/core").WritableSignal<Set<number>>;
-    readonly selectionChanged$: Subject<number[]>;
+    /** Un identifiant de ligne peut être un nombre ou un GUID, selon la source. */
+    readonly selectedIds: import("@angular/core").WritableSignal<Set<RowId>>;
+    readonly selectionChanged$: Subject<RowId[]>;
     readonly rowClicked$: Subject<T>;
     readonly isReady$: BehaviorSubject<boolean>;
     readonly isDataReady$: BehaviorSubject<boolean>;
@@ -60,7 +63,7 @@ export declare class TaTableState<T> {
     refresh(): void;
     /** Repartir du début : la prochaine réponse remplace ce qui est affiché. */
     private _resetCursor;
-    toggleRow(id: number): void;
+    toggleRow(id: RowId): void;
     toggleAll(): void;
     clearSelection(): void;
     isAllPageSelected(): boolean;

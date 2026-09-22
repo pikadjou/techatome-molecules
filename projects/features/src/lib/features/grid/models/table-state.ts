@@ -4,6 +4,9 @@ import { BehaviorSubject, Observable, Subject, firstValueFrom } from 'rxjs';
 
 import { ColMetaData, Filter, PaginationMode, Sort, ajaxRequestFuncParams, ajaxResponse } from './types';
 
+/** Ce qui identifie une ligne : un entier côté SQL, un GUID côté GraphQL. */
+export type RowId = number | string;
+
 export interface ITableStateServices<T> {
   getData$: (params: ajaxRequestFuncParams) => Observable<ajaxResponse<T>>;
 }
@@ -36,8 +39,9 @@ export class TaTableState<T> {
   readonly hasNextPage = signal(false);
   readonly endCursor = signal<string | null>(null);
 
-  readonly selectedIds = signal<Set<number>>(new Set());
-  readonly selectionChanged$ = new Subject<number[]>();
+  /** Un identifiant de ligne peut être un nombre ou un GUID, selon la source. */
+  readonly selectedIds = signal<Set<RowId>>(new Set());
+  readonly selectionChanged$ = new Subject<RowId[]>();
 
   readonly rowClicked$ = new Subject<T>();
   readonly isReady$ = new BehaviorSubject(false);
@@ -166,7 +170,7 @@ export class TaTableState<T> {
     this.hasNextPage.set(false);
   }
 
-  toggleRow(id: number): void {
+  toggleRow(id: RowId): void {
     this.selectedIds.update(set => {
       const next = new Set(set);
       if (next.has(id)) next.delete(id);
@@ -177,7 +181,7 @@ export class TaTableState<T> {
   }
 
   toggleAll(): void {
-    const pageIds = (this.rows() as Array<{ id: number }>).map(r => r.id);
+    const pageIds = (this.rows() as Array<{ id: RowId }>).map(r => r.id);
     const allSelected = pageIds.length > 0 && pageIds.every(id => this.selectedIds().has(id));
     this.selectedIds.update(set => {
       const next = new Set(set);
@@ -194,7 +198,7 @@ export class TaTableState<T> {
   }
 
   isAllPageSelected(): boolean {
-    const pageIds = (this.rows() as Array<{ id: number }>).map(r => r.id);
+    const pageIds = (this.rows() as Array<{ id: RowId }>).map(r => r.id);
     return pageIds.length > 0 && pageIds.every(id => this.selectedIds().has(id));
   }
 
