@@ -60,7 +60,21 @@ export type GridOptions<T> = (services?: any) => {
   preset?: Preset[];
 };
 
-export type ajaxResponse<T> = { data: T[]; last_page: number; total: number };
+/**
+ * Comment la source numérote ses pages : `page` demande une page par son rang et connaît le total,
+ * `cursor` demande la suite à partir d'un curseur et empile les réponses (les connexions Relay ne
+ * savent pas compter).
+ */
+export type PaginationMode = 'page' | 'cursor';
+
+export type ajaxResponse<T> = {
+  data: T[];
+  last_page: number;
+  total: number;
+  /** Mode `cursor` : reste-t-il une page, et à partir d'où la demander. */
+  hasNextPage?: boolean;
+  endCursor?: string | null;
+};
 export type ajaxRequestFuncParams = {
   filter: Filter[];
   sort: Sort[];
@@ -68,6 +82,8 @@ export type ajaxRequestFuncParams = {
   page: number;
   size: number;
   colsMetaData: ColMetaData<any>[];
+  /** Mode `cursor` : `null` pour la première page, sinon la fin de la précédente. */
+  cursor: string | null;
 };
 
 export type ViewType = 'grid' | 'card';

@@ -1,4 +1,5 @@
 export * from "./models/graphPayload";
+export * from "./models/connection";
 export * from "./models/graphSchema";
 export * from "./models/graphEndpoint";
 export * from "./models/graphConfig";

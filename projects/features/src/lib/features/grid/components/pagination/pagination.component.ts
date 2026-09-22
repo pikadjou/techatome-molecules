@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
 import { TypedTemplateDirective } from '@ta/utils';
 
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -16,14 +17,24 @@ type PageNumber = {
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe],
+  imports: [ButtonComponent, FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe],
 })
 export class PaginationComponent extends TaAbstractGridComponent<any> {
   readonly PageNumber!: { pagenumber: PageNumber };
   readonly maxPageNumber = 10;
 
   get show() {
-    return this.paginationGetTotalPages > 1;
+    return this.isCursorMode ? this.hasNextPage : this.paginationGetTotalPages > 1;
+  }
+  /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
+  get isCursorMode() {
+    return this.grid.table?.isCursorMode() ?? false;
+  }
+  get hasNextPage() {
+    return this.grid.table?.hasNextPage() ?? false;
+  }
+  get isLoading() {
+    return this.grid.table?.isLoading() ?? false;
   }
   get paginationGetTotalPages() {
     return this.grid.table?.getPageMax() || 0;

@@ -384,12 +384,18 @@ class TaTableState {
         this.groupByField = signal(null);
         this.isLoading = signal(false);
         this.errorMessage = signal('');
+        /** Mode `cursor` : la suite existe-t-elle, et d'où la reprendre. */
+        this.hasNextPage = signal(false);
+        this.endCursor = signal(null);
         this.selectedIds = signal(new Set());
         this.selectionChanged$ = new Subject();
         this.rowClicked$ = new Subject();
         this.isReady$ = new BehaviorSubject(false);
         this.isDataReady$ = new BehaviorSubject(false);
         this._services = null;
+        this._pagination = 'page';
+        /** Mode `cursor` : la prochaine réponse s'ajoute au lieu de remplacer. */
+        this._appendNext = false;
         this._allData = [];
         this._colsMetaData = [];
         this._fetchTimer = null;
@@ -399,6 +405,10 @@ class TaTableState {
         this._services = params.services ?? null;
         this._colsMetaData = params.colsMetaData;
         this._onDataUpdate = params.onDataUpdate;
+        this._pagination = params.pagination ?? 'page';
+        if (params.pageSize) {
+            this.pageSize.set(params.pageSize);
+        }
         if (params.initialFilter?.length) {
             this.filters.set(params.initialFilter);
         }
@@ -416,6 +426,17 @@ class TaTableState {
     }
     getPageMax() {
         return this.totalPages();
+    }
+    isCursorMode() {
+        return this._pagination === 'cursor';
+    }
+    /** Mode `cursor` : demande la suite, qui s'ajoute à ce qui est déjà lu. */
+    loadMore() {
+        if (!this.isCursorMode() || !this.hasNextPage() || this.isLoading()) {
+            return;
+        }
+        this._appendNext = true;
+        this._scheduleUpdate();
     }
     setPage(n) {
         if (n >= 1 && n <= this.totalPages()) {
@@ -437,6 +458,7 @@ class TaTableState {
     }
     setFilter(filters) {
         this.currentPage.set(1);
+        this._resetCursor();
         this.filters.set(filters);
         this._scheduleUpdate();
     }
@@ -452,6 +474,7 @@ class TaTableState {
         this.sortField.set(field);
         this.sortDir.set(dir);
         this.currentPage.set(1);
+        this._resetCursor();
         this._scheduleUpdate();
     }
     setGroupBy(field) {
@@ -460,7 +483,14 @@ class TaTableState {
         this._scheduleUpdate();
     }
     refresh() {
+        this._resetCursor();
         this._scheduleUpdate();
+    }
+    /** Repartir du début : la prochaine réponse remplace ce qui est affiché. */
+    _resetCursor() {
+        this._appendNext = false;
+        this.endCursor.set(null);
+        this.hasNextPage.set(false);
     }
     toggleRow(id) {
         this.selectedIds.update(set => {
@@ -520,12 +550,12 @@ class TaTableState {
         for (const f of this.filters()) {
             const isSearch = f.field === 'search';
             if (isSearch) {
-                const searchFields = this._colsMetaData
-                    .filter(c => c.isSearchField)
-                    .map(c => String(c.name));
+                const searchFields = this._colsMetaData.filter(c => c.isSearchField).map(c => String(c.name));
                 if (searchFields.length && f.value) {
                     const needle = String(f.value).toLowerCase();
-                    data = data.filter(item => searchFields.some(key => String(item[key] ?? '').toLowerCase().includes(needle)));
+                    data = data.filter(item => searchFields.some(key => String(item[key] ?? '')
+                        .toLowerCase()
+                        .includes(needle)));
                 }
                 continue;
             }
@@ -533,17 +563,34 @@ class TaTableState {
                 const val = item[f.field];
                 const target = f.value;
                 switch (f.type) {
-                    case '=': return val == target;
-                    case '!=': return val != target;
-                    case 'like': return String(val ?? '').toLowerCase().includes(String(target).toLowerCase());
-                    case '<': return val < target;
-                    case '>': return val > target;
-                    case '<=': return val <= target;
-                    case '>=': return val >= target;
-                    case 'starts': return String(val ?? '').toLowerCase().startsWith(String(target).toLowerCase());
-                    case 'ends': return String(val ?? '').toLowerCase().endsWith(String(target).toLowerCase());
-                    case 'in': return Array.isArray(target) ? target.includes(val) : val == target;
-                    default: return true;
+                    case '=':
+                        return val == target;
+                    case '!=':
+                        return val != target;
+                    case 'like':
+                        return String(val ?? '')
+                            .toLowerCase()
+                            .includes(String(target).toLowerCase());
+                    case '<':
+                        return val < target;
+                    case '>':
+                        return val > target;
+                    case '<=':
+                        return val <= target;
+                    case '>=':
+                        return val >= target;
+                    case 'starts':
+                        return String(val ?? '')
+                            .toLowerCase()
+                            .startsWith(String(target).toLowerCase());
+                    case 'ends':
+                        return String(val ?? '')
+                            .toLowerCase()
+                            .endsWith(String(target).toLowerCase());
+                    case 'in':
+                        return Array.isArray(target) ? target.includes(val) : val == target;
+                    default:
+                        return true;
                 }
             });
         }
@@ -577,6 +624,8 @@ class TaTableState {
         const id = ++this._fetchId;
         this.isLoading.set(true);
         const sort = this.sortField() ? [{ field: this.sortField(), dir: this.sortDir() }] : [];
+        const append = this._appendNext;
+        this._appendNext = false;
         firstValueFrom(this._services.getData$({
             filter: this.filters(),
             sort,
@@ -584,16 +633,25 @@ class TaTableState {
             page: this.currentPage(),
             size: this.pageSize(),
             colsMetaData: this._colsMetaData,
+            cursor: append ? this.endCursor() : null,
         }))
             .then(response => {
             if (id !== this._fetchId)
                 return;
-            this.rows.set(response.data);
-            this.totalItems.set(response.total);
+            this.rows.set(append ? [...this.rows(), ...response.data] : response.data);
+            if (this.isCursorMode()) {
+                // Une connexion ne compte pas : le total affiché est ce qui a été lu.
+                this.hasNextPage.set(response.hasNextPage ?? false);
+                this.endCursor.set(response.endCursor ?? null);
+                this.totalItems.set(this.rows().length);
+            }
+            else {
+                this.totalItems.set(response.total);
+            }
             this.errorMessage.set('');
             this.isLoading.set(false);
             this.isDataReady$.next(true);
-            this._onDataUpdate?.(response.total);
+            this._onDataUpdate?.(this.totalItems());
         })
             .catch(() => {
             if (id !== this._fetchId)
@@ -658,12 +716,18 @@ class TaGridData {
             data: params.data,
             services: params.services,
             initialFilter: params.initialFilter,
+            pagination: params.pagination,
+            pageSize: params.pageSize,
             onDataUpdate: total => this.totalItems.set(total),
         });
         this.filters = new TaGridFilters(this.scope, this.table, params.preset);
-        this._tableSubs.push(this.table.isReady$.subscribe(ready => { if (ready)
-            this.isReady$.next(true); }), this.table.isDataReady$.subscribe(ready => { if (ready)
-            this.isDataReady$.next(true); }), this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)));
+        this._tableSubs.push(this.table.isReady$.subscribe(ready => {
+            if (ready)
+                this.isReady$.next(true);
+        }), this.table.isDataReady$.subscribe(ready => {
+            if (ready)
+                this.isDataReady$.next(true);
+        }), this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)));
     }
     destroy() {
         this._tableSubs.forEach(s => s.unsubscribe());
@@ -829,7 +893,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
 
 class PaginationComponent extends TaAbstractGridComponent {
     get show() {
-        return this.paginationGetTotalPages > 1;
+        return this.isCursorMode ? this.hasNextPage : this.paginationGetTotalPages > 1;
+    }
+    /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
+    get isCursorMode() {
+        return this.grid.table?.isCursorMode() ?? false;
+    }
+    get hasNextPage() {
+        return this.grid.table?.hasNextPage() ?? false;
+    }
+    get isLoading() {
+        return this.grid.table?.isLoading() ?? false;
     }
     get paginationGetTotalPages() {
         return this.grid.table?.getPageMax() || 0;
@@ -863,11 +937,11 @@ class PaginationComponent extends TaAbstractGridComponent {
         return pageNumbers;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PaginationComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PaginationComponent, isStandalone: true, selector: "ta-grid-pagination", usesInheritance: true, ngImport: i0, template: "@if (this.grid && this.grid.table && this.show) {\r\n  <div class=\"flex-start g-space-sm align-center\">\r\n    <ta-font-icon\r\n      name=\"chevron_left\"\r\n      class=\"c-pointer\"\r\n      [title]=\"'grid.pagination.previous' | translate\"\r\n      [attr.aria-label]=\"'grid.pagination.previous' | translate\"\r\n      (click)=\"this.grid.table.previousPage()\"\r\n    ></ta-font-icon>\r\n    <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n    @for (page of this.getListPage(); track page.number) {\r\n      <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n    }\r\n\r\n    @if (this.paginationGetTotalPages > 1) {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"item\"\r\n        [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages },\r\n        }\"\r\n      ></ng-template>\r\n    }\r\n\r\n    <ta-font-icon\r\n      name=\"chevron_right\"\r\n      class=\"c-pointer\"\r\n      [title]=\"'grid.pagination.next' | translate\"\r\n      [attr.aria-label]=\"'grid.pagination.next' | translate\"\r\n      (click)=\"this.grid.table.nextPage()\"\r\n    ></ta-font-icon>\r\n  </div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid.table?.getPage() || 0)\"\r\n    (click)=\"this.grid.table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n      <ta-font-icon [name]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n      {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [":host{display:block}.figure{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);min-width:var(--ta-space-xl);height:var(--ta-space-xl);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);border:1px solid transparent;color:var(--ta-text-secondary);transition:color .15s ease,background-color .15s ease,border-color .15s ease}.figure:hover{color:var(--ta-text-primary);background-color:var(--ta-surface-hover-primary)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary);font-weight:var(--ta-font-weight-bold)}.figure.is-active:hover{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}ta-font-icon{color:var(--ta-icon-secondary);border-radius:var(--ta-radius-full);transition:color .15s ease,background-color .15s ease}ta-font-icon:hover{color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: TypedTemplateDirective, selector: "ng-template[typedTemplate]", inputs: ["typedTemplate"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PaginationComponent, isStandalone: true, selector: "ta-grid-pagination", usesInheritance: true, ngImport: i0, template: "@if (this.grid && this.grid.table && this.show && this.isCursorMode) {\r\n<div class=\"load-more flex-row justify-center\">\r\n  <ta-button type=\"secondary\" [state]=\"this.isLoading ? 'inactive' : 'classic'\" (action)=\"this.grid.table.loadMore()\">\r\n    {{ 'grid.pagination.load_more' | translate }}\r\n  </ta-button>\r\n</div>\r\n} @if (this.grid && this.grid.table && this.show && !this.isCursorMode) {\r\n<div class=\"flex-start g-space-sm align-center\">\r\n  <ta-font-icon\r\n    name=\"chevron_left\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.previous' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.previous' | translate\"\r\n    (click)=\"this.grid.table.previousPage()\"\r\n  ></ta-font-icon>\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n  @for (page of this.getListPage(); track page.number) {\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n  } @if (this.paginationGetTotalPages > 1) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"item\"\r\n    [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages },\r\n        }\"\r\n  ></ng-template>\r\n  }\r\n\r\n  <ta-font-icon\r\n    name=\"chevron_right\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.next' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.next' | translate\"\r\n    (click)=\"this.grid.table.nextPage()\"\r\n  ></ta-font-icon>\r\n</div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid.table?.getPage() || 0)\"\r\n    (click)=\"this.grid.table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n    <ta-font-icon [name]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n    {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [":host{display:block}.figure{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);min-width:var(--ta-space-xl);height:var(--ta-space-xl);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);border:1px solid transparent;color:var(--ta-text-secondary);transition:color .15s ease,background-color .15s ease,border-color .15s ease}.figure:hover{color:var(--ta-text-primary);background-color:var(--ta-surface-hover-primary)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary);font-weight:var(--ta-font-weight-bold)}.figure.is-active:hover{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}ta-font-icon{color:var(--ta-icon-secondary);border-radius:var(--ta-radius-full);transition:color .15s ease,background-color .15s ease}ta-font-icon:hover{color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: TypedTemplateDirective, selector: "ng-template[typedTemplate]", inputs: ["typedTemplate"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PaginationComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-pagination', standalone: true, imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe], template: "@if (this.grid && this.grid.table && this.show) {\r\n  <div class=\"flex-start g-space-sm align-center\">\r\n    <ta-font-icon\r\n      name=\"chevron_left\"\r\n      class=\"c-pointer\"\r\n      [title]=\"'grid.pagination.previous' | translate\"\r\n      [attr.aria-label]=\"'grid.pagination.previous' | translate\"\r\n      (click)=\"this.grid.table.previousPage()\"\r\n    ></ta-font-icon>\r\n    <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n    @for (page of this.getListPage(); track page.number) {\r\n      <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n    }\r\n\r\n    @if (this.paginationGetTotalPages > 1) {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"item\"\r\n        [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages },\r\n        }\"\r\n      ></ng-template>\r\n    }\r\n\r\n    <ta-font-icon\r\n      name=\"chevron_right\"\r\n      class=\"c-pointer\"\r\n      [title]=\"'grid.pagination.next' | translate\"\r\n      [attr.aria-label]=\"'grid.pagination.next' | translate\"\r\n      (click)=\"this.grid.table.nextPage()\"\r\n    ></ta-font-icon>\r\n  </div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid.table?.getPage() || 0)\"\r\n    (click)=\"this.grid.table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n      <ta-font-icon [name]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n      {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [":host{display:block}.figure{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);min-width:var(--ta-space-xl);height:var(--ta-space-xl);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);border:1px solid transparent;color:var(--ta-text-secondary);transition:color .15s ease,background-color .15s ease,border-color .15s ease}.figure:hover{color:var(--ta-text-primary);background-color:var(--ta-surface-hover-primary)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary);font-weight:var(--ta-font-weight-bold)}.figure.is-active:hover{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}ta-font-icon{color:var(--ta-icon-secondary);border-radius:var(--ta-radius-full);transition:color .15s ease,background-color .15s ease}ta-font-icon:hover{color:var(--ta-icon-brand-primary)}\n"] }]
+            args: [{ selector: 'ta-grid-pagination', standalone: true, imports: [ButtonComponent, FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe], template: "@if (this.grid && this.grid.table && this.show && this.isCursorMode) {\r\n<div class=\"load-more flex-row justify-center\">\r\n  <ta-button type=\"secondary\" [state]=\"this.isLoading ? 'inactive' : 'classic'\" (action)=\"this.grid.table.loadMore()\">\r\n    {{ 'grid.pagination.load_more' | translate }}\r\n  </ta-button>\r\n</div>\r\n} @if (this.grid && this.grid.table && this.show && !this.isCursorMode) {\r\n<div class=\"flex-start g-space-sm align-center\">\r\n  <ta-font-icon\r\n    name=\"chevron_left\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.previous' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.previous' | translate\"\r\n    (click)=\"this.grid.table.previousPage()\"\r\n  ></ta-font-icon>\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n  @for (page of this.getListPage(); track page.number) {\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n  } @if (this.paginationGetTotalPages > 1) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"item\"\r\n    [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages },\r\n        }\"\r\n  ></ng-template>\r\n  }\r\n\r\n  <ta-font-icon\r\n    name=\"chevron_right\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.next' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.next' | translate\"\r\n    (click)=\"this.grid.table.nextPage()\"\r\n  ></ta-font-icon>\r\n</div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid.table?.getPage() || 0)\"\r\n    (click)=\"this.grid.table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n    <ta-font-icon [name]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n    {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [":host{display:block}.figure{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);min-width:var(--ta-space-xl);height:var(--ta-space-xl);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);border:1px solid transparent;color:var(--ta-text-secondary);transition:color .15s ease,background-color .15s ease,border-color .15s ease}.figure:hover{color:var(--ta-text-primary);background-color:var(--ta-surface-hover-primary)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary);font-weight:var(--ta-font-weight-bold)}.figure.is-active:hover{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}ta-font-icon{color:var(--ta-icon-secondary);border-radius:var(--ta-radius-full);transition:color .15s ease,background-color .15s ease}ta-font-icon:hover{color:var(--ta-icon-brand-primary)}\n"] }]
         }], ctorParameters: () => [] });
 
 class TaGridComponent extends TaAbstractGridComponent {
@@ -1304,11 +1378,11 @@ class TaGridCountComponent extends TaAbstractGridComponent {
         return this.grid?.totalItems() ?? 0;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridCountComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridCountComponent, isStandalone: true, selector: "ta-grid-count", inputs: { label: { classPropertyName: "label", publicName: "label", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\n  <span class=\"grid-count\">\n    {{ this.label() | pluralTranslate: this.total | translate: { nb: this.total } }}\n  </span>\n}\n", styles: [".grid-count{font-family:var(--ta-font-display-family);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:var(--ta-font-weight-bold);color:var(--ta-text-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridCountComponent, isStandalone: true, selector: "ta-grid-count", inputs: { label: { classPropertyName: "label", publicName: "label", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\r\n  <span class=\"grid-count\">\r\n    {{ this.label() | pluralTranslate: this.total | translate: { nb: this.total } }}\r\n  </span>\r\n}\r\n", styles: [".grid-count{font-family:var(--ta-font-display-family);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:var(--ta-font-weight-bold);color:var(--ta-text-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridCountComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-count', standalone: true, imports: [AsyncPipe, PluralTranslatePipe, TranslatePipe], template: "@if (this.isReady$ | async) {\n  <span class=\"grid-count\">\n    {{ this.label() | pluralTranslate: this.total | translate: { nb: this.total } }}\n  </span>\n}\n", styles: [".grid-count{font-family:var(--ta-font-display-family);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:var(--ta-font-weight-bold);color:var(--ta-text-primary)}\n"] }]
+            args: [{ selector: 'ta-grid-count', standalone: true, imports: [AsyncPipe, PluralTranslatePipe, TranslatePipe], template: "@if (this.isReady$ | async) {\r\n  <span class=\"grid-count\">\r\n    {{ this.label() | pluralTranslate: this.total | translate: { nb: this.total } }}\r\n  </span>\r\n}\r\n", styles: [".grid-count{font-family:var(--ta-font-display-family);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:var(--ta-font-weight-bold);color:var(--ta-text-primary)}\n"] }]
         }] });
 
 class TaGridSessionService {
@@ -1341,6 +1415,11 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
         this.model = input('');
         this.colsMetaData = input([]);
         this.preset = input();
+        /** Source de données maison, quand la grille ne lit pas un modèle du serveur. */
+        this.dataService = input();
+        /** `cursor` pour une source qui ne sait pas compter : le « voir plus » remplace les numéros de page. */
+        this.pagination = input('page');
+        this.pageSize = input();
         this._session = inject(TaGridSessionService);
         this._service = inject(TaGridViewService);
     }
@@ -1352,9 +1431,10 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
             initialFilter: raw ?? [],
             data: this.initialData(),
             preset: this.preset(),
-            services: this.model()
-                ? { getData$: params => this._service.getData$(this.model(), params) }
-                : undefined,
+            pagination: this.pagination(),
+            pageSize: this.pageSize(),
+            services: this.dataService() ??
+                (this.model() ? { getData$: params => this._service.getData$(this.model(), params) } : undefined),
         });
     }
     ngOnDestroy() {
@@ -1362,7 +1442,7 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
         this._grid.destroy();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-content></ng-content>\r\n", styles: [""] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null }, dataService: { classPropertyName: "dataService", publicName: "dataService", isSignal: true, isRequired: false, transformFunction: null }, pagination: { classPropertyName: "pagination", publicName: "pagination", isSignal: true, isRequired: false, transformFunction: null }, pageSize: { classPropertyName: "pageSize", publicName: "pageSize", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-content></ng-content>\r\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, decorators: [{
             type: Component,

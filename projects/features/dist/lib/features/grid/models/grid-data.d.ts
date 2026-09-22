@@ -2,7 +2,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { BaseCol } from './cols/base-col';
 import { TaGridFilters } from './grid-filters';
 import { ITableStateServices as IDataService, TaTableState } from './table-state';
-import { ColMetaData, Filter, Preset, ViewType } from './types';
+import { ColMetaData, Filter, PaginationMode, Preset, ViewType } from './types';
 export { ITableStateServices as IDataService } from './table-state';
 export declare class TaGridData<T> {
     readonly scope: string;
@@ -36,6 +36,8 @@ export declare class TaGridData<T> {
         services?: IDataService<T>;
         initialFilter?: Filter[];
         preset?: Preset[];
+        pagination?: PaginationMode;
+        pageSize?: number;
     }): void;
     destroy(): void;
     setGroupBy(field: string): void;

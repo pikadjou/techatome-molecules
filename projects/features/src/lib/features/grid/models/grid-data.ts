@@ -11,7 +11,7 @@ import { RelationCol } from './cols/relation-col';
 import { StringCol } from './cols/string-col';
 import { TaGridFilters } from './grid-filters';
 import { ITableStateServices as IDataService, TaTableState } from './table-state';
-import { ColMetaData, Filter, ParameterType, Preset, ViewType } from './types';
+import { ColMetaData, Filter, PaginationMode, ParameterType, Preset, ViewType } from './types';
 import { groupBy } from './utils';
 
 export { ITableStateServices as IDataService } from './table-state';
@@ -57,6 +57,8 @@ export class TaGridData<T> {
     services?: IDataService<T>;
     initialFilter?: Filter[];
     preset?: Preset[];
+    pagination?: PaginationMode;
+    pageSize?: number;
   }) {
     if (this.table) {
       this._tableSubs.forEach(s => s.unsubscribe());
@@ -72,15 +74,21 @@ export class TaGridData<T> {
       data: params.data,
       services: params.services,
       initialFilter: params.initialFilter,
+      pagination: params.pagination,
+      pageSize: params.pageSize,
       onDataUpdate: total => this.totalItems.set(total),
     });
 
     this.filters = new TaGridFilters(this.scope, this.table, params.preset);
 
     this._tableSubs.push(
-      this.table.isReady$.subscribe(ready => { if (ready) this.isReady$.next(true); }),
-      this.table.isDataReady$.subscribe(ready => { if (ready) this.isDataReady$.next(true); }),
-      this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)),
+      this.table.isReady$.subscribe(ready => {
+        if (ready) this.isReady$.next(true);
+      }),
+      this.table.isDataReady$.subscribe(ready => {
+        if (ready) this.isDataReady$.next(true);
+      }),
+      this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row))
     );
   }
 

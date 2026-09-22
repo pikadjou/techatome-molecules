@@ -15,6 +15,7 @@
   "form.group.title": "Grouping",
   "form.reset": "Clear all",
   "form.title": "Refine your search",
+  "pagination.load_more": "Show more",
   "pagination.next": "Next page",
   "pagination.previous": "Previous page",
   "search.placeholder": "Search",

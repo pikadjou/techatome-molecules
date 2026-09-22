@@ -10,6 +10,10 @@ export declare class PaginationComponent extends TaAbstractGridComponent<any> {
     };
     readonly maxPageNumber = 10;
     get show(): boolean;
+    /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
+    get isCursorMode(): boolean;
+    get hasNextPage(): boolean;
+    get isLoading(): boolean;
     get paginationGetTotalPages(): number;
     constructor();
     getListPage(): PageNumber[];
