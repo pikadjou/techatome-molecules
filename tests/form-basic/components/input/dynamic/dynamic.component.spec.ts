@@ -31,7 +31,7 @@ class TestHostComponent {
     key: 'items',
     label: 'Items',
     template: [
-      { type: 'textbox', options: { key: 'itemName', label: 'Item Name' } },
+      { type: 'InputTextBox', options: { key: 'itemName', label: 'Item Name' } },
     ],
     inputsGroup: {},
   });
@@ -113,7 +113,7 @@ describe('DynamicComponent (standalone)', () => {
       key: 'items',
       label: 'Items',
       template: [
-        { type: 'textbox', options: { key: 'itemName', label: 'Item Name' } },
+        { type: 'InputTextBox', options: { key: 'itemName', label: 'Item Name' } },
       ],
       inputsGroup: {
         existing: [new InputTextBox({ key: 'itemName', label: 'Item Name', value: 'First' })],

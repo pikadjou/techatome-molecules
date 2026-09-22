@@ -69,6 +69,48 @@ export const getCountryName = (code: string | null | undefined, locale?: string)
   }
 };
 
+/** Langues dans lesquelles un nom de pays hérité a pu être stocké. */
+const NAME_LOCALES = ['en', 'fr', 'nl', 'de'];
+
+/**
+ * Ramène un pays à son code ISO 3166-1 alpha-2.
+ *
+ * Un code connu est rendu en majuscules. Un nom complet (« Belgium »,
+ * « Belgique », « België »…) — héritage d'anciens enregistrements — est
+ * résolu par comparaison, insensible à la casse et aux accents, avec les noms
+ * localisés en anglais, français, néerlandais et allemand. Toute autre valeur
+ * donne `null`.
+ */
+export const resolveCountryCode = (value: string | null | undefined): string | null => {
+  const trimmed = value?.trim() ?? '';
+  if (!trimmed) {
+    return null;
+  }
+  const upper = trimmed.toUpperCase();
+  if (COUNTRY_CODES.includes(upper)) {
+    return upper;
+  }
+  const wanted = foldName(trimmed);
+  for (const locale of NAME_LOCALES) {
+    const displayNames = buildDisplayNames(locale);
+    if (!displayNames) {
+      continue;
+    }
+    const match = COUNTRY_CODES.find(code => foldName(displayNames.of(code) ?? '') === wanted);
+    if (match) {
+      return match;
+    }
+  }
+  return null;
+};
+
+const foldName = (name: string): string => {
+  return name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+};
+
 /**
  * Retourne la liste complète des pays (code + nom localisé).
  *

@@ -25,6 +25,8 @@ export declare class InputLocalityComponent extends TaAbstractInputComponent<Inp
     private _isApplyingValue;
     private _localities;
     private _localityMap;
+    /** Valeurs reçues qui ne figurent pas dans la liste officielle (données héritées) : gardées telles quelles. */
+    private _orphans;
     constructor();
     ngOnInit(): void;
     ngOnDestroy(): void;
@@ -35,7 +37,12 @@ export declare class InputLocalityComponent extends TaAbstractInputComponent<Inp
     private _setValue;
     /** Reflète `input.value` dans les champs — sans repasser par leurs `valueChanged`. */
     private _applyValueToFields;
+    /**
+     * Options proposées : les valeurs déjà choisies d'abord (y compris celles hors liste,
+     * pour qu'elles restent lisibles et retirables), puis la liste filtrée et plafonnée.
+     */
     private _searchLocalities;
+    private _toOption;
     static ɵfac: i0.ɵɵFactoryDeclaration<InputLocalityComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<InputLocalityComponent, "ta-input-locality", never, {}, {}, never, never, true, never>;
 }

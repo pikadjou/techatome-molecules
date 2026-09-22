@@ -19,6 +19,16 @@ export interface Country {
  */
 export declare const getCountryName: (code: string | null | undefined, locale?: string) => string;
 /**
+ * Ramène un pays à son code ISO 3166-1 alpha-2.
+ *
+ * Un code connu est rendu en majuscules. Un nom complet (« Belgium »,
+ * « Belgique », « België »…) — héritage d'anciens enregistrements — est
+ * résolu par comparaison, insensible à la casse et aux accents, avec les noms
+ * localisés en anglais, français, néerlandais et allemand. Toute autre valeur
+ * donne `null`.
+ */
+export declare const resolveCountryCode: (value: string | null | undefined) => string | null;
+/**
  * Retourne la liste complète des pays (code + nom localisé).
  *
  * Les pays "prioritaires" (ex. Belgique, France...) sont remontés en tête de

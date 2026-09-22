@@ -8,7 +8,7 @@ import { of, filter, distinctUntilChanged, tap, switchMap, BehaviorSubject } fro
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
 import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
 import { ButtonComponent, TitleComponent, LinkComponent, LoaderComponent } from '@ta/ui';
-import { TaAddressLookupService, isNonNullable, toArray, getCountryList, TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
+import { TaAddressLookupService, isNonNullable, toArray, getCountryList, resolveCountryCode, TaBaseComponent, extractEnum, Culture, StopPropagationDirective } from '@ta/utils';
 import { TaAbstractInputComponent, InputChoicesComponent, TextBoxComponent, FormLabelComponent, CheckboxComponent, ComponentInputComponent, CultureComponent, DatePickerComponent, DropdownComponent, LabelComponent, InputPhoneComponent, RadioComponent, InputSchemaComponent, SliderComponent, SwitchComponent, TextareaComponent, TimePickerComponent, ToggleComponent, UploadComponent, InputImageComponent, InputImagesComponent, InputLogoComponent, WysiswygComponent, RatingComponent } from '@ta/form-input';
 import { TranslateService } from '@ngx-translate/core';
 import { InputChoices, InputTextBox, InputLocality } from '@ta/form-model';
@@ -32,6 +32,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         }], ctorParameters: () => [] });
 
 const DEFAULT_COUNTRY$1 = 'BE';
+/** Options rendues au plus : la recherche affine, le DOM ne porte jamais un pays entier. */
+const MAX_RESULTS = 100;
 /**
  * Choix d'une localité (code postal + commune) dans la liste officielle du pays.
  *
@@ -50,6 +52,8 @@ class InputLocalityComponent extends TaAbstractInputComponent {
         this._isApplyingValue = false;
         this._localities = [];
         this._localityMap = new Map();
+        /** Valeurs reçues qui ne figurent pas dans la liste officielle (données héritées) : gardées telles quelles. */
+        this._orphans = new Map();
         TaTranslationForm.getInstance();
     }
     ngOnInit() {
@@ -113,7 +117,9 @@ class InputLocalityComponent extends TaAbstractInputComponent {
         if (this._isApplyingValue) {
             return;
         }
-        const localities = (this.choicesInput.value ?? []).map(id => this._localityMap.get(id)).filter(isNonNullable);
+        const localities = (this.choicesInput.value ?? [])
+            .map(id => this._localityMap.get(id) ?? this._orphans.get(id))
+            .filter(isNonNullable);
         this._setValue(this._pack(localities));
     }
     onFreeInputChanged() {
@@ -148,6 +154,9 @@ class InputLocalityComponent extends TaAbstractInputComponent {
     /** Reflète `input.value` dans les champs — sans repasser par leurs `valueChanged`. */
     _applyValueToFields() {
         const localities = toArray(this.input.value).filter(isNonNullable);
+        this._orphans = new Map(localities
+            .map(locality => [InputLocality.localityId(locality), locality])
+            .filter(([id]) => !this._localityMap.has(id)));
         this._isApplyingValue = true;
         const ids = localities.map(locality => InputLocality.localityId(locality));
         const current = this.choicesInput.value ?? [];
@@ -159,16 +168,24 @@ class InputLocalityComponent extends TaAbstractInputComponent {
         this.cityInput.value = first?.city ?? '';
         this._isApplyingValue = false;
     }
+    /**
+     * Options proposées : les valeurs déjà choisies d'abord (y compris celles hors liste,
+     * pour qu'elles restent lisibles et retirables), puis la liste filtrée et plafonnée.
+     */
     _searchLocalities(search) {
         const term = (search ?? '').trim().toLowerCase();
-        const matched = term
-            ? this._localities.filter(locality => `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term))
-            : this._localities;
-        return matched.map(locality => ({
+        const selected = toArray(this.input.value).filter(isNonNullable);
+        const selectedIds = new Set(selected.map(locality => InputLocality.localityId(locality)));
+        const matched = this._localities.filter(locality => !selectedIds.has(InputLocality.localityId(locality)) &&
+            (!term || `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term)));
+        return [...selected, ...matched.slice(0, MAX_RESULTS)].map(locality => this._toOption(locality));
+    }
+    _toOption(locality) {
+        return {
             data: locality,
             id: InputLocality.localityId(locality),
-            name: `${locality.zipCode} ${locality.city}`,
-        }));
+            name: `${locality.zipCode} ${locality.city}`.trim(),
+        };
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: InputLocalityComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: InputLocalityComponent, isStandalone: true, selector: "ta-input-locality", viewQueries: [{ propertyName: "_choicesRef", first: true, predicate: InputChoicesComponent, descendants: true }, { propertyName: "_localityItemTpl", first: true, predicate: ["localityItemTpl"], descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: "@if (this.available()) {\n  <ta-input-choices\n    [input]=\"this.choicesInput\"\n    [standalone]=\"true\"\n    (valueChanged)=\"this.onChoicesChanged()\"\n  ></ta-input-choices>\n} @else {\n  <div class=\"grid g-space-sm\">\n    <div class=\"one-third\">\n      <ta-input-textbox\n        [input]=\"this.zipCodeInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onFreeInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n    <div class=\"two-thirds\">\n      <ta-input-textbox\n        [input]=\"this.cityInput\"\n        [standalone]=\"true\"\n        (valueChanged)=\"this.onFreeInputChanged()\"\n      ></ta-input-textbox>\n    </div>\n  </div>\n}\n\n<ng-template #localityItemTpl let-item=\"item\">\n  <span class=\"locality-option\">{{ item.zipCode }} {{ item.city }}</span>\n</ng-template>\n", styles: [":host{display:block}.locality-option{color:var(--ta-text-primary);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}\n"], dependencies: [{ kind: "component", type: InputChoicesComponent, selector: "ta-input-choices" }, { kind: "component", type: TextBoxComponent, selector: "ta-input-textbox", inputs: ["space"] }] }); }
@@ -320,9 +337,11 @@ class InputAddressComponent extends TaAbstractInputComponent {
             longitude: value.longitude ?? null,
             placeId: value.placeId ?? null,
         };
+        // Un pays hérité en toutes lettres (« Belgium ») est ramené à son code : sans ça, ni la
+        // liste des pays ni celle des localités ne le reconnaissent.
         this._setFields({
             city: value.city ?? '',
-            country: value.country || DEFAULT_COUNTRY,
+            country: resolveCountryCode(value.country) ?? DEFAULT_COUNTRY,
             floor: value.floor ?? '',
             number: value.number ?? '',
             street: value.street ?? '',

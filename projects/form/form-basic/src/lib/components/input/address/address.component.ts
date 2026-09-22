@@ -15,7 +15,7 @@ import {
   TextBoxComponent,
 } from '@ta/form-input';
 import { TranslatePipe } from '@ta/translation';
-import { AddressLocality, getCountryList, isNonNullable, toArray } from '@ta/utils';
+import { AddressLocality, getCountryList, isNonNullable, resolveCountryCode, toArray } from '@ta/utils';
 
 import { TaTranslationForm } from '../../../translation.service';
 import { InputLocalityComponent } from '../locality/locality.component';
@@ -202,9 +202,11 @@ export class InputAddressComponent
       longitude: value.longitude ?? null,
       placeId: value.placeId ?? null,
     };
+    // Un pays hérité en toutes lettres (« Belgium ») est ramené à son code : sans ça, ni la
+    // liste des pays ni celle des localités ne le reconnaissent.
     this._setFields({
       city: value.city ?? '',
-      country: value.country || DEFAULT_COUNTRY,
+      country: resolveCountryCode(value.country) ?? DEFAULT_COUNTRY,
       floor: value.floor ?? '',
       number: value.number ?? '',
       street: value.street ?? '',

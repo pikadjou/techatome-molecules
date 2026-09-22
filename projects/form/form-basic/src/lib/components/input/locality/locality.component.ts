@@ -10,6 +10,8 @@ import { AddressLocality, TaAddressLookupService, isNonNullable, toArray } from 
 import { TaTranslationForm } from '../../../translation.service';
 
 const DEFAULT_COUNTRY = 'BE';
+/** Options rendues au plus : la recherche affine, le DOM ne porte jamais un pays entier. */
+const MAX_RESULTS = 100;
 
 type LocalityValue = AddressLocality | AddressLocality[] | null;
 
@@ -48,6 +50,8 @@ export class InputLocalityComponent
   private _isApplyingValue = false;
   private _localities: AddressLocality[] = [];
   private _localityMap = new Map<string, AddressLocality>();
+  /** Valeurs reçues qui ne figurent pas dans la liste officielle (données héritées) : gardées telles quelles. */
+  private _orphans = new Map<string, AddressLocality>();
 
   constructor() {
     super();
@@ -125,7 +129,9 @@ export class InputLocalityComponent
     if (this._isApplyingValue) {
       return;
     }
-    const localities = (this.choicesInput.value ?? []).map(id => this._localityMap.get(id)).filter(isNonNullable);
+    const localities = (this.choicesInput.value ?? [])
+      .map(id => this._localityMap.get(id) ?? this._orphans.get(id))
+      .filter(isNonNullable);
     this._setValue(this._pack(localities));
   }
 
@@ -167,6 +173,11 @@ export class InputLocalityComponent
   /** Reflète `input.value` dans les champs — sans repasser par leurs `valueChanged`. */
   private _applyValueToFields() {
     const localities = toArray(this.input.value).filter(isNonNullable);
+    this._orphans = new Map(
+      localities
+        .map(locality => [InputLocality.localityId(locality), locality] as const)
+        .filter(([id]) => !this._localityMap.has(id))
+    );
     this._isApplyingValue = true;
     const ids = localities.map(locality => InputLocality.localityId(locality));
     const current = this.choicesInput.value ?? [];
@@ -179,15 +190,27 @@ export class InputLocalityComponent
     this._isApplyingValue = false;
   }
 
+  /**
+   * Options proposées : les valeurs déjà choisies d'abord (y compris celles hors liste,
+   * pour qu'elles restent lisibles et retirables), puis la liste filtrée et plafonnée.
+   */
   private _searchLocalities(search?: string): InputChoicesOption[] {
     const term = (search ?? '').trim().toLowerCase();
-    const matched = term
-      ? this._localities.filter(locality => `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term))
-      : this._localities;
-    return matched.map(locality => ({
+    const selected = toArray(this.input.value).filter(isNonNullable);
+    const selectedIds = new Set(selected.map(locality => InputLocality.localityId(locality)));
+    const matched = this._localities.filter(
+      locality =>
+        !selectedIds.has(InputLocality.localityId(locality)) &&
+        (!term || `${locality.zipCode} ${locality.city}`.toLowerCase().includes(term))
+    );
+    return [...selected, ...matched.slice(0, MAX_RESULTS)].map(locality => this._toOption(locality));
+  }
+
+  private _toOption(locality: AddressLocality): InputChoicesOption {
+    return {
       data: locality,
       id: InputLocality.localityId(locality),
-      name: `${locality.zipCode} ${locality.city}`,
-    }));
+      name: `${locality.zipCode} ${locality.city}`.trim(),
+    };
   }
 }

@@ -20,6 +20,23 @@ const PARIS: AddressLocality = { city: 'Paris', country: 'FR', latitude: 48.85, 
 // Le générique par défaut du modèle : une valeur seule le ferait rétrécir à `AddressLocality`.
 type LocalityValue = AddressLocality | AddressLocality[];
 
+/** Zone héritée de l'ancienne saisie libre : un code postal seul, absent de la liste officielle. */
+const LEGACY_4000: AddressLocality = { city: '', country: 'BE', latitude: null, longitude: null, zipCode: '4000' };
+/** Pays fictif de 150 localités, pour le plafond d'affichage. */
+const MANY: AddressLocality[] = Array.from({ length: 150 }, (_, i) => ({
+  city: `Ville ${i}`,
+  country: 'XL',
+  latitude: null,
+  longitude: null,
+  zipCode: String(1000 + i),
+}));
+
+const optionNames = (component: InputLocalityComponent, search?: string) => {
+  let names: string[] = [];
+  component.choicesInput.advancedSearch$?.(search).subscribe(options => (names = options.map(o => o.name)));
+  return names;
+};
+
 describe('InputLocalityComponent', () => {
   let fixture: ComponentFixture<InputLocalityComponent>;
   let component: InputLocalityComponent;
@@ -42,6 +59,9 @@ describe('InputLocalityComponent', () => {
       }
       if (country === 'FR') {
         return of([PARIS]);
+      }
+      if (country === 'XL') {
+        return of(MANY);
       }
       return of([]);
     });
@@ -111,6 +131,44 @@ describe('InputLocalityComponent', () => {
     country$.next('FR');
     expect(input.value).toBeNull();
     expect(lookup.getCountryPostalCodes).toHaveBeenCalledWith('FR');
+  });
+
+  // Données héritées : une zone hors liste reste lisible et n'est pas perdue à la première sélection.
+  it('should keep a legacy value that is not in the list, with a readable label', async () => {
+    const input = new InputLocality<LocalityValue>({ key: 'zones', multiple: true, value: [LEGACY_4000] });
+    await create(input);
+    expect(component.choicesInput.value).toEqual(['4000__']);
+    expect(optionNames(component)[0]).toBe('4000');
+
+    component.choicesInput.value = ['4000__', InputLocality.localityId(IXELLES)];
+    component.onChoicesChanged();
+    expect(input.value).toEqual([LEGACY_4000, IXELLES]);
+  });
+
+  it('should list the selected localities first, then at most 100 others', async () => {
+    const input = new InputLocality<LocalityValue>({
+      country$: of('XL'),
+      key: 'zones',
+      multiple: true,
+      value: [MANY[149]],
+    });
+    await create(input);
+    const names = optionNames(component);
+    expect(names.length).toBe(101);
+    expect(names[0]).toBe('1149 Ville 149');
+    expect(optionNames(component, 'Ville 14')).toEqual([
+      '1149 Ville 149',
+      '1014 Ville 14',
+      '1140 Ville 140',
+      '1141 Ville 141',
+      '1142 Ville 142',
+      '1143 Ville 143',
+      '1144 Ville 144',
+      '1145 Ville 145',
+      '1146 Ville 146',
+      '1147 Ville 147',
+      '1148 Ville 148',
+    ]);
   });
 
   it('should build a locality from free input', async () => {

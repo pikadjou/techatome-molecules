@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -10,20 +9,37 @@ import { of } from 'rxjs';
 import { InputAddress } from '@ta/form-model';
 import { TaGraphService, TaStrapiService, TaServerSevice } from '@ta/server';
 import { TaTranslationRegistryService } from '@ta/translation';
+import { AddressLocality, TaAddressLookupService } from '@ta/utils';
 
 import { InputAddressComponent } from '@lib/form-basic/components/input/address/address.component';
+
+const IXELLES: AddressLocality = { city: 'Ixelles', country: 'BE', latitude: 50.83, longitude: 4.37, zipCode: '1050' };
+const LIEGE: AddressLocality = { city: 'Liège', country: 'BE', latitude: 50.63, longitude: 5.57, zipCode: '4000' };
 
 describe('InputAddressComponent', () => {
   let component: InputAddressComponent;
   let fixture: ComponentFixture<InputAddressComponent>;
   let addressInput: InputAddress;
+  let lookup: jasmine.SpyObj<TaAddressLookupService>;
+
+  const create = async (input: InputAddress) => {
+    addressInput = input;
+    fixture = TestBed.createComponent(InputAddressComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('input', input);
+    fixture.componentRef.setInput('standalone', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+  };
 
   beforeEach(async () => {
-    addressInput = new InputAddress({ key: 'address', label: 'Address' });
+    lookup = jasmine.createSpyObj<TaAddressLookupService>('TaAddressLookupService', ['getCountryPostalCodes']);
+    lookup.getCountryPostalCodes.and.callFake((country: string | null | undefined) =>
+      of(country === 'BE' ? [IXELLES, LIEGE] : [])
+    );
 
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         NoopAnimationsModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
@@ -31,126 +47,94 @@ describe('InputAddressComponent', () => {
         InputAddressComponent,
       ],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({}), queryParams: of({}) },
-        },
-        {
-          provide: Router,
-          useValue: { url: '/test' },
-        },
-        {
-          provide: Location,
-          useValue: {},
-        },
-        {
-          provide: TaTranslationRegistryService,
-          useValue: { register: jasmine.createSpy('register') },
-        },
-        {
-          provide: TaGraphService,
-          useValue: { registerGraphEndpoint: jasmine.createSpy('registerGraphEndpoint') },
-        },
-        {
-          provide: TaStrapiService,
-          useValue: { fetchQueryList$: jasmine.createSpy('fetchQueryList$') },
-        },
-        {
-          provide: TaServerSevice,
-          useValue: { registerRoutes: jasmine.createSpy('registerRoutes') },
-        },
+        { provide: TaAddressLookupService, useValue: lookup },
+        { provide: ActivatedRoute, useValue: { params: of({}), queryParams: of({}) } },
+        { provide: Router, useValue: { url: '/test' } },
+        { provide: Location, useValue: {} },
+        { provide: TaTranslationRegistryService, useValue: { register: jasmine.createSpy('register') } },
+        { provide: TaGraphService, useValue: { registerGraphEndpoint: jasmine.createSpy('registerGraphEndpoint') } },
+        { provide: TaStrapiService, useValue: { fetchQueryList$: jasmine.createSpy('fetchQueryList$') } },
+        { provide: TaServerSevice, useValue: { registerRoutes: jasmine.createSpy('registerRoutes') } },
       ],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(InputAddressComponent);
-    component = fixture.componentInstance;
-    fixture.componentRef.setInput('input', addressInput);
-    fixture.detectChanges();
   });
 
   afterEach(() => {
-    addressInput.destroy();
+    addressInput?.destroy();
   });
 
-  it('should create', () => {
+  it('should create', async () => {
+    await create(new InputAddress({ key: 'address', label: 'Address' }));
     expect(component).toBeTruthy();
-  });
-
-  it('should expose address input', () => {
-    expect(component.input).toBe(addressInput);
     expect(component.input.key).toBe('address');
   });
 
-  it('should initialize with empty state when no value provided', () => {
-    expect(component.state()).toBe('empty');
-    expect(component.snapshot()).toBeNull();
-  });
-
-  it('should initialize with locked state when value is provided', () => {
-    addressInput.destroy();
-    addressInput = new InputAddress({
-      key: 'address',
-      label: 'Address',
-      value: { city: 'Brussels', country: 'Belgium', street: 'Main St', zipCode: '1000' },
-    });
-    fixture.componentRef.setInput('input', addressInput);
-    fixture.detectChanges();
-
-    expect(component.state()).toBe('locked');
-  });
-
-  it('should have sub-inputs for each address field', () => {
+  it('should have a sub-input for each address part', async () => {
+    await create(new InputAddress({ key: 'address' }));
     expect(component.streetInput).toBeTruthy();
     expect(component.numberInput).toBeTruthy();
-    expect(component.cityInput).toBeTruthy();
-    expect(component.zipCodeInput).toBeTruthy();
-    expect(component.countryInput).toBeTruthy();
     expect(component.complementInput).toBeTruthy();
+    expect(component.localityInput).toBeTruthy();
+    expect(component.countryInput).toBeTruthy();
   });
 
-  describe('unlockManual', () => {
-    beforeEach(() => {
-      component.state.set('locked');
-    });
+  // Une adresse vide n'est pas « rien » : elle porte déjà le pays par défaut.
+  it('should seed the default country in an empty address', async () => {
+    const input = new InputAddress({ key: 'address' });
+    await create(input);
+    expect(input.value?.country).toBe('BE');
+    expect(component.countryInput.value).toEqual(['BE']);
+    expect(lookup.getCountryPostalCodes).toHaveBeenCalledWith('BE');
+  });
 
-    it('should set state to manual', () => {
-      component.unlockManual();
-      expect(component.state()).toBe('manual');
-    });
-
-    it('should make sub-inputs editable', () => {
-      component.unlockManual();
-      expect(component.streetInput.readonly).toBeFalse();
-      expect(component.cityInput.readonly).toBeFalse();
+  it('should spread a given value over the sub-inputs', async () => {
+    await create(
+      new InputAddress({
+        key: 'address',
+        value: { city: 'Ixelles', country: 'BE', floor: '2', number: '12', street: 'Rue du Test', zipCode: '1050' },
+      })
+    );
+    expect(component.streetInput.value).toBe('Rue du Test');
+    expect(component.numberInput.value).toBe('12');
+    expect(component.complementInput.value).toBe('2');
+    expect(component.countryInput.value).toEqual(['BE']);
+    expect(component.localityInput.value).toEqual({
+      city: 'Ixelles',
+      country: 'BE',
+      latitude: null,
+      longitude: null,
+      zipCode: '1050',
     });
   });
 
-  describe('revertToOriginal', () => {
-    it('should do nothing when no snapshot', () => {
-      component.state.set('manual');
-      component.revertToOriginal();
-      expect(component.state()).toBe('manual');
-    });
+  // Les anciennes adresses portent le pays en toutes lettres : la liste des pays et celle des
+  // localités ne connaissent que le code.
+  it('should normalize a legacy country name to its ISO code', async () => {
+    await create(
+      new InputAddress({
+        key: 'address',
+        value: { city: 'Brussels', country: 'Belgium', number: '240', street: 'Avenue Louise', zipCode: '1050' },
+      })
+    );
+    expect(component.countryInput.value).toEqual(['BE']);
+    expect(component.localityInput.value).toEqual(jasmine.objectContaining({ country: 'BE', zipCode: '1050' }));
+    expect(lookup.getCountryPostalCodes).toHaveBeenCalledWith('BE');
+  });
 
-    it('should restore snapshot and lock fields', () => {
-      component.snapshot.set({
-        city: 'Brussels',
-        country: 'Belgium',
-        floor: '',
-        latitude: 50.8,
-        longitude: 4.3,
-        number: '10',
-        placeId: 'abc123',
-        street: 'Rue de la Loi',
-        zipCode: '1000',
-      });
-      component.state.set('manual');
+  it('should write the chosen locality into the address value', async () => {
+    const input = new InputAddress({ key: 'address' });
+    await create(input);
+    component.onLocalityChanged(LIEGE);
+    expect(input.value).toEqual(
+      jasmine.objectContaining({ city: 'Liège', country: 'BE', latitude: 50.63, longitude: 5.57, zipCode: '4000' })
+    );
+  });
 
-      component.revertToOriginal();
-
-      expect(component.state()).toBe('locked');
-      expect(component.streetInput.value).toBe('Rue de la Loi');
-      expect(component.cityInput.value).toBe('Brussels');
-    });
+  it('should reload the locality list when the country changes', async () => {
+    await create(new InputAddress({ key: 'address' }));
+    component.countryInput.value = ['FR'];
+    component.onSubInputChanged();
+    expect(lookup.getCountryPostalCodes).toHaveBeenCalledWith('FR');
+    expect(component.localityInput.value).toBeNull();
   });
 });

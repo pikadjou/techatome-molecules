@@ -25,7 +25,7 @@ describe('InputTranslationComponent (standalone)', () => {
       key: 'translations',
       label: 'Translations',
       template: [
-        { type: 'textbox', options: { key: 'title', label: 'Title' } },
+        { type: 'InputTextBox', options: { key: 'title', label: 'Title' } },
       ],
       inputsGroup: {},
     });

@@ -759,6 +759,45 @@ const getCountryName = (code, locale) => {
         return normalized;
     }
 };
+/** Langues dans lesquelles un nom de pays hérité a pu être stocké. */
+const NAME_LOCALES = ['en', 'fr', 'nl', 'de'];
+/**
+ * Ramène un pays à son code ISO 3166-1 alpha-2.
+ *
+ * Un code connu est rendu en majuscules. Un nom complet (« Belgium »,
+ * « Belgique », « België »…) — héritage d'anciens enregistrements — est
+ * résolu par comparaison, insensible à la casse et aux accents, avec les noms
+ * localisés en anglais, français, néerlandais et allemand. Toute autre valeur
+ * donne `null`.
+ */
+const resolveCountryCode = (value) => {
+    const trimmed = value?.trim() ?? '';
+    if (!trimmed) {
+        return null;
+    }
+    const upper = trimmed.toUpperCase();
+    if (COUNTRY_CODES.includes(upper)) {
+        return upper;
+    }
+    const wanted = foldName(trimmed);
+    for (const locale of NAME_LOCALES) {
+        const displayNames = buildDisplayNames(locale);
+        if (!displayNames) {
+            continue;
+        }
+        const match = COUNTRY_CODES.find(code => foldName(displayNames.of(code) ?? '') === wanted);
+        if (match) {
+            return match;
+        }
+    }
+    return null;
+};
+const foldName = (name) => {
+    return name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+};
 /**
  * Retourne la liste complète des pays (code + nom localisé).
  *
@@ -1336,5 +1375,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, sameGuid, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
 //# sourceMappingURL=ta-utils.mjs.map

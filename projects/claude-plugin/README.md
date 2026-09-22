@@ -10,7 +10,7 @@ Plugin Claude Code pour le développement sur le monorepo Angular **techatome** 
 
 ## Contenu du plugin
 
-### Commands (26 slash-commands)
+### Commands (28 slash-commands)
 
 Un assistant contextuel par librairie `@ta/*` + un assistant patterns.
 
@@ -41,6 +41,8 @@ Un assistant contextuel par librairie `@ta/*` + un assistant patterns.
 | `/project`        | `@ta/project` — Feature project                                                                           |
 | `/testing`        | `@ta/testing` — Utilitaires de test                                                                       |
 | `/patterns`       | Patterns & conventions — TOC vers le skill `techatome-patterns` (routing, forms, menus, layout, AG Grid…) |
+| **`/strapi-multi-tenant`** | **⭐ Back-end — cloisonnement multi-tenant Strapi 5, contrôles d'accès, champs calculés** |
+| **`/test-integrity`** | **⭐ Tests qui protègent réellement — mutation, fixtures, assertions** |
 
 **Usage** : chaque commande accepte un argument libre
 
@@ -63,9 +65,11 @@ Les agents sont invoqués automatiquement par Claude Code via le `Task` tool ou 
 
 ### Skill
 
-| Skill                | Description                                                                                                                                                                                                                                               |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `techatome-patterns` | **Source de vérité** pour tous les patterns Angular du projet : composants @ta/\* obligatoires, SCSS tokens, conventions de code, routing, formulaires, menus, layout, modales, AG Grid, GraphQL, états. Le command `/patterns` en est le point d'entrée. |
+| Skill                   | Description                                                                                                                                                                                                                                               |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `techatome-patterns`    | **Source de vérité** pour tous les patterns Angular du projet : composants @ta/\* obligatoires, SCSS tokens, conventions de code, routing, formulaires, menus, layout, modales, AG Grid, GraphQL, états. Le command `/patterns` en est le point d'entrée. |
+| `strapi-multi-tenant`   | **Source de vérité** pour la sécurité des back-ends Strapi 5 : document middlewares, les quatre trous du filtre générique (type racine, `update`, relations, `clone`), authentification déléguée, rôles, champs calculés, tables de référence. Chaque règle vient d'un défaut réellement survenu. Le command `/strapi-multi-tenant` en est le point d'entrée. |
+| `test-integrity`        | Écrire des tests qui protègent réellement : tests de mutation, fixtures complètes, assertions qui échouent quand le code casse, harnais de bout en bout. À lire avant d'annoncer qu'un comportement est testé. Le command `/test-integrity` en est le point d'entrée. |
 
 ### Hooks
 
@@ -88,7 +92,7 @@ Un hook `PreToolUse` s'active avant chaque écriture de fichier Angular (`.ts`, 
 claude-plugin/
 ├── .claude-plugin/
 │   └── plugin.json          # Manifest du plugin
-├── commands/                # 25 slash-commands (/ui, /styles, /patterns, …)
+├── commands/                # 28 slash-commands (/ui, /styles, /patterns, …)
 │   ├── ui.md
 │   ├── styles.md
 │   ├── patterns.md
@@ -101,8 +105,12 @@ claude-plugin/
 │   ├── hooks.json
 │   └── techatome_conventions_hook.py
 ├── skills/                  # Skills invocables
-│   └── techatome-patterns/
-│       └── SKILL.md         # Référence complète des patterns
+│   ├── techatome-patterns/
+│   │   └── SKILL.md         # Référence complète des patterns Angular
+│   ├── strapi-multi-tenant/
+│   │   └── SKILL.md         # Sécurité et cloisonnement des back-ends Strapi
+│   └── test-integrity/
+│       └── SKILL.md         # Tests qui protègent réellement
 └── README.md
 ```
 
