@@ -718,15 +718,26 @@ class TaGraphService {
             return throwError(() => err);
         }))), take(1));
     }
-    fetchQueryBuilder(payload, context) {
+    /**
+     * `fresh` : la reponse vient du serveur sans passer par le cache, sans pour autant l'invalider —
+     * de quoi lire une donnee qui change sans nous (un webhook, l'action d'un autre utilisateur) sans
+     * priver les autres ecrans de leur cache.
+     */
+    fetchQueryBuilder(payload, context, options) {
         Logger.LogInfo('[GraphQL] [Prepare] fetchQueryBuilder:', {
             payload,
             context,
+            options,
         });
         return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQueryBuilder:', {
             payload,
             context,
-        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
+        })), switchMap(() => this.apollo
+            .query({
+            ...this._setupData(payload, context),
+            ...(options?.fresh ? { fetchPolicy: 'network-only' } : {}),
+        })
+            .pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
             data,
             context,
         })), filter(response => !!response.data), map(response => response.data[payload.name]), catchError((err) => {

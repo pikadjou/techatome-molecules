@@ -145,10 +145,16 @@ export class TaGraphService {
     );
   }
 
-  public fetchQueryBuilder<T>(payload: GraphPayload, context: string) {
+  /**
+   * `fresh` : la reponse vient du serveur sans passer par le cache, sans pour autant l'invalider —
+   * de quoi lire une donnee qui change sans nous (un webhook, l'action d'un autre utilisateur) sans
+   * priver les autres ecrans de leur cache.
+   */
+  public fetchQueryBuilder<T>(payload: GraphPayload, context: string, options?: { fresh?: boolean }) {
     Logger.LogInfo('[GraphQL] [Prepare] fetchQueryBuilder:', {
       payload,
       context,
+      options,
     });
     return this._getWrapper({ context }).pipe(
       tap(() =>
@@ -158,26 +164,31 @@ export class TaGraphService {
         })
       ),
       switchMap(() =>
-        this.apollo.query<{ [key: string]: T }>(this._setupData(payload, context)).pipe(
-          tap(data =>
-            Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
-              data,
-              context,
-            })
-          ),
-          filter(response => !!response.data),
-          map(response => response.data[payload.name]),
-          catchError((err: ApolloError) => {
-            Logger.LogError('[GraphQL] [Error] fetchQueryBuilder:', {
-              payload,
-              context,
-              message: err.message,
-            });
-
-            this._errorServices.addError(payload, err);
-            return throwError(() => err);
+        this.apollo
+          .query<{ [key: string]: T }>({
+            ...this._setupData(payload, context),
+            ...(options?.fresh ? { fetchPolicy: 'network-only' as const } : {}),
           })
-        )
+          .pipe(
+            tap(data =>
+              Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
+                data,
+                context,
+              })
+            ),
+            filter(response => !!response.data),
+            map(response => response.data[payload.name]),
+            catchError((err: ApolloError) => {
+              Logger.LogError('[GraphQL] [Error] fetchQueryBuilder:', {
+                payload,
+                context,
+                message: err.message,
+              });
+
+              this._errorServices.addError(payload, err);
+              return throwError(() => err);
+            })
+          )
       ),
       take(1)
     );

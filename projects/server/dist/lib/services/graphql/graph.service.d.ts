@@ -23,7 +23,14 @@ export declare class TaGraphService {
         totalCount: number;
         items?: T[] | undefined;
     }>;
-    fetchQueryBuilder<T>(payload: GraphPayload, context: string): import("rxjs").Observable<T>;
+    /**
+     * `fresh` : la reponse vient du serveur sans passer par le cache, sans pour autant l'invalider —
+     * de quoi lire une donnee qui change sans nous (un webhook, l'action d'un autre utilisateur) sans
+     * priver les autres ecrans de leur cache.
+     */
+    fetchQueryBuilder<T>(payload: GraphPayload, context: string, options?: {
+        fresh?: boolean;
+    }): import("rxjs").Observable<T>;
     /**
      * Comme `fetchQueryBuilder`, mais la requête reste ouverte : Apollo la rejoue toutes les
      * `pollInterval` millisecondes et chaque réponse est émise, sans passer par le cache. Le flux ne
