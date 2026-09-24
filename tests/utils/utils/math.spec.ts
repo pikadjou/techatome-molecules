@@ -1,4 +1,4 @@
-import { createRange, roundToDecimal, percentage } from '@lib/utils/utils/math';
+import { createRange, parseNumber, roundToDecimal, percentage } from '@lib/utils/utils/math';
 
 describe('math utils', () => {
   describe('createRange', () => {
@@ -52,6 +52,35 @@ describe('math utils', () => {
 
     it('should handle decimal results', () => {
       expect(percentage(1, 3)).toBeCloseTo(33.33, 1);
+    });
+  });
+
+  describe('parseNumber', () => {
+    it('should read an integer written as a string', () => {
+      expect(parseNumber('1000')).toBe(1000);
+    });
+
+    it('should keep zero, which is a value like any other', () => {
+      expect(parseNumber('0')).toBe(0);
+    });
+
+    it('should read a decimal and a negative value', () => {
+      expect(parseNumber('12.5')).toBe(12.5);
+      expect(parseNumber('-3')).toBe(-3);
+    });
+
+    it('should return null rather than NaN for a non-numeric value', () => {
+      expect(parseNumber('abc')).toBeNull();
+    });
+
+    it('should return null for an infinite value', () => {
+      expect(parseNumber('Infinity')).toBeNull();
+    });
+
+    it('should return null for an absent or empty value', () => {
+      expect(parseNumber(null)).toBeNull();
+      expect(parseNumber(undefined)).toBeNull();
+      expect(parseNumber('')).toBeNull();
     });
   });
 });

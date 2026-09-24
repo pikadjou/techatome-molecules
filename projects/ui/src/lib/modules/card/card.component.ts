@@ -21,6 +21,12 @@ export class CardComponent {
 
   shadow = input<boolean>(true);
 
+  /**
+   * Carte en retrait : surface et texte atténués, image désaturée. Pour un élément qui reste
+   * listé mais n'est plus actif — il se lit encore, il ne s'impose plus.
+   */
+  muted = input<boolean>(false);
+
   fullHeight = input<boolean>(false);
 
   noContent = input<boolean>(false);

@@ -90,3 +90,19 @@ ta-input-phone {
     min-height: 40px;
   }
 }
+
+// --- Angular Material : panneau d'un item de menu (@ta/menu — ta-menu-item) -
+//
+// Le panneau est accroché à l'overlay CDK, en dehors de tout composant : seule une classe posée
+// sur `<mat-menu>` permet de le viser. D'où `ta-menu-panel`, qui reste un sélecteur à nous.
+.mat-mdc-menu-panel.ta-menu-panel {
+  background-color: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+  box-shadow: common.get-var(shadow, black, md);
+  min-width: auto;
+
+  .mat-mdc-menu-content {
+    padding: common.get-var(space, xs);
+  }
+}

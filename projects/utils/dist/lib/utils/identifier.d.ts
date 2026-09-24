@@ -9,4 +9,9 @@ export declare const newId: () => number;
  * égale, pas même à une autre valeur absente.
  */
 export declare const sameGuid: (a: string | null | undefined, b: string | null | undefined) => boolean;
+/**
+ * L'écriture canonique d'un GUID : sans tirets, en minuscules. Sert à comparer, mais aussi à
+ * regrouper — une clé de `Set` ou de `Map` ne passe pas par `sameGuid`.
+ */
+export declare const normalizeGuid: (guid: string) => string;
 export declare const s4: () => string;

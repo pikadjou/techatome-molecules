@@ -111,6 +111,12 @@
     }
     @media screen and (min-width: 992px) {
       @include menu-item-vertical();
+
+      // Sur la barre de bureau, un item qui porte une icône de fin a quelque chose à ouvrir :
+      // la masquer priverait du seul indice qu'un panneau existe.
+      .ending-icon-container {
+        display: flex;
+      }
     }
     &.menu-minimized {
       .icon {
@@ -203,11 +209,30 @@
   }
 }
 
+// Le déclencheur est un point invisible : c'est lui que l'overlay prend pour ancre. Posé dans la
+// marge à droite, il convient à un menu vertical, où le panneau sort sur le côté.
 .trigger-container {
   position: relative;
   .trigger {
     position: absolute;
     top: 0;
     right: calc(common.get-var(space, xl) * -1);
+  }
+}
+
+// Sur une barre horizontale, le panneau doit tomber sous son item : le déclencheur épouse alors
+// la case entière, et l'overlay s'aligne sur son bord.
+.item {
+  position: relative;
+}
+
+@media screen and (min-width: 992px) {
+  .responsive .trigger-container,
+  .horizontal .trigger-container {
+    position: static;
+    .trigger {
+      inset: 0;
+      right: auto;
+    }
   }
 }

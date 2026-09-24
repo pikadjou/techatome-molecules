@@ -97,6 +97,18 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
     return this.item() + "-" + item.key;
   }
 
+  /**
+   * Un item à panneau s'ouvre aussi au survol : sur une barre horizontale, on parcourt les
+   * rubriques à la souris sans cliquer. Sans panneau, ou sur mobile, le survol ne fait rien.
+   */
+  public openPanelOnHover() {
+    if (!this.getTemplate() || this.breakpoints.isLessThanXS) {
+      return;
+    }
+
+    this.triggerMenu.openMenu();
+  }
+
   public executeCallback() {
     const myTemplate = this.getTemplate();
     if (myTemplate) {

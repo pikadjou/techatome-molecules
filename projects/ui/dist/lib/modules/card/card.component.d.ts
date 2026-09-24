@@ -4,6 +4,11 @@ export declare class CardComponent {
     /** Carte navy : surface inversée, chiffres et actions en jaune. */
     invert: import("@angular/core").InputSignal<boolean>;
     shadow: import("@angular/core").InputSignal<boolean>;
+    /**
+     * Carte en retrait : surface et texte atténués, image désaturée. Pour un élément qui reste
+     * listé mais n'est plus actif — il se lit encore, il ne s'impose plus.
+     */
+    muted: import("@angular/core").InputSignal<boolean>;
     fullHeight: import("@angular/core").InputSignal<boolean>;
     noContent: import("@angular/core").InputSignal<boolean>;
     directionCard: import("@angular/core").InputSignal<"vertical" | "horizontal" | null>;
@@ -14,5 +19,5 @@ export declare class CardComponent {
     constructor();
     clickTrigger(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<CardComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<CardComponent, "ta-card", never, { "highlight": { "alias": "highlight"; "required": false; "isSignal": true; }; "invert": { "alias": "invert"; "required": false; "isSignal": true; }; "shadow": { "alias": "shadow"; "required": false; "isSignal": true; }; "fullHeight": { "alias": "fullHeight"; "required": false; "isSignal": true; }; "noContent": { "alias": "noContent"; "required": false; "isSignal": true; }; "directionCard": { "alias": "directionCard"; "required": false; "isSignal": true; }; "isNew": { "alias": "isNew"; "required": false; "isSignal": true; }; }, { "click": "click"; }, never, ["ta-card-image", "ta-card-header", "ta-card-content", "ta-card-cta"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CardComponent, "ta-card", never, { "highlight": { "alias": "highlight"; "required": false; "isSignal": true; }; "invert": { "alias": "invert"; "required": false; "isSignal": true; }; "shadow": { "alias": "shadow"; "required": false; "isSignal": true; }; "muted": { "alias": "muted"; "required": false; "isSignal": true; }; "fullHeight": { "alias": "fullHeight"; "required": false; "isSignal": true; }; "noContent": { "alias": "noContent"; "required": false; "isSignal": true; }; "directionCard": { "alias": "directionCard"; "required": false; "isSignal": true; }; "isNew": { "alias": "isNew"; "required": false; "isSignal": true; }; }, { "click": "click"; }, never, ["ta-card-image", "ta-card-header", "ta-card-content", "ta-card-cta"], true, never>;
 }

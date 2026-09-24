@@ -37,7 +37,11 @@ export const sameGuid = (
   return normalizeGuid(a) === normalizeGuid(b);
 };
 
-const normalizeGuid = (guid: string): string => {
+/**
+ * L'écriture canonique d'un GUID : sans tirets, en minuscules. Sert à comparer, mais aussi à
+ * regrouper — une clé de `Set` ou de `Map` ne passe pas par `sameGuid`.
+ */
+export const normalizeGuid = (guid: string): string => {
   return guid.replace(/-/g, "").toLowerCase();
 };
 

@@ -38,7 +38,11 @@
 }
 
 <ng-template #Item [typedTemplate]="this.typeToken">
-  <div class="item pointer" [class.disable]="this.item().disabled">
+  <div
+    class="item pointer"
+    [class.disable]="this.item().disabled"
+    (mouseenter)="this.openPanelOnHover()"
+  >
     <div class="icon">
       @if (this.hasFontIcon()) {
       <span class="icon-material">
@@ -75,7 +79,7 @@
     } @let panelTemplate = this.getTemplate(); @if (panelTemplate) {
     <div class="trigger-container">
       <div class="trigger" [matMenuTriggerFor]="menu" #triggerPanel></div>
-      <mat-menu #menu="matMenu">
+      <mat-menu #menu="matMenu" class="ta-menu-panel">
         <ng-container [ngTemplateOutlet]="panelTemplate"></ng-container>
       </mat-menu>
     </div>

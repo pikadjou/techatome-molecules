@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { TaIconType } from '@ta/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { differenceInMinutes, parseISO, isValid } from 'date-fns';
+import { differenceInMinutes, parseISO, isValid, addDays as addDays$1, startOfWeek, format, addWeeks } from 'date-fns';
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 import Compressor from 'compressorjs';
@@ -851,6 +851,90 @@ const isStrictISODateString = (value) => {
     const date = parseISO(value);
     return isValid(date) && value === date.toISOString().slice(0, value.length);
 };
+const MINUTES_PER_HOUR = 60;
+const MINUTES_PER_DAY = 1440;
+const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
+/**
+ * « HH:mm » → minutes depuis minuit. Une valeur absente ou mal formée vaut minuit : un horaire
+ * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
+ */
+const parseTimeToMinutes = (time) => {
+    const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? "").trim());
+    if (!match) {
+        return 0;
+    }
+    return Number(match[1]) * MINUTES_PER_HOUR + Number(match[2]);
+};
+/** Minutes depuis minuit → « HH:mm ». Déborde et revient dans la journée plutôt que d'aller au-delà. */
+const formatMinutesToTime = (minutes) => {
+    const normalized = ((minutes % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
+    const hours = Math.floor(normalized / MINUTES_PER_HOUR);
+    const rest = normalized % MINUTES_PER_HOUR;
+    return `${String(hours).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+};
+/** Ajoute des jours à une date, sans la muter. */
+const addDays = (date, days) => {
+    return addDays$1(date, days);
+};
+/** Lundi 00:00 de la semaine locale qui contient `reference`. */
+const startOfLocalWeek = (reference = new Date()) => {
+    return startOfWeek(reference, { weekStartsOn: 1 });
+};
+/** Clé de regroupement par jour local — « 2026-09-15 ». */
+const localDayKey = (date) => {
+    return format(typeof date === "string" ? new Date(date) : date, "yyyy-MM-dd");
+};
+/**
+ * Le décalage local par rapport à UTC change-t-il dans les sept prochains jours ? Sert à prévenir
+ * qu'un horaire récurrent va se décaler à l'écran sans que personne n'y ait touché.
+ */
+const hasUpcomingOffsetShift = (reference = new Date()) => {
+    return reference.getTimezoneOffset() !== addWeeks(reference, 1).getTimezoneOffset();
+};
+/** Les jours de la semaine dans l'ordre d'affichage européen, lundi en tête (0 = dimanche). */
+const WEEK_DAYS_FROM_MONDAY = [1, 2, 3, 4, 5, 6, 0];
+/** Un créneau vu comme un point dans la semaine : minutes depuis dimanche minuit, et durée. */
+const toWeekMinutes = (slot) => {
+    const startOfDayMinutes = parseTimeToMinutes(slot.startTime);
+    return {
+        start: slot.dayOfWeek * MINUTES_PER_DAY + startOfDayMinutes,
+        duration: parseTimeToMinutes(slot.endTime) - startOfDayMinutes,
+    };
+};
+const fromWeekMinutes = (start, duration) => {
+    const normalized = ((start % MINUTES_PER_WEEK) + MINUTES_PER_WEEK) % MINUTES_PER_WEEK;
+    return {
+        dayOfWeek: Math.floor(normalized / MINUTES_PER_DAY),
+        startTime: formatMinutesToTime(normalized),
+        endTime: formatMinutesToTime(normalized + duration),
+    };
+};
+/**
+ * Un créneau hebdomadaire exprimé en UTC, ramené à l'heure locale. Le décalage est celui en
+ * vigueur à `reference` : un changement d'heure dans la semaine décalerait l'affichage, ce dont
+ * `hasUpcomingOffsetShift` permet de prévenir.
+ */
+const weeklySlotToLocal = (slot, reference = new Date()) => {
+    const { start, duration } = toWeekMinutes(slot);
+    return fromWeekMinutes(start - reference.getTimezoneOffset(), duration);
+};
+/**
+ * L'inverse : un créneau saisi en heure locale, exprimé en UTC. `null` si la plage est vide ou
+ * inversée, ou si elle franchit minuit UTC — un créneau appartient à un seul jour côté serveur.
+ */
+const weeklySlotToUtc = (slot, reference = new Date()) => {
+    const { start, duration } = toWeekMinutes(slot);
+    if (duration <= 0) {
+        return null;
+    }
+    const utcStart = (((start + reference.getTimezoneOffset()) % MINUTES_PER_WEEK) + MINUTES_PER_WEEK) %
+        MINUTES_PER_WEEK;
+    if (Math.floor((utcStart + duration) / MINUTES_PER_DAY) !==
+        Math.floor(utcStart / MINUTES_PER_DAY)) {
+        return null;
+    }
+    return fromWeekMinutes(utcStart, duration);
+};
 
 const extractEnum = (allEnum, backendOne = false) => {
     const keys = Object.keys(allEnum).filter((k) => typeof allEnum[k] === "number");
@@ -892,6 +976,10 @@ const sameGuid = (a, b) => {
     }
     return normalizeGuid(a) === normalizeGuid(b);
 };
+/**
+ * L'écriture canonique d'un GUID : sans tirets, en minuscules. Sert à comparer, mais aussi à
+ * regrouper — une clé de `Set` ou de `Map` ne passe pas par `sameGuid`.
+ */
 const normalizeGuid = (guid) => {
     return guid.replace(/-/g, "").toLowerCase();
 };
@@ -1087,6 +1175,35 @@ const roundToDecimal = (number, precision) => {
 };
 const percentage = (partialValue, totalValue) => {
     return (100 * partialValue) / totalValue;
+};
+/**
+ * Un nombre lu dans une chaîne qui peut manquer ou n'en pas être un : les API en renvoient
+ * (métadonnées, paramètres d'URL). `null` dès que la valeur ne fait pas un nombre fini — à l'appelant
+ * de décider quoi montrer, plutôt qu'un `NaN` qui traverse tout l'écran.
+ */
+const parseNumber = (raw) => {
+    if (!raw) {
+        return null;
+    }
+    const value = Number(raw);
+    return Number.isFinite(value) ? value : null;
+};
+
+/**
+ * Montants facturés. Les API de paiement comptent en cents entiers : jamais de flottant sur
+ * l'argent tant qu'on calcule, et la conversion se fait au dernier moment, pour l'affichage.
+ */
+/** Cents → unité principale (euros chez nous), pour le pipe `currency`. */
+const centsToEuros = (cents) => {
+    return (cents ?? 0) / 100;
+};
+/** TVA contenue dans un total TTC : `total × taux / (100 + taux)`. */
+const vatIncludedCents = (totalCents, vatRate) => {
+    return Math.round((totalCents * vatRate) / (100 + vatRate));
+};
+/** Le même total, hors taxe. */
+const excludingVatCents = (totalCents, vatRate) => {
+    return totalCents - vatIncludedCents(totalCents, vatRate);
 };
 
 const getCivilityIcon = (civility) => {
@@ -1375,5 +1492,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, addDays, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
 //# sourceMappingURL=ta-utils.mjs.map

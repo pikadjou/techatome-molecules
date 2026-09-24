@@ -60,6 +60,24 @@ $spacing: common.get-var(components, card, padding);
     }
   }
 
+  /// Carte en retrait : la surface recule, le texte passe en secondaire et la photo perd
+  /// ses couleurs. Rien n'est caché — la carte se lit encore, elle ne réclame plus l'œil.
+  &.muted {
+    background-color: common.get-var(surface, tertiary);
+    color: common.get-var(text, secondary);
+    border-color: common.get-var(border, disabled);
+    // Seule opacité du système, celle de la carte à bascule désactivée : même intention, même valeur.
+    opacity: common.get-var(components, toggle-card, disabled, opacity);
+
+    &.card-shadow {
+      box-shadow: none;
+    }
+
+    .card-img-container {
+      filter: grayscale(1);
+    }
+  }
+
   .responsive-content {
     @include flex.flex-column();
     @include flex.flex-full();
