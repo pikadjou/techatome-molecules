@@ -1033,6 +1033,14 @@ $components: map.deep-merge(
           accent: map.get($surface, brand, secondary),
         ),
 
+      // Scope .muted — carte en retrait : lisible, mais elle ne réclame plus l'œil.
+      muted: (
+          background: map.get($surface, tertiary),
+          color: map.get($text, secondary),
+          border: map.get($border, disabled),
+          opacity: 0.6,
+        ),
+
       // Scope .full-height
       full-height: (
           spacing-offset: map.get($space, md),

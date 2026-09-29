@@ -7,7 +7,7 @@ import { MenuIcon } from "../../../models/menu/item/icon";
 import { MenuPanel } from "../../../models/menu/item/panel";
 import * as i0 from "@angular/core";
 export declare class MenuItemComponent extends TaBaseComponent implements OnInit {
-    item: import("@angular/core").InputSignal<MenuBase | MenuIcon | MenuAction | MenuPanel>;
+    item: import("@angular/core").InputSignal<MenuIcon | MenuAction | MenuBase | MenuPanel>;
     styleType: import("@angular/core").InputSignal<String>;
     triggerMenu: MatMenuTrigger;
     readonly typeToken: MenuIcon | MenuAction | MenuBase | MenuPanel;

@@ -6,7 +6,8 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { TaIconType } from '@ta/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { differenceInMinutes, parseISO, isValid, addDays as addDays$1, startOfWeek, format, addWeeks } from 'date-fns';
+import { differenceInMinutes, parseISO, isValid, startOfWeek, format, addWeeks } from 'date-fns';
+export { addDays } from 'date-fns';
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 import Compressor from 'compressorjs';
@@ -854,6 +855,8 @@ const isStrictISODateString = (value) => {
 const MINUTES_PER_HOUR = 60;
 const MINUTES_PER_DAY = 1440;
 const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
+/** Reste toujours positif : ramène une valeur qui déborde dans un cycle (jour, semaine). */
+const mod = (value, cycle) => ((value % cycle) + cycle) % cycle;
 /**
  * « HH:mm » → minutes depuis minuit. Une valeur absente ou mal formée vaut minuit : un horaire
  * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
@@ -867,14 +870,10 @@ const parseTimeToMinutes = (time) => {
 };
 /** Minutes depuis minuit → « HH:mm ». Déborde et revient dans la journée plutôt que d'aller au-delà. */
 const formatMinutesToTime = (minutes) => {
-    const normalized = ((minutes % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
+    const normalized = mod(minutes, MINUTES_PER_DAY);
     const hours = Math.floor(normalized / MINUTES_PER_HOUR);
     const rest = normalized % MINUTES_PER_HOUR;
     return `${String(hours).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
-};
-/** Ajoute des jours à une date, sans la muter. */
-const addDays = (date, days) => {
-    return addDays$1(date, days);
 };
 /** Lundi 00:00 de la semaine locale qui contient `reference`. */
 const startOfLocalWeek = (reference = new Date()) => {
@@ -882,7 +881,7 @@ const startOfLocalWeek = (reference = new Date()) => {
 };
 /** Clé de regroupement par jour local — « 2026-09-15 ». */
 const localDayKey = (date) => {
-    return format(typeof date === "string" ? new Date(date) : date, "yyyy-MM-dd");
+    return format(new Date(date), "yyyy-MM-dd");
 };
 /**
  * Le décalage local par rapport à UTC change-t-il dans les sept prochains jours ? Sert à prévenir
@@ -902,7 +901,7 @@ const toWeekMinutes = (slot) => {
     };
 };
 const fromWeekMinutes = (start, duration) => {
-    const normalized = ((start % MINUTES_PER_WEEK) + MINUTES_PER_WEEK) % MINUTES_PER_WEEK;
+    const normalized = mod(start, MINUTES_PER_WEEK);
     return {
         dayOfWeek: Math.floor(normalized / MINUTES_PER_DAY),
         startTime: formatMinutesToTime(normalized),
@@ -927,10 +926,8 @@ const weeklySlotToUtc = (slot, reference = new Date()) => {
     if (duration <= 0) {
         return null;
     }
-    const utcStart = (((start + reference.getTimezoneOffset()) % MINUTES_PER_WEEK) + MINUTES_PER_WEEK) %
-        MINUTES_PER_WEEK;
-    if (Math.floor((utcStart + duration) / MINUTES_PER_DAY) !==
-        Math.floor(utcStart / MINUTES_PER_DAY)) {
+    const utcStart = start + reference.getTimezoneOffset();
+    if (mod(utcStart, MINUTES_PER_DAY) + duration >= MINUTES_PER_DAY) {
         return null;
     }
     return fromWeekMinutes(utcStart, duration);
@@ -1492,5 +1489,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, addDays, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
 //# sourceMappingURL=ta-utils.mjs.map

@@ -1,5 +1,4 @@
 import {
-  addDays as addDaysFns,
   addWeeks,
   differenceInMinutes,
   format,
@@ -53,6 +52,9 @@ const MINUTES_PER_HOUR = 60;
 const MINUTES_PER_DAY = 1440;
 const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
 
+/** Reste toujours positif : ramène une valeur qui déborde dans un cycle (jour, semaine). */
+const mod = (value: number, cycle: number): number => ((value % cycle) + cycle) % cycle;
+
 /**
  * « HH:mm » → minutes depuis minuit. Une valeur absente ou mal formée vaut minuit : un horaire
  * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
@@ -69,8 +71,7 @@ export const parseTimeToMinutes = (
 
 /** Minutes depuis minuit → « HH:mm ». Déborde et revient dans la journée plutôt que d'aller au-delà. */
 export const formatMinutesToTime = (minutes: number): string => {
-  const normalized =
-    ((minutes % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
+  const normalized = mod(minutes, MINUTES_PER_DAY);
   const hours = Math.floor(normalized / MINUTES_PER_HOUR);
   const rest = normalized % MINUTES_PER_HOUR;
 
@@ -78,9 +79,7 @@ export const formatMinutesToTime = (minutes: number): string => {
 };
 
 /** Ajoute des jours à une date, sans la muter. */
-export const addDays = (date: Date, days: number): Date => {
-  return addDaysFns(date, days);
-};
+export { addDays } from "date-fns";
 
 /** Lundi 00:00 de la semaine locale qui contient `reference`. */
 export const startOfLocalWeek = (reference: Date = new Date()): Date => {
@@ -89,7 +88,7 @@ export const startOfLocalWeek = (reference: Date = new Date()): Date => {
 
 /** Clé de regroupement par jour local — « 2026-09-15 ». */
 export const localDayKey = (date: Date | string): string => {
-  return format(typeof date === "string" ? new Date(date) : date, "yyyy-MM-dd");
+  return format(new Date(date), "yyyy-MM-dd");
 };
 
 /**
@@ -124,7 +123,7 @@ const toWeekMinutes = (slot: WeeklySlot): { start: number; duration: number } =>
 };
 
 const fromWeekMinutes = (start: number, duration: number): WeeklySlot => {
-  const normalized = ((start % MINUTES_PER_WEEK) + MINUTES_PER_WEEK) % MINUTES_PER_WEEK;
+  const normalized = mod(start, MINUTES_PER_WEEK);
 
   return {
     dayOfWeek: Math.floor(normalized / MINUTES_PER_DAY),
@@ -160,14 +159,8 @@ export const weeklySlotToUtc = (
     return null;
   }
 
-  const utcStart =
-    (((start + reference.getTimezoneOffset()) % MINUTES_PER_WEEK) + MINUTES_PER_WEEK) %
-    MINUTES_PER_WEEK;
-
-  if (
-    Math.floor((utcStart + duration) / MINUTES_PER_DAY) !==
-    Math.floor(utcStart / MINUTES_PER_DAY)
-  ) {
+  const utcStart = start + reference.getTimezoneOffset();
+  if (mod(utcStart, MINUTES_PER_DAY) + duration >= MINUTES_PER_DAY) {
     return null;
   }
 

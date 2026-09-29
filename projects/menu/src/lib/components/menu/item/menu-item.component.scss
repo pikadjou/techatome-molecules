@@ -2,6 +2,7 @@
 @use 'ta/utils/mixins/fonts';
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/transitions';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 @mixin menu-item-horizontal() {
   justify-content: center;
@@ -226,13 +227,14 @@
   position: relative;
 }
 
-@media screen and (min-width: 992px) {
+@include mq.from-key(lg) {
   .responsive .trigger-container,
   .horizontal .trigger-container {
     position: static;
     .trigger {
-      inset: 0;
       right: auto;
+      bottom: 0;
+      left: 0;
     }
   }
 }

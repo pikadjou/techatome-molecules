@@ -102,23 +102,18 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
    * rubriques à la souris sans cliquer. Sans panneau, ou sur mobile, le survol ne fait rien.
    */
   public openPanelOnHover() {
-    if (!this.getTemplate() || this.breakpoints.isLessThanXS) {
-      return;
+    if (this.getTemplate() && !this.breakpoints.isLessThanXS) {
+      this.triggerMenu.openMenu();
     }
-
-    this.triggerMenu.openMenu();
   }
 
   public executeCallback() {
-    const myTemplate = this.getTemplate();
-    if (myTemplate) {
-      if (this.breakpoints.isLessThanXS) {
-        this.isMobileModalOpen.set(true);
-      } else {
-        this.triggerMenu.openMenu();
-      }
-    } else {
+    if (!this.getTemplate()) {
       this.item().callback?.();
+    } else if (this.breakpoints.isLessThanXS) {
+      this.isMobileModalOpen.set(true);
+    } else {
+      this.openPanelOnHover();
     }
   }
 

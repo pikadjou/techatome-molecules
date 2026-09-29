@@ -1,3 +1,4 @@
+/// <reference types="date-fns" />
 export declare const toLocalDateString: (utcDateString: string) => string;
 export declare const toLocalDate: (utcDateString: string) => Date;
 export declare const toUtcDate: (localDateString: Date) => Date;
@@ -14,7 +15,7 @@ export declare const parseTimeToMinutes: (time: string | null | undefined) => nu
 /** Minutes depuis minuit → « HH:mm ». Déborde et revient dans la journée plutôt que d'aller au-delà. */
 export declare const formatMinutesToTime: (minutes: number) => string;
 /** Ajoute des jours à une date, sans la muter. */
-export declare const addDays: (date: Date, days: number) => Date;
+export { addDays } from "date-fns";
 /** Lundi 00:00 de la semaine locale qui contient `reference`. */
 export declare const startOfLocalWeek: (reference?: Date) => Date;
 /** Clé de regroupement par jour local — « 2026-09-15 ». */
