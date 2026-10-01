@@ -92,14 +92,20 @@ export class TaGridData<T> {
     );
   }
 
+  /**
+   * L'instance survit au composant : `TaGridInstanceService` la garde par `gridId` et la rend à la
+   * grille recréée sous le même id. On la remet donc à zéro sans fermer ses sujets — fermés, la
+   * grille recréée n'était jamais « prête » et restait vide.
+   */
   public destroy() {
     this._tableSubs.forEach(s => s.unsubscribe());
     this._tableSubs = [];
     this.filters?.destroy();
+    this.filters = null;
     this.table?.destroy();
-    this.rowClicked$.complete();
-    this.isReady$.complete();
-    this.isDataReady$.complete();
+    this.table = null;
+    this.isReady$.next(false);
+    this.isDataReady$.next(false);
   }
 
   public setGroupBy(field: string) {

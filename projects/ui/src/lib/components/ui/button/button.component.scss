@@ -51,6 +51,13 @@
     outline: none;
   }
 
+  // L'icône (24 px) dépassait la ligne de texte et grandissait le bouton : à côté d'un bouton sans
+  // icône, les hauteurs différaient. Elle tient dans une ligne et déborde, centrée, dans le padding.
+  ta-font-icon {
+    height: 1lh;
+    align-items: center;
+  }
+
   &.small {
     @include fonts.fontSizeBody(sm);
     padding: common.get-var(components, button, small, padding-vertical)

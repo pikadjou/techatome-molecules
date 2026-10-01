@@ -43,6 +43,10 @@
 .underline {
   gap: common.get-var(space, xs);
   border-bottom: 1px solid common.get-var(border, disabled);
+  // Des onglets de section ne passent pas à la ligne : sur mobile, la barre défile.
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
 
   .tab-bar-item {
     @include fonts.fontSizeBody(md, true);
@@ -54,7 +58,7 @@
     background: transparent;
     color: common.get-var(text, muted);
 
-    &:hover:not(:disabled) {
+    &:hover:not(:disabled):not(.active) {
       color: common.get-var(text, primary);
     }
 
@@ -88,7 +92,8 @@
     background: common.get-var(surface, primary);
     color: common.get-var(text, secondary);
 
-    &:hover:not(:disabled) {
+    // L'onglet actif garde ses couleurs : le survol le rendait illisible (texte marine sur fond marine).
+    &:hover:not(:disabled):not(.active) {
       border-color: common.get-var(border, brand, primary);
       color: common.get-var(text, primary);
     }

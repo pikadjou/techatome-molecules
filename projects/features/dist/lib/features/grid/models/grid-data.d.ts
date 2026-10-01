@@ -39,6 +39,11 @@ export declare class TaGridData<T> {
         pagination?: PaginationMode;
         pageSize?: number;
     }): void;
+    /**
+     * L'instance survit au composant : `TaGridInstanceService` la garde par `gridId` et la rend à la
+     * grille recréée sous le même id. On la remet donc à zéro sans fermer ses sujets — fermés, la
+     * grille recréée n'était jamais « prête » et restait vide.
+     */
     destroy(): void;
     setGroupBy(field: string): void;
     clearGroupBy(): void;
