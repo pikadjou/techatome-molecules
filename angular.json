@@ -735,7 +735,10 @@
           "options": {
             "tsConfig": "projects/icons/tsconfig.spec.json",
             "include": ["../../../tests/icons/**/*.spec.ts"],
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/styles/src/style"]
+            }
           }
         }
       }
