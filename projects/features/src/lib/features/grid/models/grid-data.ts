@@ -17,20 +17,20 @@ import { groupBy } from './utils';
 export { ITableStateServices as IDataService } from './table-state';
 
 export class TaGridData<T> {
-  get data(): T[] {
+  public data(): T[] {
     return this.table?.getData() ?? [];
   }
-  get dataByGroup() {
-    return groupBy(this._groupBy(), this.data);
+  public dataByGroup() {
+    return groupBy(this._groupBy(), this.data());
   }
-  get isGroup() {
+  public isGroup() {
     return this._groupBy() !== null;
   }
   /**
    * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
    * il notifie les composants même sous un parent en OnPush.
    */
-  get groupBy(): keyof T | null {
+  public groupBy(): keyof T | null {
     return this._groupBy();
   }
 
@@ -125,7 +125,7 @@ export class TaGridData<T> {
     this.cols = Object.fromEntries(
       colsMetaData.map(meta => {
         const field = this._factoryCols(meta);
-        return [field.key, field];
+        return [field.key(), field];
       })
     );
   }

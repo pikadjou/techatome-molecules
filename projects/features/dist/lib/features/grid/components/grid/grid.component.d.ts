@@ -22,14 +22,14 @@ export declare class TaGridComponent<T extends {
     constructor();
     visibleCols: Signal<ColConfig[]>;
     ngOnInit(): void;
-    get rows(): T[];
-    get sortField(): string | null;
-    get sortDir(): 'asc' | 'desc';
-    get isLoading(): boolean;
-    get errorMessage(): string;
+    rows(): T[];
+    sortField(): string | null;
+    sortDir(): 'asc' | 'desc';
+    isLoading(): boolean;
+    errorMessage(): string;
     /** Largeur d'une ligne d'en-tête de groupe, colonne de sélection comprise. */
-    get colspan(): number;
-    get selectedIds(): Set<RowId>;
+    colspan(): number;
+    selectedIds(): Set<RowId>;
     isSelected(id: number): boolean;
     isAllPageSelected(): boolean;
     toggleRow(row: T): void;

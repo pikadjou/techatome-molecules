@@ -14,9 +14,9 @@ export interface IBaseCol {
 export declare class BaseCol<T> {
     data: IBaseCol;
     model: TaGridData<any>;
-    get key(): string;
-    get inputLabel(): string;
-    get filterValues(): T[];
+    key(): string;
+    inputLabel(): string;
+    filterValues(): T[];
     constructor(data: IBaseCol, model: TaGridData<any>);
     getColConfig(): ColConfig;
     defaultFormatter(row: any): string;

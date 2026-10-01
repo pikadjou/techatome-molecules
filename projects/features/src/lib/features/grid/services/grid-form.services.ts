@@ -97,11 +97,11 @@ export class TaGridFormService<T> {
               Object.values(model.cols)
                 .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
                 .map(group => ({
-                  id: group.key,
-                  name: group.inputLabel,
+                  id: group.key(),
+                  name: group.inputLabel(),
                 }))
             ),
-            value: model.groupBy,
+            value: model.groupBy(),
           }),
         ],
       }),

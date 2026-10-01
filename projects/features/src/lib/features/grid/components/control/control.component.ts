@@ -25,8 +25,8 @@ import { TaGridFormComponent } from '../form/form.component';
 export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
   closeEvent = output<void>();
 
-  get resultCount(): number {
-    return this.grid?.totalItems() ?? 0;
+  public resultCount(): number {
+    return this.grid()?.totalItems() ?? 0;
   }
 
   /** Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control. */
@@ -63,62 +63,56 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
   public isFiltersOpen = signal(false);
 
   /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
-  get activeFiltersCount(): number {
-    return (this.grid?.filters?.get() ?? [])
-      .filter(tag => tag.key !== gridSearchFieldsName)
-      .reduce((count, tag) => count + tag.values.length, 0);
-  }
-
   /** Colonnes sur lesquelles un regroupement a du sens. */
-  get groupableCols(): { key: string; label: string }[] {
-    return Object.values(this.grid?.cols ?? {})
+  public groupableCols(): { key: string; label: string }[] {
+    return Object.values(this.grid()?.cols ?? {})
       .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
-      .map(col => ({ key: col.key, label: col.inputLabel }));
+      .map(col => ({ key: col.key(), label: col.inputLabel() }));
   }
 
-  get hasGroupableCols(): boolean {
-    return this.groupableCols.length > 0;
+  public hasGroupableCols(): boolean {
+    return this.groupableCols().length > 0;
   }
 
   /** Colonnes triables, pour les vues sans en-têtes (cartes). */
-  get sortableCols(): { key: string; label: string }[] {
-    return Object.values(this.grid?.cols ?? {})
-      .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
-      .map(col => ({ key: col.key, label: col.inputLabel }));
+  public sortableCols(): { key: string; label: string }[] {
+    return Object.values(this.grid()?.cols ?? {})
+      .filter(col => !col.data.col.notDisplayable && !col.key().startsWith('_'))
+      .map(col => ({ key: col.key(), label: col.inputLabel() }));
   }
 
-  get hasSortableCols(): boolean {
-    return this.sortableCols.length > 0;
+  public hasSortableCols(): boolean {
+    return this.sortableCols().length > 0;
   }
 
-  get activeSort(): string | null {
-    return this.grid?.table?.sortField() ?? null;
+  public activeSort(): string | null {
+    return this.grid()?.table?.sortField() ?? null;
   }
 
-  get activeSortDir(): 'asc' | 'desc' {
-    return this.grid?.table?.sortDir() ?? 'asc';
+  public activeSortDir(): 'asc' | 'desc' {
+    return this.grid()?.table?.sortDir() ?? 'asc';
   }
 
-  get activeSortLabel(): string | null {
-    const key = this.activeSort;
-    return key ? this.grid?.cols[key]?.inputLabel ?? key : null;
+  public activeSortLabel(): string | null {
+    const key = this.activeSort();
+    return key ? this.grid()?.cols[key]?.inputLabel() ?? key : null;
   }
 
-  get activeGroup(): string | null {
-    return (this.grid?.groupBy as string) ?? null;
+  public activeGroup(): string | null {
+    return (this.grid()?.groupBy() as string) ?? null;
   }
 
-  get activeGroupLabel(): string | null {
-    const key = this.activeGroup;
-    return key ? this.grid?.cols[key]?.inputLabel ?? key : null;
+  public activeGroupLabel(): string | null {
+    const key = this.activeGroup();
+    return key ? this.grid()?.cols[key]?.inputLabel() ?? key : null;
   }
 
-  get hasPresets(): boolean {
-    return (this.grid?.filters?.preset?.length ?? 0) > 0;
+  public hasPresets(): boolean {
+    return (this.grid()?.filters?.preset?.length ?? 0) > 0;
   }
 
-  get activePresetName(): string | null {
-    return this.grid?.filters?.preset?.find(preset => this.isPresetActive(preset))?.name ?? null;
+  public activePresetName(): string | null {
+    return this.grid()?.filters?.preset?.find(preset => this.isPresetActive(preset))?.name ?? null;
   }
 
   public override ngOnInit() {
@@ -126,6 +120,13 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     if (this.breakpoints.isMobile && this.show().switchView) {
       this.switchView('card');
     }
+  }
+
+  /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
+  public activeFiltersCount(): number {
+    return (this.grid()?.filters?.get() ?? [])
+      .filter(tag => tag.key !== gridSearchFieldsName)
+      .reduce((count, tag) => count + tag.values.length, 0);
   }
 
   public switchView(type: ViewType) {
@@ -137,21 +138,21 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
   }
 
   public setPreset(preset: Preset) {
-    this.grid.filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
+    this.grid().filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
   }
 
   /** Rejouer le même critère inverse le sens. */
   public setSort(key: string | null) {
     if (!key) {
-      this.grid?.table?.setSort(null, 'asc');
+      this.grid()?.table?.setSort(null, 'asc');
       return;
     }
-    const dir = key === this.activeSort && this.activeSortDir === 'asc' ? 'desc' : 'asc';
-    this.grid?.table?.setSort(key, dir);
+    const dir = key === this.activeSort() && this.activeSortDir() === 'asc' ? 'desc' : 'asc';
+    this.grid()?.table?.setSort(key, dir);
   }
 
   public setGroup(key: string | null) {
-    if (!key || key === this.activeGroup) {
+    if (!key || key === this.activeGroup()) {
       this._grid.clearGroupBy();
       return;
     }
@@ -162,7 +163,7 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     if (!preset.filters.length) {
       return false;
     }
-    const active = (this.grid?.filters?.get() ?? []).flatMap(tag => tag.values);
+    const active = (this.grid()?.filters?.get() ?? []).flatMap(tag => tag.values);
 
     return preset.filters.every(filter =>
       active.some(

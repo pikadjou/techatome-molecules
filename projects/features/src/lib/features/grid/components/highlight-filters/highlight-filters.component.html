@@ -13,7 +13,7 @@
     <div class="highlight-filters__meta">
       @if (this.showResultCount()) {
         <ta-text class="highlight-filters__count">
-          {{ 'grid.tag.results' | pluralTranslate: this.grid.totalItems() | translate: { nb: this.grid.totalItems() } }}
+          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}
         </ta-text>
       }
 

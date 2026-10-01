@@ -53,51 +53,51 @@ export class TaGridComponent<T extends { id: RowId }> extends TaAbstractGridComp
   override ngOnInit() {
     super.ngOnInit();
     this.visibleCols = computed(() =>
-      Object.values(this.grid.cols)
-        .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
+      Object.values(this.grid().cols)
+        .filter(col => !col.data.col.notDisplayable && !col.key().startsWith('_'))
         .map(col => col.getColConfig())
     );
     this._registerSubscription(this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) }));
     if (this._grid.table) {
       this._registerSubscription(
         this._grid.table.selectionChanged$.subscribe(ids => {
-          this.selectionChanged.emit(this.rows.filter(r => ids.includes(r.id)));
+          this.selectionChanged.emit(this.rows().filter(r => ids.includes(r.id)));
         })
       );
     }
   }
 
-  get rows(): T[] {
+  public rows(): T[] {
     return this._grid.table?.rows() ?? [];
   }
 
-  get sortField(): string | null {
+  public sortField(): string | null {
     return this._grid.table?.sortField() ?? null;
   }
 
-  get sortDir(): 'asc' | 'desc' {
+  public sortDir(): 'asc' | 'desc' {
     return this._grid.table?.sortDir() ?? 'asc';
   }
 
-  get isLoading(): boolean {
+  public isLoading(): boolean {
     return this._grid.table?.isLoading() ?? false;
   }
 
-  get errorMessage(): string {
+  public errorMessage(): string {
     return this._grid.table?.errorMessage() ?? '';
   }
 
   /** Largeur d'une ligne d'en-tête de groupe, colonne de sélection comprise. */
-  get colspan(): number {
+  public colspan(): number {
     return this.visibleCols().length + (this.showSelection() ? 1 : 0);
   }
 
-  get selectedIds(): Set<RowId> {
+  public selectedIds(): Set<RowId> {
     return this._grid.table?.selectedIds() ?? new Set();
   }
 
   isSelected(id: number): boolean {
-    return this.selectedIds.has(id);
+    return this.selectedIds().has(id);
   }
 
   isAllPageSelected(): boolean {
@@ -117,7 +117,7 @@ export class TaGridComponent<T extends { id: RowId }> extends TaAbstractGridComp
    * formatteur de la colonne pour retrouver dates et booléens lisibles.
    */
   groupLabel(value: string): string {
-    const field = this._grid.groupBy as string;
+    const field = this._grid.groupBy() as string;
     const col = field ? this._grid.cols[field] : null;
     if (!col) {
       return value;
@@ -136,8 +136,8 @@ export class TaGridComponent<T extends { id: RowId }> extends TaAbstractGridComp
 
   onSort(col: ColConfig): void {
     if (!col.sortable || !this._grid.table) return;
-    const current = this.sortField;
-    const dir = this.sortDir;
+    const current = this.sortField();
+    const dir = this.sortDir();
 
     if (current !== col.key) {
       this._grid.table.setSort(col.key, 'asc');

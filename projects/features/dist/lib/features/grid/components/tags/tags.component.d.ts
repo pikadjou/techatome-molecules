@@ -2,9 +2,9 @@ import { Filter } from '../../models/types';
 import { TaAbstractGridComponent } from '../abstract.component';
 import * as i0 from "@angular/core";
 export declare class TaGridTagsComponent extends TaAbstractGridComponent<unknown> {
-    get group(): null;
-    get activeFilters(): import("../../models/types").ActiveFilter[];
-    get hasActiveFilters(): boolean;
+    group(): null;
+    activeFilters(): import("../../models/types").ActiveFilter[];
+    hasActiveFilters(): boolean;
     /** Clé de traduction du libellé d'un critère — le champ de recherche n'est pas une colonne. */
     labelKey(key: string): string;
     /**

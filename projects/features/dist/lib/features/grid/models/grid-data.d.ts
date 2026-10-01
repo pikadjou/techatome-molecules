@@ -6,17 +6,17 @@ import { ColMetaData, Filter, PaginationMode, Preset, ViewType } from './types';
 export { ITableStateServices as IDataService } from './table-state';
 export declare class TaGridData<T> {
     readonly scope: string;
-    get data(): T[];
-    get dataByGroup(): {
+    data(): T[];
+    dataByGroup(): {
         key: string;
         data: T[];
     }[];
-    get isGroup(): boolean;
+    isGroup(): boolean;
     /**
      * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
      * il notifie les composants même sous un parent en OnPush.
      */
-    get groupBy(): keyof T | null;
+    groupBy(): keyof T | null;
     readonly rowClicked$: Subject<T>;
     table: TaTableState<T> | null;
     cols: {

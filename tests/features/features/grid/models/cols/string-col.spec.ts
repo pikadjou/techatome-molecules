@@ -16,14 +16,14 @@ describe('StringCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
 
@@ -41,7 +41,7 @@ describe('StringCol', () => {
   });
 
   it('should have the correct key', () => {
-    expect(stringCol.key).toBe('description');
+    expect(stringCol.key()).toBe('description');
   });
 
   describe('getInputForm', () => {

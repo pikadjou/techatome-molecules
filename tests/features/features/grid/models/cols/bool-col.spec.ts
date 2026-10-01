@@ -16,14 +16,14 @@ describe('BoolCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
 
@@ -41,7 +41,7 @@ describe('BoolCol', () => {
   });
 
   it('should have the correct key', () => {
-    expect(boolCol.key).toBe('isActive');
+    expect(boolCol.key()).toBe('isActive');
   });
 
   it('should inherit getColConfig from BaseCol', () => {

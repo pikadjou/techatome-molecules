@@ -23,21 +23,21 @@ export class PaginationComponent extends TaAbstractGridComponent<any> {
   readonly PageNumber!: { pagenumber: PageNumber };
   readonly maxPageNumber = 10;
 
-  get show() {
-    return this.isCursorMode ? this.hasNextPage : this.paginationGetTotalPages > 1;
+  public show() {
+    return this.isCursorMode() ? this.hasNextPage() : this.paginationGetTotalPages() > 1;
   }
   /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
-  get isCursorMode() {
-    return this.grid.table?.isCursorMode() ?? false;
+  public isCursorMode() {
+    return this.grid().table?.isCursorMode() ?? false;
   }
-  get hasNextPage() {
-    return this.grid.table?.hasNextPage() ?? false;
+  public hasNextPage() {
+    return this.grid().table?.hasNextPage() ?? false;
   }
-  get isLoading() {
-    return this.grid.table?.isLoading() ?? false;
+  public isLoading() {
+    return this.grid().table?.isLoading() ?? false;
   }
-  get paginationGetTotalPages() {
-    return this.grid.table?.getPageMax() || 0;
+  public paginationGetTotalPages() {
+    return this.grid().table?.getPageMax() || 0;
   }
 
   constructor() {
@@ -45,16 +45,17 @@ export class PaginationComponent extends TaAbstractGridComponent<any> {
   }
 
   public getListPage() {
-    if (!this.grid || !this.grid.table) {
+    const table = this.grid()?.table;
+    if (!table) {
       return [];
     }
-    const last = this.paginationGetTotalPages;
+    const last = this.paginationGetTotalPages();
 
     if (last <= this.maxPageNumber) {
       return this._computedPageNumbers(2, last);
     }
 
-    const current = this.grid.table.getPage() || 0;
+    const current = table.getPage() || 0;
     const rangeStart = Math.floor(current / 10) * 10;
     const rangeEnd = rangeStart + 10;
 

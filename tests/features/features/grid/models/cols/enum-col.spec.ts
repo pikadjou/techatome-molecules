@@ -16,14 +16,14 @@ describe('EnumCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
 
@@ -45,7 +45,7 @@ describe('EnumCol', () => {
   });
 
   it('should have the correct key', () => {
-    expect(enumCol.key).toBe('status');
+    expect(enumCol.key()).toBe('status');
   });
 
   describe('getInputForm', () => {

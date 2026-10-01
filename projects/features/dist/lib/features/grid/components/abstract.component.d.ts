@@ -5,14 +5,14 @@ import { TaGridData } from '../models/grid-data';
 import * as i0 from "@angular/core";
 export declare abstract class TaAbstractGridComponent<T> extends TaBaseComponent implements OnInit {
     gridId: import("@angular/core").InputSignal<string>;
-    get grid(): TaGridData<T>;
-    get isGroup(): boolean;
-    get data(): T[];
-    get dataByGroup(): {
+    grid(): TaGridData<T>;
+    isGroup(): boolean;
+    data(): T[];
+    dataByGroup(): {
         key: string;
         data: T[];
     }[];
-    get displayType(): import("@angular/core").WritableSignal<import("@ta/features").ViewType>;
+    displayType(): import("@angular/core").WritableSignal<import("@ta/features").ViewType>;
     isReady$: Observable<boolean>;
     isDataReady$: Observable<boolean>;
     protected _grid: TaGridData<T>;

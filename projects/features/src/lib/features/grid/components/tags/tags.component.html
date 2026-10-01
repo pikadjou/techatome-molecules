@@ -1,21 +1,21 @@
 <div class="grid-tags">
   <ta-text class="grid-tags__results">
-    {{ 'grid.tag.results' | pluralTranslate: this.grid.totalItems() | translate: { nb: this.grid.totalItems() } }}
+    {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}
   </ta-text>
 
-  @if (this.hasActiveFilters) {
+  @if (this.hasActiveFilters()) {
     <div class="grid-tags__list">
-      @if (this.group) {
+      @if (this.group()) {
         <ta-badge
           class="grid-tags__chip grid-tags__chip--group"
-          [value]="('grid.tag.group' | translate) + ' : ' + (this.labelKey(this.group) | translate)"
+          [value]="('grid.tag.group' | translate) + ' : ' + (this.labelKey(this.group()) | translate)"
           type="secondary"
           icon="close"
           (clickAction)="this.removeGroup()"
         ></ta-badge>
       }
 
-      @for (tag of this.activeFilters; track tag.key) {
+      @for (tag of this.activeFilters(); track tag.key) {
         @for (value of tag.values; track value.type + value.value) {
           <ta-badge
             class="grid-tags__chip"

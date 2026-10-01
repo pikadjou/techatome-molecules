@@ -18,7 +18,7 @@ export class TaGridCountComponent extends TaAbstractGridComponent<unknown> {
   /** Clé de traduction pluralisée du décompte (résultats par défaut). */
   label = input<string>('grid.tag.results');
 
-  get total(): number {
-    return this.grid?.totalItems() ?? 0;
+  public total(): number {
+    return this.grid()?.totalItems() ?? 0;
   }
 }

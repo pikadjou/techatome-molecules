@@ -19,11 +19,11 @@ describe('TaGridTagsComponent', () => {
       scope: 'test-grid',
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
-      data: [],
-      dataByGroup: [{ key: '', data: [] }],
-      isGroup: false,
+      data: () => [],
+      dataByGroup: () => [{ key: '', data: [] }],
+      isGroup: () => false,
       displayType: jasmine.createSpy('displayType').and.returnValue('card'),
-      groupBy: null,
+      groupBy: () => null,
       table: null,
       cols: {},
       filters: {
@@ -66,18 +66,18 @@ describe('TaGridTagsComponent', () => {
 
   describe('group', () => {
     it('should return the grid groupBy value', () => {
-      expect(component.group).toBeNull();
+      expect(component.group()).toBeNull();
     });
 
     it('should reflect changes to groupBy', () => {
-      mockGridData.groupBy = 'category';
-      expect(component.group as unknown as string).toBe('category');
+      mockGridData.groupBy = () => 'category';
+      expect(component.group() as unknown as string).toBe('category');
     });
   });
 
   describe('activeFilters', () => {
     it('should return empty array when no filters', () => {
-      expect(component.activeFilters).toEqual([]);
+      expect(component.activeFilters()).toEqual([]);
     });
 
     it('should return filters from grid', () => {
@@ -86,12 +86,12 @@ describe('TaGridTagsComponent', () => {
       ];
       mockGridData.filters.get.and.returnValue(filters);
 
-      expect(component.activeFilters).toEqual(filters);
+      expect(component.activeFilters()).toEqual(filters);
     });
 
     it('should return empty array when filters is null', () => {
       mockGridData.filters = null;
-      expect(component.activeFilters).toEqual([]);
+      expect(component.activeFilters()).toEqual([]);
     });
   });
 

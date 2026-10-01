@@ -33,6 +33,6 @@ describe('TaGridCountComponent', () => {
   });
 
   it('should report zero before any data', () => {
-    expect(component.total).toBe(0);
+    expect(component.total()).toBe(0);
   });
 });

@@ -106,7 +106,7 @@ describe('TaGridFormService', () => {
           hidden: createMockColForGroup('hidden', false, false),
           notDisplayable: createMockColForGroup('notDisplayable', true, true),
         },
-        groupBy: null,
+        groupBy: () => null,
       } as unknown as TaGridData<any>;
 
       const result = service.getGroupForm(model);
@@ -135,19 +135,19 @@ describe('TaGridFormService', () => {
 
 function createMockCol(key: string, showOnSearch: boolean) {
   return {
-    key,
+    key: () => key,
     data: { col: { name: key, type: ParameterType.String, showOnSearch } },
     getInputForm: () =>
       showOnSearch
         ? { key, label: `grid.test.core.${key}`, class: 'pb-2' }
         : null,
-    inputLabel: `grid.test.core.${key}`,
+    inputLabel: () => `grid.test.core.${key}`,
   };
 }
 
 function createMockColWithFormat(key: string, formatResult: any) {
   return {
-    key,
+    key: () => key,
     data: { col: { name: key, type: ParameterType.String } },
     formatInputForm: () => formatResult,
   };
@@ -155,8 +155,8 @@ function createMockColWithFormat(key: string, formatResult: any) {
 
 function createMockColForGroup(key: string, showOnSearch: boolean, notDisplayable: boolean) {
   return {
-    key,
+    key: () => key,
     data: { col: { name: key, type: ParameterType.String, showOnSearch, notDisplayable } },
-    inputLabel: `grid.test.core.${key}`,
+    inputLabel: () => `grid.test.core.${key}`,
   };
 }

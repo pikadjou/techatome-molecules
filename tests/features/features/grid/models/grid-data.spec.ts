@@ -34,7 +34,7 @@ describe('TaGridData', () => {
   });
 
   it('should have groupBy initially null', () => {
-    expect(gridData.groupBy).toBeNull();
+    expect(gridData.groupBy()).toBeNull();
   });
 
   it('should have totalItems initially 0', () => {
@@ -47,13 +47,13 @@ describe('TaGridData', () => {
 
   describe('data', () => {
     it('should return empty array when table is null', () => {
-      expect(gridData.data).toEqual([]);
+      expect(gridData.data()).toEqual([]);
     });
   });
 
   describe('dataByGroup', () => {
     it('should return single group with empty data when table is null and groupBy is null', () => {
-      const result = gridData.dataByGroup;
+      const result = gridData.dataByGroup();
 
       expect(result.length).toBe(1);
       expect(result[0].key).toBe('');
@@ -63,7 +63,7 @@ describe('TaGridData', () => {
 
   describe('isGroup', () => {
     it('should return false when groupBy is null', () => {
-      expect(gridData.isGroup).toBeFalse();
+      expect(gridData.isGroup()).toBeFalse();
     });
   });
 
@@ -88,7 +88,7 @@ describe('TaGridData', () => {
 
       gridData.setGroupBy('category');
 
-      expect(gridData.groupBy).toBe('category');
+      expect(gridData.groupBy()).toBe('category');
     });
 
     it('should call table.setGroupBy', () => {
@@ -112,7 +112,7 @@ describe('TaGridData', () => {
       gridData.setGroupBy('category');
       gridData.clearGroupBy();
 
-      expect(gridData.groupBy).toBeNull();
+      expect(gridData.groupBy()).toBeNull();
     });
 
     it('should call table.setGroupBy with null', () => {

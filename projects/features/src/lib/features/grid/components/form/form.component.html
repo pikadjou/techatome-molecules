@@ -4,7 +4,7 @@
       <ta-title [level]="3">{{ this.title() | translate }}</ta-title>
       @if (this.showResultCount()) {
         <ta-text class="grid-form__count">
-          {{ 'grid.tag.results' | pluralTranslate: this.grid.totalItems() | translate: { nb: this.grid.totalItems() } }}
+          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}
         </ta-text>
       }
     </div>

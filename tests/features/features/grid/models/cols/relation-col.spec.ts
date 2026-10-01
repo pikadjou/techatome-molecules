@@ -16,14 +16,14 @@ describe('RelationCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
   });
@@ -44,7 +44,7 @@ describe('RelationCol', () => {
     });
 
     it('should have the correct key', () => {
-      expect(relationCol.key).toBe('projectId');
+      expect(relationCol.key()).toBe('projectId');
     });
 
     describe('getInputForm', () => {

@@ -13,7 +13,7 @@
     </ta-button>
 
     <ta-button (action)="this.closeEvent.emit()">
-      {{ 'grid.filters.applyCount' | pluralTranslate: this.resultCount | translate: { nb: this.resultCount } }}
+      {{ 'grid.filters.applyCount' | pluralTranslate: this.resultCount() | translate: { nb: this.resultCount() } }}
     </ta-button>
   </div>
 </ta-layout-full-panel>

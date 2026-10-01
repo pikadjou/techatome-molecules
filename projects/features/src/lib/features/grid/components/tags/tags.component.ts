@@ -25,14 +25,14 @@ const OPERATOR_SYMBOLS: Partial<Record<FilterType, string>> = {
   imports: [TranslatePipe, PluralTranslatePipe, BadgeComponent, TextComponent, ButtonComponent],
 })
 export class TaGridTagsComponent extends TaAbstractGridComponent<unknown> {
-  get group() {
-    return this._grid.groupBy;
+  public group() {
+    return this._grid.groupBy();
   }
-  get activeFilters() {
+  public activeFilters() {
     return this._grid.filters?.get() ?? [];
   }
-  get hasActiveFilters(): boolean {
-    return this.activeFilters.length > 0 || !!this.group;
+  public hasActiveFilters(): boolean {
+    return this.activeFilters().length > 0 || !!this.group();
   }
 
   /** Clé de traduction du libellé d'un critère — le champ de recherche n'est pas une colonne. */
@@ -40,7 +40,7 @@ export class TaGridTagsComponent extends TaAbstractGridComponent<unknown> {
     if (key === gridSearchFieldsName) {
       return 'grid.tag.search';
     }
-    return this._grid.cols[key]?.inputLabel ?? key;
+    return this._grid.cols[key]?.inputLabel() ?? key;
   }
 
   /**

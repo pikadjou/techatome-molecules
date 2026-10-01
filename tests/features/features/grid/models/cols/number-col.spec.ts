@@ -16,14 +16,14 @@ describe('NumberCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
 
@@ -41,7 +41,7 @@ describe('NumberCol', () => {
   });
 
   it('should have the correct key', () => {
-    expect(numberCol.key).toBe('quantity');
+    expect(numberCol.key()).toBe('quantity');
   });
 
   describe('getInputForm', () => {

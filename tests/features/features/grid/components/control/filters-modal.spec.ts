@@ -20,7 +20,7 @@ describe('FiltersModal', () => {
       scope: 'test-grid',
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
-      data: [],
+      data: () => [],
       filters: null,
       table: null,
       cols: {},

@@ -47,14 +47,14 @@ describe('BaseCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
 
@@ -83,19 +83,19 @@ describe('BaseCol', () => {
 
   describe('key', () => {
     it('should return the column name', () => {
-      expect(baseCol.key).toBe('testField');
+      expect(baseCol.key()).toBe('testField');
     });
   });
 
   describe('inputLabel', () => {
     it('should return a formatted label string', () => {
-      expect(baseCol.inputLabel).toBe('grid.test-scope.core.testField');
+      expect(baseCol.inputLabel()).toBe('grid.test-scope.core.testField');
     });
   });
 
   describe('filterValues', () => {
     it('should return empty array when no filters match', () => {
-      expect(baseCol.filterValues).toEqual([]);
+      expect(baseCol.filterValues()).toEqual([]);
     });
 
     it('should return filter values when filters match the key', () => {
@@ -111,13 +111,13 @@ describe('BaseCol', () => {
         ],
       };
 
-      expect(baseCol.filterValues).toEqual(['val1', 'val2']);
+      expect(baseCol.filterValues()).toEqual(['val1', 'val2']);
     });
 
     it('should return empty array when filters is null', () => {
       mockModel.filters = null;
 
-      expect(baseCol.filterValues).toEqual([]);
+      expect(baseCol.filterValues()).toEqual([]);
     });
   });
 

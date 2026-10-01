@@ -11,15 +11,15 @@ export class EnumCol extends BaseCol<string> {
       contentClass: 'row g-0',
       children: [
         new InputDropdown({
-          key: this.key,
-          label: this.inputLabel,
+          key: this.key(),
+          label: this.inputLabel(),
           options$: of(
             this.data.col.enumValues?.map(value => ({
               id: value,
               name: value,
             })) ?? []
           ),
-          value: this.filterValues[0],
+          value: this.filterValues()[0],
         }),
       ],
     });

@@ -16,14 +16,14 @@ describe('DateCol', () => {
       filters: {
         get: () => [],
       },
-      data: [],
+      data: () => [],
       table: null,
       cols: {},
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
       rowClicked$: new Subject(),
       displayType: signal('card'),
-      groupBy: null,
+      groupBy: () => null,
       totalItems: signal(0),
     } as unknown as TaGridData<any>;
 
@@ -41,7 +41,7 @@ describe('DateCol', () => {
   });
 
   it('should have the correct key', () => {
-    expect(dateCol.key).toBe('createdDate');
+    expect(dateCol.key()).toBe('createdDate');
   });
 
   describe('getInputForm', () => {

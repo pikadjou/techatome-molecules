@@ -17,11 +17,11 @@ describe('PaginationComponent', () => {
       scope: 'test-grid',
       isReady$: new BehaviorSubject(false),
       isDataReady$: new BehaviorSubject(false),
-      data: [],
-      dataByGroup: [{ key: '', data: [] }],
-      isGroup: false,
+      data: () => [],
+      dataByGroup: () => [{ key: '', data: [] }],
+      isGroup: () => false,
       displayType: jasmine.createSpy('displayType').and.returnValue('card'),
-      groupBy: null,
+      groupBy: () => null,
       table: null,
       cols: {},
       filters: null,
@@ -63,23 +63,23 @@ describe('PaginationComponent', () => {
 
   describe('show', () => {
     it('should return false when total pages is 0', () => {
-      expect(component.show).toBeFalse();
+      expect(component.show()).toBeFalse();
     });
 
     it('should return false when total pages is 1', () => {
       mockGridData.table = { getPageMax: () => 1 };
-      expect(component.show).toBeFalse();
+      expect(component.show()).toBeFalse();
     });
   });
 
   describe('paginationGetTotalPages', () => {
     it('should return 0 when table is null', () => {
-      expect(component.paginationGetTotalPages).toBe(0);
+      expect(component.paginationGetTotalPages()).toBe(0);
     });
 
     it('should return the value from table.getPageMax', () => {
       mockGridData.table = { getPageMax: () => 5 };
-      expect(component.paginationGetTotalPages).toBe(5);
+      expect(component.paginationGetTotalPages()).toBe(5);
     });
   });
 

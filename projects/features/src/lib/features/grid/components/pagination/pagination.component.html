@@ -1,27 +1,27 @@
-@if (this.grid && this.grid.table && this.show && this.isCursorMode) {
+@if (this.grid() && this.grid().table && this.show() && this.isCursorMode()) {
 <div class="load-more flex-row justify-center">
-  <ta-button type="secondary" [state]="this.isLoading ? 'inactive' : 'classic'" (action)="this.grid.table.loadMore()">
+  <ta-button type="secondary" [state]="this.isLoading() ? 'inactive' : 'classic'" (action)="this.grid().table.loadMore()">
     {{ 'grid.pagination.load_more' | translate }}
   </ta-button>
 </div>
-} @if (this.grid && this.grid.table && this.show && !this.isCursorMode) {
+} @if (this.grid() && this.grid().table && this.show() && !this.isCursorMode()) {
 <div class="flex-start g-space-sm align-center">
   <ta-font-icon
     name="chevron_left"
     class="c-pointer"
     [title]="'grid.pagination.previous' | translate"
     [attr.aria-label]="'grid.pagination.previous' | translate"
-    (click)="this.grid.table.previousPage()"
+    (click)="this.grid().table.previousPage()"
   ></ta-font-icon>
   <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ pagenumber: { number: 1 } }"></ng-template>
 
   @for (page of this.getListPage(); track page.number) {
   <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ pagenumber: page }"></ng-template>
-  } @if (this.paginationGetTotalPages > 1) {
+  } @if (this.paginationGetTotalPages() > 1) {
   <ng-template
     [ngTemplateOutlet]="item"
     [ngTemplateOutletContext]="{
-          pagenumber: { number: this.paginationGetTotalPages },
+          pagenumber: { number: this.paginationGetTotalPages() },
         }"
   ></ng-template>
   }
@@ -31,7 +31,7 @@
     class="c-pointer"
     [title]="'grid.pagination.next' | translate"
     [attr.aria-label]="'grid.pagination.next' | translate"
-    (click)="this.grid.table.nextPage()"
+    (click)="this.grid().table.nextPage()"
   ></ta-font-icon>
 </div>
 }
@@ -39,8 +39,8 @@
 <ng-template #item let-pagenumber="pagenumber" [typedTemplate]="this.PageNumber">
   <div
     class="figure c-pointer"
-    [class.is-active]="pagenumber.number === (this.grid.table?.getPage() || 0)"
-    (click)="this.grid.table?.setPage(pagenumber.number)"
+    [class.is-active]="pagenumber.number === (this.grid().table?.getPage() || 0)"
+    (click)="this.grid().table?.setPage(pagenumber.number)"
   >
     @if (pagenumber.icon) {
     <ta-font-icon [name]="pagenumber.icon"></ta-font-icon>

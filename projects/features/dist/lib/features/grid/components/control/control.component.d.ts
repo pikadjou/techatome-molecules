@@ -8,7 +8,7 @@ import * as i0 from "@angular/core";
  */
 export declare class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
     closeEvent: import("@angular/core").OutputEmitterRef<void>;
-    get resultCount(): number;
+    resultCount(): number;
     /** Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control. */
     reset(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridFiltersPanel, never>;
@@ -26,27 +26,28 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     compact: import("@angular/core").InputSignal<boolean>;
     isFiltersOpen: import("@angular/core").WritableSignal<boolean>;
     /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
-    get activeFiltersCount(): number;
     /** Colonnes sur lesquelles un regroupement a du sens. */
-    get groupableCols(): {
+    groupableCols(): {
         key: string;
         label: string;
     }[];
-    get hasGroupableCols(): boolean;
+    hasGroupableCols(): boolean;
     /** Colonnes triables, pour les vues sans en-têtes (cartes). */
-    get sortableCols(): {
+    sortableCols(): {
         key: string;
         label: string;
     }[];
-    get hasSortableCols(): boolean;
-    get activeSort(): string | null;
-    get activeSortDir(): 'asc' | 'desc';
-    get activeSortLabel(): string | null;
-    get activeGroup(): string | null;
-    get activeGroupLabel(): string | null;
-    get hasPresets(): boolean;
-    get activePresetName(): string | null;
+    hasSortableCols(): boolean;
+    activeSort(): string | null;
+    activeSortDir(): 'asc' | 'desc';
+    activeSortLabel(): string | null;
+    activeGroup(): string | null;
+    activeGroupLabel(): string | null;
+    hasPresets(): boolean;
+    activePresetName(): string | null;
     ngOnInit(): void;
+    /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
+    activeFiltersCount(): number;
     switchView(type: ViewType): void;
     openFilters(): void;
     setPreset(preset: Preset): void;

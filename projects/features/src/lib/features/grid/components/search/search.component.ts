@@ -23,6 +23,6 @@ export class TaGridSearchComponent extends TaAbstractGridComponent<any> {
     const trimmed = (value ?? '').trim();
     const filters: Filter[] = trimmed ? [{ field: gridSearchFieldsName, type: 'like', value: trimmed }] : [];
 
-    this.grid.filters?.apply(filters);
+    this.grid().filters?.apply(filters);
   }
 }
