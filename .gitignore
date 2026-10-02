@@ -5,7 +5,9 @@ scripts/app.config.js
 
 # Compiled output
 /dist
-# **/dist
+# Build local des librairies. Les projects/**/dist suivis sont écrits par la CI
+# (.github/workflows/build-libs.yml) : ne jamais les reconstruire à la main.
+.build/
 /tmp
 /out-tsc
 /bazel-out

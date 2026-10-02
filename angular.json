@@ -32,7 +32,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@ta/icons/dist/assets/fonts",
+                "input": "node_modules/@ta/icons/.build/assets/fonts",
                 "output": "assets/fonts/"
               },
               {
@@ -188,7 +188,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@ta/icons/dist/assets/fonts",
+                "input": "node_modules/@ta/icons/.build/assets/fonts",
                 "output": "assets/fonts/"
               }
             ],

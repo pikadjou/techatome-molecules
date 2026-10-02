@@ -39,7 +39,7 @@ yarn checkfiles                 # Verify installed dependencies
 ```bash
 yarn start                      # Start main application dev server
 yarn start-local                # Start with local environment config
-yarn build                     # Clean every dist, then build all libraries in dependency order (Nx)
+yarn build                     # Clean every .build, then build all libraries in dependency order (Nx)
 yarn watch                     # Watch for changes and rebuild + start dev server
 ```
 
@@ -78,7 +78,7 @@ yarn publish                    # Publish packages to npm registry
 ### Cleanup
 
 ```bash
-yarn clean                      # Remove all dist folders, node_modules, and lock files
+yarn clean                      # Remove all .build folders, node_modules, and lock files
 ```
 
 ## Architecture Overview
@@ -106,6 +106,17 @@ Layer 4: @ta/form-input → @ta/form-basic
 Layer 5: @ta/core, @ta/user, @ta/charts, @ta/files-basic
 Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
 ```
+
+### Build Output: `.build` (local) vs `dist` (versioned)
+
+- Libraries build into `projects/<lib>/.build/` (git-ignored). The root `tsconfig.json` maps
+  `@ta/<lib>` straight to that folder.
+- `projects/<lib>/dist/` stays versioned because consumer projects (bailo, subsidia…) embed this
+  repo as a git submodule and read `dist` without compiling. Only `.github/workflows/build-libs.yml`
+  writes it: on every push to `develop` it builds, copies `.build` → `dist`, writes `DIST_SOURCE`
+  (source commit SHA) and pushes an extra commit — history is never rewritten.
+- Consequence: local rebuilds never touch tracked files, so diffs and PRs only show sources.
+  Never stage `dist/` by hand.
 
 ### Package Management
 
@@ -444,7 +455,8 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 - Hardcode colors, spacing, or fonts in SCSS
 - Create NgModules (use standalone components)
 - Use constructor injection (use `inject()` function)
-- Import from dist/ folders (always import from `@ta/<lib>`)
+- Import from dist/ or .build/ folders (always import from `@ta/<lib>`)
+- Build or commit `projects/**/dist` by hand (only the CI writes them, see below)
 - Forget to clean up subscriptions (base class handles it via ngOnDestroy)
 
 ## Development Workflow
@@ -454,7 +466,7 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 Follow the documented process in README.md or use `/ta-library`:
 
 1. Generate library: `ng g lib [LibName]`
-2. Update `ng-package.json` dest to `'dist'`
+2. Update `ng-package.json` dest to `'.build'`
 3. Update `package.json` name to `'@ta/[LibName]'`
 4. Add build scripts to package.json
 5. Update angular.json project references (the `test` target needs `"include": ["../../../tests/[LibName]/**/*.spec.ts"]`, one more `../` for nested libs)
@@ -500,5 +512,5 @@ Follow the documented process in README.md or use `/ta-library`:
   Never put a `.spec.ts` next to a component.
 - Specs import the code under test through the `@lib/<lib>/*` alias (→ `projects/<lib>/src/lib/*`),
   e.g. `import { ButtonComponent } from '@lib/ui/components/ui/button/button.component'`.
-  `@ta/<lib>` resolves to the built `dist/`, so it is only for *other* libraries. `@lib/*` is reserved for `tests/`.
+  `@ta/<lib>` resolves to the built `.build/`, so it is only for *other* libraries. `@lib/*` is reserved for `tests/`.
 - E2E specs (Playwright) live in `e2e/specs/<lib>/`

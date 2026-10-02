@@ -1,10 +1,10 @@
 /**
  * Reconstruit les libs affectées par les fichiers vus par `nx watch` (script `watch:lib`).
- * `--initial` construit d'abord toutes les libs, pour ne pas compiler l'application contre un dist périmé.
+ * `--initial` construit d'abord toutes les libs, pour ne pas compiler l'application contre un .build périmé.
  *
  * Deux raisons d'exister :
  * 1. sous cmd.exe, `$NX_FILE_CHANGES` n'est pas substitué et NX reconstruit 0 projet ; on lit `process.env` ;
- * 2. un verrou sérialise les builds, sinon plusieurs ng-packagr écrivent les mêmes dist et le dev-server lit des fichiers tronqués.
+ * 2. un verrou sérialise les builds, sinon plusieurs ng-packagr écrivent les mêmes .build et le dev-server lit des fichiers tronqués.
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';

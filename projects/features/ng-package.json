@@ -9,7 +9,7 @@
       "output": "i18n"
     }
   ],
-  "dest": "dist",
+  "dest": ".build",
   "lib": {
     "entryFile": "src/public-api.ts",
     "styleIncludePaths": ["../styles/src/style"]

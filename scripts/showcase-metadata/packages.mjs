@@ -64,7 +64,7 @@ export function collectPublicFiles(entryFile) {
   return [...seen].sort();
 }
 
-const SKIP_DIRS = new Set(["node_modules", "dist", "__mock__", "__mocks__", ".angular"]);
+const SKIP_DIRS = new Set(["node_modules", "dist", ".build", "__mock__", "__mocks__", ".angular"]);
 
 /**
  * Tous les .ts d'un paquet. Sert à indexer les classes de base — `TaBaseComponent`

@@ -26,14 +26,14 @@
     "nx-release-publish": {
       "//": "On publie la sortie ng-packagr, PAS le dossier projet. Le package.json source n'a ni `exports`, ni `typings`, ni `module` : publié tel quel, le paquet n'est pas résolvable par son nom, car aucun outil ne relit un package.json imbriqué quand `main` pointe vers un dossier. Seul dist/package.json est un manifeste valide. Les 3 paquets sans ng-packagr (claude-plugin, eslint-config, prettier-config) surchargent cette valeur dans leur propre package.json.",
       "options": {
-        "packageRoot": "{projectRoot}/dist"
+        "packageRoot": "{projectRoot}/.build"
       }
     },
     "build": {
       "//outputs": "ng-packagr écrit dans le dossier du projet, pas dans un dist/ racine. Sans cette déclaration Nx traite `dist` comme une source : reconstruire une lib invalide alors le cache de toutes celles qui en dépendent, en cascade, et il ne reste plus rien à réutiliser.",
       "dependsOn": ["^build"],
       "cache": true,
-      "outputs": ["{projectRoot}/dist"]
+      "outputs": ["{projectRoot}/.build"]
     }
   }
 }

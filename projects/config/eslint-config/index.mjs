@@ -10,7 +10,7 @@ import unusedImports from "eslint-plugin-unused-imports";
 export default [
   js.configs.recommended, // Règles de base ESLint
   {
-    ignores: ["**/dist/**/*", "**/node_modules/**/*"], // Exclure les dossiers dist et node_modules
+    ignores: ["**/dist/**/*", "**/.build/**/*", "**/node_modules/**/*"], // Exclure les sorties de build et node_modules
   },
   {
     files: ["**/*.ts"], // Sans `files`, ESLint ne lit que les .js

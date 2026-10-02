@@ -2,3 +2,7 @@
 # ferait diverger le contenu du dépôt de celui que le générateur produit, et le
 # contrôle `showcase:metadata:check` échouerait en boucle.
 src/app/showcase/generated/
+
+# Sorties de build des librairies : locale (.build) et versionnée par la CI (dist).
+**/.build/
+**/dist/

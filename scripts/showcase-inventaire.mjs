@@ -21,7 +21,7 @@ function walk(dir, acc = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (!/node_modules|dist|\.angular/.test(entry.name)) walk(full, acc);
+      if (!/node_modules|dist|\.build|\.angular/.test(entry.name)) walk(full, acc);
     } else acc.push(full);
   }
   return acc;

@@ -4,7 +4,7 @@
   "main": "./dist",
   "scripts": {
     "build": "ng build @ta/server",
-    "postpublish": "rm -rf dist/"
+    "postpublish": "rm -rf .build/"
   },
   "dependencies": {
     "@apollo/client": "3.11.0",

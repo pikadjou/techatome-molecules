@@ -53,15 +53,14 @@ const MINUTES_PER_DAY = 1440;
 const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
 
 /** Reste toujours positif : ramène une valeur qui déborde dans un cycle (jour, semaine). */
-const mod = (value: number, cycle: number): number => ((value % cycle) + cycle) % cycle;
+const mod = (value: number, cycle: number): number =>
+  ((value % cycle) + cycle) % cycle;
 
 /**
  * « HH:mm » → minutes depuis minuit. Une valeur absente ou mal formée vaut minuit : un horaire
  * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
  */
-export const parseTimeToMinutes = (
-  time: string | null | undefined
-): number => {
+export const parseTimeToMinutes = (time: string | null | undefined): number => {
   const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? "").trim());
   if (!match) {
     return 0;
@@ -95,12 +94,27 @@ export const localDayKey = (date: Date | string): string => {
  * Le décalage local par rapport à UTC change-t-il dans les sept prochains jours ? Sert à prévenir
  * qu'un horaire récurrent va se décaler à l'écran sans que personne n'y ait touché.
  */
-export const hasUpcomingOffsetShift = (reference: Date = new Date()): boolean => {
-  return reference.getTimezoneOffset() !== addWeeks(reference, 1).getTimezoneOffset();
+export const hasUpcomingOffsetShift = (
+  reference: Date = new Date()
+): boolean => {
+  return (
+    reference.getTimezoneOffset() !== addWeeks(reference, 1).getTimezoneOffset()
+  );
 };
 
 /** Les jours de la semaine dans l'ordre d'affichage européen, lundi en tête (0 = dimanche). */
 export const WEEK_DAYS_FROM_MONDAY: number[] = [1, 2, 3, 4, 5, 6, 0];
+
+/** Clé de traduction (`@ta/ui`) de chaque jour, indexée comme `Date.getDay()` : 0 = dimanche. */
+export const WEEK_DAY_LABELS: string[] = [
+  "ui.common.days.sunday",
+  "ui.common.days.monday",
+  "ui.common.days.tuesday",
+  "ui.common.days.wednesday",
+  "ui.common.days.thursday",
+  "ui.common.days.friday",
+  "ui.common.days.saturday",
+];
 
 /** Un créneau qui revient chaque semaine : un jour, une heure de début, une de fin. */
 export interface WeeklySlot {
@@ -113,7 +127,9 @@ export interface WeeklySlot {
 }
 
 /** Un créneau vu comme un point dans la semaine : minutes depuis dimanche minuit, et durée. */
-const toWeekMinutes = (slot: WeeklySlot): { start: number; duration: number } => {
+const toWeekMinutes = (
+  slot: WeeklySlot
+): { start: number; duration: number } => {
   const startOfDayMinutes = parseTimeToMinutes(slot.startTime);
 
   return {
