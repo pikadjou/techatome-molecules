@@ -62,10 +62,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          # Les dossiers sont listés un par un : un motif comme 'projects/*/dist' ne désigne aucun
+          # fichier pour git (le joker doit couvrir tout le chemin) et `git add` échoue en fatal.
           # -A : les fichiers disparus d'un build doivent aussi disparaître du dépôt.
           # -f : les dist sont couverts par aucune règle d'ignore aujourd'hui, mais une nouvelle lib
           #      pourrait l'être ; on force pour ne jamais publier un dist partiel.
-          git add -A -f -- 'projects/*/dist' 'projects/*/*/dist'
+          mapfile -t dists < <(find projects -mindepth 2 -maxdepth 3 -type d -name dist -not -path '*/node_modules/*')
+          git add -A -f -- "${dists[@]}"
 
           if git diff --cached --quiet; then
             echo "Aucun changement dans les dist : rien à publier."
