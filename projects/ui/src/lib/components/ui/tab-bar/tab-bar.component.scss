@@ -39,10 +39,12 @@
   border-radius: common.get-var(radius, pill);
 }
 
-// underline : le margin-bottom négatif fait chevaucher le filet de base et celui de l'onglet actif.
+// underline : le filet de base est une ombre intérieure, pas une bordure. La barre défile
+// (overflow-x: auto rogne aussi en vertical) : un onglet qui débordait sur une bordure pour la
+// recouvrir était coupé. L'ombre est peinte sous les onglets, le trait de l'actif la recouvre.
 .underline {
   gap: common.get-var(space, xs);
-  border-bottom: 1px solid common.get-var(border, disabled);
+  box-shadow: inset 0 -1px 0 common.get-var(border, disabled);
   // Des onglets de section ne passent pas à la ligne : sur mobile, la barre défile.
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -52,7 +54,6 @@
     @include fonts.fontSizeBody(md, true);
     padding: common.get-var(components, tab-bar, underline, padding-vertical)
       common.get-var(components, tab-bar, underline, padding-horizontal);
-    margin-bottom: -1px;
     border: none;
     border-bottom: 2px solid transparent;
     background: transparent;

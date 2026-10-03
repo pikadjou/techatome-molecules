@@ -113,8 +113,9 @@ Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
   `@ta/<lib>` straight to that folder.
 - `projects/<lib>/dist/` stays versioned because consumer projects (bailo, subsidia…) embed this
   repo as a git submodule and read `dist` without compiling. Only `.github/workflows/build-libs.yml`
-  writes it: on every push to `develop` it builds, copies `.build` → `dist`, writes `DIST_SOURCE`
-  (source commit SHA) and pushes an extra commit — history is never rewritten.
+  writes it: on every push to `develop` or `main` it builds, copies `.build` → `dist` and pushes an
+  extra commit `chore(dist): build <sha>` whose `Dist-Source:` trailer names the source commit —
+  history is never rewritten. (`git log -1 --format=%B` in a submodule tells which sources its dist come from.)
 - Consequence: local rebuilds never touch tracked files, so diffs and PRs only show sources.
   Never stage `dist/` by hand.
 
@@ -306,7 +307,9 @@ See `.claude/reference/forms-reference.md` for all 25+ input types and complete 
 
 ### GraphQL (via @ta/server)
 
-- Use `createQuery<T>()` and `createPagedQuery<T>()` for queries
+- Use `createQuery<T>()` for every read query; paginate with `paging: { mode: 'offset', skip }` (`totalCount` + `items`)
+  or `paging: { mode: 'cursor', first, after }` (Relay `pageInfo` + `nodes`, flatten with `toPage()`); query-specific
+  arguments go in `args: { name: { type: 'Boolean!', value } }`
 - Use `gql` + `GraphMutationPayload` for mutations
 - Use `TaGraphService` methods: `fetchQueryList`, `fetchQuery`, `fetchQueryPaged`, `mutate`
 - Filter with `WhereType<T>`: `{ field: { eq: value } }`, `{ field: { contains: str } }`
@@ -364,7 +367,7 @@ Providers: `provideGTM()`, `provideGoogleMaps()`
 
 ### @ta/server
 `TaGraphService`, `TaServerService`, `TaServerErrorService`, `BaseService`, `Logger`, `TaStrapiService`, `BaseStrapiService`, `CacheInterceptor`
-Helpers: `createQuery<T>()`, `createPagedQuery<T>()`, `handleRequest()`
+Helpers: `createQuery<T>()` (offset or cursor paging), `toPage()`, `appendPage()`, `handleRequest()`
 Types: `GraphPayload`, `GraphMutationPayload`, `GraphQueryInput<T>`, `WhereType<T>`, `OrderType<T>`, `GraphReponsePaged<T>`, `GraphEndpoint`, `IGraphConfig`
 Providers: `provideServer()`, `provideStrapi()`
 

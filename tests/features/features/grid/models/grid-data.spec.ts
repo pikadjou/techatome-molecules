@@ -140,6 +140,46 @@ describe('TaGridData', () => {
     it('should not throw when table is null', () => {
       expect(() => gridData.destroy()).not.toThrow();
     });
+
+    describe('then init again (grid recreated under the same id)', () => {
+      const colsMetaData = [{ name: 'category', type: ParameterType.String }];
+
+      it('becomes ready again', () => {
+        gridData.init({ colsMetaData, data: [] });
+        gridData.destroy();
+        expect(gridData.isReady$.getValue()).toBeFalse();
+
+        gridData.init({ colsMetaData, data: [] });
+
+        expect(gridData.isReady$.getValue()).toBeTrue();
+      });
+
+      it('still forwards row clicks', () => {
+        gridData.init({ colsMetaData, data: [] });
+        gridData.destroy();
+        gridData.init({ colsMetaData, data: [] });
+        const clicked: unknown[] = [];
+        gridData.rowClicked$.subscribe(row => clicked.push(row));
+
+        gridData.table?.rowClicked$.next({ id: 1 });
+
+        expect(clicked).toEqual([{ id: 1 }]);
+      });
+
+      it('forgets the previous grouping and total', () => {
+        gridData.init({ colsMetaData, data: [] });
+        gridData.setGroupBy('category');
+        gridData.totalItems.set(12);
+
+        gridData.destroy();
+        gridData.init({ colsMetaData, data: [] });
+
+        expect(gridData.groupBy()).toBeNull();
+        expect(gridData.isGroup()).toBeFalse();
+        expect(gridData.totalItems()).toBe(0);
+        expect(gridData.table?.groupByField()).toBeNull();
+      });
+    });
   });
 
   describe('rowClicked$', () => {

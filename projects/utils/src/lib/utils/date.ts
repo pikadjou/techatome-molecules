@@ -1,11 +1,4 @@
-import {
-  addWeeks,
-  differenceInMinutes,
-  format,
-  isValid,
-  parseISO,
-  startOfWeek,
-} from "date-fns";
+import { addWeeks, differenceInMinutes, format, isValid, parseISO, startOfWeek } from 'date-fns';
 
 export const toLocalDateString = (utcDateString: string): string => {
   return toLocalDate(utcDateString).toString();
@@ -17,30 +10,24 @@ export const toLocalDate = (utcDateString: string): Date => {
 };
 
 export const toUtcDate = (localDateString: Date): Date => {
-  return new Date(
-    localDateString.getTime() - localDateString.getTimezoneOffset() * 60 * 1000
-  );
+  return new Date(localDateString.getTime() - localDateString.getTimezoneOffset() * 60 * 1000);
 };
 
-export const diffInHourAndMinutes = (
-  start: string,
-  end: string
-): { h: string; m: string } => {
+export const diffInHourAndMinutes = (start: string, end: string): { h: string; m: string } => {
   const diff = differenceInMinutes(new Date(end), new Date(start));
 
   const hours = Math.floor(diff / 60);
   const minutes = Math.round(diff - hours * 60);
 
   return {
-    h: hours.toString().padStart(2, "0"),
-    m: minutes.toString().padStart(2, "0"),
+    h: hours.toString().padStart(2, '0'),
+    m: minutes.toString().padStart(2, '0'),
   };
 };
 
 export const isStrictISODateString = (value: string) => {
   // Vérifie le format complet ISO 8601 (YYYY-MM-DD ou YYYY-MM-DDTHH:mm:ss.sssZ)
-  const isoRegex =
-    /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z|([+-]\d{2}:\d{2})))?$/;
+  const isoRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z|([+-]\d{2}:\d{2})))?$/;
 
   if (!isoRegex.test(value)) return false;
 
@@ -53,15 +40,14 @@ const MINUTES_PER_DAY = 1440;
 const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
 
 /** Reste toujours positif : ramène une valeur qui déborde dans un cycle (jour, semaine). */
-const mod = (value: number, cycle: number): number =>
-  ((value % cycle) + cycle) % cycle;
+const mod = (value: number, cycle: number): number => ((value % cycle) + cycle) % cycle;
 
 /**
  * « HH:mm » → minutes depuis minuit. Une valeur absente ou mal formée vaut minuit : un horaire
  * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
  */
 export const parseTimeToMinutes = (time: string | null | undefined): number => {
-  const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? "").trim());
+  const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? '').trim());
   if (!match) {
     return 0;
   }
@@ -74,11 +60,11 @@ export const formatMinutesToTime = (minutes: number): string => {
   const hours = Math.floor(normalized / MINUTES_PER_HOUR);
   const rest = normalized % MINUTES_PER_HOUR;
 
-  return `${String(hours).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+  return `${String(hours).padStart(2, '0')}:${String(rest).padStart(2, '0')}`;
 };
 
 /** Ajoute des jours à une date, sans la muter. */
-export { addDays } from "date-fns";
+export { addDays } from 'date-fns';
 
 /** Lundi 00:00 de la semaine locale qui contient `reference`. */
 export const startOfLocalWeek = (reference: Date = new Date()): Date => {
@@ -87,19 +73,15 @@ export const startOfLocalWeek = (reference: Date = new Date()): Date => {
 
 /** Clé de regroupement par jour local — « 2026-09-15 ». */
 export const localDayKey = (date: Date | string): string => {
-  return format(new Date(date), "yyyy-MM-dd");
+  return format(new Date(date), 'yyyy-MM-dd');
 };
 
 /**
  * Le décalage local par rapport à UTC change-t-il dans les sept prochains jours ? Sert à prévenir
  * qu'un horaire récurrent va se décaler à l'écran sans que personne n'y ait touché.
  */
-export const hasUpcomingOffsetShift = (
-  reference: Date = new Date()
-): boolean => {
-  return (
-    reference.getTimezoneOffset() !== addWeeks(reference, 1).getTimezoneOffset()
-  );
+export const hasUpcomingOffsetShift = (reference: Date = new Date()): boolean => {
+  return reference.getTimezoneOffset() !== addWeeks(reference, 1).getTimezoneOffset();
 };
 
 /** Les jours de la semaine dans l'ordre d'affichage européen, lundi en tête (0 = dimanche). */
@@ -107,13 +89,13 @@ export const WEEK_DAYS_FROM_MONDAY: number[] = [1, 2, 3, 4, 5, 6, 0];
 
 /** Clé de traduction (`@ta/ui`) de chaque jour, indexée comme `Date.getDay()` : 0 = dimanche. */
 export const WEEK_DAY_LABELS: string[] = [
-  "ui.common.days.sunday",
-  "ui.common.days.monday",
-  "ui.common.days.tuesday",
-  "ui.common.days.wednesday",
-  "ui.common.days.thursday",
-  "ui.common.days.friday",
-  "ui.common.days.saturday",
+  'ui.common.days.sunday',
+  'ui.common.days.monday',
+  'ui.common.days.tuesday',
+  'ui.common.days.wednesday',
+  'ui.common.days.thursday',
+  'ui.common.days.friday',
+  'ui.common.days.saturday',
 ];
 
 /** Un créneau qui revient chaque semaine : un jour, une heure de début, une de fin. */
@@ -127,9 +109,7 @@ export interface WeeklySlot {
 }
 
 /** Un créneau vu comme un point dans la semaine : minutes depuis dimanche minuit, et durée. */
-const toWeekMinutes = (
-  slot: WeeklySlot
-): { start: number; duration: number } => {
+const toWeekMinutes = (slot: WeeklySlot): { start: number; duration: number } => {
   const startOfDayMinutes = parseTimeToMinutes(slot.startTime);
 
   return {
@@ -153,10 +133,7 @@ const fromWeekMinutes = (start: number, duration: number): WeeklySlot => {
  * vigueur à `reference` : un changement d'heure dans la semaine décalerait l'affichage, ce dont
  * `hasUpcomingOffsetShift` permet de prévenir.
  */
-export const weeklySlotToLocal = (
-  slot: WeeklySlot,
-  reference: Date = new Date()
-): WeeklySlot => {
+export const weeklySlotToLocal = (slot: WeeklySlot, reference: Date = new Date()): WeeklySlot => {
   const { start, duration } = toWeekMinutes(slot);
 
   return fromWeekMinutes(start - reference.getTimezoneOffset(), duration);
@@ -166,10 +143,7 @@ export const weeklySlotToLocal = (
  * L'inverse : un créneau saisi en heure locale, exprimé en UTC. `null` si la plage est vide ou
  * inversée, ou si elle franchit minuit UTC — un créneau appartient à un seul jour côté serveur.
  */
-export const weeklySlotToUtc = (
-  slot: WeeklySlot,
-  reference: Date = new Date()
-): WeeklySlot | null => {
+export const weeklySlotToUtc = (slot: WeeklySlot, reference: Date = new Date()): WeeklySlot | null => {
   const { start, duration } = toWeekMinutes(slot);
   if (duration <= 0) {
     return null;

@@ -43,7 +43,7 @@ ng g lib [LibName]
 ```
 
 `.build/` est ignoré par git. Les `dist/` versionnés (lus par les projets consommateurs) sont écrits
-uniquement par la CI (`.github/workflows/build-libs.yml`) sur `develop`.
+uniquement par la CI (`.github/workflows/build-libs.yml`) sur `develop` et `main`.
 
 ## Change package.json from new lib
 

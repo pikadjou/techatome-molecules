@@ -1,10 +1,10 @@
-import { gql } from "@apollo/client/core";
-import { TypedDocumentNode } from "apollo-angular";
+import { gql } from '@apollo/client/core';
+import { TypedDocumentNode } from 'apollo-angular';
 
-import { capitalizeFirstLetter } from "@ta/utils";
+import { capitalizeFirstLetter } from '@ta/utils';
 
-import { graphQlTake } from "../helpers/queries";
-import { connectionFields } from "./connection";
+import { graphQlTake } from '../helpers/queries';
+import { connectionFields } from './connection';
 
 export interface PageInfo {
   hasNextPage: boolean;
@@ -18,7 +18,7 @@ export type GraphReponsePaged<T> = {
 };
 
 export type OrderType<T> = {
-  [index in keyof Partial<T>]: "ASC" | "DESC";
+  [index in keyof Partial<T>]: 'ASC' | 'DESC';
 };
 
 export type WhereType<T> = {
@@ -26,14 +26,7 @@ export type WhereType<T> = {
     | WhereType<T[index]>
     | WhereType<T>[]
     | {
-        [op: string]:
-          | WhereType<T[index]>
-          | string
-          | string[]
-          | number
-          | boolean
-          | Date
-          | null;
+        [op: string]: WhereType<T[index]> | string | string[] | number | boolean | Date | null;
       };
 };
 /** Un argument propre à la requête (`estateId`, `includeDismissed`…) : son type GraphQL et sa valeur. */
@@ -48,8 +41,8 @@ export interface GraphQueryArgument {
  * - `cursor` : `first`/`after` au format Relay, la réponse porte `pageInfo` et `nodes` (voir `toPage`).
  */
 export type GraphQueryPaging =
-  | { mode: "offset"; skip?: number | null }
-  | { mode: "cursor"; first?: number | null; after?: string | null };
+  | { mode: 'offset'; skip?: number | null }
+  | { mode: 'cursor'; first?: number | null; after?: string | null };
 
 export interface GraphQueryInput<T = any> {
   props: string;
@@ -86,13 +79,8 @@ export interface GraphMutationPayload {
  * });
  * ```
  */
-export function createQuery<T>(
-  name: string,
-  input?: GraphQueryInput<T>
-): GraphPayload {
-  const capPrefixType = input?.prefixType
-    ? capitalizeFirstLetter(input.prefixType)
-    : "";
+export function createQuery<T>(name: string, input?: GraphQueryInput<T>): GraphPayload {
+  const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
   const paging = input?.paging;
 
   const queryParams: string[] = [];
@@ -105,40 +93,37 @@ export function createQuery<T>(
     variables[key] = value;
   };
 
-  Object.entries(input?.args ?? {}).forEach(([key, arg]) =>
-    declare(key, arg.type, arg.value)
-  );
+  Object.entries(input?.args ?? {}).forEach(([key, arg]) => declare(key, arg.type, arg.value));
 
   if (input?.where) {
-    declare("where", `${capPrefixType}FilterInput`, input.where);
+    declare('where', `${capPrefixType}FilterInput`, input.where);
   }
   if (input?.order) {
-    declare("order", `[${capPrefixType}SortInput!]`, input.order);
+    declare('order', `[${capPrefixType}SortInput!]`, input.order);
   }
 
-  if (paging?.mode === "cursor") {
-    declare("first", "Int", paging.first ?? null);
-    declare("after", "String", paging.after ?? null);
+  if (paging?.mode === 'cursor') {
+    declare('first', 'Int', paging.first ?? null);
+    declare('after', 'String', paging.after ?? null);
   } else {
     if (input?.take) {
       queryArgs.push(graphQlTake(input.take));
     }
-    if (paging?.mode === "offset" && paging.skip != null) {
+    if (paging?.mode === 'offset' && paging.skip != null) {
       queryArgs.push(`skip: ${paging.skip}`);
     }
   }
 
-  const props = input?.props ?? "";
-  let body = props ? `{ ${props} }` : "";
-  if (paging?.mode === "cursor") {
+  const props = input?.props ?? '';
+  let body = props ? `{ ${props} }` : '';
+  if (paging?.mode === 'cursor') {
     body = `{ ${connectionFields(props)} }`;
-  } else if (paging?.mode === "offset") {
+  } else if (paging?.mode === 'offset') {
     body = `{ totalCount items { ${props} } }`;
   }
 
-  const queryParamsStr =
-    queryParams.length > 0 ? `(${queryParams.join(", ")})` : "";
-  const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(", ")})` : "";
+  const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
+  const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
 
   return {
     name,

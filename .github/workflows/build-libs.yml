@@ -2,19 +2,21 @@ name: Build libraries (dist)
 
 # Les projets consommateurs (bailo, subsidia…) embarquent ce dépôt en sous-module et lisent
 # `projects/<lib>/dist` sans rien compiler. En local, les libs se construisent dans `.build/`
-# (ignoré) : seul ce workflow écrit les `dist` versionnés, par un commit ajouté à develop.
-# L'historique n'est jamais réécrit — un sous-module pointe un commit précis, qui doit rester joignable.
+# (ignoré) : seul ce workflow écrit les `dist` versionnés, par un commit ajouté à la branche poussée
+# (develop ou main). L'historique n'est jamais réécrit — un sous-module pointe un commit précis, qui
+# doit rester joignable.
 
 on:
   push:
     branches:
       - develop
+      - main
   workflow_dispatch:
 
 permissions:
   contents: write
 
-# Une seule publication à la fois ; un push arrivé pendant un build attend son tour.
+# Une seule publication à la fois par branche ; un push arrivé pendant un build attend son tour.
 concurrency:
   group: build-libs-${{ github.ref }}
   cancel-in-progress: false
@@ -38,7 +40,7 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Build @ta libraries
         run: yarn build
@@ -78,9 +80,8 @@ jobs:
             exit 0
           fi
 
-          # Indique de quel commit source proviennent les dist, pour vérifier un sous-module.
-          echo "$SOURCE_SHA" > DIST_SOURCE
-          git add DIST_SOURCE
-
-          git commit -m "chore(dist): build ${SOURCE_SHA::8} [skip ci]"
+          # Le commit source est noté dans le message (trailer Dist-Source), pas dans un fichier :
+          # develop et main en écriraient chacune un différent, et chaque merge entre elles
+          # tomberait en conflit dessus.
+          git commit -m "chore(dist): build ${SOURCE_SHA::8} [skip ci]" -m "Dist-Source: $SOURCE_SHA"
           git push origin "HEAD:$BRANCH"

@@ -37,8 +37,7 @@ Format : nom (`Class`) — description courte. Le fichier de référence est `re
 ### Services GraphQL
 
 - `TaGraphService` — service Apollo/GraphQL principal (fetchQueryList, fetchQuery, fetchQueryPaged, fetchQueryBuilder, mutate).
-- `createQuery<T>()` — helper pour définir une query GraphQL typée.
-- `createPagedQuery<T>()` — helper pour une query paginée typée.
+- `createQuery<T>()` — helper pour définir une query GraphQL typée ; `paging: { mode: 'offset', skip }` ou `{ mode: 'cursor', first, after }` pour paginer, `args` pour les arguments propres à la requête.
 
 ### Services HTTP
 

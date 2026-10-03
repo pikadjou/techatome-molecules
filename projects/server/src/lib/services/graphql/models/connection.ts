@@ -34,9 +34,7 @@ export function emptyPage<T>(): TaPage<T> {
 }
 
 /** Aplatit la réponse de l'API ; une connexion absente vaut une page vide. */
-export function toPage<T>(
-  connection: TaConnection<T> | null | undefined
-): TaPage<T> {
+export function toPage<T>(connection: TaConnection<T> | null | undefined): TaPage<T> {
   return {
     endCursor: connection?.pageInfo?.endCursor ?? null,
     hasNextPage: connection?.pageInfo?.hasNextPage ?? false,
