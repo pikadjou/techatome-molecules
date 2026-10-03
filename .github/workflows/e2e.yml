@@ -1,11 +1,8 @@
 name: e2e
 
+# Plus lancé automatiquement (ni push, ni PR) : seulement à la main, depuis l'onglet Actions.
 on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - develop
+  workflow_dispatch:
 
 jobs:
   playwright:
