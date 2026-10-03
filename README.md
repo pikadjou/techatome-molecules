@@ -39,8 +39,11 @@ ng g lib [LibName]
 - Dest to
 
 ```yaml
-"dest": "dist"
+"dest": ".build"
 ```
+
+`.build/` est ignoré par git. Les `dist/` versionnés (lus par les projets consommateurs) sont écrits
+uniquement par la CI (`.github/workflows/build-libs.yml`) sur `develop`.
 
 ## Change package.json from new lib
 
@@ -55,7 +58,7 @@ ng g lib [LibName]
 ```yaml
 "scripts": {
     "build": "ng build @ta/[LibName]", # Command to compile this particular lib
-    "postpublish": "rm -rf dist/",
+    "postpublish": "rm -rf .build/",
   }
 ```
 
@@ -82,5 +85,5 @@ to
 to
 
 ```yaml
-"@ta/[LibName]": ["projects/[LibName]/dist"]
+"@ta/[LibName]": ["projects/[LibName]/.build"]
 ```

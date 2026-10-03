@@ -1,0 +1,21 @@
+<div class="tab-bar" [ngClass]="this.variant()" role="tablist">
+  @for (item of this.items(); track item.key) {
+    <button
+      type="button"
+      role="tab"
+      class="tab-bar-item"
+      [class.active]="this.isActive(item)"
+      [disabled]="!!item.disabled"
+      [attr.aria-selected]="this.isActive(item)"
+      (click)="this.trigger(item)"
+    >
+      @if (item.icon) {
+        <ta-font-icon [name]="item.icon" type="sm"></ta-font-icon>
+      }
+      <span class="tab-bar-label">{{ item.label | translate }}</span>
+      @if (this.hasCount(item)) {
+        <span class="tab-bar-count">{{ item.count }}</span>
+      }
+    </button>
+  }
+</div>

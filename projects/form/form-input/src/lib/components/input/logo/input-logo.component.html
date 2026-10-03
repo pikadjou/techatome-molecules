@@ -2,6 +2,18 @@
 
 <ta-loader [isLoading]="this.requestState.isLoading()" size="sm">
   <div class="logo-wrapper">
+    <!-- Désactivé : l'image seule, sans sélecteur ni suppression. -->
+    @if (this.input.disabled) {
+      <div class="logo-preview" [class.has-value]="!!this.input.value">
+        @if (this.input.value) {
+          <img [src]="this.input.value.url" class="logo-image" />
+        } @else {
+          <div class="logo-placeholder">
+            <ta-font-icon name="add_a_photo" type="lg"></ta-font-icon>
+          </div>
+        }
+      </div>
+    } @else {
     <ta-overlay-panel #logoPanel [panelConfig]="{ matchTriggerWidth: false }">
       <ng-template #panelTrigger>
         <div class="logo-preview" [class.has-value]="!!this.input.value">
@@ -38,6 +50,7 @@
       <ta-button type="danger" size="small" icon="delete" (action)="this.removeLogo()">
         {{ 'input.logo.remove' | translate }}
       </ta-button>
+    }
     }
   </div>
 </ta-loader>

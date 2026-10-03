@@ -1,25 +1,35 @@
 @use "ta/utils/mixins/fonts";
 @use "ta/utils/mixins/common";
 
+/// Le message est porté par un filet vertical de 6px : c'est lui qui code la
+/// nature de l'alerte, le fond restant neutre pour garder le texte lisible.
 .card {
-  box-shadow: common.get-var(shadow, black, md);
-  border-radius: common.get-var(radius, rounded);
+  box-shadow: common.get-var(components, feedback, shadow);
+  border-radius: common.get-var(components, feedback, radius);
   overflow: hidden;
-  padding: common.get-var(space, lg);
-  background-color: common.get-var(surface, primary);
-  color: common.get-var(text, primary);
+  padding: common.get-var(components, feedback, padding-vertical)
+    common.get-var(components, feedback, padding-horizontal);
+  background-color: common.get-var(components, feedback, background);
+  color: common.get-var(components, feedback, color);
   @include fonts.fontSizeBody(md);
 
   &.success {
-    border-left: 4px solid common.get-var(semantic-token, success);
+    border-left: common.get-var(components, feedback, accent-width) solid
+      common.get-var(components, feedback, success);
   }
   &.danger {
-    border-left: 4px solid common.get-var(semantic-token, alert);
+    border-left: common.get-var(components, feedback, accent-width) solid
+      common.get-var(components, feedback, alert);
   }
   &.warning {
-    border-left: 4px solid common.get-var(semantic-token, warning);
+    border-left: common.get-var(components, feedback, accent-width) solid
+      common.get-var(components, feedback, warning);
   }
+  // L'information neutre s'inverse : fond navy, filet jaune.
   &.info {
-    border-left: 4px solid common.get-var(semantic-token, link);
+    background-color: common.get-var(components, feedback, invert, background);
+    color: common.get-var(components, feedback, invert, color);
+    border-left: common.get-var(components, feedback, accent-width) solid
+      common.get-var(components, feedback, invert, accent-color);
   }
 }

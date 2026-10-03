@@ -1,0 +1,288 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+
+.planches {
+  @include flex.flex-column();
+  gap: common.get-var(space, xl);
+}
+
+// ============================================================
+// Planche — carte blanche coiffée d'un bandeau navy
+// ============================================================
+.planche {
+  border-radius: common.get-var(radius, rounded);
+  background-color: common.get-var(surface, primary);
+  box-shadow: common.get-var(shadow, black, sm);
+  overflow: hidden;
+
+  &--muted .planche__body {
+    background-color: common.get-var(surface, secondary);
+  }
+}
+
+/// Le filet jaune plein hauteur est la signature du bandeau : il tient lieu de
+/// marque, ce qui laisse le titre en graisse légère sans le priver d'accroche.
+.planche__header {
+  position: relative;
+  padding: common.get-var(components, header, padding-vertical)
+    common.get-var(components, header, padding-horizontal);
+  background-color: common.get-var(components, header, background);
+  color: common.get-var(components, header, color);
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: common.get-var(components, header, accent-width);
+    background-color: common.get-var(components, header, accent-color);
+  }
+
+  &--compact {
+    flex-direction: row;
+    align-items: center;
+    gap: common.get-var(space, sm);
+    padding: common.get-var(space, md) common.get-var(space, md)
+      common.get-var(space, lg);
+  }
+}
+
+.planche__title {
+  @include fonts.fontSizeHeader(h2);
+}
+
+.planche__overline {
+  font-family: ui-monospace, Menlo, monospace;
+  @include fonts.fontSizeBody(xs, true);
+  letter-spacing: common.get-var(components, header, overline, letter-spacing);
+  text-transform: uppercase;
+  color: common.get-var(components, header, overline, color);
+
+  // Repris comme intertitre dans le corps clair de la planche.
+  &--dark {
+    color: common.get-var(text, secondary);
+  }
+}
+
+.planche__body {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, lg)
+    common.get-var(components, header, padding-horizontal);
+
+  &--center {
+    align-items: center;
+  }
+}
+
+// ============================================================
+// Matrice type × état
+// ============================================================
+.matrix {
+  display: grid;
+  grid-template-columns: 80px repeat(2, 1fr);
+  gap: common.get-var(space, sm);
+  align-items: center;
+
+  @include mq.to(768px) {
+    grid-template-columns: 64px repeat(2, 1fr);
+  }
+
+  ta-button {
+    display: block;
+  }
+}
+
+.matrix__head {
+  @include fonts.fontSizeBody(xs, true);
+  font-family: ui-monospace, Menlo, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: common.get-var(text, secondary);
+  text-align: center;
+}
+
+.matrix__label {
+  @include fonts.fontSizeBody(sm, true);
+  color: common.get-var(text, primary);
+}
+
+.matrix__note {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, secondary);
+  margin: 0;
+}
+
+// ============================================================
+// Alignements courants
+// ============================================================
+.row {
+  @include flex.flex-row();
+  align-items: center;
+  flex-wrap: wrap;
+  gap: common.get-var(space, sm);
+
+  &--tight {
+    gap: common.get-var(space, xs);
+  }
+}
+
+.stack {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+}
+
+.rule {
+  height: 1px;
+  background-color: common.get-var(brand, 50);
+}
+
+.cta-row {
+  @include flex.flex-row();
+  gap: common.get-var(space, sm);
+
+  ta-button {
+    flex: 1;
+  }
+
+  &__main {
+    flex: 2;
+  }
+}
+
+// ============================================================
+// Chips et compteurs — motifs sans composant dédié
+// ============================================================
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: common.get-var(components, chip, gap);
+  padding: common.get-var(components, chip, padding);
+  border-radius: common.get-var(components, chip, radius);
+  background-color: common.get-var(components, chip, background);
+  color: common.get-var(components, chip, color);
+  @include fonts.fontSizeBody(sm, true);
+}
+
+.chip__close {
+  color: common.get-var(components, chip, icon, color);
+  font-size: common.get-var(components, chip, icon, size);
+  cursor: pointer;
+}
+
+.counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: common.get-var(components, badge, counter, min-width);
+  height: common.get-var(components, badge, counter, height);
+  padding: 0 common.get-var(space, xs);
+  border-radius: common.get-var(components, badge, radius);
+  background-color: common.get-var(components, badge, counter, background);
+  color: common.get-var(components, badge, counter, color);
+  @include fonts.fontSizeBody(xs, true);
+
+  &--alert {
+    background-color: common.get-var(
+      components,
+      badge,
+      counter,
+      alert,
+      background
+    );
+    color: common.get-var(components, badge, counter, alert, color);
+  }
+}
+
+.feedback-line {
+  @include flex.flex-row();
+  align-items: center;
+  gap: common.get-var(space, sm);
+}
+
+// ============================================================
+// Carte inversée : séparateur et chiffre clé
+// ============================================================
+.separator {
+  height: 1px;
+  background-color: common.get-var(components, card, invert, separator);
+  margin-bottom: common.get-var(space, md);
+}
+
+.kpi__value {
+  @include fonts.fontSizeKey(xl);
+  color: common.get-var(components, card, invert, accent);
+}
+
+.kpi__unit {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(components, card, invert, secondary);
+  margin-left: common.get-var(space, sm);
+}
+
+// ============================================================
+// Maquette mobile — 390 px
+// ============================================================
+.phone {
+  width: 390px;
+  max-width: 100%;
+  border-radius: 38px;
+  padding: 10px;
+  background-color: common.get-var(surface, brand, primary);
+  box-shadow: common.get-var(shadow, black, lg);
+  box-sizing: border-box;
+}
+
+.phone__screen {
+  min-height: 720px;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: common.get-var(surface, secondary);
+  @include flex.flex-column();
+}
+
+.phone__status {
+  @include flex.space-between();
+  align-items: center;
+  padding: common.get-var(space, sm) common.get-var(space, md) 0;
+  background-color: common.get-var(surface, brand, primary);
+  color: common.get-var(text, invert, primary);
+  @include fonts.fontSizeBody(sm, true);
+}
+
+.phone__status-icons {
+  @include flex.flex-row();
+  gap: common.get-var(space, xs);
+}
+
+.phone__back {
+  color: common.get-var(icon, brand, secondary);
+}
+
+.phone__heading {
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+}
+
+.phone__content {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, md);
+}
+
+.phone__card {
+  border-radius: common.get-var(radius, rounded);
+  background-color: common.get-var(surface, primary);
+  box-shadow: common.get-var(shadow, black, sm);
+  padding: common.get-var(space, md);
+}
+
+.phone__cta {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+}

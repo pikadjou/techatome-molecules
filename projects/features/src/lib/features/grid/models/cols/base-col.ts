@@ -24,18 +24,18 @@ export class BaseCol<T> {
   public data: IBaseCol;
   public model: TaGridData<any>;
 
-  get key(): string {
+  public key(): string {
     return this.data.col.name as string;
   }
 
-  get inputLabel() {
-    return `grid.${this.data.scope}.core.${this.key}`;
+  public inputLabel() {
+    return `grid.${this.data.scope}.core.${this.key()}`;
   }
-  get filterValues(): T[] {
+  public filterValues(): T[] {
     return (
       this.model.filters
         ?.get()
-        .find(filter => filter.key === this.key)
+        .find(filter => filter.key === this.key())
         ?.values.map(f => f.value) || []
     );
   }
@@ -46,16 +46,17 @@ export class BaseCol<T> {
 
   public getColConfig(): ColConfig {
     return {
-      key: this.key as string,
-      title: this.inputLabel,
+      key: this.key() as string,
+      title: this.inputLabel(),
       sortable: true,
       width: this.data.col.width,
+      align: this.data.col.align,
       template: this.data.col.template,
     };
   }
 
   public defaultFormatter(row: any): string {
-    const value = row[this.key as string];
+    const value = row[this.key() as string];
     return value != null ? String(value) : '';
   }
 
@@ -63,14 +64,14 @@ export class BaseCol<T> {
     return null;
   }
   public formatInputForm(data: any): Filter | null {
-    const value = data[this.key];
+    const value = data[this.key()];
 
     if (!value) {
       return null;
     }
 
     return {
-      field: this.key as string,
+      field: this.key() as string,
       type: '=',
       value: value.trim(),
     };

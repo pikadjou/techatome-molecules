@@ -1,0 +1,28 @@
+@if (this.available()) {
+  <ta-input-choices
+    [input]="this.choicesInput"
+    [standalone]="true"
+    (valueChanged)="this.onChoicesChanged()"
+  ></ta-input-choices>
+} @else {
+  <div class="grid g-space-sm">
+    <div class="one-third">
+      <ta-input-textbox
+        [input]="this.zipCodeInput"
+        [standalone]="true"
+        (valueChanged)="this.onFreeInputChanged()"
+      ></ta-input-textbox>
+    </div>
+    <div class="two-thirds">
+      <ta-input-textbox
+        [input]="this.cityInput"
+        [standalone]="true"
+        (valueChanged)="this.onFreeInputChanged()"
+      ></ta-input-textbox>
+    </div>
+  </div>
+}
+
+<ng-template #localityItemTpl let-item="item">
+  <span class="locality-option">{{ item.zipCode }} {{ item.city }}</span>
+</ng-template>

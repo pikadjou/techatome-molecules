@@ -1,3 +1,9 @@
 <div class="img-container">
   <img [src]="this.src()" class="img" />
+  <div class="img-overlay img-overlay-start">
+    <ng-content select="[imageOverlayStart]"></ng-content>
+  </div>
+  <div class="img-overlay img-overlay-end">
+    <ng-content select="[imageOverlayEnd]"></ng-content>
+  </div>
 </div>

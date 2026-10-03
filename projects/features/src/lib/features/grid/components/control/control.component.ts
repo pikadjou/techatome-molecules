@@ -3,42 +3,35 @@ import { Component, OnInit, input, output, signal } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent, TaModalComponent, TaOverlayPanelComponent, TitleComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { ButtonComponent, LayoutFullPanelComponent, TaOverlayPanelComponent } from '@ta/ui';
+import { PluralTranslatePipe } from '@ta/utils';
 
 import { Preset, ViewType } from '../../models/types';
+import { gridSearchFieldsName } from '../../services/grid-view.service';
 import { TaAbstractGridComponent } from '../abstract.component';
 import { TaGridFormComponent } from '../form/form.component';
 
+/**
+ * Panneau latéral des filtres. Un panneau plutôt qu'une modale : les critères
+ * restent à côté de la liste, qui se met à jour pendant qu'on les règle.
+ */
 @Component({
-  selector: 'ta-grid-filters-modal',
-  template: `
-    <ta-modal
-      [open]="this.open()"
-      size="medium"
-      [title]="'grid.filters.title' | translate"
-      (closeEvent)="this.closeEvent.emit()"
-    >
-      <div modal-content>
-        <ta-grid-form [gridId]="this.gridId()" [showTitle]="false"></ta-grid-form>
-      </div>
-      <div modal-footer>
-        <ta-button (action)="this.closeEvent.emit()">{{ 'grid.filters.apply' | translate }}</ta-button>
-      </div>
-    </ta-modal>
-  `,
-  styleUrls: ['./filters-modal.component.scss'],
+  selector: 'ta-grid-filters-panel',
+  templateUrl: './filters-panel.component.html',
+  styleUrls: ['./filters-panel.component.scss'],
   standalone: true,
-  imports: [TaGridFormComponent, ButtonComponent, TaModalComponent, TranslatePipe],
+  imports: [TaGridFormComponent, ButtonComponent, LayoutFullPanelComponent, TranslatePipe, PluralTranslatePipe],
 })
-export class TaFiltersModal extends TaBaseComponent {
-  open = input.required<boolean>();
-  gridId = input.required<string>();
-
+export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
   closeEvent = output<void>();
 
-  constructor() {
-    super();
+  public resultCount(): number {
+    return this.grid()?.totalItems() ?? 0;
+  }
+
+  /** Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control. */
+  public reset(): void {
+    this._grid.filters?.apply([]);
   }
 }
 
@@ -47,19 +40,79 @@ export class TaFiltersModal extends TaBaseComponent {
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaFiltersModal],
+  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaGridFiltersPanel, TranslatePipe],
 })
 export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
-  show = input<{ switchView?: boolean; filters?: boolean; preset?: boolean }>({
-    switchView: true,
+  show = input<{
+    switchView?: boolean;
+    filters?: boolean;
+    preset?: boolean;
+    group?: boolean;
+    sort?: boolean;
+  }>({
     filters: true,
+    group: true,
     preset: true,
+    sort: true,
+    switchView: true,
   });
+
+  /** Masque les libellés textuels : ne restent que les icônes. */
+  compact = input<boolean>(false);
 
   public isFiltersOpen = signal(false);
 
-  constructor() {
-    super();
+  /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
+  /** Colonnes sur lesquelles un regroupement a du sens. */
+  public groupableCols(): { key: string; label: string }[] {
+    return Object.values(this.grid()?.cols ?? {})
+      .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
+      .map(col => ({ key: col.key(), label: col.inputLabel() }));
+  }
+
+  public hasGroupableCols(): boolean {
+    return this.groupableCols().length > 0;
+  }
+
+  /** Colonnes triables, pour les vues sans en-têtes (cartes). */
+  public sortableCols(): { key: string; label: string }[] {
+    return Object.values(this.grid()?.cols ?? {})
+      .filter(col => !col.data.col.notDisplayable && !col.key().startsWith('_'))
+      .map(col => ({ key: col.key(), label: col.inputLabel() }));
+  }
+
+  public hasSortableCols(): boolean {
+    return this.sortableCols().length > 0;
+  }
+
+  public activeSort(): string | null {
+    return this.grid()?.table?.sortField() ?? null;
+  }
+
+  public activeSortDir(): 'asc' | 'desc' {
+    return this.grid()?.table?.sortDir() ?? 'asc';
+  }
+
+  public activeSortLabel(): string | null {
+    const key = this.activeSort();
+    return key ? this.grid()?.cols[key]?.inputLabel() ?? key : null;
+  }
+
+  public activeGroup(): string | null {
+    return (this.grid()?.groupBy() as string) ?? null;
+  }
+
+  public activeGroupLabel(): string | null {
+    const key = this.activeGroup();
+    return key ? this.grid()?.cols[key]?.inputLabel() ?? key : null;
+  }
+
+  public hasPresets(): boolean {
+    return (this.grid()?.filters?.preset?.length ?? 0) > 0;
+  }
+
+  public activePresetName(): string | null {
+    return this.grid()?.filters?.preset?.find(preset => this.isPresetActive(preset))?.name ?? null;
   }
 
   public override ngOnInit() {
@@ -67,6 +120,13 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     if (this.breakpoints.isMobile && this.show().switchView) {
       this.switchView('card');
     }
+  }
+
+  /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
+  public activeFiltersCount(): number {
+    return (this.grid()?.filters?.get() ?? [])
+      .filter(tag => tag.key !== gridSearchFieldsName)
+      .reduce((count, tag) => count + tag.values.length, 0);
   }
 
   public switchView(type: ViewType) {
@@ -78,6 +138,40 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
   }
 
   public setPreset(preset: Preset) {
-    this.grid.filters?.apply(preset.filters);
+    this.grid().filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
+  }
+
+  /** Rejouer le même critère inverse le sens. */
+  public setSort(key: string | null) {
+    if (!key) {
+      this.grid()?.table?.setSort(null, 'asc');
+      return;
+    }
+    const dir = key === this.activeSort() && this.activeSortDir() === 'asc' ? 'desc' : 'asc';
+    this.grid()?.table?.setSort(key, dir);
+  }
+
+  public setGroup(key: string | null) {
+    if (!key || key === this.activeGroup()) {
+      this._grid.clearGroupBy();
+      return;
+    }
+    this._grid.setGroupBy(key);
+  }
+
+  public isPresetActive(preset: Preset): boolean {
+    if (!preset.filters.length) {
+      return false;
+    }
+    const active = (this.grid()?.filters?.get() ?? []).flatMap(tag => tag.values);
+
+    return preset.filters.every(filter =>
+      active.some(
+        current =>
+          current.field === filter.field &&
+          current.type === filter.type &&
+          String(current.value) === String(filter.value)
+      )
+    );
   }
 }

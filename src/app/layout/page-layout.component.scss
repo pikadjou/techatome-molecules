@@ -1,26 +1,67 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/mediaQueriesRanges" as mq;
 
 :host {
-  display: flex;
-  flex-direction: column;
+  @include flex.flex-column();
   height: 100%;
 }
 
+// L'en-tête ne s'appuie sur aucun trait : la hiérarchie vient de la taille du
+// titre, de la couleur du sur-titre et de l'espace qui suit.
+// Largeur de lecture bornée : sur un grand écran, le contenu ne s'étire pas
+// jusqu'aux bords, il reste une colonne posée face à la navigation.
+$content-max-width: 1280px;
+
 .page-header {
-  padding: common.get-var(space, lg) common.get-var(space, xl);
-  border-bottom: 1px solid common.get-var(border, primary);
-  background: common.get-var(surface, primary);
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+  padding: common.get-var(space, xl) common.get-var(space, xl) common.get-var(space, lg);
+  flex-shrink: 0;
+  width: 100%;
+  // Padding compris, pour rester aligné sur le contenu du corps de page.
+  max-width: calc(#{$content-max-width} + 2 * 32px);
 
   h1 {
+    @include fonts.fontSizeHeader(h1);
     margin: 0;
-    @include fonts.fontSizeHeader(h2);
     color: common.get-var(text, primary);
+    letter-spacing: -0.02em;
   }
+}
+
+.page-eyebrow {
+  @include fonts.fontSizeBody(xs);
+  color: common.get-var(text, secondary);
+  font-family: "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  letter-spacing: 0.02em;
+}
+
+.page-description {
+  @include fonts.fontSizeBody(md);
+  margin: 0;
+  max-width: 68ch;
+  color: common.get-var(text, secondary);
 }
 
 .page-body {
   flex: 1;
   overflow-y: auto;
-  padding: common.get-var(space, lg) common.get-var(space, xl);
+  padding: 0 common.get-var(space, xl) common.get-var(space, xxl);
+
+  > * {
+    width: 100%;
+    max-width: $content-max-width;
+  }
+}
+
+@include mq.to(768px) {
+  .page-header {
+    padding: common.get-var(space, lg) common.get-var(space, md) common.get-var(space, md);
+  }
+
+  .page-body {
+    padding: 0 common.get-var(space, md) common.get-var(space, xl);
+  }
 }

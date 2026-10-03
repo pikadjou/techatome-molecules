@@ -1,34 +1,30 @@
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
-import { ButtonComponent } from "../../../../components/ui/button/button.component";
-import { TextComponent } from "../../../../components/ui/text/text.component";
-import { TaModalComponent } from "../../../layout/modal/modal.component";
-import { TaBaseComponent } from "@ta/utils";
-import { ModalParameter } from "../common-modal";
-import { TaTranslationUI } from "../../../../translation.service";
+import { TaBaseModal } from '@ta/utils';
 
+import { ButtonComponent } from '../../../../components/ui/button/button.component';
+import { TextComponent } from '../../../../components/ui/text/text.component';
+import { TaTranslationUI } from '../../../../translation.service';
+import { TaModalComponent } from '../../../layout/modal/modal.component';
+import { ModalParameter } from '../common-modal';
+
+/** Confirmation Oui/Non : `confirm(true)` sur Oui, `dismiss()` sur Non ou fermeture. */
 @Component({
-  selector: "ta-validation-modal",
-  templateUrl: "./modal-validation.component.html",
-  styleUrls: ["./modal-validation.component.scss"],
+  selector: 'ta-validation-modal',
+  templateUrl: './modal-validation.component.html',
+  styleUrls: ['./modal-validation.component.scss'],
   standalone: true,
   imports: [TranslateModule, ButtonComponent, TextComponent, TaModalComponent],
 })
-export class ValidationModal extends TaBaseComponent {
-  open = input.required<boolean>();
-  params = input<ModalParameter | undefined>(undefined);
-
-  @Output() validated = new EventEmitter<void>();
-  @Output() closeEvent = new EventEmitter<void>();
-
+export class ValidationModal extends TaBaseModal<ModalParameter | undefined, boolean> {
   public get title(): string {
-    return this.params()?.title ?? "validation.modal.title";
+    return this.modalState()?.input()?.title ?? 'validation.modal.title';
   }
 
   public get subtitle(): string {
-    return this.params()?.subtitle ?? "validation.modal.content";
+    return this.modalState()?.input()?.subtitle ?? 'validation.modal.content';
   }
 
   constructor() {
@@ -37,11 +33,10 @@ export class ValidationModal extends TaBaseComponent {
   }
 
   public onNoClick(): void {
-    this.closeEvent.emit();
+    this.dismiss();
   }
 
   public onYesClick(): void {
-    this.validated.emit();
-    this.closeEvent.emit();
+    this.confirm(true);
   }
 }

@@ -1,34 +1,30 @@
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs';
 
-import { FileEditComponent } from "@ta/files-basic";
-import { TaModalComponent } from "@ta/ui";
-import { FileStructure, TaBaseComponent, newGuid } from "@ta/utils";
+import { FileEditComponent } from '@ta/files-basic';
+import { TaModalComponent } from '@ta/ui';
+import { FileStructure, TaBaseModal, newGuid } from '@ta/utils';
 
 @Component({
-  selector: "ta-input-schema-modal",
-  styleUrls: ["./input-schema-modal.component.scss"],
-  templateUrl: "./input-schema-modal.component.html",
+  selector: 'ta-input-schema-modal',
+  styleUrls: ['./input-schema-modal.component.scss'],
+  templateUrl: './input-schema-modal.component.html',
   standalone: true,
   imports: [FileEditComponent, TaModalComponent],
 })
-export class InputSchemaModal extends TaBaseComponent {
-  open = input.required<boolean>();
-
-  @Output() savedFile = new EventEmitter<{ file: FileStructure }>();
-  @Output() closeEvent = new EventEmitter<void>();
-
+/** Éditeur de schéma plein écran ; rend le fichier dessiné. */
+export class InputSchemaModal extends TaBaseModal<null, { file: FileStructure }> {
   public askImage$ = new Subject<null>();
   public imagePath =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoAQMAAAB3bUanAAAABlBMVEUAAAD8/vwnjUF/AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAcVJREFUeJztzTEBAAAMAiD7l9YYOwYFSC/Fbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xb7g32cNHwzdl5x4gAAAABJRU5ErkJggg==";
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoAQMAAAB3bUanAAAABlBMVEUAAAD8/vwnjUF/AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAcVJREFUeJztzTEBAAAMAiD7l9YYOwYFSC/Fbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xa73W632+12u91ut9vtdrvdbrfb7Xb7g32cNHwzdl5x4gAAAABJRU5ErkJggg==';
 
   constructor() {
     super();
   }
 
   public close = () => {
-    this.closeEvent.emit();
+    this.dismiss();
   };
 
   public selected = () => {
@@ -37,7 +33,6 @@ export class InputSchemaModal extends TaBaseComponent {
 
   public savedImage(blob: Blob): void {
     const file = new File([blob], newGuid(), { type: blob.type });
-    this.savedFile.emit({ file: { file, localUrl: this.imagePath } });
-    this.closeEvent.emit();
+    this.confirm({ file: { file, localUrl: this.imagePath } });
   }
 }

@@ -12,6 +12,16 @@
 
   border-radius: common.get-var(components, label, radius);
   border: 1px solid transparent;
+  gap: common.get-var(space, xs);
+
+  ta-font-icon {
+    flex-shrink: 0;
+    color: inherit;
+  }
+
+  &.pill {
+    border-radius: common.get-var(radius, pill);
+  }
 
   &.xs {
     padding: common.get-var(components, label, xs, padding-vertical)
@@ -65,4 +75,10 @@
   color: common.get-var(components, label, purple, color);
   background: common.get-var(components, label, purple, background);
   border-color: common.get-var(components, label, purple, border);
+}
+
+.label-neutral {
+  color: common.get-var(components, label, neutral, color);
+  background: common.get-var(components, label, neutral, background);
+  border-color: common.get-var(components, label, neutral, border);
 }

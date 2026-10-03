@@ -1,5 +1,5 @@
 <ta-modal
-  [open]="this.open()"
+  [open]="this.isOpen()"
   size="small"
   [title]="this.title | translate"
   [closeOnBackdrop]="false"
@@ -10,10 +10,10 @@
   </div>
   <div modal-footer>
     <ta-button type="danger" (action)="this.onNoClick()">
-      {{ "ui.container.validation.modal.cta.cancel" | translate }}
+      {{ 'ui.container.validation.modal.cta.cancel' | translate }}
     </ta-button>
     <ta-button type="primary" (action)="this.onYesClick()">
-      {{ "ui.container.validation.modal.cta.ok" | translate }}
+      {{ 'ui.container.validation.modal.cta.ok' | translate }}
     </ta-button>
   </div>
 </ta-modal>

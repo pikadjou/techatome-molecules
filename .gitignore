@@ -5,7 +5,9 @@ scripts/app.config.js
 
 # Compiled output
 /dist
-# **/dist
+# Build local des librairies. Les projects/**/dist suivis sont écrits par la CI
+# (.github/workflows/build-libs.yml) : ne jamais les reconstruire à la main.
+.build/
 /tmp
 /out-tsc
 /bazel-out
@@ -54,3 +56,13 @@ Thumbs.db
 # Compodoc
 documentation.json
 scripts/app.config.js
+
+# Playwright / e2e
+/test-results
+/playwright-report
+/playwright/.cache
+projects/testing/dist-e2e
+
+# Bascule de compte : identifiants locaux et profil navigateur, jamais versionnés
+/scripts/app/accounts.json
+/scripts/app/.browser-profile/

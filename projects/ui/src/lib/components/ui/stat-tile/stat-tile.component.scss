@@ -1,0 +1,86 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+
+:host {
+  display: block;
+}
+
+.stat-tile {
+  @include flex.simple-flex();
+  gap: common.get-var(space, md);
+  min-width: 0;
+  height: 100%;
+  padding: common.get-var(space, md) common.get-var(space, md);
+  box-sizing: border-box;
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, card);
+
+  // Icône alignée sur la première ligne.
+  &.label-first {
+    align-items: flex-start;
+  }
+
+  &.value-first {
+    align-items: center;
+  }
+}
+
+.stat-tile-icon {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, secondary);
+}
+
+.stat-tile-body {
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+  min-width: 0;
+}
+
+.stat-tile-value {
+  font-family: common.get-var(font, display, family);
+  letter-spacing: common.get-var(font, display, tracking);
+  color: common.get-var(text, primary);
+  overflow-wrap: anywhere;
+}
+
+.value-first .stat-tile-value {
+  @include fonts.fontSizeKey(lg, true);
+  line-height: 1;
+}
+
+.label-first .stat-tile-value {
+  @include fonts.fontSizeBody(md, true);
+  line-height: 1.35;
+}
+
+.stat-tile-label {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, muted);
+}
+
+.brand .stat-tile-icon {
+  color: common.get-var(icon, brand, primary);
+}
+.accent .stat-tile-icon {
+  color: common.get-var(icon, accent);
+}
+.success .stat-tile-icon {
+  color: common.get-var(text, success);
+}
+.warning .stat-tile-icon {
+  color: common.get-var(text, warning);
+}
+.alert .stat-tile-icon {
+  color: common.get-var(text, alert);
+}
+.neutral .stat-tile-icon {
+  color: common.get-var(icon, secondary);
+}

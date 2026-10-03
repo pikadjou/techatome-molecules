@@ -1,0 +1,17 @@
+<button
+  type="button"
+  class="checkbox"
+  role="checkbox"
+  [attr.aria-checked]="this.checked()"
+  [disabled]="this.disabled()"
+  (click)="this.toggle()"
+>
+  <span class="checkbox-box" [class.checked]="this.checked()">
+    @if (this.checked()) {
+      <ta-font-icon name="check" type="sm"></ta-font-icon>
+    }
+  </span>
+  <span class="checkbox-label">
+    <ng-content></ng-content>
+  </span>
+</button>

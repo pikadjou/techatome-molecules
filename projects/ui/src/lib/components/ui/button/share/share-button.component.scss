@@ -15,7 +15,7 @@ $share-disabled-color: #a0a0a0;
   padding: common.get-var(space, sm) common.get-var(space, lg);
   background-color: $share-bg;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: common.get-var(font, weight, bold);
   transition: background-color 0.2s ease, transform 0.1s ease;
 
   @include fonts.fontSizeBody(md);

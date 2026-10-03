@@ -1,0 +1,259 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
+
+.lightbox {
+  @include flex.flex();
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: common.get-var(components, lightbox, background);
+  padding: common.get-var(space, lg);
+  overflow: auto;
+}
+
+.lightbox-inner {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+  width: 100%;
+  max-width: common.get-var(components, lightbox, max-width);
+  margin: 0 auto;
+  min-height: 0;
+}
+
+.lightbox-header {
+  @include flex.space-between();
+  align-items: flex-start;
+  gap: common.get-var(space, md);
+  flex-shrink: 0;
+}
+
+.lightbox-heading {
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+  min-width: 0;
+}
+
+.lightbox-title {
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeKey(md, true);
+  line-height: 1.2;
+  color: common.get-var(text, invert, primary);
+  overflow-wrap: anywhere;
+}
+
+.lightbox-actions {
+  @include flex.align-center();
+  gap: common.get-var(space, sm);
+  flex-shrink: 0;
+}
+
+.lightbox-counter {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, invert, secondary);
+  margin-right: common.get-var(space, xs);
+}
+
+.lightbox-button {
+  @include flex.align-center();
+  justify-content: center;
+  width: common.get-var(components, lightbox, control-size);
+  height: common.get-var(components, lightbox, control-size);
+  border: 1px solid common.get-var(surface, veil, md);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, veil, sm);
+  color: common.get-var(text, invert, primary);
+  cursor: pointer;
+  transition: background common.get-var(transition, fast);
+
+  &:hover {
+    background: common.get-var(surface, veil, md);
+  }
+
+  &--close {
+    background: common.get-var(neutral, white);
+    border-color: common.get-var(neutral, white);
+    color: common.get-var(text, brand, primary);
+
+    &:hover {
+      background: common.get-var(neutral, 200);
+    }
+  }
+}
+
+.lightbox-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border-radius: common.get-var(radius, label);
+  overflow: hidden;
+  background: common.get-var(surface, veil, xs);
+
+  ta-image-viewer,
+  ta-pdf-viewer,
+  ta-word-viewer,
+  ta-excel-viewer {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.lightbox-no-viewer {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: common.get-var(text, invert, secondary);
+}
+
+.lightbox-nav {
+  @include flex.align-center();
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: common.get-var(components, lightbox, control-size);
+  height: common.get-var(components, lightbox, control-size);
+  border: 1px solid common.get-var(surface, veil, md);
+  border-radius: 50%;
+  background: common.get-var(components, lightbox, scrim);
+  color: common.get-var(text, invert, primary);
+  cursor: pointer;
+  transition: background common.get-var(transition, fast);
+
+  &:hover {
+    background: common.get-var(components, lightbox, scrim-hover);
+  }
+
+  &--prev {
+    left: common.get-var(space, md);
+  }
+
+  &--next {
+    right: common.get-var(space, md);
+  }
+}
+
+.lightbox-meta {
+  @include flex.space-between();
+  align-items: center;
+  gap: common.get-var(space, md);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.lightbox-caption {
+  @include fonts.fontSizeBody(md);
+  color: common.get-var(text, invert, primary);
+  min-width: 0;
+}
+
+.lightbox-hints {
+  @include flex.align-center();
+  gap: common.get-var(space, xs);
+  flex-shrink: 0;
+}
+
+.lightbox-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: common.get-var(components, lightbox, key-size);
+  height: common.get-var(components, lightbox, key-size);
+  padding: 0 common.get-var(space, xs);
+  border: 1px solid common.get-var(surface, veil, md);
+  border-radius: common.get-var(radius, minimal);
+  background: common.get-var(surface, veil, sm);
+  @include fonts.fontSizeBody(xs);
+  color: common.get-var(text, invert, primary);
+}
+
+.lightbox-hint-label {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(text, invert, secondary);
+  margin-right: common.get-var(space, sm);
+}
+
+.lightbox-film {
+  @include flex.flex-row();
+  gap: common.get-var(space, sm);
+  overflow-x: auto;
+  padding-bottom: common.get-var(space, xs);
+  flex-shrink: 0;
+}
+
+.lightbox-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: common.get-var(components, lightbox, thumb-width);
+  height: common.get-var(components, lightbox, thumb-height);
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, veil, sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color common.get-var(transition, fast);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &:hover {
+    border-color: common.get-var(surface, veil, lg);
+  }
+
+  &.active {
+    border-color: common.get-var(surface, brand, secondary);
+
+    .lightbox-thumb-label {
+      color: common.get-var(surface, brand, secondary);
+    }
+  }
+}
+
+.lightbox-thumb::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 60%;
+  background: linear-gradient(to top, common.get-var(components, lightbox, thumb-gradient), transparent);
+  pointer-events: none;
+}
+
+.lightbox-thumb-label {
+  position: absolute;
+  z-index: 1;
+  left: common.get-var(space, sm);
+  right: common.get-var(space, xs);
+  bottom: common.get-var(space, xs);
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeBody(xs, true);
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: left;
+  color: common.get-var(text, invert, primary);
+  text-shadow: common.get-var(components, lightbox, text-shadow);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@include mq.to-key(mobile) {
+  .lightbox {
+    padding: common.get-var(space, md);
+  }
+
+  .lightbox-nav {
+    width: common.get-var(components, lightbox, control-size-mobile);
+    height: common.get-var(components, lightbox, control-size-mobile);
+  }
+
+  .lightbox-hints {
+    display: none;
+  }
+}

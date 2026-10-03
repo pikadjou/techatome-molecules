@@ -1,0 +1,88 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+:host {
+  display: block;
+}
+
+.api {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+}
+
+// Un tableau d'API est large par nature : il défile dans sa propre boîte plutôt
+// que de pousser la page à défiler horizontalement. Le défilement vit sur une
+// enveloppe et non sur le `<table>` lui-même : changer le `display` d'un tableau
+// lui fait perdre sa sémantique implicite pour les lecteurs d'écran. C'est aussi
+// la convention déjà employée dans cette application (`.flags-table-wrapper`).
+.api-table-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.api-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+
+  caption {
+    @include fonts.fontSizeBody(sm);
+    padding-bottom: common.get-var(space, xs);
+    color: common.get-var(text, secondary);
+    text-align: left;
+  }
+
+  th,
+  td {
+    @include fonts.fontSizeBody(sm);
+    padding: common.get-var(space, xs) common.get-var(space, sm);
+    border-bottom: 1px solid common.get-var(border, tertiary);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    color: common.get-var(text, secondary);
+    font-weight: common.get-var(font, weight, bold);
+  }
+
+  td:last-child {
+    white-space: normal;
+  }
+}
+
+.api-required {
+  @include fonts.fontSizeBody(xs);
+  margin-left: common.get-var(space, xs);
+  padding: 1px 6px;
+  border-radius: common.get-var(radius, label);
+  background: common.get-var(surface, brand, primary);
+  color: common.get-var(text, invert, primary);
+}
+
+.api-empty {
+  color: common.get-var(text, tertiary);
+}
+
+.api-empty-message {
+  @include fonts.fontSizeBody(sm);
+  margin: 0;
+  color: common.get-var(text, secondary);
+}
+
+.api-toggle {
+  @include fonts.fontSizeBody(sm);
+  align-self: flex-start;
+  padding: common.get-var(space, xs) common.get-var(space, sm);
+  border: 1px solid common.get-var(border, secondary);
+  border-radius: common.get-var(radius, rounded);
+  background: transparent;
+  color: common.get-var(text, secondary);
+  cursor: pointer;
+
+  &:hover {
+    background: common.get-var(surface, hover, primary);
+    color: common.get-var(text, primary);
+  }
+}

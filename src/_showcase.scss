@@ -1,0 +1,103 @@
+// ---------------------------------------------------------------------------
+// Motifs partagés par les pages de la sandbox.
+//
+// Ces classes étaient recopiées dans 17 feuilles de composants ; elles vivent
+// ici pour que toutes les pages respirent de la même façon. La coque reste
+// volontairement discrète : le contenu à regarder, ce sont les composants @ta.
+// ---------------------------------------------------------------------------
+
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+
+// Pile verticale des sections d'une page.
+.sections {
+  @include flex.flex-column();
+  gap: common.get-var(space, lg);
+}
+
+// Chaque démonstration est posée sur une surface claire : la séparation vient
+// du fond et de l'espace, jamais d'un trait appuyé.
+.sections > section,
+.demo-section {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, lg);
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+}
+
+// Alignements récurrents des exemples.
+.demo-row {
+  @include flex.flex-row();
+  @include flex.align-center();
+  flex-wrap: wrap;
+  gap: common.get-var(space, md);
+}
+
+.demo-column {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+}
+
+// Identifiants techniques cités dans les textes d'explication.
+.sections code,
+.demo-section code {
+  @include fonts.fontSizeBody(sm);
+  padding: 1px 6px;
+  border-radius: common.get-var(radius, minimal);
+  background: common.get-var(surface, secondary);
+  color: common.get-var(text, primary);
+  font-family: "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas",
+    monospace;
+}
+
+// Onglets des sections à plusieurs pages.
+.tabs-nav {
+  @include flex.flex-row();
+  gap: common.get-var(space, xs);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  padding: 0 common.get-var(space, xl) common.get-var(space, md);
+  background: transparent;
+}
+
+.tab-link {
+  @include fonts.fontSizeBody(sm);
+  padding: common.get-var(space, xs) common.get-var(space, md);
+  border-radius: common.get-var(radius, full);
+  color: common.get-var(text, secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    color: common.get-var(text, primary);
+    background: common.get-var(surface, secondary);
+  }
+
+  &.active {
+    color: common.get-var(text, invert, primary);
+    background: common.get-var(surface, brand, primary);
+    font-weight: common.get-var(font, weight, bold);
+  }
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+@include mq.to(768px) {
+  .tabs-nav {
+    padding-left: common.get-var(space, md);
+    padding-right: common.get-var(space, md);
+  }
+
+  .sections > section,
+  .demo-section {
+    padding: common.get-var(space, md);
+  }
+}

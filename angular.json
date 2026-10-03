@@ -32,7 +32,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@ta/icons/dist/assets/fonts",
+                "input": "node_modules/@ta/icons/.build/assets/fonts",
                 "output": "assets/fonts/"
               },
               {
@@ -94,9 +94,14 @@
                 "glob": "*.json",
                 "input": "projects/files/src/i18n",
                 "output": "assets/i18n/files"
+              },
+              {
+                "glob": "*.json",
+                "input": "projects/features/src/i18n",
+                "output": "assets/i18n/grid"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["node_modules/@angular/cdk/overlay-prebuilt.css", "src/styles.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src", "sass", "projects/styles/src/style", "."]
@@ -167,7 +172,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": ["node_modules/@angular/cdk/overlay-prebuilt.css", "src/styles.scss"],
             "scripts": []
           }
         },
@@ -183,7 +188,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@ta/icons/dist/assets/fonts",
+                "input": "node_modules/@ta/icons/.build/assets/fonts",
                 "output": "assets/fonts/"
               }
             ],
@@ -240,8 +245,11 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/ui/tsconfig.spec.json",
+            "include": ["../../../tests/ui/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"],
-            "styleIncludePaths": ["projects/styles/src/style"]
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/styles/src/style"]
+            }
           }
         }
       }
@@ -271,6 +279,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/server/tsconfig.spec.json",
+            "include": ["../../../tests/server/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -301,6 +310,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/services/tsconfig.spec.json",
+            "include": ["../../../tests/services/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -331,8 +341,32 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/utils/tsconfig.spec.json",
+            "include": ["../../../tests/utils/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
+        }
+      }
+    },
+    "@ta/testing": {
+      "projectType": "library",
+      "root": "projects/testing",
+      "sourceRoot": "projects/testing/src",
+      "prefix": "ta",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/testing/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/testing/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/testing/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     },
@@ -361,6 +395,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/notification/tsconfig.spec.json",
+            "include": ["../../../tests/notification/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -391,36 +426,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/menu/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
-          }
-        }
-      }
-    },
-    "@ta/calendar": {
-      "projectType": "library",
-      "root": "projects/calendar",
-      "sourceRoot": "projects/calendar/src",
-      "prefix": "ta",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/calendar/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/calendar/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/calendar/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/calendar/tsconfig.spec.json",
+            "include": ["../../../tests/menu/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -451,6 +457,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/translation/tsconfig.spec.json",
+            "include": ["../../../tests/translation/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -481,6 +488,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/form/form-input/tsconfig.spec.json",
+            "include": ["../../../../tests/form-input/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -511,6 +519,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/form/form-model/tsconfig.spec.json",
+            "include": ["../../../../tests/form-model/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -541,6 +550,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/form/form-basic/tsconfig.spec.json",
+            "include": ["../../../../tests/form-basic/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -631,6 +641,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/styles/tsconfig.spec.json",
+            "include": ["../../../tests/styles/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -661,6 +672,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/files/files-extended/tsconfig.spec.json",
+            "include": ["../../../../tests/files-extended/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -691,6 +703,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/files/files-basic/tsconfig.spec.json",
+            "include": ["../../../../tests/files-basic/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -721,7 +734,11 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/icons/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "include": ["../../../tests/icons/**/*.spec.ts"],
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/styles/src/style"]
+            }
           }
         }
       }
@@ -751,6 +768,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/capacitor/tsconfig.spec.json",
+            "include": ["../../../tests/capacitor/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -781,6 +799,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/core/tsconfig.spec.json",
+            "include": ["../../../tests/core/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -811,6 +830,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/user/tsconfig.spec.json",
+            "include": ["../../../tests/user/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -841,6 +861,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/cms/tsconfig.spec.json",
+            "include": ["../../../tests/cms/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -871,6 +892,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/wysiswyg/tsconfig.spec.json",
+            "include": ["../../../tests/wysiswyg/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -901,6 +923,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/charts/tsconfig.spec.json",
+            "include": ["../../../tests/charts/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -931,6 +954,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/features/tsconfig.spec.json",
+            "include": ["../../../tests/features/**/*.spec.ts"],
             "polyfills": ["zone.js", "zone.js/testing"],
             "stylePreprocessorOptions": {
               "includePaths": ["src", "sass", "projects/styles/src/style", "."]

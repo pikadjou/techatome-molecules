@@ -1,3 +1,5 @@
+@use "ta/utils/mixins/common";
+
 .slider-container {
   width: 100%;
   position: relative;
@@ -6,4 +8,17 @@
 .slider-input {
   width: 100%;
   margin: 0;
+  // La piste et la poignée natives suffisent : seule la teinte est reprise.
+  accent-color: common.get-var(surface, brand, primary);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: common.get-var(shadow, focus);
+  }
+
+  &:disabled {
+    accent-color: common.get-var(components, control, disabled, border-color);
+    cursor: not-allowed;
+  }
 }

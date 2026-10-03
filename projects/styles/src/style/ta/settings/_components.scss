@@ -2,10 +2,100 @@
 @use "ta/settings/common";
 
 @use "ta/utils/mixins/common" as utils-common;
+@use "ta/utils/mixins/fonts";
 @use "ta/utils/mixins/shadows";
+@use "ta/utils/mixins/transitions";
 
 @mixin generateComponents() {
   @include common.generateMap("components", vars.$components);
+
+  /// Champ de saisie — rempli et souligné : aucun contour, un trait bas de 2px
+  /// qui porte l'état, et un rayon sur les seuls coins hauts.
+  ///
+  /// La règle est globale et non portée par `ta-input-layout` : `.form-control`
+  /// est posée par chacun des composants de saisie, qui sont *projetés* dans le
+  /// layout. Depuis le layout il faudrait percer l'encapsulation pour les
+  /// atteindre ; comme classe partagée du design system, elle a sa place ici,
+  /// aux côtés des autres styles globaux générés.
+  .form-control {
+    @include fonts.fontSizeBody(md);
+    // `input` et `textarea` ne reprennent pas la police du document : sans
+    // cette ligne le champ multiligne tombe sur la monospace par défaut.
+    font-family: inherit;
+    border: none;
+    border-bottom: utils-common.get-var(components, input, border-width) solid
+      utils-common.get-var(components, input, border-color);
+    border-radius: utils-common.get-var(components, input, radius);
+    padding: utils-common.get-var(components, input, padding-vertical)
+      utils-common.get-var(components, input, padding-horizontal);
+    outline: none;
+    color: utils-common.get-var(components, input, color);
+    background-color: utils-common.get-var(components, input, background);
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box;
+    min-height: utils-common.get-var(components, input, min-height);
+    @include transitions.transition-border-focus();
+
+    &::placeholder {
+      color: utils-common.get-var(components, input, placeholder);
+    }
+
+    &:hover:not(:disabled) {
+      border-bottom-color: utils-common.get-var(
+        components,
+        input,
+        hover,
+        border-color
+      );
+    }
+
+    &:focus:not(:disabled),
+    &:focus-within:not(:disabled) {
+      border-bottom-color: utils-common.get-var(
+        components,
+        input,
+        focus,
+        border-color
+      );
+      background-color: utils-common.get-var(
+        components,
+        input,
+        focus,
+        background
+      );
+      box-shadow: utils-common.get-var(components, input, focus, shadow);
+    }
+
+    &:disabled {
+      border-bottom-color: utils-common.get-var(
+        components,
+        input,
+        disabled,
+        border-color
+      );
+      background-color: utils-common.get-var(
+        components,
+        input,
+        disabled,
+        background
+      );
+      color: utils-common.get-var(components, input, disabled, color);
+      cursor: not-allowed;
+    }
+  }
+
+  // L'erreur prime sur le focus : le trait reste rouge tant que le champ est
+  // invalide et a été visité.
+  .error .form-control,
+  .form-control.ng-invalid.ng-touched {
+    border-bottom-color: utils-common.get-var(
+      components,
+      input,
+      error,
+      border-color
+    );
+  }
 
   /* width */
   ::-webkit-scrollbar {

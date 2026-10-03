@@ -2,7 +2,10 @@ import { computed, signal } from '@angular/core';
 
 import { BehaviorSubject, Observable, Subject, firstValueFrom } from 'rxjs';
 
-import { ColMetaData, Filter, Sort, ajaxRequestFuncParams, ajaxResponse } from './types';
+import { ColMetaData, Filter, PaginationMode, Sort, ajaxRequestFuncParams, ajaxResponse } from './types';
+
+/** Ce qui identifie une ligne : un entier côté SQL, un GUID côté GraphQL. */
+export type RowId = number | string;
 
 export interface ITableStateServices<T> {
   getData$: (params: ajaxRequestFuncParams) => Observable<ajaxResponse<T>>;
@@ -14,6 +17,9 @@ export interface ITableStateParams<T> {
   services?: ITableStateServices<T>;
   initialFilter?: Filter[];
   onDataUpdate?: (total: number) => void;
+  /** Par défaut `page` ; `cursor` pour une source qui ne sait pas compter (connexion Relay). */
+  pagination?: PaginationMode;
+  pageSize?: number;
 }
 
 export class TaTableState<T> {
@@ -29,14 +35,22 @@ export class TaTableState<T> {
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string>('');
 
-  readonly selectedIds = signal<Set<number>>(new Set());
-  readonly selectionChanged$ = new Subject<number[]>();
+  /** Mode `cursor` : la suite existe-t-elle, et d'où la reprendre. */
+  readonly hasNextPage = signal(false);
+  readonly endCursor = signal<string | null>(null);
+
+  /** Un identifiant de ligne peut être un nombre ou un GUID, selon la source. */
+  readonly selectedIds = signal<Set<RowId>>(new Set());
+  readonly selectionChanged$ = new Subject<RowId[]>();
 
   readonly rowClicked$ = new Subject<T>();
   readonly isReady$ = new BehaviorSubject(false);
   readonly isDataReady$ = new BehaviorSubject(false);
 
   private _services: ITableStateServices<T> | null = null;
+  private _pagination: PaginationMode = 'page';
+  /** Mode `cursor` : la prochaine réponse s'ajoute au lieu de remplacer. */
+  private _appendNext = false;
   private _allData: T[] = [];
   private _colsMetaData: ColMetaData<T>[] = [];
   private _fetchTimer: ReturnType<typeof setTimeout> | null = null;
@@ -47,6 +61,11 @@ export class TaTableState<T> {
     this._services = params.services ?? null;
     this._colsMetaData = params.colsMetaData;
     this._onDataUpdate = params.onDataUpdate;
+    this._pagination = params.pagination ?? 'page';
+
+    if (params.pageSize) {
+      this.pageSize.set(params.pageSize);
+    }
 
     if (params.initialFilter?.length) {
       this.filters.set(params.initialFilter);
@@ -72,6 +91,19 @@ export class TaTableState<T> {
     return this.totalPages();
   }
 
+  isCursorMode(): boolean {
+    return this._pagination === 'cursor';
+  }
+
+  /** Mode `cursor` : demande la suite, qui s'ajoute à ce qui est déjà lu. */
+  loadMore(): void {
+    if (!this.isCursorMode() || !this.hasNextPage() || this.isLoading()) {
+      return;
+    }
+    this._appendNext = true;
+    this._scheduleUpdate();
+  }
+
   setPage(n: number): void {
     if (n >= 1 && n <= this.totalPages()) {
       this.currentPage.set(n);
@@ -95,6 +127,7 @@ export class TaTableState<T> {
 
   setFilter(filters: Filter[]): void {
     this.currentPage.set(1);
+    this._resetCursor();
     this.filters.set(filters);
     this._scheduleUpdate();
   }
@@ -115,6 +148,7 @@ export class TaTableState<T> {
     this.sortField.set(field);
     this.sortDir.set(dir);
     this.currentPage.set(1);
+    this._resetCursor();
     this._scheduleUpdate();
   }
 
@@ -125,10 +159,18 @@ export class TaTableState<T> {
   }
 
   refresh(): void {
+    this._resetCursor();
     this._scheduleUpdate();
   }
 
-  toggleRow(id: number): void {
+  /** Repartir du début : la prochaine réponse remplace ce qui est affiché. */
+  private _resetCursor(): void {
+    this._appendNext = false;
+    this.endCursor.set(null);
+    this.hasNextPage.set(false);
+  }
+
+  toggleRow(id: RowId): void {
     this.selectedIds.update(set => {
       const next = new Set(set);
       if (next.has(id)) next.delete(id);
@@ -139,7 +181,7 @@ export class TaTableState<T> {
   }
 
   toggleAll(): void {
-    const pageIds = (this.rows() as Array<{ id: number }>).map(r => r.id);
+    const pageIds = (this.rows() as Array<{ id: RowId }>).map(r => r.id);
     const allSelected = pageIds.length > 0 && pageIds.every(id => this.selectedIds().has(id));
     this.selectedIds.update(set => {
       const next = new Set(set);
@@ -156,7 +198,7 @@ export class TaTableState<T> {
   }
 
   isAllPageSelected(): boolean {
-    const pageIds = (this.rows() as Array<{ id: number }>).map(r => r.id);
+    const pageIds = (this.rows() as Array<{ id: RowId }>).map(r => r.id);
     return pageIds.length > 0 && pageIds.every(id => this.selectedIds().has(id));
   }
 
@@ -189,15 +231,15 @@ export class TaTableState<T> {
       const isSearch = f.field === 'search';
 
       if (isSearch) {
-        const searchFields = this._colsMetaData
-          .filter(c => c.isSearchField)
-          .map(c => String(c.name));
+        const searchFields = this._colsMetaData.filter(c => c.isSearchField).map(c => String(c.name));
 
         if (searchFields.length && f.value) {
           const needle = String(f.value).toLowerCase();
           data = data.filter(item =>
             searchFields.some(key =>
-              String((item as any)[key] ?? '').toLowerCase().includes(needle)
+              String((item as any)[key] ?? '')
+                .toLowerCase()
+                .includes(needle)
             )
           );
         }
@@ -208,17 +250,34 @@ export class TaTableState<T> {
         const val = (item as any)[f.field];
         const target = f.value;
         switch (f.type) {
-          case '=': return val == target;
-          case '!=': return val != target;
-          case 'like': return String(val ?? '').toLowerCase().includes(String(target).toLowerCase());
-          case '<': return val < target;
-          case '>': return val > target;
-          case '<=': return val <= target;
-          case '>=': return val >= target;
-          case 'starts': return String(val ?? '').toLowerCase().startsWith(String(target).toLowerCase());
-          case 'ends': return String(val ?? '').toLowerCase().endsWith(String(target).toLowerCase());
-          case 'in': return Array.isArray(target) ? target.includes(val) : val == target;
-          default: return true;
+          case '=':
+            return val == target;
+          case '!=':
+            return val != target;
+          case 'like':
+            return String(val ?? '')
+              .toLowerCase()
+              .includes(String(target).toLowerCase());
+          case '<':
+            return val < target;
+          case '>':
+            return val > target;
+          case '<=':
+            return val <= target;
+          case '>=':
+            return val >= target;
+          case 'starts':
+            return String(val ?? '')
+              .toLowerCase()
+              .startsWith(String(target).toLowerCase());
+          case 'ends':
+            return String(val ?? '')
+              .toLowerCase()
+              .endsWith(String(target).toLowerCase());
+          case 'in':
+            return Array.isArray(target) ? target.includes(val) : val == target;
+          default:
+            return true;
         }
       });
     }
@@ -255,6 +314,8 @@ export class TaTableState<T> {
     this.isLoading.set(true);
 
     const sort: Sort[] = this.sortField() ? [{ field: this.sortField()!, dir: this.sortDir() }] : [];
+    const append = this._appendNext;
+    this._appendNext = false;
 
     firstValueFrom(
       this._services.getData$({
@@ -264,16 +325,26 @@ export class TaTableState<T> {
         page: this.currentPage(),
         size: this.pageSize(),
         colsMetaData: this._colsMetaData,
+        cursor: append ? this.endCursor() : null,
       })
     )
       .then(response => {
         if (id !== this._fetchId) return;
-        this.rows.set(response.data);
-        this.totalItems.set(response.total);
+        this.rows.set(append ? [...this.rows(), ...response.data] : response.data);
+
+        if (this.isCursorMode()) {
+          // Une connexion ne compte pas : le total affiché est ce qui a été lu.
+          this.hasNextPage.set(response.hasNextPage ?? false);
+          this.endCursor.set(response.endCursor ?? null);
+          this.totalItems.set(this.rows().length);
+        } else {
+          this.totalItems.set(response.total);
+        }
+
         this.errorMessage.set('');
         this.isLoading.set(false);
         this.isDataReady$.next(true);
-        this._onDataUpdate?.(response.total);
+        this._onDataUpdate?.(this.totalItems());
       })
       .catch(() => {
         if (id !== this._fetchId) return;

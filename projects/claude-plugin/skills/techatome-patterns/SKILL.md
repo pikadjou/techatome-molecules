@@ -3,12 +3,12 @@ name: techatome-patterns
 description: Bonnes pratiques et patterns Angular pour le développement sur les projets techatome/techatome. Couvre les conventions de code, le routing, les formulaires, les menus, le layout, les modales, AG Grid, les services GraphQL, la gestion des états loading/error/empty, et les classes de base. Utiliser ce skill quand l'utilisateur demande comment implémenter une feature, quel pattern utiliser, ou comment suivre les conventions du projet.
 ---
 
-## 0. UTILISATION OBLIGATOIRE DES COMPOSANTS @TA/*
+## 0. UTILISATION OBLIGATOIRE DES COMPOSANTS @TA/\*
 
 **L'utilisation d'un élément HTML natif ou d'un composant tiers est INTERDITE lorsqu'un équivalent `@ta/*` existe.** Cette règle est sans exception.
 
 | Besoin             | Composant obligatoire                                                                 | Interdit                                |
-| ------------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
+| ------------------ | ------------------------------------------------------------------------------------- | --------------------------------------- | ---------- | ----------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Bouton / CTA       | `<ta-button>`                                                                         | `<button>`, `<a>` stylisé               |
 | Titre / heading    | `<ta-title [level]="N">`                                                              | `<h1>`–`<h6>`                           |
 | Texte / paragraphe | `<ta-text>`                                                                           | `<p>`, `<span>`                         |
@@ -23,10 +23,13 @@ description: Bonnes pratiques et patterns Angular pour le développement sur les
 | Formulaire         | `<ta-form>` + `<ta-input-*>`                                                          | `<form>`, `<input>`, `<select>` natifs  |
 | Notification       | `NotificationService` (`@ta/notification`)                                            | `alert()`, `mat-snackbar` direct        |
 | Progression        | `<ta-progress-bar>`, `<ta-progress-circle>`                                           | `<mat-progress-bar>` direct             |
-| Modal centrée      | `<ta-modal>` (`@ta/ui`)                                                               | `MatDialog.open()`, divs custom         |
+| Modal centrée      | `TaBaseModal<In, Out>` + `ModalState` + `<ta-modal>` (§5a)                            | `MatDialog.open()`, divs custom         |
 | Panneau latéral    | `<ta-layout-full-panel>` (`@ta/ui`)                                                   | `mat-drawer`, divs custom               |
+| Date / heure       | `date: 'shortDate'                                                                    | 'mediumDate'                            | 'fullDate' | 'shortTime' | …`, `<ta-hour-date-line>`, `<ta-time-ago>`, `<ta-duration>` | `date: 'EEEE d MMMM'`, `date: … : undefined : this.locale`, formatage à la main |
 
 En cas de doute, vérifier les APIs publiques de `@ta/ui`, `@ta/form-basic`, `@ta/form-input`, `@ta/icons`, `@ta/notification` avant d'utiliser un élément natif ou tiers.
+
+**Exceptions actées (2026-09-16)** : les `<button>` natifs de `ta-files-preview-modal` (visionneuse plein écran) et de la toolbar EditorJS de `@ta/wysiswyg`. Contrôles denses propres à ces composants, `ta-button` n'ayant pas d'état « pressé » ; ne pas les signaler en revue. Leur habillage reste soumis aux règles SCSS ci-dessous.
 
 ---
 
@@ -111,8 +114,72 @@ box-shadow: common.get-var(shadow, brand, sm);
 box-shadow: common.get-var(shadow, brand, md);
 
 // ❌ Interdit
-box-shadow: get-var(shadow, black-sm);   // mauvaise syntaxe (2 args au lieu de 3)
+box-shadow: get-var(shadow, black-sm); // mauvaise syntaxe (2 args au lieu de 3)
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+```
+
+### Jetons : uniquement `get-var()` — jamais `var(--ta-…)` ni réassignation
+
+```scss
+// ❌ Interdit : hook maison avec valeur de repli
+padding: var(--ta-card-padding, #{common.get-var(space, md)});
+
+// ❌ Interdit : réassignation d'un jeton d'un composant enfant depuis le parent
+ta-label {
+  --ta-label-radius: #{common.get-var(radius, pill)};
+  --ta-label-background: #{common.get-var(surface, secondary)};
+}
+
+// ✅ Correct : le jeton, et une variante du composant pour le besoin du parent
+padding: common.get-var(components, card, padding);
+<ta-label shape="pill" type="neutral">3</ta-label>
+```
+
+- Lire un jeton : `common.get-var(...)`. Produire son nom : `common.get-var-name(...)`. Rien d'autre.
+- Un composant ne se retouche jamais depuis l'endroit qui l'utilise (ni `::ng-deep`, ni `--ta-*` sur un ancêtre). Le besoin passe par ses entrées (`type`, `size`, `shape`, `variant`…) ; s'il n'existe pas, on ajoute la variante au composant.
+- **Jeton manquant → on l'ajoute dans `_vars.scss`**, map `components.<composant>` (ex. `components.tab-bar.pill.padding-vertical`, `components.lightbox.background`). Jamais de valeur brute dans un `.component.scss`.
+
+### Couleurs : aucun hex, `rgb()`, `rgba()`
+
+```scss
+// ❌ Interdit — y compris les voiles translucides et les couleurs « proches » de la marque
+background: #0b1426;
+border: 1px solid rgba(255, 255, 255, 0.14);
+
+// ✅ Correct
+background: common.get-var(components, lightbox, background); // = brand 900
+border: 1px solid common.get-var(surface, veil, md); // voile blanc sur surface sombre
+```
+
+`surface.veil` : `xs` (0.04) · `sm` (0.08) · `md` (0.14) · `lg` (0.2). Une couleur dérivée (scrim, dégradé) se
+définit dans `_vars.scss` avec `color.change(map.get($brand, 900), $alpha: …)`.
+
+### Typographie : mixins `fonts.*`, on ne change pas la police
+
+```scss
+// ❌ Interdit
+font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+font-size: 13px;
+font-weight: 600;
+letter-spacing: 0.06em;
+
+// ✅ Correct
+@include fonts.fontSizeBody(sm); // taille + graisse
+@include fonts.fontSizeBody(sm, true); // bold
+font-family: common.get-var(font, display, family); // seule autre famille admise : celle du thème
+```
+
+### Flexbox : mixins `flex.*`
+
+```scss
+// ❌ Interdit
+display: flex;
+flex-direction: column;
+
+// ✅ Correct
+@include flex.flex-column();
+@include flex.space-between();
+@include flex.align-center();
 ```
 
 ### Classes utilitaires — à préférer aux styles inline
@@ -418,7 +485,7 @@ export class ViewPage extends BasePage implements AfterViewInit {
 | ---------------------- | ------------- | ---------------------------------------------- |
 | Page chargée par route | `Page`        | `TeamsPage`, `AllTasksListPage`                |
 | Composant réutilisable | `Component`   | `AllListComponent`, `EditComponent`            |
-| Modale MatDialog       | `Modal`       | `DocumentAttachmentModal`                      |
+| Modale (`TaBaseModal`) | `Modal`       | `DocumentAttachmentModal`                      |
 | Service métier         | `Service`     | `AppTasksService`, `AppTeamsService`           |
 | Service de formulaire  | `FormService` | `AppTasksFormService`, `taColorSetFormService` |
 
@@ -426,6 +493,87 @@ export class ViewPage extends BasePage implements AfterViewInit {
 - Services injectés : toujours `private readonly` (sauf si besoin de réassignation)
 - Méthodes lifecycle Angular (`ngOnInit`, `ngAfterViewInit`) : sans modificateur d'accès
 - Méthodes publiques : `public` explicite
+
+### 0.6 Pas d'assertion non-null `!` dans les templates
+
+```html
+<!-- ❌ Interdit -->
+@if (this.menuUser()) {
+<ta-menu [menu]="this.menuUser()!"></ta-menu>
+}
+
+<!-- ✅ Correct : le @if capture la valeur -->
+@if (this.menuUser(); as menuUser) {
+<ta-menu [menu]="menuUser"></ta-menu>
+}
+```
+
+### 0.7 Variantes d'un composant : `[ngClass]` dans le template, règles dans le SCSS
+
+Les classes de variante ne se posent pas par `host: { '[class.x]': … }` dans le décorateur : le template
+porte un `[ngClass]="this.getClass()"` sur son élément racine et le SCSS fait le reste (c'est le pattern de
+`ta-label`, `ta-button`, `ta-data-grid`).
+
+```typescript
+// ❌ Interdit
+@Component({
+  host: { '[class.row]': "this.orientation() === 'row'", '[attr.data-columns]': 'this.columns()' },
+})
+
+// ✅ Correct
+export class DataGridComponent {
+  columns = input<1 | 2 | 3 | 4>(2);
+  orientation = input<'row' | 'stack' | 'fact'>('row');
+
+  public getClass(): string {
+    return `data-grid-${this.orientation()} columns-${this.columns()}`;
+  }
+}
+```
+
+```html
+<div class="data-grid" [ngClass]="this.getClass()"><ng-content></ng-content></div>
+```
+
+```scss
+.data-grid.columns-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+:host-context(.data-grid-row) { … } // depuis un enfant
+```
+
+### 0.8 Dates : formats déjà prévus, jamais de motif à la main
+
+```html
+<!-- ❌ Interdit : motif maison, locale passée en argument -->
+{{ visit.startAt | date: 'EEEE d MMMM' : undefined : this.locale }}
+
+<!-- ✅ Correct : formats prédéfinis d'Angular, qui suivent LOCALE_ID -->
+{{ visit.startAt | date: 'fullDate' }} {{ visit.startAt | date: 'shortTime' }}
+<ta-hour-date-line [startDate]="visit.startAt" [endDate]="visit.endAt"></ta-hour-date-line>
+<ta-time-ago [date]="visit.updatedAt"></ta-time-ago>
+```
+
+Formats admis : `short`, `medium`, `long`, `full`, `shortDate`, `mediumDate`, `longDate`, `fullDate`,
+`shortTime`, `mediumTime`, `longTime`, `fullTime`. Pas de locale en argument : `LOCALE_ID` s'en charge.
+
+### 0.9 Commentaires : courts et factuels
+
+Une ligne de JSDoc par input, output ou méthode publique quand le nom ne suffit pas. Pas de bannière de
+section (`// ---- Scène ----`), pas de paragraphe qui justifie un choix de design, pas de commentaire qui
+explique ce que le code montre déjà.
+
+```typescript
+// ❌
+/**
+ * Clés de traduction des deux états d'un interrupteur. Sans elles, la
+ * position du curseur est la seule indication ; avec, l'état se lit. À poser
+ * quand se tromper coûte cher — ce qui est publié, ce qui est notifié.
+ */
+onLabel?: string;
+
+// ✅
+/** Clés de traduction des deux états d'un interrupteur. */
+onLabel?: string;
+```
 
 ---
 
@@ -955,15 +1103,11 @@ export class TeamsPage extends BaseListPage<Team> {}
 </div>
 
 @if (this.isShowPanel()) {
-  <ta-layout-full-panel
-    width="400px"
-    [title]="'teams.edit.title' | translate"
-    (closeEvent)="this.close()"
-  >
-    <div panel-content class="d-flex full-width">
-      <app-team-edit [team]="this.activeItem" (closeEvent)="this.close()"></app-team-edit>
-    </div>
-  </ta-layout-full-panel>
+<ta-layout-full-panel width="400px" [title]="'teams.edit.title' | translate" (closeEvent)="this.close()">
+  <div panel-content class="d-flex full-width">
+    <app-team-edit [team]="this.activeItem" (closeEvent)="this.close()"></app-team-edit>
+  </div>
+</ta-layout-full-panel>
 }
 ```
 
@@ -983,75 +1127,120 @@ export class TeamsPage extends BaseListPage<Team> {}
 
 ## 5. MODALES ET PANNEAUX LATÉRAUX
 
-### 5a. `ta-modal` — modale déclarative (approche préférée)
+### 5a. Modale = `ModalState` + `TaBaseModal<In, Out>` + `ta-modal` (pattern unique)
 
-`ta-modal` est un composant standalone de `@ta/ui` qui remplace `MatDialog` pour les cas courants. Il est contrôlé par un signal `open` passé depuis le parent — **pas de service, pas d'injection**.
-
-**Inputs :**
-| Input | Type | Défaut | Description |
-|---|---|---|---|
-| `open` | `boolean` (required) | — | Contrôle l'affichage |
-| `size` | `'small' \| 'medium' \| 'large' \| 'fullscreen'` | `undefined` | Largeur fixe (sinon contenu) |
-| `title` | `string` | `''` | Titre affiché dans le header |
-| `closeOnBackdrop` | `boolean` | `true` | Fermer au clic sur le backdrop |
-
-**Output :** `closeEvent: EventEmitter<void>`
-
-**Slots de contenu :**
-- `[modal-content]` — zone scrollable principale
-- `[modal-footer]` — pied de modale fixe (masqué si vide)
-
-**Tailles :**
-| Valeur | Largeur |
-|---|---|
-| `small` | 400px |
-| `medium` | 600px |
-| `large` | 900px |
-| `fullscreen` | 100vw / 100dvh |
-| _(absent)_ | Pilotée par le contenu (max 90vw / 85vh) |
-
-**Usage complet :**
+Une modale est un composant de **contenu** qui hérite de `TaBaseModal<In, Out>` (`@ta/utils`), embarque son
+`<ta-modal>` (`@ta/ui`) et est piloté par un `ModalState<In, Out>` que le parent possède. Le parent pousse
+l'entrée avec `asked(input)`, la modale rend son résultat avec `confirm(output)` — même contrat que
+`CamBaseModal` / `ModalState` côté Camelot. **Pas de service, pas d'injection, pas de `MatDialog`.**
 
 ```typescript
-// mon-composant.component.ts
-public isModalOpen = signal(false);
-public openModal(): void { this.isModalOpen.set(true); }
-public closeModal(): void { this.isModalOpen.set(false); }
+// @ta/utils
+class ModalState<T, U> {
+  open: WritableSignal<boolean>; // false
+  input: WritableSignal<T | null | undefined>; // null
+  output: WritableSignal<U | null>; // null
+  asked(input: T): void; // input := input ; output := null ; open := true
+  completed(output: U): void; // output := output ; open := false
+  dismissed(): void; // open := false
+}
+
+abstract class TaBaseModal<T, U> extends TaAbstractComponent {
+  modalState = input<ModalState<T, U> | null>(null);
+  closeEvent = output<U>();
+  isOpen(): boolean; // modalState()?.open() ?? false
+  confirm(output: U): void; // completed(output) + closeEvent.emit(output)
+  dismiss(): void; // dismissed(), sans événement
+}
+```
+
+**La modale** (contenu + `ta-modal` embarqué) :
+
+```typescript
+export type DeleteAccountInput = { accountName: string };
+
+@Component({
+  selector: 'app-delete-account-modal',
+  templateUrl: './delete-account-modal.component.html',
+  styleUrls: ['./delete-account-modal.component.scss'],
+  standalone: true,
+  imports: [ButtonComponent, TaModalComponent, TextComponent, TranslateModule],
+})
+export class DeleteAccountModal extends TaBaseModal<DeleteAccountInput, boolean> {
+  public get accountName(): string {
+    return this.modalState()?.input()?.accountName ?? '';
+  }
+
+  public onYes(): void {
+    this.confirm(true);
+  }
+}
 ```
 
 ```html
-<!-- mon-composant.component.html -->
-<ta-button type="secondary" (action)="this.openModal()">Ouvrir</ta-button>
-
 <ta-modal
-  [open]="this.isModalOpen()"
-  size="medium"
-  title="Titre de la modale"
-  (closeEvent)="this.closeModal()"
+  [open]="this.isOpen()"
+  size="small"
+  [title]="'account.delete.title' | translate"
+  (closeEvent)="this.dismiss()"
 >
   <div modal-content>
-    <ta-text>Contenu principal scrollable.</ta-text>
+    <ta-text>{{ 'account.delete.content' | translate: { name: this.accountName } }}</ta-text>
   </div>
   <div modal-footer>
-    <ta-button type="secondary" (action)="this.closeModal()">Annuler</ta-button>
-    <ta-button type="primary" (action)="this.confirm()">Confirmer</ta-button>
+    <ta-button type="secondary" (action)="this.dismiss()">{{ 'common.cancel' | translate }}</ta-button>
+    <ta-button type="danger" (action)="this.onYes()">{{ 'common.delete' | translate }}</ta-button>
   </div>
 </ta-modal>
 ```
 
-**Import dans le composant :**
+**Le parent** :
 
 ```typescript
-import { TaModalComponent } from '@ta/ui';
-// ou
-import { ModalSize, TaModalComponent } from '@ta/ui'; // si besoin du type ModalSize
+public deleteModal = new ModalState<DeleteAccountInput, boolean>();
+
+public askDelete(account: Account): void {
+  this.deleteModal.asked({ accountName: account.name });
+}
+
+public onDeleteConfirmed(): void {
+  this._accountsService.delete$(this.account.id).subscribe(…);
+}
 ```
 
+```html
+<ta-button type="danger" icon="delete" (action)="this.askDelete(this.account)"
+  >{{ 'common.delete' | translate }}</ta-button
+>
+<app-delete-account-modal
+  [modalState]="this.deleteModal"
+  (closeEvent)="this.onDeleteConfirmed()"
+></app-delete-account-modal>
+```
+
+**`ta-modal` (le conteneur, embarqué dans la modale) :**
+
+| Input             | Type                 | Défaut   | Description                                                                |
+| ----------------- | -------------------- | -------- | -------------------------------------------------------------------------- | -------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
+| `open`            | `boolean` (required) | —        | Lier `this.isOpen()`                                                       |
+| `size`            | `'small'             | 'medium' | 'large'                                                                    | 'fullscreen'`                                                  | `undefined` | 400 / 600 / 900 px / plein écran ; absent = piloté par le contenu |
+| `title`           | `string`             | `''`     | Chaîne déjà traduite : `[title]="'key'                                     | translate"`                                                    |
+| `overline`        | `string`             | `''`     | Surtitre en capitales                                                      |
+| `tone`            | `'surface'           | 'brand'` | `'surface'`                                                                | `brand` : bandeau de marque plein, pour les modales bloquantes |
+| `showClose`       | `boolean`            | `true`   | `false` : la modale projette sa propre action dans `[modal-header-action]` |
+| `closeOnBackdrop` | `boolean`            | `true`   | Fermer au clic sur le fond                                                 |
+| `contentFit`      | `boolean`            | `false`  | Contenu qui remplit la hauteur (visionneuse, éditeur)                      |
+
+**Output :** `closeEvent` (croix ou fond) → `(closeEvent)="this.dismiss()"`.
+**Slots :** `[modal-content]` (zone scrollable), `[modal-footer]` (pied fixe, masqué si vide), `[modal-header-action]`.
+
 **Règles :**
-- Utiliser `ta-modal` pour toutes les **nouvelles** modales — éviter `MatDialog` sauf pour les cas complexes (formulaire avec `@ViewChild`, résultat typé via `afterClosed()`)
-- Toujours passer les slots via `<div modal-content>` et `<div modal-footer>`
-- Le `title` est une chaîne brute (pas une clé de traduction) — utiliser le pipe `translate` si nécessaire : `[title]="'key' | translate"`
-- Ne **pas** utiliser `TranslateModule` dans `ta-modal` — les traductions se font côté parent
+
+- Une modale = une classe `XxxModal extends TaBaseModal<In, Out>` ; `In`/`Out` toujours explicites, `null` s'il n'y a rien.
+- L'entrée se lit à la demande (`this.modalState()?.input()`), pas dans `ngOnInit` — le composant reste monté, seul `open()` bouge. État local à réinitialiser à chaque ouverture → `effect(() => { if (this.isOpen()) this._init(this.modalState()?.input()); })` dans le constructeur, champs simples uniquement.
+- Le parent ne connaît que `[modalState]` et `(closeEvent)` ; jamais de `[open]` + inputs/outputs ad hoc par modale, jamais de `isModalOpen = signal(false)`.
+- Annuler = `dismiss()` (rien n'est émis) ; confirmer = `confirm(result)`.
+- Fiches : `references/utils/ta-base-modal.md`, `references/utils/modal-state.md`, `references/ui/layout-modal.md`.
 
 ---
 
@@ -1068,6 +1257,7 @@ Overlay fixe depuis la droite avec backdrop semi-transparent. Contrôlé via `@i
 **Output :** `closeEvent: EventEmitter<void>`
 
 **Slots de contenu :**
+
 - `[panel-content]` — zone scrollable principale
 - `[panel-footer]` — pied de panneau fixe (masqué si vide)
 
@@ -1083,18 +1273,14 @@ public isPanelOpen = signal(false);
 <ta-button type="secondary" (action)="this.isPanelOpen.set(true)">Ouvrir le panel</ta-button>
 
 @if (this.isPanelOpen()) {
-  <ta-layout-full-panel
-    width="400px"
-    title="Titre du panneau"
-    (closeEvent)="this.isPanelOpen.set(false)"
-  >
-    <div panel-content class="flex-column g-space-md">
-      <ta-text>Contenu du panneau.</ta-text>
-    </div>
-    <div panel-footer>
-      <ta-button type="secondary" (action)="this.isPanelOpen.set(false)">Fermer</ta-button>
-    </div>
-  </ta-layout-full-panel>
+<ta-layout-full-panel width="400px" title="Titre du panneau" (closeEvent)="this.isPanelOpen.set(false)">
+  <div panel-content class="flex-column g-space-md">
+    <ta-text>Contenu du panneau.</ta-text>
+  </div>
+  <div panel-footer>
+    <ta-button type="secondary" (action)="this.isPanelOpen.set(false)">Fermer</ta-button>
+  </div>
+</ta-layout-full-panel>
 }
 ```
 
@@ -1106,41 +1292,11 @@ import { LayoutFullPanelComponent } from '@ta/ui';
 
 ---
 
-### 5c. `MatDialog` — modales complexes (legacy / cas spéciaux)
+### 5c. `MatDialog` — legacy uniquement
 
-Réserver `MatDialog` aux cas où `ta-modal` ne suffit pas : résultat typé via `afterClosed()`, `@ViewChild` sur un composant interne, ou formulaire avec cycle de vie complexe.
-
-```typescript
-import { MatDialog } from '@angular/material/dialog';
-import { AttachmentsResult, DocumentAttachmentModal } from './document-attachment-modal.component';
-
-export class ParentComponent extends BaseComponent {
-  private _dialog = inject(MatDialog);
-
-  public openAttachmentModal() {
-    const ref = this._dialog.open<DocumentAttachmentModal, void, AttachmentsResult | null>(DocumentAttachmentModal, {
-      panelClass: 'classic-modal',
-    });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      // traiter result.files, etc.
-    });
-  }
-}
-```
-
-```typescript
-import { taBaseModal } from '@ta/utils';
-
-export class MyModal extends taBaseModal {
-  constructor(public dialogRef: MatDialogRef<MyModal, MyModalResult | null>) {
-    super();
-    this.dialogRef.addPanelClass('classic-modal');
-  }
-  public onSave(files: InputUploadValue[]) { this.dialogRef.close({ files }); }
-  public onCancel() { this.dialogRef.close(null); }
-}
-```
+Plus aucune modale des libs `@ta/*` n'utilise `MatDialog`. Ne pas en créer de nouvelle ; une modale legacy
+rencontrée dans l'app se migre vers 5a (le `dialogRef.close(result)` devient `confirm(result)`, le
+`MAT_DIALOG_DATA` devient `modalState().input()`).
 
 ---
 
@@ -1613,7 +1769,7 @@ taAbstractComponent (@ta/utils)
 - Composant simple → étend `BaseComponent`
 - Page → étend `BasePage`
 - Page avec liste + panneau latéral → étend `BaseListPage<MonType>`
-- Modale MatDialog → étend `taBaseModal` (de `@ta/utils`)
+- Modale → étend `TaBaseModal<In, Out>` (de `@ta/utils`), pilotée par un `ModalState` du parent (§5a)
 - Toujours utiliser `this._registerSubscription()` pour les subscriptions (auto-unsubscribe)
 - `requestState.asked()` / `requestState.completed()` pour gérer l'état de chargement
 
@@ -1670,6 +1826,7 @@ import { TaNotificationService } from '@ta/notification';
 ```
 
 Quand une erreur GraphQL survient (`TaGraphService.fetchQuery/mutate/...`), le flux est :
+
 1. `TaServerErrorService.addError()` stocke l'erreur détaillée
 2. Le handler dispatch un toast persistant avec le message d'erreur
 3. L'utilisateur peut cliquer "Voir détails" → ouvre `ErrorBoxModal` avec query, variables, stack
@@ -1699,13 +1856,28 @@ Les notifications affichent : barre latérale colorée (4px) + icône + titre ty
 - [ ] `HandleSimpleRequest` vs `HandleComplexRequest` : utiliser la bonne selon le besoin
 - [ ] `standalone: true` sur tous les nouveaux composants
 - [ ] `selector: ''` sur les pages (pas de sélecteur HTML pour les routes)
-- [ ] Modales : utiliser `<ta-modal>` (déclaratif) plutôt que `MatDialog` pour les cas simples
+- [ ] Modales : `XxxModal extends TaBaseModal<In, Out>` + `ModalState` côté parent + `<ta-modal>` embarqué ; jamais `MatDialog`, jamais `isModalOpen = signal(false)` + inputs/outputs ad hoc
 - [ ] Panneaux latéraux : utiliser `<ta-layout-full-panel>` avec slots `[panel-content]` et `[panel-footer]`
 - [ ] `this.` devant toutes les variables/méthodes dans les templates HTML
 - [ ] Ordre des membres : signal inputs/outputs / `@ViewChild` → publics → readonly → getters → services privés → constructor → lifecycle → méthodes publiques → méthodes privées
 - [ ] Suffixe de classe : `Page` pour les routes, `Component` pour les réutilisables, `Modal` pour les dialogues
 - [ ] Propriétés/méthodes privées préfixées par `_`
 - [ ] Services injectés : `private readonly`
+- [ ] Aucune assertion non-null `!` dans les templates → `@if (…; as x)`
+- [ ] Dates : formats prédéfinis (`shortDate`, `fullDate`…) ou `ta-hour-date-line` / `ta-time-ago` / `ta-duration` ; aucun motif à la main ni locale en argument
+- [ ] Variantes de composant via `[ngClass]="this.getClass()"` + SCSS, pas de `host: { '[class.x]' }`
+- [ ] Commentaires : une ligne par input / méthode publique, pas de bannière ni de paragraphe de justification
+
+**SCSS :**
+
+- [ ] Aucun `var(--ta-…)` écrit à la main (avec ou sans repli) → `common.get-var(...)`
+- [ ] Aucune réassignation `--ta-xxx: …` sur un composant enfant → variante du composant
+- [ ] Aucune couleur hex / `rgb()` / `rgba()` → jeton (`surface.veil` pour un voile sur fond sombre)
+- [ ] Aucun px « ajusté » (`11px`, `22px`) → `space` ou jeton `components.<composant>` ajouté dans `_vars.scss`
+- [ ] Aucun `font-family` / `font-size` / `font-weight` / `letter-spacing` à la main → `fonts.*`
+- [ ] Aucun `display: flex` + `flex-direction` à la main → `flex.*`
+- [ ] Aucun `::ng-deep`, aucun `@media` brut
+- [ ] `<button>` natif : uniquement les deux exceptions actées (`ta-files-preview-modal`, toolbar `@ta/wysiswyg`)
 
 ---
 
@@ -1744,6 +1916,7 @@ src/app/services/baseDto.ts      # Interface BaseDto partagée (id, createdDate,
 
 ```typescript
 import { Routes } from '@angular/router';
+
 import { TaRoutes } from '@ta/menu';
 
 // Type pour les paramètres de route spéciaux
@@ -1752,8 +1925,8 @@ export type FormKey = 'new';
 // Enum de toutes les clés de route de la feature
 export enum EMyFeatureRoute {
   myFeature = 'myFeature',
-  list      = 'list',
-  form      = 'form',
+  list = 'list',
+  form = 'form',
 }
 
 // Enregistrement des routes dans TaRoutes (navigation déclarative)
@@ -1770,13 +1943,11 @@ TaRoutes.addRoute({
 export const myFeatureRoutes: Routes = [
   {
     path: TaRoutes.getUrl([EMyFeatureRoute.myFeature, EMyFeatureRoute.list]),
-    loadComponent: () =>
-      import('./pages/list/list.component').then((c) => c.ListPage),
+    loadComponent: () => import('./pages/list/list.component').then(c => c.ListPage),
   },
   {
     path: TaRoutes.getUrl([EMyFeatureRoute.myFeature, EMyFeatureRoute.form]),
-    loadComponent: () =>
-      import('./pages/form/form.component').then((c) => c.FormPage),
+    loadComponent: () => import('./pages/form/form.component').then(c => c.FormPage),
   },
 ];
 ```
@@ -1789,7 +1960,7 @@ Les pages orchestrent le layout et délèguent l'affichage aux sous-composants.
 // pages/list/list.component.ts
 @Component({
   standalone: true,
-  selector: '',           // ← toujours vide pour une page
+  selector: '', // ← toujours vide pour une page
   imports: [ListComponent, LayoutFirstLevelComponent, LayoutTitleComponent, LayoutContentComponent, ButtonComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -1799,7 +1970,7 @@ export class ListPage extends TaBasePage implements OnInit {
 
   ngOnInit() {
     this._registerSubscription(
-      this._getPathParams<{ id: string }>({ id: '' }).subscribe((params) => {
+      this._getPathParams<{ id: string }>({ id: '' }).subscribe(params => {
         this.id.set(params.id === 'all' ? null : params.id);
       })
     );
@@ -1807,10 +1978,9 @@ export class ListPage extends TaBasePage implements OnInit {
 
   public add(id?: string) {
     this._router.navigateByUrl(
-      TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>(
-        [EMyFeatureRoute.myFeature, EMyFeatureRoute.form],
-        { id: id ?? 'new' }
-      )
+      TaRoutes.getAbsoluteUrl<{ id: FormKey | string }>([EMyFeatureRoute.myFeature, EMyFeatureRoute.form], {
+        id: id ?? 'new',
+      })
     );
   }
 }
@@ -1842,7 +2012,7 @@ Les composants gèrent leur propre chargement et leur état via `requestState`.
 @Component({
   standalone: true,
   selector: 'app-my-feature-list',
-  imports: [LoaderComponent, ErrorComponent, EmptyComponent, CardComponent, /* ... */],
+  imports: [LoaderComponent, ErrorComponent, EmptyComponent, CardComponent /* ... */],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
@@ -1860,8 +2030,7 @@ export class ListComponent extends TaBaseComponent {
     this.requestState.asked();
     this._myFeatureService.fetchItems$().subscribe({
       complete: () => this.requestState.completed(),
-      error: (error: HttpErrorResponse) =>
-        this.requestState.onError(error.status, error.statusText),
+      error: (error: HttpErrorResponse) => this.requestState.onError(error.status, error.statusText),
     });
   }
 }
@@ -1875,10 +2044,10 @@ export class ListComponent extends TaBaseComponent {
     <ta-empty [isEmpty]="!items || items.length === 0">
       <div class="grid">
         @for (item of items; track item.id) {
-          <ta-card class="g-col-4">
-            <ta-card-header><ta-card-title>{{ item.name }}</ta-card-title></ta-card-header>
-            <ta-card-content>{{ item.description }}</ta-card-content>
-          </ta-card>
+        <ta-card class="g-col-4">
+          <ta-card-header><ta-card-title>{{ item.name }}</ta-card-title></ta-card-header>
+          <ta-card-content>{{ item.description }}</ta-card-content>
+        </ta-card>
         }
       </div>
     </ta-empty>
@@ -1898,13 +2067,13 @@ export class ListComponent extends TaBaseComponent {
   styleUrl: './form.component.scss',
 })
 export class FormComponent extends TaBaseComponent implements OnInit {
-  id = input.required<string | null>();   // ← signal input obligatoire
+  id = input.required<string | null>(); // ← signal input obligatoire
 
   public form = signal<InputBase<any>[]>([]);
 
   private readonly _notificationService = inject(TaNotificationService);
-  private readonly _formService         = inject(MyFeatureFormService);
-  private readonly _dataService         = inject(MyFeatureService);
+  private readonly _formService = inject(MyFeatureFormService);
+  private readonly _dataService = inject(MyFeatureService);
 
   ngOnInit() {
     this._fetch();
@@ -1912,12 +2081,10 @@ export class FormComponent extends TaBaseComponent implements OnInit {
 
   public save(data: unknown) {
     const payload = this._formService.formatForm(data as MyFormData);
-    const obs = this.id()
-      ? this._dataService.update$(this.id()!, payload)
-      : this._dataService.create$(payload);
+    const obs = this.id() ? this._dataService.update$(this.id()!, payload) : this._dataService.create$(payload);
 
     obs.subscribe({
-      next: (item) => {
+      next: item => {
         this._notificationService.addNotification('notification.common.success', ENotificationCode.success);
         this._router.navigateByUrl(
           TaRoutes.getAbsoluteUrl([EMyFeatureRoute.myFeature, EMyFeatureRoute.list], { id: item.id ?? 'all' })
@@ -1935,7 +2102,7 @@ export class FormComponent extends TaBaseComponent implements OnInit {
       return;
     }
     this._dataService.fetchOne$(this.id()!).subscribe({
-      next: (item) => this.form.set(this._formService.getForm(item)),
+      next: item => this.form.set(this._formService.getForm(item)),
     });
   }
 }
@@ -1947,13 +2114,14 @@ export class FormComponent extends TaBaseComponent implements OnInit {
 
 ```typescript
 import { GraphSchema } from '@ta/server';
+
 import { BaseDto } from '../../baseDto';
 
 export interface MyEntity extends BaseDto {
   // id, createdDate, updatedDate viennent de BaseDto
   name: string;
   description: string;
-  relatedEntity?: RelatedEntity;   // relation → interface importée depuis son dto/
+  relatedEntity?: RelatedEntity; // relation → interface importée depuis son dto/
 }
 
 // Tableau de toutes les clés (utilisé pour GraphSchema)
@@ -1978,8 +2146,13 @@ export const myEntityPropsComposition = `
 ```
 
 > `BaseDto` est défini dans `src/app/services/baseDto.ts` :
+>
 > ```typescript
-> export interface BaseDto { id: string; createdDate: string; updatedDate: string; }
+> export interface BaseDto {
+>   id: string;
+>   createdDate: string;
+>   updatedDate: string;
+> }
 > ```
 
 #### 5.2 DTO de mutation — `form/dto/<Action>Input.ts`
@@ -1993,7 +2166,7 @@ export interface CreateMyEntityInput {
 }
 
 export interface UpdateMyEntityInput extends CreateMyEntityInput {
-  myEntityId: string;   // ← identifiant pour l'update
+  myEntityId: string; // ← identifiant pour l'update
 }
 ```
 
@@ -2001,6 +2174,7 @@ export interface UpdateMyEntityInput extends CreateMyEntityInput {
 
 ```typescript
 import { GraphPayload, GraphQueryInput, createQuery } from '@ta/server';
+
 import { MyEntity } from './dto/my-entity';
 
 export function myEntitiesQuery(input: GraphQueryInput<MyEntity>): GraphPayload {
@@ -2016,6 +2190,7 @@ export function myEntityByOwnerQuery(input: GraphQueryInput<MyEntity>): GraphPay
 
 ```typescript
 import { Apollo_gql, GraphMutationPayload } from '@ta/server';
+
 import { myEntityProps } from './dto/my-entity';
 import { CreateMyEntityInput, UpdateMyEntityInput } from './form/dto/myEntityInput';
 
@@ -2063,9 +2238,12 @@ export function deleteMyEntity(id: string): GraphMutationPayload {
 
 ```typescript
 import { Injectable } from '@angular/core';
+
 import { filter, map, mergeMap } from 'rxjs';
+
 import { GraphEndpoint, HandleComplexRequest, HandleSimpleRequest, TaBaseService } from '@ta/server';
 import { isNonNullable } from '@ta/utils';
+
 import { MyEntity, myEntityProps } from './dto/my-entity';
 import { CreateMyEntityInput, UpdateMyEntityInput } from './form/dto/myEntityInput';
 import { createMyEntity, deleteMyEntity, updateMyEntity } from './mutation';
@@ -2088,7 +2266,7 @@ const graphEndpoint: GraphEndpoint = {
 @Injectable({ providedIn: 'root' })
 export class MyEntityService extends TaBaseService {
   // HandleSimpleRequest : liste globale (pas de clé)
-  public myEntities   = new HandleSimpleRequest<MyEntity[]>();
+  public myEntities = new HandleSimpleRequest<MyEntity[]>();
 
   // HandleComplexRequest : résultats par clé (ex: par id)
   public myEntityDetail = new HandleComplexRequest<MyEntity>();
@@ -2101,17 +2279,14 @@ export class MyEntityService extends TaBaseService {
   public fetchMyEntities$() {
     return this.myEntities.fetch(
       this._graphService
-        .fetchQueryBuilder<MyEntity[]>(
-          myEntitiesQuery({ props: myEntityDetail }),
-          graphEndpoint.clientName
-        )
+        .fetchQueryBuilder<MyEntity[]>(myEntitiesQuery({ props: myEntityDetail }), graphEndpoint.clientName)
         .pipe(filter(isNonNullable))
     );
   }
 
   public fetchMyEntity$(id: string) {
     return this.myEntityDetail.fetch(
-      id,                          // ← clé de cache pour HandleComplexRequest
+      id, // ← clé de cache pour HandleComplexRequest
       this._graphService
         .fetchQueryBuilder<MyEntity[]>(
           myEntitiesQuery({
@@ -2134,7 +2309,7 @@ export class MyEntityService extends TaBaseService {
         createMyEntity(entity),
         'createMyEntity',
         graphEndpoint.clientName,
-        ['myEntities']            // ← caches Apollo à invalider après mutation
+        ['myEntities'] // ← caches Apollo à invalider après mutation
       )
       .pipe(
         filter(isNonNullable),
@@ -2144,12 +2319,9 @@ export class MyEntityService extends TaBaseService {
 
   public updateMyEntity$(id: string, entity: Partial<UpdateMyEntityInput>) {
     return this._graphService
-      .mutate<MyEntity>(
-        updateMyEntity({ ...entity, myEntityId: id }),
-        'updateMyEntity',
-        graphEndpoint.clientName,
-        ['myEntities']
-      )
+      .mutate<MyEntity>(updateMyEntity({ ...entity, myEntityId: id }), 'updateMyEntity', graphEndpoint.clientName, [
+        'myEntities',
+      ])
       .pipe(
         filter(isNonNullable),
         mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))
@@ -2158,12 +2330,7 @@ export class MyEntityService extends TaBaseService {
 
   public deleteMyEntity$(id: string) {
     return this._graphService
-      .mutate<unknown>(
-        deleteMyEntity(id),
-        'deleteMyEntity',
-        graphEndpoint.clientName,
-        ['myEntities']
-      )
+      .mutate<unknown>(deleteMyEntity(id), 'deleteMyEntity', graphEndpoint.clientName, ['myEntities'])
       .pipe(
         filter(isNonNullable),
         mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))
@@ -2173,6 +2340,7 @@ export class MyEntityService extends TaBaseService {
 ```
 
 > **`HandleSimpleRequest` vs `HandleComplexRequest`**
+>
 > - `HandleSimpleRequest<T>` : stockage unique (ex: liste globale), pas de clé de cache
 > - `HandleComplexRequest<T>` : stockage par clé (ex: détail par id), prend un `id` en premier argument de `.fetch()`
 
@@ -2181,15 +2349,17 @@ export class MyEntityService extends TaBaseService {
 ```typescript
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { InputBase, InputPanel, InputTextBox, InputDropdown } from '@ta/form-model';
+
+import { InputBase, InputDropdown, InputPanel, InputTextBox } from '@ta/form-model';
+
 import { MyEntity } from '../dto/my-entity';
 import { CreateMyEntityInput } from './dto/myEntityInput';
 
 // Enum des clés de champ — TOUJOURS défini ici, pas dans le composant
 export enum EMyEntityFormFields {
-  name        = 'name',
+  name = 'name',
   description = 'description',
-  status      = 'status',
+  status = 'status',
 }
 
 @Injectable({ providedIn: 'root' })
@@ -2202,13 +2372,13 @@ export class MyEntityFormService {
         contentClass: 'flex-column g-space-md',
         children: [
           new InputTextBox({
-            key:        EMyEntityFormFields.name,
-            label:      'app.myFeature.form.field.name',
+            key: EMyEntityFormFields.name,
+            label: 'app.myFeature.form.field.name',
             validators: [Validators.required],
-            value:      entity?.name,
+            value: entity?.name,
           }),
           new InputTextBox({
-            key:   EMyEntityFormFields.description,
+            key: EMyEntityFormFields.description,
             label: 'app.myFeature.form.field.description',
             value: entity?.description,
           }),
@@ -2220,7 +2390,7 @@ export class MyEntityFormService {
   // formatForm : transforme la sortie brute du ta-form en payload de mutation
   public formatMyEntityForm(data: any): Partial<CreateMyEntityInput> {
     return {
-      name:        data[EMyEntityFormFields.name],
+      name: data[EMyEntityFormFields.name],
       description: data[EMyEntityFormFields.description],
     };
   }
@@ -2229,21 +2399,21 @@ export class MyEntityFormService {
 
 ### 6. Conventions de nommage
 
-| Élément | Convention | Exemple |
-|---|---|---|
-| Classe de page | `<Name>Page` | `ListPage`, `FormPage` |
-| Classe de composant | `<Name>Component` | `ListComponent`, `FormComponent` |
-| Enum de routes | `E<Feature>Route` | `ECategoriesRoute` |
-| Type de param spécial | `FormKey` | `type FormKey = 'new'` |
-| Sélecteur de page | `''` (vide) | `selector: ''` |
-| Sélecteur de composant | `'app-<feature>-<name>'` | `'app-categories-list'` |
-| Service principal | `<Feature>Service` | `EstateService`, `CategoriesService` |
-| Service formulaire | `<Feature>FormService` | `EstateFormService` |
-| DTO entité | `<Entity>` | `Estate`, `Category` |
-| Enum champs form | `E<Entity>FormFields` | `EEstateFormFields` |
-| Input mutation | `Create<Entity>Input` / `Update<Entity>Input` | `CreateEstateInput` |
-| Query builder | `<entities>Query()` | `myEntitiesQuery()`, `estatesInfo()` |
-| Mutation builder | `create<Entity>()` / `update<Entity>()` / `delete<Entity>()` | `createEstate()` |
+| Élément                | Convention                                                   | Exemple                              |
+| ---------------------- | ------------------------------------------------------------ | ------------------------------------ |
+| Classe de page         | `<Name>Page`                                                 | `ListPage`, `FormPage`               |
+| Classe de composant    | `<Name>Component`                                            | `ListComponent`, `FormComponent`     |
+| Enum de routes         | `E<Feature>Route`                                            | `ECategoriesRoute`                   |
+| Type de param spécial  | `FormKey`                                                    | `type FormKey = 'new'`               |
+| Sélecteur de page      | `''` (vide)                                                  | `selector: ''`                       |
+| Sélecteur de composant | `'app-<feature>-<name>'`                                     | `'app-categories-list'`              |
+| Service principal      | `<Feature>Service`                                           | `EstateService`, `CategoriesService` |
+| Service formulaire     | `<Feature>FormService`                                       | `EstateFormService`                  |
+| DTO entité             | `<Entity>`                                                   | `Estate`, `Category`                 |
+| Enum champs form       | `E<Entity>FormFields`                                        | `EEstateFormFields`                  |
+| Input mutation         | `Create<Entity>Input` / `Update<Entity>Input`                | `CreateEstateInput`                  |
+| Query builder          | `<entities>Query()`                                          | `myEntitiesQuery()`, `estatesInfo()` |
+| Mutation builder       | `create<Entity>()` / `update<Entity>()` / `delete<Entity>()` | `createEstate()`                     |
 
 ### 7. Règles importantes
 
@@ -2272,12 +2442,12 @@ Le système de theming permet aux partenaires d'overrider les CSS custom propert
 
 ### Fichiers
 
-| Fichier | Rôle |
-|---------|------|
-| `projects/styles/src/style/ta/_theme.scss` | Module de theming |
-| `sass/partners/_theme.scss` | Thème actif (copié par `apply-skin.js`) |
-| `partners/{nom}/sass/_theme.scss` | Thème de chaque partenaire |
-| `src/styles.scss` | Importe `partners/theme` après `bases` |
+| Fichier                                    | Rôle                                    |
+| ------------------------------------------ | --------------------------------------- |
+| `projects/styles/src/style/ta/_theme.scss` | Module de theming                       |
+| `sass/partners/_theme.scss`                | Thème actif (copié par `apply-skin.js`) |
+| `partners/{nom}/sass/_theme.scss`          | Thème de chaque partenaire              |
+| `src/styles.scss`                          | Importe `partners/theme` après `bases`  |
 
 ### Exemple de thème partenaire
 
@@ -2287,16 +2457,30 @@ Le système de theming permet aux partenaires d'overrider les CSS custom propert
 
 $_theme: map.merge(
   theme.build-tokens(
-    $brand: (900: #262D36, 800: #2f3742, 700: #3a434e, ...),
-    $second: (900: #b45309, 800: #d97706, 500: #f59e0b, ...),
+    $brand: (
+      900: #262d36,
+      800: #2f3742,
+      700: #3a434e,
+      ...,
+    ),
+    $second: (
+      900: #b45309,
+      800: #d97706,
+      500: #f59e0b,
+      ...,
+    ),
   ),
   (
     components: (
       button: (
-        secondary: (color: #ffffff, background: #f59e0b, border: #f59e0b),
+        secondary: (
+          color: #ffffff,
+          background: #f59e0b,
+          border: #f59e0b,
+        ),
       ),
     ),
-  ),
+  )
 );
 
 @include theme.apply-theme($_theme);

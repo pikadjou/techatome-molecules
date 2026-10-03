@@ -30,6 +30,8 @@ export interface ColMetaData<T = unknown> {
         value: any;
     }>;
     width?: string;
+    /** Alignement du contenu de la colonne — les montants se lisent à droite. */
+    align?: 'left' | 'center' | 'right';
 }
 export type FilterType = '=' | '!=' | 'like' | '<' | '>' | '<=' | '>=' | 'in' | 'regex' | 'starts' | 'ends';
 export interface Filter {
@@ -42,6 +44,7 @@ export interface ColConfig {
     title: string;
     sortable: boolean;
     width?: string;
+    align?: 'left' | 'center' | 'right';
     template?: TemplateRef<any>;
 }
 export type ActiveFilter = {
@@ -57,10 +60,19 @@ export type GridOptions<T> = (services?: any) => {
     colsMetaData: ColMetaData<T>[];
     preset?: Preset[];
 };
+/**
+ * Comment la source numérote ses pages : `page` demande une page par son rang et connaît le total,
+ * `cursor` demande la suite à partir d'un curseur et empile les réponses (les connexions Relay ne
+ * savent pas compter).
+ */
+export type PaginationMode = 'page' | 'cursor';
 export type ajaxResponse<T> = {
     data: T[];
     last_page: number;
     total: number;
+    /** Mode `cursor` : reste-t-il une page, et à partir d'où la demander. */
+    hasNextPage?: boolean;
+    endCursor?: string | null;
 };
 export type ajaxRequestFuncParams = {
     filter: Filter[];
@@ -69,6 +81,8 @@ export type ajaxRequestFuncParams = {
     page: number;
     size: number;
     colsMetaData: ColMetaData<any>[];
+    /** Mode `cursor` : `null` pour la première page, sinon la fin de la précédente. */
+    cursor: string | null;
 };
 export type ViewType = 'grid' | 'card';
 export type Preset = {

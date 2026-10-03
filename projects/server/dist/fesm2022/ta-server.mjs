@@ -529,6 +529,69 @@ function createQuery(name, input) {
     };
 }
 
+/** Le corps d'une connexion, écrit une seule fois pour toutes les requêtes paginées. */
+function connectionFields(props) {
+    return `
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      ${props}
+    }
+  `;
+}
+/** Avant toute lecture, et à chaque relecture depuis le début. */
+function emptyPage() {
+    return { endCursor: null, hasNextPage: false, nodes: [] };
+}
+/** Aplatit la réponse de l'API ; une connexion absente vaut une page vide. */
+function toPage(connection) {
+    return {
+        endCursor: connection?.pageInfo?.endCursor ?? null,
+        hasNextPage: connection?.pageInfo?.hasNextPage ?? false,
+        nodes: connection?.nodes ?? [],
+    };
+}
+/** La page suivante s'ajoute à ce qui est déjà lu ; le curseur et la suite sont ceux de la dernière. */
+function appendPage(current, next) {
+    return { ...next, nodes: [...current.nodes, ...next.nodes] };
+}
+/**
+ * Construit une requête paginée au format Relay : `first`/`after` en variables, `pageInfo` et
+ * `nodes` déjà écrits. Les arguments propres à la requête sont déclarés avec leur type GraphQL.
+ *
+ * ```ts
+ * createConnectionQuery('mySuggestedEstates', {
+ *   args: { includeDismissed: { type: 'Boolean!', value: true } },
+ *   props: suggestionComposition,
+ *   first: 20,
+ *   after: null,
+ * });
+ * ```
+ */
+function createConnectionQuery(name, input) {
+    const entries = Object.entries(input.args ?? {});
+    const params = [...entries.map(([key, arg]) => `$${key}: ${arg.type}`), '$first: Int', '$after: String'];
+    const args = [...entries.map(([key]) => `${key}: $${key}`), 'first: $first', 'after: $after'];
+    const variables = {
+        after: input.after ?? null,
+        first: input.first ?? null,
+    };
+    entries.forEach(([key, arg]) => (variables[key] = arg.value));
+    return {
+        name,
+        query: gql `
+      query ${capitalizeFirstLetter(name)}(${params.join(', ')}) {
+        ${name}(${args.join(', ')}) {
+          ${connectionFields(input.props)}
+        }
+      }
+    `,
+        variables,
+    };
+}
+
 const GRAPHQL_SERVER_CONFIG = "config_graphQl_server";
 
 const graphQlUpdateFields = (object) => {
@@ -655,15 +718,26 @@ class TaGraphService {
             return throwError(() => err);
         }))), take(1));
     }
-    fetchQueryBuilder(payload, context) {
+    /**
+     * `fresh` : la reponse vient du serveur sans passer par le cache, sans pour autant l'invalider —
+     * de quoi lire une donnee qui change sans nous (un webhook, l'action d'un autre utilisateur) sans
+     * priver les autres ecrans de leur cache.
+     */
+    fetchQueryBuilder(payload, context, options) {
         Logger.LogInfo('[GraphQL] [Prepare] fetchQueryBuilder:', {
             payload,
             context,
+            options,
         });
         return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQueryBuilder:', {
             payload,
             context,
-        })), switchMap(() => this.apollo.query(this._setupData(payload, context)).pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
+        })), switchMap(() => this.apollo
+            .query({
+            ...this._setupData(payload, context),
+            ...(options?.fresh ? { fetchPolicy: 'network-only' } : {}),
+        })
+            .pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] fetchQueryBuilder:', {
             data,
             context,
         })), filter(response => !!response.data), map(response => response.data[payload.name]), catchError((err) => {
@@ -675,6 +749,36 @@ class TaGraphService {
             this._errorServices.addError(payload, err);
             return throwError(() => err);
         }))), take(1));
+    }
+    /**
+     * Comme `fetchQueryBuilder`, mais la requête reste ouverte : Apollo la rejoue toutes les
+     * `pollInterval` millisecondes et chaque réponse est émise, sans passer par le cache. Le flux ne
+     * se termine pas de lui-même — c'est à l'appelant de se désabonner quand il a ce qu'il attend.
+     */
+    watchQueryBuilder(payload, context, pollInterval) {
+        Logger.LogInfo('[GraphQL] [Prepare] watchQueryBuilder:', {
+            payload,
+            context,
+            pollInterval,
+        });
+        return this._getWrapper({ context }).pipe(take(1), switchMap(() => this.apollo
+            .watchQuery({
+            ...this._setupData(payload, context),
+            fetchPolicy: 'network-only',
+            pollInterval,
+        })
+            .valueChanges.pipe(tap(data => Logger.LogInfo('[GraphQL] [Response] watchQueryBuilder:', {
+            data,
+            context,
+        })), filter(response => !!response.data), map(response => response.data[payload.name]), catchError((err) => {
+            Logger.LogError('[GraphQL] [Error] watchQueryBuilder:', {
+                payload,
+                context,
+                message: err.message,
+            });
+            this._errorServices.addError(payload, err);
+            return throwError(() => err);
+        }))));
     }
     fetchQuery(payload, node, context) {
         return this._getWrapper({ context }).pipe(tap(() => Logger.LogInfo('[GraphQL] [Query] fetchQuery:', {
@@ -958,5 +1062,5 @@ const provideStrapi = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, baseStrapiProps, createPagedQuery, createQuery, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, appendPage, baseStrapiProps, connectionFields, createConnectionQuery, createPagedQuery, createQuery, emptyPage, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi, toPage };
 //# sourceMappingURL=ta-server.mjs.map

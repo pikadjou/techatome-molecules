@@ -2,16 +2,21 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { BaseCol } from './cols/base-col';
 import { TaGridFilters } from './grid-filters';
 import { ITableStateServices as IDataService, TaTableState } from './table-state';
-import { ColMetaData, Filter, Preset, ViewType } from './types';
+import { ColMetaData, Filter, PaginationMode, Preset, ViewType } from './types';
 export { ITableStateServices as IDataService } from './table-state';
 export declare class TaGridData<T> {
     readonly scope: string;
-    get data(): T[];
-    get dataByGroup(): {
+    data(): T[];
+    dataByGroup(): {
         key: string;
         data: T[];
     }[];
-    get isGroup(): boolean;
+    isGroup(): boolean;
+    /**
+     * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
+     * il notifie les composants même sous un parent en OnPush.
+     */
+    groupBy(): keyof T | null;
     readonly rowClicked$: Subject<T>;
     table: TaTableState<T> | null;
     cols: {
@@ -22,7 +27,7 @@ export declare class TaGridData<T> {
     readonly isDataReady$: BehaviorSubject<boolean>;
     private _tableSubs;
     readonly displayType: import("@angular/core").WritableSignal<ViewType>;
-    groupBy: keyof T | null;
+    private readonly _groupBy;
     readonly totalItems: import("@angular/core").WritableSignal<number>;
     constructor(scope: string);
     init(params: {
@@ -31,7 +36,14 @@ export declare class TaGridData<T> {
         services?: IDataService<T>;
         initialFilter?: Filter[];
         preset?: Preset[];
+        pagination?: PaginationMode;
+        pageSize?: number;
     }): void;
+    /**
+     * L'instance survit au composant : `TaGridInstanceService` la garde par `gridId` et la rend à la
+     * grille recréée sous le même id. On la remet donc à zéro sans fermer ses sujets — fermés, la
+     * grille recréée n'était jamais « prête » et restait vide.
+     */
     destroy(): void;
     setGroupBy(field: string): void;
     clearGroupBy(): void;

@@ -1,0 +1,50 @@
+<div class="editor-toolbar" role="toolbar">
+  <div class="editor-toolbar__group">
+    @for (entry of this.blockTools(); track entry.id) {
+      <button
+        type="button"
+        class="editor-toolbar__button"
+        [class.is-active]="this.isActive(entry.id)"
+        [attr.aria-pressed]="this.isActive(entry.id)"
+        [title]="this.getLabel(entry)"
+        [attr.aria-label]="this.getLabel(entry)"
+        (click)="this.blockTool.emit(entry.id)"
+      >
+        @if (entry.icon) {
+          <span class="editor-toolbar__icon" [innerHTML]="entry.icon"></span>
+        }
+        @if (entry.text) {
+          <span class="editor-toolbar__text">{{ entry.text }}</span>
+        }
+      </button>
+    }
+  </div>
+
+  <div class="editor-toolbar__separator"></div>
+
+  <div class="editor-toolbar__group">
+    @for (entry of this.blockCommands; track entry.id) {
+      <button
+        type="button"
+        class="editor-toolbar__button"
+        [title]="this.getLabel(entry)"
+        [attr.aria-label]="this.getLabel(entry)"
+        (click)="this.blockCommand.emit(entry.id)"
+      >
+        <span class="editor-toolbar__icon" [innerHTML]="entry.icon"></span>
+      </button>
+    }
+  </div>
+
+  <div class="editor-toolbar__group editor-toolbar__group--end">
+    <button
+      type="button"
+      class="editor-toolbar__button editor-toolbar__button--danger"
+      [title]="this.getLabel(this.deleteCommand)"
+      [attr.aria-label]="this.getLabel(this.deleteCommand)"
+      (click)="this.blockCommand.emit(this.deleteCommand.id)"
+    >
+      <span class="editor-toolbar__icon" [innerHTML]="this.deleteCommand.icon"></span>
+    </button>
+  </div>
+</div>

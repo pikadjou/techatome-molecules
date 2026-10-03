@@ -1,12 +1,6 @@
 @use "ta/utils/mixins/common";
 @use "ta/utils/mixins/fonts";
 
-.sections {
-  display: flex;
-  flex-direction: column;
-  gap: common.get-var(space, xxl);
-}
-
 section {
   display: flex;
   flex-direction: column;
@@ -34,7 +28,7 @@ section {
 
   span {
     @include fonts.fontSizeBody(xs);
-    font-weight: 600;
+    font-weight: common.get-var(font, weight, bold);
     color: common.get-var(neutral, white);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
@@ -106,7 +100,7 @@ section {
   align-items: center;
   justify-content: center;
   @include fonts.fontSizeKey(lg);
-  font-weight: 700;
+  font-weight: common.get-var(font, weight, bold);
   background-color: common.get-var(surface, secondary);
   border: 1px solid common.get-var(border, tertiary);
 }
@@ -247,9 +241,9 @@ section {
 .typo--body-md { @include fonts.fontSizeBody(md); }
 .typo--body-sm { @include fonts.fontSizeBody(sm); }
 .typo--body-xs { @include fonts.fontSizeBody(xs); }
-.typo--key-xl  { @include fonts.fontSizeKey(xl); font-weight: 600; }
-.typo--key-lg  { @include fonts.fontSizeKey(lg); font-weight: 600; }
-.typo--key-md  { @include fonts.fontSizeKey(md); font-weight: 600; }
+.typo--key-xl  { @include fonts.fontSizeKey(xl); font-weight: common.get-var(font, weight, bold); }
+.typo--key-lg  { @include fonts.fontSizeKey(lg); font-weight: common.get-var(font, weight, bold); }
+.typo--key-md  { @include fonts.fontSizeKey(md); font-weight: common.get-var(font, weight, bold); }
 
 // ============================
 // Transitions

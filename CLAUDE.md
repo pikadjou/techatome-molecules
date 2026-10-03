@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **Techatome Molecules** (internally called "Taelot"), an Angular monorepo that follows a micro-library architecture pattern. The project is managed using Lerna and Angular CLI, containing 20+ specialized Angular libraries that can be used independently or together to build applications.
+This is **Techatome Molecules** (internally called "Taelot"), an Angular monorepo that follows a micro-library architecture pattern. The project is managed using Nx and Angular CLI, containing 20+ specialized Angular libraries that can be used independently or together to build applications.
 
 The repository uses the `@ta/` namespace for all published packages and follows a structured approach to component library development with Storybook for documentation and testing.
 
@@ -39,15 +39,17 @@ yarn checkfiles                 # Verify installed dependencies
 ```bash
 yarn start                      # Start main application dev server
 yarn start-local                # Start with local environment config
-yarn build                     # Build all libraries with dependencies using Lerna
+yarn build                     # Clean every .build, then build all libraries in dependency order (Nx)
 yarn watch                     # Watch for changes and rebuild + start dev server
 ```
 
 ### Library Development
 
 ```bash
-lerna run build --include-dependencies    # Build all libraries with their dependencies
-ng build @ta/[LibName]                    # Build specific library
+nx run-many --target=build --all          # Build every library, in dependency order
+nx run @ta/[LibName]:build                # Build one library and whatever it depends on
+ng build @ta/[LibName]                    # Build one library alone, without its dependencies
+yarn watch:lib                            # Rebuild only the libraries affected by each change
 ```
 
 ### Quality Assurance
@@ -66,7 +68,7 @@ yarn storybook                  # Start Storybook dev server on port 6006
 yarn build-storybook           # Build Storybook for production
 ```
 
-### Publishing (Lerna-managed)
+### Publishing (Nx-managed)
 
 ```bash
 yarn version                    # Bump versions for all packages
@@ -76,7 +78,7 @@ yarn publish                    # Publish packages to npm registry
 ### Cleanup
 
 ```bash
-yarn clean                      # Remove all dist folders, node_modules, and lock files
+yarn clean                      # Remove all .build folders, node_modules, and lock files
 ```
 
 ## Architecture Overview
@@ -88,7 +90,7 @@ The project is organized into specialized libraries under the `projects/` direct
 - **Core Libraries**: `@ta/core`, `@ta/server`, `@ta/services`, `@ta/utils`
 - **UI Components**: `@ta/ui`, `@ta/icons`, `@ta/styles`, `@ta/menu`, `@ta/notification`
 - **Form System**: `@ta/form-basic`, `@ta/form-input`, `@ta/form-model` (specialized form handling)
-- **Feature Libraries**: `@ta/calendar`, `@ta/charts`, `@ta/wysiswyg`, `@ta/translation`, `@ta/features`
+- **Feature Libraries**: `@ta/charts`, `@ta/wysiswyg`, `@ta/translation`, `@ta/features`
 - **File Management**: `@ta/files-basic`, `@ta/files-extended`
 - **Configuration**: `@ta/eslint-config`, `@ta/prettier-config`
 - **Integration**: `@ta/capacitor`, `@ta/cms`, `@ta/user`
@@ -101,13 +103,29 @@ Layer 1: @ta/icons → @ta/utils
 Layer 2: @ta/notification, @ta/translation, @ta/form-model, @ta/server
 Layer 3: @ta/ui, @ta/services, @ta/menu
 Layer 4: @ta/form-input → @ta/form-basic
-Layer 5: @ta/core, @ta/user, @ta/calendar, @ta/charts, @ta/files-basic
+Layer 5: @ta/core, @ta/user, @ta/charts, @ta/files-basic
 Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
 ```
 
+### Build Output: `.build` (local) vs `dist` (versioned)
+
+- Libraries build into `projects/<lib>/.build/` (git-ignored). The root `tsconfig.json` maps
+  `@ta/<lib>` straight to that folder.
+- `projects/<lib>/dist/` stays versioned because consumer projects (bailo, subsidia…) embed this
+  repo as a git submodule and read `dist` without compiling. Only `.github/workflows/build-libs.yml`
+  writes it: on every push to `develop` it builds, copies `.build` → `dist`, writes `DIST_SOURCE`
+  (source commit SHA) and pushes an extra commit — history is never rewritten.
+- Consequence: local rebuilds never touch tracked files, so diffs and PRs only show sources.
+  Never stage `dist/` by hand.
+
 ### Package Management
 
-- Uses **Lerna** for monorepo management with Yarn workspaces
+- Uses **Nx** for task orchestration (graph, ordering, caching) over Yarn workspaces
+- The dependency graph is read from each library's `package.json` — `analyzeSourceFiles`
+  is off in `nx.json`, because the source imports contain a real cycle
+  (`@ta/services` imports `@ta/notification`, while `notification → ui → services`).
+  A library that gains a dependency must therefore declare it in its `package.json`,
+  or Nx will build it too early.
 - All packages follow the `@ta/` namespace convention
 - Each library has its own `package.json`, `ng-package.json`, and TypeScript configurations
 - Dependencies are managed at both root and individual library levels
@@ -351,8 +369,8 @@ Types: `GraphPayload`, `GraphMutationPayload`, `GraphQueryInput<T>`, `WhereType<
 Providers: `provideServer()`, `provideStrapi()`
 
 ### @ta/utils
-**Classes**: `TaAbstractComponent`, `TaBaseComponent`, `TaBasePage`, `TaBaseModal`
-**Helpers**: `SubscriberHandler`, `RequestState`, `BreakpointDetection`, `HorizontalScroll`
+**Classes**: `TaAbstractComponent`, `TaBaseComponent`, `TaBasePage`, `TaBaseModal<In, Out>` (modal content: `modalState` input, `closeEvent` output, `isOpen()` / `confirm()` / `dismiss()`)
+**Helpers**: `SubscriberHandler`, `RequestState`, `ModalState<In, Out>` (signals `open` / `input` / `output`, `asked()` / `completed()` / `dismissed()`), `BreakpointDetection`, `HorizontalScroll`
 **Directives**: `StopPropagationDirective`, `DndDirective`, `LetDirective`, `OnRenderDirective`, `TypedTemplateDirective`
 **Pipes**: `FileSizePipe`, `JoinPipe`, `PluralTranslatePipe`, `SafePipe`
 **Functions**: `isNonNullable()`, `getUniqueArray()`, `toArray()`, `filterNonNullableItems()`, `capitalizeFirstLetter()`, `isURL()`, `newGuid()`, `merge()`, `compare()`, `getModifiedValues()`, `copyTextToClipboard()`, `isLight()`, `extractEnum()`, `fullName()`, `compressImage()`, `downloadFile()`, `octetsToMo()`, `search()`, `sort()`, `createRange()`, `percentage()`, `roundToDecimal()`
@@ -413,7 +431,6 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 | `@ta/notification` | `projects/notification/src/lib/` |
 | `@ta/translation` | `projects/translation/src/lib/` |
 | `@ta/menu` | `projects/menu/src/lib/` |
-| `@ta/calendar` | `projects/calendar/src/lib/` |
 | `@ta/charts` | `projects/charts/src/lib/` |
 | `@ta/user` | `projects/user/src/lib/` |
 | `@ta/cms` | `projects/cms/src/lib/` |
@@ -438,7 +455,8 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 - Hardcode colors, spacing, or fonts in SCSS
 - Create NgModules (use standalone components)
 - Use constructor injection (use `inject()` function)
-- Import from dist/ folders (always import from `@ta/<lib>`)
+- Import from dist/ or .build/ folders (always import from `@ta/<lib>`)
+- Build or commit `projects/**/dist` by hand (only the CI writes them, see below)
 - Forget to clean up subscriptions (base class handles it via ngOnDestroy)
 
 ## Development Workflow
@@ -448,15 +466,16 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 Follow the documented process in README.md or use `/ta-library`:
 
 1. Generate library: `ng g lib [LibName]`
-2. Update `ng-package.json` dest to `'dist'`
+2. Update `ng-package.json` dest to `'.build'`
 3. Update `package.json` name to `'@ta/[LibName]'`
 4. Add build scripts to package.json
-5. Update angular.json project references
-6. Update tsconfig path mappings
+5. Update angular.json project references (the `test` target needs `"include": ["../../../tests/[LibName]/**/*.spec.ts"]`, one more `../` for nested libs)
+6. Update tsconfig path mappings: `@ta/[LibName]` → `projects/[LibName]` **and** `@lib/[LibName]/*` → `projects/[LibName]/src/lib/*`
+7. Point the library's `tsconfig.spec.json` at `../../tests/[LibName]/**/*.spec.ts` (keep `src/**/*.d.ts`)
 
 ### Building and Testing
 
-- Always build with dependencies: `lerna run build --include-dependencies`
+- Always build with dependencies: `nx run-many --target=build --all` (or `yarn build`)
 - Test individual libraries: `ng test @ta/[LibName]`
 - Use Storybook for component development and documentation
 
@@ -488,4 +507,10 @@ Follow the documented process in README.md or use `/ta-library`:
 - Storybook for component documentation and manual testing
 - ESLint + Prettier for code quality
 - Individual library testing is supported
-- Tests are located alongside source files in each library
+- Unit specs are centralized under `tests/<lib>/`, mirroring the library's `src/lib/` tree
+  (e.g. `projects/ui/src/lib/components/ui/button/button.component.ts` → `tests/ui/components/ui/button/button.component.spec.ts`).
+  Never put a `.spec.ts` next to a component.
+- Specs import the code under test through the `@lib/<lib>/*` alias (→ `projects/<lib>/src/lib/*`),
+  e.g. `import { ButtonComponent } from '@lib/ui/components/ui/button/button.component'`.
+  `@ta/<lib>` resolves to the built `.build/`, so it is only for *other* libraries. `@lib/*` is reserved for `tests/`.
+- E2E specs (Playwright) live in `e2e/specs/<lib>/`

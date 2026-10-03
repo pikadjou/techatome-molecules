@@ -1,8 +1,8 @@
-import { NgClass } from "@angular/common";
-import { Component, InjectionToken, inject, input } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, InjectionToken, inject, input } from '@angular/core';
 
-import { FlagIconComponent, FontIconComponent } from "@ta/icons";
-import { TaTranslationService, TranslatePipe } from "@ta/translation";
+import { FlagIconComponent, FontIconComponent } from '@ta/icons';
+import { TaTranslationService, TranslatePipe } from '@ta/translation';
 import {
   ListContainerComponent,
   ListElementComponent,
@@ -10,24 +10,21 @@ import {
   ListTitleComponent,
   OverlayMenuConfig,
   TaOverlayPanelComponent,
-} from "@ta/ui";
+} from '@ta/ui';
 
 export type TaLanguageConfig = { id: string; name: string };
 
-export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>(
-  "TaLanguages",
-  {
-    factory: () => [
-      { id: "fr", name: "Français" },
-      { id: "en", name: "English" },
-    ],
-  }
-);
+export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>('TaLanguages', {
+  factory: () => [
+    { id: 'fr', name: 'Français' },
+    { id: 'en', name: 'English' },
+  ],
+});
 
 @Component({
-  selector: "ta-switch-language",
-  templateUrl: "./switch-language.component.html",
-  styleUrls: ["./switch-language.component.scss"],
+  selector: 'ta-switch-language',
+  templateUrl: './switch-language.component.html',
+  styleUrls: ['./switch-language.component.scss'],
   standalone: true,
   imports: [
     FlagIconComponent,
@@ -42,7 +39,8 @@ export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>(
   ],
 })
 export class SwitchLanguageComponent {
-  mode = input<"inline" | "dropdown" | "modal">("inline");
+  /** `compact` : rangée de codes de langue, sans drapeau ni panneau (pied de page). */
+  mode = input<'inline' | 'dropdown' | 'modal' | 'compact'>('inline');
 
   private _translateService = inject(TaTranslationService);
   readonly languages = inject(TA_LANGUAGES);

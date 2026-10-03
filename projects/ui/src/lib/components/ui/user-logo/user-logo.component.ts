@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
 import { FontIconComponent } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
 
-import { TrigramComponent } from '../trigram/trigram.component';
+import { TrigramComponent, TrigramTone } from '../trigram/trigram.component';
 
 export interface UserLogoData {
   firstname: string;
@@ -28,7 +28,13 @@ export class UserLogoComponent {
 
   forcedSize = input<number | undefined>(undefined);
 
-  defaultType = input<'font' | 'trigram'>('font');
+  /** Repli sans photo : `initials` (prénom + nom) ou trigramme. */
+  defaultType = input<'font' | 'trigram' | 'initials'>('font');
+
+  /** Forme et teinte du repli textuel. */
+  shape = input<'circle' | 'squircle'>('circle');
+
+  tone = input<TrigramTone>('brand');
 
   get sizeValue() {
     if (this.forcedSize()) {
@@ -50,6 +56,13 @@ export class UserLogoComponent {
 
   public getTrigram() {
     return this._trigram(this.user().firstname);
+  }
+
+  public getInitials() {
+    const { firstname, lastname } = this.user();
+    const initials = `${firstname?.[0] ?? ''}${lastname?.[0] ?? ''}`.toUpperCase();
+    // Sans nom exploitable : trigramme.
+    return initials || this.getTrigram();
   }
 
   private _trigram = (name: string | null | undefined) => {

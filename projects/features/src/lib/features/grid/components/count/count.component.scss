@@ -1,0 +1,9 @@
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+
+.grid-count {
+  font-family: common.get-var(font, display, family);
+  @include fonts.fontSizeBody(md);
+  font-weight: common.get-var(font, weight, bold);
+  color: common.get-var(text, primary);
+}

@@ -2,6 +2,7 @@
 @use 'ta/utils/mixins/fonts';
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/transitions';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 @mixin menu-item-horizontal() {
   justify-content: center;
@@ -99,14 +100,24 @@
   &.responsive {
     @media screen and (max-width: 575px) {
       @include menu-item-horizontal();
-      .ending-icon-container { display: none; }
+      .ending-icon-container {
+        display: none;
+      }
     }
     @media screen and (min-width: 576px) {
       @include menu-item-horizontal();
-      .ending-icon-container { display: none; }
+      .ending-icon-container {
+        display: none;
+      }
     }
     @media screen and (min-width: 992px) {
       @include menu-item-vertical();
+
+      // Sur la barre de bureau, un item qui porte une icône de fin a quelque chose à ouvrir :
+      // la masquer priverait du seul indice qu'un panneau existe.
+      .ending-icon-container {
+        display: flex;
+      }
     }
     &.menu-minimized {
       .icon {
@@ -138,11 +149,92 @@
   }
 }
 
+// Navigation inversée (`ta-main-menu` en `tone="brand"`) : actif enveloppé d'un voile, icône en couleur de marque.
+:host-context(.tone-brand) .link {
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, sm) common.get-var(space, md);
+  border-radius: common.get-var(radius, rounded);
+
+  .title {
+    font-family: common.get-var(font, display, family);
+    color: common.get-var(text, invert, secondary);
+  }
+
+  .icon {
+    color: common.get-var(icon, invert, secondary);
+  }
+
+  &:hover:not(.active) {
+    background-color: common.get-var(surface, veil, xs);
+
+    .title {
+      color: common.get-var(text, invert, primary);
+    }
+  }
+
+  &.active {
+    background-color: common.get-var(surface, veil, sm);
+
+    .title {
+      color: common.get-var(text, invert, primary);
+    }
+
+    .icon {
+      color: common.get-var(surface, brand, secondary);
+    }
+  }
+}
+
+// Navigation de pied de page : colonne de liens sans pastille, fond ni icône.
+:host-context(.tone-footer) .link {
+  padding: common.get-var(space, xs) 0;
+  background: none;
+
+  .icon {
+    display: none;
+  }
+
+  .title {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, invert, secondary);
+  }
+
+  &:hover .title,
+  &.active .title {
+    color: common.get-var(text, invert, primary);
+  }
+
+  &:hover:not(.active),
+  &.active {
+    background: none;
+  }
+}
+
+// Le déclencheur est un point invisible : c'est lui que l'overlay prend pour ancre. Posé dans la
+// marge à droite, il convient à un menu vertical, où le panneau sort sur le côté.
 .trigger-container {
   position: relative;
   .trigger {
     position: absolute;
     top: 0;
     right: calc(common.get-var(space, xl) * -1);
+  }
+}
+
+// Sur une barre horizontale, le panneau doit tomber sous son item : le déclencheur épouse alors
+// la case entière, et l'overlay s'aligne sur son bord.
+.item {
+  position: relative;
+}
+
+@include mq.from-key(lg) {
+  .responsive .trigger-container,
+  .horizontal .trigger-container {
+    position: static;
+    .trigger {
+      right: auto;
+      bottom: 0;
+      left: 0;
+    }
   }
 }

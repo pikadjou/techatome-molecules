@@ -24,5 +24,6 @@
   "placeholder.text": "Enter text...",
   "upload.add": "Add a document",
   "upload.confirm": "Confirm",
-  "upload.dragndrop": "Drag or drop your files here"
+  "upload.dragndrop": "Drag or drop your files here",
+  "validate": "Confirm"
 }

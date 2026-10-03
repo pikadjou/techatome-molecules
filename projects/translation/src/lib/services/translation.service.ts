@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional, inject } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
-import { debounceTime, mergeMap } from 'rxjs';
+import { Observable, debounceTime, map, mergeMap } from 'rxjs';
 import { LocalStorage } from 'storage-manager-js';
 
 import { TaTranslationRegistryService } from './translation-registry.service';
@@ -18,6 +18,16 @@ export interface ITranslationConfig {
 export class TaTranslationService {
   public translateService = inject(TranslateService);
   private _registry = inject(TaTranslationRegistryService);
+
+  /** Langue active, à chaque changement (les applications n'importent pas ngx-translate). */
+  public readonly onLangChange$: Observable<string> = this.translateService.onLangChange.pipe(
+    map(({ lang }) => lang)
+  );
+
+  /** Fichiers de traduction (re)chargés sans changement de langue : `reloadLang()`. */
+  public readonly onTranslationChange$: Observable<string> = this.translateService.onTranslationChange.pipe(
+    map(({ lang }) => lang)
+  );
 
   constructor(
     @Optional()
@@ -74,6 +84,16 @@ export class TaTranslationService {
 
   public get(key: string | string[], interpolateParams?: Object) {
     return this.translateService.get(key, interpolateParams);
+  }
+
+  /** Traduction immédiate ; rend la clé tant que les fichiers ne sont pas chargés. */
+  public instant(key: string | string[], interpolateParams?: Object): string {
+    return this.translateService.instant(key, interpolateParams);
+  }
+
+  /** Traduction qui suit les changements de langue. */
+  public stream(key: string | string[], interpolateParams?: Object): Observable<string> {
+    return this.translateService.stream(key, interpolateParams);
   }
 
   public use(lang: string) {

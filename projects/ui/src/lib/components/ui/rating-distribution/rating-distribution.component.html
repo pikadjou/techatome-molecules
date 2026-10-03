@@ -1,0 +1,15 @@
+<div class="rating-distribution">
+  @for (step of this.steps(); track step.note) {
+    <div class="rating-distribution-row">
+      <span class="rating-distribution-note">{{ step.note }}</span>
+      <ta-font-icon name="star" type="sm"></ta-font-icon>
+      <ta-progress-bar
+        class="rating-distribution-bar"
+        size="md"
+        [current]="step.count"
+        [max]="this.total()"
+      ></ta-progress-bar>
+      <span class="rating-distribution-count">{{ step.count }}</span>
+    </div>
+  }
+</div>

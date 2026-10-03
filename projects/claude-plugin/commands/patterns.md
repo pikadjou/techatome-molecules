@@ -19,12 +19,11 @@ Avant de répondre à la question :
 1. **Identifie** dans le tableau des sections ci-dessous la ou les sections concernées.
 2. **Lis la fiche de référence** via `Read` si une librairie spécifique est impliquée :
    - Composants : `references/ui/<selector>.md`, `references/form-basic/<name>.md`, etc.
-   - Patterns de routing : `references/patterns/routing.md`
-   - Patterns de formulaires : `references/patterns/forms.md`
    - Patterns GraphQL : `references/server/<name>.md`
-3. **Réponds à partir du contenu lu** — les références sont la **source de vérité**.
+   - Patterns de routing et de formulaires : **pas de fiche `references/patterns/` à ce jour** — fie-toi aux sections ci-dessous et aux sources de l'application.
+3. **Réponds à partir de ce que tu as vérifié** — les références lues restent la **source de vérité**.
 
-Si plusieurs sections sont concernées, lis **toutes** les fiches pertinentes avant de répondre.
+Si plusieurs sections sont concernées, vérifie-les toutes avant de répondre.
 
 ---
 

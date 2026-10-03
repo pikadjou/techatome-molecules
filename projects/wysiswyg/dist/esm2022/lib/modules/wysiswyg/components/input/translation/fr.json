@@ -77,5 +77,20 @@
             "backgroundColorLabel": "surlignage",
             "frontColorLabel": "couleur"
         }
+    },
+    "toolbar": {
+        "delete": "Supprimer le bloc",
+        "delimiter": "Séparateur",
+        "header1": "Titre principal",
+        "header2": "Titre",
+        "header3": "Sous-titre",
+        "image": "Image",
+        "listOrdered": "Liste numérotée",
+        "listUnordered": "Liste à puces",
+        "moveDown": "Déplacer vers le bas",
+        "moveUp": "Déplacer vers le haut",
+        "paragraph": "Texte",
+        "quote": "Citation",
+        "warning": "Avertissement"
     }
 }

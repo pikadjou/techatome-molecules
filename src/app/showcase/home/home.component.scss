@@ -1,52 +1,47 @@
 @use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/fonts";
 
-.cards {
+.section-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: common.get-var(space, lg);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: common.get-var(space, md);
 }
 
-.card {
-  display: flex;
-  align-items: center;
-  gap: common.get-var(space, md);
+// Les cartes s'appuient sur une surface pleine et un filet clair : au survol,
+// seul le filet se renforce — pas de soulèvement ni d'ombre portée.
+.section-card {
+  @include flex.flex-column();
+
+  position: relative;
+  gap: common.get-var(space, xs);
   padding: common.get-var(space, lg);
   background: common.get-var(surface, primary);
-  border: 1px solid common.get-var(border, primary);
+  border: 1px solid common.get-var(border, tertiary);
   border-radius: common.get-var(radius, rounded);
   text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-color: common.get-var(border, brand, primary);
   }
-}
 
-.card-icon {
-  font-size: 32px;
-  color: common.get-var(text, brand);
-}
+  &__pkg {
+    @include fonts.fontSizeBody(xs);
+    color: common.get-var(text, secondary);
+    font-family: "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas",
+      monospace;
+  }
 
-.card-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: common.get-var(space, xs);
-
-  strong {
+  &__title {
     @include fonts.fontSizeBody(lg);
     color: common.get-var(text, primary);
+    font-weight: common.get-var(font, weight, bold);
+    letter-spacing: -0.01em;
   }
 
-  span {
+  &__description {
     @include fonts.fontSizeBody(sm);
     color: common.get-var(text, secondary);
   }
-}
-
-.card-arrow {
-  color: common.get-var(text, tertiary);
 }

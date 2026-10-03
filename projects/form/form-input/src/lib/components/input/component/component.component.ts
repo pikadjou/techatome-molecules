@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Output, input, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { Subject } from 'rxjs';
@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { InputComponent } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
 import { TaModalComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { ModalState, TaBaseModal } from '@ta/utils';
 
 import { TaAbstractInputComponent } from '../../abstract.component';
 import { InputLayoutComponent } from '../../input-layout/input-layout.component';
@@ -18,24 +18,18 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
   imports: [NgTemplateOutlet, TaModalComponent],
   templateUrl: './modal.html',
 })
-export class ComponentSelectorModal extends TaBaseComponent {
-  open = input.required<boolean>();
-  inputData = input.required<InputComponent>();
-
-  @Output() closeEvent = new EventEmitter<void>();
-
+/** Projette le `TemplateRef` du modèle `InputComponent` reçu en entrée ; rend la valeur choisie. */
+export class ComponentSelectorModal extends TaBaseModal<InputComponent, string> {
   readonly selectedValue$ = new Subject<string>();
 
   constructor() {
     super();
-    this._registerSubscription(
-      this.selectedValue$.subscribe({ next: value => this.select(value) })
-    );
+    this._registerSubscription(this.selectedValue$.subscribe({ next: value => this.select(value) }));
   }
 
   public select(value: string) {
-    this.inputData().selectedValue$.next(value);
-    this.closeEvent.emit();
+    this.modalState()?.input()?.selectedValue$.next(value);
+    this.confirm(value);
   }
 }
 
@@ -47,9 +41,9 @@ export class ComponentSelectorModal extends TaBaseComponent {
   styleUrl: './component.component.scss',
 })
 export class ComponentInputComponent extends TaAbstractInputComponent<InputComponent> {
-  public isModalOpen = signal(false);
+  public selectorModal = new ModalState<InputComponent, string>();
 
   public open() {
-    this.isModalOpen.set(true);
+    this.selectorModal.asked(this.input);
   }
 }

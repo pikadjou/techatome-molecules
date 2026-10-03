@@ -24,5 +24,6 @@
   "placeholder.text": "Saisir du texte...",
   "upload.add": "Ajouter un document",
   "upload.confirm": "Confirmer",
-  "upload.dragndrop": "Glissez ou placez vos fichiers ici"
+  "upload.dragndrop": "Glissez ou placez vos fichiers ici",
+  "validate": "Confirmer"
 }

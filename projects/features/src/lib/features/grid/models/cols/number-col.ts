@@ -10,23 +10,23 @@ export class NumberCol extends BaseCol<number> {
       contentClass: 'row g-0',
       children: [
         new InputNumber({
-          key: this.key,
-          label: this.inputLabel,
-          value: this.filterValues[0],
+          key: this.key(),
+          label: this.inputLabel(),
+          value: this.filterValues()[0],
         }),
       ],
     });
   }
 
   public override formatInputForm(data: any): Filter | null {
-    const value = data[this.key];
+    const value = data[this.key()];
 
     if (!value) {
       return null;
     }
 
     return {
-      field: this.key,
+      field: this.key(),
       type: '=',
       value: value,
     };

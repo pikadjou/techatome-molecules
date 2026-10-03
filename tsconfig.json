@@ -34,37 +34,34 @@
         "node_modules/@angular/*"
       ],
       "@ta/ui": [
-        "projects/ui"
+        "projects/ui/.build"
       ],
       "@ta/server": [
-        "projects/server"
+        "projects/server/.build"
       ],
       "@ta/services": [
-        "projects/services"
+        "projects/services/.build"
       ],
       "@ta/utils": [
-        "projects/utils"
+        "projects/utils/.build"
       ],
       "@ta/notification": [
-        "projects/notification"
+        "projects/notification/.build"
       ],
       "@ta/menu": [
-        "projects/menu"
-      ],
-      "@ta/calendar": [
-        "projects/calendar"
+        "projects/menu/.build"
       ],
       "@ta/translation": [
-        "projects/translation"
+        "projects/translation/.build"
       ],
       "@ta/form-input": [
-        "projects/form/form-input"
+        "projects/form/form-input/.build"
       ],
       "@ta/form-model": [
-        "projects/form/form-model"
+        "projects/form/form-model/.build"
       ],
       "@ta/form-basic": [
-        "projects/form/form-basic"
+        "projects/form/form-basic/.build"
       ],
       "@ta/eslint-config": [
         "projects/config/eslint-config"
@@ -73,37 +70,109 @@
         "projects/config/prettier-config"
       ],
       "@ta/styles": [
-        "projects/styles"
+        "projects/styles/.build"
       ],
       "@ta/files-basic": [
-        "projects/files/files-basic"
+        "projects/files/files-basic/.build"
       ],
       "@ta/files-extended": [
-        "projects/files/files-extended"
+        "projects/files/files-extended/.build"
       ],
       "@ta/icons": [
-        "projects/icons"
+        "projects/icons/.build"
       ],
       "@ta/capacitor": [
-        "projects/capacitor"
+        "projects/capacitor/.build"
       ],
       "@ta/core": [
-        "projects/core"
+        "projects/core/.build"
       ],
       "@ta/user": [
-        "projects/user"
+        "projects/user/.build"
       ],
       "@ta/cms": [
-        "projects/cms"
+        "projects/cms/.build"
       ],
       "@ta/wysiswyg": [
-        "projects/wysiswyg"
+        "projects/wysiswyg/.build"
       ],
       "@ta/charts": [
-        "projects/charts"
+        "projects/charts/.build"
       ],
       "@ta/features": [
-        "projects/features"
+        "projects/features/.build"
+      ],
+      "@ta/testing": [
+        "projects/testing/.build"
+      ],
+      "@ta/testing/e2e": [
+        "projects/testing/e2e/src/public-api.ts"
+      ],
+      "@lib/ui/*": [
+        "projects/ui/src/lib/*"
+      ],
+      "@lib/server/*": [
+        "projects/server/src/lib/*"
+      ],
+      "@lib/services/*": [
+        "projects/services/src/lib/*"
+      ],
+      "@lib/utils/*": [
+        "projects/utils/src/lib/*"
+      ],
+      "@lib/notification/*": [
+        "projects/notification/src/lib/*"
+      ],
+      "@lib/menu/*": [
+        "projects/menu/src/lib/*"
+      ],
+      "@lib/translation/*": [
+        "projects/translation/src/lib/*"
+      ],
+      "@lib/form-input/*": [
+        "projects/form/form-input/src/lib/*"
+      ],
+      "@lib/form-model/*": [
+        "projects/form/form-model/src/lib/*"
+      ],
+      "@lib/form-basic/*": [
+        "projects/form/form-basic/src/lib/*"
+      ],
+      "@lib/styles/*": [
+        "projects/styles/src/lib/*"
+      ],
+      "@lib/files-basic/*": [
+        "projects/files/files-basic/src/lib/*"
+      ],
+      "@lib/files-extended/*": [
+        "projects/files/files-extended/src/lib/*"
+      ],
+      "@lib/icons/*": [
+        "projects/icons/src/lib/*"
+      ],
+      "@lib/capacitor/*": [
+        "projects/capacitor/src/lib/*"
+      ],
+      "@lib/core/*": [
+        "projects/core/src/lib/*"
+      ],
+      "@lib/user/*": [
+        "projects/user/src/lib/*"
+      ],
+      "@lib/cms/*": [
+        "projects/cms/src/lib/*"
+      ],
+      "@lib/wysiswyg/*": [
+        "projects/wysiswyg/src/lib/*"
+      ],
+      "@lib/charts/*": [
+        "projects/charts/src/lib/*"
+      ],
+      "@lib/features/*": [
+        "projects/features/src/lib/*"
+      ],
+      "@lib/testing/*": [
+        "projects/testing/src/lib/*"
       ]
     },
     "lib": [

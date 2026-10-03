@@ -20,7 +20,7 @@
       "output": "i18n/maps"
     }
   ],
-  "dest": "dist",
+  "dest": ".build",
 
   "lib": {
     "entryFile": "src/public-api.ts",

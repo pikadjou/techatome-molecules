@@ -24,7 +24,7 @@ export class TaGridFormService<T> {
       new InputPanel({
         key: 'main-panel',
         class: 'p-space-sm',
-        contentClass: 'grid g-space-md',
+        contentClass: 'flex-column g-space-md',
         children: keys
           .filter(key => model.cols[key].data.col.showOnSearch)
           .map(key => model.cols[key].getInputForm())
@@ -32,7 +32,7 @@ export class TaGridFormService<T> {
           .map(
             input =>
               new InputPanel({
-                key: 'panel',
+                key: `panel-${input.key}`,
                 class: 'g-col-6',
                 children: [input],
               })
@@ -54,7 +54,7 @@ export class TaGridFormService<T> {
       .map(
         input =>
           new InputPanel({
-            key: 'panel',
+            key: `panel-${input.key}`,
             class: 'g-col-6',
             children: [input],
           })
@@ -67,7 +67,7 @@ export class TaGridFormService<T> {
     return [
       new InputPanel({
         key: 'highlight-panel',
-        contentClass: 'grid g-space-md',
+        contentClass: 'flex-column g-space-md',
         children,
       }),
     ];
@@ -97,11 +97,11 @@ export class TaGridFormService<T> {
               Object.values(model.cols)
                 .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
                 .map(group => ({
-                  id: group.key,
-                  name: group.inputLabel,
+                  id: group.key(),
+                  name: group.inputLabel(),
                 }))
             ),
-            value: model.groupBy,
+            value: model.groupBy(),
           }),
         ],
       }),

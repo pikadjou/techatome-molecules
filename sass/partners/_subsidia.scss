@@ -191,13 +191,201 @@ $_theme: map.merge(
             border: map.get($_neutral, 200),
           ),
         ),
+        // Contour rouge qui se remplit au survol.
+        danger: (
+          color: map.get($_semantic, red),
+          background: map.get($_brand, 900),
+          border: map.get($_semantic, red),
+          hover: (
+            color: map.get($_neutral, black),
+            background: map.get($_semantic, red),
+            border: map.get($_semantic, red),
+          ),
+          disabled: (
+            color: map.get($_neutral, 300),
+            background: map.get($_brand, 900),
+            border: map.get($_neutral, 500),
+          ),
+          inactive: (
+            color: map.get($_neutral, 300),
+            background: map.get($_brand, 900),
+          ),
+          icon: (
+            color: map.get($_semantic, red),
+          ),
+        ),
       ),
+
+      // Champ rempli et souligne — surfaces sombres
+      input: (
+        border-color: map.get($_neutral, 400),
+        background: map.get($_brand, 800),
+        color: map.get($_neutral, white),
+        placeholder: map.get($_neutral, 300),
+        icon: (
+          color: map.get($_neutral, 200),
+        ),
+        hover: (
+          border-color: map.get($_neutral, 200),
+        ),
+        focus: (
+          border-color: map.get($_second, 400),
+          background: map.get($_brand, 700),
+          icon: (
+            color: map.get($_second, 400),
+          ),
+        ),
+        error: (
+          border-color: map.get($_semantic, red),
+          color: map.get($_semantic, red),
+        ),
+        disabled: (
+          border-color: map.get($_neutral, 500),
+          background: map.get($_brand, 900),
+          color: map.get($_neutral, 300),
+        ),
+        label: (
+          color: map.get($_neutral, 100),
+          required: map.get($_semantic, red),
+          disabled: map.get($_neutral, 300),
+        ),
+        panel: (
+          background: map.get($_neutral, 600),
+          hover: (
+            background: map.get($_brand, 700),
+          ),
+          selected: (
+            color: map.get($_neutral, black),
+            background: map.get($_second, 500),
+          ),
+          disabled: (
+            color: map.get($_neutral, 300),
+          ),
+        ),
+        dropzone: (
+          border: map.get($_neutral, 400),
+          background: map.get($_brand, 800),
+          color: map.get($_neutral, 100),
+        ),
+      ),
+
+      badge: (
+        primary: (
+          color: map.get($_neutral, white),
+          background: map.get($_brand, 700),
+        ),
+        secondary: (
+          color: map.get($_neutral, black),
+          background: map.get($_second, 400),
+        ),
+      ),
+
+      chip: (
+        color: map.get($_neutral, white),
+        background: map.get($_brand, 700),
+        hover: (
+          background: map.get($_brand, 600),
+        ),
+        icon: (
+          color: map.get($_neutral, 100),
+        ),
+      ),
+
+      segment: (
+        color: map.get($_neutral, white),
+        background: map.get($_brand, 700),
+        hover: (
+          background: map.get($_brand, 600),
+        ),
+        selected: (
+          color: map.get($_neutral, black),
+          background: map.get($_second, 500),
+        ),
+        disabled: (
+          color: map.get($_neutral, 300),
+          background: map.get($_brand, 800),
+        ),
+      ),
+
+      control: (
+        border-color: map.get($_neutral, 400),
+        background: map.get($_brand, 800),
+        checked: (
+          color: map.get($_neutral, black),
+          background: map.get($_second, 500),
+          border-color: map.get($_second, 500),
+        ),
+        disabled: (
+          border-color: map.get($_neutral, 500),
+          background: map.get($_brand, 900),
+          color: map.get($_neutral, 300),
+        ),
+        switch: (
+          track-background: map.get($_neutral, 400),
+          thumb-background: map.get($_neutral, white),
+          checked: (
+            track-background: map.get($_second, 500),
+            thumb-background: map.get($_neutral, black),
+          ),
+        ),
+        rating: (
+          color: map.get($_second, 400),
+          empty: map.get($_neutral, 500),
+        ),
+      ),
+
+      list: (
+        background: map.get($_neutral, 600),
+        separator: map.get($_neutral, 500),
+        item: (
+          accent-color: map.get($_second, 400),
+          hover: (
+            background: map.get($_brand, 700),
+          ),
+        ),
+      ),
+
+      feedback: (
+        background: map.get($_neutral, 600),
+        color: map.get($_neutral, white),
+        success: map.get($_semantic, green),
+        warning: map.get($_semantic, orange),
+        alert: map.get($_semantic, red),
+        info: map.get($_second, 400),
+        invert: (
+          background: map.get($_brand, 800),
+          color: map.get($_neutral, white),
+          accent-color: map.get($_second, 400),
+        ),
+        banner: (
+          background: map.get($_second, 500),
+          color: map.get($_neutral, black),
+        ),
+      ),
+
+      header: (
+        background: map.get($_brand, 900),
+        color: map.get($_neutral, white),
+        accent-color: map.get($_second, 400),
+        overline: (
+          color: map.get($_second, 400),
+        ),
+      ),
+
       card: (
         background: map.get($_neutral, 600),
         color: map.get($_neutral, white),
         border: map.get($_neutral, 500),
         hover: (
           background: map.get($_brand, 800),
+        ),
+        invert: (
+          background: map.get($_brand, 800),
+          color: map.get($_neutral, white),
+          border: map.get($_brand, 800),
+          separator: rgba(240, 242, 244, 0.15),
+          secondary: map.get($_neutral, 100),
+          accent: map.get($_second, 400),
         ),
       ),
     ),

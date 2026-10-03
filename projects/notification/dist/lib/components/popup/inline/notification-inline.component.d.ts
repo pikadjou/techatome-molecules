@@ -1,5 +1,5 @@
-import { TaBaseComponent } from "@ta/utils";
-import { ENotificationCode } from "../../../enum";
+import { ModalState, TaBaseComponent } from '@ta/utils';
+import { ENotificationCode } from '../../../enum';
 import * as i0 from "@angular/core";
 export declare class NotificationInlineComponent extends TaBaseComponent {
     messageInput: import("@angular/core").InputSignal<string>;
@@ -7,7 +7,7 @@ export declare class NotificationInlineComponent extends TaBaseComponent {
     showClose: import("@angular/core").InputSignal<boolean>;
     askClose: import("@angular/core").OutputEmitterRef<void>;
     showMessage: boolean;
-    isErrorModalOpen: import("@angular/core").WritableSignal<boolean>;
+    errorModal: ModalState<null, null>;
     get message(): string;
     get isError(): boolean;
     get isWarning(): boolean;

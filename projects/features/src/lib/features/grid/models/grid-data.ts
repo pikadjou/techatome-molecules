@@ -11,20 +11,27 @@ import { RelationCol } from './cols/relation-col';
 import { StringCol } from './cols/string-col';
 import { TaGridFilters } from './grid-filters';
 import { ITableStateServices as IDataService, TaTableState } from './table-state';
-import { ColMetaData, Filter, ParameterType, Preset, ViewType } from './types';
+import { ColMetaData, Filter, PaginationMode, ParameterType, Preset, ViewType } from './types';
 import { groupBy } from './utils';
 
 export { ITableStateServices as IDataService } from './table-state';
 
 export class TaGridData<T> {
-  get data(): T[] {
+  public data(): T[] {
     return this.table?.getData() ?? [];
   }
-  get dataByGroup() {
-    return groupBy(this.groupBy, this.data);
+  public dataByGroup() {
+    return groupBy(this._groupBy(), this.data());
   }
-  get isGroup() {
-    return this.groupBy !== null;
+  public isGroup() {
+    return this._groupBy() !== null;
+  }
+  /**
+   * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
+   * il notifie les composants même sous un parent en OnPush.
+   */
+  public groupBy(): keyof T | null {
+    return this._groupBy();
   }
 
   public readonly rowClicked$ = new Subject<T>();
@@ -39,7 +46,7 @@ export class TaGridData<T> {
 
   public readonly displayType = signal<ViewType>('card');
 
-  public groupBy: keyof T | null = null;
+  private readonly _groupBy = signal<keyof T | null>(null);
   public readonly totalItems = signal(0);
 
   constructor(public readonly scope: string) {}
@@ -50,6 +57,8 @@ export class TaGridData<T> {
     services?: IDataService<T>;
     initialFilter?: Filter[];
     preset?: Preset[];
+    pagination?: PaginationMode;
+    pageSize?: number;
   }) {
     if (this.table) {
       this._tableSubs.forEach(s => s.unsubscribe());
@@ -65,34 +74,46 @@ export class TaGridData<T> {
       data: params.data,
       services: params.services,
       initialFilter: params.initialFilter,
+      pagination: params.pagination,
+      pageSize: params.pageSize,
       onDataUpdate: total => this.totalItems.set(total),
     });
 
     this.filters = new TaGridFilters(this.scope, this.table, params.preset);
 
     this._tableSubs.push(
-      this.table.isReady$.subscribe(ready => { if (ready) this.isReady$.next(true); }),
-      this.table.isDataReady$.subscribe(ready => { if (ready) this.isDataReady$.next(true); }),
-      this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)),
+      this.table.isReady$.subscribe(ready => {
+        if (ready) this.isReady$.next(true);
+      }),
+      this.table.isDataReady$.subscribe(ready => {
+        if (ready) this.isDataReady$.next(true);
+      }),
+      this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row))
     );
   }
 
+  /**
+   * L'instance survit au composant : `TaGridInstanceService` la garde par `gridId` et la rend à la
+   * grille recréée sous le même id. On la remet donc à zéro sans fermer ses sujets — fermés, la
+   * grille recréée n'était jamais « prête » et restait vide.
+   */
   public destroy() {
     this._tableSubs.forEach(s => s.unsubscribe());
     this._tableSubs = [];
     this.filters?.destroy();
+    this.filters = null;
     this.table?.destroy();
-    this.rowClicked$.complete();
-    this.isReady$.complete();
-    this.isDataReady$.complete();
+    this.table = null;
+    this.isReady$.next(false);
+    this.isDataReady$.next(false);
   }
 
   public setGroupBy(field: string) {
-    this.groupBy = field as keyof T;
+    this._groupBy.set(field as keyof T);
     this.table?.setGroupBy(field);
   }
   public clearGroupBy() {
-    this.groupBy = null;
+    this._groupBy.set(null);
     this.table?.setGroupBy(null);
   }
 
@@ -104,7 +125,7 @@ export class TaGridData<T> {
     this.cols = Object.fromEntries(
       colsMetaData.map(meta => {
         const field = this._factoryCols(meta);
-        return [field.key, field];
+        return [field.key(), field];
       })
     );
   }

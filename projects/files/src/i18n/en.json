@@ -2,8 +2,13 @@
   "documents.upload.dialog.description": "Document description",
   "documents.upload.dialog.document-type": "Document type",
   "documents.upload.dialog.title": "Upload document",
+  "preview.close": "Close",
+  "preview.hint_browse": "to browse",
+  "preview.hint_close": "to close",
+  "preview.next": "Next",
+  "preview.previous": "Previous",
   "preview.title": "File preview",
-  "slide.download": "Download",
   "slide.delete": "Delete",
+  "slide.download": "Download",
   "slide.no-viewer": "No viewer available for this file type"
 }

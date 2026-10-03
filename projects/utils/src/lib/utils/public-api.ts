@@ -10,6 +10,7 @@ export * from "./identifier";
 export * from "./mail";
 export * from "./maps";
 export * from "./math";
+export * from "./money";
 export * from "./object";
 export * from "./person";
 export * from "./phone";

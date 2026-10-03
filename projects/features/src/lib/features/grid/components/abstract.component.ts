@@ -4,6 +4,7 @@ import { Observable, distinctUntilChanged, filter } from 'rxjs';
 
 import { TaBaseComponent } from '@ta/utils';
 
+import { TaTranslationGrid } from '../../../translation.service';
 import { TaGridData } from '../models/grid-data';
 import { TaGridInstanceService } from '../services/grid-instance.service';
 
@@ -11,19 +12,19 @@ import { TaGridInstanceService } from '../services/grid-instance.service';
 export abstract class TaAbstractGridComponent<T> extends TaBaseComponent implements OnInit {
   gridId = input.required<string>();
 
-  get grid() {
+  public grid() {
     return this._grid;
   }
-  get isGroup() {
-    return this._grid.isGroup;
+  public isGroup() {
+    return this._grid.isGroup();
   }
-  get data() {
-    return this._grid.data;
+  public data() {
+    return this._grid.data();
   }
-  get dataByGroup() {
-    return this._grid.dataByGroup;
+  public dataByGroup() {
+    return this._grid.dataByGroup();
   }
-  get displayType() {
+  public displayType() {
     return this._grid.displayType;
   }
   public isReady$!: Observable<boolean>;
@@ -34,6 +35,7 @@ export abstract class TaAbstractGridComponent<T> extends TaBaseComponent impleme
 
   constructor() {
     super();
+    TaTranslationGrid.getInstance();
   }
 
   ngOnInit() {

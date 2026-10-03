@@ -17,10 +17,10 @@ Question ou tâche : $ARGUMENTS
 Avant de répondre à la question :
 
 1. **Identifie** dans le catalogue ci-dessous l'élément concerné (helper, mock, pattern de test…).
-2. **Lis la fiche de référence** via `Read` (chemin : `references/testing/<name>.md`).
-3. **Réponds à partir du contenu lu** — ne **devine pas** les helpers disponibles ou les patterns.
+2. **La référence détaillée `references/testing/<name>.md` n'existe pas encore** — le paquet `@ta/testing`, lui, existe bien (`projects/testing/`) : fie-toi au catalogue ci-dessous et, au besoin, à ses sources.
+3. **Réponds à partir de ce que tu as vérifié** — ne **devine pas** les helpers disponibles ou les patterns.
 
-Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
+Si plusieurs éléments sont concernés, vérifie-les tous avant de répondre.
 
 ---
 
@@ -51,6 +51,10 @@ Format : nom — description courte. Le fichier de référence est `references/t
 ## Conventions de test dans techatome
 
 - Pas de génération automatique de `.spec.ts` (`skipTests: true` dans angular.json) — créer manuellement.
+- Specs unitaires centralisés dans `tests/<lib>/`, en miroir de `projects/<lib>/src/lib/` — jamais à côté du composant
+  (`projects/ui/src/lib/components/ui/button/button.component.ts` → `tests/ui/components/ui/button/button.component.spec.ts`).
+- Le code testé s'importe via l'alias `@lib/<lib>/…` (→ `projects/<lib>/src/lib/…`) ; `@ta/<lib>` pointe sur `dist/` et ne sert
+  qu'aux *autres* librairies. `@lib/*` est réservé aux specs.
 - Mocks locaux dans `__mocks__/` dans chaque librairie.
 - Tests standalone importent directement le composant (pas de module NgModule).
 - `httpMock.verify()` à la fin de chaque test avec requêtes HTTP.

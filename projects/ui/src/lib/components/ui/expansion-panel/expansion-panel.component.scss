@@ -1,26 +1,4 @@
-@use "ta/utils/mixins/common";
-
-:host,
-::ng-deep {
-  .mat-content {
-    overflow: visible !important;
-  }
-  .mat-expansion-panel {
-    box-shadow: none;
-    border-radius: 0px !important;
-    border-bottom: 1px solid common.get-var(border, tertiary);
-    padding: common.get-var(space, sm) 0;
-    background-color: common.get-var(surface, primary);
-    transition: box-shadow common.get-var(transition, base),
-                border-radius common.get-var(transition, base);
-
-    &.mat-expanded {
-      box-shadow: common.get-var(shadow, black, md);
-      border-radius: common.get-var(radius, rounded) !important;
-    }
-  }
-  .mat-expansion-panel-header,
-  .mat-expansion-panel-body {
-    padding: common.get-var(space, xs) !important;
-  }
-}
+// Ce composant enveloppe `mat-expansion-panel` : tout son habillage porte sur du
+// DOM Angular Material, qui ne reçoit aucun attribut d'encapsulation. Les règles
+// vivent donc dans @ta/styles (`ta/vendors`), préfixées par `ta-expansion-panel`
+// — la portée reste celle de ce composant, sans encapsulation percée.

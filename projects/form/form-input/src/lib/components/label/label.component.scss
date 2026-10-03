@@ -3,6 +3,23 @@
 
 .form-label {
   display: block;
-  @include fonts.fontSizeBody(md);
-  color: common.get-var(text, brand, primary);
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(components, input, label, color);
+  margin-bottom: common.get-var(components, input, label, margin-bottom);
+
+  // Astérisque des champs obligatoires : seul signal rouge au repos, le trait
+  // du champ ne passe en alerte qu'en cas d'erreur réelle.
+  span {
+    color: common.get-var(components, input, label, required);
+  }
+
+  /// Énoncé d'un choix (case, radio, interrupteur) : c'est la phrase que l'on
+  /// coche, pas l'intitulé d'un champ — donc du texte courant, à l'encre
+  /// primaire, sans réserve d'espace sous lui.
+  &--choice {
+    @include fonts.fontSizeBody(md);
+    color: common.get-var(text, primary);
+    margin-bottom: 0;
+    cursor: pointer;
+  }
 }

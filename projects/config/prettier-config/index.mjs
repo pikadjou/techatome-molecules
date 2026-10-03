@@ -47,6 +47,7 @@ export default {
     '^rxjs/(.*)$',
     '<THIRD_PARTY_MODULES>',
     '^@ta/(.*)$',
+    '^@(lib|app)/(.*)$', // alias sources réservés aux specs : @lib/<lib>/* (molecules), @app/* (applications)
     '^src/(.*)$',
     '^[../]',
     '^[./]',

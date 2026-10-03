@@ -1,7 +1,17 @@
-<div class="flex-column g-space-md">
+<div class="flex-column g-space-md" [class.is-compact]="this.isCompact()">
+  @if (this.showToolbar()) {
+    <ta-cms-editor-toolbar
+      [activeTool]="this.activeTool()"
+      [labels]="this.toolbarLabels"
+      [enabledTools]="this.enabledTools()"
+      (blockTool)="this.applyBlockTool($event)"
+      (blockCommand)="this.applyBlockCommand($event)"
+    ></ta-cms-editor-toolbar>
+  }
   <div
     #editorjs
     class="editor-container"
     [class.max-height]="this.maxHeight()"
+    [class.resizable]="this.resizable()"
   ></div>
 </div>

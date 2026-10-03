@@ -24,5 +24,6 @@
   "placeholder.text": "Text eingeben...",
   "upload.add": "Ein Dokument hinzufügen",
   "upload.confirm": "Bestätigen",
-  "upload.dragndrop": "Dateien hierher ziehen oder klicken zum Hochladen"
+  "upload.dragndrop": "Dateien hierher ziehen oder klicken zum Hochladen",
+  "validate": "Bestätigen"
 }

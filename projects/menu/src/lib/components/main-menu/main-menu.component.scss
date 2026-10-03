@@ -9,6 +9,29 @@
   border-radius: common.get-var(radius, rounded) common.get-var(radius, rounded) 0 0;
   background-color: common.get-var(surface, primary);
   box-shadow: common.get-var(shadow, black, sm);
+
+  // Bandeau de marque ; les enfants lisent `:host-context(.tone-brand)`.
+  &.tone-brand {
+    padding: common.get-var(components, header, padding-vertical) common.get-var(components, header, padding-horizontal);
+    border-radius: 0;
+    background-color: common.get-var(components, header, background);
+    color: common.get-var(components, header, color);
+    box-shadow: none;
+  }
+}
+
+.tone-brand {
+  .hamburger-icon {
+    color: common.get-var(text, invert, primary);
+
+    &:hover {
+      color: common.get-var(surface, brand, secondary);
+    }
+  }
+
+  .user-nav .sep {
+    border-bottom-color: common.get-var(surface, veil, md);
+  }
 }
 
 .main-nav {
@@ -142,6 +165,10 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

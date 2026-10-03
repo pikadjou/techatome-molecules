@@ -3,7 +3,7 @@
 </div>
 
 <div class="row bottom-sheet-template-basic">
-  @for (item of this.data.menu$ | async; track item) {
+  @for (item of this.data.menu$ | async; track item.key || item.label || $index) {
   <div
     class="ta-c"
     [ngClass]="this.data.orientation === 'horizontal' ? 'col-12' : 'col'"

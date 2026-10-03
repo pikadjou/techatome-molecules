@@ -1,11 +1,34 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
 
 .img-container {
+  position: relative;
   aspect-ratio: common.get-var(components, card-image, aspect-ratio);
   overflow: hidden;
   border-radius: common.get-var(components, card-image, border-radius);
 
   .img {
+    display: block;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
+}
+
+.img-overlay {
+  position: absolute;
+  top: common.get-var(space, sm);
+  display: flex;
+  gap: common.get-var(space, xs);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.img-overlay-start {
+  left: common.get-var(space, sm);
+}
+
+.img-overlay-end {
+  right: common.get-var(space, sm);
 }

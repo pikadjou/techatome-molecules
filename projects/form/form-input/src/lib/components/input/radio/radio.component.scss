@@ -20,53 +20,55 @@
   margin-right: auto;
 }
 
+/// Cartes de choix : plein contre plein, sans contour. L'option retenue passe
+/// en navy et fait ressortir son icône en jaune ; les autres restent sur le
+/// gris de surface.
 .radio-container {
   display: flex !important;
   flex-direction: row;
-  justify-content: space-between;
+  gap: common.get-var(components, segment, gap);
 
   .radio-element {
     display: flex;
-    height: 50px;
-    width: 45%;
-    border: 1.5px solid common.get-var(border, tertiary);
-    border-radius: common.get-var(radius, rounded);
+    flex: 1;
+    min-height: 50px;
+    border: none;
+    border-radius: common.get-var(components, segment, radius);
+    padding: common.get-var(components, segment, padding-vertical) common.get-var(space, md);
     box-sizing: border-box;
     align-items: center;
     gap: common.get-var(space, sm);
     justify-content: center;
-    color: common.get-var(text, secondary);
+    color: common.get-var(components, segment, color);
+    background-color: common.get-var(components, segment, background);
     @include fonts.fontSizeBody(md);
     line-height: 28px;
-    font-weight: 500;
+    font-weight: common.get-var(components, segment, font-weight);
     cursor: pointer;
-    @include transitions.transition-border-focus();
+    @include transitions.transition-interactive();
 
-    app-local-icon {
-      opacity: 0.4;
-      transition: opacity common.get-var(transition, fast);
-    }
-
-    &:hover:not(.disabled) {
-      border-color: common.get-var(border, brand, primary);
+    &:hover:not(.disabled):not(.validated) {
+      background-color: common.get-var(components, segment, hover, background);
     }
 
     &.validated {
-      border: 1.5px solid common.get-var(surface, brand, primary);
-      @include transitions.focus-ring();
-
-      app-local-icon {
-        opacity: 1;
-      }
+      color: common.get-var(components, segment, selected, color);
+      background-color: common.get-var(components, segment, selected, background);
 
       span {
-        color: common.get-var(text, primary);
+        color: common.get-var(components, segment, selected, color);
       }
     }
 
     &.disabled {
-      opacity: 0.4;
+      color: common.get-var(components, segment, disabled, color);
+      background-color: common.get-var(components, segment, disabled, background);
       cursor: not-allowed;
+
+      app-local-icon,
+      ta-local-icon {
+        opacity: 0.5;
+      }
     }
   }
 }

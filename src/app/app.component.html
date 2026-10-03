@@ -1,44 +1,83 @@
 <div class="shell">
   <nav class="sidebar">
-    <div class="sidebar-header">{{ this.title }}</div>
+    <div class="sidebar-header">
+      <span class="sidebar-title">{{ this.title }}</span>
+      <span class="sidebar-subtitle">{{ this.subtitle }}</span>
+    </div>
+
+    <div class="nav-search">
+      <input
+        type="search"
+        data-testid="nav-search"
+        aria-label="Rechercher un composant"
+        placeholder="Rechercher un composant…"
+        [value]="this.query()"
+        (input)="this.onQueryInput($event)"
+      />
+    </div>
+
+    <!--
+      Zone annoncée, **toujours montée**. Un lecteur d'écran ne surveille de façon
+      fiable qu'une région déjà présente dans le DOM avant que son contenu ne change :
+      insérer d'un coup un nœud portant à la fois `aria-live` et son contenu n'est pas
+      annoncé de manière garantie. Le conteneur reste donc là en permanence, vide
+      quand la recherche l'est, et seul son contenu varie. Elle englobe aussi les
+      messages, pour qu'une absence de résultat s'entende comme un résultat.
+    -->
+    <div class="nav-results-region" aria-live="polite">
+      @if (this.query().trim().length > 0) {
+        @if (this.searchResults().length > 0) {
+          <ul class="nav-results" data-testid="nav-results">
+            @for (result of this.searchResults(); track result.id) {
+              <li>
+                <a
+                  data-testid="nav-component-link"
+                  [routerLink]="['/', result.short, result.id]"
+                  (click)="this.clearQuery()"
+                >
+                  <span class="nav-result-id">{{ result.id }}</span>
+                  <span class="nav-result-pkg">{{ result.pkg }}</span>
+                </a>
+              </li>
+            }
+          </ul>
+
+          @if (this.hiddenResultCount() > 0) {
+            <p class="nav-results-note" data-testid="nav-results-more">
+              {{ this.hiddenResultCount() }} autre(s) correspondance(s) — précisez la recherche.
+            </p>
+          }
+        } @else if (this.query().trim().length < 2) {
+          <p class="nav-results-note" data-testid="nav-results-hint">
+            Tapez au moins deux caractères.
+          </p>
+        } @else {
+          <p class="nav-results-note" data-testid="nav-results-empty">
+            Aucun composant ne correspond.
+          </p>
+        }
+      }
+    </div>
+
     <div class="sidebar-nav">
       @for (item of this.menu; track item.label) {
         @if (item.group) {
           <div class="nav-group">{{ item.label }}</div>
-        } @else if (item.children) {
-          <a
-            [routerLink]="item.route"
-            class="nav-item"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: false }"
-          >
-            <span class="material-icons">{{ item.icon }}</span>
-            <span>{{ item.label }}</span>
-          </a>
-          @for (child of item.children; track child.label) {
-            <a
-              [routerLink]="child.route"
-              class="nav-item nav-item--child"
-              routerLinkActive="active"
-            >
-              <span>{{ child.label }}</span>
-            </a>
-          }
         } @else {
-          <a
-            [routerLink]="item.route"
-            class="nav-item"
-            routerLinkActive="active"
-          >
+          <a [routerLink]="item.route" class="nav-item" routerLinkActive="active">
             <span class="material-icons">{{ item.icon }}</span>
             <span>{{ item.label }}</span>
           </a>
         }
       }
     </div>
+
     <div class="sidebar-footer">
       <label class="theme-label">
-        <span class="material-icons">palette</span>
+        <span class="theme-label-text">
+          <span class="material-icons">palette</span>
+          Thème
+        </span>
         <select
           class="theme-select"
           [value]="this.activeTheme().name"
@@ -51,6 +90,7 @@
       </label>
     </div>
   </nav>
+
   <main class="content">
     <router-outlet />
   </main>

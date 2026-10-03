@@ -39,6 +39,44 @@ $spacing: common.get-var(components, card, padding);
     box-shadow: common.get-var(components, card, card-shadow, box-shadow);
   }
 
+  /// Carte inversée : le navy devient la surface, le jaune signale le chiffre
+  /// clé et l'action. Les textes secondaires remontent en brand-100 pour
+  /// rester lisibles sur fond sombre.
+  ///
+  /// La classe est simplement posée ici. Les composants enfants qui doivent s'y
+  /// adapter la lisent depuis leur propre feuille via `:host-context(.invert)` —
+  /// voir `ta-card-header`.
+  &.invert {
+    background-color: common.get-var(components, card, invert, background);
+    color: common.get-var(components, card, invert, color);
+    border-color: common.get-var(components, card, invert, border);
+
+    &.card-shadow {
+      box-shadow: common.get-var(components, card, invert, shadow);
+    }
+
+    &.hover:hover {
+      background-color: common.get-var(brand, 800);
+    }
+  }
+
+  /// Carte en retrait : la surface recule, le texte passe en secondaire et la photo perd
+  /// ses couleurs. Rien n'est caché — la carte se lit encore, elle ne réclame plus l'œil.
+  &.muted {
+    background-color: common.get-var(components, card, muted, background);
+    color: common.get-var(components, card, muted, color);
+    border-color: common.get-var(components, card, muted, border);
+    opacity: common.get-var(components, card, muted, opacity);
+
+    &.card-shadow {
+      box-shadow: none;
+    }
+
+    .card-img-container {
+      filter: grayscale(1);
+    }
+  }
+
   .responsive-content {
     @include flex.flex-column();
     @include flex.flex-full();

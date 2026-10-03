@@ -1,14 +1,15 @@
-<app-page-layout title="Molecules Sandbox">
-  <div class="cards">
-    @for (s of this.sections; track s.route) {
-    <a [routerLink]="s.route" class="card">
-      <span class="material-icons card-icon">{{ s.icon }}</span>
-      <div class="card-text">
-        <strong>{{ s.title }}</strong>
-        <span>{{ s.description }}</span>
-      </div>
-      <span class="material-icons card-arrow">arrow_forward</span>
-    </a>
+<app-page-layout
+  eyebrow="Techatome Molecules"
+  title="Sandbox des composants"
+  description="Chaque paquet @ta a sa page : les composants y sont montrés dans leurs états réels, avec le thème actif."
+>
+  <div class="section-grid">
+    @for (section of this.sections; track section.route) {
+      <a [routerLink]="section.route" class="section-card">
+        <span class="section-card__pkg">{{ section.pkg }}</span>
+        <span class="section-card__title">{{ section.title }}</span>
+        <span class="section-card__description">{{ section.description }}</span>
+      </a>
     }
   </div>
 </app-page-layout>

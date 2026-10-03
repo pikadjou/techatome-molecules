@@ -17,8 +17,8 @@ Avant de répondre à la question :
 1. **Identifie** dans les tableaux ci-dessous le composant ou token concerné.
 2. **Lis la fiche de référence** via `Read` si un élément spécifique est mentionné :
    - Composants UI : `references/ui/<selector>.md`
-   - Mixins/tokens SCSS : `references/styles/mixins.md` ou `references/styles/tokens.md`
-   - Classes CSS : `references/styles/css-classes.md`
+   - Tokens SCSS : `references/styles/design-tokens.md` — mixins : `references/styles/mixin-flex.md`, `mixin-fonts.md`, `mixin-common.md`, `mixin-media-queries.md`, `mixin-text.md`
+   - Classes CSS : `references/styles/css-classes-flexbox.md`, `css-classes-spacing.md`, `css-classes-grid.md`, `css-classes-text.md`
 3. **Réponds à partir du contenu lu** — les références sont la **source de vérité**.
 
 Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes avant de répondre.
@@ -69,27 +69,31 @@ Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes a
 <ta-button type="primary" size="medium" (action)="this.save()">Valider</ta-button>
 ```
 
+**Exceptions actées (2026-09-16), à ne pas rouvrir** : les `<button>` natifs de `ta-files-preview-modal`
+(visionneuse plein écran) et de la toolbar EditorJS de `@ta/wysiswyg` — contrôles denses propres à ces
+composants, `ta-button` n'ayant pas d'état « pressé ». Partout ailleurs la règle est entière.
+
 ### Icônes
 
-| ❌ Interdit                     | ✅ Obligatoire                                  |
-| ------------------------------- | ----------------------------------------------- |
-| `<i class="icon-*">`            | `<ta-font-icon [name]="'search'">`              |
-| `<span class="material-icons">` | `<ta-material-icon>search</ta-material-icon>`   |
-| SVG inline                      | `<ta-local-icon [type]="TaIconType.Search">`    |
+| ❌ Interdit                     | ✅ Obligatoire                                |
+| ------------------------------- | --------------------------------------------- |
+| `<i class="icon-*">`            | `<ta-font-icon [name]="'search'">`            |
+| `<span class="material-icons">` | `<ta-material-icon>search</ta-material-icon>` |
+| SVG inline                      | `<ta-local-icon [type]="TaIconType.Search">`  |
 
 ### Layout de page
 
-| ❌ Interdit                           | ✅ Obligatoire                                                                       |
-| ------------------------------------- | ------------------------------------------------------------------------------------ |
+| ❌ Interdit                           | ✅ Obligatoire                                                                     |
+| ------------------------------------- | ---------------------------------------------------------------------------------- |
 | Divs custom pour la structure de page | `<ta-layout-page>`, `<ta-layout-header>`, `<ta-layout-content>`, `<ta-layout-nav>` |
 
 ### Cards
 
-| ❌ Interdit                  | ✅ Obligatoire                                  |
-| ---------------------------- | ----------------------------------------------- |
-| `<div class="card">` custom  | `<ta-card>`                                     |
-| Titres de card en `<h*>`     | `<ta-card-title>` dans `<ta-card-header>`       |
-| Sous-titres de card en `<p>` | `<ta-card-subtitle>` dans `<ta-card-header>`    |
+| ❌ Interdit                  | ✅ Obligatoire                               |
+| ---------------------------- | -------------------------------------------- |
+| `<div class="card">` custom  | `<ta-card>`                                  |
+| Titres de card en `<h*>`     | `<ta-card-title>` dans `<ta-card-header>`    |
+| Sous-titres de card en `<p>` | `<ta-card-subtitle>` dans `<ta-card-header>` |
 
 ```html
 <!-- ✅ Structure complète d'une card -->
@@ -110,9 +114,9 @@ Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes a
 
 ### Listes
 
-| ❌ Interdit                            | ✅ Obligatoire                                |
-| -------------------------------------- | --------------------------------------------- |
-| `<ul>/<li>` pour des listes de données | `<ta-list-container>` + `<ta-list-element>`   |
+| ❌ Interdit                            | ✅ Obligatoire                              |
+| -------------------------------------- | ------------------------------------------- |
+| `<ul>/<li>` pour des listes de données | `<ta-list-container>` + `<ta-list-element>` |
 
 ```html
 <!-- ✅ -->
@@ -128,16 +132,16 @@ Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes a
 
 ### Badges
 
-| ❌ Interdit                   | ✅ Obligatoire                                                                         |
-| ----------------------------- | -------------------------------------------------------------------------------------- |
+| ❌ Interdit                   | ✅ Obligatoire                                                                     |
+| ----------------------------- | ---------------------------------------------------------------------------------- |
 | `<span class="badge">` custom | `<ta-badge value="..." type="primary\|success\|warning\|danger\|info\|secondary">` |
 
 ### États (loading / erreur / vide)
 
-| ❌ Interdit                            | ✅ Obligatoire                              |
-| -------------------------------------- | ------------------------------------------- |
-| Spinner custom, `<mat-spinner>` direct | `<ta-loader [isLoading]="...">`             |
-| Div "aucun résultat" custom            | `<ta-empty [isEmpty]="...">`                |
+| ❌ Interdit                            | ✅ Obligatoire                            |
+| -------------------------------------- | ----------------------------------------- |
+| Spinner custom, `<mat-spinner>` direct | `<ta-loader [isLoading]="...">`           |
+| Div "aucun résultat" custom            | `<ta-empty [isEmpty]="...">`              |
 | Div d'erreur custom                    | `<ta-error [message]="..." [code]="...">` |
 
 ```html
@@ -153,15 +157,38 @@ Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes a
 
 ### Formulaires
 
-| ❌ Interdit                                          | ✅ Obligatoire                                   |
-| ---------------------------------------------------- | ------------------------------------------------ |
-| `<form>`, `<input>`, `<select>`, `<textarea>` natifs | `<ta-form>` + composants de `@ta/form-input`     |
+| ❌ Interdit                                          | ✅ Obligatoire                               |
+| ---------------------------------------------------- | -------------------------------------------- |
+| `<form>`, `<input>`, `<select>`, `<textarea>` natifs | `<ta-form>` + composants de `@ta/form-input` |
 
 ### Notifications
 
-| ❌ Interdit                      | ✅ Obligatoire                                                                |
-| -------------------------------- | ----------------------------------------------------------------------------- |
-| `alert()`, `mat-snackbar` direct | `TaNotificationService.addNotification()` de `@ta/notification`              |
+| ❌ Interdit                      | ✅ Obligatoire                                                  |
+| -------------------------------- | --------------------------------------------------------------- |
+| `alert()`, `mat-snackbar` direct | `TaNotificationService.addNotification()` de `@ta/notification` |
+
+### Dates — formats déjà prévus, jamais de motif à la main
+
+| ❌ Interdit                                                              | ✅ Obligatoire                                                                                 |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `date: 'EEEE d MMMM'`, `date: 'dd/MM/yyyy'` — motif écrit à la main      | `date: 'shortDate' \| 'mediumDate' \| 'longDate' \| 'fullDate' \| 'shortTime' \| 'short' \| …` |
+| `date: 'fullDate' : undefined : this.locale` — locale passée en argument | rien : `LOCALE_ID` s'en charge                                                                 |
+| Date + plage horaire composée à la main                                  | `<ta-hour-date-line [startDate] [endDate]>`                                                    |
+| « il y a 2 jours », « hier » calculés à la main                          | `<ta-time-ago [date]>`                                                                         |
+| Durée formatée à la main                                                 | `<ta-duration>`                                                                                |
+
+```html
+<!-- ❌ -->
+{{ visit.startAt | date: 'EEEE d MMMM' : undefined : this.locale }}
+
+<!-- ✅ -->
+{{ visit.startAt | date: 'fullDate' }}
+<ta-hour-date-line [startDate]="visit.startAt" [endDate]="visit.endAt"></ta-hour-date-line>
+```
+
+Les formats prédéfinis d'Angular (`short`, `medium`, `long`, `full`, `shortDate`, `mediumDate`, `longDate`,
+`fullDate`, `shortTime`, `mediumTime`, `longTime`, `fullTime`) suivent la locale et le thème ; un motif
+maison ne suit ni l'un ni l'autre.
 
 ---
 
@@ -170,11 +197,35 @@ Si plusieurs éléments sont concernés, lis **toutes** les fiches pertinentes a
 ### Import en tête de chaque `.component.scss`
 
 ```scss
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/flex";
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/mediaQueriesRanges" as mq;
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 ```
+
+### Jetons : uniquement `common.get-var()` — jamais `var(--ta-…)` à la main
+
+Un jeton se **lit** par `common.get-var(...)`, son nom se **produit** par `common.get-var-name(...)`.
+Écrire `var(--ta-…)` soi-même, avec ou sans valeur de repli, est interdit. Poser `--ta-xxx: …` sur un
+composant depuis l'extérieur (« réassignation ») l'est aussi : un composant ne se retouche jamais depuis
+l'endroit qui l'utilise. S'il manque une variante, on l'ajoute au composant (`type`, `shape`, `variant`…).
+
+```scss
+// ❌ hook maison, valeur de repli, réassignation depuis le parent
+padding: var(--ta-card-padding, #{common.get-var(space, md)});
+ta-label {
+  --ta-label-radius: #{common.get-var(radius, pill)};
+}
+
+// ✅ le jeton, rien d'autre
+padding: common.get-var(components, card, padding);
+```
+
+**Jeton manquant → on l'ajoute dans `_vars.scss`**, jamais de valeur brute dans un `.component.scss` :
+
+- espacement hors grille propre à un composant → map `components.<composant>` (ex. `components.tab-bar.pill.padding-vertical`) ;
+- couleur ou taille propre à un composant → même map (ex. `components.lightbox.background`, `components.lightbox.control-size`) ;
+- voile translucide sur surface sombre → `common.get-var(surface, veil, xs|sm|md|lg)`.
 
 ### Espacements — `common.get-var(space, ...)`
 
@@ -199,19 +250,27 @@ padding: common.get-var(space, md);
 gap: common.get-var(space, sm);
 ```
 
+Un `11px`, `13px`, `22px` « ajusté à l'œil » n'est pas une exception : soit le palier `space` le plus proche,
+soit un jeton `components.<composant>` ajouté dans `_vars.scss`.
+
 ### Couleurs — `common.get-var(...)`
 
 ```scss
-// ❌
+// ❌ — hex, rgb(), rgba(), noms de couleur : tout est interdit
 color: #1f2245;
 background-color: #f4f4f4;
-border-color: #e0e0e0;
+border: 1px solid rgba(255, 255, 255, 0.14);
+background: #0b1426;
 
 // ✅
 color: common.get-var(text, primary);
 background-color: common.get-var(surface, secondary);
-border-color: common.get-var(border, primary);
+border: 1px solid common.get-var(surface, veil, md);
+background: common.get-var(components, lightbox, background);
 ```
+
+Une couleur « proche de la marque » (`#0b1426`) se remplace par le jeton de la marque (`brand, 900`) ; une
+couleur dérivée (scrim, dégradé) se définit dans `_vars.scss` avec `color.change(map.get($brand, 900), $alpha: …)`.
 
 **Tokens texte :** `common.get-var(text, primary|secondary|tertiary|brand|invert|body|success|warning|alert)`
 **Tokens surface :** `common.get-var(surface, default|primary|secondary|tertiary|brand|hover|invert|success|warning|alert)`
@@ -228,8 +287,8 @@ border-radius: 8px;
 // ✅
 border-radius: common.get-var(radius, minimal); // 4px
 border-radius: common.get-var(radius, rounded); // 8px
-border-radius: common.get-var(radius, label);   // 16px
-border-radius: common.get-var(radius, full);    // 40px
+border-radius: common.get-var(radius, label); // 16px
+border-radius: common.get-var(radius, full); // 40px
 ```
 
 ### Ombres — `common.get-var(shadow, ...)`
@@ -238,10 +297,43 @@ border-radius: common.get-var(radius, full);    // 40px
 // ❌
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
+// ✅ — 3 arguments : famille puis taille
+box-shadow: common.get-var(shadow, black, sm);
+box-shadow: common.get-var(shadow, black, md);
+box-shadow: common.get-var(shadow, brand, lg);
+```
+
+### Typographie — mixins `fonts.*` obligatoires
+
+On ne change pas la police. Aucun `font-family`, `font-size`, `font-weight`, `letter-spacing` écrit à la
+main : taille et graisse viennent des mixins, la famille du thème.
+
+```scss
+// ❌
+font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+font-size: 13px;
+font-weight: 600;
+letter-spacing: 0.06em;
+
 // ✅
-box-shadow: common.get-var(shadow, black-sm);
-box-shadow: common.get-var(shadow, black-md);
-box-shadow: common.get-var(shadow, brand-lg);
+@include fonts.fontSizeBody(sm); // taille + graisse du palier
+@include fonts.fontSizeBody(sm, true); // même palier, graisse bold
+@include fonts.fontSizeHeader(h2);
+font-family: common.get-var(font, display, family); // seule famille alternative admise : celle du thème
+```
+
+### Flexbox — mixins `flex.*` obligatoires
+
+```scss
+// ❌
+display: flex;
+flex-direction: column;
+
+// ✅
+@include flex.flex-column();
+@include flex.flex-row();
+@include flex.space-between(); // display: flex; flex-direction: row; justify-content: space-between
+@include flex.align-center(); // display: flex; align-items: center
 ```
 
 ### Media queries — mixins obligatoires
@@ -337,12 +429,23 @@ Avant de soumettre tout code HTML/SCSS, vérifier :
 - [ ] Aucune div "vide" custom → `<ta-empty>`
 - [ ] Aucune div "erreur" custom → `<ta-error>`
 - [ ] Aucun `<form>`/`<input>` natif → `<ta-form>` + composants `@ta/form-input`
+- [ ] Aucun motif de date à la main (`date: 'EEEE d MMMM'`) ni locale en argument → formats prédéfinis (`shortDate`, `fullDate`…), `<ta-hour-date-line>`, `<ta-time-ago>`, `<ta-duration>`
 
 **SCSS :**
 
-- [ ] Aucune valeur px brute → `common.get-var(space, ...)`
-- [ ] Aucune couleur hex brute → `common.get-var(text|surface|border|icon, ...)`
+- [ ] Aucun `var(--ta-…)` écrit à la main, avec ou sans repli → `common.get-var(...)`
+- [ ] Aucun `--ta-xxx: …` posé sur un composant enfant (réassignation) → variante du composant
+- [ ] Aucune valeur px brute, même « ajustée » (`11px`, `22px`) → `space` ou jeton `components.<composant>` dans `_vars.scss`
+- [ ] Aucune couleur hex / `rgb()` / `rgba()` → `text|surface|border|icon`, `surface.veil` sur fond sombre, ou jeton `components.<composant>`
+- [ ] Aucun `font-family` / `font-size` / `font-weight` / `letter-spacing` à la main → `fonts.*`
+- [ ] Aucun `display: flex` + `flex-direction` à la main → `flex.*`
 - [ ] Aucun `border-radius` brut → `common.get-var(radius, ...)`
-- [ ] Aucun `box-shadow` brut → `common.get-var(shadow, ...)`
+- [ ] Aucun `box-shadow` brut → `common.get-var(shadow, famille, taille)`
 - [ ] Aucun `@media` brut → `@include mq.from()` / `@include mq.to()`
 - [ ] Classes utilitaires utilisées dans le template pour éviter du CSS redondant
+
+**TypeScript / templates :**
+
+- [ ] Aucune assertion non-null `!` dans un template → `@if (this.x(); as x) { … }`
+- [ ] Variantes de composant par `[ngClass]="this.getClass()"` dans le template + SCSS, pas par `host: { '[class.x]': … }`
+- [ ] Commentaires courts : une ligne par input / méthode publique, pas de bannière de section ni de paragraphe de justification

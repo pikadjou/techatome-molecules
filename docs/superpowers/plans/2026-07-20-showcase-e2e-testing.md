@@ -4,7 +4,7 @@
 
 **Goal:** Mettre en place une suite e2e Playwright qui teste les composants `@ta/*` affichés dans le showcase (1 spec par composant via un runner descripteur partagé), et en extraire un socle de testabilité réutilisable (`taTestId`, `@ta/testing`).
 
-**Architecture:** Playwright pilote l'app showcase (`ng serve` sur `:4200`). Un runner `testComponent(descriptor)` génère les tests à partir d'un descripteur minimal, gardant chaque spec par composant petit et sans duplication. La testabilité repose sur une directive `taTestId` dans `@ta/utils` et des testids par défaut sur les composants interactifs clés. Les helpers Playwright et le harness runtime sont packagés dans `@ta/testing` (entrée `@ta/testing/e2e` en plain-TS).
+**Architecture:** Playwright pilote l'app showcase (`ng serve --port 4300`, port dédié pour éviter tout conflit avec un `yarn start` déjà lancé sur 4200). Un runner `testComponent(descriptor)` génère les tests à partir d'un descripteur minimal, gardant chaque spec par composant petit et sans duplication. La testabilité repose sur une directive `taTestId` dans `@ta/utils` et des testids par défaut sur les composants interactifs clés. Les helpers Playwright et le harness runtime sont packagés dans `@ta/testing` (entrée `@ta/testing/e2e` en plain-TS).
 
 **Tech Stack:** Angular 18, Playwright, TypeScript, ng-packagr (lib runtime) + tsc (entrée e2e plain-TS), Lerna/Yarn workspaces.
 
@@ -121,7 +121,7 @@ git commit -m "chore(e2e): add Playwright dependency and scripts"
 - Create: `e2e/tsconfig.json`
 
 **Interfaces:**
-- Produces: `testDir: ./e2e/specs`, `baseURL: http://localhost:4200`, `webServer` lançant `yarn start`.
+- Produces: `testDir: ./e2e/specs`, `baseURL: http://localhost:4300`, `webServer` lançant `ng serve --port 4300`.
 
 - [ ] **Step 1: Écrire la config**
 
@@ -136,13 +136,13 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
-    baseURL: 'http://localhost:4200',
+    baseURL: 'http://localhost:4300',
     trace: 'on-first-retry',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'yarn start',
-    url: 'http://localhost:4200',
+    command: 'ng serve --port 4300',
+    url: 'http://localhost:4300',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },
@@ -912,7 +912,19 @@ git commit -m "refactor(testing): move Playwright helpers into @ta/testing/e2e"
 
 ## PHASE 3 — Couverture par composant
 
-> **Réalité du showcase :** plusieurs sous-pages du nouveau showcase sont encore des placeholders "Coming Soon" (ex. `ui/basics`). On ne peut tester que les composants **effectivement rendus**. Pour chaque section, d'abord repérer les composants rendus, écrire une spec descripteur par composant, puis passer à la section suivante. Les sections vides sont notées `test.fixme` avec la route cible, à activer quand la page sera implémentée.
+> **RÉVISION (2026-07-20) — Approche harness générique.** Constat à l'exécution : ~80% des
+> pages routées du showcase sont des stubs "Coming Soon" (seules `theme`, `charts`, `features`,
+> `wysiswyg`, `user` rendent du vrai contenu). Décision utilisateur : ne pas dépendre de
+> l'avancement du showcase. On introduit une **page harness générique** montant n'importe quel
+> composant `@ta/*` à la demande via une route `/e2e-harness/:caseId`. Chaque "case" est un petit
+> composant standalone wrapper rendant un composant `@ta/*` dans une config canonique. Les specs
+> descripteur pointent leur `route` vers `/e2e-harness/<caseId>`. L'engine harness
+> (`E2eHarnessComponent` + registre) est d'abord posé dans l'app showcase (tranche verticale de
+> preuve), puis extrait vers `@ta/testing` (`TaHarnessComponent` + `provideHarnessCases`) pour être
+> réutilisable par les apps consommatrices. Le runner `testComponent()` est inchangé.
+>
+> **Réalité showcase (héritée) :** les pages showcase réellement remplies peuvent aussi être
+> testées directement (route showcase au lieu de la route harness) — le descripteur accepte les deux.
 
 ### Task 3.0 : Procédure répétable (pattern) — à appliquer par section
 
@@ -926,11 +938,25 @@ Pour une route donnée (ex. `/container`), lister les composants `@ta/*` rendus 
 grep -oE "ta-[a-z-]+" src/app/showcase/<section>/*.html | sort -u
 ```
 
-- [ ] **Step 2: Vérifier/ajouter les testids manquants**
+- [ ] **Step 2: Rendre le composant ciblable (pattern retenu)**
 
-Pour chaque composant listé sans `data-testid` par défaut (hors ceux de Phase 1), soit :
-- ajouter un `data-testid` par défaut dans le template `@ta/*` du composant (rebuild la lib), soit
-- appliquer `taTestId="..."` sur l'usage dans le template showcase.
+**Pattern validé (préféré, non invasif)** : dans le composant wrapper de case, importer
+`TaTestIdDirective` de `@ta/utils` et appliquer `taTestId="ta-<selector>"` sur l'élément
+`@ta/*`. Aucune édition des libs nécessaire. Exemple :
+```ts
+@Component({
+  standalone: true, selector: "app-case-ui-title",
+  imports: [TitleComponent, TaTestIdDirective],
+  template: `<ta-title taTestId="ta-title" [level]="2">Harness Title</ta-title>`,
+})
+export class UiTitleCase {}
+```
+Alternative (seulement si un testid par défaut est souhaité partout) : ajouter un
+`data-testid` en dur dans le template de la lib (ex. `ta-button`) puis rebuild la lib.
+
+> **Batch réalisé (2026-07-20)** : `ui-button` (+click), `ui-title`, `ui-text`, `ui-badge`,
+> et les 5 charts (`bar/line/doughnut/pie/mixed`) — 12 tests verts. Une seule case `charts`
+> rend les 5 graphiques (data chart.js réutilisée du showcase), 5 specs ciblant chaque testId.
 
 - [ ] **Step 3: Écrire une spec par composant**
 
@@ -1089,4 +1115,10 @@ git commit -m "docs(testing): document @ta/testing runtime and e2e harness for a
 
 **Cohérence des types :** `ComponentTestDescriptor`, `Interaction`, `testComponent`, `byTestId`, `AppPage`, `ShowcasePage`, `provideTestingServer` utilisés de façon cohérente entre Phase 0 (création), Phase 2 (migration, mêmes signatures) et Phase 3 (consommation). `testId` = `ta-<selector>` / `ta-input-<key>` cohérent entre Task 1.3 et Phase 3.
 
-**Point ouvert résolu :** build de l'entrée `/e2e` → **tsc dédié** (`tsconfig.e2e.json`) + `exports` map, consommation locale via path mapping tsconfig (pas de conflit ng-packagr/Playwright).
+**Point ouvert résolu :** build de l'entrée `/e2e` → **tsc dédié** (`tsconfig.e2e.json` → `dist-e2e/`, exit 0). Consommation **locale** via path mapping tsconfig (`@ta/testing/e2e` → `projects/testing/e2e/src/public-api.ts`), avec `tsconfig: "./e2e/tsconfig.json"` dans `playwright.config.ts`. Pas d'`exports` map sur la package.json source (elle casserait la résolution `.` du runtime servi depuis `dist`).
+
+## Déviations rencontrées à l'exécution (Phase 2)
+
+1. **Symlink workspace** : après création du package, `yarn install` est requis pour créer `node_modules/@ta/testing` (sinon l'app ne résout pas `@ta/testing`). Le `canvas`/node-gyp error au install est une dép optionnelle préexistante, ignorable.
+2. **Piège barrel Playwright** : le loader Playwright **ne re-exporte pas correctement** `export * from "./x"` quand la chaîne inclut un module ne contenant que des types (`descriptor.ts`). Symptôme : `does not provide an export named 'testComponent'`. **Fix** : re-exports **nommés explicites** dans `projects/testing/e2e/src/public-api.ts` (`export { testComponent } from "./test-component"`, `export type { ... } from "./descriptor"`). Ne concerne QUE le barrel chargé par Playwright ; le `public-api.ts` runtime (ng-packagr) garde `export *`.
+3. **Port 4200 occupé** par l'app de l'utilisateur → webServer e2e sur **4300** (`ng serve --port 4300`).

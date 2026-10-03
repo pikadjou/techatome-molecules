@@ -1,12 +1,13 @@
 import * as i0 from '@angular/core';
-import { input, HostListener, Directive, effect, EventEmitter, Output, Pipe, inject, Injectable, signal, Component, InjectionToken } from '@angular/core';
+import { input, HostListener, Directive, effect, EventEmitter, Output, HostBinding, Pipe, inject, Injectable, signal, Component, output, InjectionToken } from '@angular/core';
 import * as i1 from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { TaIconType } from '@ta/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { differenceInMinutes, parseISO, isValid } from 'date-fns';
+import { differenceInMinutes, parseISO, isValid, startOfWeek, format, addWeeks } from 'date-fns';
+export { addDays } from 'date-fns';
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 import Compressor from 'compressorjs';
@@ -112,6 +113,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], propDecorators: { rendered: [{
                 type: Output
+            }] } });
+
+class TaTestIdDirective {
+    constructor() {
+        this.taTestId = input.required();
+    }
+    get attr() {
+        return this.taTestId();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTestIdDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: TaTestIdDirective, isStandalone: true, selector: "[taTestId]", inputs: { taTestId: { classPropertyName: "taTestId", publicName: "taTestId", isSignal: true, isRequired: true, transformFunction: null } }, host: { properties: { "attr.data-testid": "this.attr" } }, ngImport: i0 }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTestIdDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: "[taTestId]",
+                    standalone: true,
+                }]
+        }], propDecorators: { attr: [{
+                type: HostBinding,
+                args: ["attr.data-testid"]
             }] } });
 
 const FILE_SIZE_UNITS = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
@@ -572,16 +594,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ template: "" }]
         }], ctorParameters: () => [] });
 
+/** Contenu d'une modale piloté par un `ModalState<T, U>` : entrée `T` lue via `modalState().input()`, résultat `U` rendu par `confirm()`. */
 class TaBaseModal extends TaAbstractComponent {
     constructor() {
         super();
+        this.modalState = input(null);
+        this.closeEvent = output();
+    }
+    isOpen() {
+        return this.modalState()?.open() ?? false;
+    }
+    /** Ferme avec un résultat : `completed()` sur l'état, puis `closeEvent`. */
+    confirm(output) {
+        this.modalState()?.completed(output);
+        this.closeEvent.emit(output);
+    }
+    /** Ferme sans résultat. */
+    dismiss() {
+        this.modalState()?.dismissed();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", inputs: { modalState: { classPropertyName: "modalState", publicName: "modalState", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, decorators: [{
             type: Component,
-            args: [{ template: "" }]
+            args: [{ template: '' }]
         }], ctorParameters: () => [] });
 
 const isArray = (variable) => {
@@ -723,6 +760,45 @@ const getCountryName = (code, locale) => {
         return normalized;
     }
 };
+/** Langues dans lesquelles un nom de pays hérité a pu être stocké. */
+const NAME_LOCALES = ['en', 'fr', 'nl', 'de'];
+/**
+ * Ramène un pays à son code ISO 3166-1 alpha-2.
+ *
+ * Un code connu est rendu en majuscules. Un nom complet (« Belgium »,
+ * « Belgique », « België »…) — héritage d'anciens enregistrements — est
+ * résolu par comparaison, insensible à la casse et aux accents, avec les noms
+ * localisés en anglais, français, néerlandais et allemand. Toute autre valeur
+ * donne `null`.
+ */
+const resolveCountryCode = (value) => {
+    const trimmed = value?.trim() ?? '';
+    if (!trimmed) {
+        return null;
+    }
+    const upper = trimmed.toUpperCase();
+    if (COUNTRY_CODES.includes(upper)) {
+        return upper;
+    }
+    const wanted = foldName(trimmed);
+    for (const locale of NAME_LOCALES) {
+        const displayNames = buildDisplayNames(locale);
+        if (!displayNames) {
+            continue;
+        }
+        const match = COUNTRY_CODES.find(code => foldName(displayNames.of(code) ?? '') === wanted);
+        if (match) {
+            return match;
+        }
+    }
+    return null;
+};
+const foldName = (name) => {
+    return name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+};
 /**
  * Retourne la liste complète des pays (code + nom localisé).
  *
@@ -776,6 +852,86 @@ const isStrictISODateString = (value) => {
     const date = parseISO(value);
     return isValid(date) && value === date.toISOString().slice(0, value.length);
 };
+const MINUTES_PER_HOUR = 60;
+const MINUTES_PER_DAY = 1440;
+const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
+/** Reste toujours positif : ramène une valeur qui déborde dans un cycle (jour, semaine). */
+const mod = (value, cycle) => ((value % cycle) + cycle) % cycle;
+/**
+ * « HH:mm » → minutes depuis minuit. Une valeur absente ou mal formée vaut minuit : un horaire
+ * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
+ */
+const parseTimeToMinutes = (time) => {
+    const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? "").trim());
+    if (!match) {
+        return 0;
+    }
+    return Number(match[1]) * MINUTES_PER_HOUR + Number(match[2]);
+};
+/** Minutes depuis minuit → « HH:mm ». Déborde et revient dans la journée plutôt que d'aller au-delà. */
+const formatMinutesToTime = (minutes) => {
+    const normalized = mod(minutes, MINUTES_PER_DAY);
+    const hours = Math.floor(normalized / MINUTES_PER_HOUR);
+    const rest = normalized % MINUTES_PER_HOUR;
+    return `${String(hours).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+};
+/** Lundi 00:00 de la semaine locale qui contient `reference`. */
+const startOfLocalWeek = (reference = new Date()) => {
+    return startOfWeek(reference, { weekStartsOn: 1 });
+};
+/** Clé de regroupement par jour local — « 2026-09-15 ». */
+const localDayKey = (date) => {
+    return format(new Date(date), "yyyy-MM-dd");
+};
+/**
+ * Le décalage local par rapport à UTC change-t-il dans les sept prochains jours ? Sert à prévenir
+ * qu'un horaire récurrent va se décaler à l'écran sans que personne n'y ait touché.
+ */
+const hasUpcomingOffsetShift = (reference = new Date()) => {
+    return reference.getTimezoneOffset() !== addWeeks(reference, 1).getTimezoneOffset();
+};
+/** Les jours de la semaine dans l'ordre d'affichage européen, lundi en tête (0 = dimanche). */
+const WEEK_DAYS_FROM_MONDAY = [1, 2, 3, 4, 5, 6, 0];
+/** Un créneau vu comme un point dans la semaine : minutes depuis dimanche minuit, et durée. */
+const toWeekMinutes = (slot) => {
+    const startOfDayMinutes = parseTimeToMinutes(slot.startTime);
+    return {
+        start: slot.dayOfWeek * MINUTES_PER_DAY + startOfDayMinutes,
+        duration: parseTimeToMinutes(slot.endTime) - startOfDayMinutes,
+    };
+};
+const fromWeekMinutes = (start, duration) => {
+    const normalized = mod(start, MINUTES_PER_WEEK);
+    return {
+        dayOfWeek: Math.floor(normalized / MINUTES_PER_DAY),
+        startTime: formatMinutesToTime(normalized),
+        endTime: formatMinutesToTime(normalized + duration),
+    };
+};
+/**
+ * Un créneau hebdomadaire exprimé en UTC, ramené à l'heure locale. Le décalage est celui en
+ * vigueur à `reference` : un changement d'heure dans la semaine décalerait l'affichage, ce dont
+ * `hasUpcomingOffsetShift` permet de prévenir.
+ */
+const weeklySlotToLocal = (slot, reference = new Date()) => {
+    const { start, duration } = toWeekMinutes(slot);
+    return fromWeekMinutes(start - reference.getTimezoneOffset(), duration);
+};
+/**
+ * L'inverse : un créneau saisi en heure locale, exprimé en UTC. `null` si la plage est vide ou
+ * inversée, ou si elle franchit minuit UTC — un créneau appartient à un seul jour côté serveur.
+ */
+const weeklySlotToUtc = (slot, reference = new Date()) => {
+    const { start, duration } = toWeekMinutes(slot);
+    if (duration <= 0) {
+        return null;
+    }
+    const utcStart = start + reference.getTimezoneOffset();
+    if (mod(utcStart, MINUTES_PER_DAY) + duration >= MINUTES_PER_DAY) {
+        return null;
+    }
+    return fromWeekMinutes(utcStart, duration);
+};
 
 const extractEnum = (allEnum, backendOne = false) => {
     const keys = Object.keys(allEnum).filter((k) => typeof allEnum[k] === "number");
@@ -802,6 +958,27 @@ const newGuid = () => {
 };
 const newId = () => {
     return Math.floor(Math.random() * 1000000 + 1);
+};
+/**
+ * Deux identifiants désignent-ils le même GUID ?
+ *
+ * Un GUID circule sous plusieurs écritures — avec ou sans tirets, en
+ * majuscules ou en minuscules — selon qu'il sort d'une API, d'une URL ou d'une
+ * extension d'erreur. Une valeur absente ne désigne rien : elle n'est jamais
+ * égale, pas même à une autre valeur absente.
+ */
+const sameGuid = (a, b) => {
+    if (!a || !b) {
+        return false;
+    }
+    return normalizeGuid(a) === normalizeGuid(b);
+};
+/**
+ * L'écriture canonique d'un GUID : sans tirets, en minuscules. Sert à comparer, mais aussi à
+ * regrouper — une clé de `Set` ou de `Map` ne passe pas par `sameGuid`.
+ */
+const normalizeGuid = (guid) => {
+    return guid.replace(/-/g, "").toLowerCase();
 };
 const s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -996,6 +1173,35 @@ const roundToDecimal = (number, precision) => {
 const percentage = (partialValue, totalValue) => {
     return (100 * partialValue) / totalValue;
 };
+/**
+ * Un nombre lu dans une chaîne qui peut manquer ou n'en pas être un : les API en renvoient
+ * (métadonnées, paramètres d'URL). `null` dès que la valeur ne fait pas un nombre fini — à l'appelant
+ * de décider quoi montrer, plutôt qu'un `NaN` qui traverse tout l'écran.
+ */
+const parseNumber = (raw) => {
+    if (!raw) {
+        return null;
+    }
+    const value = Number(raw);
+    return Number.isFinite(value) ? value : null;
+};
+
+/**
+ * Montants facturés. Les API de paiement comptent en cents entiers : jamais de flottant sur
+ * l'argent tant qu'on calcule, et la conversion se fait au dernier moment, pour l'affichage.
+ */
+/** Cents → unité principale (euros chez nous), pour le pipe `currency`. */
+const centsToEuros = (cents) => {
+    return (cents ?? 0) / 100;
+};
+/** TVA contenue dans un total TTC : `total × taux / (100 + taux)`. */
+const vatIncludedCents = (totalCents, vatRate) => {
+    return Math.round((totalCents * vatRate) / (100 + vatRate));
+};
+/** Le même total, hors taxe. */
+const excludingVatCents = (totalCents, vatRate) => {
+    return totalCents - vatIncludedCents(totalCents, vatRate);
+};
 
 const getCivilityIcon = (civility) => {
     if (!civility) {
@@ -1035,28 +1241,37 @@ const sort = (array, options) => {
 };
 
 const getFileExtension = (filePath) => {
-    const extension = getFullFileNameFromUrl(filePath)?.split(".").pop()?.toLowerCase() || null;
+    // Ignore la query string et l'ancre (`photo.jpg?token=…`).
+    const name = getFullFileNameFromUrl(filePath)?.split(/[?#]/)[0] ?? null;
+    const extension = name?.split('.').pop()?.toLowerCase() || null;
     switch (extension) {
-        case "pdf":
+        case 'pdf':
             return EFileExtension.PDF;
-        case "docx":
+        case 'doc':
+        case 'docx':
             return EFileExtension.Word;
-        case "xls":
-        case "xlsx":
+        case 'xls':
+        case 'xlsx':
             return EFileExtension.Excel;
-        case "jpg":
-        case "jpeg":
-        case "png":
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'gif':
+        case 'webp':
+        case 'avif':
+        case 'bmp':
+        case 'svg':
+        case 'heic':
             return EFileExtension.Image;
     }
     return EFileExtension.Unknown;
 };
 const getFullFileNameFromUrl = (url) => {
-    return url.split("/").pop() || null;
+    return url.split('/').pop() || null;
 };
 const trigram = (name) => {
     if (!name) {
-        return "";
+        return '';
     }
     if (name.length < 4) {
         return name;
@@ -1068,7 +1283,7 @@ const capitalizeFirstLetter = (value) => {
         return value;
     return value.charAt(0).toUpperCase() + value.slice(1);
 };
-const convertToNumber = (values) => values?.map((value) => Number(value)) || [];
+const convertToNumber = (values) => values?.map(value => Number(value)) || [];
 const isURL = (str) => {
     // Expression régulière pour vérifier une URL
     const pattern = /^https?:\/\//; // Fragment d'URL
@@ -1149,6 +1364,28 @@ class HorizontalScroll {
         this._elementRef.addEventListener("mousemove", this.mouseMove);
         this._elementRef.addEventListener("mouseleave", this.mouseLeft);
         this._elementRef.addEventListener("mouseup", this.mouseLeft);
+    }
+}
+
+/** État partagé entre un parent et une modale : entrée `T` poussée à l'ouverture, résultat `U` rendu à la fermeture. */
+class ModalState {
+    constructor() {
+        this.open = signal(false);
+        this.input = signal(null);
+        this.output = signal(null);
+    }
+    asked(input) {
+        this.input.set(input);
+        this.output.set(null);
+        this.open.set(true);
+    }
+    completed(output) {
+        this.output.set(output);
+        this.open.set(false);
+    }
+    /** Fermeture sans résultat. */
+    dismissed() {
+        this.open.set(false);
     }
 }
 
@@ -1252,5 +1489,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TemporaryFile, TypedTemplateDirective, call, canTakePhoto, capitalizeFirstLetter, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, extractEnum, extractExtension, filterNonNullableItems, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, merge, newGuid, newId, octetsToMo, openExternalUrl, openMap, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, roundToDecimal, s4, search, sendMail, sort, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
 //# sourceMappingURL=ta-utils.mjs.map

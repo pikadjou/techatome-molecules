@@ -2,6 +2,8 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent } from '@ta/ui';
 import { TypedTemplateDirective } from '@ta/utils';
 
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -15,17 +17,27 @@ type PageNumber = {
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
   standalone: true,
-  imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective],
+  imports: [ButtonComponent, FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe],
 })
 export class PaginationComponent extends TaAbstractGridComponent<any> {
   readonly PageNumber!: { pagenumber: PageNumber };
   readonly maxPageNumber = 10;
 
-  get show() {
-    return this.paginationGetTotalPages > 1;
+  public show() {
+    return this.isCursorMode() ? this.hasNextPage() : this.paginationGetTotalPages() > 1;
   }
-  get paginationGetTotalPages() {
-    return this.grid.table?.getPageMax() || 0;
+  /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
+  public isCursorMode() {
+    return this.grid().table?.isCursorMode() ?? false;
+  }
+  public hasNextPage() {
+    return this.grid().table?.hasNextPage() ?? false;
+  }
+  public isLoading() {
+    return this.grid().table?.isLoading() ?? false;
+  }
+  public paginationGetTotalPages() {
+    return this.grid().table?.getPageMax() || 0;
   }
 
   constructor() {
@@ -33,16 +45,17 @@ export class PaginationComponent extends TaAbstractGridComponent<any> {
   }
 
   public getListPage() {
-    if (!this.grid || !this.grid.table) {
+    const table = this.grid()?.table;
+    if (!table) {
       return [];
     }
-    const last = this.paginationGetTotalPages;
+    const last = this.paginationGetTotalPages();
 
     if (last <= this.maxPageNumber) {
       return this._computedPageNumbers(2, last);
     }
 
-    const current = this.grid.table.getPage() || 0;
+    const current = table.getPage() || 0;
     const rangeStart = Math.floor(current / 10) * 10;
     const rangeEnd = rangeStart + 10;
 

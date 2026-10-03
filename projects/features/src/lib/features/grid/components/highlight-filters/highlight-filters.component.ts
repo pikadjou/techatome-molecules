@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angu
 
 import { FormComponent } from '@ta/form-basic';
 import { InputBase } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
 import { ButtonComponent, TextComponent } from '@ta/ui';
+import { PluralTranslatePipe } from '@ta/utils';
 
 import { TaGridFormService } from '../../services/grid-form.services';
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -12,7 +12,7 @@ import { TaAbstractGridComponent } from '../abstract.component';
 @Component({
   selector: 'ta-grid-highlight-filters',
   standalone: true,
-  imports: [FormComponent, FontIconComponent, TranslatePipe, ButtonComponent, TextComponent],
+  imports: [FormComponent, TranslatePipe, PluralTranslatePipe, ButtonComponent, TextComponent],
   templateUrl: './highlight-filters.component.html',
   styleUrl: './highlight-filters.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

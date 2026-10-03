@@ -21,13 +21,15 @@
               </ta-button>
             </div>
           }
+          <!-- Encart de mise en avant (score, quota, formule…). -->
+          <ng-content select="[accountHighlight]"></ng-content>
         </div>
       </ta-empty>
     </ta-error>
   </ta-loader>
-  @if (this.profileMenu()) {
+  @if (this.profileMenu(); as profileMenu) {
     <div class="bdp-b color-border-primary pt-space-xs">
-      <ta-menu [menu]="this.profileMenu()!" [style]="'dark'" [container]="'overflow'"></ta-menu>
+      <ta-menu [menu]="profileMenu" [style]="'dark'" [container]="'overflow'"></ta-menu>
     </div>
   }
   @let disconnectionMenu = this.disconnectionMenu();

@@ -63,5 +63,20 @@
                 }
             }
         }
+    },
+    "toolbar": {
+        "delete": "Delete block",
+        "delimiter": "Separator",
+        "header1": "Main heading",
+        "header2": "Heading",
+        "header3": "Subheading",
+        "image": "Image",
+        "listOrdered": "Numbered list",
+        "listUnordered": "Bulleted list",
+        "moveDown": "Move down",
+        "moveUp": "Move up",
+        "paragraph": "Text",
+        "quote": "Quote",
+        "warning": "Warning"
     }
 }

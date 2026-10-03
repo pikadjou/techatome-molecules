@@ -1,0 +1,89 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+:host {
+  display: block;
+}
+
+.example {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+  padding: common.get-var(space, lg);
+  background: common.get-var(surface, primary);
+  border: 1px solid common.get-var(border, tertiary);
+  border-radius: common.get-var(radius, rounded);
+}
+
+.example-header {
+  @include flex.flex-row();
+  @include flex.align-center();
+  @include flex.space-between();
+  gap: common.get-var(space, md);
+}
+
+.example-actions {
+  @include flex.flex-row();
+  gap: common.get-var(space, xs);
+
+  button {
+    @include fonts.fontSizeBody(xs);
+    padding: common.get-var(space, xs) common.get-var(space, sm);
+    border: 1px solid common.get-var(border, secondary);
+    border-radius: common.get-var(radius, rounded);
+    background: transparent;
+    color: common.get-var(text, secondary);
+    cursor: pointer;
+
+    &:hover {
+      background: common.get-var(surface, hover, primary);
+      color: common.get-var(text, primary);
+    }
+  }
+}
+
+.example-description {
+  @include fonts.fontSizeBody(sm);
+  margin: 0;
+  color: common.get-var(text, secondary);
+}
+
+// Les exemples posent leurs éléments côte à côte par défaut : c'est la
+// comparaison des variantes qui fait la démonstration. Une mise en page, un
+// formulaire ou un tableau veulent au contraire toute la largeur : voir
+// `.is-stacked`.
+.example-render {
+  @include flex.flex-row();
+  @include flex.align-center();
+  flex-wrap: wrap;
+  gap: common.get-var(space, md);
+  padding: common.get-var(space, md);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, secondary);
+
+  &.is-stacked {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.example-source-label {
+  @include fonts.fontSizeBody(xs);
+  margin: 0;
+  color: common.get-var(text, secondary);
+}
+
+.example-source {
+  overflow-x: auto;
+  margin: 0;
+  padding: common.get-var(space, md);
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(surface, secondary);
+
+  code {
+    @include fonts.fontSizeBody(sm);
+    color: common.get-var(text, primary);
+    font-family: "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
+    white-space: pre;
+  }
+}

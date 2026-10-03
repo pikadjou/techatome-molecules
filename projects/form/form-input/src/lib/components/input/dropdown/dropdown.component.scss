@@ -93,7 +93,7 @@ button .selected-value {
 
   &.selected {
     background-color: common.get-var(surface, tertiary);
-    font-weight: 600;
+    font-weight: common.get-var(font, weight, bold);
   }
 
   &.disabled {

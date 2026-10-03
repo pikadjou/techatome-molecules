@@ -1,23 +1,42 @@
-<div stopPropagationActivation (click)="this.openModal()">
-  <ng-content></ng-content>
-</div>
+@if (!this.isInlineOpen()) {
+  <div stopPropagationActivation (click)="this.openModal()">
+    <ng-content></ng-content>
+  </div>
+}
 
-<ta-modal
-  [open]="this.isModalOpen()"
-  size="small"
-  [title]="this.title() | translate"
-  [closeOnBackdrop]="false"
-  (closeEvent)="this.onNoClick()"
->
-  <div modal-content>
-    <ta-text>{{ this.subtitle() | translate }}</ta-text>
+@if (this.isInlineOpen()) {
+  <div class="validation-inline">
+    <span class="validation-inline__title">{{ this.title() | translate }}</span>
+    <ta-text class="validation-inline__body">{{ this.subtitle() | translate }}</ta-text>
+    <div class="validation-inline__actions">
+      <ta-button type="tertiary" size="small" (action)="this.onNoClick()">
+        {{ 'ui.container.validation.modal.cta.cancel' | translate }}
+      </ta-button>
+      <ta-button type="danger" size="small" (action)="this.onYesClick()">
+        {{ 'ui.container.validation.modal.cta.ok' | translate }}
+      </ta-button>
+    </div>
   </div>
-  <div modal-footer>
-    <ta-button type="danger" (action)="this.onNoClick()">
-      {{ 'ui.container.validation.modal.cta.cancel' | translate }}
-    </ta-button>
-    <ta-button type="primary" (action)="this.onYesClick()">
-      {{ 'ui.container.validation.modal.cta.ok' | translate }}
-    </ta-button>
-  </div>
-</ta-modal>
+}
+
+@if (this.variant() === 'modal') {
+  <ta-modal
+    [open]="this.isModalOpen()"
+    size="small"
+    [title]="this.title() | translate"
+    [closeOnBackdrop]="false"
+    (closeEvent)="this.onNoClick()"
+  >
+    <div modal-content>
+      <ta-text>{{ this.subtitle() | translate }}</ta-text>
+    </div>
+    <div modal-footer>
+      <ta-button type="danger" (action)="this.onNoClick()">
+        {{ 'ui.container.validation.modal.cta.cancel' | translate }}
+      </ta-button>
+      <ta-button type="primary" (action)="this.onYesClick()">
+        {{ 'ui.container.validation.modal.cta.ok' | translate }}
+      </ta-button>
+    </div>
+  </ta-modal>
+}

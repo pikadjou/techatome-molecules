@@ -1,5 +1,6 @@
 <progress
   class="progress-bar"
+  [ngClass]="this.getClasses()"
   max="{{ this.max() }}"
   value="{{ this.current() }}"
 ></progress>

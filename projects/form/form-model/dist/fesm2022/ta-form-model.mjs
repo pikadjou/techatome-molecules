@@ -147,9 +147,11 @@ class InputBase {
 class InputCheckBox extends InputBase {
     constructor(options = {}) {
         super(options);
-        this.controlType = "checkbox";
+        this.controlType = 'checkbox';
+        this.onLabel = options.onLabel;
+        this.offLabel = options.offLabel;
         if (options.toggle === true) {
-            this.controlType = "toggle";
+            this.controlType = 'toggle';
         }
         if (!this.value) {
             this.value = false;
@@ -540,19 +542,67 @@ class InputAddress extends InputBase {
         this.type = 'address';
         this.priorityCountries = options.priorityCountries ?? ['BE', 'FR', 'DE', 'NL'];
     }
+    /**
+     * Valeur brute du formulaire → adresse normalisée.
+     *
+     * Les chaînes sont détourées : une recherche Google ou une saisie manuelle
+     * laisse volontiers une espace en tête ou en fin, et chaque consommateur
+     * refaisait le travail de son côté. Le reste passe tel quel — coordonnées et
+     * `placeId` compris, à charge de l'appelant de ne transmettre que ce que son
+     * API accepte.
+     */
     static formatAddressForm(data) {
         if (!data) {
             return null;
         }
         return {
-            city: data[EAddressValues.city],
-            country: data[EAddressValues.country],
-            floor: data[EAddressValues.floor],
-            number: data[EAddressValues.number],
+            city: InputAddress._trim(data[EAddressValues.city]),
+            country: InputAddress._trim(data[EAddressValues.country]),
+            floor: InputAddress._trim(data[EAddressValues.floor]),
+            number: InputAddress._trim(data[EAddressValues.number]),
             placeId: data[EAddressValues.placeId],
-            street: data[EAddressValues.street],
-            zipCode: data[EAddressValues.zipCode],
+            street: InputAddress._trim(data[EAddressValues.street]),
+            zipCode: InputAddress._trim(data[EAddressValues.zipCode]),
         };
+    }
+    /**
+     * L'adresse porte-t-elle de quoi écrire une enveloppe ?
+     *
+     * `Validators.required` posé sur le champ ne garantit que la présence d'une
+     * valeur, pas celle de ses parties : une recherche abandonnée en cours de
+     * route rend une adresse partielle, qu'une API postale rejettera. `floor`
+     * reste facultatif — un immeuble n'en a pas toujours.
+     */
+    static isComplete(address) {
+        if (!address) {
+            return false;
+        }
+        return [address.street, address.number, address.zipCode, address.city, address.country].every(value => !!InputAddress._trim(value));
+    }
+    static _trim(value) {
+        return typeof value === 'string' ? value.trim() : value;
+    }
+}
+
+/**
+ * Code postal + commune choisis dans la liste officielle du pays — jamais saisis
+ * librement. C'est la brique « localité » de l'adresse, utilisable seule : une
+ * zone de recherche, un périmètre d'intervention.
+ *
+ * Valeur : `AddressLocality` (ou `AddressLocality[]` si `multiple`), `null` tant
+ * que rien n'est choisi.
+ */
+class InputLocality extends InputBase {
+    constructor(options = {}) {
+        super(options);
+        this.controlType = 'locality';
+        this.type = 'locality';
+        this.country$ = options.country$ ?? null;
+        this.multiple = options.multiple === true;
+    }
+    /** Identifiant d'une localité dans une liste de choix : le couple code postal + commune. */
+    static localityId(locality) {
+        return `${locality.zipCode}__${locality.city}`;
     }
 }
 
@@ -621,5 +671,5 @@ class InputComponent extends InputBase {
  * Generated bundle index. Do not edit.
  */
 
-export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
+export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLocality, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
 //# sourceMappingURL=ta-form-model.mjs.map

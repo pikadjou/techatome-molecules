@@ -1,0 +1,11 @@
+<div class="data-grid-item">
+  <span class="data-grid-item-label">
+    @if (this.icon(); as icon) {
+      <ta-font-icon [name]="icon" type="sm"></ta-font-icon>
+    }
+    <span class="data-grid-item-label-text">{{ this.label() }}</span>
+  </span>
+  <span class="data-grid-item-value">
+    <ng-content></ng-content>
+  </span>
+</div>

@@ -1,65 +1,45 @@
-import { Component, EventEmitter, OnInit, Output, input } from "@angular/core";
+import { Component, effect } from '@angular/core';
 
-import { map } from "rxjs";
-import { Observable } from "rxjs";
+import { Observable, Subscription, map } from 'rxjs';
 
-import { FontIconComponent } from "@ta/icons";
-import { TranslatePipe } from "@ta/translation";
-import { ButtonComponent, DualButtonComponent, TaModalComponent, TitleComponent } from "@ta/ui";
-import { FileData, FileStructure, TaBaseComponent, TemporaryFile, pickImages } from "@ta/utils";
+import { FontIconComponent } from '@ta/icons';
+import { TranslatePipe } from '@ta/translation';
+import { ButtonComponent, DualButtonComponent, TaModalComponent, TitleComponent } from '@ta/ui';
+import { FileData, FileStructure, TaBaseModal, TemporaryFile, pickImages } from '@ta/utils';
 
-export interface LogoDialogData {
-  selection: string | null;
-  input: {
-    availableFile$?: Observable<FileData>;
-    update?: (file: FileStructure) => void;
-  };
-}
+export type InputLogoModalInput = {
+  initialSelection: string | null;
+  availableFile$?: Observable<FileData>;
+  update?: (file: FileStructure) => void;
+};
 
+/** Choix ou remplacement d'un logo ; rend l'URL retenue, `null` si effacée. */
 @Component({
-  selector: "ta-input-logo-modal",
-  styleUrls: ["./input-logo-modal.component.scss"],
-  templateUrl: "./input-logo-modal.component.html",
+  selector: 'ta-input-logo-modal',
+  styleUrls: ['./input-logo-modal.component.scss'],
+  templateUrl: './input-logo-modal.component.html',
   standalone: true,
-  imports: [
-    ButtonComponent,
-    DualButtonComponent,
-    FontIconComponent,
-    TaModalComponent,
-    TitleComponent,
-    TranslatePipe,
-  ],
+  imports: [ButtonComponent, DualButtonComponent, FontIconComponent, TaModalComponent, TitleComponent, TranslatePipe],
 })
-export class InputLogoModal extends TaBaseComponent implements OnInit {
-  open = input.required<boolean>();
-  initialSelection = input<string | null>(null);
-  availableFile$ = input<Observable<FileData> | undefined>(undefined);
-  updateFn = input<((file: FileStructure) => void) | undefined>(undefined);
-
-  @Output() saved = new EventEmitter<string | null>();
-  @Output() closeEvent = new EventEmitter<void>();
-
+export class InputLogoModal extends TaBaseModal<InputLogoModalInput, string | null> {
   public selection: string | null = null;
   public tempFiles = new TemporaryFile();
 
+  private _fileSubscription?: Subscription;
+
   constructor() {
     super();
-    this.selection = this.initialSelection();
-  }
-
-  ngOnInit() {
-    this.selection = this.initialSelection();
-    if (this.availableFile$()) {
-      this._registerSubscription(
-        this.availableFile$()!.subscribe(() => this.tempFiles.removeAll())
-      );
-    }
+    effect(() => {
+      if (this.isOpen()) {
+        this._init(this.modalState()?.input());
+      }
+    });
   }
 
   public getPics$() {
-    return this.availableFile$()?.pipe(
-      map((file) => ({ ...file, isSelected: this.selection === file.url }))
-    );
+    return this.modalState()
+      ?.input()
+      ?.availableFile$?.pipe(map(file => ({ ...file, isSelected: this.selection === file.url })));
   }
 
   public onFileSelected(file: FileData) {
@@ -69,7 +49,7 @@ export class InputLogoModal extends TaBaseComponent implements OnInit {
   public uploadPics = async () => {
     const pics = await pickImages();
     if (pics.length > 0) {
-      const fn = this.updateFn();
+      const fn = this.modalState()?.input()?.update;
       if (fn) {
         this.tempFiles.addFiles(pics);
         fn(pics[0]);
@@ -79,15 +59,24 @@ export class InputLogoModal extends TaBaseComponent implements OnInit {
   };
 
   public selected = () => {
-    this.saved.emit(this.selection);
-    this.closeEvent.emit();
+    this.confirm(this.selection);
   };
 
   public cancel = () => {
-    this.closeEvent.emit();
+    this.dismiss();
   };
 
   public clearSelection = () => {
     this.selection = null;
   };
+
+  /** Repart de l'entrée à chaque ouverture. */
+  private _init(data: InputLogoModalInput | null | undefined) {
+    this.selection = data?.initialSelection ?? null;
+    this._fileSubscription?.unsubscribe();
+    if (data?.availableFile$) {
+      this._fileSubscription = data.availableFile$.subscribe(() => this.tempFiles.removeAll());
+      this._registerSubscription(this._fileSubscription);
+    }
+  }
 }

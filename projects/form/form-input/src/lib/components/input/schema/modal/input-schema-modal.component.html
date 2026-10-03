@@ -1,9 +1,4 @@
-<ta-modal
-  [open]="this.open()"
-  size="fullscreen"
-  title=""
-  (closeEvent)="this.close()"
->
+<ta-modal [open]="this.isOpen()" size="fullscreen" title="" (closeEvent)="this.close()">
   <div modal-content class="edit-schema-container">
     <ta-files-edit
       [imagePath]="this.imagePath"

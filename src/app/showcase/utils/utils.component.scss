@@ -2,26 +2,9 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/fonts";
 
-.sections {
-  @include flex.flex-column();
-  gap: common.get-var(space, xxl);
-}
-
 section {
   @include flex.flex-column();
   gap: common.get-var(space, md);
-}
-
-.demo-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: common.get-var(space, md);
-}
-
-.demo-column {
-  @include flex.flex-column();
-  gap: common.get-var(space, sm);
 }
 
 .demo-box {

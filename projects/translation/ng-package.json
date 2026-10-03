@@ -6,7 +6,7 @@
     "@ngx-translate",
     "storage-manager-js"
   ],
-  "dest": "dist",
+  "dest": ".build",
 
   "lib": {
     "entryFile": "src/public-api.ts"

@@ -1,6 +1,7 @@
 <div
   class="list-element"
   [class.list-border]="this.withSeparator()"
+  [class.highlight]="this.highlight()"
   [class.responsive-container]="this.flexColumn()"
 >
   <div class="titles-container" (click)="this.action.emit()">

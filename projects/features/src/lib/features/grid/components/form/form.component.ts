@@ -2,9 +2,9 @@ import { Component, inject, input, signal } from '@angular/core';
 
 import { FormComponent } from '@ta/form-basic';
 import { InputBase } from '@ta/form-model';
-import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent, TitleComponent } from '@ta/ui';
+import { ButtonComponent, TextComponent, TitleComponent } from '@ta/ui';
+import { PluralTranslatePipe } from '@ta/utils';
 
 import { TaGridFormService } from '../../services/grid-form.services';
 import { TaAbstractGridComponent } from '../abstract.component';
@@ -12,13 +12,25 @@ import { TaAbstractGridComponent } from '../abstract.component';
 @Component({
   selector: 'ta-grid-form',
   standalone: true,
-  imports: [FormComponent, TitleComponent, TranslatePipe, FontIconComponent, ButtonComponent],
+  imports: [FormComponent, TitleComponent, TextComponent, TranslatePipe, PluralTranslatePipe, ButtonComponent],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
 export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
   showTitle = input<boolean>(true);
   showReset = input<boolean>(true);
+
+  /** Clé de traduction du titre du panneau. */
+  title = input<string>('grid.form.title');
+
+  /** Affiche le nombre de résultats à côté du titre. */
+  showResultCount = input<boolean>(true);
+
+  /**
+   * Affiche le regroupement dans le panneau. Désactivé par défaut : le
+   * regroupement organise l'affichage, il est porté par `ta-grid-control`.
+   */
+  showGroup = input<boolean>(false);
 
   public filtersForm = signal<InputBase<any>[]>([]);
   public groupForm = signal<InputBase<any>[]>([]);
@@ -56,6 +68,8 @@ export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
 
   public reset() {
     this._grid.filters?.apply([]);
-    this._grid.clearGroupBy();
+    if (this.showGroup()) {
+      this._grid.clearGroupBy();
+    }
   }
 }

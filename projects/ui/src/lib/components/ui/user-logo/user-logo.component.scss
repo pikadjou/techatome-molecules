@@ -1,8 +1,14 @@
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/common';
 
 .user-image {
   border-radius: 100%;
   border: 1px solid common.get-var(border, tertiary);
+  object-fit: cover;
+
+  // La photo suit la forme du repli.
+  &.squircle {
+    border-radius: common.get-var(radius, minimal);
+  }
 }
 
 .img-container {

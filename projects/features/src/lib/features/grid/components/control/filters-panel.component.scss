@@ -1,0 +1,16 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+
+.filters-panel {
+  // Les deux actions du pied de panneau gardent l'apparence standard de
+  // `ta-button` : un bouton se présente de la même façon partout, et n'est
+  // jamais réécrit depuis l'endroit qui l'utilise.
+  &__footer {
+    @include flex.simple-flex();
+    @include flex.align-center();
+    @include flex.space-between();
+
+    gap: common.get-var(space, md);
+    width: 100%;
+  }
+}

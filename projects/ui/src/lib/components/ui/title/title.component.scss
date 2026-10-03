@@ -1,5 +1,15 @@
-@use "ta/utils/mixins/common";
-@use "ta/utils/mixins/fonts";
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/fonts';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: common.get-var(font, display, family);
+  letter-spacing: common.get-var(font, display, tracking);
+}
 
 h1 {
   @include fonts.fontSizeHeader(h1);
@@ -27,6 +37,16 @@ h4 {
   margin: 0;
   &.bold {
     @include fonts.fontSizeHeader(h4, true);
+  }
+}
+
+.title-content {
+  display: block;
+
+  &.with-icon {
+    display: flex;
+    align-items: center;
+    gap: common.get-var(space, sm);
   }
 }
 

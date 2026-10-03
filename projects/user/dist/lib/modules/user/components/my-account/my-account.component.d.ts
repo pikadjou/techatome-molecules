@@ -31,5 +31,5 @@ export declare class MyAccountComponent extends TaBaseComponent implements OnIni
     getDisconnectionMenu(): Menu<MenuIcon>;
     navigateToEditProfile(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MyAccountComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MyAccountComponent, "ta-my-account", never, { "profileMenu": { "alias": "profileMenu"; "required": false; "isSignal": true; }; "appVersion": { "alias": "appVersion"; "required": false; "isSignal": true; }; "isEditable": { "alias": "isEditable"; "required": false; "isSignal": true; }; }, { "navigateEvent": "navigateEvent"; "navigateEditEvent": "navigateEditEvent"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MyAccountComponent, "ta-my-account", never, { "profileMenu": { "alias": "profileMenu"; "required": false; "isSignal": true; }; "appVersion": { "alias": "appVersion"; "required": false; "isSignal": true; }; "isEditable": { "alias": "isEditable"; "required": false; "isSignal": true; }; }, { "navigateEvent": "navigateEvent"; "navigateEditEvent": "navigateEditEvent"; }, never, ["[accountHighlight]"], true, never>;
 }

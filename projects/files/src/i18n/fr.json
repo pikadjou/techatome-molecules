@@ -2,8 +2,13 @@
   "documents.upload.dialog.description": "Description du document",
   "documents.upload.dialog.document-type": "Type de document",
   "documents.upload.dialog.title": "Téléverser un document",
+  "preview.close": "Fermer",
+  "preview.hint_browse": "pour défiler",
+  "preview.hint_close": "pour fermer",
+  "preview.next": "Suivant",
+  "preview.previous": "Précédent",
   "preview.title": "Prévisualisation du fichier",
-  "slide.download": "Télécharger",
   "slide.delete": "Supprimer",
+  "slide.download": "Télécharger",
   "slide.no-viewer": "Aucun visualiseur disponible pour ce type de fichier"
 }

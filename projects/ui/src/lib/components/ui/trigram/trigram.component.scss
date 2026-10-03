@@ -1,13 +1,11 @@
-@use "ta/utils/mixins/fonts";
-@use "ta/utils/mixins/common";
+@use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/common';
 
 .trigram {
   @include fonts.fontSizeBody(md);
+  font-family: common.get-var(font, display, family);
+  font-weight: common.get-var(font, body, sm, bold, weight);
 
-  background-color: common.get-var(surface, brand, primary);
-  color: common.get-var(neutral, 100);
-
-  border-radius: 100%;
   width: 36px;
   height: 36px;
   line-height: 36px;
@@ -15,4 +13,33 @@
   vertical-align: middle;
 
   margin: auto;
+
+  &.circle {
+    border-radius: 100%;
+  }
+
+  // Même rayon que les cartes.
+  &.squircle {
+    border-radius: common.get-var(radius, minimal);
+  }
+
+  &.brand {
+    background-color: common.get-var(surface, brand, primary);
+    color: common.get-var(neutral, 100);
+  }
+
+  &.highlight {
+    background-color: common.get-var(surface, brand, secondary);
+    color: common.get-var(text, brand, primary);
+  }
+
+  &.surface {
+    background-color: common.get-var(surface, secondary);
+    color: common.get-var(text, brand, primary);
+  }
+
+  &.invert {
+    background-color: common.get-var(surface, veil, sm);
+    color: common.get-var(surface, brand, secondary);
+  }
 }

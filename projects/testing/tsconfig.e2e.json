@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist-e2e",
+    "declaration": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "rootDir": "./e2e/src",
+    "skipLibCheck": true
+  },
+  "include": ["e2e/src/**/*.ts"]
+}

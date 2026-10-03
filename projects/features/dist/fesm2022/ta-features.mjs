@@ -1,18 +1,18 @@
 import * as i0 from '@angular/core';
-import { Injectable, signal, computed, input, inject, Component, output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { FormComponent } from '@ta/form-basic';
-import { FontIconComponent } from '@ta/icons';
-import { TranslatePipe } from '@ta/translation';
-import { TitleComponent, ButtonComponent, EmptyComponent, ErrorComponent, LoaderComponent, TextComponent, BadgeComponent, TaModalComponent, TaOverlayPanelComponent } from '@ta/ui';
-import { of, Subject, BehaviorSubject, firstValueFrom, distinctUntilChanged, filter, map } from 'rxjs';
-import { InputPanel, InputDropdown, InputDatePicker, InputNumber, InputChoices, InputTextBox } from '@ta/form-model';
-import { isNonNullable, getUniqueArray, TaBaseComponent, TypedTemplateDirective } from '@ta/utils';
+import { signal, computed, Injectable, input, inject, Component, output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Subject, BehaviorSubject, firstValueFrom, of, distinctUntilChanged, filter, map } from 'rxjs';
 import { format } from 'date-fns';
+import { InputDatePicker, InputPanel, InputDropdown, InputNumber, InputChoices, InputTextBox } from '@ta/form-model';
+import { getUniqueArray, isNonNullable, TaBaseComponent, PluralTranslatePipe, TypedTemplateDirective } from '@ta/utils';
+import { FormComponent } from '@ta/form-basic';
+import { TaLazyTranslationService, TranslatePipe } from '@ta/translation';
+import { TitleComponent, TextComponent, ButtonComponent, EmptyComponent, ErrorComponent, LoaderComponent, BadgeComponent, LayoutFullPanelComponent, TaOverlayPanelComponent } from '@ta/ui';
 import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import * as i1 from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchFieldComponent } from '@ta/form-input';
+import { FontIconComponent } from '@ta/icons';
 import { TaBaseService, createPagedQuery, HandleComplexRequest } from '@ta/server';
+import { SearchFieldComponent } from '@ta/form-input';
 
 var ParameterType;
 (function (ParameterType) {
@@ -24,333 +24,6 @@ var ParameterType;
     ParameterType[ParameterType["Enum"] = 5] = "Enum";
     ParameterType[ParameterType["Relation"] = 6] = "Relation";
 })(ParameterType || (ParameterType = {}));
-
-class TaGridFormService {
-    constructor() { }
-    getFiltersForm(model) {
-        const keys = Object.keys(model.cols);
-        if (!keys || keys.length === 0) {
-            return [];
-        }
-        return [
-            new InputPanel({
-                key: 'main-panel',
-                class: 'p-space-sm',
-                contentClass: 'grid g-space-md',
-                children: keys
-                    .filter(key => model.cols[key].data.col.showOnSearch)
-                    .map(key => model.cols[key].getInputForm())
-                    .filter(isNonNullable)
-                    .map(input => new InputPanel({
-                    key: 'panel',
-                    class: 'g-col-6',
-                    children: [input],
-                })),
-            }),
-        ];
-    }
-    getHighlightedFiltersForm(model) {
-        const keys = Object.keys(model.cols);
-        if (!keys || keys.length === 0) {
-            return [];
-        }
-        const children = keys
-            .filter(key => model.cols[key].data.col.highlighted)
-            .map(key => model.cols[key].getInputForm())
-            .filter(isNonNullable)
-            .map(input => new InputPanel({
-            key: 'panel',
-            class: 'g-col-6',
-            children: [input],
-        }));
-        if (children.length === 0) {
-            return [];
-        }
-        return [
-            new InputPanel({
-                key: 'highlight-panel',
-                contentClass: 'grid g-space-md',
-                children,
-            }),
-        ];
-    }
-    formatFiltersForm(model, data) {
-        return Object.keys(model.cols).reduce((acc, key) => {
-            const filter = model.cols[key].formatInputForm(data);
-            if (!filter) {
-                return acc;
-            }
-            return [...acc, filter];
-        }, []);
-    }
-    getGroupForm(model) {
-        return [
-            new InputPanel({
-                key: 'main-panel',
-                class: 'p-space-sm',
-                children: [
-                    new InputDropdown({
-                        key: 'group',
-                        label: 'grid.core.groupBy',
-                        options$: of(Object.values(model.cols)
-                            .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
-                            .map(group => ({
-                            id: group.key,
-                            name: group.inputLabel,
-                        }))),
-                        value: model.groupBy,
-                    }),
-                ],
-            }),
-        ];
-    }
-    formatGroupForm(data) {
-        return data['group'] || null;
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormService, providedIn: 'root' }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root',
-                }]
-        }], ctorParameters: () => [] });
-
-const operatorMap = {
-    contains: '%',
-    greaterThan: '>',
-    lessThan: '<',
-    equals: '=',
-    notEqual: '!=',
-    greaterThanOrEqual: '>=',
-    lessThanOrEqual: '<=',
-};
-class BaseCol {
-    get key() {
-        return this.data.col.name;
-    }
-    get inputLabel() {
-        return `grid.${this.data.scope}.core.${this.key}`;
-    }
-    get filterValues() {
-        return (this.model.filters
-            ?.get()
-            .find(filter => filter.key === this.key)
-            ?.values.map(f => f.value) || []);
-    }
-    constructor(data, model) {
-        this.data = data;
-        this.model = model;
-    }
-    getColConfig() {
-        return {
-            key: this.key,
-            title: this.inputLabel,
-            sortable: true,
-            width: this.data.col.width,
-            template: this.data.col.template,
-        };
-    }
-    defaultFormatter(row) {
-        const value = row[this.key];
-        return value != null ? String(value) : '';
-    }
-    getInputForm() {
-        return null;
-    }
-    formatInputForm(data) {
-        const value = data[this.key];
-        if (!value) {
-            return null;
-        }
-        return {
-            field: this.key,
-            type: '=',
-            value: value.trim(),
-        };
-    }
-}
-
-class BoolCol extends BaseCol {
-    defaultFormatter(row) {
-        const value = row[this.key];
-        if (value == null)
-            return '';
-        return value ? '✓' : '✗';
-    }
-}
-
-class DateCol extends BaseCol {
-    getInputForm() {
-        return new InputDatePicker({
-            key: this.key,
-            label: this.inputLabel,
-            rangeEnabled: true,
-            value: this.filterValues[0] ? { start: this.filterValues[0] } : undefined,
-        });
-    }
-    defaultFormatter(row) {
-        const value = row[this.key];
-        if (!value)
-            return '';
-        const date = new Date(value);
-        if (isNaN(date.getTime()))
-            return String(value);
-        return format(date, 'dd/MM/yyyy');
-    }
-    formatInputForm(data) {
-        const value = data[this.key];
-        if (!value) {
-            return null;
-        }
-        return {
-            field: this.key,
-            type: 'like',
-            value: format(value, 'yyyy-MM-dd') + '%',
-        };
-    }
-}
-
-class EnumCol extends BaseCol {
-    getInputForm() {
-        return new InputPanel({
-            key: 'enum-panel',
-            contentClass: 'row g-0',
-            children: [
-                new InputDropdown({
-                    key: this.key,
-                    label: this.inputLabel,
-                    options$: of(this.data.col.enumValues?.map(value => ({
-                        id: value,
-                        name: value,
-                    })) ?? []),
-                    value: this.filterValues[0],
-                }),
-            ],
-        });
-    }
-}
-
-class NumberCol extends BaseCol {
-    getInputForm() {
-        return new InputPanel({
-            key: 'number-panel',
-            contentClass: 'row g-0',
-            children: [
-                new InputNumber({
-                    key: this.key,
-                    label: this.inputLabel,
-                    value: this.filterValues[0],
-                }),
-            ],
-        });
-    }
-    formatInputForm(data) {
-        const value = data[this.key];
-        if (!value) {
-            return null;
-        }
-        return {
-            field: this.key,
-            type: '=',
-            value: value,
-        };
-    }
-}
-
-class RelationCol extends BaseCol {
-    getInputForm() {
-        if (this.data.col.dataSearch$) {
-            return new InputChoices({
-                key: this.key,
-                label: this.inputLabel,
-                class: 'pb-2',
-                advancedSearch$: this.data.col.dataSearch$,
-                value: this.filterValues,
-            });
-        }
-        return new InputTextBox({
-            key: this.key,
-            value: this.filterValues[0],
-        });
-    }
-    formatInputForm(data) {
-        const value = data[this.key];
-        if (!value) {
-            return null;
-        }
-        return {
-            field: this.key,
-            type: this.data.col.multivalues ? 'in' : '=',
-            value: Number(value),
-        };
-    }
-}
-
-class StringCol extends BaseCol {
-    getInputForm() {
-        // const value = this.values;
-        return new InputTextBox({
-            key: this.key,
-            label: this.inputLabel,
-            class: 'pb-2',
-            value: this.filterValues[0],
-        });
-    }
-    formatInputForm(data) {
-        const value = data[this.key];
-        if (!value || value === '' || value.length === 0) {
-            return null;
-        }
-        return {
-            field: this.key,
-            type: 'like',
-            value: value,
-        };
-    }
-}
-
-class TaGridFilters {
-    constructor(scope, table, preset = []) {
-        this.scope = scope;
-        this.table = table;
-        this.preset = preset;
-        this._debounceTimer = null;
-    }
-    get() {
-        return this.table.getFilters(false).reduce((acc, filter) => {
-            const existing = acc.find(tag => tag.key === filter.field);
-            if (existing) {
-                existing.values.push(filter);
-            }
-            else {
-                acc.push({
-                    key: filter.field,
-                    values: [filter],
-                });
-            }
-            return acc;
-        }, []);
-    }
-    apply(filters) {
-        if (this._debounceTimer) {
-            clearTimeout(this._debounceTimer);
-        }
-        this._debounceTimer = setTimeout(() => {
-            this.table.setFilter(filters);
-        }, 500);
-    }
-    remove(filter) {
-        this.table.removeFilter(filter.field, filter.type, filter.value);
-    }
-    destroy() {
-        if (this._debounceTimer) {
-            clearTimeout(this._debounceTimer);
-            this._debounceTimer = null;
-        }
-    }
-}
 
 class TaTableState {
     constructor() {
@@ -365,12 +38,19 @@ class TaTableState {
         this.groupByField = signal(null);
         this.isLoading = signal(false);
         this.errorMessage = signal('');
+        /** Mode `cursor` : la suite existe-t-elle, et d'où la reprendre. */
+        this.hasNextPage = signal(false);
+        this.endCursor = signal(null);
+        /** Un identifiant de ligne peut être un nombre ou un GUID, selon la source. */
         this.selectedIds = signal(new Set());
         this.selectionChanged$ = new Subject();
         this.rowClicked$ = new Subject();
         this.isReady$ = new BehaviorSubject(false);
         this.isDataReady$ = new BehaviorSubject(false);
         this._services = null;
+        this._pagination = 'page';
+        /** Mode `cursor` : la prochaine réponse s'ajoute au lieu de remplacer. */
+        this._appendNext = false;
         this._allData = [];
         this._colsMetaData = [];
         this._fetchTimer = null;
@@ -380,6 +60,10 @@ class TaTableState {
         this._services = params.services ?? null;
         this._colsMetaData = params.colsMetaData;
         this._onDataUpdate = params.onDataUpdate;
+        this._pagination = params.pagination ?? 'page';
+        if (params.pageSize) {
+            this.pageSize.set(params.pageSize);
+        }
         if (params.initialFilter?.length) {
             this.filters.set(params.initialFilter);
         }
@@ -397,6 +81,17 @@ class TaTableState {
     }
     getPageMax() {
         return this.totalPages();
+    }
+    isCursorMode() {
+        return this._pagination === 'cursor';
+    }
+    /** Mode `cursor` : demande la suite, qui s'ajoute à ce qui est déjà lu. */
+    loadMore() {
+        if (!this.isCursorMode() || !this.hasNextPage() || this.isLoading()) {
+            return;
+        }
+        this._appendNext = true;
+        this._scheduleUpdate();
     }
     setPage(n) {
         if (n >= 1 && n <= this.totalPages()) {
@@ -418,6 +113,7 @@ class TaTableState {
     }
     setFilter(filters) {
         this.currentPage.set(1);
+        this._resetCursor();
         this.filters.set(filters);
         this._scheduleUpdate();
     }
@@ -433,6 +129,7 @@ class TaTableState {
         this.sortField.set(field);
         this.sortDir.set(dir);
         this.currentPage.set(1);
+        this._resetCursor();
         this._scheduleUpdate();
     }
     setGroupBy(field) {
@@ -441,7 +138,14 @@ class TaTableState {
         this._scheduleUpdate();
     }
     refresh() {
+        this._resetCursor();
         this._scheduleUpdate();
+    }
+    /** Repartir du début : la prochaine réponse remplace ce qui est affiché. */
+    _resetCursor() {
+        this._appendNext = false;
+        this.endCursor.set(null);
+        this.hasNextPage.set(false);
     }
     toggleRow(id) {
         this.selectedIds.update(set => {
@@ -501,12 +205,12 @@ class TaTableState {
         for (const f of this.filters()) {
             const isSearch = f.field === 'search';
             if (isSearch) {
-                const searchFields = this._colsMetaData
-                    .filter(c => c.isSearchField)
-                    .map(c => String(c.name));
+                const searchFields = this._colsMetaData.filter(c => c.isSearchField).map(c => String(c.name));
                 if (searchFields.length && f.value) {
                     const needle = String(f.value).toLowerCase();
-                    data = data.filter(item => searchFields.some(key => String(item[key] ?? '').toLowerCase().includes(needle)));
+                    data = data.filter(item => searchFields.some(key => String(item[key] ?? '')
+                        .toLowerCase()
+                        .includes(needle)));
                 }
                 continue;
             }
@@ -514,17 +218,34 @@ class TaTableState {
                 const val = item[f.field];
                 const target = f.value;
                 switch (f.type) {
-                    case '=': return val == target;
-                    case '!=': return val != target;
-                    case 'like': return String(val ?? '').toLowerCase().includes(String(target).toLowerCase());
-                    case '<': return val < target;
-                    case '>': return val > target;
-                    case '<=': return val <= target;
-                    case '>=': return val >= target;
-                    case 'starts': return String(val ?? '').toLowerCase().startsWith(String(target).toLowerCase());
-                    case 'ends': return String(val ?? '').toLowerCase().endsWith(String(target).toLowerCase());
-                    case 'in': return Array.isArray(target) ? target.includes(val) : val == target;
-                    default: return true;
+                    case '=':
+                        return val == target;
+                    case '!=':
+                        return val != target;
+                    case 'like':
+                        return String(val ?? '')
+                            .toLowerCase()
+                            .includes(String(target).toLowerCase());
+                    case '<':
+                        return val < target;
+                    case '>':
+                        return val > target;
+                    case '<=':
+                        return val <= target;
+                    case '>=':
+                        return val >= target;
+                    case 'starts':
+                        return String(val ?? '')
+                            .toLowerCase()
+                            .startsWith(String(target).toLowerCase());
+                    case 'ends':
+                        return String(val ?? '')
+                            .toLowerCase()
+                            .endsWith(String(target).toLowerCase());
+                    case 'in':
+                        return Array.isArray(target) ? target.includes(val) : val == target;
+                    default:
+                        return true;
                 }
             });
         }
@@ -558,6 +279,8 @@ class TaTableState {
         const id = ++this._fetchId;
         this.isLoading.set(true);
         const sort = this.sortField() ? [{ field: this.sortField(), dir: this.sortDir() }] : [];
+        const append = this._appendNext;
+        this._appendNext = false;
         firstValueFrom(this._services.getData$({
             filter: this.filters(),
             sort,
@@ -565,16 +288,25 @@ class TaTableState {
             page: this.currentPage(),
             size: this.pageSize(),
             colsMetaData: this._colsMetaData,
+            cursor: append ? this.endCursor() : null,
         }))
             .then(response => {
             if (id !== this._fetchId)
                 return;
-            this.rows.set(response.data);
-            this.totalItems.set(response.total);
+            this.rows.set(append ? [...this.rows(), ...response.data] : response.data);
+            if (this.isCursorMode()) {
+                // Une connexion ne compte pas : le total affiché est ce qui a été lu.
+                this.hasNextPage.set(response.hasNextPage ?? false);
+                this.endCursor.set(response.endCursor ?? null);
+                this.totalItems.set(this.rows().length);
+            }
+            else {
+                this.totalItems.set(response.total);
+            }
             this.errorMessage.set('');
             this.isLoading.set(false);
             this.isDataReady$.next(true);
-            this._onDataUpdate?.(response.total);
+            this._onDataUpdate?.(this.totalItems());
         })
             .catch(() => {
             if (id !== this._fetchId)
@@ -582,6 +314,242 @@ class TaTableState {
             this.isLoading.set(false);
             this.errorMessage.set('grid.error.fetch');
         });
+    }
+}
+
+const operatorMap = {
+    contains: '%',
+    greaterThan: '>',
+    lessThan: '<',
+    equals: '=',
+    notEqual: '!=',
+    greaterThanOrEqual: '>=',
+    lessThanOrEqual: '<=',
+};
+class BaseCol {
+    key() {
+        return this.data.col.name;
+    }
+    inputLabel() {
+        return `grid.${this.data.scope}.core.${this.key()}`;
+    }
+    filterValues() {
+        return (this.model.filters
+            ?.get()
+            .find(filter => filter.key === this.key())
+            ?.values.map(f => f.value) || []);
+    }
+    constructor(data, model) {
+        this.data = data;
+        this.model = model;
+    }
+    getColConfig() {
+        return {
+            key: this.key(),
+            title: this.inputLabel(),
+            sortable: true,
+            width: this.data.col.width,
+            align: this.data.col.align,
+            template: this.data.col.template,
+        };
+    }
+    defaultFormatter(row) {
+        const value = row[this.key()];
+        return value != null ? String(value) : '';
+    }
+    getInputForm() {
+        return null;
+    }
+    formatInputForm(data) {
+        const value = data[this.key()];
+        if (!value) {
+            return null;
+        }
+        return {
+            field: this.key(),
+            type: '=',
+            value: value.trim(),
+        };
+    }
+}
+
+class BoolCol extends BaseCol {
+    defaultFormatter(row) {
+        const value = row[this.key()];
+        if (value == null)
+            return '';
+        return value ? '✓' : '✗';
+    }
+}
+
+class DateCol extends BaseCol {
+    getInputForm() {
+        return new InputDatePicker({
+            key: this.key(),
+            label: this.inputLabel(),
+            rangeEnabled: true,
+            value: this.filterValues()[0] ? { start: this.filterValues()[0] } : undefined,
+        });
+    }
+    defaultFormatter(row) {
+        const value = row[this.key()];
+        if (!value)
+            return '';
+        const date = new Date(value);
+        if (isNaN(date.getTime()))
+            return String(value);
+        return format(date, 'dd/MM/yyyy');
+    }
+    formatInputForm(data) {
+        const value = data[this.key()];
+        if (!value) {
+            return null;
+        }
+        return {
+            field: this.key(),
+            type: 'like',
+            value: format(value, 'yyyy-MM-dd') + '%',
+        };
+    }
+}
+
+class EnumCol extends BaseCol {
+    getInputForm() {
+        return new InputPanel({
+            key: 'enum-panel',
+            contentClass: 'row g-0',
+            children: [
+                new InputDropdown({
+                    key: this.key(),
+                    label: this.inputLabel(),
+                    options$: of(this.data.col.enumValues?.map(value => ({
+                        id: value,
+                        name: value,
+                    })) ?? []),
+                    value: this.filterValues()[0],
+                }),
+            ],
+        });
+    }
+}
+
+class NumberCol extends BaseCol {
+    getInputForm() {
+        return new InputPanel({
+            key: 'number-panel',
+            contentClass: 'row g-0',
+            children: [
+                new InputNumber({
+                    key: this.key(),
+                    label: this.inputLabel(),
+                    value: this.filterValues()[0],
+                }),
+            ],
+        });
+    }
+    formatInputForm(data) {
+        const value = data[this.key()];
+        if (!value) {
+            return null;
+        }
+        return {
+            field: this.key(),
+            type: '=',
+            value: value,
+        };
+    }
+}
+
+class RelationCol extends BaseCol {
+    getInputForm() {
+        if (this.data.col.dataSearch$) {
+            return new InputChoices({
+                key: this.key(),
+                label: this.inputLabel(),
+                class: 'pb-2',
+                advancedSearch$: this.data.col.dataSearch$,
+                value: this.filterValues(),
+            });
+        }
+        return new InputTextBox({
+            key: this.key(),
+            value: this.filterValues()[0],
+        });
+    }
+    formatInputForm(data) {
+        const value = data[this.key()];
+        if (!value) {
+            return null;
+        }
+        return {
+            field: this.key(),
+            type: this.data.col.multivalues ? 'in' : '=',
+            value: Number(value),
+        };
+    }
+}
+
+class StringCol extends BaseCol {
+    getInputForm() {
+        // const value = this.values;
+        return new InputTextBox({
+            key: this.key(),
+            label: this.inputLabel(),
+            class: 'pb-2',
+            value: this.filterValues()[0],
+        });
+    }
+    formatInputForm(data) {
+        const value = data[this.key()];
+        if (!value || value === '' || value.length === 0) {
+            return null;
+        }
+        return {
+            field: this.key(),
+            type: 'like',
+            value: value,
+        };
+    }
+}
+
+class TaGridFilters {
+    constructor(scope, table, preset = []) {
+        this.scope = scope;
+        this.table = table;
+        this.preset = preset;
+        this._debounceTimer = null;
+    }
+    get() {
+        return this.table.getFilters(false).reduce((acc, filter) => {
+            const existing = acc.find(tag => tag.key === filter.field);
+            if (existing) {
+                existing.values.push(filter);
+            }
+            else {
+                acc.push({
+                    key: filter.field,
+                    values: [filter],
+                });
+            }
+            return acc;
+        }, []);
+    }
+    apply(filters) {
+        if (this._debounceTimer) {
+            clearTimeout(this._debounceTimer);
+        }
+        this._debounceTimer = setTimeout(() => {
+            this.table.setFilter(filters);
+        }, 500);
+    }
+    remove(filter) {
+        this.table.removeFilter(filter.field, filter.type, filter.value);
+    }
+    destroy() {
+        if (this._debounceTimer) {
+            clearTimeout(this._debounceTimer);
+            this._debounceTimer = null;
+        }
     }
 }
 
@@ -597,14 +565,21 @@ const groupBy = (key, data) => {
 };
 
 class TaGridData {
-    get data() {
+    data() {
         return this.table?.getData() ?? [];
     }
-    get dataByGroup() {
-        return groupBy(this.groupBy, this.data);
+    dataByGroup() {
+        return groupBy(this._groupBy(), this.data());
     }
-    get isGroup() {
-        return this.groupBy !== null;
+    isGroup() {
+        return this._groupBy() !== null;
+    }
+    /**
+     * Champ de regroupement courant. Adossé à un signal : lu depuis un template,
+     * il notifie les composants même sous un parent en OnPush.
+     */
+    groupBy() {
+        return this._groupBy();
     }
     constructor(scope) {
         this.scope = scope;
@@ -616,7 +591,7 @@ class TaGridData {
         this.isDataReady$ = new BehaviorSubject(false);
         this._tableSubs = [];
         this.displayType = signal('card');
-        this.groupBy = null;
+        this._groupBy = signal(null);
         this.totalItems = signal(0);
     }
     init(params) {
@@ -632,28 +607,40 @@ class TaGridData {
             data: params.data,
             services: params.services,
             initialFilter: params.initialFilter,
+            pagination: params.pagination,
+            pageSize: params.pageSize,
             onDataUpdate: total => this.totalItems.set(total),
         });
         this.filters = new TaGridFilters(this.scope, this.table, params.preset);
-        this._tableSubs.push(this.table.isReady$.subscribe(ready => { if (ready)
-            this.isReady$.next(true); }), this.table.isDataReady$.subscribe(ready => { if (ready)
-            this.isDataReady$.next(true); }), this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)));
+        this._tableSubs.push(this.table.isReady$.subscribe(ready => {
+            if (ready)
+                this.isReady$.next(true);
+        }), this.table.isDataReady$.subscribe(ready => {
+            if (ready)
+                this.isDataReady$.next(true);
+        }), this.table.rowClicked$.subscribe(row => this.rowClicked$.next(row)));
     }
+    /**
+     * L'instance survit au composant : `TaGridInstanceService` la garde par `gridId` et la rend à la
+     * grille recréée sous le même id. On la remet donc à zéro sans fermer ses sujets — fermés, la
+     * grille recréée n'était jamais « prête » et restait vide.
+     */
     destroy() {
         this._tableSubs.forEach(s => s.unsubscribe());
         this._tableSubs = [];
         this.filters?.destroy();
+        this.filters = null;
         this.table?.destroy();
-        this.rowClicked$.complete();
-        this.isReady$.complete();
-        this.isDataReady$.complete();
+        this.table = null;
+        this.isReady$.next(false);
+        this.isDataReady$.next(false);
     }
     setGroupBy(field) {
-        this.groupBy = field;
+        this._groupBy.set(field);
         this.table?.setGroupBy(field);
     }
     clearGroupBy() {
-        this.groupBy = null;
+        this._groupBy.set(null);
         this.table?.setGroupBy(null);
     }
     switchView(type) {
@@ -662,7 +649,7 @@ class TaGridData {
     _buildCols(colsMetaData) {
         this.cols = Object.fromEntries(colsMetaData.map(meta => {
             const field = this._factoryCols(meta);
-            return [field.key, field];
+            return [field.key(), field];
         }));
     }
     _factoryCols(col) {
@@ -713,26 +700,137 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
+class TaGridFormService {
+    constructor() { }
+    getFiltersForm(model) {
+        const keys = Object.keys(model.cols);
+        if (!keys || keys.length === 0) {
+            return [];
+        }
+        return [
+            new InputPanel({
+                key: 'main-panel',
+                class: 'p-space-sm',
+                contentClass: 'flex-column g-space-md',
+                children: keys
+                    .filter(key => model.cols[key].data.col.showOnSearch)
+                    .map(key => model.cols[key].getInputForm())
+                    .filter(isNonNullable)
+                    .map(input => new InputPanel({
+                    key: `panel-${input.key}`,
+                    class: 'g-col-6',
+                    children: [input],
+                })),
+            }),
+        ];
+    }
+    getHighlightedFiltersForm(model) {
+        const keys = Object.keys(model.cols);
+        if (!keys || keys.length === 0) {
+            return [];
+        }
+        const children = keys
+            .filter(key => model.cols[key].data.col.highlighted)
+            .map(key => model.cols[key].getInputForm())
+            .filter(isNonNullable)
+            .map(input => new InputPanel({
+            key: `panel-${input.key}`,
+            class: 'g-col-6',
+            children: [input],
+        }));
+        if (children.length === 0) {
+            return [];
+        }
+        return [
+            new InputPanel({
+                key: 'highlight-panel',
+                contentClass: 'flex-column g-space-md',
+                children,
+            }),
+        ];
+    }
+    formatFiltersForm(model, data) {
+        return Object.keys(model.cols).reduce((acc, key) => {
+            const filter = model.cols[key].formatInputForm(data);
+            if (!filter) {
+                return acc;
+            }
+            return [...acc, filter];
+        }, []);
+    }
+    getGroupForm(model) {
+        return [
+            new InputPanel({
+                key: 'main-panel',
+                class: 'p-space-sm',
+                children: [
+                    new InputDropdown({
+                        key: 'group',
+                        label: 'grid.core.groupBy',
+                        options$: of(Object.values(model.cols)
+                            .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
+                            .map(group => ({
+                            id: group.key(),
+                            name: group.inputLabel(),
+                        }))),
+                        value: model.groupBy(),
+                    }),
+                ],
+            }),
+        ];
+    }
+    formatGroupForm(data) {
+        return data['group'] || null;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormService, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }], ctorParameters: () => [] });
+
+/**
+ * Charge les libellés de @ta/features depuis `assets/i18n/grid/<lang>.json`.
+ * Les clés du fichier sont automatiquement préfixées par `grid.`.
+ */
+class TaTranslationGrid extends TaLazyTranslationService {
+    constructor() {
+        super('grid');
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationGrid, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationGrid, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }], ctorParameters: () => [] });
+
 class TaAbstractGridComponent extends TaBaseComponent {
-    get grid() {
+    grid() {
         return this._grid;
     }
-    get isGroup() {
-        return this._grid.isGroup;
+    isGroup() {
+        return this._grid.isGroup();
     }
-    get data() {
-        return this._grid.data;
+    data() {
+        return this._grid.data();
     }
-    get dataByGroup() {
-        return this._grid.dataByGroup;
+    dataByGroup() {
+        return this._grid.dataByGroup();
     }
-    get displayType() {
+    displayType() {
         return this._grid.displayType;
     }
     constructor() {
         super();
         this.gridId = input.required();
         this._dataService = inject(TaGridInstanceService);
+        TaTranslationGrid.getInstance();
     }
     ngOnInit() {
         this._grid = this._dataService.get(this.gridId(), true);
@@ -752,6 +850,15 @@ class TaGridFormComponent extends TaAbstractGridComponent {
         super(...arguments);
         this.showTitle = input(true);
         this.showReset = input(true);
+        /** Clé de traduction du titre du panneau. */
+        this.title = input('grid.form.title');
+        /** Affiche le nombre de résultats à côté du titre. */
+        this.showResultCount = input(true);
+        /**
+         * Affiche le regroupement dans le panneau. Désactivé par défaut : le
+         * regroupement organise l'affichage, il est porté par `ta-grid-control`.
+         */
+        this.showGroup = input(false);
         this.filtersForm = signal([]);
         this.groupForm = signal([]);
         this._formService = inject((TaGridFormService));
@@ -779,36 +886,49 @@ class TaGridFormComponent extends TaAbstractGridComponent {
     }
     reset() {
         this._grid.filters?.apply([]);
-        this._grid.clearGroupBy();
+        if (this.showGroup()) {
+            this._grid.clearGroupBy();
+        }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridFormComponent, isStandalone: true, selector: "ta-grid-form", inputs: { showTitle: { classPropertyName: "showTitle", publicName: "showTitle", isSignal: true, isRequired: false, transformFunction: null }, showReset: { classPropertyName: "showReset", publicName: "showReset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"grid-form\">\n  @if (this.showTitle()) {\n    <div class=\"grid-form__header\">\n      <div class=\"flex-row align-center g-space-sm\">\n        <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n        <ta-title [level]=\"3\">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>\n      </div>\n    </div>\n  }\n\n  <div class=\"grid-form__body\">\n    <div class=\"grid-form__section\">\n      <ta-form\n        [inputs]=\"this.filtersForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    @if (this.groupForm().length > 0) {\n      <div class=\"grid-form__section\">\n        <ta-form\n          [inputs]=\"this.groupForm()\"\n          (valid)=\"this.applyGroup($event)\"\n          [askOnDestroy]=\"true\"\n          [canDisplayButton]=\"false\"\n        ></ta-form>\n      </div>\n    }\n  </div>\n\n  @if (this.showReset()) {\n    <div class=\"grid-form__footer\">\n      <ta-button type=\"secondary\" (action)=\"this.reset()\">\n        {{ 'grid.form.reset' | translate }}\n      </ta-button>\n    </div>\n  }\n</div>\n", styles: [":host{display:block}.grid-form{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__header{padding-bottom:var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.grid-form__header ta-font-icon{color:var(--ta-icon-brand-primary)}.grid-form__body{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__section{padding:var(--ta-space-md);background:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}.grid-form__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding-top:var(--ta-space-sm);border-top:1px solid var(--ta-border-secondary)}\n"], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridFormComponent, isStandalone: true, selector: "ta-grid-form", inputs: { showTitle: { classPropertyName: "showTitle", publicName: "showTitle", isSignal: true, isRequired: false, transformFunction: null }, showReset: { classPropertyName: "showReset", publicName: "showReset", isSignal: true, isRequired: false, transformFunction: null }, title: { classPropertyName: "title", publicName: "title", isSignal: true, isRequired: false, transformFunction: null }, showResultCount: { classPropertyName: "showResultCount", publicName: "showResultCount", isSignal: true, isRequired: false, transformFunction: null }, showGroup: { classPropertyName: "showGroup", publicName: "showGroup", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"grid-form\">\r\n  @if (this.showTitle()) {\r\n    <div class=\"grid-form__header\">\r\n      <ta-title [level]=\"3\">{{ this.title() | translate }}</ta-title>\r\n      @if (this.showResultCount()) {\r\n        <ta-text class=\"grid-form__count\">\r\n          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}\r\n        </ta-text>\r\n      }\r\n    </div>\r\n  }\r\n\r\n  <div class=\"grid-form__body\">\r\n    <div class=\"grid-form__section\">\r\n      <ta-form\r\n        [inputs]=\"this.filtersForm()\"\r\n        (valid)=\"this.applyFilters($event)\"\r\n        [onLive]=\"true\"\r\n        [askOnDestroy]=\"true\"\r\n        [canDisplayButton]=\"false\"\r\n      ></ta-form>\r\n    </div>\r\n\r\n    @if (this.showGroup() && this.groupForm().length > 0) {\r\n      <div class=\"grid-form__section\">\r\n        <div class=\"grid-form__section-title\">{{ 'grid.form.group.title' | translate }}</div>\r\n        <ta-form\r\n          [inputs]=\"this.groupForm()\"\r\n          (valid)=\"this.applyGroup($event)\"\r\n          [onLive]=\"true\"\r\n          [askOnDestroy]=\"true\"\r\n          [canDisplayButton]=\"false\"\r\n        ></ta-form>\r\n      </div>\r\n    }\r\n  </div>\r\n\r\n  @if (this.showReset()) {\r\n    <div class=\"grid-form__footer\">\r\n      <ta-button type=\"tertiary\" size=\"small\" (action)=\"this.reset()\">\r\n        {{ 'grid.form.reset' | translate }}\r\n      </ta-button>\r\n    </div>\r\n  }\r\n</div>\r\n", styles: [":host{display:block}.grid-form{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__header{flex-wrap:nowrap;align-items:center;display:flex;flex-direction:row;justify-content:space-between;gap:var(--ta-space-md);padding-bottom:var(--ta-space-sm)}.grid-form__count{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary);white-space:nowrap}.grid-form__body{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__section+.grid-form__section{padding-top:var(--ta-space-md);border-top:1px solid var(--ta-border-tertiary)}.grid-form__section-title{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);margin-bottom:var(--ta-space-sm);color:var(--ta-text-secondary);text-transform:uppercase;letter-spacing:.06em;font-weight:var(--ta-font-weight-bold)}.grid-form__footer{flex-wrap:nowrap;display:flex;align-items:center;justify-content:flex-end;padding-top:var(--ta-space-sm);border-top:1px solid var(--ta-border-tertiary)}\n"], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFormComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-form', standalone: true, imports: [FormComponent, TitleComponent, TranslatePipe, FontIconComponent, ButtonComponent], template: "<div class=\"grid-form\">\n  @if (this.showTitle()) {\n    <div class=\"grid-form__header\">\n      <div class=\"flex-row align-center g-space-sm\">\n        <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n        <ta-title [level]=\"3\">{{ 'grid.' + this.grid.scope + '.title' | translate }}</ta-title>\n      </div>\n    </div>\n  }\n\n  <div class=\"grid-form__body\">\n    <div class=\"grid-form__section\">\n      <ta-form\n        [inputs]=\"this.filtersForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    @if (this.groupForm().length > 0) {\n      <div class=\"grid-form__section\">\n        <ta-form\n          [inputs]=\"this.groupForm()\"\n          (valid)=\"this.applyGroup($event)\"\n          [askOnDestroy]=\"true\"\n          [canDisplayButton]=\"false\"\n        ></ta-form>\n      </div>\n    }\n  </div>\n\n  @if (this.showReset()) {\n    <div class=\"grid-form__footer\">\n      <ta-button type=\"secondary\" (action)=\"this.reset()\">\n        {{ 'grid.form.reset' | translate }}\n      </ta-button>\n    </div>\n  }\n</div>\n", styles: [":host{display:block}.grid-form{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__header{padding-bottom:var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.grid-form__header ta-font-icon{color:var(--ta-icon-brand-primary)}.grid-form__body{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__section{padding:var(--ta-space-md);background:var(--ta-surface-secondary);border-radius:var(--ta-radius-rounded)}.grid-form__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding-top:var(--ta-space-sm);border-top:1px solid var(--ta-border-secondary)}\n"] }]
+            args: [{ selector: 'ta-grid-form', standalone: true, imports: [FormComponent, TitleComponent, TextComponent, TranslatePipe, PluralTranslatePipe, ButtonComponent], template: "<div class=\"grid-form\">\r\n  @if (this.showTitle()) {\r\n    <div class=\"grid-form__header\">\r\n      <ta-title [level]=\"3\">{{ this.title() | translate }}</ta-title>\r\n      @if (this.showResultCount()) {\r\n        <ta-text class=\"grid-form__count\">\r\n          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}\r\n        </ta-text>\r\n      }\r\n    </div>\r\n  }\r\n\r\n  <div class=\"grid-form__body\">\r\n    <div class=\"grid-form__section\">\r\n      <ta-form\r\n        [inputs]=\"this.filtersForm()\"\r\n        (valid)=\"this.applyFilters($event)\"\r\n        [onLive]=\"true\"\r\n        [askOnDestroy]=\"true\"\r\n        [canDisplayButton]=\"false\"\r\n      ></ta-form>\r\n    </div>\r\n\r\n    @if (this.showGroup() && this.groupForm().length > 0) {\r\n      <div class=\"grid-form__section\">\r\n        <div class=\"grid-form__section-title\">{{ 'grid.form.group.title' | translate }}</div>\r\n        <ta-form\r\n          [inputs]=\"this.groupForm()\"\r\n          (valid)=\"this.applyGroup($event)\"\r\n          [onLive]=\"true\"\r\n          [askOnDestroy]=\"true\"\r\n          [canDisplayButton]=\"false\"\r\n        ></ta-form>\r\n      </div>\r\n    }\r\n  </div>\r\n\r\n  @if (this.showReset()) {\r\n    <div class=\"grid-form__footer\">\r\n      <ta-button type=\"tertiary\" size=\"small\" (action)=\"this.reset()\">\r\n        {{ 'grid.form.reset' | translate }}\r\n      </ta-button>\r\n    </div>\r\n  }\r\n</div>\r\n", styles: [":host{display:block}.grid-form{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__header{flex-wrap:nowrap;align-items:center;display:flex;flex-direction:row;justify-content:space-between;gap:var(--ta-space-md);padding-bottom:var(--ta-space-sm)}.grid-form__count{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary);white-space:nowrap}.grid-form__body{display:flex;flex-direction:column;gap:var(--ta-space-md)}.grid-form__section+.grid-form__section{padding-top:var(--ta-space-md);border-top:1px solid var(--ta-border-tertiary)}.grid-form__section-title{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);margin-bottom:var(--ta-space-sm);color:var(--ta-text-secondary);text-transform:uppercase;letter-spacing:.06em;font-weight:var(--ta-font-weight-bold)}.grid-form__footer{flex-wrap:nowrap;display:flex;align-items:center;justify-content:flex-end;padding-top:var(--ta-space-sm);border-top:1px solid var(--ta-border-tertiary)}\n"] }]
         }] });
 
 class PaginationComponent extends TaAbstractGridComponent {
-    get show() {
-        return this.paginationGetTotalPages > 1;
+    show() {
+        return this.isCursorMode() ? this.hasNextPage() : this.paginationGetTotalPages() > 1;
     }
-    get paginationGetTotalPages() {
-        return this.grid.table?.getPageMax() || 0;
+    /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
+    isCursorMode() {
+        return this.grid().table?.isCursorMode() ?? false;
+    }
+    hasNextPage() {
+        return this.grid().table?.hasNextPage() ?? false;
+    }
+    isLoading() {
+        return this.grid().table?.isLoading() ?? false;
+    }
+    paginationGetTotalPages() {
+        return this.grid().table?.getPageMax() || 0;
     }
     constructor() {
         super();
         this.maxPageNumber = 10;
     }
     getListPage() {
-        if (!this.grid || !this.grid.table) {
+        const table = this.grid()?.table;
+        if (!table) {
             return [];
         }
-        const last = this.paginationGetTotalPages;
+        const last = this.paginationGetTotalPages();
         if (last <= this.maxPageNumber) {
             return this._computedPageNumbers(2, last);
         }
-        const current = this.grid.table.getPage() || 0;
+        const current = table.getPage() || 0;
         const rangeStart = Math.floor(current / 10) * 10;
         const rangeEnd = rangeStart + 10;
         return [
@@ -825,11 +945,11 @@ class PaginationComponent extends TaAbstractGridComponent {
         return pageNumbers;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PaginationComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PaginationComponent, isStandalone: true, selector: "ta-grid-pagination", usesInheritance: true, ngImport: i0, template: "@if (this.grid && this.grid.table && this.show) {\r\n  <div class=\"flex-start g-space-sm align-center\">\r\n    <ta-font-icon icon=\"chevron_left\" class=\"c-pointer\" (click)=\"this.grid.table.previousPage()\"></ta-font-icon>\r\n    <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n    @for (page of this.getListPage(); track page.number) {\r\n      <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n    }\r\n\r\n    @if (this.paginationGetTotalPages > 1) {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"item\"\r\n        [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages },\r\n        }\"\r\n      ></ng-template>\r\n    }\r\n\r\n    <ta-font-icon icon=\"chevron_right\" class=\"c-pointer\" (click)=\"this.grid.table.nextPage()\"></ta-font-icon>\r\n  </div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid.table?.getPage() || 0)\"\r\n    (click)=\"this.grid.table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n      <ta-font-icon [icon]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n      {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [".figure{color:var(--ta-text-primary);border:1px solid var(--ta-border-secondary);padding:var(--ta-space-sm) var(--ta-space-md);border-radius:var(--ta-radius-rounded)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}\n"], dependencies: [{ kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: TypedTemplateDirective, selector: "ng-template[typedTemplate]", inputs: ["typedTemplate"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: PaginationComponent, isStandalone: true, selector: "ta-grid-pagination", usesInheritance: true, ngImport: i0, template: "@if (this.grid() && this.grid().table && this.show() && this.isCursorMode()) {\r\n<div class=\"load-more flex-row justify-center\">\r\n  <ta-button type=\"secondary\" [state]=\"this.isLoading() ? 'inactive' : 'classic'\" (action)=\"this.grid().table.loadMore()\">\r\n    {{ 'grid.pagination.load_more' | translate }}\r\n  </ta-button>\r\n</div>\r\n} @if (this.grid() && this.grid().table && this.show() && !this.isCursorMode()) {\r\n<div class=\"flex-start g-space-sm align-center\">\r\n  <ta-font-icon\r\n    name=\"chevron_left\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.previous' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.previous' | translate\"\r\n    (click)=\"this.grid().table.previousPage()\"\r\n  ></ta-font-icon>\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n  @for (page of this.getListPage(); track page.number) {\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n  } @if (this.paginationGetTotalPages() > 1) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"item\"\r\n    [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages() },\r\n        }\"\r\n  ></ng-template>\r\n  }\r\n\r\n  <ta-font-icon\r\n    name=\"chevron_right\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.next' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.next' | translate\"\r\n    (click)=\"this.grid().table.nextPage()\"\r\n  ></ta-font-icon>\r\n</div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid().table?.getPage() || 0)\"\r\n    (click)=\"this.grid().table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n    <ta-font-icon [name]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n    {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [":host{display:block}.figure{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);min-width:var(--ta-space-xl);height:var(--ta-space-xl);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);border:1px solid transparent;color:var(--ta-text-secondary);transition:color .15s ease,background-color .15s ease,border-color .15s ease}.figure:hover{color:var(--ta-text-primary);background-color:var(--ta-surface-hover-primary)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary);font-weight:var(--ta-font-weight-bold)}.figure.is-active:hover{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}ta-font-icon{color:var(--ta-icon-secondary);border-radius:var(--ta-radius-full);transition:color .15s ease,background-color .15s ease}ta-font-icon:hover{color:var(--ta-icon-brand-primary)}\n"], dependencies: [{ kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: TypedTemplateDirective, selector: "ng-template[typedTemplate]", inputs: ["typedTemplate"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PaginationComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-pagination', standalone: true, imports: [FontIconComponent, NgTemplateOutlet, TypedTemplateDirective], template: "@if (this.grid && this.grid.table && this.show) {\r\n  <div class=\"flex-start g-space-sm align-center\">\r\n    <ta-font-icon icon=\"chevron_left\" class=\"c-pointer\" (click)=\"this.grid.table.previousPage()\"></ta-font-icon>\r\n    <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n    @for (page of this.getListPage(); track page.number) {\r\n      <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n    }\r\n\r\n    @if (this.paginationGetTotalPages > 1) {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"item\"\r\n        [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages },\r\n        }\"\r\n      ></ng-template>\r\n    }\r\n\r\n    <ta-font-icon icon=\"chevron_right\" class=\"c-pointer\" (click)=\"this.grid.table.nextPage()\"></ta-font-icon>\r\n  </div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid.table?.getPage() || 0)\"\r\n    (click)=\"this.grid.table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n      <ta-font-icon [icon]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n      {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [".figure{color:var(--ta-text-primary);border:1px solid var(--ta-border-secondary);padding:var(--ta-space-sm) var(--ta-space-md);border-radius:var(--ta-radius-rounded)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}\n"] }]
+            args: [{ selector: 'ta-grid-pagination', standalone: true, imports: [ButtonComponent, FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe], template: "@if (this.grid() && this.grid().table && this.show() && this.isCursorMode()) {\r\n<div class=\"load-more flex-row justify-center\">\r\n  <ta-button type=\"secondary\" [state]=\"this.isLoading() ? 'inactive' : 'classic'\" (action)=\"this.grid().table.loadMore()\">\r\n    {{ 'grid.pagination.load_more' | translate }}\r\n  </ta-button>\r\n</div>\r\n} @if (this.grid() && this.grid().table && this.show() && !this.isCursorMode()) {\r\n<div class=\"flex-start g-space-sm align-center\">\r\n  <ta-font-icon\r\n    name=\"chevron_left\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.previous' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.previous' | translate\"\r\n    (click)=\"this.grid().table.previousPage()\"\r\n  ></ta-font-icon>\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: { number: 1 } }\"></ng-template>\r\n\r\n  @for (page of this.getListPage(); track page.number) {\r\n  <ng-template [ngTemplateOutlet]=\"item\" [ngTemplateOutletContext]=\"{ pagenumber: page }\"></ng-template>\r\n  } @if (this.paginationGetTotalPages() > 1) {\r\n  <ng-template\r\n    [ngTemplateOutlet]=\"item\"\r\n    [ngTemplateOutletContext]=\"{\r\n          pagenumber: { number: this.paginationGetTotalPages() },\r\n        }\"\r\n  ></ng-template>\r\n  }\r\n\r\n  <ta-font-icon\r\n    name=\"chevron_right\"\r\n    class=\"c-pointer\"\r\n    [title]=\"'grid.pagination.next' | translate\"\r\n    [attr.aria-label]=\"'grid.pagination.next' | translate\"\r\n    (click)=\"this.grid().table.nextPage()\"\r\n  ></ta-font-icon>\r\n</div>\r\n}\r\n\r\n<ng-template #item let-pagenumber=\"pagenumber\" [typedTemplate]=\"this.PageNumber\">\r\n  <div\r\n    class=\"figure c-pointer\"\r\n    [class.is-active]=\"pagenumber.number === (this.grid().table?.getPage() || 0)\"\r\n    (click)=\"this.grid().table?.setPage(pagenumber.number)\"\r\n  >\r\n    @if (pagenumber.icon) {\r\n    <ta-font-icon [name]=\"pagenumber.icon\"></ta-font-icon>\r\n    } @else {\r\n    {{ pagenumber.number }}\r\n    }\r\n  </div>\r\n</ng-template>\r\n", styles: [":host{display:block}.figure{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);min-width:var(--ta-space-xl);height:var(--ta-space-xl);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);border:1px solid transparent;color:var(--ta-text-secondary);transition:color .15s ease,background-color .15s ease,border-color .15s ease}.figure:hover{color:var(--ta-text-primary);background-color:var(--ta-surface-hover-primary)}.figure.is-active{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary);font-weight:var(--ta-font-weight-bold)}.figure.is-active:hover{color:var(--ta-text-invert-primary);background-color:var(--ta-surface-brand-primary)}ta-font-icon{color:var(--ta-icon-secondary);border-radius:var(--ta-radius-full);transition:color .15s ease,background-color .15s ease}ta-font-icon:hover{color:var(--ta-icon-brand-primary)}\n"] }]
         }], ctorParameters: () => [] });
 
 class TaGridComponent extends TaAbstractGridComponent {
@@ -837,41 +957,51 @@ class TaGridComponent extends TaAbstractGridComponent {
         super();
         this.cardTemplate = input.required();
         this.showSelection = input(false);
+        /** Hauteur de ligne : confortable par défaut, compacte pour les longues listes. */
+        this.density = input('comfortable');
+        /** Ce que dit la grille quand elle ne ramène rien ; l'action se projette sur `[emptyAction]`. */
+        this.emptyText = input('ui.container.empty.title');
+        this.emptySubtitle = input('');
+        this.emptyIcon = input('sentiment_dissatisfied');
         this.rowClicked = output();
         this.selectionChanged = output();
     }
     ngOnInit() {
         super.ngOnInit();
-        this.visibleCols = computed(() => Object.values(this.grid.cols)
-            .filter(col => !col.data.col.notDisplayable && !String(col.key).startsWith('_'))
+        this.visibleCols = computed(() => Object.values(this.grid().cols)
+            .filter(col => !col.data.col.notDisplayable && !col.key().startsWith('_'))
             .map(col => col.getColConfig()));
         this._registerSubscription(this._grid.rowClicked$.subscribe({ next: row => this.rowClicked.emit(row) }));
         if (this._grid.table) {
             this._registerSubscription(this._grid.table.selectionChanged$.subscribe(ids => {
-                this.selectionChanged.emit(this.rows.filter(r => ids.includes(r.id)));
+                this.selectionChanged.emit(this.rows().filter(r => ids.includes(r.id)));
             }));
         }
     }
-    get rows() {
+    rows() {
         return this._grid.table?.rows() ?? [];
     }
-    get sortField() {
+    sortField() {
         return this._grid.table?.sortField() ?? null;
     }
-    get sortDir() {
+    sortDir() {
         return this._grid.table?.sortDir() ?? 'asc';
     }
-    get isLoading() {
+    isLoading() {
         return this._grid.table?.isLoading() ?? false;
     }
-    get errorMessage() {
+    errorMessage() {
         return this._grid.table?.errorMessage() ?? '';
     }
-    get selectedIds() {
+    /** Largeur d'une ligne d'en-tête de groupe, colonne de sélection comprise. */
+    colspan() {
+        return this.visibleCols().length + (this.showSelection() ? 1 : 0);
+    }
+    selectedIds() {
         return this._grid.table?.selectedIds() ?? new Set();
     }
     isSelected(id) {
-        return this.selectedIds.has(id);
+        return this.selectedIds().has(id);
     }
     isAllPageSelected() {
         return this._grid.table?.isAllPageSelected() ?? false;
@@ -882,6 +1012,19 @@ class TaGridComponent extends TaAbstractGridComponent {
     toggleAll() {
         this._grid.table?.toggleAll();
     }
+    /**
+     * Libellé d'un groupe : `groupBy` produit des chaînes, on repasse par le
+     * formatteur de la colonne pour retrouver dates et booléens lisibles.
+     */
+    groupLabel(value) {
+        const field = this._grid.groupBy();
+        const col = field ? this._grid.cols[field] : null;
+        if (!col) {
+            return value;
+        }
+        const casted = value === 'true' ? true : value === 'false' ? false : value;
+        return col.defaultFormatter({ [field]: casted }) || value;
+    }
     getCellValue(row, key) {
         return row[key];
     }
@@ -891,8 +1034,8 @@ class TaGridComponent extends TaAbstractGridComponent {
     onSort(col) {
         if (!col.sortable || !this._grid.table)
             return;
-        const current = this.sortField;
-        const dir = this.sortDir;
+        const current = this.sortField();
+        const dir = this.sortDir();
         if (current !== col.key) {
             this._grid.table.setSort(col.key, 'asc');
         }
@@ -904,11 +1047,21 @@ class TaGridComponent extends TaAbstractGridComponent {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridComponent, isStandalone: true, selector: "ta-grid", inputs: { cardTemplate: { classPropertyName: "cardTemplate", publicName: "cardTemplate", isSignal: true, isRequired: true, transformFunction: null }, showSelection: { classPropertyName: "showSelection", publicName: "showSelection", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { rowClicked: "rowClicked", selectionChanged: "selectionChanged" }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\n  <ta-loader [isLoading]=\"this.isLoading\">\n    <ta-error [message]=\"this.errorMessage\" (retry)=\"this._grid.table?.refresh()\">\n      <ta-empty [isEmpty]=\"this.rows.length === 0\">\n        @if (this.displayType() === 'grid') {\n          <div class=\"ta-grid-table-wrapper\">\n            <table class=\"ta-grid-table\">\n              <thead>\n                <tr>\n                  @if (this.showSelection()) {\n                    <th class=\"ta-grid-th ta-grid-th--select\" (click)=\"this.toggleAll()\">\n                      <ta-font-icon\n                        class=\"c-pointer\"\n                        [icon]=\"this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'\"\n                      />\n                    </th>\n                  }\n                  @for (col of this.visibleCols(); track col.key) {\n                    <th\n                      class=\"ta-grid-th\"\n                      [class.is-sortable]=\"col.sortable\"\n                      [class.is-sorted]=\"this.sortField === col.key\"\n                      [style.width]=\"col.width ?? 'auto'\"\n                      (click)=\"this.onSort(col)\"\n                    >\n                      <div class=\"ta-grid-th__inner\">\n                        <span class=\"ta-grid-th__label\">{{ col.title | translate }}</span>\n                        @if (this.sortField === col.key) {\n                          <ta-font-icon\n                            class=\"ta-grid-th__sort-icon\"\n                            [icon]=\"this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'\"\n                          />\n                        }\n                      </div>\n                    </th>\n                  }\n                </tr>\n              </thead>\n              <tbody>\n                @for (row of this.rows; track row.id) {\n                  <tr\n                    class=\"ta-grid-tr c-pointer\"\n                    [class.is-selected]=\"this.isSelected(row.id)\"\n                    (click)=\"this.onRowClick(row)\"\n                  >\n                    @if (this.showSelection()) {\n                      <td class=\"ta-grid-td ta-grid-td--select\" (click)=\"$event.stopPropagation(); this.toggleRow(row)\">\n                        <ta-font-icon\n                          class=\"c-pointer\"\n                          [icon]=\"this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'\"\n                        />\n                      </td>\n                    }\n                    @for (col of this.visibleCols(); track col.key) {\n                      <td class=\"ta-grid-td\">\n                        @if (col.template) {\n                          <ng-container\n                            [ngTemplateOutlet]=\"col.template\"\n                            [ngTemplateOutletContext]=\"{ $implicit: row, value: this.getCellValue(row, col.key) }\"\n                          ></ng-container>\n                        } @else {\n                          {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}\n                        }\n                      </td>\n                    }\n                  </tr>\n                }\n              </tbody>\n            </table>\n          </div>\n        }\n\n        @if (this.displayType() === 'card') {\n          @if (this.isGroup) {\n            @for (group of this.dataByGroup; track group.key) {\n              <ta-title [level]=\"3\">{{ group.key }}</ta-title>\n              <div class=\"py-space-md\">\n                <ng-template\n                  [ngTemplateOutlet]=\"this.cardTemplate()\"\n                  [ngTemplateOutletContext]=\"{ items: group.data, selectedIds: this.selectedIds }\"\n                ></ng-template>\n              </div>\n            }\n          } @else {\n            <ng-template\n              [ngTemplateOutlet]=\"this.cardTemplate()\"\n              [ngTemplateOutletContext]=\"{ items: this.data, selectedIds: this.selectedIds }\"\n            ></ng-template>\n          }\n        }\n\n        <div class=\"py-space-md align-center\">\n          <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\n        </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [".ta-grid-table-wrapper{width:100%;overflow-x:auto}.ta-grid-table{width:100%;border-collapse:collapse;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.ta-grid-table .ta-grid-th{padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border-bottom:2px solid var(--ta-border-primary);color:var(--ta-text-secondary);white-space:nowrap;-webkit-user-select:none;user-select:none}.ta-grid-table .ta-grid-th.is-sortable{cursor:pointer}.ta-grid-table .ta-grid-th.is-sortable:hover{color:var(--ta-text-primary);background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-th.is-sorted{color:var(--ta-text-brand)}.ta-grid-table .ta-grid-th__inner{display:flex;align-items:center;gap:var(--ta-space-xs)}.ta-grid-table .ta-grid-tr{border-bottom:1px solid var(--ta-border-secondary)}.ta-grid-table .ta-grid-tr:hover{background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-td{padding:var(--ta-space-sm) var(--ta-space-md);color:var(--ta-text-primary);vertical-align:middle}\n"], dependencies: [{ kind: "component", type: PaginationComponent, selector: "ta-grid-pagination" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "isLight", "showMessage", "text", "subtitle", "emptyIcon", "iconSize"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code", "showRetry", "retryLabel"], outputs: ["retry"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }], encapsulation: i0.ViewEncapsulation.None }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridComponent, isStandalone: true, selector: "ta-grid", inputs: { cardTemplate: { classPropertyName: "cardTemplate", publicName: "cardTemplate", isSignal: true, isRequired: true, transformFunction: null }, showSelection: { classPropertyName: "showSelection", publicName: "showSelection", isSignal: true, isRequired: false, transformFunction: null }, density: { classPropertyName: "density", publicName: "density", isSignal: true, isRequired: false, transformFunction: null }, emptyText: { classPropertyName: "emptyText", publicName: "emptyText", isSignal: true, isRequired: false, transformFunction: null }, emptySubtitle: { classPropertyName: "emptySubtitle", publicName: "emptySubtitle", isSignal: true, isRequired: false, transformFunction: null }, emptyIcon: { classPropertyName: "emptyIcon", publicName: "emptyIcon", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { rowClicked: "rowClicked", selectionChanged: "selectionChanged" }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\r\n<ta-loader [isLoading]=\"this.isLoading()\">\r\n  <ta-error [message]=\"this.errorMessage()\" (retry)=\"this._grid.table?.refresh()\">\r\n    <ta-empty\r\n      [isEmpty]=\"this.rows().length === 0\"\r\n      [text]=\"this.emptyText()\"\r\n      [subtitle]=\"this.emptySubtitle()\"\r\n      [emptyIcon]=\"this.emptyIcon()\"\r\n    >\r\n      <!-- L'action propos\u00E9e quand il n'y a rien : c'est l'\u00E9cran qui sait laquelle. -->\r\n      <ng-content select=\"[emptyAction]\" ngProjectAs=\"[emptyAction]\"></ng-content>\r\n      @if (this.displayType() === 'grid') {\r\n      <div class=\"ta-grid-table-wrapper\">\r\n        <table class=\"ta-grid-table\" [class.is-compact]=\"this.density() === 'compact'\">\r\n          <thead>\r\n            <tr>\r\n              @if (this.showSelection()) {\r\n              <th class=\"ta-grid-th ta-grid-th--select\" (click)=\"this.toggleAll()\">\r\n                <ta-font-icon\r\n                  class=\"c-pointer\"\r\n                  [name]=\"this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'\"\r\n                />\r\n              </th>\r\n              } @for (col of this.visibleCols(); track col.key) {\r\n              <th\r\n                class=\"ta-grid-th\"\r\n                [class.is-sortable]=\"col.sortable\"\r\n                [class.is-sorted]=\"this.sortField() === col.key\"\r\n                [style.width]=\"col.width ?? 'auto'\"\r\n                [style.text-align]=\"col.align ?? 'left'\"\r\n                (click)=\"this.onSort(col)\"\r\n              >\r\n                <div class=\"ta-grid-th__inner\">\r\n                  <span class=\"ta-grid-th__label\">{{ col.title | translate }}</span>\r\n                  @if (this.sortField() === col.key) {\r\n                  <ta-font-icon\r\n                    class=\"ta-grid-th__sort-icon\"\r\n                    [name]=\"this.sortDir() === 'asc' ? 'arrow-up' : 'arrow-down'\"\r\n                  />\r\n                  }\r\n                </div>\r\n              </th>\r\n              }\r\n            </tr>\r\n          </thead>\r\n          <tbody>\r\n            @if (this.isGroup()) {\r\n            <!-- Regroupement : une ligne d'en-t\u00EAte introduit chaque groupe. -->\r\n            @for (group of this.dataByGroup(); track group.key) {\r\n            <tr class=\"ta-grid-group-row\">\r\n              <td class=\"ta-grid-group-row__cell\" [attr.colspan]=\"this.colspan()\">\r\n                <div class=\"ta-grid-group-row__inner\">\r\n                  <span class=\"ta-grid-group-row__label\">{{ this.groupLabel(group.key) }}</span>\r\n                  <span class=\"ta-grid-group-row__count\">{{ group.data.length }}</span>\r\n                </div>\r\n              </td>\r\n            </tr>\r\n            @for (row of group.data; track row.id) {\r\n            <ng-container [ngTemplateOutlet]=\"rowTpl\" [ngTemplateOutletContext]=\"{ $implicit: row }\"></ng-container>\r\n            } } } @else { @for (row of this.rows(); track row.id) {\r\n            <ng-container [ngTemplateOutlet]=\"rowTpl\" [ngTemplateOutletContext]=\"{ $implicit: row }\"></ng-container>\r\n            } }\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      } @if (this.displayType() === 'card') { @if (this.isGroup()) { @for (group of this.dataByGroup(); track group.key) {\r\n      <div class=\"ta-grid-group-header\">\r\n        <ta-title [level]=\"3\">{{ this.groupLabel(group.key) }}</ta-title>\r\n        <span class=\"ta-grid-group-header__count\">{{ group.data.length }}</span>\r\n      </div>\r\n      <div class=\"py-space-md\">\r\n        <ng-template\r\n          [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n          [ngTemplateOutletContext]=\"{ items: group.data, selectedIds: this.selectedIds() }\"\r\n        ></ng-template>\r\n      </div>\r\n      } } @else {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n        [ngTemplateOutletContext]=\"{ items: this.data(), selectedIds: this.selectedIds() }\"\r\n      ></ng-template>\r\n      } }\r\n\r\n      <div class=\"py-space-md align-center\">\r\n        <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\r\n      </div>\r\n    </ta-empty>\r\n  </ta-error>\r\n</ta-loader>\r\n}\r\n\r\n<ng-template #rowTpl let-row>\r\n  <tr class=\"ta-grid-tr c-pointer\" [class.is-selected]=\"this.isSelected(row.id)\" (click)=\"this.onRowClick(row)\">\r\n    @if (this.showSelection()) {\r\n    <td class=\"ta-grid-td ta-grid-td--select\" (click)=\"$event.stopPropagation(); this.toggleRow(row)\">\r\n      <ta-font-icon class=\"c-pointer\" [name]=\"this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'\" />\r\n    </td>\r\n    } @for (col of this.visibleCols(); track col.key) {\r\n    <td class=\"ta-grid-td\" [style.text-align]=\"col.align ?? 'left'\">\r\n      @if (col.template) {\r\n      <ng-container\r\n        [ngTemplateOutlet]=\"col.template\"\r\n        [ngTemplateOutletContext]=\"{ $implicit: row, value: this.getCellValue(row, col.key) }\"\r\n      ></ng-container>\r\n      } @else {\r\n      {{ this.grid().cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}\r\n      }\r\n    </td>\r\n    }\r\n  </tr>\r\n</ng-template>\r\n", styles: [".ta-grid-table-wrapper{width:100%;overflow-x:auto}.ta-grid-table{width:100%;border-collapse:collapse;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.ta-grid-table .ta-grid-th{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border-bottom:1px solid var(--ta-border-tertiary);color:var(--ta-text-secondary);text-transform:uppercase;letter-spacing:.06em;font-weight:var(--ta-font-weight-bold);white-space:nowrap;-webkit-user-select:none;user-select:none}.ta-grid-table .ta-grid-th.is-sortable{cursor:pointer}.ta-grid-table .ta-grid-th.is-sortable:hover{color:var(--ta-text-primary);background:var(--ta-surface-hover-primary)}.ta-grid-table .ta-grid-th.is-sorted{color:var(--ta-text-brand-primary)}.ta-grid-table .ta-grid-th__inner{display:flex;align-items:center;gap:var(--ta-space-xs)}.ta-grid-table .ta-grid-tr{border-bottom:1px solid var(--ta-border-tertiary);transition:background-color .12s ease}.ta-grid-table .ta-grid-tr:last-child{border-bottom:none}.ta-grid-table .ta-grid-tr:hover{background:var(--ta-surface-secondary)}.ta-grid-table .ta-grid-tr.is-selected{background:var(--ta-surface-tertiary)}.ta-grid-table .ta-grid-td{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-sm) var(--ta-space-md);color:var(--ta-text-primary);vertical-align:middle}.ta-grid-table .ta-grid-th--select,.ta-grid-table .ta-grid-td--select{width:1%;padding-right:0;color:var(--ta-icon-secondary)}.ta-grid-table.is-compact .ta-grid-th,.ta-grid-table.is-compact .ta-grid-td{padding-top:var(--ta-space-xs);padding-bottom:var(--ta-space-xs)}.ta-grid-group-row__cell{padding:var(--ta-space-sm) var(--ta-space-md);background:var(--ta-surface-secondary);border-bottom:1px solid var(--ta-border-tertiary)}.ta-grid-group-row__inner{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.ta-grid-group-row__label{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-primary);font-weight:var(--ta-font-weight-bold)}.ta-grid-group-row__count{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);background:var(--ta-surface-primary);color:var(--ta-text-secondary);font-weight:var(--ta-font-weight-bold)}.ta-grid-group-header{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm);padding-top:var(--ta-space-md)}.ta-grid-group-header__count{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);background:var(--ta-surface-secondary);color:var(--ta-text-secondary);font-weight:var(--ta-font-weight-bold)}\n"], dependencies: [{ kind: "component", type: PaginationComponent, selector: "ta-grid-pagination" }, { kind: "directive", type: NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: EmptyComponent, selector: "ta-empty", inputs: ["isEmpty", "variant", "isLight", "showMessage", "text", "subtitle", "emptyIcon", "iconSize"] }, { kind: "component", type: ErrorComponent, selector: "ta-error", inputs: ["message", "code", "showRetry", "retryLabel"], outputs: ["retry"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: LoaderComponent, selector: "ta-loader", inputs: ["isLoading", "skeleton", "size", "text"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }, { kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }], encapsulation: i0.ViewEncapsulation.None }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid', standalone: true, imports: [PaginationComponent, NgTemplateOutlet, AsyncPipe, EmptyComponent, ErrorComponent, FontIconComponent, LoaderComponent, TitleComponent, TranslateModule], encapsulation: ViewEncapsulation.None, template: "@if (this.isReady$ | async) {\n  <ta-loader [isLoading]=\"this.isLoading\">\n    <ta-error [message]=\"this.errorMessage\" (retry)=\"this._grid.table?.refresh()\">\n      <ta-empty [isEmpty]=\"this.rows.length === 0\">\n        @if (this.displayType() === 'grid') {\n          <div class=\"ta-grid-table-wrapper\">\n            <table class=\"ta-grid-table\">\n              <thead>\n                <tr>\n                  @if (this.showSelection()) {\n                    <th class=\"ta-grid-th ta-grid-th--select\" (click)=\"this.toggleAll()\">\n                      <ta-font-icon\n                        class=\"c-pointer\"\n                        [icon]=\"this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'\"\n                      />\n                    </th>\n                  }\n                  @for (col of this.visibleCols(); track col.key) {\n                    <th\n                      class=\"ta-grid-th\"\n                      [class.is-sortable]=\"col.sortable\"\n                      [class.is-sorted]=\"this.sortField === col.key\"\n                      [style.width]=\"col.width ?? 'auto'\"\n                      (click)=\"this.onSort(col)\"\n                    >\n                      <div class=\"ta-grid-th__inner\">\n                        <span class=\"ta-grid-th__label\">{{ col.title | translate }}</span>\n                        @if (this.sortField === col.key) {\n                          <ta-font-icon\n                            class=\"ta-grid-th__sort-icon\"\n                            [icon]=\"this.sortDir === 'asc' ? 'arrow-up' : 'arrow-down'\"\n                          />\n                        }\n                      </div>\n                    </th>\n                  }\n                </tr>\n              </thead>\n              <tbody>\n                @for (row of this.rows; track row.id) {\n                  <tr\n                    class=\"ta-grid-tr c-pointer\"\n                    [class.is-selected]=\"this.isSelected(row.id)\"\n                    (click)=\"this.onRowClick(row)\"\n                  >\n                    @if (this.showSelection()) {\n                      <td class=\"ta-grid-td ta-grid-td--select\" (click)=\"$event.stopPropagation(); this.toggleRow(row)\">\n                        <ta-font-icon\n                          class=\"c-pointer\"\n                          [icon]=\"this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'\"\n                        />\n                      </td>\n                    }\n                    @for (col of this.visibleCols(); track col.key) {\n                      <td class=\"ta-grid-td\">\n                        @if (col.template) {\n                          <ng-container\n                            [ngTemplateOutlet]=\"col.template\"\n                            [ngTemplateOutletContext]=\"{ $implicit: row, value: this.getCellValue(row, col.key) }\"\n                          ></ng-container>\n                        } @else {\n                          {{ this.grid.cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}\n                        }\n                      </td>\n                    }\n                  </tr>\n                }\n              </tbody>\n            </table>\n          </div>\n        }\n\n        @if (this.displayType() === 'card') {\n          @if (this.isGroup) {\n            @for (group of this.dataByGroup; track group.key) {\n              <ta-title [level]=\"3\">{{ group.key }}</ta-title>\n              <div class=\"py-space-md\">\n                <ng-template\n                  [ngTemplateOutlet]=\"this.cardTemplate()\"\n                  [ngTemplateOutletContext]=\"{ items: group.data, selectedIds: this.selectedIds }\"\n                ></ng-template>\n              </div>\n            }\n          } @else {\n            <ng-template\n              [ngTemplateOutlet]=\"this.cardTemplate()\"\n              [ngTemplateOutletContext]=\"{ items: this.data, selectedIds: this.selectedIds }\"\n            ></ng-template>\n          }\n        }\n\n        <div class=\"py-space-md align-center\">\n          <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\n        </div>\n      </ta-empty>\n    </ta-error>\n  </ta-loader>\n}\n", styles: [".ta-grid-table-wrapper{width:100%;overflow-x:auto}.ta-grid-table{width:100%;border-collapse:collapse;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.ta-grid-table .ta-grid-th{padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border-bottom:2px solid var(--ta-border-primary);color:var(--ta-text-secondary);white-space:nowrap;-webkit-user-select:none;user-select:none}.ta-grid-table .ta-grid-th.is-sortable{cursor:pointer}.ta-grid-table .ta-grid-th.is-sortable:hover{color:var(--ta-text-primary);background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-th.is-sorted{color:var(--ta-text-brand)}.ta-grid-table .ta-grid-th__inner{display:flex;align-items:center;gap:var(--ta-space-xs)}.ta-grid-table .ta-grid-tr{border-bottom:1px solid var(--ta-border-secondary)}.ta-grid-table .ta-grid-tr:hover{background:var(--ta-surface-hover)}.ta-grid-table .ta-grid-td{padding:var(--ta-space-sm) var(--ta-space-md);color:var(--ta-text-primary);vertical-align:middle}\n"] }]
+            args: [{ selector: 'ta-grid', standalone: true, imports: [
+                        PaginationComponent,
+                        NgTemplateOutlet,
+                        AsyncPipe,
+                        EmptyComponent,
+                        ErrorComponent,
+                        FontIconComponent,
+                        LoaderComponent,
+                        TitleComponent,
+                        TranslateModule,
+                    ], encapsulation: ViewEncapsulation.None, template: "@if (this.isReady$ | async) {\r\n<ta-loader [isLoading]=\"this.isLoading()\">\r\n  <ta-error [message]=\"this.errorMessage()\" (retry)=\"this._grid.table?.refresh()\">\r\n    <ta-empty\r\n      [isEmpty]=\"this.rows().length === 0\"\r\n      [text]=\"this.emptyText()\"\r\n      [subtitle]=\"this.emptySubtitle()\"\r\n      [emptyIcon]=\"this.emptyIcon()\"\r\n    >\r\n      <!-- L'action propos\u00E9e quand il n'y a rien : c'est l'\u00E9cran qui sait laquelle. -->\r\n      <ng-content select=\"[emptyAction]\" ngProjectAs=\"[emptyAction]\"></ng-content>\r\n      @if (this.displayType() === 'grid') {\r\n      <div class=\"ta-grid-table-wrapper\">\r\n        <table class=\"ta-grid-table\" [class.is-compact]=\"this.density() === 'compact'\">\r\n          <thead>\r\n            <tr>\r\n              @if (this.showSelection()) {\r\n              <th class=\"ta-grid-th ta-grid-th--select\" (click)=\"this.toggleAll()\">\r\n                <ta-font-icon\r\n                  class=\"c-pointer\"\r\n                  [name]=\"this.isAllPageSelected() ? 'check_box' : 'check_box_outline_blank'\"\r\n                />\r\n              </th>\r\n              } @for (col of this.visibleCols(); track col.key) {\r\n              <th\r\n                class=\"ta-grid-th\"\r\n                [class.is-sortable]=\"col.sortable\"\r\n                [class.is-sorted]=\"this.sortField() === col.key\"\r\n                [style.width]=\"col.width ?? 'auto'\"\r\n                [style.text-align]=\"col.align ?? 'left'\"\r\n                (click)=\"this.onSort(col)\"\r\n              >\r\n                <div class=\"ta-grid-th__inner\">\r\n                  <span class=\"ta-grid-th__label\">{{ col.title | translate }}</span>\r\n                  @if (this.sortField() === col.key) {\r\n                  <ta-font-icon\r\n                    class=\"ta-grid-th__sort-icon\"\r\n                    [name]=\"this.sortDir() === 'asc' ? 'arrow-up' : 'arrow-down'\"\r\n                  />\r\n                  }\r\n                </div>\r\n              </th>\r\n              }\r\n            </tr>\r\n          </thead>\r\n          <tbody>\r\n            @if (this.isGroup()) {\r\n            <!-- Regroupement : une ligne d'en-t\u00EAte introduit chaque groupe. -->\r\n            @for (group of this.dataByGroup(); track group.key) {\r\n            <tr class=\"ta-grid-group-row\">\r\n              <td class=\"ta-grid-group-row__cell\" [attr.colspan]=\"this.colspan()\">\r\n                <div class=\"ta-grid-group-row__inner\">\r\n                  <span class=\"ta-grid-group-row__label\">{{ this.groupLabel(group.key) }}</span>\r\n                  <span class=\"ta-grid-group-row__count\">{{ group.data.length }}</span>\r\n                </div>\r\n              </td>\r\n            </tr>\r\n            @for (row of group.data; track row.id) {\r\n            <ng-container [ngTemplateOutlet]=\"rowTpl\" [ngTemplateOutletContext]=\"{ $implicit: row }\"></ng-container>\r\n            } } } @else { @for (row of this.rows(); track row.id) {\r\n            <ng-container [ngTemplateOutlet]=\"rowTpl\" [ngTemplateOutletContext]=\"{ $implicit: row }\"></ng-container>\r\n            } }\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      } @if (this.displayType() === 'card') { @if (this.isGroup()) { @for (group of this.dataByGroup(); track group.key) {\r\n      <div class=\"ta-grid-group-header\">\r\n        <ta-title [level]=\"3\">{{ this.groupLabel(group.key) }}</ta-title>\r\n        <span class=\"ta-grid-group-header__count\">{{ group.data.length }}</span>\r\n      </div>\r\n      <div class=\"py-space-md\">\r\n        <ng-template\r\n          [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n          [ngTemplateOutletContext]=\"{ items: group.data, selectedIds: this.selectedIds() }\"\r\n        ></ng-template>\r\n      </div>\r\n      } } @else {\r\n      <ng-template\r\n        [ngTemplateOutlet]=\"this.cardTemplate()\"\r\n        [ngTemplateOutletContext]=\"{ items: this.data(), selectedIds: this.selectedIds() }\"\r\n      ></ng-template>\r\n      } }\r\n\r\n      <div class=\"py-space-md align-center\">\r\n        <ta-grid-pagination [gridId]=\"this.gridId()\"></ta-grid-pagination>\r\n      </div>\r\n    </ta-empty>\r\n  </ta-error>\r\n</ta-loader>\r\n}\r\n\r\n<ng-template #rowTpl let-row>\r\n  <tr class=\"ta-grid-tr c-pointer\" [class.is-selected]=\"this.isSelected(row.id)\" (click)=\"this.onRowClick(row)\">\r\n    @if (this.showSelection()) {\r\n    <td class=\"ta-grid-td ta-grid-td--select\" (click)=\"$event.stopPropagation(); this.toggleRow(row)\">\r\n      <ta-font-icon class=\"c-pointer\" [name]=\"this.isSelected(row.id) ? 'check_box' : 'check_box_outline_blank'\" />\r\n    </td>\r\n    } @for (col of this.visibleCols(); track col.key) {\r\n    <td class=\"ta-grid-td\" [style.text-align]=\"col.align ?? 'left'\">\r\n      @if (col.template) {\r\n      <ng-container\r\n        [ngTemplateOutlet]=\"col.template\"\r\n        [ngTemplateOutletContext]=\"{ $implicit: row, value: this.getCellValue(row, col.key) }\"\r\n      ></ng-container>\r\n      } @else {\r\n      {{ this.grid().cols[col.key]?.defaultFormatter(row) ?? this.getCellValue(row, col.key) }}\r\n      }\r\n    </td>\r\n    }\r\n  </tr>\r\n</ng-template>\r\n", styles: [".ta-grid-table-wrapper{width:100%;overflow-x:auto}.ta-grid-table{width:100%;border-collapse:collapse;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}.ta-grid-table .ta-grid-th{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:var(--ta-space-sm) var(--ta-space-md);text-align:left;border-bottom:1px solid var(--ta-border-tertiary);color:var(--ta-text-secondary);text-transform:uppercase;letter-spacing:.06em;font-weight:var(--ta-font-weight-bold);white-space:nowrap;-webkit-user-select:none;user-select:none}.ta-grid-table .ta-grid-th.is-sortable{cursor:pointer}.ta-grid-table .ta-grid-th.is-sortable:hover{color:var(--ta-text-primary);background:var(--ta-surface-hover-primary)}.ta-grid-table .ta-grid-th.is-sorted{color:var(--ta-text-brand-primary)}.ta-grid-table .ta-grid-th__inner{display:flex;align-items:center;gap:var(--ta-space-xs)}.ta-grid-table .ta-grid-tr{border-bottom:1px solid var(--ta-border-tertiary);transition:background-color .12s ease}.ta-grid-table .ta-grid-tr:last-child{border-bottom:none}.ta-grid-table .ta-grid-tr:hover{background:var(--ta-surface-secondary)}.ta-grid-table .ta-grid-tr.is-selected{background:var(--ta-surface-tertiary)}.ta-grid-table .ta-grid-td{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);padding:var(--ta-space-sm) var(--ta-space-md);color:var(--ta-text-primary);vertical-align:middle}.ta-grid-table .ta-grid-th--select,.ta-grid-table .ta-grid-td--select{width:1%;padding-right:0;color:var(--ta-icon-secondary)}.ta-grid-table.is-compact .ta-grid-th,.ta-grid-table.is-compact .ta-grid-td{padding-top:var(--ta-space-xs);padding-bottom:var(--ta-space-xs)}.ta-grid-group-row__cell{padding:var(--ta-space-sm) var(--ta-space-md);background:var(--ta-surface-secondary);border-bottom:1px solid var(--ta-border-tertiary)}.ta-grid-group-row__inner{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.ta-grid-group-row__label{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-primary);font-weight:var(--ta-font-weight-bold)}.ta-grid-group-row__count{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);background:var(--ta-surface-primary);color:var(--ta-text-secondary);font-weight:var(--ta-font-weight-bold)}.ta-grid-group-header{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm);padding-top:var(--ta-space-md)}.ta-grid-group-header__count{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:0 var(--ta-space-sm);border-radius:var(--ta-radius-full);background:var(--ta-surface-secondary);color:var(--ta-text-secondary);font-weight:var(--ta-font-weight-bold)}\n"] }]
         }], ctorParameters: () => [] });
 
 class TaGridHighlightFiltersComponent extends TaAbstractGridComponent {
@@ -939,129 +1092,26 @@ class TaGridHighlightFiltersComponent extends TaAbstractGridComponent {
         this.highlightForm.set(this._formService.getHighlightedFiltersForm(this._grid));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridHighlightFiltersComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridHighlightFiltersComponent, isStandalone: true, selector: "ta-grid-highlight-filters", inputs: { showResultCount: { classPropertyName: "showResultCount", publicName: "showResultCount", isSignal: true, isRequired: false, transformFunction: null }, showReset: { classPropertyName: "showReset", publicName: "showReset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.highlightForm().length > 0) {\n  <div class=\"highlight-filters\" [class.highlight-filters--active]=\"this.hasActiveFilters()\">\n    <div class=\"highlight-filters__icon\">\n      <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n    </div>\n\n    <div class=\"highlight-filters__form\">\n      <ta-form\n        [inputs]=\"this.highlightForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    <div class=\"highlight-filters__actions\">\n      @if (this.showReset() && this.hasActiveFilters()) {\n        <ta-button type=\"tertiary\" size=\"small\" icon=\"close\" (action)=\"this.reset()\">\n          {{ 'grid.form.reset' | translate }}\n        </ta-button>\n      }\n    </div>\n\n    @if (this.showResultCount()) {\n      <div class=\"highlight-filters__count\">\n        <ta-text size=\"sm\">\n          {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}\n        </ta-text>\n      </div>\n    }\n  </div>\n}\n", styles: [":host{display:block}.highlight-filters{display:flex;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-sm) var(--ta-space-md);background:var(--ta-surface-secondary);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);transition:border-color .2s ease,box-shadow .2s ease}.highlight-filters--active{border-color:var(--ta-brand-300);box-shadow:0 0 0 1px var(--ta-brand-100)}.highlight-filters__icon{display:flex;align-items:center;justify-content:center;width:var(--ta-space-xl);height:var(--ta-space-xl);min-width:var(--ta-space-xl);border-radius:var(--ta-radius-minimal);background:var(--ta-brand-50);color:var(--ta-icon-brand-primary)}.highlight-filters__form{flex:1;min-width:0}.highlight-filters__form ::ng-deep ta-form .ta-form{gap:0}.highlight-filters__form ::ng-deep .ta-panel{padding:0;background:transparent}.highlight-filters__form ::ng-deep .grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--ta-space-sm)}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 160px;min-width:140px;max-width:240px}.highlight-filters__form ::ng-deep .mat-mdc-form-field{width:100%}.highlight-filters__form ::ng-deep ta-inputs{margin-bottom:0}.highlight-filters__actions{display:flex;align-items:center;flex-shrink:0}.highlight-filters__count{display:flex;align-items:center;flex-shrink:0;padding-left:var(--ta-space-sm);border-left:1px solid var(--ta-border-secondary);color:var(--ta-text-secondary);white-space:nowrap;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}@media screen and (max-width: 767px){.highlight-filters{flex-wrap:wrap}.highlight-filters__icon{display:none}.highlight-filters__form{flex-basis:100%}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 100%;max-width:none}.highlight-filters__count{border-left:none;padding-left:0}}\n"], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridHighlightFiltersComponent, isStandalone: true, selector: "ta-grid-highlight-filters", inputs: { showResultCount: { classPropertyName: "showResultCount", publicName: "showResultCount", isSignal: true, isRequired: false, transformFunction: null }, showReset: { classPropertyName: "showReset", publicName: "showReset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.highlightForm().length > 0) {\r\n  <div class=\"highlight-filters\" [class.highlight-filters--active]=\"this.hasActiveFilters()\">\r\n    <div class=\"highlight-filters__form\">\r\n      <ta-form\r\n        [inputs]=\"this.highlightForm()\"\r\n        (valid)=\"this.applyFilters($event)\"\r\n        [onLive]=\"true\"\r\n        [askOnDestroy]=\"true\"\r\n        [canDisplayButton]=\"false\"\r\n      ></ta-form>\r\n    </div>\r\n\r\n    <div class=\"highlight-filters__meta\">\r\n      @if (this.showResultCount()) {\r\n        <ta-text class=\"highlight-filters__count\">\r\n          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}\r\n        </ta-text>\r\n      }\r\n\r\n      @if (this.showReset() && this.hasActiveFilters()) {\r\n        <ta-button type=\"tertiary\" size=\"small\" icon=\"close\" (action)=\"this.reset()\">\r\n          {{ 'grid.form.reset' | translate }}\r\n        </ta-button>\r\n      }\r\n    </div>\r\n  </div>\r\n}\r\n", styles: [":host{display:block}.highlight-filters{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs);padding:var(--ta-space-xs);background:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-full);box-shadow:var(--ta-shadow-black-sm);transition:border-color .2s ease,box-shadow .2s ease}.highlight-filters:hover{box-shadow:var(--ta-shadow-black-md)}.highlight-filters--active{border-color:var(--ta-border-brand-primary)}.highlight-filters__form{display:flex;flex:1 1 100%;min-width:0}.highlight-filters__meta{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm);flex-shrink:0;padding:0 var(--ta-space-md);border-left:1px solid var(--ta-border-tertiary)}.highlight-filters__count{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-primary);font-weight:var(--ta-font-weight-bold);white-space:nowrap}@media screen and (max-width: 767px){.highlight-filters{flex-wrap:wrap;padding:var(--ta-space-sm);border-radius:var(--ta-radius-rounded)}.highlight-filters__form{flex-basis:100%}.highlight-filters__meta{width:100%;justify-content:space-between;padding:var(--ta-space-xs) var(--ta-space-sm) 0;border-left:none;border-top:1px solid var(--ta-border-tertiary)}}\n"], dependencies: [{ kind: "component", type: FormComponent, selector: "ta-form", inputs: ["inputs", "askValidation$", "askOnDestroy", "loader", "error", "border", "canDisplayButton", "buttonTitle", "onLive"], outputs: ["valid", "isFormValid"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridHighlightFiltersComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-grid-highlight-filters', standalone: true, imports: [FormComponent, FontIconComponent, TranslatePipe, ButtonComponent, TextComponent], changeDetection: ChangeDetectionStrategy.OnPush, template: "@if (this.highlightForm().length > 0) {\n  <div class=\"highlight-filters\" [class.highlight-filters--active]=\"this.hasActiveFilters()\">\n    <div class=\"highlight-filters__icon\">\n      <ta-font-icon name=\"filter\" size=\"sm\"></ta-font-icon>\n    </div>\n\n    <div class=\"highlight-filters__form\">\n      <ta-form\n        [inputs]=\"this.highlightForm()\"\n        (valid)=\"this.applyFilters($event)\"\n        [askOnDestroy]=\"true\"\n        [canDisplayButton]=\"false\"\n      ></ta-form>\n    </div>\n\n    <div class=\"highlight-filters__actions\">\n      @if (this.showReset() && this.hasActiveFilters()) {\n        <ta-button type=\"tertiary\" size=\"small\" icon=\"close\" (action)=\"this.reset()\">\n          {{ 'grid.form.reset' | translate }}\n        </ta-button>\n      }\n    </div>\n\n    @if (this.showResultCount()) {\n      <div class=\"highlight-filters__count\">\n        <ta-text size=\"sm\">\n          {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}\n        </ta-text>\n      </div>\n    }\n  </div>\n}\n", styles: [":host{display:block}.highlight-filters{display:flex;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-sm) var(--ta-space-md);background:var(--ta-surface-secondary);border:1px solid var(--ta-border-secondary);border-radius:var(--ta-radius-rounded);transition:border-color .2s ease,box-shadow .2s ease}.highlight-filters--active{border-color:var(--ta-brand-300);box-shadow:0 0 0 1px var(--ta-brand-100)}.highlight-filters__icon{display:flex;align-items:center;justify-content:center;width:var(--ta-space-xl);height:var(--ta-space-xl);min-width:var(--ta-space-xl);border-radius:var(--ta-radius-minimal);background:var(--ta-brand-50);color:var(--ta-icon-brand-primary)}.highlight-filters__form{flex:1;min-width:0}.highlight-filters__form ::ng-deep ta-form .ta-form{gap:0}.highlight-filters__form ::ng-deep .ta-panel{padding:0;background:transparent}.highlight-filters__form ::ng-deep .grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--ta-space-sm)}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 160px;min-width:140px;max-width:240px}.highlight-filters__form ::ng-deep .mat-mdc-form-field{width:100%}.highlight-filters__form ::ng-deep ta-inputs{margin-bottom:0}.highlight-filters__actions{display:flex;align-items:center;flex-shrink:0}.highlight-filters__count{display:flex;align-items:center;flex-shrink:0;padding-left:var(--ta-space-sm);border-left:1px solid var(--ta-border-secondary);color:var(--ta-text-secondary);white-space:nowrap;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight)}@media screen and (max-width: 767px){.highlight-filters{flex-wrap:wrap}.highlight-filters__icon{display:none}.highlight-filters__form{flex-basis:100%}.highlight-filters__form ::ng-deep .g-col-6{flex:1 1 100%;max-width:none}.highlight-filters__count{border-left:none;padding-left:0}}\n"] }]
+            args: [{ selector: 'ta-grid-highlight-filters', standalone: true, imports: [FormComponent, TranslatePipe, PluralTranslatePipe, ButtonComponent, TextComponent], changeDetection: ChangeDetectionStrategy.OnPush, template: "@if (this.highlightForm().length > 0) {\r\n  <div class=\"highlight-filters\" [class.highlight-filters--active]=\"this.hasActiveFilters()\">\r\n    <div class=\"highlight-filters__form\">\r\n      <ta-form\r\n        [inputs]=\"this.highlightForm()\"\r\n        (valid)=\"this.applyFilters($event)\"\r\n        [onLive]=\"true\"\r\n        [askOnDestroy]=\"true\"\r\n        [canDisplayButton]=\"false\"\r\n      ></ta-form>\r\n    </div>\r\n\r\n    <div class=\"highlight-filters__meta\">\r\n      @if (this.showResultCount()) {\r\n        <ta-text class=\"highlight-filters__count\">\r\n          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}\r\n        </ta-text>\r\n      }\r\n\r\n      @if (this.showReset() && this.hasActiveFilters()) {\r\n        <ta-button type=\"tertiary\" size=\"small\" icon=\"close\" (action)=\"this.reset()\">\r\n          {{ 'grid.form.reset' | translate }}\r\n        </ta-button>\r\n      }\r\n    </div>\r\n  </div>\r\n}\r\n", styles: [":host{display:block}.highlight-filters{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs);padding:var(--ta-space-xs);background:var(--ta-surface-primary);border:1px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-full);box-shadow:var(--ta-shadow-black-sm);transition:border-color .2s ease,box-shadow .2s ease}.highlight-filters:hover{box-shadow:var(--ta-shadow-black-md)}.highlight-filters--active{border-color:var(--ta-border-brand-primary)}.highlight-filters__form{display:flex;flex:1 1 100%;min-width:0}.highlight-filters__meta{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm);flex-shrink:0;padding:0 var(--ta-space-md);border-left:1px solid var(--ta-border-tertiary)}.highlight-filters__count{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-primary);font-weight:var(--ta-font-weight-bold);white-space:nowrap}@media screen and (max-width: 767px){.highlight-filters{flex-wrap:wrap;padding:var(--ta-space-sm);border-radius:var(--ta-radius-rounded)}.highlight-filters__form{flex-basis:100%}.highlight-filters__meta{width:100%;justify-content:space-between;padding:var(--ta-space-xs) var(--ta-space-sm) 0;border-left:none;border-top:1px solid var(--ta-border-tertiary)}}\n"] }]
         }] });
-
-class TaGridTagsComponent extends TaAbstractGridComponent {
-    get group() {
-        return this._grid.groupBy;
-    }
-    get activeFilters() {
-        return this._grid.filters?.get() ?? [];
-    }
-    ngOnInit() {
-        super.ngOnInit();
-    }
-    remove(filter) {
-        this._grid.filters?.remove(filter);
-    }
-    removeGroup() {
-        this._grid.clearGroupBy();
-    }
-    clear() {
-        this._grid.filters?.apply([]);
-        this._grid.clearGroupBy();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridTagsComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridTagsComponent, isStandalone: true, selector: "ta-grid-tags", usesInheritance: true, ngImport: i0, template: "<div class=\"space-between align-center g-space-md\">\r\n  <div class=\"list-tag flex-start g-space-sm\">\r\n    <div class=\"group-tag flex-start g-space-xs align-center\">\r\n      @if (this.group) {\r\n        {{ 'grid.core.groupBy' | translate }}:\r\n        <ta-badge [value]=\"this.group\" type=\"primary\" icon=\"close\" (clickAction)=\"this.removeGroup()\"></ta-badge>\r\n      }\r\n    </div>\r\n\r\n    @for (tag of this.activeFilters; track tag.key) {\r\n      <div class=\"item-tag flex-start g-space-xs align-center\">\r\n        <div class=\"tag-title\">{{ 'grid.' + this.gridId() + '.core.' + tag.key | translate }}:</div>\r\n        @for (value of tag.values; track value.field) {\r\n          <ta-badge\r\n            [value]=\"value.type + ' ' + value.value\"\r\n            type=\"primary\"\r\n            icon=\"close\"\r\n            (clickAction)=\"this.remove(value)\"\r\n          ></ta-badge>\r\n        }\r\n      </div>\r\n    }\r\n  </div>\r\n\r\n  <div class=\"reset-n-result flex-start g-space-md align-center\">\r\n    @if (this.activeFilters.length > 0) {\r\n      <div class=\"reset\">\r\n        <ta-button (action)=\"this.clear()\">\r\n          {{ 'grid.tag.reset' | translate }}\r\n        </ta-button>\r\n      </div>\r\n    }\r\n    <div class=\"result\">\r\n      <ta-text>\r\n        {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}\r\n      </ta-text>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "component", type: BadgeComponent, selector: "ta-badge", inputs: ["value", "type", "showClickOption", "icon"], outputs: ["clickAction"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridTagsComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-grid-tags', standalone: true, imports: [TranslatePipe, BadgeComponent, TextComponent, ButtonComponent], template: "<div class=\"space-between align-center g-space-md\">\r\n  <div class=\"list-tag flex-start g-space-sm\">\r\n    <div class=\"group-tag flex-start g-space-xs align-center\">\r\n      @if (this.group) {\r\n        {{ 'grid.core.groupBy' | translate }}:\r\n        <ta-badge [value]=\"this.group\" type=\"primary\" icon=\"close\" (clickAction)=\"this.removeGroup()\"></ta-badge>\r\n      }\r\n    </div>\r\n\r\n    @for (tag of this.activeFilters; track tag.key) {\r\n      <div class=\"item-tag flex-start g-space-xs align-center\">\r\n        <div class=\"tag-title\">{{ 'grid.' + this.gridId() + '.core.' + tag.key | translate }}:</div>\r\n        @for (value of tag.values; track value.field) {\r\n          <ta-badge\r\n            [value]=\"value.type + ' ' + value.value\"\r\n            type=\"primary\"\r\n            icon=\"close\"\r\n            (clickAction)=\"this.remove(value)\"\r\n          ></ta-badge>\r\n        }\r\n      </div>\r\n    }\r\n  </div>\r\n\r\n  <div class=\"reset-n-result flex-start g-space-md align-center\">\r\n    @if (this.activeFilters.length > 0) {\r\n      <div class=\"reset\">\r\n        <ta-button (action)=\"this.clear()\">\r\n          {{ 'grid.tag.reset' | translate }}\r\n        </ta-button>\r\n      </div>\r\n    }\r\n    <div class=\"result\">\r\n      <ta-text>\r\n        {{ 'grid.tag.results' | translate: { nb: this.grid.totalItems() } }}\r\n      </ta-text>\r\n    </div>\r\n  </div>\r\n</div>\r\n" }]
-        }] });
-
-class TaFiltersModal extends TaBaseComponent {
-    constructor() {
-        super();
-        this.open = input.required();
-        this.gridId = input.required();
-        this.closeEvent = output();
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFiltersModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaFiltersModal, isStandalone: true, selector: "ta-grid-filters-modal", inputs: { open: { classPropertyName: "open", publicName: "open", isSignal: true, isRequired: true, transformFunction: null }, gridId: { classPropertyName: "gridId", publicName: "gridId", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: `
-    <ta-modal
-      [open]="this.open()"
-      size="medium"
-      [title]="'grid.filters.title' | translate"
-      (closeEvent)="this.closeEvent.emit()"
-    >
-      <div modal-content>
-        <ta-grid-form [gridId]="this.gridId()" [showTitle]="false"></ta-grid-form>
-      </div>
-      <div modal-footer>
-        <ta-button (action)="this.closeEvent.emit()">{{ 'grid.filters.apply' | translate }}</ta-button>
-      </div>
-    </ta-modal>
-  `, isInline: true, styles: [".filters-modal{display:flex;flex-direction:column;gap:var(--ta-space-md)}.filters-modal__header{flex-direction:row;justify-content:space-between;display:flex;align-items:center;padding:var(--ta-space-md) var(--ta-space-md) var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.filters-modal__header ta-font-icon{color:var(--ta-icon-brand-primary)}.filters-modal__content{padding:0 var(--ta-space-md)}.filters-modal__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding:var(--ta-space-sm) var(--ta-space-md) var(--ta-space-md);border-top:1px solid var(--ta-border-secondary)}\n"], dependencies: [{ kind: "component", type: TaGridFormComponent, selector: "ta-grid-form", inputs: ["showTitle", "showReset"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TaModalComponent, selector: "ta-modal", inputs: ["open", "size", "title", "closeOnBackdrop", "contentFit"], outputs: ["closeEvent"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaFiltersModal, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-grid-filters-modal', template: `
-    <ta-modal
-      [open]="this.open()"
-      size="medium"
-      [title]="'grid.filters.title' | translate"
-      (closeEvent)="this.closeEvent.emit()"
-    >
-      <div modal-content>
-        <ta-grid-form [gridId]="this.gridId()" [showTitle]="false"></ta-grid-form>
-      </div>
-      <div modal-footer>
-        <ta-button (action)="this.closeEvent.emit()">{{ 'grid.filters.apply' | translate }}</ta-button>
-      </div>
-    </ta-modal>
-  `, standalone: true, imports: [TaGridFormComponent, ButtonComponent, TaModalComponent, TranslatePipe], styles: [".filters-modal{display:flex;flex-direction:column;gap:var(--ta-space-md)}.filters-modal__header{flex-direction:row;justify-content:space-between;display:flex;align-items:center;padding:var(--ta-space-md) var(--ta-space-md) var(--ta-space-sm);border-bottom:1px solid var(--ta-border-secondary)}.filters-modal__header ta-font-icon{color:var(--ta-icon-brand-primary)}.filters-modal__content{padding:0 var(--ta-space-md)}.filters-modal__footer{display:flex;flex-wrap:nowrap;justify-content:flex-end;padding:var(--ta-space-sm) var(--ta-space-md) var(--ta-space-md);border-top:1px solid var(--ta-border-secondary)}\n"] }]
-        }], ctorParameters: () => [] });
-class TaGridControlComponent extends TaAbstractGridComponent {
-    constructor() {
-        super();
-        this.show = input({
-            switchView: true,
-            filters: true,
-            preset: true,
-        });
-        this.isFiltersOpen = signal(false);
-    }
-    ngOnInit() {
-        super.ngOnInit();
-        if (this.breakpoints.isMobile && this.show().switchView) {
-            this.switchView('card');
-        }
-    }
-    switchView(type) {
-        this._grid.switchView(type);
-    }
-    openFilters() {
-        this.isFiltersOpen.set(true);
-    }
-    setPreset(preset) {
-        this.grid.filters?.apply(preset.filters);
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridControlComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridControlComponent, isStandalone: true, selector: "ta-grid-control", inputs: { show: { classPropertyName: "show", publicName: "show", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\n  <div class=\"grid-control\">\n    @if (this.show().filters) {\n      <ta-button\n        icon=\"filter\"\n        type=\"secondary\"\n        [options]=\"{ circular: 'small' }\"\n        (action)=\"this.openFilters()\"\n      ></ta-button>\n    }\n\n    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n        <ng-template #panelTrigger>\n          <ta-button type=\"secondary\" icon=\"tune\" [options]=\"{ circular: 'small' }\"></ta-button>\n        </ng-template>\n        <ng-template #panelContent>\n          <div class=\"preset-menu\">\n            @for (preset of this.grid.filters?.preset; track preset.name) {\n              <div class=\"preset-menu__item c-pointer\" (click)=\"this.setPreset(preset)\">\n                {{ preset.name }}\n              </div>\n            }\n          </div>\n        </ng-template>\n      </ta-overlay-panel>\n    }\n\n    @if (this.show().switchView) {\n      <div class=\"grid-control__toggle\">\n        <ta-button\n          icon=\"view_list\"\n          [type]=\"this.displayType() === 'grid' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'grid' }\"\n          (action)=\"this.switchView('grid')\"\n        ></ta-button>\n        <ta-button\n          icon=\"grid_view\"\n          [type]=\"this.displayType() === 'card' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'card' }\"\n          (action)=\"this.switchView('card')\"\n        ></ta-button>\n      </div>\n    }\n  </div>\n}\n\n<ta-grid-filters-modal\n  [open]=\"this.isFiltersOpen()\"\n  [gridId]=\"this.gridId()\"\n  (closeEvent)=\"this.isFiltersOpen.set(false)\"\n></ta-grid-filters-modal>\n", styles: [".grid-control{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.grid-control__toggle{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs)}.preset-menu{display:flex;flex-direction:column;padding:var(--ta-space-xs)}.preset-menu__item{padding:var(--ta-space-sm) var(--ta-space-md);border-radius:var(--ta-radius-minimal);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.preset-menu__item:hover{background:var(--ta-surface-hover)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }, { kind: "component", type: TaFiltersModal, selector: "ta-grid-filters-modal", inputs: ["open", "gridId"], outputs: ["closeEvent"] }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridControlComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'ta-grid-control', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaFiltersModal], template: "@if (this.isReady$ | async) {\n  <div class=\"grid-control\">\n    @if (this.show().filters) {\n      <ta-button\n        icon=\"filter\"\n        type=\"secondary\"\n        [options]=\"{ circular: 'small' }\"\n        (action)=\"this.openFilters()\"\n      ></ta-button>\n    }\n\n    @if (this.show().preset && (this.grid.filters?.preset?.length ?? 0 > 0)) {\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\n        <ng-template #panelTrigger>\n          <ta-button type=\"secondary\" icon=\"tune\" [options]=\"{ circular: 'small' }\"></ta-button>\n        </ng-template>\n        <ng-template #panelContent>\n          <div class=\"preset-menu\">\n            @for (preset of this.grid.filters?.preset; track preset.name) {\n              <div class=\"preset-menu__item c-pointer\" (click)=\"this.setPreset(preset)\">\n                {{ preset.name }}\n              </div>\n            }\n          </div>\n        </ng-template>\n      </ta-overlay-panel>\n    }\n\n    @if (this.show().switchView) {\n      <div class=\"grid-control__toggle\">\n        <ta-button\n          icon=\"view_list\"\n          [type]=\"this.displayType() === 'grid' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'grid' }\"\n          (action)=\"this.switchView('grid')\"\n        ></ta-button>\n        <ta-button\n          icon=\"grid_view\"\n          [type]=\"this.displayType() === 'card' ? 'primary' : 'tertiary'\"\n          [options]=\"{ circular: 'small', border: this.displayType() !== 'card' }\"\n          (action)=\"this.switchView('card')\"\n        ></ta-button>\n      </div>\n    }\n  </div>\n}\n\n<ta-grid-filters-modal\n  [open]=\"this.isFiltersOpen()\"\n  [gridId]=\"this.gridId()\"\n  (closeEvent)=\"this.isFiltersOpen.set(false)\"\n></ta-grid-filters-modal>\n", styles: [".grid-control{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.grid-control__toggle{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs)}.preset-menu{display:flex;flex-direction:column;padding:var(--ta-space-xs)}.preset-menu__item{padding:var(--ta-space-sm) var(--ta-space-md);border-radius:var(--ta-radius-minimal);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight)}.preset-menu__item:hover{background:var(--ta-surface-hover)}\n"] }]
-        }], ctorParameters: () => [] });
 
 const gridSearchFieldsName = 'search';
 const filterTypeToGql = {
     '=': 'eq',
     '!=': 'neq',
-    like: 'contains',
+    'like': 'contains',
     '<': 'lt',
     '>': 'gt',
     '<=': 'lte',
     '>=': 'gte',
-    in: 'in',
-    starts: 'startsWith',
-    ends: 'endsWith',
-    regex: 'contains',
+    'in': 'in',
+    'starts': 'startsWith',
+    'ends': 'endsWith',
+    'regex': 'contains',
 };
 function buildWhere(filters, colsMetaData) {
     if (!filters.length)
@@ -1119,6 +1169,206 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
                 }]
         }], ctorParameters: () => [] });
 
+/** Opérateurs rendus tels quels dans le chip, sous leur forme mathématique. */
+const OPERATOR_SYMBOLS = {
+    '!=': '≠',
+    '<': '<',
+    '<=': '≤',
+    '>': '>',
+    '>=': '≥',
+};
+class TaGridTagsComponent extends TaAbstractGridComponent {
+    group() {
+        return this._grid.groupBy();
+    }
+    activeFilters() {
+        return this._grid.filters?.get() ?? [];
+    }
+    hasActiveFilters() {
+        return this.activeFilters().length > 0 || !!this.group();
+    }
+    /** Clé de traduction du libellé d'un critère — le champ de recherche n'est pas une colonne. */
+    labelKey(key) {
+        if (key === gridSearchFieldsName) {
+            return 'grid.tag.search';
+        }
+        return this._grid.cols[key]?.inputLabel() ?? key;
+    }
+    /**
+     * Suffixe lisible du chip : « : Electronics », « ≥ 100 », « : « book » ».
+     * L'opérateur n'apparaît que lorsqu'il porte du sens.
+     */
+    formatValue(filter) {
+        if (typeof filter.value === 'boolean') {
+            return ` ${filter.value ? '✓' : '✗'}`;
+        }
+        const value = Array.isArray(filter.value) ? filter.value.join(', ') : String(filter.value);
+        switch (filter.type) {
+            case 'like':
+            case 'regex':
+                return ` : « ${value} »`;
+            case 'starts':
+                return ` : ${value}…`;
+            case 'ends':
+                return ` : …${value}`;
+            case '=':
+            case 'in':
+                return ` : ${value}`;
+            default:
+                return ` ${OPERATOR_SYMBOLS[filter.type] ?? filter.type} ${value}`;
+        }
+    }
+    remove(filter) {
+        this._grid.filters?.remove(filter);
+    }
+    removeGroup() {
+        this._grid.clearGroupBy();
+    }
+    clear() {
+        this._grid.filters?.apply([]);
+        this._grid.clearGroupBy();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridTagsComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridTagsComponent, isStandalone: true, selector: "ta-grid-tags", usesInheritance: true, ngImport: i0, template: "<div class=\"grid-tags\">\r\n  <ta-text class=\"grid-tags__results\">\r\n    {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}\r\n  </ta-text>\r\n\r\n  @if (this.hasActiveFilters()) {\r\n    <div class=\"grid-tags__list\">\r\n      @if (this.group()) {\r\n        <ta-badge\r\n          class=\"grid-tags__chip grid-tags__chip--group\"\r\n          [value]=\"('grid.tag.group' | translate) + ' : ' + (this.labelKey(this.group()) | translate)\"\r\n          type=\"secondary\"\r\n          icon=\"close\"\r\n          (clickAction)=\"this.removeGroup()\"\r\n        ></ta-badge>\r\n      }\r\n\r\n      @for (tag of this.activeFilters(); track tag.key) {\r\n        @for (value of tag.values; track value.type + value.value) {\r\n          <ta-badge\r\n            class=\"grid-tags__chip\"\r\n            [value]=\"(this.labelKey(tag.key) | translate) + this.formatValue(value)\"\r\n            type=\"primary\"\r\n            icon=\"close\"\r\n            (clickAction)=\"this.remove(value)\"\r\n          ></ta-badge>\r\n        }\r\n      }\r\n    </div>\r\n\r\n    <ta-button class=\"grid-tags__clear\" type=\"tertiary\" size=\"small\" (action)=\"this.clear()\">\r\n      {{ 'grid.tag.reset' | translate }}\r\n    </ta-button>\r\n  }\r\n</div>\r\n", styles: [":host{display:block}.grid-tags{flex-wrap:nowrap;display:flex;align-items:center;flex-wrap:wrap;gap:var(--ta-space-sm) var(--ta-space-md);padding:var(--ta-space-sm) 0}.grid-tags__results{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight);color:var(--ta-text-primary);white-space:nowrap}.grid-tags__list{flex-wrap:nowrap;display:flex;align-items:center;flex:1 1 auto;flex-wrap:wrap;gap:var(--ta-space-sm);min-width:0}\n"], dependencies: [{ kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }, { kind: "component", type: BadgeComponent, selector: "ta-badge", inputs: ["value", "type", "showClickOption", "icon"], outputs: ["clickAction"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridTagsComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-grid-tags', standalone: true, imports: [TranslatePipe, PluralTranslatePipe, BadgeComponent, TextComponent, ButtonComponent], template: "<div class=\"grid-tags\">\r\n  <ta-text class=\"grid-tags__results\">\r\n    {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}\r\n  </ta-text>\r\n\r\n  @if (this.hasActiveFilters()) {\r\n    <div class=\"grid-tags__list\">\r\n      @if (this.group()) {\r\n        <ta-badge\r\n          class=\"grid-tags__chip grid-tags__chip--group\"\r\n          [value]=\"('grid.tag.group' | translate) + ' : ' + (this.labelKey(this.group()) | translate)\"\r\n          type=\"secondary\"\r\n          icon=\"close\"\r\n          (clickAction)=\"this.removeGroup()\"\r\n        ></ta-badge>\r\n      }\r\n\r\n      @for (tag of this.activeFilters(); track tag.key) {\r\n        @for (value of tag.values; track value.type + value.value) {\r\n          <ta-badge\r\n            class=\"grid-tags__chip\"\r\n            [value]=\"(this.labelKey(tag.key) | translate) + this.formatValue(value)\"\r\n            type=\"primary\"\r\n            icon=\"close\"\r\n            (clickAction)=\"this.remove(value)\"\r\n          ></ta-badge>\r\n        }\r\n      }\r\n    </div>\r\n\r\n    <ta-button class=\"grid-tags__clear\" type=\"tertiary\" size=\"small\" (action)=\"this.clear()\">\r\n      {{ 'grid.tag.reset' | translate }}\r\n    </ta-button>\r\n  }\r\n</div>\r\n", styles: [":host{display:block}.grid-tags{flex-wrap:nowrap;display:flex;align-items:center;flex-wrap:wrap;gap:var(--ta-space-sm) var(--ta-space-md);padding:var(--ta-space-sm) 0}.grid-tags__results{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight);color:var(--ta-text-primary);white-space:nowrap}.grid-tags__list{flex-wrap:nowrap;display:flex;align-items:center;flex:1 1 auto;flex-wrap:wrap;gap:var(--ta-space-sm);min-width:0}\n"] }]
+        }] });
+
+/**
+ * Panneau latéral des filtres. Un panneau plutôt qu'une modale : les critères
+ * restent à côté de la liste, qui se met à jour pendant qu'on les règle.
+ */
+class TaGridFiltersPanel extends TaAbstractGridComponent {
+    constructor() {
+        super(...arguments);
+        this.closeEvent = output();
+    }
+    resultCount() {
+        return this.grid()?.totalItems() ?? 0;
+    }
+    /** Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control. */
+    reset() {
+        this._grid.filters?.apply([]);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFiltersPanel, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaGridFiltersPanel, isStandalone: true, selector: "ta-grid-filters-panel", outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: "<ta-layout-full-panel\r\n  width=\"420px\"\r\n  [title]=\"'grid.filters.title' | translate\"\r\n  (closeEvent)=\"this.closeEvent.emit()\"\r\n>\r\n  <div panel-content>\r\n    <ta-grid-form [gridId]=\"this.gridId()\" [showTitle]=\"false\" [showReset]=\"false\"></ta-grid-form>\r\n  </div>\r\n\r\n  <div panel-footer class=\"filters-panel__footer\">\r\n    <ta-button type=\"tertiary\" (action)=\"this.reset()\">\r\n      {{ 'grid.form.reset' | translate }}\r\n    </ta-button>\r\n\r\n    <ta-button (action)=\"this.closeEvent.emit()\">\r\n      {{ 'grid.filters.applyCount' | pluralTranslate: this.resultCount() | translate: { nb: this.resultCount() } }}\r\n    </ta-button>\r\n  </div>\r\n</ta-layout-full-panel>\r\n", styles: [".filters-panel__footer{flex-wrap:nowrap;align-items:center;display:flex;flex-direction:row;justify-content:space-between;gap:var(--ta-space-md);width:100%}\n"], dependencies: [{ kind: "component", type: TaGridFormComponent, selector: "ta-grid-form", inputs: ["showTitle", "showReset", "title", "showResultCount", "showGroup"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: LayoutFullPanelComponent, selector: "ta-layout-full-panel", inputs: ["width", "title"], outputs: ["closeEvent"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridFiltersPanel, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-grid-filters-panel', standalone: true, imports: [TaGridFormComponent, ButtonComponent, LayoutFullPanelComponent, TranslatePipe, PluralTranslatePipe], template: "<ta-layout-full-panel\r\n  width=\"420px\"\r\n  [title]=\"'grid.filters.title' | translate\"\r\n  (closeEvent)=\"this.closeEvent.emit()\"\r\n>\r\n  <div panel-content>\r\n    <ta-grid-form [gridId]=\"this.gridId()\" [showTitle]=\"false\" [showReset]=\"false\"></ta-grid-form>\r\n  </div>\r\n\r\n  <div panel-footer class=\"filters-panel__footer\">\r\n    <ta-button type=\"tertiary\" (action)=\"this.reset()\">\r\n      {{ 'grid.form.reset' | translate }}\r\n    </ta-button>\r\n\r\n    <ta-button (action)=\"this.closeEvent.emit()\">\r\n      {{ 'grid.filters.applyCount' | pluralTranslate: this.resultCount() | translate: { nb: this.resultCount() } }}\r\n    </ta-button>\r\n  </div>\r\n</ta-layout-full-panel>\r\n", styles: [".filters-panel__footer{flex-wrap:nowrap;align-items:center;display:flex;flex-direction:row;justify-content:space-between;gap:var(--ta-space-md);width:100%}\n"] }]
+        }] });
+class TaGridControlComponent extends TaAbstractGridComponent {
+    constructor() {
+        super(...arguments);
+        this.show = input({
+            filters: true,
+            group: true,
+            preset: true,
+            sort: true,
+            switchView: true,
+        });
+        /** Masque les libellés textuels : ne restent que les icônes. */
+        this.compact = input(false);
+        this.isFiltersOpen = signal(false);
+    }
+    /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
+    /** Colonnes sur lesquelles un regroupement a du sens. */
+    groupableCols() {
+        return Object.values(this.grid()?.cols ?? {})
+            .filter(col => col.data.col.showOnSearch && !col.data.col.notDisplayable)
+            .map(col => ({ key: col.key(), label: col.inputLabel() }));
+    }
+    hasGroupableCols() {
+        return this.groupableCols().length > 0;
+    }
+    /** Colonnes triables, pour les vues sans en-têtes (cartes). */
+    sortableCols() {
+        return Object.values(this.grid()?.cols ?? {})
+            .filter(col => !col.data.col.notDisplayable && !col.key().startsWith('_'))
+            .map(col => ({ key: col.key(), label: col.inputLabel() }));
+    }
+    hasSortableCols() {
+        return this.sortableCols().length > 0;
+    }
+    activeSort() {
+        return this.grid()?.table?.sortField() ?? null;
+    }
+    activeSortDir() {
+        return this.grid()?.table?.sortDir() ?? 'asc';
+    }
+    activeSortLabel() {
+        const key = this.activeSort();
+        return key ? this.grid()?.cols[key]?.inputLabel() ?? key : null;
+    }
+    activeGroup() {
+        return this.grid()?.groupBy() ?? null;
+    }
+    activeGroupLabel() {
+        const key = this.activeGroup();
+        return key ? this.grid()?.cols[key]?.inputLabel() ?? key : null;
+    }
+    hasPresets() {
+        return (this.grid()?.filters?.preset?.length ?? 0) > 0;
+    }
+    activePresetName() {
+        return this.grid()?.filters?.preset?.find(preset => this.isPresetActive(preset))?.name ?? null;
+    }
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.breakpoints.isMobile && this.show().switchView) {
+            this.switchView('card');
+        }
+    }
+    /** Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres. */
+    activeFiltersCount() {
+        return (this.grid()?.filters?.get() ?? [])
+            .filter(tag => tag.key !== gridSearchFieldsName)
+            .reduce((count, tag) => count + tag.values.length, 0);
+    }
+    switchView(type) {
+        this._grid.switchView(type);
+    }
+    openFilters() {
+        this.isFiltersOpen.set(true);
+    }
+    setPreset(preset) {
+        this.grid().filters?.apply(this.isPresetActive(preset) ? [] : preset.filters);
+    }
+    /** Rejouer le même critère inverse le sens. */
+    setSort(key) {
+        if (!key) {
+            this.grid()?.table?.setSort(null, 'asc');
+            return;
+        }
+        const dir = key === this.activeSort() && this.activeSortDir() === 'asc' ? 'desc' : 'asc';
+        this.grid()?.table?.setSort(key, dir);
+    }
+    setGroup(key) {
+        if (!key || key === this.activeGroup()) {
+            this._grid.clearGroupBy();
+            return;
+        }
+        this._grid.setGroupBy(key);
+    }
+    isPresetActive(preset) {
+        if (!preset.filters.length) {
+            return false;
+        }
+        const active = (this.grid()?.filters?.get() ?? []).flatMap(tag => tag.values);
+        return preset.filters.every(filter => active.some(current => current.field === filter.field &&
+            current.type === filter.type &&
+            String(current.value) === String(filter.value)));
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridControlComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridControlComponent, isStandalone: true, selector: "ta-grid-control", inputs: { show: { classPropertyName: "show", publicName: "show", isSignal: true, isRequired: false, transformFunction: null }, compact: { classPropertyName: "compact", publicName: "compact", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\r\n  <div class=\"grid-control\" [class.grid-control--compact]=\"this.compact()\">\r\n    @if (this.show().filters) {\r\n      <ta-button\r\n        [type]=\"this.activeFiltersCount() > 0 ? 'secondary' : 'tertiary'\"\r\n        icon=\"filter_alt\"\r\n        (action)=\"this.openFilters()\"\r\n      >\r\n        <span class=\"grid-control__label\">{{ 'grid.control.filters' | translate }}</span>\r\n        @if (this.activeFiltersCount() > 0) {\r\n          <span class=\"grid-control__count\">{{ this.activeFiltersCount() }}</span>\r\n        }\r\n      </ta-button>\r\n    }\r\n\r\n    @if (this.show().preset && this.hasPresets()) {\r\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\r\n        <ng-template #panelTrigger>\r\n          <!-- Pas de stopPropagation : le clic doit atteindre l'overlay. -->\r\n          <ta-button\r\n            [type]=\"this.activePresetName() ? 'secondary' : 'tertiary'\"\r\n            icon=\"tune\"\r\n            [stopPropagationActivation]=\"false\"\r\n          >\r\n            <span class=\"grid-control__label\">\r\n              {{ this.activePresetName() ?? ('grid.control.presets' | translate) }}\r\n            </span>\r\n          </ta-button>\r\n        </ng-template>\r\n\r\n        <ng-template #panelContent>\r\n          <div class=\"preset-menu\">\r\n            <div class=\"preset-menu__title\">{{ 'grid.control.presets' | translate }}</div>\r\n            @for (preset of this.grid().filters?.preset; track preset.name) {\r\n              <div\r\n                class=\"preset-menu__item c-pointer\"\r\n                [class.is-active]=\"this.isPresetActive(preset)\"\r\n                (click)=\"this.setPreset(preset)\"\r\n              >\r\n                <span class=\"preset-menu__item-label\">{{ preset.name }}</span>\r\n                @if (this.isPresetActive(preset)) {\r\n                  <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n                }\r\n              </div>\r\n            }\r\n          </div>\r\n        </ng-template>\r\n      </ta-overlay-panel>\r\n    }\r\n\r\n    @if (this.show().sort && this.hasSortableCols()) {\r\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\r\n        <ng-template #panelTrigger>\r\n          <!-- Le clic doit atteindre le d\u00E9clencheur de l'overlay : pas de stopPropagation. -->\r\n          <ta-button\r\n            [type]=\"this.activeSort() ? 'secondary' : 'tertiary'\"\r\n            [icon]=\"this.activeSort() && this.activeSortDir() === 'desc' ? 'arrow_downward' : 'arrow_upward'\"\r\n            [stopPropagationActivation]=\"false\"\r\n          >\r\n            <span class=\"grid-control__label\">\r\n              {{ this.activeSortLabel() ? (this.activeSortLabel() | translate) : ('grid.control.sort' | translate) }}\r\n            </span>\r\n          </ta-button>\r\n        </ng-template>\r\n\r\n        <ng-template #panelContent>\r\n          <div class=\"preset-menu\">\r\n            <div class=\"preset-menu__title\">{{ 'grid.control.sort' | translate }}</div>\r\n\r\n            <div class=\"preset-menu__item c-pointer\" [class.is-active]=\"!this.activeSort()\" (click)=\"this.setSort(null)\">\r\n              <span class=\"preset-menu__item-label\">{{ 'grid.control.sortNone' | translate }}</span>\r\n              @if (!this.activeSort()) {\r\n                <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n              }\r\n            </div>\r\n\r\n            @for (col of this.sortableCols(); track col.key) {\r\n              <div\r\n                class=\"preset-menu__item c-pointer\"\r\n                [class.is-active]=\"this.activeSort() === col.key\"\r\n                (click)=\"this.setSort(col.key)\"\r\n              >\r\n                <span class=\"preset-menu__item-label\">{{ col.label | translate }}</span>\r\n                @if (this.activeSort() === col.key) {\r\n                  <ta-font-icon\r\n                    [name]=\"this.activeSortDir() === 'desc' ? 'arrow_downward' : 'arrow_upward'\"\r\n                    type=\"sm\"\r\n                  ></ta-font-icon>\r\n                }\r\n              </div>\r\n            }\r\n          </div>\r\n        </ng-template>\r\n      </ta-overlay-panel>\r\n    }\r\n\r\n    @if (this.show().group && this.hasGroupableCols()) {\r\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\r\n        <ng-template #panelTrigger>\r\n          <!-- Le clic doit atteindre le d\u00E9clencheur de l'overlay : pas de stopPropagation. -->\r\n          <ta-button\r\n            [type]=\"this.activeGroup() ? 'secondary' : 'tertiary'\"\r\n            icon=\"workspaces\"\r\n            [stopPropagationActivation]=\"false\"\r\n          >\r\n            <span class=\"grid-control__label\">\r\n              {{ this.activeGroupLabel() ? (this.activeGroupLabel() | translate) : ('grid.control.group' | translate) }}\r\n            </span>\r\n          </ta-button>\r\n        </ng-template>\r\n\r\n        <ng-template #panelContent>\r\n          <div class=\"preset-menu\">\r\n            <div class=\"preset-menu__title\">{{ 'grid.control.group' | translate }}</div>\r\n\r\n            <div\r\n              class=\"preset-menu__item c-pointer\"\r\n              [class.is-active]=\"!this.activeGroup()\"\r\n              (click)=\"this.setGroup(null)\"\r\n            >\r\n              <span class=\"preset-menu__item-label\">{{ 'grid.control.groupNone' | translate }}</span>\r\n              @if (!this.activeGroup()) {\r\n                <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n              }\r\n            </div>\r\n\r\n            @for (col of this.groupableCols(); track col.key) {\r\n              <div\r\n                class=\"preset-menu__item c-pointer\"\r\n                [class.is-active]=\"this.activeGroup() === col.key\"\r\n                (click)=\"this.setGroup(col.key)\"\r\n              >\r\n                <span class=\"preset-menu__item-label\">{{ col.label | translate }}</span>\r\n                @if (this.activeGroup() === col.key) {\r\n                  <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n                }\r\n              </div>\r\n            }\r\n          </div>\r\n        </ng-template>\r\n      </ta-overlay-panel>\r\n    }\r\n\r\n    @if (this.show().switchView) {\r\n      <div class=\"grid-control__switch\" role=\"group\">\r\n        <div class=\"grid-control__segment\" [class.is-active]=\"this.displayType() === 'grid'\">\r\n          <ta-button type=\"tertiary\" icon=\"view_list\" size=\"small\" (action)=\"this.switchView('grid')\">\r\n            <span class=\"grid-control__label\">{{ 'grid.control.table' | translate }}</span>\r\n          </ta-button>\r\n        </div>\r\n        <div class=\"grid-control__segment\" [class.is-active]=\"this.displayType() === 'card'\">\r\n          <ta-button type=\"tertiary\" icon=\"grid_view\" size=\"small\" (action)=\"this.switchView('card')\">\r\n            <span class=\"grid-control__label\">{{ 'grid.control.card' | translate }}</span>\r\n          </ta-button>\r\n        </div>\r\n      </div>\r\n    }\r\n  </div>\r\n}\r\n\r\n@if (this.isFiltersOpen()) {\r\n  <ta-grid-filters-panel [gridId]=\"this.gridId()\" (closeEvent)=\"this.isFiltersOpen.set(false)\"></ta-grid-filters-panel>\r\n}\r\n", styles: [".grid-control{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.grid-control__label{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);font-weight:var(--ta-font-weight-medium)}.grid-control__count{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);min-width:var(--ta-space-md);height:var(--ta-space-md);padding:0 var(--ta-space-xs);border-radius:var(--ta-radius-full);background:var(--ta-surface-brand-primary);color:var(--ta-text-invert-primary);font-weight:var(--ta-font-weight-bold);line-height:1}.grid-control__switch{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs);padding:var(--ta-space-xs);border-radius:var(--ta-radius-full);background:var(--ta-surface-secondary)}.grid-control__segment{border-radius:var(--ta-radius-full)}.grid-control__segment.is-active{background:var(--ta-surface-primary);box-shadow:var(--ta-shadow-black-sm)}.grid-control--compact .grid-control__label{display:none}@media screen and (max-width: 767px){.grid-control__label{display:none}}.preset-menu{display:flex;flex-direction:column;min-width:220px;padding:var(--ta-space-xs)}.preset-menu__title{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:var(--ta-space-xs) var(--ta-space-sm);color:var(--ta-text-secondary);text-transform:uppercase;letter-spacing:.06em;font-weight:var(--ta-font-weight-bold)}.preset-menu__item{flex-wrap:nowrap;align-items:center;display:flex;flex-direction:row;justify-content:space-between;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);gap:var(--ta-space-md);padding:var(--ta-space-sm) var(--ta-space-sm);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary)}.preset-menu__item:hover{background:var(--ta-surface-hover-primary)}.preset-menu__item.is-active{color:var(--ta-text-brand-primary);font-weight:var(--ta-font-weight-bold)}.preset-menu__item.is-active ta-font-icon{color:var(--ta-icon-brand-primary)}.preset-menu__item-label{display:flex;flex:1 1 100%}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TaOverlayPanelComponent, selector: "ta-overlay-panel", inputs: ["panelConfig", "position"], outputs: ["closed"] }, { kind: "component", type: TaGridFiltersPanel, selector: "ta-grid-filters-panel", outputs: ["closeEvent"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridControlComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-grid-control', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaGridFiltersPanel, TranslatePipe], template: "@if (this.isReady$ | async) {\r\n  <div class=\"grid-control\" [class.grid-control--compact]=\"this.compact()\">\r\n    @if (this.show().filters) {\r\n      <ta-button\r\n        [type]=\"this.activeFiltersCount() > 0 ? 'secondary' : 'tertiary'\"\r\n        icon=\"filter_alt\"\r\n        (action)=\"this.openFilters()\"\r\n      >\r\n        <span class=\"grid-control__label\">{{ 'grid.control.filters' | translate }}</span>\r\n        @if (this.activeFiltersCount() > 0) {\r\n          <span class=\"grid-control__count\">{{ this.activeFiltersCount() }}</span>\r\n        }\r\n      </ta-button>\r\n    }\r\n\r\n    @if (this.show().preset && this.hasPresets()) {\r\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\r\n        <ng-template #panelTrigger>\r\n          <!-- Pas de stopPropagation : le clic doit atteindre l'overlay. -->\r\n          <ta-button\r\n            [type]=\"this.activePresetName() ? 'secondary' : 'tertiary'\"\r\n            icon=\"tune\"\r\n            [stopPropagationActivation]=\"false\"\r\n          >\r\n            <span class=\"grid-control__label\">\r\n              {{ this.activePresetName() ?? ('grid.control.presets' | translate) }}\r\n            </span>\r\n          </ta-button>\r\n        </ng-template>\r\n\r\n        <ng-template #panelContent>\r\n          <div class=\"preset-menu\">\r\n            <div class=\"preset-menu__title\">{{ 'grid.control.presets' | translate }}</div>\r\n            @for (preset of this.grid().filters?.preset; track preset.name) {\r\n              <div\r\n                class=\"preset-menu__item c-pointer\"\r\n                [class.is-active]=\"this.isPresetActive(preset)\"\r\n                (click)=\"this.setPreset(preset)\"\r\n              >\r\n                <span class=\"preset-menu__item-label\">{{ preset.name }}</span>\r\n                @if (this.isPresetActive(preset)) {\r\n                  <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n                }\r\n              </div>\r\n            }\r\n          </div>\r\n        </ng-template>\r\n      </ta-overlay-panel>\r\n    }\r\n\r\n    @if (this.show().sort && this.hasSortableCols()) {\r\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\r\n        <ng-template #panelTrigger>\r\n          <!-- Le clic doit atteindre le d\u00E9clencheur de l'overlay : pas de stopPropagation. -->\r\n          <ta-button\r\n            [type]=\"this.activeSort() ? 'secondary' : 'tertiary'\"\r\n            [icon]=\"this.activeSort() && this.activeSortDir() === 'desc' ? 'arrow_downward' : 'arrow_upward'\"\r\n            [stopPropagationActivation]=\"false\"\r\n          >\r\n            <span class=\"grid-control__label\">\r\n              {{ this.activeSortLabel() ? (this.activeSortLabel() | translate) : ('grid.control.sort' | translate) }}\r\n            </span>\r\n          </ta-button>\r\n        </ng-template>\r\n\r\n        <ng-template #panelContent>\r\n          <div class=\"preset-menu\">\r\n            <div class=\"preset-menu__title\">{{ 'grid.control.sort' | translate }}</div>\r\n\r\n            <div class=\"preset-menu__item c-pointer\" [class.is-active]=\"!this.activeSort()\" (click)=\"this.setSort(null)\">\r\n              <span class=\"preset-menu__item-label\">{{ 'grid.control.sortNone' | translate }}</span>\r\n              @if (!this.activeSort()) {\r\n                <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n              }\r\n            </div>\r\n\r\n            @for (col of this.sortableCols(); track col.key) {\r\n              <div\r\n                class=\"preset-menu__item c-pointer\"\r\n                [class.is-active]=\"this.activeSort() === col.key\"\r\n                (click)=\"this.setSort(col.key)\"\r\n              >\r\n                <span class=\"preset-menu__item-label\">{{ col.label | translate }}</span>\r\n                @if (this.activeSort() === col.key) {\r\n                  <ta-font-icon\r\n                    [name]=\"this.activeSortDir() === 'desc' ? 'arrow_downward' : 'arrow_upward'\"\r\n                    type=\"sm\"\r\n                  ></ta-font-icon>\r\n                }\r\n              </div>\r\n            }\r\n          </div>\r\n        </ng-template>\r\n      </ta-overlay-panel>\r\n    }\r\n\r\n    @if (this.show().group && this.hasGroupableCols()) {\r\n      <ta-overlay-panel [panelConfig]=\"{ matchTriggerWidth: false }\">\r\n        <ng-template #panelTrigger>\r\n          <!-- Le clic doit atteindre le d\u00E9clencheur de l'overlay : pas de stopPropagation. -->\r\n          <ta-button\r\n            [type]=\"this.activeGroup() ? 'secondary' : 'tertiary'\"\r\n            icon=\"workspaces\"\r\n            [stopPropagationActivation]=\"false\"\r\n          >\r\n            <span class=\"grid-control__label\">\r\n              {{ this.activeGroupLabel() ? (this.activeGroupLabel() | translate) : ('grid.control.group' | translate) }}\r\n            </span>\r\n          </ta-button>\r\n        </ng-template>\r\n\r\n        <ng-template #panelContent>\r\n          <div class=\"preset-menu\">\r\n            <div class=\"preset-menu__title\">{{ 'grid.control.group' | translate }}</div>\r\n\r\n            <div\r\n              class=\"preset-menu__item c-pointer\"\r\n              [class.is-active]=\"!this.activeGroup()\"\r\n              (click)=\"this.setGroup(null)\"\r\n            >\r\n              <span class=\"preset-menu__item-label\">{{ 'grid.control.groupNone' | translate }}</span>\r\n              @if (!this.activeGroup()) {\r\n                <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n              }\r\n            </div>\r\n\r\n            @for (col of this.groupableCols(); track col.key) {\r\n              <div\r\n                class=\"preset-menu__item c-pointer\"\r\n                [class.is-active]=\"this.activeGroup() === col.key\"\r\n                (click)=\"this.setGroup(col.key)\"\r\n              >\r\n                <span class=\"preset-menu__item-label\">{{ col.label | translate }}</span>\r\n                @if (this.activeGroup() === col.key) {\r\n                  <ta-font-icon name=\"check\" type=\"sm\"></ta-font-icon>\r\n                }\r\n              </div>\r\n            }\r\n          </div>\r\n        </ng-template>\r\n      </ta-overlay-panel>\r\n    }\r\n\r\n    @if (this.show().switchView) {\r\n      <div class=\"grid-control__switch\" role=\"group\">\r\n        <div class=\"grid-control__segment\" [class.is-active]=\"this.displayType() === 'grid'\">\r\n          <ta-button type=\"tertiary\" icon=\"view_list\" size=\"small\" (action)=\"this.switchView('grid')\">\r\n            <span class=\"grid-control__label\">{{ 'grid.control.table' | translate }}</span>\r\n          </ta-button>\r\n        </div>\r\n        <div class=\"grid-control__segment\" [class.is-active]=\"this.displayType() === 'card'\">\r\n          <ta-button type=\"tertiary\" icon=\"grid_view\" size=\"small\" (action)=\"this.switchView('card')\">\r\n            <span class=\"grid-control__label\">{{ 'grid.control.card' | translate }}</span>\r\n          </ta-button>\r\n        </div>\r\n      </div>\r\n    }\r\n  </div>\r\n}\r\n\r\n@if (this.isFiltersOpen()) {\r\n  <ta-grid-filters-panel [gridId]=\"this.gridId()\" (closeEvent)=\"this.isFiltersOpen.set(false)\"></ta-grid-filters-panel>\r\n}\r\n", styles: [".grid-control{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-sm)}.grid-control__label{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);font-weight:var(--ta-font-weight-medium)}.grid-control__count{flex-wrap:nowrap;align-items:center;display:flex;justify-content:center;margin:auto;font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);min-width:var(--ta-space-md);height:var(--ta-space-md);padding:0 var(--ta-space-xs);border-radius:var(--ta-radius-full);background:var(--ta-surface-brand-primary);color:var(--ta-text-invert-primary);font-weight:var(--ta-font-weight-bold);line-height:1}.grid-control__switch{flex-wrap:nowrap;display:flex;align-items:center;gap:var(--ta-space-xs);padding:var(--ta-space-xs);border-radius:var(--ta-radius-full);background:var(--ta-surface-secondary)}.grid-control__segment{border-radius:var(--ta-radius-full)}.grid-control__segment.is-active{background:var(--ta-surface-primary);box-shadow:var(--ta-shadow-black-sm)}.grid-control--compact .grid-control__label{display:none}@media screen and (max-width: 767px){.grid-control__label{display:none}}.preset-menu{display:flex;flex-direction:column;min-width:220px;padding:var(--ta-space-xs)}.preset-menu__title{font-size:var(--ta-font-body-xs-default-size);font-weight:var(--ta-font-body-xs-default-weight);padding:var(--ta-space-xs) var(--ta-space-sm);color:var(--ta-text-secondary);text-transform:uppercase;letter-spacing:.06em;font-weight:var(--ta-font-weight-bold)}.preset-menu__item{flex-wrap:nowrap;align-items:center;display:flex;flex-direction:row;justify-content:space-between;font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);gap:var(--ta-space-md);padding:var(--ta-space-sm) var(--ta-space-sm);border-radius:var(--ta-radius-minimal);color:var(--ta-text-primary)}.preset-menu__item:hover{background:var(--ta-surface-hover-primary)}.preset-menu__item.is-active{color:var(--ta-text-brand-primary);font-weight:var(--ta-font-weight-bold)}.preset-menu__item.is-active ta-font-icon{color:var(--ta-icon-brand-primary)}.preset-menu__item-label{display:flex;flex:1 1 100%}\n"] }]
+        }] });
+
 class TaGridSearchComponent extends TaAbstractGridComponent {
     constructor() {
         super(...arguments);
@@ -1127,10 +1377,8 @@ class TaGridSearchComponent extends TaAbstractGridComponent {
     }
     valueChanged(value) {
         const trimmed = (value ?? '').trim();
-        const filters = trimmed
-            ? [{ field: gridSearchFieldsName, type: 'like', value: trimmed }]
-            : [];
-        this.grid.filters?.apply(filters);
+        const filters = trimmed ? [{ field: gridSearchFieldsName, type: 'like', value: trimmed }] : [];
+        this.grid().filters?.apply(filters);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridSearchComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridSearchComponent, isStandalone: true, selector: "ta-grid-search", inputs: { placeholder: { classPropertyName: "placeholder", publicName: "placeholder", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ta-search-field\n  [input]=\"this.searchInput\"\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  (valueCompleted)=\"this.valueChanged($event)\"\n></ta-search-field>\n", styles: [":host{display:block;width:100%}\n"], dependencies: [{ kind: "component", type: SearchFieldComponent, selector: "ta-search-field", inputs: ["isOpen", "placeholder", "space", "type"], outputs: ["valueCompleted"] }] }); }
@@ -1138,6 +1386,24 @@ class TaGridSearchComponent extends TaAbstractGridComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridSearchComponent, decorators: [{
             type: Component,
             args: [{ selector: 'ta-grid-search', standalone: true, imports: [SearchFieldComponent], template: "<ta-search-field\n  [input]=\"this.searchInput\"\n  [isOpen]=\"true\"\n  [placeholder]=\"this.placeholder()\"\n  (valueCompleted)=\"this.valueChanged($event)\"\n></ta-search-field>\n", styles: [":host{display:block;width:100%}\n"] }]
+        }] });
+
+/** Nombre de résultats de la liste, affiché au-dessus des résultats. */
+class TaGridCountComponent extends TaAbstractGridComponent {
+    constructor() {
+        super(...arguments);
+        /** Clé de traduction pluralisée du décompte (résultats par défaut). */
+        this.label = input('grid.tag.results');
+    }
+    total() {
+        return this.grid()?.totalItems() ?? 0;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridCountComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: TaGridCountComponent, isStandalone: true, selector: "ta-grid-count", inputs: { label: { classPropertyName: "label", publicName: "label", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@if (this.isReady$ | async) {\r\n  <span class=\"grid-count\">\r\n    {{ this.label() | pluralTranslate: this.total() | translate: { nb: this.total() } }}\r\n  </span>\r\n}\r\n", styles: [".grid-count{font-family:var(--ta-font-display-family);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:var(--ta-font-weight-bold);color:var(--ta-text-primary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "pipe", type: PluralTranslatePipe, name: "pluralTranslate" }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridCountComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-grid-count', standalone: true, imports: [AsyncPipe, PluralTranslatePipe, TranslatePipe], template: "@if (this.isReady$ | async) {\r\n  <span class=\"grid-count\">\r\n    {{ this.label() | pluralTranslate: this.total() | translate: { nb: this.total() } }}\r\n  </span>\r\n}\r\n", styles: [".grid-count{font-family:var(--ta-font-display-family);font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);font-weight:var(--ta-font-weight-bold);color:var(--ta-text-primary)}\n"] }]
         }] });
 
 class TaGridSessionService {
@@ -1170,6 +1436,11 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
         this.model = input('');
         this.colsMetaData = input([]);
         this.preset = input();
+        /** Source de données maison, quand la grille ne lit pas un modèle du serveur. */
+        this.dataService = input();
+        /** `cursor` pour une source qui ne sait pas compter : le « voir plus » remplace les numéros de page. */
+        this.pagination = input('page');
+        this.pageSize = input();
         this._session = inject(TaGridSessionService);
         this._service = inject(TaGridViewService);
     }
@@ -1181,9 +1452,10 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
             initialFilter: raw ?? [],
             data: this.initialData(),
             preset: this.preset(),
-            services: this.model()
-                ? { getData$: params => this._service.getData$(this.model(), params) }
-                : undefined,
+            pagination: this.pagination(),
+            pageSize: this.pageSize(),
+            services: this.dataService() ??
+                (this.model() ? { getData$: params => this._service.getData$(this.model(), params) } : undefined),
         });
     }
     ngOnDestroy() {
@@ -1191,7 +1463,7 @@ class TaGridContainerComponent extends TaAbstractGridComponent {
         this._grid.destroy();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-content></ng-content>\r\n", styles: [""] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaGridContainerComponent, isStandalone: true, selector: "ta-grid-container", inputs: { initialData: { classPropertyName: "initialData", publicName: "initialData", isSignal: true, isRequired: false, transformFunction: null }, model: { classPropertyName: "model", publicName: "model", isSignal: true, isRequired: false, transformFunction: null }, colsMetaData: { classPropertyName: "colsMetaData", publicName: "colsMetaData", isSignal: true, isRequired: false, transformFunction: null }, preset: { classPropertyName: "preset", publicName: "preset", isSignal: true, isRequired: false, transformFunction: null }, dataService: { classPropertyName: "dataService", publicName: "dataService", isSignal: true, isRequired: false, transformFunction: null }, pagination: { classPropertyName: "pagination", publicName: "pagination", isSignal: true, isRequired: false, transformFunction: null }, pageSize: { classPropertyName: "pageSize", publicName: "pageSize", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<ng-content></ng-content>\r\n", styles: [""] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaGridContainerComponent, decorators: [{
             type: Component,
@@ -1210,5 +1482,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ParameterType, TaFiltersModal, TaGridComponent, TaGridContainerComponent, TaGridControlComponent, TaGridFormComponent, TaGridHighlightFiltersComponent, TaGridSearchComponent, TaGridTagsComponent };
+export { ParameterType, TaGridComponent, TaGridContainerComponent, TaGridControlComponent, TaGridCountComponent, TaGridData, TaGridFiltersPanel, TaGridFormComponent, TaGridHighlightFiltersComponent, TaGridInstanceService, TaGridSearchComponent, TaGridTagsComponent, TaTableState };
 //# sourceMappingURL=ta-features.mjs.map

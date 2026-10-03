@@ -38,30 +38,13 @@
       ></ta-input-textbox>
     </div>
 
-    @if (this.localityAvailable) {
-      <div class="full">
-        <ta-input-choices
-          [input]="this.localityInput"
-          [standalone]="true"
-          (valueChanged)="this.onLocalitySelected()"
-        ></ta-input-choices>
-      </div>
-    } @else {
-      <div class="one-third">
-        <ta-input-textbox
-          [input]="this.zipCodeInput"
-          [standalone]="true"
-          (valueChanged)="this.onSubInputChanged()"
-        ></ta-input-textbox>
-      </div>
-      <div class="two-thirds">
-        <ta-input-textbox
-          [input]="this.cityInput"
-          [standalone]="true"
-          (valueChanged)="this.onSubInputChanged()"
-        ></ta-input-textbox>
-      </div>
-    }
+    <div class="full">
+      <ta-input-locality
+        [input]="this.localityInput"
+        [standalone]="true"
+        (valueChanged)="this.onLocalityChanged($event)"
+      ></ta-input-locality>
+    </div>
 
     <div class="full">
       <ta-input-choices
@@ -72,10 +55,6 @@
     </div>
   </div>
 </div>
-
-<ng-template #localityItemTpl let-item="item">
-  <span class="locality-option">{{ item.zipCode }} {{ item.city }}</span>
-</ng-template>
 
 <ng-template #countryItemTpl let-item="item">
   <span class="locality-option">{{ item.name }}</span>

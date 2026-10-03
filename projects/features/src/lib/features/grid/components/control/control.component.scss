@@ -1,30 +1,112 @@
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/flex';
 @use 'ta/utils/mixins/fonts';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
 .grid-control {
   @include flex.simple-flex();
   @include flex.align-center();
   gap: common.get-var(space, sm);
 
-  &__toggle {
+  // Les boutons de la barre sont des `ta-button` standards : leur apparence
+  // vient du design system, jamais de cette barre.
+
+  &__label {
+    @include fonts.fontSizeBody(sm);
+    font-weight: common.get-var(font, weight, medium);
+  }
+
+  // Pastille de comptage sur le bouton Filtres.
+  &__count {
     @include flex.simple-flex();
     @include flex.align-center();
+    @include flex.justify-center();
+    @include fonts.fontSizeBody(xs);
+
+    min-width: common.get-var(space, md);
+    height: common.get-var(space, md);
+    padding: 0 common.get-var(space, xs);
+    border-radius: common.get-var(radius, full);
+    background: common.get-var(surface, brand, primary);
+    color: common.get-var(text, invert, primary);
+    font-weight: common.get-var(font, weight, bold);
+    line-height: 1;
+  }
+
+  // Sélecteur de vue : rail unique, segment actif en relief.
+  &__switch {
+    @include flex.simple-flex();
+    @include flex.align-center();
+
     gap: common.get-var(space, xs);
+    padding: common.get-var(space, xs);
+    border-radius: common.get-var(radius, full);
+    background: common.get-var(surface, secondary);
+  }
+
+  // Segment du sélecteur de vue : seul l'état actif est marqué, et il l'est sur
+  // le conteneur — le bouton qu'il contient reste intact.
+  &__segment {
+    border-radius: common.get-var(radius, full);
+
+    &.is-active {
+      background: common.get-var(surface, primary);
+      box-shadow: common.get-var(shadow, black, sm);
+    }
+  }
+
+  // Version icônes seules : demandée explicitement, ou imposée par la largeur.
+  &--compact &__label {
+    display: none;
+  }
+
+  @include mq.to(768px) {
+    &__label {
+      display: none;
+    }
   }
 }
 
 .preset-menu {
   @include flex.flex-column();
+  min-width: 220px;
   padding: common.get-var(space, xs);
 
+  &__title {
+    @include fonts.fontSizeBody(xs);
+    padding: common.get-var(space, xs) common.get-var(space, sm);
+    color: common.get-var(text, secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: common.get-var(font, weight, bold);
+  }
+
   &__item {
-    padding: common.get-var(space, sm) common.get-var(space, md);
-    border-radius: common.get-var(radius, minimal);
+    @include flex.simple-flex();
+    @include flex.align-center();
+    @include flex.space-between();
     @include fonts.fontSizeBody(md);
 
+    gap: common.get-var(space, md);
+    padding: common.get-var(space, sm) common.get-var(space, sm);
+    border-radius: common.get-var(radius, minimal);
+    color: common.get-var(text, primary);
+
     &:hover {
-      background: common.get-var(surface, hover);
+      background: common.get-var(surface, hover, primary);
     }
+
+    &.is-active {
+      color: common.get-var(text, brand, primary);
+      font-weight: common.get-var(font, weight, bold);
+
+      ta-font-icon {
+        color: common.get-var(icon, brand, primary);
+      }
+    }
+  }
+
+  &__item-label {
+    @include flex.flex-full();
   }
 }

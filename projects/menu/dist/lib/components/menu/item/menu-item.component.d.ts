@@ -24,6 +24,11 @@ export declare class MenuItemComponent extends TaBaseComponent implements OnInit
     toggle(): void;
     getTemplate(): import("@angular/core").TemplateRef<any> | null;
     trackByFn(index: any, item: MenuBase): string;
+    /**
+     * Un item à panneau s'ouvre aussi au survol : sur une barre horizontale, on parcourt les
+     * rubriques à la souris sans cliquer. Sans panneau, ou sur mobile, le survol ne fait rien.
+     */
+    openPanelOnHover(): void;
     executeCallback(): void;
     getLink(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<MenuItemComponent, never>;
