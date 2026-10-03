@@ -1,4 +1,3 @@
-import { GraphPayload } from './graphPayload';
 /**
  * Une connexion au format Relay, telle que l'API la renvoie : le curseur de fin, la présence d'une
  * page suivante, et les nœuds. Les deux champs sont optionnels parce qu'une réponse partielle ou
@@ -25,32 +24,3 @@ export declare function emptyPage<T>(): TaPage<T>;
 export declare function toPage<T>(connection: TaConnection<T> | null | undefined): TaPage<T>;
 /** La page suivante s'ajoute à ce qui est déjà lu ; le curseur et la suite sont ceux de la dernière. */
 export declare function appendPage<T>(current: TaPage<T>, next: TaPage<T>): TaPage<T>;
-/** Un argument de requête : son type GraphQL, et sa valeur. */
-export interface TaConnectionArgument {
-    type: string;
-    value: unknown;
-}
-export interface TaConnectionQueryInput {
-    /** Les arguments propres à la requête, en plus de `first` et `after`. */
-    args?: {
-        [name: string]: TaConnectionArgument;
-    };
-    /** La composition des nœuds. */
-    props: string;
-    first?: number | null;
-    after?: string | null;
-}
-/**
- * Construit une requête paginée au format Relay : `first`/`after` en variables, `pageInfo` et
- * `nodes` déjà écrits. Les arguments propres à la requête sont déclarés avec leur type GraphQL.
- *
- * ```ts
- * createConnectionQuery('mySuggestedEstates', {
- *   args: { includeDismissed: { type: 'Boolean!', value: true } },
- *   props: suggestionComposition,
- *   first: 20,
- *   after: null,
- * });
- * ```
- */
-export declare function createConnectionQuery(name: string, input: TaConnectionQueryInput): GraphPayload;

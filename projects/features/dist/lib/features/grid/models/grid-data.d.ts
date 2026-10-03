@@ -42,7 +42,8 @@ export declare class TaGridData<T> {
     /**
      * L'instance survit au composant : `TaGridInstanceService` la garde par `gridId` et la rend à la
      * grille recréée sous le même id. On la remet donc à zéro sans fermer ses sujets — fermés, la
-     * grille recréée n'était jamais « prête » et restait vide.
+     * grille recréée n'était jamais « prête » et restait vide. Le regroupement et le total repartent
+     * aussi de zéro : la table recréée n'en sait rien, la grille regrouperait sans que le serveur le fasse.
      */
     destroy(): void;
     setGroupBy(field: string): void;

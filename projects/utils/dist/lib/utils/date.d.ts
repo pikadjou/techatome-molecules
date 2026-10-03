@@ -15,7 +15,7 @@ export declare const parseTimeToMinutes: (time: string | null | undefined) => nu
 /** Minutes depuis minuit → « HH:mm ». Déborde et revient dans la journée plutôt que d'aller au-delà. */
 export declare const formatMinutesToTime: (minutes: number) => string;
 /** Ajoute des jours à une date, sans la muter. */
-export { addDays } from "date-fns";
+export { addDays } from 'date-fns';
 /** Lundi 00:00 de la semaine locale qui contient `reference`. */
 export declare const startOfLocalWeek: (reference?: Date) => Date;
 /** Clé de regroupement par jour local — « 2026-09-15 ». */
@@ -27,6 +27,8 @@ export declare const localDayKey: (date: Date | string) => string;
 export declare const hasUpcomingOffsetShift: (reference?: Date) => boolean;
 /** Les jours de la semaine dans l'ordre d'affichage européen, lundi en tête (0 = dimanche). */
 export declare const WEEK_DAYS_FROM_MONDAY: number[];
+/** Clé de traduction (`@ta/ui`) de chaque jour, indexée comme `Date.getDay()` : 0 = dimanche. */
+export declare const WEEK_DAY_LABELS: string[];
 /** Un créneau qui revient chaque semaine : un jour, une heure de début, une de fin. */
 export interface WeeklySlot {
     /** 0 = dimanche, comme `Date.getDay()`. */

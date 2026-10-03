@@ -840,8 +840,8 @@ const diffInHourAndMinutes = (start, end) => {
     const hours = Math.floor(diff / 60);
     const minutes = Math.round(diff - hours * 60);
     return {
-        h: hours.toString().padStart(2, "0"),
-        m: minutes.toString().padStart(2, "0"),
+        h: hours.toString().padStart(2, '0'),
+        m: minutes.toString().padStart(2, '0'),
     };
 };
 const isStrictISODateString = (value) => {
@@ -862,7 +862,7 @@ const mod = (value, cycle) => ((value % cycle) + cycle) % cycle;
  * se saisit dans un champ qui contraint déjà sa forme, et zéro reste une heure lisible.
  */
 const parseTimeToMinutes = (time) => {
-    const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? "").trim());
+    const match = /^(\d{1,2}):(\d{2})$/.exec((time ?? '').trim());
     if (!match) {
         return 0;
     }
@@ -873,7 +873,7 @@ const formatMinutesToTime = (minutes) => {
     const normalized = mod(minutes, MINUTES_PER_DAY);
     const hours = Math.floor(normalized / MINUTES_PER_HOUR);
     const rest = normalized % MINUTES_PER_HOUR;
-    return `${String(hours).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+    return `${String(hours).padStart(2, '0')}:${String(rest).padStart(2, '0')}`;
 };
 /** Lundi 00:00 de la semaine locale qui contient `reference`. */
 const startOfLocalWeek = (reference = new Date()) => {
@@ -881,7 +881,7 @@ const startOfLocalWeek = (reference = new Date()) => {
 };
 /** Clé de regroupement par jour local — « 2026-09-15 ». */
 const localDayKey = (date) => {
-    return format(new Date(date), "yyyy-MM-dd");
+    return format(new Date(date), 'yyyy-MM-dd');
 };
 /**
  * Le décalage local par rapport à UTC change-t-il dans les sept prochains jours ? Sert à prévenir
@@ -892,6 +892,16 @@ const hasUpcomingOffsetShift = (reference = new Date()) => {
 };
 /** Les jours de la semaine dans l'ordre d'affichage européen, lundi en tête (0 = dimanche). */
 const WEEK_DAYS_FROM_MONDAY = [1, 2, 3, 4, 5, 6, 0];
+/** Clé de traduction (`@ta/ui`) de chaque jour, indexée comme `Date.getDay()` : 0 = dimanche. */
+const WEEK_DAY_LABELS = [
+    'ui.common.days.sunday',
+    'ui.common.days.monday',
+    'ui.common.days.tuesday',
+    'ui.common.days.wednesday',
+    'ui.common.days.thursday',
+    'ui.common.days.friday',
+    'ui.common.days.saturday',
+];
 /** Un créneau vu comme un point dans la semaine : minutes depuis dimanche minuit, et durée. */
 const toWeekMinutes = (slot) => {
     const startOfDayMinutes = parseTimeToMinutes(slot.startTime);
@@ -1489,5 +1499,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
+export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, WEEK_DAY_LABELS, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
 //# sourceMappingURL=ta-utils.mjs.map

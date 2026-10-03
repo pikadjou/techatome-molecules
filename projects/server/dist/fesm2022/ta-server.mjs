@@ -452,83 +452,6 @@ const graphQlPaginationFields = () => {
     `;
 };
 
-function createPagedQuery(name, input) {
-    const capName = capitalizeFirstLetter(name);
-    const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
-    const queryParams = [];
-    const queryArgs = [];
-    const variables = {};
-    if (input?.where) {
-        queryParams.push(`$where: ${capPrefixType}FilterInput`);
-        queryArgs.push('where: $where');
-        variables.where = input.where;
-    }
-    if (input?.order) {
-        queryParams.push(`$order: [${capPrefixType}SortInput!]`);
-        queryArgs.push('order: $order');
-        variables.order = input.order;
-    }
-    if (input?.take != null) {
-        queryArgs.push(`take: ${input.take}`);
-    }
-    if (input?.skip != null) {
-        queryArgs.push(`skip: ${input.skip}`);
-    }
-    const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
-    const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
-    const propsStr = input?.props ?? '';
-    return {
-        name,
-        query: gql `
-      query ${capName}${queryParamsStr} {
-        ${name}${queryArgsStr} {
-          totalCount
-          items {
-            ${propsStr}
-          }
-        }
-      }
-    `,
-        variables,
-    };
-}
-function createQuery(name, input) {
-    const capName = capitalizeFirstLetter(name);
-    const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
-    // Construire dynamiquement les paramètres de la query
-    const queryParams = [];
-    const queryArgs = [];
-    const variables = {};
-    if (input?.where) {
-        queryParams.push(`$where: ${capPrefixType}FilterInput`);
-        queryArgs.push('where: $where');
-        variables.where = input.where;
-    }
-    if (input?.order) {
-        queryParams.push(`$order: [${capPrefixType}SortInput!]`);
-        queryArgs.push('order: $order');
-        variables.order = input.order;
-    }
-    if (input?.take) {
-        const takeClause = graphQlTake(input.take);
-        if (takeClause) {
-            queryArgs.push(takeClause);
-        }
-    }
-    const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
-    const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
-    const propsStr = input?.props ? ` { ${input?.props} }` : '';
-    return {
-        name: name,
-        query: gql `
-          query ${capName}${queryParamsStr} {
-            ${name}${queryArgsStr}  ${propsStr}
-          }
-        `,
-        variables,
-    };
-}
-
 /** Le corps d'une connexion, écrit une seule fois pour toutes les requêtes paginées. */
 function connectionFields(props) {
     return `
@@ -557,35 +480,64 @@ function toPage(connection) {
 function appendPage(current, next) {
     return { ...next, nodes: [...current.nodes, ...next.nodes] };
 }
+
 /**
- * Construit une requête paginée au format Relay : `first`/`after` en variables, `pageInfo` et
- * `nodes` déjà écrits. Les arguments propres à la requête sont déclarés avec leur type GraphQL.
+ * Construit une requête de lecture : filtres, tri, arguments propres et pagination déclarés en
+ * variables. Sans `paging`, la réponse est la liste elle-même ; avec, elle suit le mode choisi.
  *
  * ```ts
- * createConnectionQuery('mySuggestedEstates', {
- *   args: { includeDismissed: { type: 'Boolean!', value: true } },
+ * createQuery('mySuggestedEstates', {
  *   props: suggestionComposition,
- *   first: 20,
- *   after: null,
+ *   args: { includeDismissed: { type: 'Boolean!', value: true } },
+ *   paging: { mode: 'cursor', first: 20, after: null },
  * });
  * ```
  */
-function createConnectionQuery(name, input) {
-    const entries = Object.entries(input.args ?? {});
-    const params = [...entries.map(([key, arg]) => `$${key}: ${arg.type}`), '$first: Int', '$after: String'];
-    const args = [...entries.map(([key]) => `${key}: $${key}`), 'first: $first', 'after: $after'];
-    const variables = {
-        after: input.after ?? null,
-        first: input.first ?? null,
+function createQuery(name, input) {
+    const capPrefixType = input?.prefixType ? capitalizeFirstLetter(input.prefixType) : '';
+    const paging = input?.paging;
+    const queryParams = [];
+    const queryArgs = [];
+    const variables = {};
+    const declare = (key, type, value) => {
+        queryParams.push(`$${key}: ${type}`);
+        queryArgs.push(`${key}: $${key}`);
+        variables[key] = value;
     };
-    entries.forEach(([key, arg]) => (variables[key] = arg.value));
+    Object.entries(input?.args ?? {}).forEach(([key, arg]) => declare(key, arg.type, arg.value));
+    if (input?.where) {
+        declare('where', `${capPrefixType}FilterInput`, input.where);
+    }
+    if (input?.order) {
+        declare('order', `[${capPrefixType}SortInput!]`, input.order);
+    }
+    if (paging?.mode === 'cursor') {
+        declare('first', 'Int', paging.first ?? null);
+        declare('after', 'String', paging.after ?? null);
+    }
+    else {
+        if (input?.take) {
+            queryArgs.push(graphQlTake(input.take));
+        }
+        if (paging?.mode === 'offset' && paging.skip != null) {
+            queryArgs.push(`skip: ${paging.skip}`);
+        }
+    }
+    const props = input?.props ?? '';
+    let body = props ? `{ ${props} }` : '';
+    if (paging?.mode === 'cursor') {
+        body = `{ ${connectionFields(props)} }`;
+    }
+    else if (paging?.mode === 'offset') {
+        body = `{ totalCount items { ${props} } }`;
+    }
+    const queryParamsStr = queryParams.length > 0 ? `(${queryParams.join(', ')})` : '';
+    const queryArgsStr = queryArgs.length > 0 ? `(${queryArgs.join(', ')})` : '';
     return {
         name,
         query: gql `
-      query ${capitalizeFirstLetter(name)}(${params.join(', ')}) {
-        ${name}(${args.join(', ')}) {
-          ${connectionFields(input.props)}
-        }
+      query ${capitalizeFirstLetter(name)}${queryParamsStr} {
+        ${name}${queryArgsStr} ${body}
       }
     `,
         variables,
@@ -1062,5 +1014,5 @@ const provideStrapi = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, appendPage, baseStrapiProps, connectionFields, createConnectionQuery, createPagedQuery, createQuery, emptyPage, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi, toPage };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, appendPage, baseStrapiProps, connectionFields, createQuery, emptyPage, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi, toPage };
 //# sourceMappingURL=ta-server.mjs.map
