@@ -25,7 +25,7 @@ export abstract class TaAbstractGridComponent<T> extends TaBaseComponent impleme
     return this._grid.dataByGroup();
   }
   public displayType() {
-    return this._grid.displayType;
+    return this._grid.displayType();
   }
   public isReady$!: Observable<boolean>;
   public isDataReady$!: Observable<boolean>;

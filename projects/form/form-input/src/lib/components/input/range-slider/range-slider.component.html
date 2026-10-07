@@ -1,0 +1,43 @@
+<ta-input-layout [input]="this.input">
+  <div class="range-slider" [class.is-disabled]="this.disabled()">
+    <div class="range-slider-values" aria-hidden="true">
+      <span class="range-slider-value">{{ this.lowLabel() }}</span>
+      <span class="range-slider-value">{{ this.highLabel() }}</span>
+    </div>
+    <div class="range-slider-track">
+      <div
+        class="range-slider-fill"
+        [style.left.%]="this.lowPercent()"
+        [style.width.%]="this.highPercent() - this.lowPercent()"
+      ></div>
+      <input
+        #focusedElement
+        type="range"
+        class="range-slider-input"
+        [class.is-on-top]="this.lowOnTop()"
+        [min]="this.input.min"
+        [max]="this.input.max"
+        [step]="this.input.step"
+        [value]="this.low()"
+        [disabled]="this.disabled() || this.input.readonly"
+        [attr.aria-label]="'form.range-slider.minimum' | translate: { label: (this.input.label | translate) }"
+        [attr.aria-valuetext]="this.lowLabel()"
+        (input)="this.onLow($event)"
+        (blur)="this.onBlur()"
+      />
+      <input
+        type="range"
+        class="range-slider-input"
+        [min]="this.input.min"
+        [max]="this.input.max"
+        [step]="this.input.step"
+        [value]="this.high()"
+        [disabled]="this.disabled() || this.input.readonly"
+        [attr.aria-label]="'form.range-slider.maximum' | translate: { label: (this.input.label | translate) }"
+        [attr.aria-valuetext]="this.highLabel()"
+        (input)="this.onHigh($event)"
+        (blur)="this.onBlur()"
+      />
+    </div>
+  </div>
+</ta-input-layout>

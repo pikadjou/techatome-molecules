@@ -11,6 +11,8 @@
   "field.invalid": "Ongeldige waarde",
   "field.required": "Dit veld is verplicht",
   "phone.format-error": "Ongeldig telefoonnummer",
+  "range-slider.maximum": "{{label}} · maximum",
+  "range-slider.minimum": "{{label}} · minimum",
   "save": "Opslaan",
   "text-box.is-mandatory": "Dit veld is verplicht",
   "validation.bce": "Ongeldig ondernemingsnummer (bv. 0123.456.789)",

@@ -11,6 +11,8 @@
   "field.invalid": "Invalid value",
   "field.required": "This field is required",
   "phone.format-error": "Invalid phone number",
+  "range-slider.maximum": "{{label}} · maximum",
+  "range-slider.minimum": "{{label}} · minimum",
   "save": "Save",
   "text-box.is-mandatory": "This field is required",
   "validation.bce": "Invalid BCE number (e.g. 0123.456.789)",

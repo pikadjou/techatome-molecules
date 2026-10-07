@@ -1,0 +1,129 @@
+@use "ta/utils/mixins/common";
+@use "ta/utils/mixins/flex";
+@use "ta/utils/mixins/fonts";
+
+// Jauge à deux curseurs : la piste et les pouces reprennent ceux de l'interrupteur, la portion
+// retenue prend la teinte d'accent. Lisible sur fond clair comme sous `.ta-form-invert`.
+.range-slider {
+  @include flex.flex-column();
+  gap: common.get-var(space, sm);
+  width: 100%;
+}
+
+.range-slider-values {
+  @include flex.space-between();
+  gap: common.get-var(space, sm);
+  min-width: 0;
+}
+
+// Les valeurs se lisent comme le libellé du champ : sous `.ta-form-invert`, elles passent en clair.
+.range-slider-value {
+  @include fonts.fontSizeBody(sm);
+  color: common.get-var(components, input, label, color);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.range-slider-track {
+  position: relative;
+  height: common.get-var(components, control, switch, thumb-size);
+
+  // La piste entière, en fond.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    height: common.get-var(space, xs);
+    transform: translateY(-50%);
+    border-radius: common.get-var(radius, pill);
+    background: common.get-var(components, control, switch, track-background);
+  }
+}
+
+// La portion entre les deux curseurs.
+.range-slider-fill {
+  position: absolute;
+  top: 50%;
+  height: common.get-var(space, xs);
+  transform: translateY(-50%);
+  border-radius: common.get-var(radius, pill);
+  background: common.get-var(surface, brand, secondary);
+}
+
+// Deux curseurs natifs superposés : seule leur poignée capte le pointeur.
+.range-slider-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &::-webkit-slider-runnable-track {
+    background: transparent;
+  }
+
+  &::-moz-range-track {
+    background: transparent;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: auto;
+    width: common.get-var(components, control, switch, thumb-size);
+    height: common.get-var(components, control, switch, thumb-size);
+    border: common.get-var(components, control, border-width) solid common.get-var(surface, brand, primary);
+    border-radius: common.get-var(radius, pill);
+    background: common.get-var(components, control, switch, thumb-background);
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    pointer-events: auto;
+    width: common.get-var(components, control, switch, thumb-size);
+    height: common.get-var(components, control, switch, thumb-size);
+    border: common.get-var(components, control, border-width) solid common.get-var(surface, brand, primary);
+    border-radius: common.get-var(radius, pill);
+    background: common.get-var(components, control, switch, thumb-background);
+    cursor: pointer;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    &::-webkit-slider-thumb {
+      box-shadow: common.get-var(shadow, focus);
+    }
+
+    &::-moz-range-thumb {
+      box-shadow: common.get-var(shadow, focus);
+    }
+  }
+
+  // Curseurs confondus en butée droite : le curseur bas passe devant (simple ordre d'empilement
+  // entre les deux curseurs, pas une couche de l'interface).
+  &.is-on-top {
+    z-index: 1;
+  }
+
+  // Règles séparées : un sélecteur propriétaire inconnu invaliderait toute une liste.
+  &:disabled::-webkit-slider-thumb {
+    border-color: common.get-var(components, control, disabled, border-color);
+    cursor: not-allowed;
+  }
+
+  &:disabled::-moz-range-thumb {
+    border-color: common.get-var(components, control, disabled, border-color);
+    cursor: not-allowed;
+  }
+}
+
+// Désactivée, la jauge se grise comme le curseur simple.
+.range-slider.is-disabled .range-slider-fill {
+  background: common.get-var(components, control, disabled, border-color);
+}

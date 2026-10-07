@@ -97,6 +97,38 @@
     );
   }
 
+  /// Formulaire posé sur un fond sombre (bandeau ou panneau marine) : les encres
+  /// autour des champs — libellés, titres de panneau, énoncés de choix, icônes —
+  /// passent en clair. Les champs eux-mêmes gardent leur fond clair : leur
+  /// intérieur reprend l'encre du champ, pour rester lisible.
+  .ta-form-invert {
+    --ta-components-input-label-color: #{utils-common.get-var(text, invert, secondary)};
+    --ta-text-primary: #{utils-common.get-var(text, invert, primary)};
+    --ta-text-secondary: #{utils-common.get-var(text, invert, secondary)};
+    --ta-text-tertiary: #{utils-common.get-var(text, invert, secondary)};
+    --ta-text-brand-primary: #{utils-common.get-var(text, invert, primary)};
+    --ta-icon-primary: #{utils-common.get-var(text, invert, primary)};
+    --ta-icon-brand-primary: #{utils-common.get-var(text, invert, primary)};
+    --ta-icon-tertiary: #{utils-common.get-var(text, invert, secondary)};
+    // La piste d'un interrupteur activé est marine : sur le marine, elle passe en clair.
+    --ta-components-control-switch-checked-track-background: #{utils-common.get-var(surface, primary)};
+    // L'anneau de focus marine disparaît sur le marine : la variante claire prévue pour ce cas.
+    --ta-shadow-focus: #{utils-common.get-var(shadow, focus-invert)};
+    color: utils-common.get-var(text, invert, primary);
+
+    // L'intérieur des champs, et les choix rendus par un gabarit (pastilles sur fond clair).
+    .input-layout-container,
+    .only-template {
+      --ta-text-primary: #{utils-common.get-var(components, input, color)};
+      --ta-text-secondary: #{utils-common.get-var(components, input, placeholder)};
+      --ta-text-tertiary: #{utils-common.get-var(components, input, placeholder)};
+      --ta-text-brand-primary: #{utils-common.get-var(components, input, color)};
+      --ta-icon-primary: #{utils-common.get-var(components, input, color)};
+      --ta-icon-brand-primary: #{utils-common.get-var(components, input, color)};
+      color: utils-common.get-var(components, input, color);
+    }
+  }
+
   /* width */
   ::-webkit-scrollbar {
     width: utils-common.get-var(space, xs);
