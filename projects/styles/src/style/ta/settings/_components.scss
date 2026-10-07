@@ -97,32 +97,6 @@
     );
   }
 
-  // Formulaire sur fond sombre : encres claires autour des champs, champs inchangés.
-  .ta-form-invert {
-    --ta-components-input-label-color: #{utils-common.get-var(text, invert, secondary)};
-    --ta-text-primary: #{utils-common.get-var(text, invert, primary)};
-    --ta-text-secondary: #{utils-common.get-var(text, invert, secondary)};
-    --ta-text-tertiary: #{utils-common.get-var(text, invert, secondary)};
-    --ta-text-brand-primary: #{utils-common.get-var(text, invert, primary)};
-    --ta-icon-primary: #{utils-common.get-var(text, invert, primary)};
-    --ta-icon-brand-primary: #{utils-common.get-var(text, invert, primary)};
-    --ta-icon-tertiary: #{utils-common.get-var(text, invert, secondary)};
-    --ta-components-control-switch-checked-track-background: #{utils-common.get-var(surface, primary)};
-    --ta-shadow-focus: #{utils-common.get-var(shadow, focus-invert)};
-    color: utils-common.get-var(text, invert, primary);
-
-    .input-layout-container,
-    .only-template {
-      --ta-text-primary: #{utils-common.get-var(components, input, color)};
-      --ta-text-secondary: #{utils-common.get-var(components, input, placeholder)};
-      --ta-text-tertiary: #{utils-common.get-var(components, input, placeholder)};
-      --ta-text-brand-primary: #{utils-common.get-var(components, input, color)};
-      --ta-icon-primary: #{utils-common.get-var(components, input, color)};
-      --ta-icon-brand-primary: #{utils-common.get-var(components, input, color)};
-      color: utils-common.get-var(components, input, color);
-    }
-  }
-
   /* width */
   ::-webkit-scrollbar {
     width: utils-common.get-var(space, xs);

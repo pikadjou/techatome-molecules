@@ -1,5 +1,5 @@
 <ta-input-layout [input]="this.input">
-  <div class="range-slider" [class.is-disabled]="this.disabled()">
+  <div class="range-slider" [class.is-disabled]="this.input.disabled">
     <div class="range-slider-values" aria-hidden="true">
       <span class="range-slider-value">{{ this.lowLabel() }}</span>
       <span class="range-slider-value">{{ this.highLabel() }}</span>
@@ -14,16 +14,13 @@
         #focusedElement
         type="range"
         class="range-slider-input"
-        [class.is-on-top]="this.lowOnTop()"
         [min]="this.input.min"
         [max]="this.input.max"
         [step]="this.input.step"
-        [value]="this.low()"
-        [disabled]="this.disabled() || this.input.readonly"
+        [disabled]="this.input.disabled || this.input.readonly"
         [attr.aria-label]="'form.range-slider.minimum' | translate: { label: (this.input.label | translate) }"
-        [attr.aria-valuetext]="this.lowLabel()"
-        (input)="this.onLow($event)"
-        (blur)="this.onBlur()"
+        [ngModel]="this.first()"
+        (ngModelChange)="this.onFirst($event)"
       />
       <input
         type="range"
@@ -31,12 +28,10 @@
         [min]="this.input.min"
         [max]="this.input.max"
         [step]="this.input.step"
-        [value]="this.high()"
-        [disabled]="this.disabled() || this.input.readonly"
+        [disabled]="this.input.disabled || this.input.readonly"
         [attr.aria-label]="'form.range-slider.maximum' | translate: { label: (this.input.label | translate) }"
-        [attr.aria-valuetext]="this.highLabel()"
-        (input)="this.onHigh($event)"
-        (blur)="this.onBlur()"
+        [ngModel]="this.second()"
+        (ngModelChange)="this.onSecond($event)"
       />
     </div>
   </div>

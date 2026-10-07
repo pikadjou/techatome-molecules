@@ -100,10 +100,6 @@
     }
   }
 
-  &.is-on-top {
-    z-index: 1;
-  }
-
   // Règles séparées : un pseudo-élément inconnu invaliderait toute la liste.
   &:disabled::-webkit-slider-thumb {
     border-color: common.get-var(components, control, disabled, border-color);
