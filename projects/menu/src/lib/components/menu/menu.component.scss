@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'ta/vars';
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/flex';
@@ -37,10 +38,10 @@
   }
 
   &.responsive {
-    @include mediaQueriesRanges.to(map-get(vars.$grid-breakpoints, mobile)) {
+    @include mediaQueriesRanges.to(map.get(vars.$grid-breakpoints, mobile)) {
       @include menu-item-vertical();
     }
-    @include mediaQueriesRanges.from(map-get(vars.$grid-breakpoints, mobile)) {
+    @include mediaQueriesRanges.from(map.get(vars.$grid-breakpoints, mobile)) {
       @include menu-item-horizontal();
       width: 100%;
     }

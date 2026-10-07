@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'ta/vars';
 
 @mixin mq($condition) {
@@ -7,13 +8,13 @@
 }
 
 @mixin from-key($key) {
-  @include from(map-get(vars.$grid-breakpoints, $key)) {
+  @include from(map.get(vars.$grid-breakpoints, $key)) {
     @content;
   }
 }
 
 @mixin to-key($key) {
-  @include to(map-get(vars.$grid-breakpoints, $key)) {
+  @include to(map.get(vars.$grid-breakpoints, $key)) {
     @content;
   }
 }

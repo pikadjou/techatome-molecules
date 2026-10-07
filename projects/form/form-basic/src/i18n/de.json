@@ -11,6 +11,8 @@
   "field.invalid": "Ungültiger Wert",
   "field.required": "Dieses Feld ist erforderlich",
   "phone.format-error": "Ungültige Telefonnummer",
+  "range-slider.maximum": "{{label}} · Maximum",
+  "range-slider.minimum": "{{label}} · Minimum",
   "save": "Speichern",
   "text-box.is-mandatory": "Dieses Feld ist erforderlich",
   "validation.bce": "Ungültige Unternehmensnummer (z.B. 0123.456.789)",

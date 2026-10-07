@@ -139,6 +139,14 @@
         [standalone]="this.standaloneMode()"
       ></ta-input-slider>
     }
+    @case ('rangeSlider') {
+      <ta-input-range-slider
+        [input]="input"
+        [matcher]="matcher"
+        [onFocus]="this.onFocusObs()"
+        [standalone]="this.standaloneMode()"
+      ></ta-input-range-slider>
+    }
     @case ('choices') {
       <ta-input-choices
         [input]="input"
