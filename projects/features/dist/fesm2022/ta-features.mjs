@@ -827,7 +827,7 @@ class TaAbstractGridComponent extends TaBaseComponent {
         return this._grid.dataByGroup();
     }
     displayType() {
-        return this._grid.displayType;
+        return this._grid.displayType();
     }
     constructor() {
         super();

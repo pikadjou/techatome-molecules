@@ -6,6 +6,7 @@ export * from "./label/label.component";
 export * from "./radio/radio.component";
 export * from "./rating/rating.component";
 export * from "./slider/slider.component";
+export * from "./range-slider/range-slider.component";
 export * from "./switch/switch.component";
 export * from "./textarea/textarea.component";
 export * from "./textbox/text-box.component";

@@ -20,6 +20,7 @@ export * from "./input/radio";
 export * from "./input/rating";
 export * from "./input/schema";
 export * from "./input/slider";
+export * from "./input/range-slider";
 export * from "./input/switch";
 export * from "./input/textarea";
 export * from "./input/textbox";

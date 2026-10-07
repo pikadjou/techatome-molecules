@@ -12,7 +12,7 @@ export declare abstract class TaAbstractGridComponent<T> extends TaBaseComponent
         key: string;
         data: T[];
     }[];
-    displayType(): import("@angular/core").WritableSignal<import("@ta/features").ViewType>;
+    displayType(): import("@ta/features").ViewType;
     isReady$: Observable<boolean>;
     isDataReady$: Observable<boolean>;
     protected _grid: TaGridData<T>;

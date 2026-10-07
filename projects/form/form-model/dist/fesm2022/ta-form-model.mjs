@@ -502,6 +502,18 @@ class InputSlider extends InputBase {
     }
 }
 
+class InputRangeSlider extends InputBase {
+    constructor(options = {}) {
+        super(options);
+        this.controlType = "rangeSlider";
+        this.min = options.min ?? 0;
+        this.max = options.max ?? 100;
+        this.step = options.step ?? 1;
+        // Pas de valeur par défaut : elle bloquerait `value$`.
+        this.format = options.format ?? ((value) => String(value));
+    }
+}
+
 class InputSwitch extends InputBase {
     constructor(options) {
         super(options);
@@ -671,5 +683,5 @@ class InputComponent extends InputBase {
  * Generated bundle index. Do not edit.
  */
 
-export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLocality, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
+export { EAddressValues, InputAddress, InputBase, InputCheckBox, InputChoices, InputColorPicker, InputComponent, InputCulture, InputCurrency, InputDatePicker, InputDropdown, InputDynamic, InputEmail, InputFactory, InputImages, InputLabel, InputLocality, InputLogo, InputNumber, InputPanel, InputPassword, InputPhone, InputRadio, InputRangeSlider, InputRating, InputSchema, InputSlider, InputSwitch, InputTextBox, InputTextarea, InputTimePicker, InputTranslation, InputUpload, InputWysiswyg, bceValidator, phoneValidator, slugValidator };
 //# sourceMappingURL=ta-form-model.mjs.map
