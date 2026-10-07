@@ -448,4 +448,4 @@ Avant de soumettre tout code HTML/SCSS, vérifier :
 
 - [ ] Aucune assertion non-null `!` dans un template → `@if (this.x(); as x) { … }`
 - [ ] Variantes de composant par `[ngClass]="this.getClass()"` dans le template + SCSS, pas par `host: { '[class.x]': … }`
-- [ ] Commentaires courts : une ligne par input / méthode publique, pas de bannière de section ni de paragraphe de justification
+- [ ] Commentaires : aucun par défaut, une seule ligne maximum quand c'est nécessaire (TS, HTML, SCSS)

@@ -2,8 +2,6 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/fonts";
 
-// Jauge à deux curseurs : la piste et les pouces reprennent ceux de l'interrupteur, la portion
-// retenue prend la teinte d'accent. Lisible sur fond clair comme sous `.ta-form-invert`.
 .range-slider {
   @include flex.flex-column();
   gap: common.get-var(space, sm);
@@ -16,7 +14,6 @@
   min-width: 0;
 }
 
-// Les valeurs se lisent comme le libellé du champ : sous `.ta-form-invert`, elles passent en clair.
 .range-slider-value {
   @include fonts.fontSizeBody(sm);
   color: common.get-var(components, input, label, color);
@@ -30,7 +27,6 @@
   position: relative;
   height: common.get-var(components, control, switch, thumb-size);
 
-  // La piste entière, en fond.
   &::before {
     content: "";
     position: absolute;
@@ -42,7 +38,6 @@
   }
 }
 
-// La portion entre les deux curseurs.
 .range-slider-fill {
   position: absolute;
   top: 50%;
@@ -52,7 +47,7 @@
   background: common.get-var(surface, brand, secondary);
 }
 
-// Deux curseurs natifs superposés : seule leur poignée capte le pointeur.
+// Curseurs superposés : seule la poignée capte le pointeur.
 .range-slider-input {
   position: absolute;
   inset: 0;
@@ -105,13 +100,11 @@
     }
   }
 
-  // Curseurs confondus en butée droite : le curseur bas passe devant (simple ordre d'empilement
-  // entre les deux curseurs, pas une couche de l'interface).
   &.is-on-top {
     z-index: 1;
   }
 
-  // Règles séparées : un sélecteur propriétaire inconnu invaliderait toute une liste.
+  // Règles séparées : un pseudo-élément inconnu invaliderait toute la liste.
   &:disabled::-webkit-slider-thumb {
     border-color: common.get-var(components, control, disabled, border-color);
     cursor: not-allowed;
@@ -123,7 +116,6 @@
   }
 }
 
-// Désactivée, la jauge se grise comme le curseur simple.
 .range-slider.is-disabled .range-slider-fill {
   background: common.get-var(components, control, disabled, border-color);
 }

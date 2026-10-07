@@ -555,11 +555,13 @@ export class DataGridComponent {
 Formats admis : `short`, `medium`, `long`, `full`, `shortDate`, `mediumDate`, `longDate`, `fullDate`,
 `shortTime`, `mediumTime`, `longTime`, `fullTime`. Pas de locale en argument : `LOCALE_ID` s'en charge.
 
-### 0.9 Commentaires : courts et factuels
+### 0.9 Commentaires : une ligne maximum, et seulement si nécessaire
 
-Une ligne de JSDoc par input, output ou méthode publique quand le nom ne suffit pas. Pas de bannière de
-section (`// ---- Scène ----`), pas de paragraphe qui justifie un choix de design, pas de commentaire qui
-explique ce que le code montre déjà.
+Par défaut, pas de commentaire : le nom de la classe, de la méthode ou de la variable doit suffire.
+Un commentaire n'est écrit que s'il apprend quelque chose que le code ne montre pas (contrainte
+externe, piège non évident), et il tient alors sur **une seule ligne**. Jamais de JSDoc multi-ligne,
+de bannière de section (`// ---- Scène ----`), de paragraphe qui justifie un choix de design, ni de
+commentaire qui paraphrase le code. Vaut pour TS, HTML et SCSS.
 
 ```typescript
 // ❌
@@ -1866,7 +1868,7 @@ Les notifications affichent : barre latérale colorée (4px) + icône + titre ty
 - [ ] Aucune assertion non-null `!` dans les templates → `@if (…; as x)`
 - [ ] Dates : formats prédéfinis (`shortDate`, `fullDate`…) ou `ta-hour-date-line` / `ta-time-ago` / `ta-duration` ; aucun motif à la main ni locale en argument
 - [ ] Variantes de composant via `[ngClass]="this.getClass()"` + SCSS, pas de `host: { '[class.x]' }`
-- [ ] Commentaires : une ligne par input / méthode publique, pas de bannière ni de paragraphe de justification
+- [ ] Commentaires : aucun par défaut, une seule ligne maximum quand c'est nécessaire
 
 **SCSS :**
 
