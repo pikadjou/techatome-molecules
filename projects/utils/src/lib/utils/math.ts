@@ -1,3 +1,5 @@
+import { isNonNullable } from './array';
+
 export const createRange = (number: number) => {
   return new Array(number).fill(0).map((n, index) => index + 1);
 };
@@ -22,4 +24,8 @@ export const parseNumber = (raw: string | null | undefined): number | null => {
 
   const value = Number(raw);
   return Number.isFinite(value) ? value : null;
+};
+
+export const isPositive = (value: number | null | undefined): value is number => {
+  return isNonNullable(value) && value > 0;
 };

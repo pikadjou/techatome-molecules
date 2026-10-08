@@ -15,8 +15,8 @@ export class TaGridFormService<T> {
   constructor() {}
 
   public getFiltersForm(model: TaGridData<T>): InputBase<any>[] {
-    const keys = Object.keys(model.cols);
-    if (!keys || keys.length === 0) {
+    const children = this._filterInputs(model, this.filterKeys(model));
+    if (children.length === 0) {
       return [];
     }
 
@@ -24,42 +24,14 @@ export class TaGridFormService<T> {
       new InputPanel({
         key: 'main-panel',
         class: 'p-space-sm',
-        contentClass: 'flex-column g-space-md',
-        children: keys
-          .filter(key => model.cols[key].data.col.showOnSearch)
-          .map(key => model.cols[key].getInputForm())
-          .filter(isNonNullable)
-          .map(
-            input =>
-              new InputPanel({
-                key: `panel-${input.key}`,
-                class: 'g-col-6',
-                children: [input],
-              })
-          ),
+        contentClass: 'grid g-space-md',
+        children,
       }),
     ];
   }
 
   public getHighlightedFiltersForm(model: TaGridData<T>): InputBase<any>[] {
-    const keys = Object.keys(model.cols);
-    if (!keys || keys.length === 0) {
-      return [];
-    }
-
-    const children = keys
-      .filter(key => model.cols[key].data.col.highlighted)
-      .map(key => model.cols[key].getInputForm())
-      .filter(isNonNullable)
-      .map(
-        input =>
-          new InputPanel({
-            key: `panel-${input.key}`,
-            class: 'g-col-6',
-            children: [input],
-          })
-      );
-
+    const children = this._filterInputs(model, this.highlightedKeys(model));
     if (children.length === 0) {
       return [];
     }
@@ -67,21 +39,26 @@ export class TaGridFormService<T> {
     return [
       new InputPanel({
         key: 'highlight-panel',
-        contentClass: 'flex-column g-space-md',
+        contentClass: 'grid g-space-md',
         children,
       }),
     ];
   }
 
-  public formatFiltersForm(model: TaGridData<T>, data: any): Filter[] {
-    return Object.keys(model.cols).reduce<Filter[]>((acc, key) => {
-      const filter = model.cols[key].formatInputForm(data);
+  /** Colonnes du panneau de filtres. */
+  public filterKeys(model: TaGridData<T>): string[] {
+    return Object.keys(model.cols).filter(key => model.cols[key].data.col.showOnSearch);
+  }
 
-      if (!filter) {
-        return acc;
-      }
-      return [...acc, filter];
-    }, []);
+  /** Colonnes de la barre mise en avant. */
+  public highlightedKeys(model: TaGridData<T>): string[] {
+    return Object.keys(model.cols).filter(key => model.cols[key].data.col.highlighted);
+  }
+
+  public formatFiltersForm(model: TaGridData<T>, data: any): Filter[] {
+    return Object.keys(model.cols)
+      .filter(key => key in data)
+      .flatMap(key => model.cols[key].formatInputForm(data) ?? []);
   }
 
   public getGroupForm(model: TaGridData<T>): InputBase<any>[] {
@@ -110,5 +87,21 @@ export class TaGridFormService<T> {
 
   public formatGroupForm(data: any): string | null {
     return data['group'] || null;
+  }
+
+  /** Chaque champ dans son propre panneau, à la largeur que la colonne demande. */
+  private _filterInputs(model: TaGridData<T>, keys: string[]): InputBase<any>[] {
+    return keys
+      .map(key => {
+        const input = model.cols[key].getInputForm();
+        return input
+          ? new InputPanel({
+              key: `panel-${input.key}`,
+              class: model.cols[key].data.col.filter?.class ?? 'full',
+              children: [input],
+            })
+          : null;
+      })
+      .filter(isNonNullable);
   }
 }

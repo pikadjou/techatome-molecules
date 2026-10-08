@@ -4,9 +4,12 @@ import { BehaviorSubject, Subject } from 'rxjs';
 
 import { BaseCol } from './cols/base-col';
 import { BoolCol } from './cols/bool-col';
+import { ChoicesCol } from './cols/choices-col';
 import { DateCol } from './cols/date-col';
 import { EnumCol } from './cols/enum-col';
+import { LocalityCol } from './cols/locality-col';
 import { NumberCol } from './cols/number-col';
+import { RangeCol } from './cols/range-col';
 import { RelationCol } from './cols/relation-col';
 import { StringCol } from './cols/string-col';
 import { TaGridFilters } from './grid-filters';
@@ -147,6 +150,12 @@ export class TaGridData<T> {
         return new BoolCol({ scope: this.scope, col: col }, this);
       case ParameterType.Relation:
         return new RelationCol({ scope: this.scope, col: col }, this);
+      case ParameterType.Range:
+        return new RangeCol({ scope: this.scope, col: col }, this);
+      case ParameterType.Locality:
+        return new LocalityCol({ scope: this.scope, col: col }, this);
+      case ParameterType.Choices:
+        return new ChoicesCol({ scope: this.scope, col: col }, this);
       default:
         return new BaseCol({ scope: this.scope, col: col }, this);
     }

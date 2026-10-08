@@ -3,7 +3,7 @@ import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, input, output }
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import deepEqual from 'fast-deep-equal';
-import { Observable, distinctUntilChanged } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged } from 'rxjs';
 
 import { IInputsError, InputBase } from '@ta/form-model';
 import { ENotificationCode, NotificationInlineComponent } from '@ta/notification';
@@ -51,6 +51,8 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
 
   public form!: FormGroup;
 
+  private _formSubscription: Subscription | null = null;
+
   constructor() {
     super();
     TaTranslationForm.getInstance();
@@ -58,16 +60,7 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
 
   ngOnInit() {
     this.form = this.toFormGroup(this.inputs());
-
-    this._registerSubscription(this.form.statusChanges.subscribe(() => this.isFormValid.emit(this.isValid())));
-
-    if (this.onLive()) {
-      this._registerSubscription(
-        this.form.valueChanges
-          .pipe(distinctUntilChanged((prev, curr) => deepEqual(prev, curr)))
-          .subscribe(() => this.onSubmit())
-      );
-    }
+    this._watchForm();
 
     const askValidation = this.askValidation$();
     if (askValidation) {
@@ -78,11 +71,13 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (simpleChanges['inputs'] && !simpleChanges['inputs'].firstChange) {
       this.form = this.toFormGroup(this.inputs());
+      this._watchForm();
     }
   }
 
   override ngOnDestroy() {
     super.ngOnDestroy();
+    this._formSubscription?.unsubscribe();
     this.inputs().forEach(inputItem => {
       inputItem.destroy();
     });
@@ -120,5 +115,19 @@ export class FormComponent extends TaBaseComponent implements OnInit, OnChanges,
       input.createFormControl(group);
     });
     return group;
+  }
+
+  // Un formulaire reconstruit (nouveaux `inputs`) doit être écouté à son tour, l'ancien lâché.
+  private _watchForm() {
+    this._formSubscription?.unsubscribe();
+    this._formSubscription = this.form.statusChanges.subscribe(() => this.isFormValid.emit(this.isValid()));
+
+    if (this.onLive()) {
+      this._formSubscription.add(
+        this.form.valueChanges
+          .pipe(distinctUntilChanged((prev, curr) => deepEqual(prev, curr)))
+          .subscribe(() => this.onSubmit())
+      );
+    }
   }
 }

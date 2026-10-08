@@ -52,7 +52,12 @@ export class TaGridTagsComponent extends TaAbstractGridComponent<unknown> {
       return ` ${filter.value ? '✓' : '✗'}`;
     }
 
-    const value = Array.isArray(filter.value) ? filter.value.join(', ') : String(filter.value);
+    const col = this._grid.cols[filter.field];
+    const value = col
+      ? col.formatFilterValue(filter.value)
+      : Array.isArray(filter.value)
+        ? filter.value.join(', ')
+        : String(filter.value);
 
     switch (filter.type) {
       case 'like':
@@ -77,7 +82,7 @@ export class TaGridTagsComponent extends TaAbstractGridComponent<unknown> {
     this._grid.clearGroupBy();
   }
   public clear() {
-    this._grid.filters?.apply([]);
+    this._grid.filters?.clear();
     this._grid.clearGroupBy();
   }
 }
