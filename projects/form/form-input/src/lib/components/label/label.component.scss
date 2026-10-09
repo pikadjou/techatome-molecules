@@ -23,3 +23,12 @@
     cursor: pointer;
   }
 }
+
+// Sous `ta-card [invert]` ou toute surface `.invert` : libellés en clair.
+:host-context(.invert) .form-label {
+  color: common.get-var(components, card, invert, secondary);
+
+  &--choice {
+    color: common.get-var(components, card, invert, color);
+  }
+}

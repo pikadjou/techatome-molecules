@@ -7,6 +7,8 @@
         }
       </div>
     }
+    <!-- Rien à montrer (ni erreur, ni bouton) : pas de bloc vide qui creuse le bas du formulaire. -->
+    @if (this.error().message || this.loader() || (this.canDisplayButton() && this.buttonTitle())) {
     <div>
       <ta-notification-inline [message]="this.error().message" [code]="this.error().status" class="my-space-sm">
         <ta-loader [isLoading]="this.loader()">
@@ -26,5 +28,6 @@
         </ta-loader>
       </ta-notification-inline>
     </div>
+    }
   </form>
 </div>

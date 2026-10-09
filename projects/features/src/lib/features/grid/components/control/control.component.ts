@@ -31,7 +31,7 @@ export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
 
   /** Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control. */
   public reset(): void {
-    this._grid.filters?.apply([]);
+    this._grid.filters?.clear();
   }
 }
 

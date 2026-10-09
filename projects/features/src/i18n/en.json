@@ -18,6 +18,7 @@
   "pagination.load_more": "Show more",
   "pagination.next": "Next page",
   "pagination.previous": "Previous page",
+  "pagination.range": "{{start}}–{{end}} of {{total}}",
   "search.placeholder": "Search",
   "tag.group": "Grouped by",
   "tag.reset": "Clear all",

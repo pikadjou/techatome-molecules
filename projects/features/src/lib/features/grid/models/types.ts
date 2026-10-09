@@ -12,11 +12,37 @@ export enum ParameterType {
   DateTime,
   Enum,
   Relation,
+  Range,
+  Locality,
+  Choices,
+}
+
+/** Comment une colonne se filtre : le grid en tire le champ et le critère, le parent ne fait que déclarer. */
+export interface ColFilterOptions {
+  /** Classe du champ dans le formulaire de filtres (grille 12 colonnes) ; `full` à défaut. */
+  class?: string;
+  /** Rendu brut sous le champ : à traduire avant. */
+  message?: string;
+  /** Opérateur du critère, quand celui du type ne convient pas (`>=` pour un seuil, une date au plus tôt…). */
+  operator?: FilterType;
+  /** Enum, Choices : les options proposées. */
+  options$?: Observable<{ id: string; name: string; data?: unknown }[]>;
+  /** Enum : libellé de l'option « indifférent » qui retire le critère. */
+  anyLabel?: string;
+  /** Choices : rendu de la liste à la place des pastilles. */
+  choiceTemplate?: TemplateRef<any>;
+  /** Range : la piste ; une extrémité en butée ne borne rien. */
+  range?: { min: number; max: number; step?: number; format?: (value: number, end: boolean) => string };
+  /** DateTime avec `operator` : première date sélectionnable. */
+  minDate?: Date | 'today';
 }
 
 export interface ColMetaData<T = unknown> {
   name: keyof T;
   type: ParameterType;
+  /** Clé de traduction du titre et du filtre ; `grid.<scope>.core.<champ>` à défaut. */
+  label?: string;
+  filter?: ColFilterOptions;
   isSearchField?: boolean;
   notDisplayable?: boolean;
   showOnSearch?: boolean;
@@ -65,7 +91,8 @@ export type GridOptions<T> = (services?: any) => {
  * `cursor` demande la suite à partir d'un curseur et empile les réponses (les connexions Relay ne
  * savent pas compter).
  */
-export type PaginationMode = 'page' | 'cursor';
+/** `cursor` : « voir plus » qui allonge la liste ; `cursor-pages` : pages navigables, sans total connu. */
+export type PaginationMode = 'page' | 'cursor' | 'cursor-pages';
 
 export type ajaxResponse<T> = {
   data: T[];

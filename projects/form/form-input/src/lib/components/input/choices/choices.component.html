@@ -42,6 +42,7 @@
           [isOpen]="true"
           [input]="this.inputSearch"
           [onFocus]="this.searchFocus"
+          [autoFocus]="true"
           [standalone]="true"
           class="m-space-sm"
         ></ta-search-field>
@@ -62,7 +63,7 @@
               }
               @for (option of this.filteredOptions$ | async; track option) {
                 <div
-                  class="flex-row pointer m-space-sm p-space-sm"
+                  class="flex-row pointer m-space-sm p-space-sm item"
                   [class.is-selected]="this.isSelected(option)"
                   (click)="this.select(option)"
                 >
@@ -72,13 +73,13 @@
             </ta-empty>
           </ta-loader>
         </ta-layout-side-content>
-        <ta-layout-side-cta [rounded]="true">
+        <ta-layout-side-cta [background]="false">
           <div class="choices-cta">
-            <ta-button type="danger" (action)="this.clear()">
+            <ta-link icon="close" size="sm" [underline]="false" (action)="this.clear()">
               {{ 'input.button.clear' | translate }}
-            </ta-button>
+            </ta-link>
             @if (this.input.onlyTemplate !== true) {
-              <ta-button (action)="this.close()">
+              <ta-button size="small" icon="check" (action)="this.close()">
                 {{ 'input.button.select' | translate }}
               </ta-button>
             }
@@ -91,6 +92,7 @@
           [isOpen]="true"
           [input]="this.inputSearch"
           [onFocus]="this.searchFocus"
+          [autoFocus]="true"
           class="m-space-sm"
           [standalone]="true"
         ></ta-search-field>
@@ -103,7 +105,7 @@
                 <div class="flex-column flex-full">
                   @for (option of this.filteredOptions$ | async; track option) {
                     <div
-                      class="flex-row pointer m-space-sm p-space-sm"
+                      class="flex-row pointer m-space-sm p-space-sm item"
                       [class.is-selected]="this.isSelected(option)"
                       (click)="this.select(option)"
                     >
@@ -132,13 +134,13 @@
             }
           </ta-loader>
         </ta-layout-side-content>
-        <ta-layout-side-cta [rounded]="true">
+        <ta-layout-side-cta [background]="false">
           <div class="choices-cta">
-            <ta-button type="danger" (action)="this.clear()">
+            <ta-link icon="close" size="sm" [underline]="false" (action)="this.clear()">
               {{ 'input.filter.clear' | translate }}
-            </ta-button>
+            </ta-link>
             @if (this.input.onlyTemplate !== true) {
-              <ta-button (action)="this.close()">
+              <ta-button size="small" icon="check" (action)="this.close()">
                 {{ 'input.validate' | translate }}
               </ta-button>
             }

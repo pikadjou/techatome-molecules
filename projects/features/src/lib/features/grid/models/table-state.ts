@@ -38,6 +38,8 @@ export class TaTableState<T> {
   /** Mode `cursor` : la suite existe-t-elle, et d'où la reprendre. */
   readonly hasNextPage = signal(false);
   readonly endCursor = signal<string | null>(null);
+  /** Mode `cursor-pages` : le curseur de début de chaque page déjà connue (`null` pour la première). */
+  readonly cursorPages = signal<(string | null)[]>([null]);
 
   /** Un identifiant de ligne peut être un nombre ou un GUID, selon la source. */
   readonly selectedIds = signal<Set<RowId>>(new Set());
@@ -88,11 +90,20 @@ export class TaTableState<T> {
   }
 
   getPageMax(): number {
-    return this.totalPages();
+    return this.isCursorPagesMode() ? this.cursorPages().length : this.totalPages();
   }
 
   isCursorMode(): boolean {
     return this._pagination === 'cursor';
+  }
+
+  isCursorPagesMode(): boolean {
+    return this._pagination === 'cursor-pages';
+  }
+
+  /** Le total est inconnu : pas de « 1–20 sur 134 ». */
+  hasKnownTotal(): boolean {
+    return this._pagination === 'page';
   }
 
   /** Mode `cursor` : demande la suite, qui s'ajoute à ce qui est déjà lu. */
@@ -105,14 +116,14 @@ export class TaTableState<T> {
   }
 
   setPage(n: number): void {
-    if (n >= 1 && n <= this.totalPages()) {
+    if (n >= 1 && n <= this.getPageMax()) {
       this.currentPage.set(n);
       this._scheduleUpdate();
     }
   }
 
   nextPage(): void {
-    if (this.currentPage() < this.totalPages()) {
+    if (this.currentPage() < this.getPageMax()) {
       this.currentPage.update(p => p + 1);
       this._scheduleUpdate();
     }
@@ -141,6 +152,7 @@ export class TaTableState<T> {
       f.filter(filter => !(filter.field === field && filter.type === type && filter.value === value))
     );
     this.currentPage.set(1);
+    this._resetCursor();
     this._scheduleUpdate();
   }
 
@@ -168,6 +180,10 @@ export class TaTableState<T> {
     this._appendNext = false;
     this.endCursor.set(null);
     this.hasNextPage.set(false);
+    if (this.isCursorPagesMode()) {
+      this.cursorPages.set([null]);
+      this.currentPage.set(1);
+    }
   }
 
   toggleRow(id: RowId): void {
@@ -308,6 +324,11 @@ export class TaTableState<T> {
     this._onDataUpdate?.(total);
   }
 
+  /** Mode `cursor-pages` : d'où commence la page demandée. */
+  private _pageCursor(): string | null {
+    return this.isCursorPagesMode() ? (this.cursorPages()[this.currentPage() - 1] ?? null) : null;
+  }
+
   private _fetchData(): void {
     if (!this._services) return;
     const id = ++this._fetchId;
@@ -325,14 +346,22 @@ export class TaTableState<T> {
         page: this.currentPage(),
         size: this.pageSize(),
         colsMetaData: this._colsMetaData,
-        cursor: append ? this.endCursor() : null,
+        cursor: append ? this.endCursor() : this._pageCursor(),
       })
     )
       .then(response => {
         if (id !== this._fetchId) return;
         this.rows.set(append ? [...this.rows(), ...response.data] : response.data);
 
-        if (this.isCursorMode()) {
+        if (this.isCursorPagesMode()) {
+          this.hasNextPage.set(response.hasNextPage ?? false);
+          this.endCursor.set(response.endCursor ?? null);
+          this.totalItems.set(this.rows().length);
+          // La page suivante devient connue (et cliquable) dès qu'on sait où elle commence.
+          if (response.hasNextPage && this.currentPage() === this.cursorPages().length) {
+            this.cursorPages.update(pages => [...pages, response.endCursor ?? null]);
+          }
+        } else if (this.isCursorMode()) {
           // Une connexion ne compte pas : le total affiché est ce qui a été lu.
           this.hasNextPage.set(response.hasNextPage ?? false);
           this.endCursor.set(response.endCursor ?? null);

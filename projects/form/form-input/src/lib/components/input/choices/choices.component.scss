@@ -36,8 +36,19 @@
 
 .choices-cta {
   @include flex.flex-row();
-  justify-content: flex-end;
+  @include flex.align-center();
+  justify-content: space-between;
   gap: common.get-var(space, sm);
+  border-top: 1px solid common.get-var(border, tertiary);
+  padding-top: common.get-var(space, sm);
+}
+
+.item {
+  border-radius: common.get-var(radius, minimal);
+
+  &:hover {
+    background-color: common.get-var(surface, brand, tertiary);
+  }
 }
 
 .only-template {

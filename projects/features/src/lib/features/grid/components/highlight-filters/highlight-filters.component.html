@@ -10,18 +10,20 @@
       ></ta-form>
     </div>
 
-    <div class="highlight-filters__meta">
-      @if (this.showResultCount()) {
-        <ta-text class="highlight-filters__count">
-          {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}
-        </ta-text>
-      }
+    @if (this.showResultCount() || (this.showReset() && this.hasActiveFilters())) {
+      <div class="highlight-filters__meta">
+        @if (this.showResultCount()) {
+          <ta-text class="highlight-filters__count">
+            {{ 'grid.tag.results' | pluralTranslate: this.grid().totalItems() | translate: { nb: this.grid().totalItems() } }}
+          </ta-text>
+        }
 
-      @if (this.showReset() && this.hasActiveFilters()) {
-        <ta-button type="tertiary" size="small" icon="close" (action)="this.reset()">
-          {{ 'grid.form.reset' | translate }}
-        </ta-button>
-      }
-    </div>
+        @if (this.showReset() && this.hasActiveFilters()) {
+          <ta-button type="tertiary" size="small" icon="close" (action)="this.reset()">
+            {{ 'grid.form.reset' | translate }}
+          </ta-button>
+        }
+      </div>
+    }
   </div>
 }

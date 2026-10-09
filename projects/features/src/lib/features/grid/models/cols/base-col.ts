@@ -29,15 +29,13 @@ export class BaseCol<T> {
   }
 
   public inputLabel() {
-    return `grid.${this.data.scope}.core.${this.key()}`;
+    return this.data.col.label ?? `grid.${this.data.scope}.core.${this.key()}`;
+  }
+  public activeFilters(): Filter[] {
+    return this.model.filters?.get().find(filter => filter.key === this.key())?.values ?? [];
   }
   public filterValues(): T[] {
-    return (
-      this.model.filters
-        ?.get()
-        .find(filter => filter.key === this.key())
-        ?.values.map(f => f.value) || []
-    );
+    return this.activeFilters().map(f => f.value);
   }
   constructor(data: IBaseCol, model: TaGridData<any>) {
     this.data = data;
@@ -60,10 +58,15 @@ export class BaseCol<T> {
     return value != null ? String(value) : '';
   }
 
+  /** Valeur d'un critère telle que l'affiche son tag. */
+  public formatFilterValue(value: unknown): string {
+    return Array.isArray(value) ? value.join(', ') : String(value);
+  }
+
   public getInputForm(): InputBase<any> | null {
     return null;
   }
-  public formatInputForm(data: any): Filter | null {
+  public formatInputForm(data: any): Filter | Filter[] | null {
     const value = data[this.key()];
 
     if (!value) {

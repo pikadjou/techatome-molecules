@@ -23,6 +23,10 @@
   white-space: nowrap;
 }
 
+:host-context(.invert) .range-slider-value {
+  color: common.get-var(components, card, invert, secondary);
+}
+
 .range-slider-track {
   position: relative;
   height: common.get-var(components, control, switch, thumb-size);

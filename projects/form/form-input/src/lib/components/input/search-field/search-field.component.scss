@@ -1,6 +1,5 @@
 @use "ta/utils/mixins/flex";
 @use "ta/utils/mixins/common";
-@use "ta/utils/mixins/transitions";
 
 $search-field-size: 44px;
 $search-field-deploy-size: 100%;
@@ -8,21 +7,12 @@ $search-field-deploy-size: 100%;
 .input-group {
   @include flex.simple-flex();
   @include flex.align-center();
-  padding: common.get-var(space, sm);
+  // Le champ porte son propre cadre : pas de second cadre autour de la loupe.
+  padding: 0 common.get-var(space, sm);
   gap: common.get-var(space, sm);
   box-sizing: border-box;
-  border: 1.5px solid common.get-var(border, tertiary);
-  border-radius: common.get-var(radius, rounded);
-  @include transitions.transition-border-focus();
-
-  &:hover {
-    border-color: common.get-var(border, hover, secondary);
-  }
 
   &.focus {
-    border-color: common.get-var(border, brand, primary);
-    @include transitions.focus-ring();
-
     ta-font-icon {
       color: common.get-var(icon, brand, primary);
     }
@@ -47,5 +37,5 @@ $search-field-deploy-size: 100%;
 }
 
 .form-control {
-  width: 90%;
+  width: 100%;
 }

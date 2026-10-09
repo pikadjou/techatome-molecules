@@ -161,3 +161,8 @@
     padding: common.get-var(components, button, square, padding);
   }
 }
+
+// Sous une surface `.invert` (ta-card [invert], conteneur sombre), le tertiaire prend le contour clair.
+:host-context(.invert) .button.tertiary {
+  @include button-variant(invert);
+}

@@ -43,17 +43,22 @@ export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
     this._registerSubscription(
       this.isReady$.subscribe({
         next: () => {
-          this.filtersForm.set(this._formService.getFiltersForm(this._grid));
+          this._setFiltersForm();
           this.groupForm.set(this._formService.getGroupForm(this._grid));
+          const filters = this._grid.filters;
+          if (filters) {
+            this._registerSubscription(filters.reset$.subscribe(() => this._setFiltersForm()));
+          }
         },
       })
     );
   }
 
   public applyFilters(data: any) {
-    const filters = this._formService.formatFiltersForm(this._grid, data);
-
-    this._grid.filters?.apply(filters);
+    this._grid.filters?.applyFields(
+      this._formService.filterKeys(this._grid),
+      this._formService.formatFiltersForm(this._grid, data)
+    );
   }
 
   public applyGroup(data: any) {
@@ -67,9 +72,13 @@ export class TaGridFormComponent extends TaAbstractGridComponent<unknown> {
   }
 
   public reset() {
-    this._grid.filters?.apply([]);
+    this._grid.filters?.clear(this._formService.filterKeys(this._grid));
     if (this.showGroup()) {
       this._grid.clearGroupBy();
     }
+  }
+
+  private _setFiltersForm() {
+    this.filtersForm.set(this._formService.getFiltersForm(this._grid));
   }
 }

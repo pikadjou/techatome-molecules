@@ -1,51 +1,55 @@
-@if (this.grid() && this.grid().table && this.show() && this.isCursorMode()) {
-<div class="load-more flex-row justify-center">
-  <ta-button type="secondary" [state]="this.isLoading() ? 'inactive' : 'classic'" (action)="this.grid().table.loadMore()">
-    {{ 'grid.pagination.load_more' | translate }}
-  </ta-button>
-</div>
-} @if (this.grid() && this.grid().table && this.show() && !this.isCursorMode()) {
-<div class="flex-start g-space-sm align-center">
-  <ta-font-icon
-    name="chevron_left"
-    class="c-pointer"
-    [title]="'grid.pagination.previous' | translate"
-    [attr.aria-label]="'grid.pagination.previous' | translate"
-    (click)="this.grid().table.previousPage()"
-  ></ta-font-icon>
-  <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ pagenumber: { number: 1 } }"></ng-template>
+@if (this.grid() && this.grid().table && this.show()) {
+  @if (this.isCursorMode()) {
+    <div class="load-more flex-row justify-center">
+      <ta-button type="secondary" [state]="this.isLoading() ? 'inactive' : 'classic'" (action)="this.loadMore()">
+        {{ 'grid.pagination.load_more' | translate }}
+      </ta-button>
+    </div>
+  } @else {
+    <div class="pagination-container">
+      <div class="pagination-info">
+        @if (this.hasKnownTotal()) {
+          @let range = this.range();
+          <ta-text size="sm" color="secondary">
+            {{ 'grid.pagination.range' | translate: { start: range.start, end: range.end, total: range.total } }}
+          </ta-text>
+        }
+      </div>
 
-  @for (page of this.getListPage(); track page.number) {
-  <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ pagenumber: page }"></ng-template>
-  } @if (this.paginationGetTotalPages() > 1) {
-  <ng-template
-    [ngTemplateOutlet]="item"
-    [ngTemplateOutletContext]="{
-          pagenumber: { number: this.paginationGetTotalPages() },
-        }"
-  ></ng-template>
+      <div class="pagination-controls">
+        <ta-button
+          type="tertiary"
+          size="small"
+          icon="chevron_left"
+          [state]="this.currentPage() === 1 || this.isLoading() ? 'disabled' : 'classic'"
+          [attr.aria-label]="'grid.pagination.previous' | translate"
+          (action)="this.goToPrevious()"
+        ></ta-button>
+
+        @for (page of this.getListPage(); track page.number) {
+          @if (page.isEllipsis) {
+            <ta-text class="pagination-ellipsis" size="sm" color="secondary">…</ta-text>
+          } @else {
+            <ta-button
+              size="small"
+              [type]="page.number === this.currentPage() ? 'primary' : 'tertiary'"
+              [state]="this.isLoading() && page.number !== this.currentPage() ? 'disabled' : 'classic'"
+              (action)="this.goToPage(page.number)"
+            >
+              {{ page.number }}
+            </ta-button>
+          }
+        }
+
+        <ta-button
+          type="tertiary"
+          size="small"
+          icon="chevron_right"
+          [state]="this.currentPage() === this.totalPages() || this.isLoading() ? 'disabled' : 'classic'"
+          [attr.aria-label]="'grid.pagination.next' | translate"
+          (action)="this.goToNext()"
+        ></ta-button>
+      </div>
+    </div>
   }
-
-  <ta-font-icon
-    name="chevron_right"
-    class="c-pointer"
-    [title]="'grid.pagination.next' | translate"
-    [attr.aria-label]="'grid.pagination.next' | translate"
-    (click)="this.grid().table.nextPage()"
-  ></ta-font-icon>
-</div>
 }
-
-<ng-template #item let-pagenumber="pagenumber" [typedTemplate]="this.PageNumber">
-  <div
-    class="figure c-pointer"
-    [class.is-active]="pagenumber.number === (this.grid().table?.getPage() || 0)"
-    (click)="this.grid().table?.setPage(pagenumber.number)"
-  >
-    @if (pagenumber.icon) {
-    <ta-font-icon [name]="pagenumber.icon"></ta-font-icon>
-    } @else {
-    {{ pagenumber.number }}
-    }
-  </div>
-</ng-template>

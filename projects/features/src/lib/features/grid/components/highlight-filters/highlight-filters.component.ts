@@ -22,9 +22,14 @@ export class TaGridHighlightFiltersComponent extends TaAbstractGridComponent<unk
   showReset = input<boolean>(true);
 
   public highlightForm = signal<InputBase<any>[]>([]);
-  public hasActiveFilters = signal<boolean>(false);
 
   private _formService = inject(TaGridFormService<unknown>);
+
+  /** Lu sur les critères du grid : ceux restaurés à l'ouverture comptent aussi. */
+  public hasActiveFilters(): boolean {
+    const keys = this._formService.highlightedKeys(this._grid);
+    return (this._grid.table?.filters() ?? []).some(filter => keys.includes(filter.field));
+  }
 
   public override ngOnInit() {
     super.ngOnInit();
@@ -32,22 +37,28 @@ export class TaGridHighlightFiltersComponent extends TaAbstractGridComponent<unk
     this._registerSubscription(
       this.isReady$.subscribe({
         next: () => {
-          this.highlightForm.set(this._formService.getHighlightedFiltersForm(this._grid));
+          this._setHighlightForm();
+          const filters = this._grid.filters;
+          if (filters) {
+            this._registerSubscription(filters.reset$.subscribe(() => this._setHighlightForm()));
+          }
         },
       })
     );
   }
 
   public applyFilters(data: any) {
-    const filters = this._formService.formatFiltersForm(this._grid, data);
-
-    this.hasActiveFilters.set(filters.length > 0);
-    this._grid.filters?.apply(filters);
+    this._grid.filters?.applyFields(
+      this._formService.highlightedKeys(this._grid),
+      this._formService.formatFiltersForm(this._grid, data)
+    );
   }
 
   public reset() {
-    this.hasActiveFilters.set(false);
-    this._grid.filters?.apply([]);
+    this._grid.filters?.clear(this._formService.highlightedKeys(this._grid));
+  }
+
+  private _setHighlightForm() {
     this.highlightForm.set(this._formService.getHighlightedFiltersForm(this._grid));
   }
 }
