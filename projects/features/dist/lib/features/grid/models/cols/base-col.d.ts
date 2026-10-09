@@ -16,10 +16,13 @@ export declare class BaseCol<T> {
     model: TaGridData<any>;
     key(): string;
     inputLabel(): string;
+    activeFilters(): Filter[];
     filterValues(): T[];
     constructor(data: IBaseCol, model: TaGridData<any>);
     getColConfig(): ColConfig;
     defaultFormatter(row: any): string;
+    /** Valeur d'un critère telle que l'affiche son tag. */
+    formatFilterValue(value: unknown): string;
     getInputForm(): InputBase<any> | null;
-    formatInputForm(data: any): Filter | null;
+    formatInputForm(data: any): Filter | Filter[] | null;
 }

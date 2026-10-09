@@ -20,6 +20,7 @@ export declare class TaGridFormComponent extends TaAbstractGridComponent<unknown
     applyFilters(data: any): void;
     applyGroup(data: any): void;
     reset(): void;
+    private _setFiltersForm;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridFormComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<TaGridFormComponent, "ta-grid-form", never, { "showTitle": { "alias": "showTitle"; "required": false; "isSignal": true; }; "showReset": { "alias": "showReset"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; "showResultCount": { "alias": "showResultCount"; "required": false; "isSignal": true; }; "showGroup": { "alias": "showGroup"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

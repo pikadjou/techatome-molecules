@@ -17,6 +17,7 @@ export declare class FormComponent extends TaBaseComponent implements OnInit, On
     valid: import("@angular/core").OutputEmitterRef<{}>;
     isFormValid: import("@angular/core").OutputEmitterRef<boolean>;
     form: FormGroup;
+    private _formSubscription;
     constructor();
     ngOnInit(): void;
     ngOnChanges(simpleChanges: SimpleChanges): void;
@@ -25,6 +26,7 @@ export declare class FormComponent extends TaBaseComponent implements OnInit, On
     handleInvalidSubmit(): void;
     isValid(): boolean;
     toFormGroup(inputs: InputBase<any>[]): FormGroup;
+    private _watchForm;
     static ɵfac: i0.ɵɵFactoryDeclaration<FormComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<FormComponent, "ta-form", never, { "inputs": { "alias": "inputs"; "required": true; "isSignal": true; }; "askValidation$": { "alias": "askValidation$"; "required": false; "isSignal": true; }; "askOnDestroy": { "alias": "askOnDestroy"; "required": false; "isSignal": true; }; "loader": { "alias": "loader"; "required": false; "isSignal": true; }; "error": { "alias": "error"; "required": false; "isSignal": true; }; "border": { "alias": "border"; "required": false; "isSignal": true; }; "canDisplayButton": { "alias": "canDisplayButton"; "required": false; "isSignal": true; }; "buttonTitle": { "alias": "buttonTitle"; "required": false; "isSignal": true; }; "onLive": { "alias": "onLive"; "required": false; "isSignal": true; }; }, { "valid": "valid"; "isFormValid": "isFormValid"; }, never, never, true, never>;
 }

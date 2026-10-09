@@ -9,6 +9,9 @@ export declare abstract class TaAbstractInputComponent<C extends InputBase<any>,
     inputModel: import("@angular/core").InputSignal<C>;
     matcher: import("@angular/core").InputSignal<ErrorStateMatcher>;
     standaloneMode: import("@angular/core").InputSignal<boolean>;
+    /** Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre). */
+    autoFocus: import("@angular/core").InputSignal<boolean>;
+    private readonly _autoFocus$;
     onFocusObs: import("@angular/core").InputSignal<Observable<void> | undefined>;
     valueChanged: import("@angular/core").OutputEmitterRef<V>;
     get input(): C;
@@ -22,5 +25,5 @@ export declare abstract class TaAbstractInputComponent<C extends InputBase<any>,
     ngOnDestroy(): void;
     onChange(value: V): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaAbstractInputComponent<any, any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractInputComponent<any, any>, "ng-component", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "matcher": { "alias": "matcher"; "required": false; "isSignal": true; }; "standaloneMode": { "alias": "standalone"; "required": false; "isSignal": true; }; "onFocusObs": { "alias": "onFocus"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; }, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractInputComponent<any, any>, "ng-component", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "matcher": { "alias": "matcher"; "required": false; "isSignal": true; }; "standaloneMode": { "alias": "standalone"; "required": false; "isSignal": true; }; "autoFocus": { "alias": "autoFocus"; "required": false; "isSignal": true; }; "onFocusObs": { "alias": "onFocus"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; }, never, never, false, never>;
 }

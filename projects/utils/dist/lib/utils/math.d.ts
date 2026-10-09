@@ -7,3 +7,4 @@ export declare const percentage: (partialValue: number, totalValue: number) => n
  * de décider quoi montrer, plutôt qu'un `NaN` qui traverse tout l'écran.
  */
 export declare const parseNumber: (raw: string | null | undefined) => number | null;
+export declare const isPositive: (value: number | null | undefined) => value is number;

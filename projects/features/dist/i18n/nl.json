@@ -18,6 +18,7 @@
   "pagination.load_more": "Meer tonen",
   "pagination.next": "Volgende pagina",
   "pagination.previous": "Vorige pagina",
+  "pagination.range": "{{start}}–{{end}} van {{total}}",
   "search.placeholder": "Zoeken",
   "tag.group": "Gegroepeerd op",
   "tag.reset": "Alles wissen",

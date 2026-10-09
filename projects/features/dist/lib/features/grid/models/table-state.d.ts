@@ -30,6 +30,8 @@ export declare class TaTableState<T> {
     /** Mode `cursor` : la suite existe-t-elle, et d'où la reprendre. */
     readonly hasNextPage: import("@angular/core").WritableSignal<boolean>;
     readonly endCursor: import("@angular/core").WritableSignal<string | null>;
+    /** Mode `cursor-pages` : le curseur de début de chaque page déjà connue (`null` pour la première). */
+    readonly cursorPages: import("@angular/core").WritableSignal<(string | null)[]>;
     /** Un identifiant de ligne peut être un nombre ou un GUID, selon la source. */
     readonly selectedIds: import("@angular/core").WritableSignal<Set<RowId>>;
     readonly selectionChanged$: Subject<RowId[]>;
@@ -50,6 +52,9 @@ export declare class TaTableState<T> {
     getPage(): number;
     getPageMax(): number;
     isCursorMode(): boolean;
+    isCursorPagesMode(): boolean;
+    /** Le total est inconnu : pas de « 1–20 sur 134 ». */
+    hasKnownTotal(): boolean;
     /** Mode `cursor` : demande la suite, qui s'ajoute à ce qui est déjà lu. */
     loadMore(): void;
     setPage(n: number): void;
@@ -70,5 +75,7 @@ export declare class TaTableState<T> {
     destroy(): void;
     private _scheduleUpdate;
     private _applyLocalFilter;
+    /** Mode `cursor-pages` : d'où commence la page demandée. */
+    private _pageCursor;
     private _fetchData;
 }
