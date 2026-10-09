@@ -7,29 +7,13 @@
   display: block;
 }
 
-// Barre de filtres rapides : une seule surface posée au-dessus de la liste.
-// Chaque critère est un segment de cette barre — pas un champ de formulaire
-// encadré dans un autre cadre : le libellé surmonte la valeur, et seul le
-// survol ou le focus dessine une pastille.
+// Fond transparent : le conteneur et sa couleur sont posés par l'application.
 .highlight-filters {
   @include flex.simple-flex();
   @include flex.align-center();
 
   gap: common.get-var(space, xs);
   padding: common.get-var(space, xs);
-  background: common.get-var(surface, primary);
-  border: 1px solid common.get-var(border, tertiary);
-  border-radius: common.get-var(radius, full);
-  box-shadow: common.get-var(shadow, black, sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    box-shadow: common.get-var(shadow, black, md);
-  }
-
-  &--active {
-    border-color: common.get-var(border, brand, primary);
-  }
 
   &__form {
     @include flex.flex-full();
@@ -59,7 +43,6 @@
   @include mq.to(768px) {
     flex-wrap: wrap;
     padding: common.get-var(space, sm);
-    border-radius: common.get-var(radius, rounded);
 
     &__form {
       flex-basis: 100%;

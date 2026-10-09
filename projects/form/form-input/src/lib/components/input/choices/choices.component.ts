@@ -26,6 +26,7 @@ import {
   LayoutSideComponent,
   LayoutSideContentComponent,
   LayoutSideCtaComponent,
+  LinkComponent,
   LoaderComponent,
   TextComponent,
 } from '@ta/ui';
@@ -49,6 +50,7 @@ import { SearchFieldComponent } from '../search-field/search-field.component';
     StopPropagationDirective,
     TranslateModule,
     ButtonComponent,
+    LinkComponent,
     TaOverlayPanelComponent,
     EmptyComponent,
     LoaderComponent,

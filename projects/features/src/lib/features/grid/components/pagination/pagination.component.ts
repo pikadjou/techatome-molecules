@@ -1,34 +1,34 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FontIconComponent } from '@ta/icons';
 import { TranslatePipe } from '@ta/translation';
-import { ButtonComponent } from '@ta/ui';
-import { TypedTemplateDirective } from '@ta/utils';
+import { ButtonComponent, TextComponent } from '@ta/ui';
 
 import { TaAbstractGridComponent } from '../abstract.component';
 
 type PageNumber = {
   number: number;
-  icon?: string;
+  isEllipsis?: boolean;
 };
+
+/** Précédent, numéros (avec ellipses au-delà de `maxPageNumber`), suivant ; ou « voir plus » en mode `cursor`. */
 @Component({
   selector: 'ta-grid-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
   standalone: true,
-  imports: [ButtonComponent, FontIconComponent, NgTemplateOutlet, TypedTemplateDirective, TranslatePipe],
+  imports: [ButtonComponent, TextComponent, TranslatePipe],
 })
 export class PaginationComponent extends TaAbstractGridComponent<any> {
-  readonly PageNumber!: { pagenumber: PageNumber };
-  readonly maxPageNumber = 10;
+  readonly maxPageNumber = 7;
 
   public show() {
-    return this.isCursorMode() ? this.hasNextPage() : this.paginationGetTotalPages() > 1;
+    return this.isCursorMode() ? this.hasNextPage() : this.totalPages() > 1;
   }
-  /** Mode `cursor` : un bouton « voir plus », pas de numéros de page. */
   public isCursorMode() {
     return this.grid().table?.isCursorMode() ?? false;
+  }
+  public hasKnownTotal() {
+    return this.grid().table?.hasKnownTotal() ?? false;
   }
   public hasNextPage() {
     return this.grid().table?.hasNextPage() ?? false;
@@ -36,41 +36,62 @@ export class PaginationComponent extends TaAbstractGridComponent<any> {
   public isLoading() {
     return this.grid().table?.isLoading() ?? false;
   }
-  public paginationGetTotalPages() {
-    return this.grid().table?.getPageMax() || 0;
+  public currentPage() {
+    return this.grid().table?.getPage() ?? 1;
+  }
+  public totalPages() {
+    return this.grid().table?.getPageMax() ?? 0;
+  }
+  public range() {
+    const table = this.grid().table;
+    const total = table?.totalItems() ?? 0;
+    const size = table?.pageSize() ?? 0;
+    const start = total === 0 ? 0 : (this.currentPage() - 1) * size + 1;
+    return { end: Math.min(this.currentPage() * size, total), start, total };
   }
 
-  constructor() {
-    super();
+  public goToPrevious() {
+    this.grid().table?.previousPage();
+  }
+  public goToNext() {
+    this.grid().table?.nextPage();
+  }
+  public goToPage(page: number) {
+    this.grid().table?.setPage(page);
+  }
+  public loadMore() {
+    this.grid().table?.loadMore();
   }
 
-  public getListPage() {
-    const table = this.grid()?.table;
-    if (!table) {
+  public getListPage(): PageNumber[] {
+    const total = this.totalPages();
+    if (total <= 1) {
       return [];
     }
-    const last = this.paginationGetTotalPages();
-
-    if (last <= this.maxPageNumber) {
-      return this._computedPageNumbers(2, last);
+    if (total <= this.maxPageNumber) {
+      return this._range(1, total);
     }
 
-    const current = table.getPage() || 0;
-    const rangeStart = Math.floor(current / 10) * 10;
-    const rangeEnd = rangeStart + 10;
-
-    return [
-      ...(rangeStart <= 1 ? [] : [{ number: rangeStart - 1, icon: 'more_horiz' }]),
-      ...this._computedPageNumbers(rangeStart > 1 ? rangeStart : 2, rangeEnd < last ? rangeEnd : last),
-      ...(rangeEnd > last ? [] : [{ number: rangeEnd, icon: 'more_horiz' }]),
-    ];
+    const current = this.currentPage();
+    const left = Math.max(current - 1, 2);
+    const right = Math.min(current + 1, total - 1);
+    const pages: PageNumber[] = [{ number: 1 }];
+    if (left > 2) {
+      pages.push({ isEllipsis: true, number: -1 });
+    }
+    pages.push(...this._range(left, right));
+    if (right < total - 1) {
+      pages.push({ isEllipsis: true, number: -2 });
+    }
+    pages.push({ number: total });
+    return pages;
   }
 
-  private _computedPageNumbers(start: number, end: number): PageNumber[] {
-    const pageNumbers = [];
-    for (let i = start; i < end; i++) {
-      pageNumbers.push({ number: i });
+  private _range(start: number, end: number): PageNumber[] {
+    const pages: PageNumber[] = [];
+    for (let i = start; i <= end; i++) {
+      pages.push({ number: i });
     }
-    return pageNumbers;
+    return pages;
   }
 }

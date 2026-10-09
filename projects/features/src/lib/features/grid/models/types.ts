@@ -91,7 +91,8 @@ export type GridOptions<T> = (services?: any) => {
  * `cursor` demande la suite à partir d'un curseur et empile les réponses (les connexions Relay ne
  * savent pas compter).
  */
-export type PaginationMode = 'page' | 'cursor';
+/** `cursor` : « voir plus » qui allonge la liste ; `cursor-pages` : pages navigables, sans total connu. */
+export type PaginationMode = 'page' | 'cursor' | 'cursor-pages';
 
 export type ajaxResponse<T> = {
   data: T[];

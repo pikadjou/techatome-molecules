@@ -11,7 +11,7 @@ import {
 import { Validators } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 
-import { Observable, delay } from "rxjs";
+import { EMPTY, Observable, Subject, delay, merge } from "rxjs";
 
 import { InputBase } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
@@ -29,6 +29,11 @@ export abstract class TaAbstractInputComponent<
   matcher = input<ErrorStateMatcher>(new ErrorStateMatcher());
 
   standaloneMode = input<boolean>(false, { alias: 'standalone' });
+
+  /** Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre). */
+  autoFocus = input<boolean>(false);
+
+  private readonly _autoFocus$ = new Subject<void>();
 
   onFocusObs = input<Observable<void> | undefined>(undefined, { alias: 'onFocus' });
 
@@ -70,9 +75,10 @@ export abstract class TaAbstractInputComponent<
   }
 
   ngAfterViewInit() {
-    if (this.onFocus) {
-      this._registerSubscription(
-        this.onFocus.pipe(delay(1)).subscribe({
+    this._registerSubscription(
+      merge(this._autoFocus$, this.onFocus ?? EMPTY)
+        .pipe(delay(1))
+        .subscribe({
           next: () => {
             if (this.focusedElement) {
               this.focusedElement.nativeElement.click();
@@ -80,7 +86,9 @@ export abstract class TaAbstractInputComponent<
             }
           },
         })
-      );
+    );
+    if (this.autoFocus()) {
+      this._autoFocus$.next();
     }
   }
 

@@ -1,50 +1,28 @@
 @use 'ta/utils/mixins/common';
 @use 'ta/utils/mixins/flex';
-@use 'ta/utils/mixins/fonts';
 
 :host {
   display: block;
+  width: 100%;
 }
 
-// Pagination alignée sur le reste de la barre d'outils : pastilles rondes,
-// page courante pleine, le reste en aplat discret.
-.figure {
+.pagination-container {
   @include flex.simple-flex();
   @include flex.align-center();
-  @include flex.justify-center();
-  @include fonts.fontSizeBody(sm);
 
-  min-width: common.get-var(space, xl);
-  height: common.get-var(space, xl);
-  padding: 0 common.get-var(space, sm);
-  border-radius: common.get-var(radius, full);
-  border: 1px solid transparent;
-  color: common.get-var(text, secondary);
-  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
-
-  &:hover {
-    color: common.get-var(text, primary);
-    background-color: common.get-var(surface, hover, primary);
-  }
-
-  &.is-active {
-    color: common.get-var(text, invert, primary);
-    background-color: common.get-var(surface, brand, primary);
-    font-weight: common.get-var(font, weight, bold);
-
-    &:hover {
-      color: common.get-var(text, invert, primary);
-      background-color: common.get-var(surface, brand, primary);
-    }
-  }
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: common.get-var(space, md);
 }
 
-ta-font-icon {
-  color: common.get-var(icon, secondary);
-  border-radius: common.get-var(radius, full);
-  transition: color 0.15s ease, background-color 0.15s ease;
+.pagination-info,
+.pagination-controls {
+  @include flex.simple-flex();
+  @include flex.align-center();
 
-  &:hover {
-    color: common.get-var(icon, brand, primary);
-  }
+  gap: common.get-var(space, xs);
+}
+
+.pagination-ellipsis {
+  padding: 0 common.get-var(space, xs);
 }
