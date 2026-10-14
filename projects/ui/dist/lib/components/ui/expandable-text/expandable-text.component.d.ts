@@ -1,10 +1,9 @@
-import { ElementRef } from "@angular/core";
 import * as i0 from "@angular/core";
 export declare class ExpandableTextComponent {
     height: import("@angular/core").InputSignal<number>;
     showFullText: boolean;
     showButton: boolean;
-    _myText: ElementRef<HTMLDivElement>;
+    private readonly _myText;
     constructor();
     get textHeight(): string;
     get hasFixedHeight(): boolean;

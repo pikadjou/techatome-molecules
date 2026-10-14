@@ -1,6 +1,6 @@
 import * as i0 from '@angular/core';
-import { input, HostListener, Directive, effect, EventEmitter, Output, HostBinding, Pipe, inject, Injectable, signal, Component, output, InjectionToken } from '@angular/core';
-import * as i1 from '@angular/platform-browser';
+import { output, Directive, input, inject, TemplateRef, ViewContainerRef, effect, Pipe, Injectable, signal, Component, InjectionToken } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { TaIconType } from '@ta/icons';
@@ -14,6 +14,48 @@ import Compressor from 'compressorjs';
 import slugify from 'slugify';
 import { HttpClient } from '@angular/common/http';
 import { of, map as map$1, catchError, shareReplay, BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+class DndDirective {
+    constructor() {
+        this.fileOver = false;
+        this.fileDropped = output();
+    }
+    onDragOver(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.fileOver = true;
+    }
+    onDragLeave(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.fileOver = false;
+    }
+    onDrop(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.fileOver = false;
+        const files = event.dataTransfer?.files;
+        if (files && files.length > 0) {
+            this.fileDropped.emit(files);
+        }
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DndDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.14", type: DndDirective, isStandalone: true, selector: "[appDnd]", outputs: { fileDropped: "fileDropped" }, host: { listeners: { "dragover": "onDragOver($event)", "dragleave": "onDragLeave($event)", "drop": "onDrop($event)" }, properties: { "class.fileover": "fileOver" } }, ngImport: i0 }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: DndDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: "[appDnd]",
+                    standalone: true,
+                    host: {
+                        "[class.fileover]": "fileOver",
+                        "(dragover)": "onDragOver($event)",
+                        "(dragleave)": "onDragLeave($event)",
+                        "(drop)": "onDrop($event)",
+                    },
+                }]
+        }] });
 
 class StopPropagationDirective {
     constructor() {
@@ -34,36 +76,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{
                     selector: "[appStopPropagation]",
                     standalone: true,
+                    host: { "(click)": "onClick($event)" },
                 }]
-        }], propDecorators: { onClick: [{
-                type: HostListener,
-                args: ["click", ["$event"]]
-            }] } });
+        }] });
 
 class TypedTemplateDirective {
-    // @ts-ignore
-    constructor(contentTemplate) {
-        this.contentTemplate = contentTemplate;
+    constructor() {
         this.typedTemplate = input.required();
+        this._contentTemplate = inject(TemplateRef);
     }
     static ngTemplateContextGuard(dir, ctx) {
         return true;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TypedTemplateDirective, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TypedTemplateDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
     static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: TypedTemplateDirective, isStandalone: true, selector: "ng-template[typedTemplate]", inputs: { typedTemplate: { classPropertyName: "typedTemplate", publicName: "typedTemplate", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TypedTemplateDirective, decorators: [{
             type: Directive,
             args: [{ selector: "ng-template[typedTemplate]", standalone: true }]
-        }], ctorParameters: () => [{ type: i0.TemplateRef }] });
+        }] });
 
 class LetDirective {
-    constructor(_viewContainer, _templateRef) {
-        this._viewContainer = _viewContainer;
-        this._templateRef = _templateRef;
+    constructor() {
         this._context = { ngLet: null, $implicit: null };
         this._hasView = false;
         this.ngLet = input();
+        this._viewContainer = inject(ViewContainerRef);
+        this._templateRef = inject(TemplateRef);
         effect(() => {
             const value = this.ngLet();
             this._context.$implicit = this._context.ngLet = value;
@@ -82,21 +121,22 @@ class LetDirective {
     static ngTemplateContextGuard(dir, ctx) {
         return true;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LetDirective, deps: [{ token: i0.ViewContainerRef }, { token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: LetDirective, selector: "[ngLet]", inputs: { ngLet: { classPropertyName: "ngLet", publicName: "ngLet", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LetDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: LetDirective, isStandalone: true, selector: "[ngLet]", inputs: { ngLet: { classPropertyName: "ngLet", publicName: "ngLet", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LetDirective, decorators: [{
             type: Directive,
             args: [{
                     // eslint-disable-next-line @angular-eslint/directive-selector
                     selector: "[ngLet]",
+                    standalone: true,
                 }]
-        }], ctorParameters: () => [{ type: i0.ViewContainerRef }, { type: i0.TemplateRef }] });
+        }], ctorParameters: () => [] });
 
 class OnRenderDirective {
     constructor() {
         this.onRender = input.required();
-        this.rendered = new EventEmitter();
+        this.rendered = output();
     }
     ngOnChanges(changes) {
         if (changes["onRender"].previousValue !== changes["onRender"].currentValue) {
@@ -104,16 +144,15 @@ class OnRenderDirective {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OnRenderDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: OnRenderDirective, selector: "[TaOnRender]", inputs: { onRender: { classPropertyName: "onRender", publicName: "onRender", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { rendered: "rendered" }, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: OnRenderDirective, isStandalone: true, selector: "[TaOnRender]", inputs: { onRender: { classPropertyName: "onRender", publicName: "onRender", isSignal: true, isRequired: true, transformFunction: null } }, outputs: { rendered: "rendered" }, usesOnChanges: true, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: OnRenderDirective, decorators: [{
             type: Directive,
             args: [{
                     selector: "[TaOnRender]",
+                    standalone: true,
                 }]
-        }], propDecorators: { rendered: [{
-                type: Output
-            }] } });
+        }] });
 
 class TaTestIdDirective {
     constructor() {
@@ -123,18 +162,16 @@ class TaTestIdDirective {
         return this.taTestId();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTestIdDirective, deps: [], target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: TaTestIdDirective, isStandalone: true, selector: "[taTestId]", inputs: { taTestId: { classPropertyName: "taTestId", publicName: "taTestId", isSignal: true, isRequired: true, transformFunction: null } }, host: { properties: { "attr.data-testid": "this.attr" } }, ngImport: i0 }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "18.2.14", type: TaTestIdDirective, isStandalone: true, selector: "[taTestId]", inputs: { taTestId: { classPropertyName: "taTestId", publicName: "taTestId", isSignal: true, isRequired: true, transformFunction: null } }, host: { properties: { "attr.data-testid": "attr" } }, ngImport: i0 }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTestIdDirective, decorators: [{
             type: Directive,
             args: [{
                     selector: "[taTestId]",
                     standalone: true,
+                    host: { "[attr.data-testid]": "attr" },
                 }]
-        }], propDecorators: { attr: [{
-                type: HostBinding,
-                args: ["attr.data-testid"]
-            }] } });
+        }] });
 
 const FILE_SIZE_UNITS = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 const FILE_SIZE_UNITS_LONG = [
@@ -203,8 +240,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         }] });
 
 class SafePipe {
-    constructor(sanitizer) {
-        this.sanitizer = sanitizer;
+    constructor() {
+        this.sanitizer = inject(DomSanitizer);
     }
     transform(value, type) {
         switch (type) {
@@ -222,13 +259,13 @@ class SafePipe {
                 throw new Error(`Invalid safe type specified: ${type}`);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SafePipe, deps: [{ token: i1.DomSanitizer }], target: i0.ɵɵFactoryTarget.Pipe }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SafePipe, deps: [], target: i0.ɵɵFactoryTarget.Pipe }); }
     static { this.ɵpipe = i0.ɵɵngDeclarePipe({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: SafePipe, isStandalone: true, name: "safe" }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SafePipe, decorators: [{
             type: Pipe,
             args: [{ name: "safe", standalone: true }]
-        }], ctorParameters: () => [{ type: i1.DomSanitizer }] });
+        }] });
 
 var EFileExtension;
 (function (EFileExtension) {
@@ -471,11 +508,11 @@ class TaAbstractComponent {
         this._subscriberHandler.registerSubscription(subscription);
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaAbstractComponent, selector: "ng-component", ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaAbstractComponent, isStandalone: true, selector: "ng-component", ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAbstractComponent, decorators: [{
             type: Component,
-            args: [{ template: "" }]
+            args: [{ standalone: true, template: "" }]
         }], ctorParameters: () => [] });
 
 class TaBaseComponent extends TaAbstractComponent {
@@ -489,11 +526,11 @@ class TaBaseComponent extends TaAbstractComponent {
         return item.key;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseComponent, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBaseComponent, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseComponent, decorators: [{
             type: Component,
-            args: [{ template: "" }]
+            args: [{ standalone: true, template: "" }]
         }], ctorParameters: () => [] });
 
 const isObject = (variable) => {
@@ -536,7 +573,7 @@ const merge = (override = true) => (init, ...objects) => {
 const getPropertyTypes = (obj) => {
     const propertyTypes = {};
     for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
             propertyTypes[key] = typeof obj[key];
         }
     }
@@ -545,7 +582,7 @@ const getPropertyTypes = (obj) => {
 const ObjectKeys = (object) => object instanceof Object ? Object.keys(object) : [];
 const ObjectKeysReOrder = (base, keysOrder) => {
     return keysOrder.reduce((final, key) => {
-        if (base.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(base, key)) {
             final[key] = base[key];
         }
         return final;
@@ -587,11 +624,11 @@ class TaBasePage extends TaAbstractComponent {
         return paramObject;
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBasePage, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBasePage, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.14", type: TaBasePage, isStandalone: true, selector: "ng-component", usesInheritance: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBasePage, decorators: [{
             type: Component,
-            args: [{ template: "" }]
+            args: [{ standalone: true, template: "" }]
         }], ctorParameters: () => [] });
 
 /** Contenu d'une modale piloté par un `ModalState<T, U>` : entrée `T` lue via `modalState().input()`, résultat `U` rendu par `confirm()`. */
@@ -614,11 +651,11 @@ class TaBaseModal extends TaAbstractComponent {
         this.modalState()?.dismissed();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaBaseModal, selector: "ng-component", inputs: { modalState: { classPropertyName: "modalState", publicName: "modalState", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: TaBaseModal, isStandalone: true, selector: "ng-component", inputs: { modalState: { classPropertyName: "modalState", publicName: "modalState", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { closeEvent: "closeEvent" }, usesInheritance: true, ngImport: i0, template: '', isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaBaseModal, decorators: [{
             type: Component,
-            args: [{ template: '' }]
+            args: [{ standalone: true, template: '' }]
         }], ctorParameters: () => [] });
 
 const isArray = (variable) => {
@@ -1232,7 +1269,7 @@ const getCivilityIcon = (civility) => {
     }
 };
 const getCivility = (person) => {
-    return person.naming && person.naming.hasOwnProperty("civility")
+    return person.naming && Object.prototype.hasOwnProperty.call(person.naming, "civility")
         ? person.naming.civility
         : null;
 };
@@ -1474,7 +1511,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ providedIn: 'root' }]
         }] });
 
-class ReadOnlyContextService {
+class TaReadOnlyContextService {
     constructor() {
         this._readonly$ = new BehaviorSubject(false);
         this.isReadOnly$ = this._readonly$.asObservable();
@@ -1482,13 +1519,31 @@ class ReadOnlyContextService {
     setReadonly(value) {
         this._readonly$.next(value);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ReadOnlyContextService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ReadOnlyContextService, providedIn: 'root' }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaReadOnlyContextService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaReadOnlyContextService, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: ReadOnlyContextService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaReadOnlyContextService, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'root' }]
         }] });
+
+const isMinimizedKey = "isMinimizedMenu";
+class TaSharedMenuService {
+    constructor() {
+        this.isMinimized$ = new BehaviorSubject(localStorage.getItem(isMinimizedKey) === "1");
+        this.isMinimized$
+            .pipe(takeUntilDestroyed())
+            .subscribe((isMinimized) => localStorage.setItem(isMinimizedKey, isMinimized ? "1" : "0"));
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSharedMenuService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSharedMenuService, providedIn: "root" }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSharedMenuService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: "root",
+                }]
+        }], ctorParameters: () => [] });
 
 const LOCAL = "config_local";
 const APPLICATION_CONFIG = new InjectionToken("config_application");
@@ -1502,5 +1557,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, WEEK_DAY_LABELS, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isPositive, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
+export { APPLICATION_CONFIG, BreakpointDetection, Breakpoints, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, DndDirective, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, TaReadOnlyContextService as ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaReadOnlyContextService, TaSharedMenuService, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, WEEK_DAY_LABELS, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isPositive, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
 //# sourceMappingURL=ta-utils.mjs.map

@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { TaSizes, TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class LinkComponent {
@@ -7,7 +6,7 @@ export declare class LinkComponent {
     bold: import("@angular/core").InputSignal<boolean>;
     size: import("@angular/core").InputSignal<TaSizes>;
     icon: import("@angular/core").InputSignal<string | null>;
-    action: EventEmitter<any>;
+    action: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     handleClick(): void;
     getClass(): {

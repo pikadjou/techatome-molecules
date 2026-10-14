@@ -4,7 +4,7 @@ import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
     space: import("@angular/core").InputSignal<boolean>;
-    overlayPanelRef: TaOverlayPanelComponent;
+    overlayPanelRef: import("@angular/core").Signal<TaOverlayPanelComponent>;
     optionsList: {
         id: string;
         name: string;

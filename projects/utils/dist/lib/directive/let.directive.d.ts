@@ -1,16 +1,15 @@
-import { TemplateRef, ViewContainerRef } from "@angular/core";
 import * as i0 from "@angular/core";
 interface LetContext<T> {
     ngLet: T;
     $implicit: T;
 }
 export declare class LetDirective<T> {
-    private _viewContainer;
-    private _templateRef;
     private _context;
     private _hasView;
     ngLet: import("@angular/core").InputSignal<T | undefined>;
-    constructor(_viewContainer: ViewContainerRef, _templateRef: TemplateRef<LetContext<T>>);
+    private readonly _viewContainer;
+    private readonly _templateRef;
+    constructor();
     /** @internal */
     static ngLetUseIfTypeGuard: void;
     /**
@@ -30,6 +29,6 @@ export declare class LetDirective<T> {
      */
     static ngTemplateContextGuard<T>(dir: LetDirective<T>, ctx: any): ctx is LetContext<Exclude<T, false | 0 | "" | null | undefined>>;
     static ɵfac: i0.ɵɵFactoryDeclaration<LetDirective<any>, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<LetDirective<any>, "[ngLet]", never, { "ngLet": { "alias": "ngLet"; "required": false; "isSignal": true; }; }, {}, never, never, false, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<LetDirective<any>, "[ngLet]", never, { "ngLet": { "alias": "ngLet"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }
 export {};

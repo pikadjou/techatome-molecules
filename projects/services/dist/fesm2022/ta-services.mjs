@@ -1,24 +1,11 @@
+import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
+export { TaSharedMenuService } from '@ta/utils';
+import { GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, TaBaseService, HandleSimpleRequest, HandleComplexRequest, Request } from '@ta/server';
 import * as i0 from '@angular/core';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, filter } from 'rxjs';
-import { GraphSchema, Apollo_gql, graphQlTake, graphQlPaginationFields, TaBaseService, HandleSimpleRequest, HandleComplexRequest, Request } from '@ta/server';
-import { isNonNullable, keepUniqueObjectByProperty } from '@ta/utils';
+import { map, filter } from 'rxjs';
 
-const isMinimizedKey = "isMinimizedMenu";
-class TaSharedMenuService {
-    constructor() {
-        this.isMinimized$ = new BehaviorSubject(localStorage.getItem(isMinimizedKey) === "1" ? true : false);
-        this.isMinimized$.subscribe((isMinimized) => localStorage.setItem(isMinimizedKey, isMinimized ? "1" : "0"));
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSharedMenuService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSharedMenuService, providedIn: "root" }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaSharedMenuService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: () => [] });
+// Déplacé dans @ta/utils ; réexporté ici pour les consommateurs existants.
 
 const projectProps = new GraphSchema([
     "id",
@@ -293,5 +280,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, TaDocumentsService, TaProjectsService, TaSharedMenuService, documentProps, projectProps };
+export { FileType, GET_LIGHT_PROJECTS, GET_MY_PROJECTS, GET_PROJECTS, GET_PROJECT_BY_ID, ProjectStatus, TaDocumentsService, TaProjectsService, documentProps, projectProps };
 //# sourceMappingURL=ta-services.mjs.map

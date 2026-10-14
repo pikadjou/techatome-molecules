@@ -3,7 +3,7 @@ import { MatDrawer } from "@angular/material/sidenav";
 import * as i0 from "@angular/core";
 export declare class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
     open: import("@angular/core").InputSignal<boolean>;
-    drawer: MatDrawer | null;
+    drawer: import("@angular/core").Signal<MatDrawer | undefined>;
     constructor();
     ngAfterViewInit(): void;
     ngOnChanges(changes: SimpleChanges): void;

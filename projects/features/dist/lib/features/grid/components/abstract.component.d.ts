@@ -20,5 +20,5 @@ export declare abstract class TaAbstractGridComponent<T> extends TaBaseComponent
     constructor();
     ngOnInit(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaAbstractGridComponent<any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractGridComponent<any>, "ng-component", never, { "gridId": { "alias": "gridId"; "required": true; "isSignal": true; }; }, {}, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractGridComponent<any>, "ng-component", never, { "gridId": { "alias": "gridId"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

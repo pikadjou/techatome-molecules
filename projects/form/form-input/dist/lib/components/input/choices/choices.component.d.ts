@@ -4,7 +4,7 @@ import { TaOverlayPanelComponent } from '@ta/ui';
 import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class InputChoicesComponent extends TaAbstractInputComponent<InputChoices> {
-    overlayPanelRef: TaOverlayPanelComponent;
+    overlayPanelRef: import("@angular/core").Signal<TaOverlayPanelComponent>;
     inputSearch: InputTextBox<string>;
     inputNullable: InputCheckBox;
     filteredOptions$: Observable<{

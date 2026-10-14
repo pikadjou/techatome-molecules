@@ -19,8 +19,8 @@ export declare class FileEditComponent extends TaBaseComponent implements OnInit
     brushSize: number;
     slider: InputSlider;
     readonly isLight: (color: string) => boolean;
-    private _containerRef;
-    private _tuiRef;
+    private readonly _containerRef;
+    private readonly _tuiRef;
     private _canvasSize;
     private _intoDrawing;
     constructor();

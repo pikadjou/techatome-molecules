@@ -23,7 +23,7 @@
 ### Services
 | Name | Purpose | Key Methods |
 |------|---------|-------------|
-| ReadOnlyContextService | Read-only mode context | setReadOnly(), isReadOnly() |
+| TaReadOnlyContextService | Read-only mode context | setReadOnly(), isReadOnly() |
 
 ### Abstract Classes
 | Name | Purpose |

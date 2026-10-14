@@ -13,8 +13,8 @@ type LocalityValue = AddressLocality | AddressLocality[] | null;
  * ne manipulent que des identifiants ou du texte.
  */
 export declare class InputLocalityComponent extends TaAbstractInputComponent<InputLocality, LocalityValue> implements OnInit, OnDestroy {
-    private _choicesRef?;
-    private _localityItemTpl;
+    private readonly _choicesRef;
+    private readonly _localityItemTpl;
     /** `false` tant que le pays courant n'a pas de liste : on bascule en saisie libre. */
     readonly available: import("@angular/core").WritableSignal<boolean>;
     choicesInput: InputChoices;

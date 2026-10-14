@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export type ModalStyle = 'full' | 'big' | 'classic' | 'small';
@@ -6,7 +5,7 @@ export declare class LayoutModalComponent extends TaBaseComponent {
     style: import("@angular/core").InputSignal<ModalStyle>;
     title: import("@angular/core").InputSignal<string>;
     showClose: import("@angular/core").InputSignal<boolean>;
-    closeEvent: EventEmitter<void>;
+    closeEvent: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     close(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutModalComponent, never>;

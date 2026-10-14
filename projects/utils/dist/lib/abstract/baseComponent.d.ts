@@ -10,5 +10,5 @@ export declare abstract class TaBaseComponent extends TaAbstractComponent implem
         key: string;
     }): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaBaseComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaBaseComponent, "ng-component", never, {}, {}, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaBaseComponent, "ng-component", never, {}, {}, never, never, true, never>;
 }

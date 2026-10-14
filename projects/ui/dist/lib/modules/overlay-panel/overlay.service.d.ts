@@ -16,7 +16,7 @@ export interface OverlayMenuConfig<T = any> {
     maxHeight?: number;
     manualTrigger?: boolean;
 }
-export declare class OverlayService extends TaBaseService {
+export declare class TaOverlayService extends TaBaseService {
     private _overlayRef?;
     private _onCloseCallback?;
     private readonly _onCloseSubject;
@@ -27,6 +27,8 @@ export declare class OverlayService extends TaBaseService {
     constructor();
     openMenu<T>(config: OverlayMenuConfig<T>): void;
     closeMenu(): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<OverlayService, never>;
-    static ɵprov: i0.ɵɵInjectableDeclaration<OverlayService>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaOverlayService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<TaOverlayService>;
 }
+/** @deprecated utiliser TaOverlayService */
+export { TaOverlayService as OverlayService };

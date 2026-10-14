@@ -7,7 +7,7 @@ export declare class FilterDisplayerComponent extends TaBaseComponent {
     iconType: import("@angular/core").InputSignal<string>;
     container: import("@angular/core").InputSignal<"button" | "link">;
     filtersSelected: import("@angular/core").OutputEmitterRef<any>;
-    filterTemplate: TemplateRef<void>;
+    filterTemplate: import("@angular/core").Signal<TemplateRef<void>>;
     private _isFilterOpen;
     get isFilterOpen(): boolean;
     set isFilterOpen(value: boolean);

@@ -6,13 +6,13 @@ import * as i0 from "@angular/core";
  * Panneau latéral des filtres. Un panneau plutôt qu'une modale : les critères
  * restent à côté de la liste, qui se met à jour pendant qu'on les règle.
  */
-export declare class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
+export declare class TaGridFiltersPanelComponent extends TaAbstractGridComponent<unknown> {
     closeEvent: import("@angular/core").OutputEmitterRef<void>;
     resultCount(): number;
     /** Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control. */
     reset(): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<TaGridFiltersPanel, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridFiltersPanel, "ta-grid-filters-panel", never, {}, { "closeEvent": "closeEvent"; }, never, never, true, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<TaGridFiltersPanelComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaGridFiltersPanelComponent, "ta-grid-filters-panel", never, {}, { "closeEvent": "closeEvent"; }, never, never, true, never>;
 }
 export declare class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
     show: import("@angular/core").InputSignal<{
@@ -58,3 +58,5 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridControlComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<TaGridControlComponent, "ta-grid-control", never, { "show": { "alias": "show"; "required": false; "isSignal": true; }; "compact": { "alias": "compact"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }
+/** @deprecated utiliser TaGridFiltersPanelComponent */
+export { TaGridFiltersPanelComponent as TaGridFiltersPanel };

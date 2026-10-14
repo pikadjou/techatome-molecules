@@ -3,7 +3,7 @@ import { InputPhone } from '@ta/form-model';
 import { TaAbstractInputComponent } from '../../abstract.component';
 import * as i0 from "@angular/core";
 export declare class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
-    phoneInput: ElementRef;
+    phoneInput: import("@angular/core").Signal<ElementRef<HTMLInputElement>>;
     readonly isReady: import("@angular/core").WritableSignal<boolean>;
     private _iti?;
     private _stylesheetReady$?;

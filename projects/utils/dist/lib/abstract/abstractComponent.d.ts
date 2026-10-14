@@ -21,5 +21,5 @@ export declare abstract class TaAbstractComponent implements OnDestroy {
     ngOnDestroy(): void;
     protected _registerSubscription(subscription: Subscription): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaAbstractComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractComponent, "ng-component", never, {}, {}, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractComponent, "ng-component", never, {}, {}, never, never, true, never>;
 }

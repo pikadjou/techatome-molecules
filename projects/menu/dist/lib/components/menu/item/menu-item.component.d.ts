@@ -9,7 +9,7 @@ import * as i0 from "@angular/core";
 export declare class MenuItemComponent extends TaBaseComponent implements OnInit {
     item: import("@angular/core").InputSignal<MenuBase | MenuIcon | MenuAction | MenuPanel>;
     styleType: import("@angular/core").InputSignal<String>;
-    triggerMenu: MatMenuTrigger;
+    triggerMenu: import("@angular/core").Signal<MatMenuTrigger>;
     readonly typeToken: MenuIcon | MenuAction | MenuBase | MenuPanel;
     isOpen: boolean;
     isMobileModalOpen: import("@angular/core").WritableSignal<boolean>;

@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { input, ViewChild, Component } from '@angular/core';
+import { input, viewChild, Component } from '@angular/core';
 import Chart from 'chart.js/auto';
 import deepEqual from 'fast-deep-equal';
 
@@ -10,6 +10,7 @@ class BaseChartComponent {
         this.datasets = input.required();
         this.chartOptions = input({});
         this.chartHeight = input();
+        this.chartCanvas = viewChild.required("chartCanvas");
         this.chart = null;
     }
     ngAfterViewInit() {
@@ -26,7 +27,7 @@ class BaseChartComponent {
         }
     }
     createChart() {
-        this.chart = new Chart(this.chartCanvas.nativeElement.getContext("2d"), {
+        this.chart = new Chart(this.chartCanvas().nativeElement, {
             type: this.type,
             options: this.chartOptions(),
             data: {
@@ -44,15 +45,12 @@ class BaseChartComponent {
         this.chart?.update();
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BaseChartComponent, selector: "ng-component", inputs: { labels: { classPropertyName: "labels", publicName: "labels", isSignal: true, isRequired: true, transformFunction: null }, datasets: { classPropertyName: "datasets", publicName: "datasets", isSignal: true, isRequired: true, transformFunction: null }, chartOptions: { classPropertyName: "chartOptions", publicName: "chartOptions", isSignal: true, isRequired: false, transformFunction: null }, chartHeight: { classPropertyName: "chartHeight", publicName: "chartHeight", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "", isInline: true }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.2.0", version: "18.2.14", type: BaseChartComponent, isStandalone: true, selector: "ng-component", inputs: { labels: { classPropertyName: "labels", publicName: "labels", isSignal: true, isRequired: true, transformFunction: null }, datasets: { classPropertyName: "datasets", publicName: "datasets", isSignal: true, isRequired: true, transformFunction: null }, chartOptions: { classPropertyName: "chartOptions", publicName: "chartOptions", isSignal: true, isRequired: false, transformFunction: null }, chartHeight: { classPropertyName: "chartHeight", publicName: "chartHeight", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "chartCanvas", first: true, predicate: ["chartCanvas"], descendants: true, isSignal: true }], usesOnChanges: true, ngImport: i0, template: "", isInline: true }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BaseChartComponent, decorators: [{
             type: Component,
-            args: [{ template: "" }]
-        }], ctorParameters: () => [], propDecorators: { chartCanvas: [{
-                type: ViewChild,
-                args: ["chartCanvas"]
-            }] } });
+            args: [{ standalone: true, template: "" }]
+        }], ctorParameters: () => [] });
 
 class TaChartBarComponent extends BaseChartComponent {
     constructor() {

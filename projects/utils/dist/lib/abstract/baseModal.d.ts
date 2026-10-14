@@ -12,5 +12,5 @@ export declare abstract class TaBaseModal<T = unknown, U = unknown> extends TaAb
     /** Ferme sans résultat. */
     dismiss(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaBaseModal<any, any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaBaseModal<any, any>, "ng-component", never, { "modalState": { "alias": "modalState"; "required": false; "isSignal": true; }; }, { "closeEvent": "closeEvent"; }, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaBaseModal<any, any>, "ng-component", never, { "modalState": { "alias": "modalState"; "required": false; "isSignal": true; }; }, { "closeEvent": "closeEvent"; }, never, never, true, never>;
 }

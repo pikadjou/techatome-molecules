@@ -7,7 +7,7 @@ export declare abstract class BaseChartComponent<TType extends ChartType = Chart
     datasets: import("@angular/core").InputSignal<ChartDataset<keyof import("chart.js").ChartTypeRegistry, TData>[]>;
     chartOptions: import("@angular/core").InputSignal<import("chart.js/dist/types/utils")._DeepPartialObject<import("chart.js").CoreChartOptions<keyof import("chart.js").ChartTypeRegistry> & import("chart.js").ElementChartOptions<keyof import("chart.js").ChartTypeRegistry> & import("chart.js").PluginChartOptions<keyof import("chart.js").ChartTypeRegistry> & import("chart.js").DatasetChartOptions<keyof import("chart.js").ChartTypeRegistry> & import("chart.js").ScaleChartOptions<keyof import("chart.js").ChartTypeRegistry>> | undefined>;
     chartHeight: import("@angular/core").InputSignal<number | undefined>;
-    chartCanvas: ElementRef;
+    chartCanvas: import("@angular/core").Signal<ElementRef<HTMLCanvasElement>>;
     type: TType;
     chart: Chart<ChartType, TData, TLabel> | null;
     constructor();
@@ -17,5 +17,5 @@ export declare abstract class BaseChartComponent<TType extends ChartType = Chart
     createChart(): void;
     refreshChart(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<BaseChartComponent<any, any, any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<BaseChartComponent<any, any, any>, "ng-component", never, { "labels": { "alias": "labels"; "required": true; "isSignal": true; }; "datasets": { "alias": "datasets"; "required": true; "isSignal": true; }; "chartOptions": { "alias": "chartOptions"; "required": false; "isSignal": true; }; "chartHeight": { "alias": "chartHeight"; "required": false; "isSignal": true; }; }, {}, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BaseChartComponent<any, any, any>, "ng-component", never, { "labels": { "alias": "labels"; "required": true; "isSignal": true; }; "datasets": { "alias": "datasets"; "required": true; "isSignal": true; }; "chartOptions": { "alias": "chartOptions"; "required": false; "isSignal": true; }; "chartHeight": { "alias": "chartHeight"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
 }

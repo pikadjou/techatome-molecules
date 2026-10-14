@@ -1,10 +1,9 @@
-import { EventEmitter } from '@angular/core';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class LayoutFullPanelComponent extends TaBaseComponent {
     width: import("@angular/core").InputSignal<string>;
     title: import("@angular/core").InputSignal<string>;
-    closeEvent: EventEmitter<any>;
+    closeEvent: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     askClose(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutFullPanelComponent, never>;

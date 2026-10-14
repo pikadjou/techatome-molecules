@@ -1,11 +1,10 @@
-import { EventEmitter } from "@angular/core";
 import { TaIconType } from "@ta/icons";
 import { FileData } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class FileCardComponent {
     file: import("@angular/core").InputSignal<FileData<any>>;
-    fileSelected: EventEmitter<FileData>;
-    moreInformationSelected: EventEmitter<FileData>;
+    fileSelected: import("@angular/core").OutputEmitterRef<FileData<any>>;
+    moreInformationSelected: import("@angular/core").OutputEmitterRef<FileData<any>>;
     get localIcon(): TaIconType.Doc | TaIconType.Excel | TaIconType.Image | TaIconType.Pdf | TaIconType.UnknownFile;
     get fileType(): string | null;
     get userTrigram(): string | null;

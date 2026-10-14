@@ -253,7 +253,7 @@ export class CameraUploadComponent {
 
 ## Services
 
-### UploadDocumentFormService
+### TaUploadDocumentFormService
 
 Service for generating form controls for document upload dialogs.
 
@@ -265,7 +265,7 @@ Service for generating form controls for document upload dialogs.
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { UploadDocumentFormService, UploadDocumentData } from '@ta/files-extended';
+import { TaUploadDocumentFormService, UploadDocumentData } from '@ta/files-extended';
 import { of } from 'rxjs';
 
 @Component({
@@ -275,7 +275,7 @@ import { of } from 'rxjs';
   `
 })
 export class DocumentUploadFormComponent {
-  private formService = inject(UploadDocumentFormService);
+  private formService = inject(TaUploadDocumentFormService);
 
   uploadData: UploadDocumentData = {
     description: 'Initial description',

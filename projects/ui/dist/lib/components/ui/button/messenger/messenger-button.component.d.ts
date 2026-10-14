@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class MessengerButtonComponent {
@@ -22,7 +21,7 @@ export declare class MessengerButtonComponent {
     /**
      * Event emitted when button is clicked
      */
-    action: EventEmitter<any>;
+    action: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     handleClick(): void;
     getClass(): {

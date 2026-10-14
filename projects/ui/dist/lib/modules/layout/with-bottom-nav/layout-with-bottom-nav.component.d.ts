@@ -3,8 +3,8 @@ import { TaBaseComponent } from "@ta/utils";
 import * as i0 from "@angular/core";
 export declare class LayoutWithBottomNavComponent extends TaBaseComponent implements AfterViewChecked {
     type: import("@angular/core").InputSignal<string>;
-    private _bottomNav;
-    private _layoutContent;
+    private readonly _bottomNav;
+    private readonly _layoutContent;
     private _sharedMenu;
     isMinimized$: import("rxjs").Observable<boolean>;
     constructor();

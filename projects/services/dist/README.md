@@ -184,7 +184,7 @@ export class DocumentManagerComponent {
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { TaSharedMenuService } from '@ta/services';
+import { TaSharedMenuService } from '@ta/utils';
 
 @Component({
   selector: 'app-navigation',
