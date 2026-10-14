@@ -12,7 +12,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-banner",
   templateUrl: "./banner.component.html",
-  styleUrls: ["./banner.component.scss"],
+  styleUrl: "./banner.component.scss",
   standalone: true,
   imports: [NgClass, TranslatePipe, TranslateModule],
 })

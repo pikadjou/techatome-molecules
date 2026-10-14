@@ -2,8 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { TaGridFormService } from '@lib/features/features/grid/services/grid-form.services';
 import { TaGridData } from '@lib/features/features/grid/models/grid-data';
-import { BaseCol } from '@lib/features/features/grid/models/cols/base-col';
-import { StringCol } from '@lib/features/features/grid/models/cols/string-col';
 import { ParameterType } from '@lib/features/features/grid/models/types';
 
 describe('TaGridFormService', () => {

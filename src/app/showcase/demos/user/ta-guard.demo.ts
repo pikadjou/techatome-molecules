@@ -68,7 +68,7 @@ export const DEMO: ComponentDemo = {
     },
     {
       title: "Accès refusé, message par défaut",
-      description: "Service neuf, donc `isAuthenticated=false` : `level=\"authenticated\"` échoue, et le message par défaut s'affiche avec un bouton « Me connecter », visible seulement pour ce niveau (voir le template `guard.component.html`).",
+      description: "Service neuf, donc `isAuthenticated=false` : `level=\"authenticated\"` échoue, et le message par défaut s'affiche avec un bouton « Connexion » (clé `user.login`), visible seulement pour ce niveau (voir le template `guard.component.html`).",
       component: TaGuardDeniedExample,
     },
     {

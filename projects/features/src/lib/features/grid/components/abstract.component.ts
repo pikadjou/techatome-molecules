@@ -8,7 +8,7 @@ import { TaTranslationGrid } from '../../../translation.service';
 import { TaGridData } from '../models/grid-data';
 import { TaGridInstanceService } from '../services/grid-instance.service';
 
-@Component({ template: '' })
+@Component({ standalone: true, template: '' })
 export abstract class TaAbstractGridComponent<T> extends TaBaseComponent implements OnInit {
   gridId = input.required<string>();
 

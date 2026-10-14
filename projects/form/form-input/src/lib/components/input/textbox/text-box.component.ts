@@ -11,7 +11,7 @@ import { TextareaComponent } from '../textarea/textarea.component';
 @Component({
   selector: 'ta-input-textbox',
   templateUrl: './text-box.component.html',
-  styleUrls: ['./text-box.component.scss'],
+  styleUrl: './text-box.component.scss',
   standalone: true,
   imports: [FontIconComponent, ReactiveFormsModule, TextareaComponent, InputLayoutComponent],
 })

@@ -16,7 +16,7 @@ export interface DualButtonInput {
 @Component({
   selector: "ta-dual-button",
   templateUrl: "./dual-button.component.html",
-  styleUrls: ["./dual-button.component.scss"],
+  styleUrl: "./dual-button.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, TranslateModule],
 })

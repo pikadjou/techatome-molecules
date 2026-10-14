@@ -10,7 +10,7 @@ import { TaBaseComponent } from "@ta/utils";
 @Component({
   selector: "ta-input-dynamic",
   templateUrl: "./dynamic.component.html",
-  styleUrls: ["./dynamic.component.scss"],
+  styleUrl: "./dynamic.component.scss",
   standalone: true,
   imports: [
     NgClass,

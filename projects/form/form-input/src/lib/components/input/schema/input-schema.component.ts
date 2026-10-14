@@ -13,7 +13,7 @@ import { InputSchemaModal } from './modal/input-schema-modal.component';
 @Component({
   selector: 'ta-input-schema',
   templateUrl: './input-schema.component.html',
-  styleUrls: ['./input-schema.component.scss'],
+  styleUrl: './input-schema.component.scss',
   standalone: true,
   imports: [LocalIconComponent, ButtonComponent, FileListComponent, InputLayoutComponent, InputSchemaModal],
 })

@@ -24,7 +24,7 @@ export const TA_LANGUAGES = new InjectionToken<TaLanguageConfig[]>('TaLanguages'
 @Component({
   selector: 'ta-switch-language',
   templateUrl: './switch-language.component.html',
-  styleUrls: ['./switch-language.component.scss'],
+  styleUrl: './switch-language.component.scss',
   standalone: true,
   imports: [
     FlagIconComponent,

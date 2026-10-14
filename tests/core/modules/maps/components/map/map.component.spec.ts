@@ -1,14 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { MapComponent } from '@lib/core/modules/maps/components/map/map.component';
+import { TA_GOOGLE_MAPS_CONFIG } from '@lib/core/modules/maps/google-maps.config';
 
 describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
 
   beforeEach(async () => {
-    // Mock google.maps globally since the component uses google.maps in class body
+    // Mock google.maps globally since the component reads google.maps when computing marker options
     (window as any).google = {
       maps: {
         Animation: { DROP: 1 },
@@ -38,7 +41,14 @@ describe('MapComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MapComponent],
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+        }),
+        MapComponent,
+      ],
+      providers: [{ provide: TA_GOOGLE_MAPS_CONFIG, useValue: { apiKey: 'test-key' } }],
     })
       .overrideComponent(MapComponent, {
         set: { template: '' },
@@ -59,26 +69,44 @@ describe('MapComponent', () => {
   });
 
   it('should have map options with center and zoom', () => {
-    expect(component.options.center).toEqual({ lat: 50, lng: 4 });
-    expect(component.options.zoom).toBe(4);
+    expect(component.options().center).toEqual({ lat: 50, lng: 4 });
+    expect(component.options().zoom).toBe(4);
   });
 
-  it('should have markers defined', () => {
-    expect(component.markers).toBeDefined();
-    expect(component.markers.length).toBeGreaterThan(0);
+  it('should have no marker by default', () => {
+    expect(component.markers()).toEqual([]);
+    expect(component.markerOptions()).toEqual([]);
   });
 
-  it('should have selectedPoints defined', () => {
-    expect(component.selectedPoints).toBeDefined();
-    expect(component.selectedPoints.length).toBe(3);
+  it('should derive marker options from the markers input', () => {
+    fixture.componentRef.setInput('markers', [{ position: { lat: 50.8503, lng: 4.3517 }, title: 'Bruxelles' }]);
+    fixture.detectChanges();
+
+    const options = component.markerOptions();
+    expect(options.length).toBe(1);
+    expect(options[0].title).toBe('Bruxelles');
+    expect(options[0].options.animation).toBe(1);
+  });
+
+  it('should have no route point by default', () => {
+    expect(component.routePoints()).toEqual([]);
   });
 
   it('should have routeSummary initially null', () => {
-    expect(component.routeSummary).toBeNull();
+    expect(component.routeSummary()).toBeNull();
   });
 
   it('should have routeDetails initially empty', () => {
     expect(component.routeDetails()).toEqual([]);
+  });
+
+  it('should not call the Routes API with fewer than two points', () => {
+    fixture.componentRef.setInput('routePoints', [{ lat: 50, lng: 4 }]);
+    fixture.detectChanges();
+
+    component.renderRouteWithRoutesApi();
+
+    expect(component.routeSummary()).toBeNull();
   });
 
   describe('parseDuration', () => {

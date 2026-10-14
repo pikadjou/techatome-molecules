@@ -10,7 +10,7 @@ import { TaSizes } from '@ta/styles';
 @Component({
   selector: 'ta-material-icon',
   templateUrl: './material-icon.component.html',
-  styleUrls: ['./material-icon.component.scss'],
+  styleUrl: './material-icon.component.scss',
   standalone: true,
   imports: [NgClass, MatIconModule],
 })

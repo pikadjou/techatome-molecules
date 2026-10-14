@@ -20,7 +20,9 @@ export class InputWysiswyg extends InputBase<WysiswgBlockData[] | null> {
     if (options.stringValue) {
       try {
         this.value = JSON.parse(options.stringValue);
-      } catch (e) {}
+      } catch {
+        // stringValue illisible : la valeur reste vide
+      }
     }
   }
 }

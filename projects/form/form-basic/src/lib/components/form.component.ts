@@ -17,7 +17,7 @@ import { InputsComponent } from './inputs/inputs.component';
 @Component({
   selector: 'ta-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],
+  styleUrl: './form.component.scss',
   standalone: true,
   imports: [
     AsyncPipe,

@@ -14,7 +14,7 @@ export type StatTileLayout = 'value-first' | 'label-first';
 @Component({
   selector: 'ta-stat-tile',
   templateUrl: './stat-tile.component.html',
-  styleUrls: ['./stat-tile.component.scss'],
+  styleUrl: './stat-tile.component.scss',
   standalone: true,
   imports: [FontIconComponent, NgClass, OverlineComponent],
 })

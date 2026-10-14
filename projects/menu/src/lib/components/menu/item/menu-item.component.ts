@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { Component, input, OnInit, ViewChild, signal } from "@angular/core";
+import { Component, input, OnInit, signal, viewChild } from "@angular/core";
 import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { RouterModule } from "@angular/router";
 
@@ -24,7 +24,7 @@ import { TaTranslationMenu } from "../../../translation.service";
 @Component({
   selector: "ta-menu-item",
   templateUrl: "./menu-item.component.html",
-  styleUrls: ["./menu-item.component.scss"],
+  styleUrl: "./menu-item.component.scss",
   standalone: true,
   imports: [
     NgClass,
@@ -43,7 +43,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
 
   styleType = input<String>("bloc");
 
-  @ViewChild(MatMenuTrigger) triggerMenu!: MatMenuTrigger;
+  triggerMenu = viewChild.required(MatMenuTrigger);
 
   public readonly typeToken!: MenuIcon | MenuAction | MenuBase | MenuPanel;
   public isOpen: boolean = false;
@@ -103,7 +103,7 @@ export class MenuItemComponent extends TaBaseComponent implements OnInit {
    */
   public openPanelOnHover() {
     if (this.getTemplate() && !this.breakpoints.isLessThanXS) {
-      this.triggerMenu.openMenu();
+      this.triggerMenu().openMenu();
     }
   }
 

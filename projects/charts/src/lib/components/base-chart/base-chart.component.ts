@@ -4,8 +4,8 @@ import {
   ElementRef,
   OnDestroy,
   SimpleChanges,
-  ViewChild,
   input,
+  viewChild,
 } from "@angular/core";
 
 import {
@@ -17,7 +17,7 @@ import {
 import Chart from "chart.js/auto";
 import deepEqual from "fast-deep-equal";
 
-@Component({ template: "" })
+@Component({ standalone: true, template: "" })
 export abstract class BaseChartComponent<
   TType extends ChartType = ChartType,
   TData = DefaultDataPoint<TType>,
@@ -32,7 +32,7 @@ export abstract class BaseChartComponent<
 
   chartHeight = input<number>();
 
-  @ViewChild("chartCanvas") chartCanvas!: ElementRef;
+  chartCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>("chartCanvas");
 
   public type!: TType;
 
@@ -64,7 +64,7 @@ export abstract class BaseChartComponent<
   }
 
   public createChart() {
-    this.chart = new Chart(this.chartCanvas.nativeElement.getContext("2d"), {
+    this.chart = new Chart(this.chartCanvas().nativeElement, {
       type: this.type,
       options: this.chartOptions(),
       data: {

@@ -88,8 +88,8 @@ describe('SearchHistoryDisplayerComponent', () => {
   });
 
   describe('searchFieldWidth', () => {
-    it('should return undefined when searchField is null', () => {
-      component.searchField = null;
+    it('should return undefined when searchField is not rendered', () => {
+      spyOn(component, 'searchField').and.returnValue(undefined);
       expect(component.searchFieldWidth).toBeUndefined();
     });
   });

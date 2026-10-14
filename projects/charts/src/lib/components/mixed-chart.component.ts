@@ -5,7 +5,7 @@ import { BaseChartComponent } from "./base-chart/base-chart.component";
 @Component({
   selector: "ta-mixed-chart",
   templateUrl: "./base-chart/base-chart.component.html",
-  styleUrls: ["./base-chart/base-chart.component.scss"],
+  styleUrl: "./base-chart/base-chart.component.scss",
   standalone: true,
   imports: [],
 })

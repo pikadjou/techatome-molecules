@@ -4,7 +4,6 @@ import { provideRouter } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { TaGridData } from '@lib/features/features/grid/models/grid-data';
 import { TaGridInstanceService } from '@lib/features/features/grid/services/grid-instance.service';
 import { TaGridSessionService } from '@lib/features/features/grid/services/grid-session.services';
 import { TaGridViewService } from '@lib/features/features/grid/services/grid-view.service';

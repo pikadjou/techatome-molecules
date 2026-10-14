@@ -10,7 +10,7 @@ import { PreviewDocumentDto } from '../../type';
 @Component({
   selector: 'ta-excel-viewer',
   templateUrl: './excel-viewer.component.html',
-  styleUrls: ['./excel-viewer.component.scss'],
+  styleUrl: './excel-viewer.component.scss',
   standalone: true,
   imports: [NgxDocViewerModule, LoaderComponent],
 })

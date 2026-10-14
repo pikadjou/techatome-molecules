@@ -13,7 +13,7 @@ import { Feature, UploadComponent } from '../upload/files-upload.component';
 @Component({
   selector: 'ta-files-display',
   templateUrl: './files-display.component.html',
-  styleUrls: ['./files-display.component.scss'],
+  styleUrl: './files-display.component.scss',
   standalone: true,
   imports: [AsyncPipe, LoaderComponent, ErrorComponent, UploadComponent, FileListComponent, NavigationComponent],
 })

@@ -2,7 +2,7 @@ import { Component, OnDestroy } from "@angular/core";
 
 import { TaAbstractComponent } from "./abstractComponent";
 
-@Component({ template: "" })
+@Component({ standalone: true, template: "" })
 export abstract class TaBaseComponent
   extends TaAbstractComponent
   implements OnDestroy

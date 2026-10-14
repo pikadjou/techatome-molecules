@@ -15,7 +15,7 @@ import { FiltersFormComponent } from "./form/filters-form.component";
 @Component({
   selector: "ta-filters",
   templateUrl: "./filters.component.html",
-  styleUrls: ["./filters.component.scss"],
+  styleUrl: "./filters.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,

@@ -5,7 +5,7 @@
 $copy-bg: transparent;
 $copy-color: common.get-var(text, primary);
 $copy-hover-bg: common.get-var(surface, hover);
-$copy-disabled-color: #a0a0a0;
+$copy-disabled-color: common.get-var(components, brand-button, disabled, color);
 
 .copy-link-button {
   width: 100%;

@@ -1,10 +1,10 @@
 import {
   Component,
   TemplateRef,
-  ViewChild,
   inject,
   input,
   output,
+  viewChild,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
@@ -22,7 +22,7 @@ import { FilterContainerComponent } from "../filter-container/filter-container.c
 @Component({
   selector: "ta-filter-displayer",
   templateUrl: "./filter-displayer.component.html",
-  styleUrls: ["./filter-displayer.component.scss"],
+  styleUrl: "./filter-displayer.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,
@@ -40,8 +40,7 @@ export class FilterDisplayerComponent extends TaBaseComponent {
 
   filtersSelected = output<any>();
 
-  @ViewChild("filterTemplate", { read: TemplateRef })
-  filterTemplate!: TemplateRef<void>;
+  filterTemplate = viewChild.required<TemplateRef<void>>("filterTemplate");
 
   private _isFilterOpen = false;
   get isFilterOpen() {
@@ -58,7 +57,7 @@ export class FilterDisplayerComponent extends TaBaseComponent {
         >(BottomSheetTemplateGenericComponent, {
           panelClass: "no-padding",
           data: {
-            template: this.filterTemplate,
+            template: this.filterTemplate(),
             context: null,
           },
         });

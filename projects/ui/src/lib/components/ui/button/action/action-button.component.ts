@@ -9,7 +9,7 @@ import { ActionButtonData } from "./action-button-data";
 @Component({
   selector: "ta-action-button",
   templateUrl: "./action-button.component.html",
-  styleUrls: ["./action-button.component.scss"],
+  styleUrl: "./action-button.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, LocalIconComponent],
 })

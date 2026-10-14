@@ -13,7 +13,7 @@ type Panel = "left" | "right" | "center";
 @Component({
   selector: "ta-layout-flex",
   templateUrl: "./layout-flex.component.html",
-  styleUrls: ["./layout-flex.component.scss"],
+  styleUrl: "./layout-flex.component.scss",
   standalone: true,
   imports: [
     AsyncPipe,

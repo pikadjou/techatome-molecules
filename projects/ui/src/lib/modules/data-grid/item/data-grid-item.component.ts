@@ -6,7 +6,7 @@ import { FontIconComponent } from '@ta/icons';
 @Component({
   selector: 'ta-data-grid-item',
   templateUrl: './data-grid-item.component.html',
-  styleUrls: ['./data-grid-item.component.scss'],
+  styleUrl: './data-grid-item.component.scss',
   standalone: true,
   imports: [FontIconComponent],
 })

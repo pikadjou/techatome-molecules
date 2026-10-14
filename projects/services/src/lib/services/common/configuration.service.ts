@@ -6,7 +6,7 @@ import { BehaviorSubject } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class CamConfigurationService {
+export class TaConfigurationService {
   public organizationName$ = new BehaviorSubject<string>("");
 
   constructor() {}
@@ -15,3 +15,6 @@ export class CamConfigurationService {
     this.organizationName$.next(user["g-lambert/orgname"]);
   }
 }
+
+/** @deprecated utiliser TaConfigurationService */
+export { TaConfigurationService as CamConfigurationService };

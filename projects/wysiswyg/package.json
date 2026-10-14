@@ -13,6 +13,9 @@
   "dependencies": {
     "@ta/notification": "^0.0.0",
     "@ta/services": "^0.0.0",
+    "@ta/styles": "^0.0.0",
+    "@ta/translation": "^0.0.0",
+    "@ta/ui": "^0.0.0",
     "@ta/utils": "^0.0.0",
     "@editorjs/delimiter": "^1.4.2",
     "@editorjs/editorjs": "^2.30.5",

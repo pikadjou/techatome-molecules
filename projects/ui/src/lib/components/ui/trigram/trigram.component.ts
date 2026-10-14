@@ -7,7 +7,7 @@ export type TrigramTone = 'brand' | 'highlight' | 'surface' | 'invert';
 @Component({
   selector: 'ta-trigram',
   templateUrl: './trigram.component.html',
-  styleUrls: ['./trigram.component.scss'],
+  styleUrl: './trigram.component.scss',
   standalone: true,
   imports: [NgClass, NgStyle],
 })

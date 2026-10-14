@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -19,7 +19,7 @@ export type BadgeType =
 @Component({
   selector: "ta-badge",
   templateUrl: "./badge.component.html",
-  styleUrls: ["./badge.component.scss"],
+  styleUrl: "./badge.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, TranslateModule],
 })
@@ -42,8 +42,7 @@ export class BadgeComponent {
 
   icon = input<string | undefined>(undefined);
 
-  @Output()
-  clickAction = new EventEmitter();
+  clickAction = output<void>();
 
   constructor() {
     TaTranslationUI.getInstance();

@@ -1,4 +1,4 @@
-import { Component, computed, input } from "@angular/core";
+import { Component, computed, input, inject } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
 import { TaSizes } from "@ta/styles";
@@ -48,7 +48,7 @@ export class FlagIconComponent {
   code = input.required<string>();
   size = input<TaSizes>("sm");
 
-  constructor(private _sanitizer: DomSanitizer) {}
+  private readonly _sanitizer = inject(DomSanitizer);
 
   svgContent = computed(() => {
     const svg = FLAG_SVGS[this.code().toLowerCase()];

@@ -12,7 +12,7 @@ import { SafePipe, TaBaseComponent } from "@ta/utils";
 @Component({
   selector: "ta-cms-editor-blocks",
   templateUrl: "./block-text.component.html",
-  styleUrls: ["./block-text.component.scss"],
+  styleUrl: "./block-text.component.scss",
   standalone: true,
   imports: [
     NotificationInlineComponent,

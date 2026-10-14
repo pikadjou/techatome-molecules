@@ -4,7 +4,7 @@ import { ModalState } from '../helpers/modal/state';
 import { TaAbstractComponent } from './abstractComponent';
 
 /** Contenu d'une modale piloté par un `ModalState<T, U>` : entrée `T` lue via `modalState().input()`, résultat `U` rendu par `confirm()`. */
-@Component({ template: '' })
+@Component({ standalone: true, template: '' })
 export abstract class TaBaseModal<T = unknown, U = unknown> extends TaAbstractComponent {
   modalState = input<ModalState<T, U> | null>(null);
 

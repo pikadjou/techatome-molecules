@@ -7,7 +7,7 @@ import { TextComponent } from "../text/text.component";
 @Component({
   selector: "ta-rich-paragraph-link",
   templateUrl: "./link.component.html",
-  styleUrls: ["./link.component.scss"],
+  styleUrl: "./link.component.scss",
   standalone: true,
   imports: [UiLinkComponent, TextComponent],
 })

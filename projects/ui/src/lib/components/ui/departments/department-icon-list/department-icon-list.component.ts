@@ -5,7 +5,7 @@ import { Department } from "../interface";
 @Component({
   selector: "ta-department-icon-list",
   templateUrl: "./department-icon-list.component.html",
-  styleUrls: ["./department-icon-list.component.scss"],
+  styleUrl: "./department-icon-list.component.scss",
   standalone: true,
   imports: [],
 })

@@ -5,7 +5,7 @@
 >
   <span class="value">{{ this.value() | translate }}</span>
   @if (this.icon()) {
-  <ta-font-icon class="ml-space-xs" [name]="icon()!" type="xs"></ta-font-icon>
+  <ta-font-icon class="ml-space-xs" [name]="this.icon()!" type="xs"></ta-font-icon>
   } @if (this.showClickOption()) {
   <ta-font-icon name="arrow-small" type="xs"></ta-font-icon>
   }

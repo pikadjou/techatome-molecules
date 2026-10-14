@@ -18,7 +18,7 @@ export interface BenefitConfig {
 @Component({
   selector: "ta-benefit-item",
   templateUrl: "./benefit-item.component.html",
-  styleUrls: ["./benefit-item.component.scss"],
+  styleUrl: "./benefit-item.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, TextComponent],
 })

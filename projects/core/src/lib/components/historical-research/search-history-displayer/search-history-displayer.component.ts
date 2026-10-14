@@ -2,9 +2,9 @@ import { NgTemplateOutlet } from "@angular/common";
 import {
   Component,
   ElementRef,
-  ViewChild,
   input,
   output,
+  viewChild,
 } from "@angular/core";
 import { Validators } from "@angular/forms";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
@@ -26,7 +26,7 @@ import {
 @Component({
   selector: "ta-search-history-displayer",
   templateUrl: "./search-history-displayer.component.html",
-  styleUrls: ["./search-history-displayer.component.scss"],
+  styleUrl: "./search-history-displayer.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,
@@ -53,13 +53,11 @@ export class SearchHistoryDisplayerComponent {
 
   valueCompleted = output<any>();
 
-  @ViewChild("searchField", { read: ElementRef })
-  searchField: ElementRef | null = null;
-  @ViewChild("searchField", { read: MatMenuTrigger })
-  searchTrigger: MatMenuTrigger | null = null;
+  searchField = viewChild("searchField", { read: ElementRef });
+  searchTrigger = viewChild("searchField", { read: MatMenuTrigger });
 
   get searchFieldWidth() {
-    return this.searchField?.nativeElement.offsetWidth;
+    return this.searchField()?.nativeElement.offsetWidth;
   }
   get listRecentSearches() {
     const searchHistoryValue = this.searchHistory();
@@ -84,7 +82,7 @@ export class SearchHistoryDisplayerComponent {
       this._saveInLocalStorage(search);
     }
     this.input.value = "";
-    this.searchTrigger?.closeMenu();
+    this.searchTrigger()?.closeMenu();
     this.valueCompleted.emit(search);
     return;
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ export type ModalStyle = 'full' | 'big' | 'classic' | 'small';
 @Component({
   selector: 'ta-layout-modal',
   templateUrl: './layout-modal.component.html',
-  styleUrls: ['./layout-modal.component.scss'],
+  styleUrl: './layout-modal.component.scss',
   standalone: true,
   imports: [
     FontIconComponent,
@@ -30,7 +30,7 @@ export class LayoutModalComponent extends TaBaseComponent {
   title = input<string>('');
   showClose = input<boolean>(true);
 
-  @Output() closeEvent = new EventEmitter<void>();
+  closeEvent = output<void>();
 
   constructor() {
     super();

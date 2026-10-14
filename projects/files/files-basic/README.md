@@ -251,7 +251,7 @@ export class DocumentsComponent {
 
 ## Services
 
-### AppPicturesService
+### TaPicturesService
 
 Service for fetching and managing pictures/images.
 
@@ -263,7 +263,7 @@ Service for fetching and managing pictures/images.
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { AppPicturesService } from '@ta/files-basic';
+import { TaPicturesService } from '@ta/files-basic';
 
 @Component({
   selector: 'app-gallery',
@@ -274,7 +274,7 @@ import { AppPicturesService } from '@ta/files-basic';
   `
 })
 export class GalleryComponent {
-  private picturesService = inject(AppPicturesService);
+  private picturesService = inject(TaPicturesService);
   pictures$ = this.picturesService.fetchDashboardProjects$('project-123');
 }
 ```

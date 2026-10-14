@@ -2,16 +2,16 @@ import { TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 
-import { UploadDocumentFormService } from '@lib/files-extended/services/document/upload-document-form.service';
+import { TaUploadDocumentFormService } from '@lib/files-extended/services/document/upload-document-form.service';
 
-describe('UploadDocumentFormService', () => {
-  let service: UploadDocumentFormService;
+describe('TaUploadDocumentFormService', () => {
+  let service: TaUploadDocumentFormService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UploadDocumentFormService],
+      providers: [TaUploadDocumentFormService],
     });
-    service = TestBed.inject(UploadDocumentFormService);
+    service = TestBed.inject(TaUploadDocumentFormService);
   });
 
   it('should be created', () => {

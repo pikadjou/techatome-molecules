@@ -32,7 +32,8 @@ export function listPackages(repoRoot = REPO_ROOT) {
     if (name.split("/").length !== 2) continue; // écarte "@ta/testing/e2e"
     if (EXCLUDED.has(name)) continue;
 
-    const dir = path.resolve(repoRoot, targets[0]);
+    // tsconfig vise la sortie `.build` ; les sources à documenter sont dans le dossier parent.
+    const dir = path.resolve(repoRoot, targets[0].replace(/[\\/]\.build$/, ""));
     const publicApi = path.join(dir, "src", "public-api.ts");
     if (!fs.existsSync(publicApi)) continue;
 

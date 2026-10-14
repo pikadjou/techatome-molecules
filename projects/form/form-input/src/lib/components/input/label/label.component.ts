@@ -10,7 +10,7 @@ import { TaAbstractInputComponent } from "../../abstract.component";
 @Component({
   selector: "ta-input-label",
   templateUrl: "./label.component.html",
-  styleUrls: ["./label.component.scss"],
+  styleUrl: "./label.component.scss",
   standalone: true,
   imports: [TranslatePipe, TitleComponent, TextComponent, FontIconComponent],
 })

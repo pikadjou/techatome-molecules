@@ -8,7 +8,7 @@ import { extractExtension } from "@ta/utils";
 @Component({
   selector: "ta-file-image",
   templateUrl: "./file-image.component.html",
-  styleUrls: ["./file-image.component.scss"],
+  styleUrl: "./file-image.component.scss",
   standalone: true,
   imports: [LocalIconComponent],
 })

@@ -49,7 +49,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'ta-inputs',
   templateUrl: './inputs.component.html',
-  styleUrls: ['./inputs.component.scss'],
+  styleUrl: './inputs.component.scss',
   standalone: true,
   imports: [
     NgTemplateOutlet,

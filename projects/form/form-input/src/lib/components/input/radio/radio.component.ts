@@ -12,7 +12,7 @@ import { FormLabelComponent } from "../../label/label.component";
 @Component({
   selector: "ta-input-radio",
   templateUrl: "./radio.component.html",
-  styleUrls: ["./radio.component.scss"],
+  styleUrl: "./radio.component.scss",
   standalone: true,
   imports: [
     NgClass,

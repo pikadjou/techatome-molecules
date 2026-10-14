@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
 import { getPropertyTypes } from "../utils/object";
 import { TaAbstractComponent } from "./abstractComponent";
 
-@Component({ template: "" })
+@Component({ standalone: true, template: "" })
 export abstract class TaBasePage extends TaAbstractComponent {
   constructor() {
     super();

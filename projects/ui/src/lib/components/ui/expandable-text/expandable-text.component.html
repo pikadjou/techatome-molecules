@@ -9,7 +9,7 @@
     </div>
   </div>
   @if (this.hasTooBigText) {
-  <button (click)="toggleText()">
+  <button (click)="this.toggleText()">
     {{
       (this.showFullText
         ? "ui.expandabletext.seeless"

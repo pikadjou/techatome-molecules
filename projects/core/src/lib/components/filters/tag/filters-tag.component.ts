@@ -8,7 +8,7 @@ import { ActiveFilterTag } from "../types";
 @Component({
   selector: "ta-filters-tag",
   templateUrl: "./filters-tag.component.html",
-  styleUrls: ["./filters-tag.component.scss"],
+  styleUrl: "./filters-tag.component.scss",
   standalone: true,
   imports: [BadgeComponent],
 })

@@ -1,11 +1,9 @@
 import {
   Component,
-  EventEmitter,
-  HostListener,
   input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
 } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 
@@ -21,8 +19,9 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 
 @Component({
   selector: "ta-search-field",
+  host: { "(window:keyup)": "keyPress($event)" },
   templateUrl: "./search-field.component.html",
-  styleUrls: ["./search-field.component.scss"],
+  styleUrl: "./search-field.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,
@@ -44,8 +43,7 @@ export class SearchFieldComponent
 
   type = input<TaSizes>("sm");
 
-  @Output()
-  valueCompleted = new EventEmitter();
+  valueCompleted = output<string | number>();
 
   public isDeployed: boolean = false;
   public focusTextBox: boolean = false;
@@ -90,7 +88,6 @@ export class SearchFieldComponent
     }
   }
 
-  @HostListener("window:keyup", ["$event"])
   public keyPress = (event: KeyboardEvent): void => {
     if (event.key === "Enter") {
       this.iconClicked();

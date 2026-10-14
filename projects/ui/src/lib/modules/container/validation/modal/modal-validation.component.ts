@@ -14,7 +14,7 @@ import { ModalParameter } from '../common-modal';
 @Component({
   selector: 'ta-validation-modal',
   templateUrl: './modal-validation.component.html',
-  styleUrls: ['./modal-validation.component.scss'],
+  styleUrl: './modal-validation.component.scss',
   standalone: true,
   imports: [TranslateModule, ButtonComponent, TextComponent, TaModalComponent],
 })

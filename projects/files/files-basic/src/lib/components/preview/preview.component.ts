@@ -16,7 +16,7 @@ import { WordViewerComponent } from './viewers/word-viewer/word-viewer.component
 @Component({
   selector: 'ta-files-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss'],
+  styleUrl: './preview.component.scss',
   standalone: true,
   imports: [
     CommonModule,

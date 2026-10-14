@@ -1,9 +1,9 @@
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 @Component({
   selector: "ta-list-element",
   templateUrl: "./list-element.component.html",
-  styleUrls: ["./list-element.component.scss"],
+  styleUrl: "./list-element.component.scss",
   standalone: true,
 })
 export class ListElementComponent {
@@ -14,6 +14,5 @@ export class ListElementComponent {
 
   flexColumn = input<boolean>(false);
 
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 }

@@ -3,7 +3,6 @@ import {
   RichParagraphText,
   RichStructure,
   RichText,
-  RichTextChildren,
 } from '@lib/cms/modules/strapi/services/dto/types/rich-text';
 
 describe('RichText types', () => {

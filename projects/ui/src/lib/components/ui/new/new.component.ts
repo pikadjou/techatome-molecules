@@ -7,7 +7,7 @@ import { BulletComponent } from "../bullet/bullet.component";
 @Component({
   selector: "ta-new",
   templateUrl: "./new.component.html",
-  styleUrls: ["./new.component.scss"],
+  styleUrl: "./new.component.scss",
   standalone: true,
   imports: [BulletComponent],
 })

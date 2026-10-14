@@ -9,7 +9,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-culture",
   templateUrl: "./culture.component.html",
-  styleUrls: ["./culture.component.scss"],
+  styleUrl: "./culture.component.scss",
   standalone: true,
   imports: [TranslateModule],
 })

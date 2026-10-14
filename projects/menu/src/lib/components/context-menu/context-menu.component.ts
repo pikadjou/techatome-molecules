@@ -22,7 +22,7 @@ import { TaTranslationMenu } from "../../translation.service";
 @Component({
   selector: "ta-context-menu",
   templateUrl: "./context-menu.component.html",
-  styleUrls: ["./context-menu.component.scss"],
+  styleUrl: "./context-menu.component.scss",
   standalone: true,
   imports: [
     AsyncPipe,

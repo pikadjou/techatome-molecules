@@ -10,7 +10,7 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
 @Component({
   selector: 'ta-input-rating',
   templateUrl: './rating.component.html',
-  styleUrls: ['./rating.component.scss'],
+  styleUrl: './rating.component.scss',
   standalone: true,
   imports: [ReactiveFormsModule, InputLayoutComponent, TaRatingComponent],
 })

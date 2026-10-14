@@ -5,7 +5,6 @@ import { ServerError, TaServerErrorService } from '@ta/server';
 import { ModalState } from '@ta/utils';
 
 import { ErrorBoxModal } from '@lib/notification/components/error-box/error-box.component';
-import { ENotificationCode } from '@lib/notification/enum';
 import { LAZY_SERVICE_TOKEN, TaNotificationService } from '@lib/notification/services/notification.service';
 
 describe('ErrorBoxModal', () => {

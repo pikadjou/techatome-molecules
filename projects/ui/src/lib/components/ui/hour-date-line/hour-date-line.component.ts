@@ -4,7 +4,7 @@ import { Component, input } from "@angular/core";
 @Component({
   selector: "ta-hour-date-line",
   templateUrl: "./hour-date-line.component.html",
-  styleUrls: ["./hour-date-line.component.scss"],
+  styleUrl: "./hour-date-line.component.scss",
   standalone: true,
   imports: [DatePipe],
 })

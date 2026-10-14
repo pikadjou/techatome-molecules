@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DomSanitizer } from '@angular/platform-browser';
 
 import { TaIconType, TaIconsService } from '@lib/icons/services/icons.service';
 import { LocalIconComponent } from '@lib/icons/components/local-icon/local-icon.component';

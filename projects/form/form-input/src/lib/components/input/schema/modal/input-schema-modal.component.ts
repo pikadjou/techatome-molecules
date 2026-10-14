@@ -8,7 +8,7 @@ import { FileStructure, TaBaseModal, newGuid } from '@ta/utils';
 
 @Component({
   selector: 'ta-input-schema-modal',
-  styleUrls: ['./input-schema-modal.component.scss'],
+  styleUrl: './input-schema-modal.component.scss',
   templateUrl: './input-schema-modal.component.html',
   standalone: true,
   imports: [FileEditComponent, TaModalComponent],

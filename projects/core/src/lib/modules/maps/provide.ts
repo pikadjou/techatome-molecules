@@ -1,18 +1,20 @@
 import { APP_INITIALIZER, Provider } from "@angular/core";
 
-import { GoogleMapsLoaderService } from "./googleMapsLoader.service";
+import { Observable } from "rxjs";
 
-export function initializeGoogleMaps(
-  loader: GoogleMapsLoaderService
-): () => Promise<void> {
-  return () => loader.load();
+import { TA_GOOGLE_MAPS_CONFIG, TaGoogleMapsConfig } from "./google-maps.config";
+import { TaGoogleMapsLoaderService } from "./googleMapsLoader.service";
+
+export function initializeGoogleMaps(loader: TaGoogleMapsLoaderService): () => Observable<void> {
+  return () => loader.load$();
 }
 
-export const provideGoogleMaps = (): Provider => [
+export const provideGoogleMaps = (config: TaGoogleMapsConfig): Provider => [
+  { provide: TA_GOOGLE_MAPS_CONFIG, useValue: config },
   {
     provide: APP_INITIALIZER,
     useFactory: initializeGoogleMaps,
-    deps: [GoogleMapsLoaderService],
+    deps: [TaGoogleMapsLoaderService],
     multi: true,
   },
 ];

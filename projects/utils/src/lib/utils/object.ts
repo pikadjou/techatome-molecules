@@ -50,7 +50,7 @@ export const getPropertyTypes = <T extends object>(
   };
 
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       propertyTypes[key as keyof T] = typeof obj[key];
     }
   }
@@ -63,7 +63,7 @@ export const ObjectKeys = <T>(object: T) =>
 
 export const ObjectKeysReOrder = <T>(base: T, keysOrder: Array<keyof T>): T => {
   return keysOrder.reduce<T>((final, key) => {
-    if ((<any>base).hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(base, key)) {
       final[key] = base[key];
     }
     return final;

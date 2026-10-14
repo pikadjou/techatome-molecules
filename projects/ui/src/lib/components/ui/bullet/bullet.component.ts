@@ -6,7 +6,7 @@ import { ColorType, TaSizes } from '@ta/styles';
 @Component({
   selector: 'ta-bullet',
   templateUrl: './bullet.component.html',
-  styleUrls: ['./bullet.component.scss'],
+  styleUrl: './bullet.component.scss',
   standalone: true,
   imports: [NgClass],
 })

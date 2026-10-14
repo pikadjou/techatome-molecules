@@ -16,7 +16,7 @@ export type InputLogoModalInput = {
 /** Choix ou remplacement d'un logo ; rend l'URL retenue, `null` si effacée. */
 @Component({
   selector: 'ta-input-logo-modal',
-  styleUrls: ['./input-logo-modal.component.scss'],
+  styleUrl: './input-logo-modal.component.scss',
   templateUrl: './input-logo-modal.component.html',
   standalone: true,
   imports: [ButtonComponent, DualButtonComponent, FontIconComponent, TaModalComponent, TitleComponent, TranslatePipe],

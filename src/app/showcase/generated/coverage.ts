@@ -206,6 +206,7 @@ export const COVERAGE: ShowcaseCoverage = {
     "ta-cms-editor-toolbar",
     "ta-data-grid",
     "ta-data-grid-item",
+    "ta-input-range-slider",
     "ta-overline",
     "ta-stat-tile",
     "ta-tab-bar"
@@ -220,8 +221,6 @@ export const COVERAGE: ShowcaseCoverage = {
     "SearchDisplayerComponent.mobileDetection (type non annoté)",
     "SearchHistoryDisplayerComponent.searchFieldWidth (type non annoté)",
     "SearchHistoryDisplayerComponent.listRecentSearches (type non annoté)",
-    "TaGridTagsComponent.group (type non annoté)",
-    "TaGridTagsComponent.activeFilters (type non annoté)",
     "DocumentsListComponent.documents$ (type non annoté)",
     "EditFieldComponent.newValue (type non annoté)",
     "InputImageComponent.selection (type non annoté)",

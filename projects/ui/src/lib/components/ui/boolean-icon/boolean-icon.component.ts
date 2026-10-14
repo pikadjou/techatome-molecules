@@ -12,7 +12,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-boolean-icon",
   templateUrl: "./boolean-icon.component.html",
-  styleUrls: ["./boolean-icon.component.scss"],
+  styleUrl: "./boolean-icon.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, TranslateModule],
 })

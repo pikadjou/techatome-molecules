@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ReadOnlyContextService } from '@lib/utils/service/read-only-context.service';
+import { TaReadOnlyContextService } from '@lib/utils/service/read-only-context.service';
 
-describe('ReadOnlyContextService', () => {
-  let service: ReadOnlyContextService;
+describe('TaReadOnlyContextService', () => {
+  let service: TaReadOnlyContextService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ReadOnlyContextService],
+      providers: [TaReadOnlyContextService],
     });
-    service = TestBed.inject(ReadOnlyContextService);
+    service = TestBed.inject(TaReadOnlyContextService);
   });
 
   it('should be created', () => {

@@ -19,7 +19,7 @@ import { TA_USER_SERVICE } from '../../services/user.service';
 @Component({
   selector: 'ta-my-account',
   templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss'],
+  styleUrl: './my-account.component.scss',
   standalone: true,
   imports: [
     AsyncPipe,

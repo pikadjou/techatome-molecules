@@ -13,7 +13,7 @@ import { TaTranslationCore } from '../../../translation.service';
 @Component({
   selector: 'ta-filters-form',
   templateUrl: './filters-form.component.html',
-  styleUrls: ['./filters-form.component.scss'],
+  styleUrl: './filters-form.component.scss',
   standalone: true,
   imports: [ButtonComponent, FormComponent, TranslatePipe],
 })

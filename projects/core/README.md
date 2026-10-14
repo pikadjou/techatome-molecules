@@ -66,7 +66,7 @@ import { provideGoogleMaps } from '@ta/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideGoogleMaps()
+    provideGoogleMaps({ apiKey })
   ]
 };
 ```

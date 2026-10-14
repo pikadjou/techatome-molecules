@@ -8,7 +8,7 @@ import { StopPropagationDirective } from '@ta/utils';
 @Component({
   selector: 'ta-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+  styleUrl: './button.component.scss',
   standalone: true,
   imports: [NgClass, FontIconComponent, StopPropagationDirective],
 })

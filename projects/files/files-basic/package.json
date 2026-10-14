@@ -13,9 +13,10 @@
   "dependencies": {
     "@ta/form-model": "^0.0.0",
     "@ta/icons": "^0.0.0",
-    "@ta/notification": "^0.0.0",
     "@ta/server": "^0.0.0",
+    "@ta/services": "^0.0.0",
     "@ta/styles": "^0.0.0",
+    "@ta/translation": "^0.0.0",
     "@ta/ui": "^0.0.0",
     "@ta/utils": "^0.0.0",
     "ngx-doc-viewer": "^15.0.1",

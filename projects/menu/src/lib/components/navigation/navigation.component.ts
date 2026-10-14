@@ -19,7 +19,7 @@ import { TaTranslationMenu } from '../../translation.service';
 @Component({
   selector: 'ta-menu-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+  styleUrl: './navigation.component.scss',
   standalone: true,
   imports: [
     NgClass,

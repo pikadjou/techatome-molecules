@@ -1,4 +1,4 @@
-import { Directive, input, effect, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Directive, input, effect, TemplateRef, ViewContainerRef, inject } from "@angular/core";
 
 interface LetContext<T> {
   ngLet: T;
@@ -8,6 +8,7 @@ interface LetContext<T> {
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: "[ngLet]",
+  standalone: true,
 })
 export class LetDirective<T> {
   private _context: LetContext<T | null> = { ngLet: null, $implicit: null };
@@ -16,10 +17,10 @@ export class LetDirective<T> {
 
   ngLet = input<T>();
 
-  constructor(
-    private _viewContainer: ViewContainerRef,
-    private _templateRef: TemplateRef<LetContext<T>>
-  ) {
+  private readonly _viewContainer = inject(ViewContainerRef);
+  private readonly _templateRef = inject<TemplateRef<LetContext<T>>>(TemplateRef);
+
+  constructor() {
     effect(() => {
       const value = this.ngLet();
       this._context.$implicit = this._context.ngLet = value as T;

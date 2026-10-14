@@ -1,18 +1,18 @@
 import {
   Directive,
-  EventEmitter,
-  Output,
   SimpleChanges,
   input,
+  output,
 } from "@angular/core";
 
 @Directive({
   selector: "[TaOnRender]",
+  standalone: true,
 })
 export class OnRenderDirective {
   onRender = input.required<boolean>();
 
-  @Output() rendered = new EventEmitter();
+  rendered = output<void>();
 
   ngOnChanges(changes: SimpleChanges) {
     if (

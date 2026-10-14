@@ -10,7 +10,7 @@ import { TaAbstractGridComponent } from '../abstract.component';
 @Component({
   selector: 'ta-grid-count',
   templateUrl: './count.component.html',
-  styleUrls: ['./count.component.scss'],
+  styleUrl: './count.component.scss',
   standalone: true,
   imports: [AsyncPipe, PluralTranslatePipe, TranslatePipe],
 })

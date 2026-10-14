@@ -6,7 +6,7 @@ import { TranslatePipe } from "@ta/translation";
 @Component({
   selector: "ta-input-error",
   templateUrl: "./input-error.component.html",
-  styleUrls: ["./input-error.component.scss"],
+  styleUrl: "./input-error.component.scss",
   standalone: true,
   imports: [TranslatePipe],
 })

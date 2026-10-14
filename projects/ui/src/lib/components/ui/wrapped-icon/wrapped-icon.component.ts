@@ -7,7 +7,7 @@ import { FontIconComponent } from "@ta/icons";
 @Component({
   selector: "ta-wrapped-icon",
   templateUrl: "./wrapped-icon.component.html",
-  styleUrls: ["./wrapped-icon.component.scss"],
+  styleUrl: "./wrapped-icon.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent],
 })

@@ -15,7 +15,7 @@ export type ModalTone = 'surface' | 'brand';
 @Component({
   selector: 'ta-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  styleUrl: './modal.component.scss',
   standalone: true,
   imports: [FontIconComponent, OverlineComponent, TitleComponent],
 })

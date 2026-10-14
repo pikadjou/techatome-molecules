@@ -7,7 +7,7 @@ import { TaAbstractInputComponent } from "../../abstract.component";
 @Component({
   selector: "ta-input-color-picker",
   templateUrl: "./color-picker.component.html",
-  styleUrls: ["./color-picker.component.scss"],
+  styleUrl: "./color-picker.component.scss",
   standalone: true,
 })
 export class ColorPickerComponent extends TaAbstractInputComponent<InputTextBox> {

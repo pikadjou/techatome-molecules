@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 import { Injector } from '@angular/core';
 
-import { OverlayService } from '@lib/ui/modules/overlay-panel/overlay.service';
+import { Logger } from '@ta/server';
 
-describe('OverlayService', () => {
-  let service: OverlayService;
+import { TaOverlayService } from '@lib/ui/modules/overlay-panel/overlay.service';
+
+describe('TaOverlayService', () => {
+  let service: TaOverlayService;
   let mockOverlay: jasmine.SpyObj<Overlay>;
 
   beforeEach(() => {
@@ -14,13 +16,13 @@ describe('OverlayService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        OverlayService,
+        TaOverlayService,
         { provide: Overlay, useValue: mockOverlay },
         Injector,
       ],
     });
 
-    service = TestBed.inject(OverlayService);
+    service = TestBed.inject(TaOverlayService);
   });
 
   it('should be created', () => {
@@ -44,14 +46,14 @@ describe('OverlayService', () => {
   });
 
   it('should log and return when openMenu is called without triggerElement', () => {
-    spyOn(console, 'log');
+    spyOn(Logger, 'LogWarning');
     service.openMenu({ menuComponent: class {} as any });
-    expect(console.log).toHaveBeenCalledWith('OverlayService: triggerElement is required.');
+    expect(Logger.LogWarning).toHaveBeenCalledWith('TaOverlayService: triggerElement is required.');
   });
 
   it('should log and return when openMenu is called without menuComponent', () => {
-    spyOn(console, 'log');
+    spyOn(Logger, 'LogWarning');
     service.openMenu({ triggerElement: document.createElement('div') });
-    expect(console.log).toHaveBeenCalledWith('OverlayService: menuComponent is required.');
+    expect(Logger.LogWarning).toHaveBeenCalledWith('TaOverlayService: menuComponent is required.');
   });
 });

@@ -262,7 +262,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
   },
   "ta-google-maps": {
     "className": "MapComponent",
-    "summary": "Carte Google Maps avec marqueurs groupés, fenêtre d'info et tracé d'itinéraire via l'API Routes ; ne déclare aucun input."
+    "summary": "Carte Google Maps avec marqueurs groupés (`markers`), fenêtre d'info et tracé d'itinéraire via l'API Routes (`routePoints`)."
   },
   "ta-grid": {
     "className": "TaGridComponent",
@@ -281,7 +281,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
     "summary": "Nombre de résultats d'une grille, à poser au-dessus de la liste — lit le `ta-grid-container` partageant le même `gridId`."
   },
   "ta-grid-filters-panel": {
-    "className": "TaGridFiltersPanel",
+    "className": "TaGridFiltersPanelComponent",
     "summary": "Panneau latéral plein écran portant le formulaire de filtres d'une grille (`ta-grid-form`) — sélectionné par `ta-grid-control` en cliquant « Filtres », mais montable seul."
   },
   "ta-grid-form": {
@@ -681,7 +681,7 @@ export const SEARCH_INDEX: Record<string, SearchIndexEntry> = {
     "summary": "Bouton d'accès rapide au changement de langue : un simple alias de `ta-switch-language` figé en `mode=\"modal\"`."
   },
   "ta-template-modal-container": {
-    "className": "TemplateModalContainer",
+    "className": "TemplateModalContainerComponent",
     "summary": "Modale pilotée par `TemplateRef`, ouverte/fermée via l'input `open` : enveloppe une `ta-modal` interne dont la taille est dérivée de `style`."
   },
   "ta-text": {

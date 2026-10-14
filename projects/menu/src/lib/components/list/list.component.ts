@@ -13,7 +13,7 @@ import { Menu } from "../../models/menu/menu";
 @Component({
   selector: "ta-list",
   templateUrl: "./list.component.html",
-  styleUrls: ["./list.component.scss"],
+  styleUrl: "./list.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,

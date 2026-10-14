@@ -9,7 +9,7 @@ import { TextComponent } from '../text/text.component';
 @Component({
   selector: 'ta-rating',
   templateUrl: './rating.component.html',
-  styleUrls: ['./rating.component.scss'],
+  styleUrl: './rating.component.scss',
   standalone: true,
   imports: [DecimalPipe, NgClass, NgStyle, TextComponent, TranslateModule],
 })

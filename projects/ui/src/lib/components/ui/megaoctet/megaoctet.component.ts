@@ -10,7 +10,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-megaoctet",
   templateUrl: "./megaoctet.component.html",
-  styleUrls: ["./megaoctet.component.scss"],
+  styleUrl: "./megaoctet.component.scss",
   standalone: true,
   imports: [FontIconComponent, TranslateModule],
 })

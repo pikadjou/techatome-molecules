@@ -1,5 +1,5 @@
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -43,7 +43,7 @@ import { SearchFieldComponent } from '../search-field/search-field.component';
 @Component({
   selector: 'ta-input-choices',
   templateUrl: './choices.component.html',
-  styleUrls: ['./choices.component.scss'],
+  styleUrl: './choices.component.scss',
   standalone: true,
   imports: [
     AsyncPipe,
@@ -67,7 +67,7 @@ import { SearchFieldComponent } from '../search-field/search-field.component';
   ],
 })
 export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices> {
-  @ViewChild(TaOverlayPanelComponent) overlayPanelRef!: TaOverlayPanelComponent;
+  overlayPanelRef = viewChild.required(TaOverlayPanelComponent);
 
   public inputSearch = new InputTextBox();
   public inputNullable = new InputCheckBox({
@@ -200,7 +200,7 @@ export class InputChoicesComponent extends TaAbstractInputComponent<InputChoices
     this.close();
   }
   public close() {
-    this.focusedElement.nativeElement.click();
-    this.overlayPanelRef.close();
+    this.focusedElement()?.nativeElement.click();
+    this.overlayPanelRef().close();
   }
 }

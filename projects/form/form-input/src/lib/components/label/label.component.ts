@@ -6,7 +6,7 @@ import { TranslatePipe } from "@ta/translation";
 @Component({
   selector: "ta-form-label",
   templateUrl: "./label.component.html",
-  styleUrls: ["./label.component.scss"],
+  styleUrl: "./label.component.scss",
   standalone: true,
   imports: [TranslatePipe],
 })

@@ -1,5 +1,5 @@
-<google-map #map [options]="this.options">
-  @for (marker of this.markers; track marker.position) {
+<google-map #map [options]="this.options()">
+  @for (marker of this.markerOptions(); track $index) {
   <map-marker
     #mapMarker="mapMarker"
     [position]="marker.position"
@@ -14,22 +14,24 @@
   </map-info-window>
 </google-map>
 
-@if (this.routeSummary) {
+@let summary = this.routeSummary();
+@if (summary) {
 <div>
-  <h3>Résumé du trajet</h3>
+  <h3>{{ "maps.route.summary" | translate }}</h3>
   <p>
-    Distance : {{ this.routeSummary.distanceKm }} km<br />
-    Durée estimée : {{ this.routeSummary.duration }}
+    {{ "maps.route.distance" | translate }} : {{ summary.distanceKm }} km<br />
+    {{ "maps.route.duration" | translate }} : {{ summary.duration }}
   </p>
 </div>
-} @if (routeDetails().length > 0) {
+}
+
+@let steps = this.routeDetails();
+@if (steps.length > 0) {
 <div>
-  <h3>Détails du trajet</h3>
+  <h3>{{ "maps.route.details" | translate }}</h3>
   <ul>
-    @for (step of routeDetails(); track step) {
-    <li>
-      {{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}
-    </li>
+    @for (step of steps; track $index) {
+    <li>{{ step.instruction }} — {{ step.distance }} m — {{ step.duration }}</li>
     }
   </ul>
 </div>

@@ -11,7 +11,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-error",
   templateUrl: "./error.component.html",
-  styleUrls: ["./error.component.scss"],
+  styleUrl: "./error.component.scss",
   standalone: true,
   imports: [TranslateModule, FontIconComponent, ButtonComponent],
 })

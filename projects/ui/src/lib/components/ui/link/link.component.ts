@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaSizes, TaState } from "@ta/styles";
@@ -7,7 +7,7 @@ import { TaSizes, TaState } from "@ta/styles";
 @Component({
   selector: "ta-link",
   templateUrl: "./link.component.html",
-  styleUrls: ["./link.component.scss"],
+  styleUrl: "./link.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent],
 })
@@ -22,8 +22,7 @@ export class LinkComponent {
 
   icon = input<string | null>(null);
 
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 
   constructor() {}
 

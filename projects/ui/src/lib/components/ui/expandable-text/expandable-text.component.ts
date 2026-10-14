@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, ViewChild } from "@angular/core";
+import { Component, ElementRef, input, viewChild } from "@angular/core";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -7,7 +7,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-expandable-text",
   templateUrl: "./expandable-text.component.html",
-  styleUrls: ["./expandable-text.component.scss"],
+  styleUrl: "./expandable-text.component.scss",
   standalone: true,
   imports: [TranslateModule],
 })
@@ -17,18 +17,16 @@ export class ExpandableTextComponent {
   public showFullText: boolean = false;
   public showButton: boolean = true;
 
-  @ViewChild("myText")
-  public _myText!: ElementRef<HTMLDivElement>;
+  private readonly _myText = viewChild<ElementRef<HTMLDivElement>>("myText");
 
   constructor() {
     TaTranslationUI.getInstance();
   }
 
   get textHeight() {
-    if (this._myText) {
-      if (this._myText.nativeElement.offsetHeight < this.height()) {
-        return "auto";
-      }
+    const text = this._myText();
+    if (text && text.nativeElement.offsetHeight < this.height()) {
+      return "auto";
     }
     if (this.showFullText) {
       return "auto";
@@ -41,10 +39,8 @@ export class ExpandableTextComponent {
   }
 
   get hasTooBigText() {
-    if (this._myText) {
-      return this._myText.nativeElement.offsetHeight > this.height();
-    }
-    return true;
+    const text = this._myText();
+    return text ? text.nativeElement.offsetHeight > this.height() : true;
   }
 
   toggleText() {

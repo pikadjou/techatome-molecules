@@ -16,7 +16,7 @@ import { FormLabelComponent } from '../../label/label.component';
 @Component({
   selector: 'ta-input-logo',
   templateUrl: './input-logo.component.html',
-  styleUrls: ['./input-logo.component.scss'],
+  styleUrl: './input-logo.component.scss',
   standalone: true,
   imports: [
     ButtonComponent,

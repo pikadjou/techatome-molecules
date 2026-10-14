@@ -1,4 +1,4 @@
-import { Component, ViewChild, input } from '@angular/core';
+import { Component, input, viewChild } from '@angular/core';
 
 import { InputDropdown } from '@ta/form-model';
 import { FontIconComponent } from '@ta/icons';
@@ -12,14 +12,14 @@ import { InputLayoutComponent } from '../../input-layout/input-layout.component'
 @Component({
   selector: 'ta-input-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss'],
+  styleUrl: './dropdown.component.scss',
   standalone: true,
   imports: [FontIconComponent, TaOverlayPanelComponent, LabelComponent, TranslatePipe, InputLayoutComponent],
 })
 export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<any>, any> {
   space = input<boolean>(true);
 
-  @ViewChild(TaOverlayPanelComponent) overlayPanelRef!: TaOverlayPanelComponent;
+  overlayPanelRef = viewChild.required(TaOverlayPanelComponent);
 
   public optionsList: { id: string; name: string; disabled?: boolean }[] = [];
   public filteredOptions: { id: string; name: string; disabled?: boolean }[] = [];
@@ -58,7 +58,7 @@ export class DropdownComponent extends TaAbstractInputComponent<InputDropdown<an
       this.input.value = currentValue;
     } else {
       this.input.value = selectedId;
-      this.overlayPanelRef.close();
+      this.overlayPanelRef().close();
     }
   }
 

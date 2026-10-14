@@ -2,7 +2,7 @@
 
 **Quand l'utiliser** : Gérer l'état minimisé/développé du menu latéral entre les composants.
 
-**Import** : `import { TaSharedMenuService } from '@ta/services'`
+**Import** : `import { TaSharedMenuService } from '@ta/utils'` (réexporté par `@ta/services` pour compatibilité)
 
 **API** :
 ```typescript

@@ -22,7 +22,7 @@ export type TabBarVariant = 'underline' | 'pill';
 @Component({
   selector: 'ta-tab-bar',
   templateUrl: './tab-bar.component.html',
-  styleUrls: ['./tab-bar.component.scss'],
+  styleUrl: './tab-bar.component.scss',
   standalone: true,
   imports: [FontIconComponent, NgClass, TranslateModule],
 })

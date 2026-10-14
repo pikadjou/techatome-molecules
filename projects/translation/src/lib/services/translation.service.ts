@@ -1,4 +1,5 @@
-import { Inject, Injectable, Optional, inject } from '@angular/core';
+import { InjectionToken, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, debounceTime, map, mergeMap } from 'rxjs';
@@ -6,7 +7,7 @@ import { LocalStorage } from 'storage-manager-js';
 
 import { TaTranslationRegistryService } from './translation-registry.service';
 
-export const TRANSLATION_CONFIG = 'config_translation';
+export const TRANSLATION_CONFIG = new InjectionToken<ITranslationConfig>('config_translation');
 export interface ITranslationConfig {
   default: string;
   supportedLanguages: string[];
@@ -29,14 +30,12 @@ export class TaTranslationService {
     map(({ lang }) => lang)
   );
 
-  constructor(
-    @Optional()
-    @Inject(TRANSLATION_CONFIG)
-    private _config: ITranslationConfig = {
-      default: 'fr',
-      supportedLanguages: ['fr'],
-    }
-  ) {
+  private readonly _config: ITranslationConfig = inject(TRANSLATION_CONFIG, { optional: true }) ?? {
+    default: 'fr',
+    supportedLanguages: ['fr'],
+  };
+
+  constructor() {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translateService.setDefaultLang(this._config.default);
 
@@ -50,8 +49,8 @@ export class TaTranslationService {
     this._registry.newRegistrationSubscription$
       .pipe(
         debounceTime(100),
-        mergeMap(() => this.translateService.reloadLang(this.translateService.currentLang))
-        // tap(data => console.log('reload lang', data))
+        mergeMap(() => this.translateService.reloadLang(this.translateService.currentLang)),
+        takeUntilDestroyed()
       )
       .subscribe({
         next: translations =>
@@ -61,7 +60,7 @@ export class TaTranslationService {
           }),
       });
 
-    this.translateService.onLangChange.subscribe(({ lang }) => {
+    this.translateService.onLangChange.pipe(takeUntilDestroyed()).subscribe(({ lang }) => {
       if (!LocalStorage.has('lang')) {
         LocalStorage.set('lang', lang);
         return;

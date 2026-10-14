@@ -11,7 +11,7 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 @Component({
   selector: "ta-input-range-slider",
   templateUrl: "./range-slider.component.html",
-  styleUrls: ["./range-slider.component.scss"],
+  styleUrl: "./range-slider.component.scss",
   standalone: true,
   imports: [FormsModule, InputLayoutComponent, TranslatePipe],
 })

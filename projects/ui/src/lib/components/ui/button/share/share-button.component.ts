@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaSizes, TaState } from "@ta/styles";
@@ -8,7 +8,7 @@ import { StopPropagationDirective } from "@ta/utils";
 @Component({
   selector: "ta-share-button",
   templateUrl: "./share-button.component.html",
-  styleUrls: ["./share-button.component.scss"],
+  styleUrl: "./share-button.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, StopPropagationDirective],
 })
@@ -43,8 +43,7 @@ export class ShareButtonComponent {
   /**
    * Event emitted when button is clicked
    */
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 
   constructor() {}
 

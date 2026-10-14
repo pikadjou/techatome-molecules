@@ -40,10 +40,10 @@ export const DEMO: ComponentDemo = {
     {
       title: "Via ta-overlay-panel",
       description:
-        "Cliquer le bouton ouvre l'overlay CDK ; `OverlayService.openMenu()` instancie `ta-default-panel` en lui injectant `MENU_TEMPLATE` (le `#panelContent` ci-dessus) et `MENU_MAX_HEIGHT`, que le composant projette avec `ngTemplateOutlet`.",
+        "Cliquer le bouton ouvre l'overlay CDK ; `TaOverlayService.openMenu()` instancie `ta-default-panel` en lui injectant `MENU_TEMPLATE` (le `#panelContent` ci-dessus) et `MENU_MAX_HEIGHT`, que le composant projette avec `ngTemplateOutlet`.",
       component: TaDefaultPanelOverlayExample,
     },
   ],
   notes:
-    "`ta-default-panel` ne peut pas se démontrer monté seul, hors overlay : ses deux entrées réelles sont les jetons d'injection optionnels `MENU_TEMPLATE`/`MENU_MAX_HEIGHT`, fournis uniquement par `OverlayService.openMenu()` (donc par `ta-overlay-panel`). Sans eux, le message de repli censé s'afficher (« Ceci est le template par defaut... ») ne s'affiche jamais : il est écrit dans un `<ng-template>` sans directive structurelle ni `ngTemplateOutlet` qui l'active, donc jamais instancié (vérifié dans `default-panel.component.html`). L'entrée `template` déclarée par la classe n'est elle non plus jamais lue par le template du composant (vérifié) : lui donner une valeur ne changerait rien à ce qui s'affiche.",
+    "`ta-default-panel` ne peut pas se démontrer monté seul, hors overlay : ses deux entrées réelles sont les jetons d'injection optionnels `MENU_TEMPLATE`/`MENU_MAX_HEIGHT`, fournis uniquement par `TaOverlayService.openMenu()` (donc par `ta-overlay-panel`). Sans eux, le message de repli censé s'afficher (« Ceci est le template par defaut... ») ne s'affiche jamais : il est écrit dans un `<ng-template>` sans directive structurelle ni `ngTemplateOutlet` qui l'active, donc jamais instancié (vérifié dans `default-panel.component.html`). L'entrée `template` déclarée par la classe n'est elle non plus jamais lue par le template du composant (vérifié) : lui donner une valeur ne changerait rien à ce qui s'affiche.",
 };

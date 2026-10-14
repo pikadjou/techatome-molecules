@@ -15,7 +15,7 @@ export interface Address {
 @Component({
   selector: "ta-address",
   templateUrl: "./address.component.html",
-  styleUrls: ["./address.component.scss"],
+  styleUrl: "./address.component.scss",
   standalone: true,
 })
 export class AddressComponent {

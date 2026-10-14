@@ -5,7 +5,7 @@ import { RichParagraphText } from "../../../services/dto/types/rich-text";
 @Component({
   selector: "ta-rich-paragraph-text",
   templateUrl: "./text.component.html",
-  styleUrls: ["./text.component.scss"],
+  styleUrl: "./text.component.scss",
   standalone: true,
 })
 export class TextComponent {

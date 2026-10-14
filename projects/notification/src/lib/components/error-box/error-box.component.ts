@@ -11,7 +11,7 @@ import { LAZY_SERVICE_TOKEN } from '../../services/notification.service';
 @Component({
   selector: 'ta-error-box',
   templateUrl: './error-box.component.html',
-  styleUrls: ['./error-box.component.scss'],
+  styleUrl: './error-box.component.scss',
   standalone: true,
   imports: [ButtonComponent, ExpandableTextComponent, JsonPipe, TaModalComponent, TextComponent, TitleComponent],
 })

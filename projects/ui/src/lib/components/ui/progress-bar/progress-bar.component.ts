@@ -7,7 +7,7 @@ export type ProgressBarTone = 'brand' | 'accent' | 'highlight' | 'success' | 'wa
 @Component({
   selector: 'ta-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss'],
+  styleUrl: './progress-bar.component.scss',
   standalone: true,
   imports: [NgClass],
 })

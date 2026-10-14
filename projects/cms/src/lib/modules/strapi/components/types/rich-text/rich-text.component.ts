@@ -12,7 +12,7 @@ import { TextComponent } from "../text/text.component";
 @Component({
   selector: "ta-rich-text",
   templateUrl: "./rich-text.component.html",
-  styleUrls: ["./rich-text.component.scss"],
+  styleUrl: "./rich-text.component.scss",
   standalone: true,
   imports: [
     NgTemplateOutlet,

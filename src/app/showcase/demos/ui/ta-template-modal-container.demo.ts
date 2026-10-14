@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, signal, TemplateRef, ViewChild } from "@angular/core";
 
-import { ButtonComponent, LayoutModalComponent, ModalStyle, TemplateModalContainer, TextComponent } from "@ta/ui";
+import { ButtonComponent, LayoutModalComponent, ModalStyle, TemplateModalContainerComponent, TextComponent } from "@ta/ui";
 
 import { ComponentDemo } from "../../demo.types";
 
 @Component({
   standalone: true,
   selector: "app-ex-ta-template-modal-container-working",
-  imports: [TemplateModalContainer, LayoutModalComponent, ButtonComponent, TextComponent],
+  imports: [TemplateModalContainerComponent, LayoutModalComponent, ButtonComponent, TextComponent],
   template: `
     <div class="flex-row g-space-sm">
       <ta-button type="secondary" size="small" (action)="this.open('classic')">classic (medium)</ta-button>

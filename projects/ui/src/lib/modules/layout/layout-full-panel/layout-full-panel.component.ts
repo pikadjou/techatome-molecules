@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -11,7 +11,7 @@ import { TaTranslationUI } from '../../../translation.service';
 @Component({
   selector: 'ta-layout-full-panel',
   templateUrl: './layout-full-panel.component.html',
-  styleUrls: ['./layout-full-panel.component.scss'],
+  styleUrl: './layout-full-panel.component.scss',
   standalone: true,
   imports: [FontIconComponent, TranslateModule, TitleComponent],
 })
@@ -19,8 +19,7 @@ export class LayoutFullPanelComponent extends TaBaseComponent {
   width = input<string>('400px');
   title = input<string>('');
 
-  @Output()
-  closeEvent = new EventEmitter();
+  closeEvent = output<void>();
 
   constructor() {
     super();

@@ -14,7 +14,7 @@ import { ErrorBoxModal } from '../../error-box/error-box.component';
 @Component({
   selector: 'ta-notification-inline',
   templateUrl: './notification-inline.component.html',
-  styleUrls: ['./notification-inline.component.scss'],
+  styleUrl: './notification-inline.component.scss',
   standalone: true,
   imports: [ErrorBoxModal, FontIconComponent, LinkComponent, NgClass, TranslateModule],
 })

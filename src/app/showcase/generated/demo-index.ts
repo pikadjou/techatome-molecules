@@ -1106,7 +1106,7 @@ export const DEMO_INDEX: Record<string, DemoIndexEntry> = {
   "ta-google-maps": {
     "examples": [],
     "notRenderable": true,
-    "summary": "Carte Google Maps avec marqueurs groupés, fenêtre d'info et tracé d'itinéraire via l'API Routes ; ne déclare aucun input."
+    "summary": "Carte Google Maps avec marqueurs groupés (`markers`), fenêtre d'info et tracé d'itinéraire via l'API Routes (`routePoints`)."
   },
   "ta-grid": {
     "examples": [

@@ -5,21 +5,21 @@ import {
   input,
   OnChanges,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from "@angular/core";
 import { MatDrawer, MatDrawerContainer } from "@angular/material/sidenav";
 
 @Component({
   selector: "ta-layout-with-panel",
   templateUrl: "./layout-with-panel.component.html",
-  styleUrls: ["./layout-with-panel.component.scss"],
+  styleUrl: "./layout-with-panel.component.scss",
   standalone: true,
   imports: [NgClass, MatDrawer, MatDrawerContainer],
 })
 export class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
   open = input.required<boolean>();
 
-  @ViewChild("drawer") drawer: MatDrawer | null = null;
+  drawer = viewChild<MatDrawer>("drawer");
 
   constructor() {}
 
@@ -32,9 +32,9 @@ export class LayoutWithPanelComponent implements OnChanges, AfterViewInit {
 
   public manageDrawer() {
     if (this.open() === true) {
-      this.drawer?.open();
+      this.drawer()?.open();
     } else {
-      this.drawer?.close();
+      this.drawer()?.close();
     }
   }
 }

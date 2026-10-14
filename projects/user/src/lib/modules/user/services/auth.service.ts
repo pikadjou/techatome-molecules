@@ -32,11 +32,13 @@ export abstract class TaAuthService extends TaBaseService {
   constructor(apiRoutes?: MappingApiType) {
     super(apiRoutes);
     this.isLoading$.next(true);
-    this.user$
-      .pipe(
-        filter(user => !!user),
-        switchMap(() => this.fetchUserProfile$())
-      )
-      .subscribe();
+    this._registerSubscription(
+      this.user$
+        .pipe(
+          filter(user => !!user),
+          switchMap(() => this.fetchUserProfile$())
+        )
+        .subscribe()
+    );
   }
 }

@@ -3,7 +3,7 @@
   "analytics": true,
   "pluginsConfig": {
     "@nx/js": {
-      "//": "Le plugin @nx/js est requis par `nx release version`. Mais il déduit AUSSI le graphe de projets des imports du code, ce qui fait remonter un import circulaire réel — `services/src/lib/services/network.service.ts` importe @ta/notification, alors que notification -> ui -> services — sous forme de cycle dans le graphe de tâches, ce qui bloque tout build. On revient donc au graphe déduit des seuls package.json, qui est acyclique. À remettre à true une fois cet import résolu dans le code : @ta/services ne déclare d'ailleurs pas @ta/notification dans ses dépendances.",
+      "//": "Le plugin @nx/js est requis par `nx release version`. Mais il déduit AUSSI le graphe de projets des imports du code, stories comprises : les stories de @ta/ui importent @ta/menu alors que menu -> ui, ce qui remonterait comme cycle dans le graphe de tâches et bloquerait tout build. On reste donc sur le graphe déduit des seuls package.json (acyclique, chaque lib déclarant ses @ta/*). Le cycle des sources (ui -> services -> notification -> ui) a été cassé le 2026-10-13 en déplaçant TaSharedMenuService dans @ta/utils ; il reste à sortir @ta/menu des stories de @ta/ui avant de remettre analyzeSourceFiles à true.",
       "analyzeSourceFiles": false
     }
   },

@@ -1,4 +1,4 @@
-import { Cms, cmsProps } from '@lib/cms/modules/strapi/services/dto/cms';
+import { cmsProps } from '@lib/cms/modules/strapi/services/dto/cms';
 
 describe('Cms DTO', () => {
   it('should have cmsProps GraphSchema defined', () => {

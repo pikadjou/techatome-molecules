@@ -14,7 +14,7 @@ type PageNumber = {
 @Component({
   selector: 'ta-grid-pagination',
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss'],
+  styleUrl: './pagination.component.scss',
   standalone: true,
   imports: [ButtonComponent, TextComponent, TranslatePipe],
 })

@@ -12,7 +12,7 @@ export interface SwiperData {
   selector: 'ta-swiper',
   standalone: true,
   templateUrl: './swiper.component.html',
-  styleUrls: ['./swiper.component.scss'],
+  styleUrl: './swiper.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule],

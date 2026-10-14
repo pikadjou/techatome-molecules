@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { TaSharedMenuService } from '@ta/services';
+import { TaSharedMenuService } from '@ta/utils';
 
 import { LayoutWithBottomNavComponent } from '@lib/ui/modules/layout/with-bottom-nav/layout-with-bottom-nav.component';
 

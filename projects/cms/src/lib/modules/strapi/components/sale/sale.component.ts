@@ -2,17 +2,16 @@ import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import {
   Component,
-  Inject,
   OnInit,
-  Optional,
   output,
+  inject,
 } from "@angular/core";
 
 import { filter, of } from "rxjs";
 
 import { ToggleComponent } from "@ta/form-input";
 import { InputCheckBox } from "@ta/form-model";
-import { TENANT_CONFIG_TOKEN, TenantConfig } from "@ta/server";
+import { TENANT_CONFIG_TOKEN } from "@ta/server";
 import { EmptyComponent, ErrorComponent, LoaderComponent } from "@ta/ui";
 import { TaBaseComponent, isNonNullable } from "@ta/utils";
 
@@ -22,7 +21,7 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
 @Component({
   selector: "ta-sale",
   templateUrl: "./sale.component.html",
-  styleUrls: ["./sale.component.scss"],
+  styleUrl: "./sale.component.scss",
   standalone: true,
   imports: [
     AsyncPipe,
@@ -36,22 +35,22 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
 export class SaleComponent extends TaBaseComponent implements OnInit {
   acceptation = output<boolean>();
 
+  public readonly saleService = inject(TaSaleService);
+  private readonly _tenantConfig = inject(TENANT_CONFIG_TOKEN, { optional: true });
+
   public checkbox = new InputCheckBox({
     label: "strapi.sale.cguAcceptation",
     toggle: true,
   });
   get content$() {
-    if (!this.tenantConfig.tenantId) {
+    if (!this._tenantConfig?.tenantId) {
       return of();
     }
     return this.saleService.saleContents.get$(
-      this.tenantConfig.tenantId?.toString()
+      this._tenantConfig?.tenantId?.toString()
     );
   }
-  constructor(
-    public saleService: TaSaleService,
-    @Optional() @Inject(TENANT_CONFIG_TOKEN) private tenantConfig: TenantConfig
-  ) {
+  constructor() {
     super();
 
     this.checkbox.createFormControl();
@@ -63,7 +62,7 @@ export class SaleComponent extends TaBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const tenantId = this.tenantConfig.tenantId ?? 0;
+    const tenantId = this._tenantConfig?.tenantId ?? 0;
 
     this.requestState.asked();
     this._registerSubscription(

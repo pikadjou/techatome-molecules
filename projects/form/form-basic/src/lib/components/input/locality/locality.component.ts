@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
 import { TouchedChangeEvent } from '@angular/forms';
 
 import { distinctUntilChanged, filter, of, switchMap, tap } from 'rxjs';
@@ -27,16 +27,15 @@ type LocalityValue = AddressLocality | AddressLocality[] | null;
   imports: [InputChoicesComponent, TextBoxComponent],
   selector: 'ta-input-locality',
   standalone: true,
-  styleUrls: ['./locality.component.scss'],
+  styleUrl: './locality.component.scss',
   templateUrl: './locality.component.html',
 })
 export class InputLocalityComponent
   extends TaAbstractInputComponent<InputLocality, LocalityValue>
   implements OnInit, OnDestroy
 {
-  @ViewChild(InputChoicesComponent) private _choicesRef?: InputChoicesComponent;
-  @ViewChild('localityItemTpl', { static: true })
-  private _localityItemTpl!: TemplateRef<any>;
+  private readonly _choicesRef = viewChild(InputChoicesComponent);
+  private readonly _localityItemTpl = viewChild.required<TemplateRef<unknown>>('localityItemTpl');
 
   /** `false` tant que le pays courant n'a pas de liste : on bascule en saisie libre. */
   public readonly available = signal(true);
@@ -70,7 +69,7 @@ export class InputLocalityComponent
       validators: this.input.validators,
       withSearch: true,
     });
-    this.choicesInput.choiceTemplate = { one: this._localityItemTpl };
+    this.choicesInput.choiceTemplate = { one: this._localityItemTpl() };
     this.zipCodeInput = new InputTextBox({
       disabled: this.input.disabled,
       key: `${this.input.key}_zipCode`,
@@ -115,7 +114,7 @@ export class InputLocalityComponent
           this._localityMap = new Map(localities.map(locality => [InputLocality.localityId(locality), locality]));
           this.available.set(localities.length > 0);
           this._applyValueToFields();
-          this._choicesRef?.refresh();
+          this._choicesRef()?.refresh();
         })
     );
   }

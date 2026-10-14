@@ -32,7 +32,7 @@ class RequestMapCore {
   }
 
   private _getConfigById(id: string): IRequestMap | null {
-    if (this.mappingApi.hasOwnProperty(id)) {
+    if (Object.prototype.hasOwnProperty.call(this.mappingApi, id)) {
       return this.mappingApi[id];
     }
     Logger.LogError("No Api Configuration found for: ", id);
@@ -41,12 +41,12 @@ class RequestMapCore {
 
   private _formatUrl(serverUrl: string, url: string, request: Request): string {
     return url.replace(/{(\w+)}/g, function (match, string) {
-      if (request.urlData !== null && request.urlData.hasOwnProperty(string)) {
+      if (request.urlData !== null && Object.prototype.hasOwnProperty.call(request.urlData, string)) {
         return request.urlData[string];
       }
       if (
         request.BrutContent !== null &&
-        request.BrutContent.hasOwnProperty(string)
+        Object.prototype.hasOwnProperty.call(request.BrutContent, string)
       ) {
         return request.BrutContent[string];
       }

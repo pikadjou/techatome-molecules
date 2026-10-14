@@ -3,20 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-import { AppPicturesService } from '@lib/files-basic/services/files/pictures.service';
+import { TaPicturesService } from '@lib/files-basic/services/files/pictures.service';
 
-describe('AppPicturesService', () => {
-  let service: AppPicturesService;
+describe('TaPicturesService', () => {
+  let service: TaPicturesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        AppPicturesService,
+        TaPicturesService,
       ],
     });
-    service = TestBed.inject(AppPicturesService);
+    service = TestBed.inject(TaPicturesService);
   });
 
   it('should be created', () => {

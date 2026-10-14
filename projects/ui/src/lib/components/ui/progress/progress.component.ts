@@ -6,7 +6,7 @@ import { ColorType, TaSizes } from '@ta/styles';
 @Component({
   selector: 'ta-progress',
   templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.scss'],
+  styleUrl: './progress.component.scss',
   standalone: true,
   imports: [NgClass],
 })

@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 import { TaDeviceNetworkService } from "@ta/capacitor";
 import { ENotificationCode, TaNotificationService } from "@ta/notification";
@@ -6,14 +7,14 @@ import { ENotificationCode, TaNotificationService } from "@ta/notification";
 @Injectable({
   providedIn: "root",
 })
-export class NetworkService {
-  constructor(
-    private _notificationService: TaNotificationService,
-    private _deviceNetworkService: TaDeviceNetworkService
-  ) {
-    this._deviceNetworkService.isConnected$.subscribe((isConnected) =>
-      this._displayNotification(isConnected)
-    );
+export class TaNetworkService {
+  private readonly _notificationService = inject(TaNotificationService);
+  private readonly _deviceNetworkService = inject(TaDeviceNetworkService);
+
+  constructor() {
+    this._deviceNetworkService.isConnected$
+      .pipe(takeUntilDestroyed())
+      .subscribe((isConnected) => this._displayNotification(isConnected));
   }
 
   private _displayNotification(isConnected: boolean): void {

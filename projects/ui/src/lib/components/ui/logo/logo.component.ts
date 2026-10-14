@@ -3,7 +3,7 @@ import { Component, input } from "@angular/core";
 @Component({
   selector: "ta-logo",
   templateUrl: "./logo.component.html",
-  styleUrls: ["./logo.component.scss"],
+  styleUrl: "./logo.component.scss",
   standalone: true,
 })
 export class LogoComponent {

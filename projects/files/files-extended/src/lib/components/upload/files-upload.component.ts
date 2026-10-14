@@ -15,7 +15,7 @@ export type Feature = "take-pic" | "upload-pic" | "upload-file";
 @Component({
   selector: "ta-files-upload",
   templateUrl: "./files-upload.component.html",
-  styleUrls: ["./files-upload.component.scss"],
+  styleUrl: "./files-upload.component.scss",
   standalone: true,
   imports: [ActionButtonComponent, ButtonComponent],
 })

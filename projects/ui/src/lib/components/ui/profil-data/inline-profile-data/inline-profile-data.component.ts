@@ -9,7 +9,7 @@ import { IProfileData } from "../IProfileData";
 @Component({
   selector: "ta-inline-profile-data",
   templateUrl: "./inline-profile-data.component.html",
-  styleUrls: ["./inline-profile-data.component.scss"],
+  styleUrl: "./inline-profile-data.component.scss",
   standalone: true,
   imports: [UserLogoComponent],
 })

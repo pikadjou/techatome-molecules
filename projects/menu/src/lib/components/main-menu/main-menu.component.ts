@@ -3,9 +3,8 @@ import { Component, TemplateRef, inject, input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { FontIconComponent } from '@ta/icons';
-import { TaSharedMenuService } from '@ta/services';
 import { LogoComponent } from '@ta/ui';
-import { TaBaseComponent } from '@ta/utils';
+import { TaBaseComponent, TaSharedMenuService } from '@ta/utils';
 
 import { Menu } from '../../models/menu/menu';
 import { MenuComponent } from '../menu/menu.component';
@@ -16,7 +15,7 @@ export type MainMenuTone = 'surface' | 'brand';
 @Component({
   selector: 'ta-main-menu',
   templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.scss'],
+  styleUrl: './main-menu.component.scss',
   standalone: true,
   imports: [NgClass, LogoComponent, MenuComponent, MatExpansionModule, NgTemplateOutlet, FontIconComponent],
 })

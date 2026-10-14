@@ -17,7 +17,7 @@ import { UploadDocumentData } from "./upload-document-data";
 @Injectable({
   providedIn: "root",
 })
-export class UploadDocumentFormService {
+export class TaUploadDocumentFormService {
   constructor() {}
 
   public getGroupForm(data: UploadDocumentData): InputBase<any>[] {
@@ -53,3 +53,6 @@ export class UploadDocumentFormService {
     ];
   }
 }
+
+/** @deprecated utiliser TaUploadDocumentFormService */
+export { TaUploadDocumentFormService as UploadDocumentFormService };

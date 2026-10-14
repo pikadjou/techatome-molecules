@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ElementRef } from '@angular/core';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TaTranslationService } from '@ta/translation';
 import { TaDocumentsService } from '@ta/services';
 
-import { EditorInputComponent, EditorInputSavedData } from '@lib/wysiswyg/modules/wysiswyg/components/input/input.component';
+import { EditorInputComponent } from '@lib/wysiswyg/modules/wysiswyg/components/input/input.component';
 
 describe('EditorInputComponent', () => {
   let component: EditorInputComponent;

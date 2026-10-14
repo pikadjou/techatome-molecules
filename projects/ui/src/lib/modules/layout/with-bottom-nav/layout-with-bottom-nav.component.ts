@@ -4,19 +4,18 @@ import {
   Component,
   ElementRef,
   input,
-  ViewChild,
   inject,
+  viewChild,
 } from "@angular/core";
 
 import { combineLatest, map, startWith } from "rxjs";
 
-import { TaSharedMenuService } from "@ta/services";
-import { TaBaseComponent } from "@ta/utils";
+import { TaBaseComponent, TaSharedMenuService } from "@ta/utils";
 
 @Component({
   selector: "ta-layout-with-bottom-nav",
   templateUrl: "./layout-with-bottom-nav.component.html",
-  styleUrls: ["./layout-with-bottom-nav.component.scss"],
+  styleUrl: "./layout-with-bottom-nav.component.scss",
   standalone: true,
   imports: [AsyncPipe],
 })
@@ -26,11 +25,8 @@ export class LayoutWithBottomNavComponent
 {
   type = input.required<string>();
 
-  @ViewChild("bottomNavContainer")
-  private _bottomNav!: ElementRef<HTMLDivElement>;
-
-  @ViewChild("bottomLayoutContainer")
-  private _layoutContent!: ElementRef<HTMLDivElement>;
+  private readonly _bottomNav = viewChild.required<ElementRef<HTMLDivElement>>("bottomNavContainer");
+  private readonly _layoutContent = viewChild.required<ElementRef<HTMLDivElement>>("bottomLayoutContainer");
 
   private _sharedMenu = inject(TaSharedMenuService);
 
@@ -49,14 +45,14 @@ export class LayoutWithBottomNavComponent
     super();
   }
   ngAfterViewChecked(): void {
-    const clientHeight = this._bottomNav.nativeElement.clientHeight;
-    const clientWidth = this._bottomNav.nativeElement.clientWidth;
+    const clientHeight = this._bottomNav().nativeElement.clientHeight;
+    const clientWidth = this._bottomNav().nativeElement.clientWidth;
 
-    this._layoutContent.nativeElement.setAttribute(
+    this._layoutContent().nativeElement.setAttribute(
       "style",
       `padding-bottom: ${clientHeight + 10}px`
     );
-    this._layoutContent.nativeElement.setAttribute(
+    this._layoutContent().nativeElement.setAttribute(
       "style",
       `width: ${window.screen.width - clientWidth}px`
     );

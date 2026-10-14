@@ -8,7 +8,7 @@ import { Placeholder } from "./config";
 @Component({
   selector: "ta-placeholder",
   templateUrl: "./placeholder.component.html",
-  styleUrls: ["./placeholder.component.scss"],
+  styleUrl: "./placeholder.component.scss",
   standalone: true,
   imports: [NgClass],
 })

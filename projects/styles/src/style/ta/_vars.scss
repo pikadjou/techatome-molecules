@@ -1070,6 +1070,41 @@ $components: map.deep-merge(
       // Styles de base .text - utilise les mixins fonts existants
        // Les tailles sont gérées par les mixins fonts.fontSizeBody(),,
     ),
+    // Boutons de marque : couleurs imposées par les marques, hors palette du thème.
+    brand-button: (
+      color: map.get($neutral, white),
+      disabled: (
+        background: #f0f0f0,
+        color: #a0a0a0,
+        logo: #d0d0d0,
+      ),
+      whatsapp: (
+        background: #25d366,
+        hover: #20bd5a,
+        active: #1da851,
+      ),
+      messenger: (
+        background: #0099ff,
+        gradient-start: #a033ff,
+        gradient-end: #0099ff,
+      ),
+      itsme: (
+        background: #ff4612,
+        hover: #e63e10,
+        active: #cc370e,
+      ),
+      veriff: (
+        background: #28a745,
+        hover: #218838,
+        active: #1e7e34,
+        icon: #14e5c5,
+      ),
+      share: (
+        background: #6c757d,
+        hover: #5a6268,
+        active: #4e555b,
+      ),
+    ),
     toggle-card: (
       // Styles de base .toggle-card
       padding: map.get($space, lg),

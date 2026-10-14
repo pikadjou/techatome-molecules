@@ -14,7 +14,7 @@ export interface UserLogoData {
 @Component({
   selector: 'ta-user-logo',
   templateUrl: './user-logo.component.html',
-  styleUrls: ['./user-logo.component.scss'],
+  styleUrl: './user-logo.component.scss',
   standalone: true,
   imports: [NgStyle, FontIconComponent, TrigramComponent],
 })

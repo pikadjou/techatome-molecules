@@ -22,7 +22,7 @@ export interface BottomSheetTemplateBasicParams {
 @Component({
   selector: "ta-bottom-sheet-template-basic",
   templateUrl: "./bottom-sheet-template-basic.component.html",
-  styleUrls: ["./bottom-sheet-template-basic.component.scss"],
+  styleUrl: "./bottom-sheet-template-basic.component.scss",
   standalone: true,
   imports: [
     NgClass,

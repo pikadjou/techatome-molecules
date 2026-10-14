@@ -1,4 +1,3 @@
-import { phoneValidator } from '../../validators/phone.validator';
 import { InputBase } from './base';
 import { IInputTextBox } from './textbox';
 

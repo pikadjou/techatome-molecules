@@ -14,7 +14,7 @@ import { TypedMessageComponent } from "../typed-message/typed-message.component"
 @Component({
   selector: "ta-picture-info-message",
   templateUrl: "./picture-info-message.component.html",
-  styleUrls: ["./picture-info-message.component.scss"],
+  styleUrl: "./picture-info-message.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,

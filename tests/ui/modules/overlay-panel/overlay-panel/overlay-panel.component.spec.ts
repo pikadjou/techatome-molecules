@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { OverlayService } from '@lib/ui/modules/overlay-panel/overlay.service';
+import { TaOverlayService } from '@lib/ui/modules/overlay-panel/overlay.service';
 import { TaOverlayPanelComponent } from '@lib/ui/modules/overlay-panel/overlay-panel/overlay-panel.component';
 
 describe('TaOverlayPanelComponent', () => {
   let component: TaOverlayPanelComponent;
   let fixture: ComponentFixture<TaOverlayPanelComponent>;
-  let mockOverlayService: jasmine.SpyObj<OverlayService>;
+  let mockOverlayService: jasmine.SpyObj<TaOverlayService>;
 
   beforeEach(async () => {
-    mockOverlayService = jasmine.createSpyObj('OverlayService', ['openMenu', 'closeMenu'], {
+    mockOverlayService = jasmine.createSpyObj('TaOverlayService', ['openMenu', 'closeMenu'], {
       onClose$: { subscribe: jasmine.createSpy('subscribe').and.callFake((cb: any) => {
         return { unsubscribe: jasmine.createSpy('unsubscribe') };
       })},
@@ -20,7 +20,7 @@ describe('TaOverlayPanelComponent', () => {
       imports: [TaOverlayPanelComponent],
       providers: [
         provideRouter([]),
-        { provide: OverlayService, useValue: mockOverlayService },
+        { provide: TaOverlayService, useValue: mockOverlayService },
       ],
     }).compileComponents();
 

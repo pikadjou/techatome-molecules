@@ -14,7 +14,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
 @Component({
   selector: 'ta-loader',
   templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.scss'],
+  styleUrl: './loader.component.scss',
   standalone: true,
   imports: [NgClass, MatProgressSpinnerModule, PlaceholderComponent, TranslatePipe],
 })

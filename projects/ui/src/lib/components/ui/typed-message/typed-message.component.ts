@@ -10,7 +10,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-typed-message",
   templateUrl: "./typed-message.component.html",
-  styleUrls: ["./typed-message.component.scss"],
+  styleUrl: "./typed-message.component.scss",
   standalone: true,
   imports: [FontIconComponent, TranslateModule],
 })

@@ -5,7 +5,7 @@ import {
   ModalParameter,
   TaModalComponent,
   TaOverlayPanelComponent,
-  TemplateModalContainer,
+  TemplateModalContainerComponent,
   ValidationModal,
 } from '@ta/ui';
 import { ModalState, TaTestIdDirective } from '@ta/utils';
@@ -21,7 +21,7 @@ import { ModalState, TaTestIdDirective } from '@ta/utils';
     LayoutModalComponent,
     TaModalComponent,
     TaOverlayPanelComponent,
-    TemplateModalContainer,
+    TemplateModalContainerComponent,
     ValidationModal,
     TaTestIdDirective,
   ],

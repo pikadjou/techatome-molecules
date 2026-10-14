@@ -1,6 +1,6 @@
 declare var google: any;
 
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
 import { TouchedChangeEvent, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -39,15 +39,15 @@ const DEFAULT_COUNTRY = 'BE';
   ],
   selector: 'ta-input-address',
   standalone: true,
-  styleUrls: ['./address.component.scss'],
+  styleUrl: './address.component.scss',
   templateUrl: './address.component.html',
 })
 export class InputAddressComponent
   extends TaAbstractInputComponent<InputAddress>
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild('googleSearchInput') googleSearchInput?: ElementRef<HTMLInputElement>;
-  @ViewChild('countryItemTpl', { static: true }) private _countryItemTpl!: TemplateRef<any>;
+  googleSearchInput = viewChild<ElementRef<HTMLInputElement>>('googleSearchInput');
+  private readonly _countryItemTpl = viewChild.required<TemplateRef<unknown>>('countryItemTpl');
 
   // La recherche Google n'est affichée que si l'API Maps/Places a bien été
   // injectée dans l'application (via provideGoogleMaps()).
@@ -112,7 +112,7 @@ export class InputAddressComponent
     }
     this.searchEnabled = this._isGoogleAvailable() && !this.input.disabled;
     // Rendu d'une option (le composant gère la boucle et l'empilement vertical).
-    this.countryInput.choiceTemplate = { one: this._countryItemTpl };
+    this.countryInput.choiceTemplate = { one: this._countryItemTpl() };
     this.countryInput.options$ = of(
       getCountryList(this._translate.currentLang, this.input.priorityCountries).map(c => ({
         data: c,
@@ -133,7 +133,7 @@ export class InputAddressComponent
   public override ngAfterViewInit() {
     super.ngAfterViewInit();
     if (this.searchEnabled) {
-      this._bindAutocomplete(this.googleSearchInput?.nativeElement);
+      this._bindAutocomplete(this.googleSearchInput()?.nativeElement);
     }
     // Les contrôles des sous-champs n'existent qu'une fois la vue construite : sans ce calcul,
     // une adresse vide passait pour valide jusqu'à la première saisie. Hors du cycle courant
@@ -263,8 +263,9 @@ export class InputAddressComponent
       zipCode: getComponent('postal_code'),
     });
     this._updateValueFromInputs();
-    if (this.googleSearchInput?.nativeElement) {
-      this.googleSearchInput.nativeElement.value = '';
+    const searchInput = this.googleSearchInput()?.nativeElement;
+    if (searchInput) {
+      searchInput.value = '';
     }
   }
 

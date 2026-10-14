@@ -20,7 +20,7 @@ import { TaTranslationCore } from '../../../translation.service';
 @Component({
   selector: 'ta-filter-container',
   templateUrl: './filter-container.component.html',
-  styleUrls: ['./filter-container.component.scss'],
+  styleUrl: './filter-container.component.scss',
   standalone: true,
   imports: [
     FontIconComponent,

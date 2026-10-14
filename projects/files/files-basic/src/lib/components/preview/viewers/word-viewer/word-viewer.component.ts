@@ -10,7 +10,7 @@ import { PreviewDocumentDto } from '../../type';
 @Component({
   selector: 'ta-word-viewer',
   templateUrl: './word-viewer.component.html',
-  styleUrls: ['./word-viewer.component.scss'],
+  styleUrl: './word-viewer.component.scss',
   standalone: true,
   imports: [NgxDocViewerModule, LoaderComponent],
 })

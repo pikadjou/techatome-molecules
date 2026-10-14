@@ -16,7 +16,7 @@ import { ToastComponent } from '../toast/toast.component';
 @Component({
   selector: 'ta-pwa',
   templateUrl: './pwa.component.html',
-  styleUrls: ['./pwa.component.scss'],
+  styleUrl: './pwa.component.scss',
   standalone: true,
   imports: [TranslateModule, LinkComponent, TitleComponent, ButtonComponent, LogoComponent, ToastComponent],
 })

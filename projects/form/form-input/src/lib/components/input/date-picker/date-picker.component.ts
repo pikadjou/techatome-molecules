@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import {
   MatDatepicker,
@@ -18,7 +18,7 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 @Component({
   selector: "ta-input-date-picker",
   templateUrl: "./date-picker.component.html",
-  styleUrls: ["./date-picker.component.scss"],
+  styleUrl: "./date-picker.component.scss",
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -29,7 +29,7 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
   ],
 })
 export class DatePickerComponent extends TaAbstractInputComponent<InputDatePicker> {
-  @ViewChild("picker") picker!: MatDatepicker<any>;
+  picker = viewChild.required<MatDatepicker<any>>("picker");
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),

@@ -11,7 +11,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-ui-profile-display",
   templateUrl: "./ui-profile-display.component.html",
-  styleUrls: ["./ui-profile-display.component.scss"],
+  styleUrl: "./ui-profile-display.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,

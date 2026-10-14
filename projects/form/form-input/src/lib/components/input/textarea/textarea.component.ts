@@ -9,7 +9,7 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 @Component({
   selector: "ta-input-textarea",
   templateUrl: "./textarea.component.html",
-  styleUrls: ["./textarea.component.scss"],
+  styleUrl: "./textarea.component.scss",
   standalone: true,
   imports: [InputLayoutComponent, ReactiveFormsModule],
 })

@@ -9,7 +9,7 @@ import { TaTranslationUI } from '../../../translation.service';
 @Component({
   selector: 'ta-time-ago',
   templateUrl: './time-ago.component.html',
-  styleUrls: ['./time-ago.component.scss'],
+  styleUrl: './time-ago.component.scss',
   standalone: true,
   imports: [TranslateModule, DatePipe],
 })

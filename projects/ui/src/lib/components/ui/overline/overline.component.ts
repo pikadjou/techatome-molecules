@@ -7,7 +7,7 @@ export type OverlineTone = 'muted' | 'accent' | 'brand' | 'invert' | 'highlight'
 @Component({
   selector: 'ta-overline',
   templateUrl: './overline.component.html',
-  styleUrls: ['./overline.component.scss'],
+  styleUrl: './overline.component.scss',
   standalone: true,
   imports: [NgClass],
 })

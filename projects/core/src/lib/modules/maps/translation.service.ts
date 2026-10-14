@@ -5,7 +5,7 @@ import { TaLazyTranslationService } from "@ta/translation";
 @Injectable({
   providedIn: "root",
 })
-export class TaTranslationMAps extends TaLazyTranslationService {
+export class TaTranslationMaps extends TaLazyTranslationService {
   constructor() {
     super("maps");
   }

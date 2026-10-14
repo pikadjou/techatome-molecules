@@ -2,7 +2,6 @@ import {
   ActiveFilter,
   ColMetaData,
   Filter,
-  GridOptions,
   ParameterType,
   Preset,
   Sort,

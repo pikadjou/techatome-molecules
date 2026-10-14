@@ -4,7 +4,6 @@ import { TextComponent, TitleComponent } from "@ta/ui";
 import {
   FileSizePipe,
   JoinPipe,
-  PluralTranslatePipe,
   SafePipe,
   StopPropagationDirective,
 } from "@ta/utils";
@@ -13,7 +12,6 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
 
 @Component({
   standalone: true,
-  selector: "",
   imports: [
     FileSizePipe,
     JoinPipe,

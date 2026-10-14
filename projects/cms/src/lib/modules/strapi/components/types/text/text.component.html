@@ -1,7 +1,7 @@
 <span
-  [class.is-bold]="text().bold"
-  [class.is-underline]="text().underline"
-  [class.is-italic]="text().italic"
+  [class.is-bold]="this.text().bold"
+  [class.is-underline]="this.text().underline"
+  [class.is-italic]="this.text().italic"
 >
-  {{ text().text }}
+  {{ this.text().text }}
 </span>

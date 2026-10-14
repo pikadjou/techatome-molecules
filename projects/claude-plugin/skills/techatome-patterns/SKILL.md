@@ -454,7 +454,7 @@ export class ViewPage extends BasePage implements AfterViewInit {
 
   // 5. Services privés
   private readonly _tasksService = inject(AppTasksService);
-  private readonly _readonlyContextService = inject(ReadOnlyContextService);
+  private readonly _readonlyContextService = inject(TaReadOnlyContextService);
 
   // 3. Readonly public
   readonly sharedService = inject(taSharedCommunicationsService);

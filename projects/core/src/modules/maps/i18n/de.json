@@ -3,5 +3,9 @@
   "noResults": "Keine Ergebnisse gefunden",
   "markers": "Markierungen",
   "zoom.in": "Vergrößern",
-  "zoom.out": "Verkleinern"
+  "zoom.out": "Verkleinern",
+  "route.summary": "Routenübersicht",
+  "route.details": "Routendetails",
+  "route.distance": "Entfernung",
+  "route.duration": "Geschätzte Dauer"
 }

@@ -12,7 +12,7 @@ import { TaTranslationUI } from "../../../../translation.service";
 @Component({
   selector: "ta-progress-bar-data",
   templateUrl: "./progress-bar-data.component.html",
-  styleUrls: ["./progress-bar-data.component.scss"],
+  styleUrl: "./progress-bar-data.component.scss",
   standalone: true,
   imports: [
     NgClass,

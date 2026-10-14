@@ -13,7 +13,7 @@
       [ngClass]="{ show: this.isOpen }"
     >
       @if (this.isFontIcon(action)) {
-      <ta-font-icon [name]="getFontIcon(action)"></ta-font-icon>
+      <ta-font-icon [name]="this.getFontIcon(action)"></ta-font-icon>
       } @else if (this.isLocalIcon(action)) {
       <ta-local-icon [type]="action.icon"></ta-local-icon>
       }

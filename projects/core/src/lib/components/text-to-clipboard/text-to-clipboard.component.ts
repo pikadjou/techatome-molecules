@@ -8,7 +8,7 @@ import { TaBaseComponent, copyTextToClipboard } from "@ta/utils";
 @Component({
   selector: "ta-text-to-clipboard",
   templateUrl: "./text-to-clipboard.component.html",
-  styleUrls: ["./text-to-clipboard.component.scss"],
+  styleUrl: "./text-to-clipboard.component.scss",
   standalone: true,
   imports: [FontIconComponent],
 })

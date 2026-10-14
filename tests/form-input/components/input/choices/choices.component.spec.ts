@@ -79,8 +79,8 @@ describe('InputChoicesComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    component.overlayPanelRef = { close: jasmine.createSpy('close') } as any;
-    component.focusedElement = { nativeElement: { click: jasmine.createSpy('click') } } as any;
+    spyOn(component, 'overlayPanelRef').and.returnValue({ close: jasmine.createSpy('close') } as any);
+    spyOn(component, 'focusedElement').and.returnValue({ nativeElement: { click: jasmine.createSpy('click') } } as any);
 
     component.select({ id: '2' });
     expect(singleInput.value).toEqual(['2']);
@@ -95,8 +95,8 @@ describe('InputChoicesComponent', () => {
 
   it('should clear selection', () => {
     inputModel.value = ['1', '2'];
-    component.overlayPanelRef = { close: jasmine.createSpy('close') } as any;
-    component.focusedElement = { nativeElement: { click: jasmine.createSpy('click') } } as any;
+    spyOn(component, 'overlayPanelRef').and.returnValue({ close: jasmine.createSpy('close') } as any);
+    spyOn(component, 'focusedElement').and.returnValue({ nativeElement: { click: jasmine.createSpy('click') } } as any);
     component.clear();
     expect(inputModel.formControl?.value).toEqual([]);
   });

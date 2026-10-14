@@ -9,7 +9,7 @@ import { UserLogoComponent } from "../user-logo/user-logo.component";
 @Component({
   selector: "ta-users-list",
   templateUrl: "./users-list.component.html",
-  styleUrls: ["./users-list.component.scss"],
+  styleUrl: "./users-list.component.scss",
   standalone: true,
   imports: [AsyncPipe, UserLogoComponent],
 })

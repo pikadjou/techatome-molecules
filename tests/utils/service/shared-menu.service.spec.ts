@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TaSharedMenuService } from '@lib/services/services/menu/menu.service';
+import { TaSharedMenuService } from '@lib/utils/service/shared-menu.service';
 
 describe('TaSharedMenuService', () => {
   let service: TaSharedMenuService;

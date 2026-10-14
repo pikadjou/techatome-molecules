@@ -66,7 +66,7 @@ Format : nom (`Class/Function`) — description courte. Le fichier de référenc
 
 ### Services (`references/utils/services.md`)
 
-- `ReadOnlyContextService` — gestion du contexte lecture seule global.
+- `TaReadOnlyContextService` — gestion du contexte lecture seule global.
 
 ### Fonctions utilitaires (`references/utils/functions.md`)
 

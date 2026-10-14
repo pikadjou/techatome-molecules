@@ -18,11 +18,11 @@ import { TaGridFormComponent } from '../form/form.component';
 @Component({
   selector: 'ta-grid-filters-panel',
   templateUrl: './filters-panel.component.html',
-  styleUrls: ['./filters-panel.component.scss'],
+  styleUrl: './filters-panel.component.scss',
   standalone: true,
   imports: [TaGridFormComponent, ButtonComponent, LayoutFullPanelComponent, TranslatePipe, PluralTranslatePipe],
 })
-export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
+export class TaGridFiltersPanelComponent extends TaAbstractGridComponent<unknown> {
   closeEvent = output<void>();
 
   public resultCount(): number {
@@ -38,9 +38,9 @@ export class TaGridFiltersPanel extends TaAbstractGridComponent<unknown> {
 @Component({
   selector: 'ta-grid-control',
   templateUrl: './control.component.html',
-  styleUrls: ['./control.component.scss'],
+  styleUrl: './control.component.scss',
   standalone: true,
-  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaGridFiltersPanel, TranslatePipe],
+  imports: [AsyncPipe, FontIconComponent, ButtonComponent, TaOverlayPanelComponent, TaGridFiltersPanelComponent, TranslatePipe],
 })
 export class TaGridControlComponent extends TaAbstractGridComponent<any> implements OnInit {
   show = input<{
@@ -175,3 +175,6 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     );
   }
 }
+
+/** @deprecated utiliser TaGridFiltersPanelComponent */
+export { TaGridFiltersPanelComponent as TaGridFiltersPanel };

@@ -14,7 +14,7 @@ export type ProgressCircleTrack = 'default' | 'invert';
 @Component({
   selector: 'ta-progress-circle',
   templateUrl: './progress-circle.component.html',
-  styleUrls: ['./progress-circle.component.scss'],
+  styleUrl: './progress-circle.component.scss',
   standalone: true,
   imports: [TranslateModule, DecimalPipe],
   host: {

@@ -64,7 +64,7 @@ describe('DropdownComponent', () => {
   });
 
   it('should select a value for single-select dropdown', () => {
-    component.overlayPanelRef = { close: jasmine.createSpy('close') } as any;
+    spyOn(component, 'overlayPanelRef').and.returnValue({ close: jasmine.createSpy('close') } as any);
     component.onMenuSelect('2');
     expect(inputModel.value).toBe('2');
   });

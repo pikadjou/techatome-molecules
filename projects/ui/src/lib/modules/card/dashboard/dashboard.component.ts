@@ -8,7 +8,7 @@ import { CardContentComponent } from "../content/card-content.component";
 @Component({
   selector: "ta-dashboard-card",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.scss"],
+  styleUrl: "./dashboard.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,

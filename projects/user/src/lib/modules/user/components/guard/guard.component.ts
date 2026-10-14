@@ -14,7 +14,7 @@ import { Level, TaPermissionsService } from '../../services/permissions.service'
 @Component({
   selector: 'ta-guard',
   templateUrl: './guard.component.html',
-  styleUrls: ['./guard.component.scss'],
+  styleUrl: './guard.component.scss',
   standalone: true,
   imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe],
 })

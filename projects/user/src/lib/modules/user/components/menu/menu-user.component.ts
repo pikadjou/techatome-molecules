@@ -16,7 +16,7 @@ import { TaPermissionsService } from "../../services/permissions.service";
 @Component({
   selector: "ta-user-menu",
   templateUrl: "./menu-user.component.html",
-  styleUrls: ["./menu-user.component.scss"],
+  styleUrl: "./menu-user.component.scss",
   standalone: true,
   imports: [
     AsyncPipe,

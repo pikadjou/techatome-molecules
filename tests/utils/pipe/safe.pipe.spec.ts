@@ -10,7 +10,7 @@ describe('SafePipe', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     sanitizer = TestBed.inject(DomSanitizer);
-    pipe = new SafePipe(sanitizer);
+    pipe = TestBed.runInInjectionContext(() => new SafePipe());
   });
 
   it('should create an instance', () => {

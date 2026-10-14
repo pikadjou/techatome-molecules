@@ -15,7 +15,7 @@ import { FileCardComponent } from "./card/file/file-card.component";
 @Component({
   selector: "ta-files-list",
   templateUrl: "./files-list.component.html",
-  styleUrls: ["./files-list.component.scss"],
+  styleUrl: "./files-list.component.scss",
   standalone: true,
   imports: [
     EmptyComponent,

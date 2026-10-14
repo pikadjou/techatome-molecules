@@ -20,7 +20,7 @@ const OPERATOR_SYMBOLS: Partial<Record<FilterType, string>> = {
 @Component({
   selector: 'ta-grid-tags',
   templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss'],
+  styleUrl: './tags.component.scss',
   standalone: true,
   imports: [TranslatePipe, PluralTranslatePipe, BadgeComponent, TextComponent, ButtonComponent],
 })

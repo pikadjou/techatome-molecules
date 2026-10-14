@@ -18,7 +18,7 @@ import { FormLabelComponent } from "../../label/label.component";
 @Component({
   selector: "ta-input-images",
   templateUrl: "./input-images.component.html",
-  styleUrls: ["./input-images.component.scss"],
+  styleUrl: "./input-images.component.scss",
   standalone: true,
   imports: [
     ButtonComponent,

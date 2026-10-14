@@ -6,3 +6,8 @@ src/app/showcase/generated/
 # Sorties de build des librairies : locale (.build) et versionnée par la CI (dist).
 **/.build/
 **/dist/
+
+# Outillage local des assistants, hors périmètre du code.
+.superpowers/
+claude-script/
+.claude/

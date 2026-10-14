@@ -9,7 +9,7 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 @Component({
   selector: "ta-input-slider",
   templateUrl: "./slider.component.html",
-  styleUrls: ["./slider.component.scss"],
+  styleUrl: "./slider.component.scss",
   standalone: true,
   imports: [InputLayoutComponent, ReactiveFormsModule],
 })

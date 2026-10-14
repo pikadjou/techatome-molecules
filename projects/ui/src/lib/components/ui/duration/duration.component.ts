@@ -3,6 +3,7 @@ import { Component, input, OnInit } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { Duration, intervalToDuration } from "date-fns";
 
+import { Logger } from "@ta/server";
 import { PluralTranslatePipe } from "@ta/utils";
 
 import { TaTranslationUI } from "../../../translation.service";
@@ -10,7 +11,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-duration",
   templateUrl: "./duration.component.html",
-  styleUrls: ["./duration.component.scss"],
+  styleUrl: "./duration.component.scss",
   standalone: true,
   imports: [TranslateModule, PluralTranslatePipe],
 })
@@ -33,10 +34,10 @@ export class DurationComponent implements OnInit {
           end: new Date(this.endDate()),
         });
       } catch (error) {
-        console.error("Invalid date format:", error);
+        Logger.LogError("Invalid date format:", error);
       }
     } else {
-      console.error("startDate or endDate is missing");
+      Logger.LogError("startDate or endDate is missing");
     }
   }
 }

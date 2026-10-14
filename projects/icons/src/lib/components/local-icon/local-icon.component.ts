@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, input } from "@angular/core";
+import { Component, input, inject } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
 import { TaSizes } from "@ta/styles";
@@ -12,7 +12,7 @@ import { TaIconType, TaIconsService } from "../../services/icons.service";
 @Component({
   selector: "ta-local-icon",
   templateUrl: "./local-icon.component.html",
-  styleUrls: ["./local-icon.component.scss"],
+  styleUrl: "./local-icon.component.scss",
   standalone: true,
   imports: [NgClass],
 })
@@ -32,10 +32,8 @@ export class LocalIconComponent {
    */
   public rotation = input<boolean>(false);
 
-  constructor(
-    private _iconService: TaIconsService,
-    private _sanitizer: DomSanitizer
-  ) {}
+  private readonly _iconService = inject(TaIconsService);
+  private readonly _sanitizer = inject(DomSanitizer);
 
   public getSvgIcon() {
     return this._sanitizer.bypassSecurityTrustHtml(

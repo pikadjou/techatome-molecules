@@ -6,7 +6,7 @@ import { TaSizes } from "@ta/styles";
 @Component({
   selector: "ta-notification-badge",
   templateUrl: "./notification-badge.component.html",
-  styleUrls: ["./notification-badge.component.scss"],
+  styleUrl: "./notification-badge.component.scss",
   standalone: true,
   imports: [NgClass],
 })

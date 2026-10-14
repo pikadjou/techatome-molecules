@@ -44,7 +44,7 @@ type EditorToolbarEntry<T> = {
 @Component({
   selector: 'ta-cms-editor-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
+  styleUrl: './toolbar.component.scss',
   standalone: true,
   // SVG injecté par `innerHTML`, hors encapsulation : règles préfixées par le sélecteur du composant.
   encapsulation: ViewEncapsulation.None,

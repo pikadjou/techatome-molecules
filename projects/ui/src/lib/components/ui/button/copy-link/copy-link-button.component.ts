@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { FontIconComponent } from "@ta/icons";
 import { TaSizes, TaState } from "@ta/styles";
@@ -8,7 +8,7 @@ import { StopPropagationDirective } from "@ta/utils";
 @Component({
   selector: "ta-copy-link-button",
   templateUrl: "./copy-link-button.component.html",
-  styleUrls: ["./copy-link-button.component.scss"],
+  styleUrl: "./copy-link-button.component.scss",
   standalone: true,
   imports: [NgClass, FontIconComponent, StopPropagationDirective],
 })
@@ -33,8 +33,7 @@ export class CopyLinkButtonComponent {
   /**
    * Event emitted when button is clicked (after copy)
    */
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 
   constructor() {}
 

@@ -9,7 +9,7 @@ import { MenuItemComponent } from "./item/menu-item.component";
 @Component({
   selector: "ta-menu",
   templateUrl: "./menu.component.html",
-  styleUrls: ["./menu.component.scss"],
+  styleUrl: "./menu.component.scss",
   standalone: true,
   imports: [NgClass, AsyncPipe, MenuItemComponent],
 })

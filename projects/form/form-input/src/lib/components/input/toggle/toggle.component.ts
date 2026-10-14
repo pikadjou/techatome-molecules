@@ -10,7 +10,7 @@ import { FormLabelComponent } from '../../label/label.component';
 @Component({
   selector: 'ta-input-toggle',
   templateUrl: './toggle.component.html',
-  styleUrls: ['./toggle.component.scss'],
+  styleUrl: './toggle.component.scss',
   standalone: true,
   imports: [FormLabelComponent, ReactiveFormsModule, TranslatePipe],
 })

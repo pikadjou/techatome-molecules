@@ -6,7 +6,6 @@ import { PageLayoutComponent } from "../../layout/page-layout.component";
 
 @Component({
   standalone: true,
-  selector: "",
   imports: [PageLayoutComponent, TitleComponent, TextComponent],
   templateUrl: "./theme.component.html",
   styleUrl: "./theme.component.scss",

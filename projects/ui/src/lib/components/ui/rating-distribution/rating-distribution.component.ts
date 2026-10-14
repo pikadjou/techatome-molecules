@@ -14,7 +14,7 @@ export type RatingDistributionStep = {
 @Component({
   selector: 'ta-rating-distribution',
   templateUrl: './rating-distribution.component.html',
-  styleUrls: ['./rating-distribution.component.scss'],
+  styleUrl: './rating-distribution.component.scss',
   standalone: true,
   imports: [FontIconComponent, ProgressBarComponent],
 })

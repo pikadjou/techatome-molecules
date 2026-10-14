@@ -8,7 +8,7 @@ export type DataGridOrientation = 'row' | 'stack' | 'fact';
 @Component({
   selector: 'ta-data-grid',
   templateUrl: './data-grid.component.html',
-  styleUrls: ['./data-grid.component.scss'],
+  styleUrl: './data-grid.component.scss',
   standalone: true,
   imports: [NgClass],
 })

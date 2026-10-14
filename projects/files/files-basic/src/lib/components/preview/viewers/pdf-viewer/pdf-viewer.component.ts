@@ -10,7 +10,7 @@ import { PreviewDocumentDto } from '../../type';
 @Component({
   selector: 'ta-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss'],
+  styleUrl: './pdf-viewer.component.scss',
   standalone: true,
   imports: [NgxDocViewerModule, LoaderComponent],
 })

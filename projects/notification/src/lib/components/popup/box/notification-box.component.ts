@@ -15,7 +15,7 @@ const AUTO_DISMISS_DELAY = 3000;
 @Component({
   selector: "ta-notification-box",
   templateUrl: "./notification-box.component.html",
-  styleUrls: ["./notification-box.component.scss"],
+  styleUrl: "./notification-box.component.scss",
   standalone: true,
   imports: [NotificationInlineComponent],
 })

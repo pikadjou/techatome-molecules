@@ -2,9 +2,9 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
   inject,
   output,
+  viewChild,
 } from "@angular/core";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 
@@ -34,7 +34,7 @@ type InProgressFile = {
 @Component({
   selector: "ta-input-upload",
   templateUrl: "./upload.component.html",
-  styleUrls: ["./upload.component.scss"],
+  styleUrl: "./upload.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,
@@ -53,7 +53,7 @@ export class UploadComponent
 {
   uploadStatusChanged = output<boolean>();
 
-  @ViewChild("fileDropRef", { static: false }) fileDropEl!: ElementRef;
+  fileDropEl = viewChild<ElementRef<HTMLElement>>("fileDropRef");
 
   private readonly _documentsService = inject(TaDocumentsService);
   private _invervalId: number;

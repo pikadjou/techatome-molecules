@@ -42,7 +42,7 @@ Format : `selector` (`Class`) — description courte. Le fichier de référence 
 
 ### Services
 
-- `UploadDocumentFormService` — service de formulaire d'upload de documents.
+- `TaUploadDocumentFormService` — service de formulaire d'upload de documents.
 
 ## Différence avec @ta/files-basic
 

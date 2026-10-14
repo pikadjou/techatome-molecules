@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
 import { TaNotificationService, ENotificationCode } from '@ta/notification';
 import { TaDeviceNetworkService } from '@ta/capacitor';
 
-import { NetworkService } from '@lib/services/services/network.service';
+import { TaNetworkService } from '@lib/services/services/network.service';
 
-describe('NetworkService', () => {
-  let service: NetworkService;
+describe('TaNetworkService', () => {
+  let service: TaNetworkService;
   let mockNotificationService: jasmine.SpyObj<TaNotificationService>;
   let mockDeviceNetworkService: { isConnected$: BehaviorSubject<boolean> };
 
@@ -20,12 +20,12 @@ describe('NetworkService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        NetworkService,
+        TaNetworkService,
         { provide: TaNotificationService, useValue: mockNotificationService },
         { provide: TaDeviceNetworkService, useValue: mockDeviceNetworkService },
       ],
     });
-    service = TestBed.inject(NetworkService);
+    service = TestBed.inject(TaNetworkService);
   });
 
   it('should be created', () => {

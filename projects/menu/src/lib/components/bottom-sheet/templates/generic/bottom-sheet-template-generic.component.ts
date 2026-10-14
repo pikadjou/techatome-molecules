@@ -11,7 +11,7 @@ export type BottomSheetTemplateGenericParams<T = any> = {
 @Component({
   selector: "ta-bottom-sheet-template-generic",
   templateUrl: "./bottom-sheet-template-generic.component.html",
-  styleUrls: ["./bottom-sheet-template-generic.component.scss"],
+  styleUrl: "./bottom-sheet-template-generic.component.scss",
   standalone: true,
   imports: [NgStyle],
 })

@@ -6,7 +6,7 @@ import { ColorType, TaSizes } from '@ta/styles';
 @Component({
   selector: 'ta-text',
   templateUrl: './text.component.html',
-  styleUrls: ['./text.component.scss'],
+  styleUrl: './text.component.scss',
   standalone: true,
   imports: [NgClass],
 })

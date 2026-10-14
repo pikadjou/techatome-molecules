@@ -1,10 +1,10 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 @Component({
   selector: "ta-toggle-card",
   templateUrl: "./toggle-card.component.html",
-  styleUrls: ["./toggle-card.component.scss"],
+  styleUrl: "./toggle-card.component.scss",
   standalone: true,
   imports: [NgClass],
 })
@@ -19,8 +19,7 @@ export class ToggleCardComponent {
 
   disabled = input<boolean>(false);
 
-  @Output()
-  toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+  toggle = output<boolean>();
 
   public onToggle() {
     if (!this.disabled()) {

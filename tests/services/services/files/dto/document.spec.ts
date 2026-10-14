@@ -1,4 +1,4 @@
-import { documentProps, DocumentDto } from '@lib/services/services/files/dto/document';
+import { documentProps } from '@lib/services/services/files/dto/document';
 
 describe('DocumentDto GraphSchema', () => {
   it('should have documentProps with all expected fields', () => {

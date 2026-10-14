@@ -10,7 +10,7 @@ import { TaTranslationUI } from "../../../translation.service";
 @Component({
   selector: "ta-contact-information",
   templateUrl: "./contact-information.component.html",
-  styleUrls: ["./contact-information.component.scss"],
+  styleUrl: "./contact-information.component.scss",
   standalone: true,
   imports: [FontIconComponent, LocalIconComponent, TranslateModule],
 })

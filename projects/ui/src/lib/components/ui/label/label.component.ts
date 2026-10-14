@@ -9,7 +9,7 @@ export type LabelType = ColorType | 'neutral';
 @Component({
   selector: 'ta-label',
   templateUrl: './label.component.html',
-  styleUrls: ['./label.component.scss'],
+  styleUrl: './label.component.scss',
   standalone: true,
   imports: [FontIconComponent, NgClass],
 })

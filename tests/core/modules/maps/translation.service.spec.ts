@@ -5,10 +5,10 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 
 import { TRANSLATION_SOURCE_CONFIG, TranslationSourceType } from '@ta/translation';
 
-import { TaTranslationMAps } from '@lib/core/modules/maps/translation.service';
+import { TaTranslationMaps } from '@lib/core/modules/maps/translation.service';
 
-describe('TaTranslationMAps', () => {
-  let service: TaTranslationMAps;
+describe('TaTranslationMaps', () => {
+  let service: TaTranslationMaps;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,14 +19,14 @@ describe('TaTranslationMAps', () => {
         }),
       ],
       providers: [
-        TaTranslationMAps,
+        TaTranslationMaps,
         {
           provide: TRANSLATION_SOURCE_CONFIG,
           useValue: { type: TranslationSourceType.FILE, filePath: '/assets/i18n/' },
         },
       ],
     });
-    service = TestBed.inject(TaTranslationMAps);
+    service = TestBed.inject(TaTranslationMaps);
   });
 
   it('should be created', () => {

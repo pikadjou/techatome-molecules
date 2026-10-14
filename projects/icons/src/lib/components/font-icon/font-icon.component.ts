@@ -7,7 +7,7 @@ import { TaSizes } from '@ta/styles';
 @Component({
   selector: 'ta-font-icon',
   templateUrl: './font-icon.component.html',
-  styleUrls: ['./font-icon.component.scss'],
+  styleUrl: './font-icon.component.scss',
   standalone: true,
   imports: [NgClass, MatIconModule],
 })

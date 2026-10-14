@@ -1,4 +1,4 @@
-# `UploadDocumentFormService`
+# `TaUploadDocumentFormService`
 **Quand l'utiliser** : Génère le formulaire d'upload de document (type de document + description).
 **Méthodes** :
 - `getGroupForm(data: UploadDocumentData): InputBase<any>[]` — retourne un `InputPanel` avec `InputDropdown` (type) + `InputTextarea` (description)

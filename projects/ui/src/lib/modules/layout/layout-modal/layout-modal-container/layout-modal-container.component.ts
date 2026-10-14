@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from "@angular/common";
-import { Component, EventEmitter, Output, TemplateRef, input } from "@angular/core";
+import { Component, TemplateRef, input, output } from "@angular/core";
 
 import { Observable } from "rxjs";
 
@@ -33,13 +33,13 @@ export interface TemplateModalContainerData {
   standalone: true,
   imports: [TaModalComponent, NgTemplateOutlet],
 })
-export class TemplateModalContainer extends TaBaseComponent {
+export class TemplateModalContainerComponent extends TaBaseComponent {
   open = input.required<boolean>();
   template = input<TemplateRef<any> | null>(null);
   style = input<ModalStyle>("full");
   askClosing$ = input<Observable<null> | undefined>(undefined);
 
-  @Output() closeEvent = new EventEmitter<void>();
+  closeEvent = output<void>();
 
   public modalSize() {
     const s = this.style();
@@ -54,3 +54,6 @@ export class TemplateModalContainer extends TaBaseComponent {
     // askClosing$ subscription handled by caller via (closeEvent)
   }
 }
+
+/** @deprecated utiliser TemplateModalContainerComponent */
+export { TemplateModalContainerComponent as TemplateModalContainer };

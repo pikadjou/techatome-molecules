@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { TaState } from "@ta/styles";
 import { StopPropagationDirective } from "@ta/utils";
@@ -7,7 +7,7 @@ import { StopPropagationDirective } from "@ta/utils";
 @Component({
   selector: "ta-veriff-button",
   templateUrl: "./veriff-button.component.html",
-  styleUrls: ["./veriff-button.component.scss"],
+  styleUrl: "./veriff-button.component.scss",
   standalone: true,
   imports: [NgClass, StopPropagationDirective],
 })
@@ -32,8 +32,7 @@ export class VeriffButtonComponent {
   /**
    * Event emitted when button is clicked
    */
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 
   constructor() {}
 

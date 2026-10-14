@@ -7,7 +7,7 @@ import { DepartmentProfessionsComponent } from "./professions/professions.compon
 @Component({
   selector: "ta-departments",
   templateUrl: "./departments.component.html",
-  styleUrls: ["./departments.component.scss"],
+  styleUrl: "./departments.component.scss",
   standalone: true,
   imports: [DepartmentIconListComponent, DepartmentProfessionsComponent],
 })

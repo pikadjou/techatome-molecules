@@ -14,10 +14,8 @@ export default {
   printWidth: 120,
   endOfLine: 'auto',
 
-  // ✅ Empêcher la suppression des types génériques
   proseWrap: 'preserve',
   quoteProps: 'consistent',
-  typescript: true,
 
   // 📌 Ignorer certains fichiers
   overrides: [

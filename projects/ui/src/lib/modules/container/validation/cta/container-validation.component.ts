@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, computed, input, signal } from '@angular/core';
+import { Component, computed, input, signal, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -13,7 +13,7 @@ import { TaModalComponent } from '../../../layout/modal/modal.component';
 @Component({
   selector: 'ta-container-validation',
   templateUrl: './container-validation.component.html',
-  styleUrls: ['./container-validation.component.scss'],
+  styleUrl: './container-validation.component.scss',
   standalone: true,
   imports: [ButtonComponent, TextComponent, TaModalComponent, TranslateModule],
 })
@@ -24,8 +24,7 @@ export class ContainerValidationComponent extends TaBaseComponent {
 
   variant = input<'modal' | 'inline'>('modal');
 
-  @Output()
-  validated = new EventEmitter();
+  validated = output<void>();
 
   public isModalOpen = signal(false);
 

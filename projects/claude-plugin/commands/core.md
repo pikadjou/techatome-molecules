@@ -64,7 +64,7 @@ Format : `selector` (`Class`) — description courte. Le fichier de référence 
 
 - `ta-map` (`MapComponent`) — carte géographique.
 - `provideMap()` — provider pour la carte (à ajouter dans les providers).
-- `provideGoogleMaps()` / `provideGTM()` — providers Google.
+- `provideGoogleMaps({ apiKey })` / `provideGTM()` — providers Google.
 
 ### Services
 

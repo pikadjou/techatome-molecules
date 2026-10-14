@@ -7,4 +7,4 @@
 **Inputs** :
 - `template` : `TemplateRef<any> | undefined`
 
-**Notes** : Reçoit aussi `MENU_TEMPLATE` et `MENU_MAX_HEIGHT` via injection DI (depuis `OverlayService`).
+**Notes** : Reçoit aussi `MENU_TEMPLATE` et `MENU_MAX_HEIGHT` via injection DI (depuis `TaOverlayService`).

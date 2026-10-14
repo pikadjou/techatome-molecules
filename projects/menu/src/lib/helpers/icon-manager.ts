@@ -3,14 +3,14 @@ import { MenuIcon } from "../models/menu/item/icon";
 import { Menu } from "../models/menu/menu";
 
 export const hasFontIcon = (item: Menu | MenuIcon | MenuBase) => {
-  if (item.hasOwnProperty("icon")) {
+  if (Object.prototype.hasOwnProperty.call(item, "icon")) {
     return typeof (<MenuIcon>item).icon === "string";
   }
   return false;
 };
 
 export const hasIconImage = (item: Menu | MenuIcon | MenuBase) => {
-  if (item.hasOwnProperty("icon")) {
+  if (Object.prototype.hasOwnProperty.call(item, "icon")) {
     return typeof (<MenuIcon>item).icon === "number";
   }
   return false;

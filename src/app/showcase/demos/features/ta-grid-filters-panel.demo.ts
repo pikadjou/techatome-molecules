@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
 
-import { ColMetaData, ParameterType, TaGridComponent, TaGridContainerComponent, TaGridFiltersPanel } from "@ta/features";
+import { ColMetaData, ParameterType, TaGridComponent, TaGridContainerComponent, TaGridFiltersPanelComponent } from "@ta/features";
 import { ButtonComponent } from "@ta/ui";
 
 import { ComponentDemo } from "../../demo.types";
@@ -29,7 +29,7 @@ const ORDERS: Order[] = [
 @Component({
   standalone: true,
   selector: "app-ex-ta-grid-filters-panel-open",
-  imports: [ButtonComponent, TaGridComponent, TaGridContainerComponent, TaGridFiltersPanel],
+  imports: [ButtonComponent, TaGridComponent, TaGridContainerComponent, TaGridFiltersPanelComponent],
   template: `
     <ta-grid-container [gridId]="this.gridId" [initialData]="this.orders" [colsMetaData]="this.columns">
       <ta-button (action)="this.isOpen.set(true)">Ouvrir les filtres</ta-button>

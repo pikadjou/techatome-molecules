@@ -22,7 +22,7 @@ interface UserLogoNaming {
 @Component({
   selector: "ta-layout-header-logo",
   templateUrl: "./layout-header-logo.component.html",
-  styleUrls: ["./layout-header-logo.component.scss"],
+  styleUrl: "./layout-header-logo.component.scss",
   standalone: true,
   imports: [NgTemplateOutlet, FontIconComponent, TaModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

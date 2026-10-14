@@ -10,7 +10,7 @@ import { TaBaseComponent } from "@ta/utils";
 @Component({
   selector: "ta-form-panel",
   templateUrl: "./panel.component.html",
-  styleUrls: ["./panel.component.scss"],
+  styleUrl: "./panel.component.scss",
   standalone: true,
   imports: [
     NgClass,

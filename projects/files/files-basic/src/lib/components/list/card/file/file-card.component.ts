@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { FontIconComponent, LocalIconComponent } from "@ta/icons";
 import { TaIconType } from "@ta/icons";
@@ -18,7 +18,7 @@ import { EFileExtension, FileData } from "@ta/utils";
 @Component({
   selector: "ta-file-card",
   templateUrl: "./file-card.component.html",
-  styleUrls: ["./file-card.component.scss"],
+  styleUrl: "./file-card.component.scss",
   standalone: true,
   imports: [
     BadgeComponent,
@@ -37,12 +37,9 @@ import { EFileExtension, FileData } from "@ta/utils";
 export class FileCardComponent {
   file = input.required<FileData>();
 
-  @Output()
-  fileSelected: EventEmitter<FileData> = new EventEmitter<FileData>();
+  fileSelected = output<FileData>();
 
-  @Output()
-  moreInformationSelected: EventEmitter<FileData> =
-    new EventEmitter<FileData>();
+  moreInformationSelected = output<FileData>();
 
   get localIcon() {
     switch (this.file().fileExtension) {

@@ -7,7 +7,7 @@ import { BadgeComponent } from "../../badge/badge.component";
 @Component({
   selector: "ta-department-professions",
   templateUrl: "./professions.component.html",
-  styleUrls: ["./professions.component.scss"],
+  styleUrl: "./professions.component.scss",
   standalone: true,
   imports: [BadgeComponent],
 })

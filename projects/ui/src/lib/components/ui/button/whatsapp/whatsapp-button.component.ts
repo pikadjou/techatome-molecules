@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, EventEmitter, input, Output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 
 import { TaState } from "@ta/styles";
 import { StopPropagationDirective } from "@ta/utils";
@@ -7,7 +7,7 @@ import { StopPropagationDirective } from "@ta/utils";
 @Component({
   selector: "ta-whatsapp-button",
   templateUrl: "./whatsapp-button.component.html",
-  styleUrls: ["./whatsapp-button.component.scss"],
+  styleUrl: "./whatsapp-button.component.scss",
   standalone: true,
   imports: [NgClass, StopPropagationDirective],
 })
@@ -37,8 +37,7 @@ export class WhatsappButtonComponent {
   /**
    * Event emitted when button is clicked
    */
-  @Output()
-  action = new EventEmitter();
+  action = output<void>();
 
   constructor() {}
 

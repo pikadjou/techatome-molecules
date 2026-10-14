@@ -21,7 +21,7 @@ export type PreviewModalDataModal = {
 @Component({
   selector: 'ta-files-preview-modal',
   templateUrl: './preview-modal.component.html',
-  styleUrls: ['./preview-modal.component.scss'],
+  styleUrl: './preview-modal.component.scss',
   standalone: true,
   imports: [
     ExcelViewerComponent,

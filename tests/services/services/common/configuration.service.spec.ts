@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CamConfigurationService } from '@lib/services/services/common/configuration.service';
+import { TaConfigurationService } from '@lib/services/services/common/configuration.service';
 
-describe('CamConfigurationService', () => {
-  let service: CamConfigurationService;
+describe('TaConfigurationService', () => {
+  let service: TaConfigurationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CamConfigurationService],
+      providers: [TaConfigurationService],
     });
-    service = TestBed.inject(CamConfigurationService);
+    service = TestBed.inject(TaConfigurationService);
   });
 
   it('should be created', () => {

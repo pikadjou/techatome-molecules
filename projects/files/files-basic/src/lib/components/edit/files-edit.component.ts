@@ -4,9 +4,9 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
   input,
   output,
+  viewChild,
 } from "@angular/core";
 
 import { NgClass } from "@angular/common";
@@ -28,7 +28,7 @@ type ShapeSelection = "rect" | "triangle" | "circle" | "line" | "";
 @Component({
   selector: "ta-files-edit",
   templateUrl: "./files-edit.component.html",
-  styleUrls: ["./files-edit.component.scss"],
+  styleUrl: "./files-edit.component.scss",
   standalone: true,
   imports: [
     NgClass,
@@ -78,11 +78,8 @@ export class FileEditComponent
 
   public readonly isLight = isLight;
 
-  @ViewChild("containerRef")
-  private _containerRef!: ElementRef<HTMLDivElement>;
-
-  @ViewChild("tuiRef")
-  private _tuiRef!: ElementRef<HTMLDivElement>;
+  private readonly _containerRef = viewChild.required<ElementRef<HTMLDivElement>>("containerRef");
+  private readonly _tuiRef = viewChild.required<ElementRef<HTMLDivElement>>("tuiRef");
   private _canvasSize: { width: number; height: number } = {
     width: 0,
     height: 0,
@@ -238,7 +235,7 @@ export class FileEditComponent
     this.requestState.completed();
   };
   private async _createImageEditor() {
-    this.tuiImageEditor = new ImageEditor(this._tuiRef.nativeElement, {
+    this.tuiImageEditor = new ImageEditor(this._tuiRef().nativeElement, {
       usageStatistics: false,
     });
     const crop = await this.tuiImageEditor.loadImageFromURL(
@@ -248,8 +245,8 @@ export class FileEditComponent
     this._canvasSize = determineNewSize(
       crop.newHeight,
       crop.newWidth,
-      this._containerRef.nativeElement.clientWidth,
-      this._containerRef.nativeElement.clientHeight - 70
+      this._containerRef().nativeElement.clientWidth,
+      this._containerRef().nativeElement.clientHeight - 70
     );
     this.tuiImageEditor.resizeCanvasDimension({
       width: this._canvasSize.width,

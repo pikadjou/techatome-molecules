@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
   output,
-  ViewChild,
+  viewChild,
 } from "@angular/core";
 import { Validators } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
@@ -16,7 +16,7 @@ import { EMPTY, Observable, Subject, delay, merge } from "rxjs";
 import { InputBase } from "@ta/form-model";
 import { TaBaseComponent } from "@ta/utils";
 
-@Component({ template: "" })
+@Component({ standalone: true, template: "" })
 export abstract class TaAbstractInputComponent<
     C extends InputBase<any>,
     V = unknown
@@ -54,8 +54,7 @@ export abstract class TaAbstractInputComponent<
     return this.onFocusObs();
   }
 
-  @ViewChild("focusedElement", { read: ElementRef })
-  focusedElement!: ElementRef;
+  focusedElement = viewChild("focusedElement", { read: ElementRef });
 
   readonly validators = Validators;
 
@@ -80,9 +79,10 @@ export abstract class TaAbstractInputComponent<
         .pipe(delay(1))
         .subscribe({
           next: () => {
-            if (this.focusedElement) {
-              this.focusedElement.nativeElement.click();
-              this.focusedElement.nativeElement.focus();
+            const focused = this.focusedElement();
+            if (focused) {
+              focused.nativeElement.click();
+              focused.nativeElement.focus();
             }
           },
         })

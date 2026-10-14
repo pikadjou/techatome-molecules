@@ -6,7 +6,7 @@ import { Civility } from "@ta/utils";
 @Component({
   selector: "ta-civility",
   templateUrl: "./civility.component.html",
-  styleUrls: ["./civility.component.scss"],
+  styleUrl: "./civility.component.scss",
   standalone: true,
   imports: [MaterialIconComponent],
 })

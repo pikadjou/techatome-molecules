@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnChanges,
@@ -23,8 +22,9 @@ export type Layout = "row" | "column";
 
 @Component({
   selector: "ta-edit-field",
+  host: { "(document:click)": "onDocumentClick($event.target)" },
   templateUrl: "./edit-field.component.html",
-  styleUrls: ["./edit-field.component.scss"],
+  styleUrl: "./edit-field.component.scss",
   standalone: true,
   imports: [
     NgClass,
@@ -53,7 +53,6 @@ export class EditFieldComponent
   readonly renderInput = signal<InputBase<null> | null>(null);
   public editMode = signal(false);
 
-  @HostListener("document:click", ["$event.target"])
   onDocumentClick(targetElement: HTMLElement): void {
     if (!this.editMode()) {
       return;

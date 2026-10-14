@@ -21,7 +21,7 @@ export const getCivilityIcon = (
 };
 
 export const getCivility = (person: { naming: any }): Civility | null => {
-  return person.naming && person.naming.hasOwnProperty("civility")
+  return person.naming && Object.prototype.hasOwnProperty.call(person.naming, "civility")
     ? (person.naming as any).civility
     : null;
 };

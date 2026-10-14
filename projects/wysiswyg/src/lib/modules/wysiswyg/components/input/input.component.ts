@@ -2,14 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
   ViewEncapsulation,
   inject,
   input,
   signal,
+  output,
+  viewChild,
 } from '@angular/core';
 
 import Delimiter from '@editorjs/delimiter';
@@ -71,7 +70,7 @@ const TOOLBAR_BLOCK_CONFIG: {
 @Component({
   selector: 'ta-cms-editor-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  styleUrl: './input.component.scss',
   standalone: true,
   imports: [EditorToolbarComponent],
   // DOM EditorJS hors encapsulation : chaque règle SCSS est préfixée par le sélecteur du composant.
@@ -110,11 +109,9 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
   /** Laisse l'utilisateur régler la hauteur de la zone d'édition. */
   resizable = input<boolean>(true);
 
-  @Output()
-  changed = new EventEmitter<{ blocks: WysiswgBlockData[] }>();
+  changed = output<{ blocks: WysiswgBlockData[] }>();
 
-  @Output()
-  saved = new EventEmitter<EditorInputSavedData>();
+  saved = output<EditorInputSavedData>();
 
   /** Outil du bloc sous le curseur, que la barre met en évidence. */
   public readonly activeTool = signal<string | null>(null);
@@ -138,8 +135,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
   private readonly _documentsService = inject(TaDocumentsService);
   private _saveAfter = false;
 
-  @ViewChild('editorjs', { static: true })
-  editorjs!: ElementRef;
+  editorjs = viewChild.required<ElementRef<HTMLElement>>('editorjs');
 
   public editorInstance: EditorJS | null = null;
   constructor() {
@@ -211,7 +207,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     const tools = this._buildTools(translations);
 
     return new EditorJS({
-      holder: this.editorjs.nativeElement,
+      holder: this.editorjs().nativeElement,
       minHeight: 100,
       data: { blocks: this.initValue() },
       placeholder: this.placeholder() ?? translations['placeholder'],
@@ -338,7 +334,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
 
   /** Relit le bloc courant à chaque clic ou frappe ; `Tab` et `/` sont retenus pour ne pas ouvrir la palette EditorJS. */
   private _trackActiveBlock() {
-    const holder = this.editorjs.nativeElement as HTMLElement;
+    const holder = this.editorjs().nativeElement;
     this._registerSubscription(
       merge(fromEvent(holder, 'click'), fromEvent(holder, 'keyup')).subscribe(() => this._updateActiveTool())
     );
@@ -428,7 +424,7 @@ export class EditorInputComponent extends TaBaseComponent implements OnInit, Aft
     }
 
     const styledSpans = Array.from(
-      this.editorjs.nativeElement.innerHTML.matchAll(/<span class="ce-inline-tool--color__token"(.*?)>/gs)
+      this.editorjs().nativeElement.innerHTML.matchAll(/<span class="ce-inline-tool--color__token"(.*?)>/gs)
     ).map((match: any) => ({
       style: match[1].trim(), // `style`
     }));

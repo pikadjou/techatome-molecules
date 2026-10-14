@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { TranslateService, TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
-import { of } from 'rxjs';
 
 import { TaTranslationRegistryService } from '@lib/translation/services/translation-registry.service';
 import { TRANSLATION_CONFIG, TaTranslationService } from '@lib/translation/services/translation.service';

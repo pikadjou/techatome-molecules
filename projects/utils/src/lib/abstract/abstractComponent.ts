@@ -10,7 +10,7 @@ import { BreakpointDetection } from "../helpers/breakpoints/detection";
 import { RequestState } from "../helpers/request/state";
 import { SubscriberHandler } from "../helpers/subscriber/handler";
 
-@Component({ template: "" })
+@Component({ standalone: true, template: "" })
 export abstract class TaAbstractComponent implements OnDestroy {
   public breakpoints = inject(BreakpointDetection);
   public requestState = new RequestState();

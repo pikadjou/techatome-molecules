@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 
-import { MenuAction } from '@lib/menu/models/menu/item/action';
 import { MenuBase } from '@lib/menu/models/menu/item/base';
 import { MenuIcon } from '@lib/menu/models/menu/item/icon';
 import { Menu } from '@lib/menu/models/menu/menu';

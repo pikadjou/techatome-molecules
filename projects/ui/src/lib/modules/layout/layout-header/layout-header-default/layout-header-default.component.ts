@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Output, TemplateRef, input } from '@angular/core';
+import { Component, TemplateRef, input, output } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,7 +12,7 @@ import { TaTranslationUI } from '../../../../translation.service';
 @Component({
   selector: 'ta-layout-header-default',
   templateUrl: './layout-header-default.component.html',
-  styleUrls: ['./layout-header-default.component.scss'],
+  styleUrl: './layout-header-default.component.scss',
   standalone: true,
   imports: [NgTemplateOutlet, FontIconComponent, TranslateModule, MatMenuModule],
 })
@@ -23,8 +23,7 @@ export class LayoutHeaderDefaultComponent extends TaBaseComponent {
 
   title = input<string | undefined>(undefined);
 
-  @Output()
-  backEvent = new EventEmitter();
+  backEvent = output<void>();
 
   constructor() {
     super();

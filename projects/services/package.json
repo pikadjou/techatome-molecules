@@ -11,6 +11,8 @@
     "@angular/core": "^18.2.13"
   },
   "dependencies": {
+    "@ta/capacitor": "^0.0.0",
+    "@ta/notification": "^0.0.0",
     "@ta/server": "^0.0.0",
     "@ta/utils": "^0.0.0",
     "tslib": "^2.3.0"

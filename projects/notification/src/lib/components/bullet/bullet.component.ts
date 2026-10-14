@@ -11,7 +11,7 @@ import { NotificationFilter } from "../../services/queries";
 @Component({
   selector: "ta-notification-bullet",
   templateUrl: "./bullet.component.html",
-  styleUrls: ["./bullet.component.scss"],
+  styleUrl: "./bullet.component.scss",
   standalone: true,
   imports: [AsyncPipe, TaBulletComponent],
 })

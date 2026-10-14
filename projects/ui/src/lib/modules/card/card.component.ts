@@ -6,7 +6,7 @@ import { NewComponent } from '../../components/ui/new/new.component';
 @Component({
   selector: 'ta-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss'],
+  styleUrl: './card.component.scss',
   standalone: true,
   imports: [NgClass, NewComponent],
   host: {

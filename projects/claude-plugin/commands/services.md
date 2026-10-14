@@ -38,7 +38,7 @@ Format : nom (`Class`) — description courte. Le fichier de référence est `re
 
 - `TaEnumerationService` (`EnumerationService`) — service de gestion des énumérations avec traduction.
 - `translatedEnumerationHelpers` — helpers pour les énumérations traduites (toDropdownOptions…).
-- `TaSharedMenuService` (`MenuService`) — service de gestion de l'état du menu.
+- `TaSharedMenuService` (`MenuService`) — état du menu ; vit dans `@ta/utils`, réexporté ici.
 - `TaDocumentsService` (`DocumentsService`) — service de gestion des documents.
 - `TaProjectsService` — service de gestion des projets.
 

@@ -14,7 +14,7 @@ const graphEndpoint: GraphEndpoint = {
 @Injectable({
   providedIn: "root",
 })
-export class AppPicturesService extends TaBaseService {
+export class TaPicturesService extends TaBaseService {
   public dashboardByProject = new HandleComplexRequest<Picture[]>();
 
   constructor() {

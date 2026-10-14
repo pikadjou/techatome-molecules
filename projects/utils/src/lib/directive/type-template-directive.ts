@@ -1,11 +1,10 @@
-import { Directive, TemplateRef, input } from "@angular/core";
+import { Directive, TemplateRef, input, inject } from "@angular/core";
 
 @Directive({ selector: "ng-template[typedTemplate]", standalone: true })
 export class TypedTemplateDirective<TypeToken> {
   typedTemplate = input.required<TypeToken>();
 
-  // @ts-ignore
-  constructor(private contentTemplate: TemplateRef<TypeToken>) {}
+  private readonly _contentTemplate = inject<TemplateRef<TypeToken>>(TemplateRef);
 
   static ngTemplateContextGuard<TypeToken>(
     dir: TypedTemplateDirective<TypeToken>,

@@ -1,4 +1,4 @@
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
 
 import intlTelInput from 'intl-tel-input';
@@ -15,12 +15,12 @@ intlTelInput.attachUtils(() => import('intl-tel-input/utils') as any);
 @Component({
   selector: 'ta-input-phone',
   templateUrl: './input-phone.component.html',
-  styleUrls: ['./input-phone.component.scss'],
+  styleUrl: './input-phone.component.scss',
   standalone: true,
   imports: [InputLayoutComponent, LoaderComponent],
 })
 export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
-  @ViewChild('phoneInput', { static: false }) phoneInput!: ElementRef;
+  phoneInput = viewChild.required<ElementRef<HTMLInputElement>>('phoneInput');
 
   public readonly isReady = signal(false);
   private _iti?: ReturnType<typeof intlTelInput>;
@@ -42,7 +42,7 @@ export class InputPhoneComponent extends TaAbstractInputComponent<InputPhone> {
   }
 
   private _initPhoneInput() {
-    this._iti = intlTelInput(this.phoneInput.nativeElement, {
+    this._iti = intlTelInput(this.phoneInput().nativeElement, {
       initialCountry: 'be',
       countryOrder: this.input.preferredCountries as any,
       separateDialCode: true,

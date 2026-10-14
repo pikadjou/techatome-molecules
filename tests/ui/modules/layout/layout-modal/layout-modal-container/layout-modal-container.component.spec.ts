@@ -5,11 +5,11 @@ import { TemplateRef } from '@angular/core';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { TemplateModalContainer, TemplateModalContainerData } from '@lib/ui/modules/layout/layout-modal/layout-modal-container/layout-modal-container.component';
+import { TemplateModalContainerComponent, TemplateModalContainerData } from '@lib/ui/modules/layout/layout-modal/layout-modal-container/layout-modal-container.component';
 
-describe('TemplateModalContainer', () => {
-  let component: TemplateModalContainer;
-  let fixture: ComponentFixture<TemplateModalContainer>;
+describe('TemplateModalContainerComponent', () => {
+  let component: TemplateModalContainerComponent;
+  let fixture: ComponentFixture<TemplateModalContainerComponent>;
   let mockDialogRef: jasmine.SpyObj<MatDialogRef<any>>;
   let mockTemplateRef: jasmine.SpyObj<TemplateRef<any>>;
 
@@ -26,7 +26,7 @@ describe('TemplateModalContainer', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
         }),
-        TemplateModalContainer,
+        TemplateModalContainerComponent,
       ],
       providers: [
         provideRouter([]),
@@ -35,7 +35,7 @@ describe('TemplateModalContainer', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TemplateModalContainer);
+    fixture = TestBed.createComponent(TemplateModalContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

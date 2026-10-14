@@ -49,6 +49,14 @@ export const TA_API: Record<string, TaApiEntry> = {
     ],
     "pkg": "@ta/user"
   },
+  "BreakpointDetection": {
+    "className": "BreakpointDetection",
+    "file": "projects/utils/src/lib/helpers/breakpoints/detection.ts",
+    "id": "BreakpointDetection",
+    "kind": "service",
+    "members": [],
+    "pkg": "@ta/utils"
+  },
   "CacheInterceptor": {
     "className": "CacheInterceptor",
     "file": "projects/server/src/lib/services/server/cacheInterceptor.ts",
@@ -120,37 +128,6 @@ export const TA_API: Record<string, TaApiEntry> = {
     ],
     "pkg": "@ta/utils"
   },
-  "OverlayService": {
-    "className": "OverlayService",
-    "file": "projects/ui/src/lib/modules/overlay-panel/overlay.service.ts",
-    "id": "OverlayService",
-    "kind": "service",
-    "members": [
-      {
-        "kind": "method",
-        "name": "openMenu",
-        "propertyName": "openMenu",
-        "required": false,
-        "type": "(config: OverlayMenuConfig<T>) => void"
-      },
-      {
-        "kind": "method",
-        "name": "closeMenu",
-        "propertyName": "closeMenu",
-        "required": false,
-        "type": "() => void"
-      },
-      {
-        "inheritedFrom": "TaBaseService",
-        "kind": "method",
-        "name": "registerRoutes",
-        "propertyName": "registerRoutes",
-        "required": false,
-        "type": "(routes: { apiRoutes?: MappingApiType; graphEndpoint?: GraphEndpoint }, options?: GraphOptions) => void"
-      }
-    ],
-    "pkg": "@ta/ui"
-  },
   "PluralTranslatePipe": {
     "className": "PluralTranslatePipe",
     "file": "projects/utils/src/lib/pipe/plural.pipe.ts",
@@ -163,22 +140,6 @@ export const TA_API: Record<string, TaApiEntry> = {
         "propertyName": "transform",
         "required": false,
         "type": "(key: string, number: number) => string"
-      }
-    ],
-    "pkg": "@ta/utils"
-  },
-  "ReadOnlyContextService": {
-    "className": "ReadOnlyContextService",
-    "file": "projects/utils/src/lib/service/read-only-context.service.ts",
-    "id": "ReadOnlyContextService",
-    "kind": "service",
-    "members": [
-      {
-        "kind": "method",
-        "name": "setReadonly",
-        "propertyName": "setReadonly",
-        "required": false,
-        "type": "(value: boolean) => void"
       }
     ],
     "pkg": "@ta/utils"
@@ -305,70 +266,6 @@ export const TA_API: Record<string, TaApiEntry> = {
       }
     ],
     "pkg": "@ta/user"
-  },
-  "TaBaseModal": {
-    "className": "TaBaseModal",
-    "doc": "Contenu d'une modale piloté par un `ModalState<T, U>` : entrée `T` lue via `modalState().input()`, résultat `U` rendu par `confirm()`.",
-    "file": "projects/utils/src/lib/abstract/baseModal.ts",
-    "id": "TaBaseModal",
-    "kind": "directive",
-    "members": [
-      {
-        "default": "null",
-        "kind": "input",
-        "name": "modalState",
-        "propertyName": "modalState",
-        "required": false,
-        "type": "ModalState<T, U> | null"
-      },
-      {
-        "kind": "output",
-        "name": "closeEvent",
-        "propertyName": "closeEvent",
-        "required": false,
-        "type": "U"
-      },
-      {
-        "kind": "method",
-        "name": "isOpen",
-        "propertyName": "isOpen",
-        "required": false,
-        "type": "() => boolean"
-      },
-      {
-        "doc": "Ferme avec un résultat : `completed()` sur l'état, puis `closeEvent`.",
-        "kind": "method",
-        "name": "confirm",
-        "propertyName": "confirm",
-        "required": false,
-        "type": "(output: U) => void"
-      },
-      {
-        "doc": "Ferme sans résultat.",
-        "kind": "method",
-        "name": "dismiss",
-        "propertyName": "dismiss",
-        "required": false,
-        "type": "() => void"
-      },
-      {
-        "inheritedFrom": "TaAbstractComponent",
-        "kind": "property",
-        "name": "isMobile",
-        "propertyName": "isMobile",
-        "required": false,
-        "type": "unknown"
-      },
-      {
-        "inheritedFrom": "TaAbstractComponent",
-        "kind": "property",
-        "name": "isDesktop",
-        "propertyName": "isDesktop",
-        "required": false,
-        "type": "unknown"
-      }
-    ],
-    "pkg": "@ta/utils"
   },
   "TaBaseService": {
     "className": "TaBaseService",
@@ -558,11 +455,20 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "(payload: GraphQueryPayload, node: string, context: string) => void"
       },
       {
+        "doc": "`fresh` : la reponse vient du serveur sans passer par le cache, sans pour autant l'invalider — de quoi lire une donnee qui change sans nous (un webhook, l'action d'un autre utilisateur) sans priver les autres ecrans de leur cache.",
         "kind": "method",
         "name": "fetchQueryBuilder",
         "propertyName": "fetchQueryBuilder",
         "required": false,
-        "type": "(payload: GraphPayload, context: string) => void"
+        "type": "(payload: GraphPayload, context: string, options?: { fresh?: boolean }) => void"
+      },
+      {
+        "doc": "Comme `fetchQueryBuilder`, mais la requête reste ouverte : Apollo la rejoue toutes les `pollInterval` millisecondes et chaque réponse est émise, sans passer par le cache. Le flux ne se termine pas de lui-même — c'est à l'appelant de se désabonner quand il a ce qu'il attend.",
+        "kind": "method",
+        "name": "watchQueryBuilder",
+        "propertyName": "watchQueryBuilder",
+        "required": false,
+        "type": "(payload: GraphPayload, context: string, pollInterval: number) => void"
       },
       {
         "kind": "method",
@@ -587,6 +493,80 @@ export const TA_API: Record<string, TaApiEntry> = {
       }
     ],
     "pkg": "@ta/server"
+  },
+  "TaGridInstanceService": {
+    "className": "TaGridInstanceService",
+    "file": "projects/features/src/lib/features/grid/services/grid-instance.service.ts",
+    "id": "TaGridInstanceService",
+    "kind": "service",
+    "members": [
+      {
+        "kind": "method",
+        "name": "create",
+        "propertyName": "create",
+        "required": false,
+        "type": "(key: string) => void"
+      },
+      {
+        "kind": "method",
+        "name": "get",
+        "propertyName": "get",
+        "required": false,
+        "type": "(key: string, create: boolean = false) => TaGridData<T>"
+      },
+      {
+        "kind": "method",
+        "name": "has",
+        "propertyName": "has",
+        "required": false,
+        "type": "(key: string) => void"
+      }
+    ],
+    "pkg": "@ta/features"
+  },
+  "TaGridSessionService": {
+    "className": "TaGridSessionService",
+    "file": "projects/features/src/lib/features/grid/services/grid-session.services.ts",
+    "id": "TaGridSessionService",
+    "kind": "service",
+    "members": [
+      {
+        "kind": "method",
+        "name": "setFilter",
+        "propertyName": "setFilter",
+        "required": false,
+        "type": "(key: string, filter: Filter[]) => void"
+      },
+      {
+        "kind": "method",
+        "name": "getFilter",
+        "propertyName": "getFilter",
+        "required": false,
+        "type": "(key: string) => void"
+      },
+      {
+        "kind": "method",
+        "name": "clearFilter",
+        "propertyName": "clearFilter",
+        "required": false,
+        "type": "(key: string) => void"
+      },
+      {
+        "kind": "method",
+        "name": "isFormOpen",
+        "propertyName": "isFormOpen",
+        "required": false,
+        "type": "(key: string) => boolean"
+      },
+      {
+        "kind": "method",
+        "name": "setFormOpen",
+        "propertyName": "setFormOpen",
+        "required": false,
+        "type": "(key: string, open: boolean) => void"
+      }
+    ],
+    "pkg": "@ta/features"
   },
   "TaIconsService": {
     "className": "TaIconsService",
@@ -626,6 +606,37 @@ export const TA_API: Record<string, TaApiEntry> = {
       }
     ],
     "pkg": "@ta/notification"
+  },
+  "TaOverlayService": {
+    "className": "TaOverlayService",
+    "file": "projects/ui/src/lib/modules/overlay-panel/overlay.service.ts",
+    "id": "TaOverlayService",
+    "kind": "service",
+    "members": [
+      {
+        "kind": "method",
+        "name": "openMenu",
+        "propertyName": "openMenu",
+        "required": false,
+        "type": "(config: OverlayMenuConfig<T>) => void"
+      },
+      {
+        "kind": "method",
+        "name": "closeMenu",
+        "propertyName": "closeMenu",
+        "required": false,
+        "type": "() => void"
+      },
+      {
+        "inheritedFrom": "TaBaseService",
+        "kind": "method",
+        "name": "registerRoutes",
+        "propertyName": "registerRoutes",
+        "required": false,
+        "type": "(routes: { apiRoutes?: MappingApiType; graphEndpoint?: GraphEndpoint }, options?: GraphOptions) => void"
+      }
+    ],
+    "pkg": "@ta/ui"
   },
   "TaPermissionsService": {
     "className": "TaPermissionsService",
@@ -767,6 +778,22 @@ export const TA_API: Record<string, TaApiEntry> = {
     ],
     "pkg": "@ta/capacitor"
   },
+  "TaReadOnlyContextService": {
+    "className": "TaReadOnlyContextService",
+    "file": "projects/utils/src/lib/service/read-only-context.service.ts",
+    "id": "TaReadOnlyContextService",
+    "kind": "service",
+    "members": [
+      {
+        "kind": "method",
+        "name": "setReadonly",
+        "propertyName": "setReadonly",
+        "required": false,
+        "type": "(value: boolean) => void"
+      }
+    ],
+    "pkg": "@ta/utils"
+  },
   "TaServerErrorService": {
     "className": "TaServerErrorService",
     "file": "projects/server/src/lib/services/error.service.ts",
@@ -829,11 +856,11 @@ export const TA_API: Record<string, TaApiEntry> = {
   },
   "TaSharedMenuService": {
     "className": "TaSharedMenuService",
-    "file": "projects/services/src/lib/services/menu/menu.service.ts",
+    "file": "projects/utils/src/lib/service/shared-menu.service.ts",
     "id": "TaSharedMenuService",
     "kind": "service",
     "members": [],
-    "pkg": "@ta/services"
+    "pkg": "@ta/utils"
   },
   "TaStrapiService": {
     "className": "TaStrapiService",
@@ -925,6 +952,22 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "(key: string | string[], interpolateParams?: Object) => void"
       },
       {
+        "doc": "Traduction immédiate ; rend la clé tant que les fichiers ne sont pas chargés.",
+        "kind": "method",
+        "name": "instant",
+        "propertyName": "instant",
+        "required": false,
+        "type": "(key: string | string[], interpolateParams?: Object) => string"
+      },
+      {
+        "doc": "Traduction qui suit les changements de langue.",
+        "kind": "method",
+        "name": "stream",
+        "propertyName": "stream",
+        "required": false,
+        "type": "(key: string | string[], interpolateParams?: Object) => Observable<string>"
+      },
+      {
         "kind": "method",
         "name": "use",
         "propertyName": "use",
@@ -933,6 +976,22 @@ export const TA_API: Record<string, TaApiEntry> = {
       }
     ],
     "pkg": "@ta/translation"
+  },
+  "TaUploadDocumentFormService": {
+    "className": "TaUploadDocumentFormService",
+    "file": "projects/files/files-extended/src/lib/services/document/upload-document-form.service.ts",
+    "id": "TaUploadDocumentFormService",
+    "kind": "service",
+    "members": [
+      {
+        "kind": "method",
+        "name": "getGroupForm",
+        "propertyName": "getGroupForm",
+        "required": false,
+        "type": "(data: UploadDocumentData) => InputBase<any>[]"
+      }
+    ],
+    "pkg": "@ta/files-extended"
   },
   "TaUserService": {
     "className": "TaUserService",
@@ -958,22 +1017,6 @@ export const TA_API: Record<string, TaApiEntry> = {
     ],
     "pkg": "@ta/user"
   },
-  "UploadDocumentFormService": {
-    "className": "UploadDocumentFormService",
-    "file": "projects/files/files-extended/src/lib/services/document/upload-document-form.service.ts",
-    "id": "UploadDocumentFormService",
-    "kind": "service",
-    "members": [
-      {
-        "kind": "method",
-        "name": "getGroupForm",
-        "propertyName": "getGroupForm",
-        "required": false,
-        "type": "(data: UploadDocumentData) => InputBase<any>[]"
-      }
-    ],
-    "pkg": "@ta/files-extended"
-  },
   "[TaOnRender]": {
     "className": "OnRenderDirective",
     "file": "projects/utils/src/lib/directive/on-render.directive.ts",
@@ -993,6 +1036,43 @@ export const TA_API: Record<string, TaApiEntry> = {
         "propertyName": "rendered",
         "required": false,
         "type": "void"
+      }
+    ],
+    "pkg": "@ta/utils"
+  },
+  "[appDnd]": {
+    "className": "DndDirective",
+    "file": "projects/utils/src/lib/directive/dnd.directive.ts",
+    "id": "[appDnd]",
+    "kind": "directive",
+    "members": [
+      {
+        "kind": "output",
+        "name": "fileDropped",
+        "propertyName": "fileDropped",
+        "required": false,
+        "type": "FileList"
+      },
+      {
+        "kind": "method",
+        "name": "onDragOver",
+        "propertyName": "onDragOver",
+        "required": false,
+        "type": "(event: DragEvent) => void"
+      },
+      {
+        "kind": "method",
+        "name": "onDragLeave",
+        "propertyName": "onDragLeave",
+        "required": false,
+        "type": "(event: DragEvent) => void"
+      },
+      {
+        "kind": "method",
+        "name": "onDrop",
+        "propertyName": "onDrop",
+        "required": false,
+        "type": "(event: DragEvent) => void"
       }
     ],
     "pkg": "@ta/utils"
@@ -1527,7 +1607,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "options",
         "propertyName": "options",
         "required": false,
-        "type": "{\n    class?: string;\n    circular?: boolean | 'big' | 'small';\n    square?: boolean | 'big' | 'small';\n    border?: boolean;\n  } | null"
+        "type": "{\r\n    class?: string;\r\n    circular?: boolean | 'big' | 'small';\r\n    square?: boolean | 'big' | 'small';\r\n    border?: boolean;\r\n  } | null"
       },
       {
         "default": "true",
@@ -1669,6 +1749,15 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "shadow",
         "propertyName": "shadow",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Carte en retrait : surface et texte atténués, image désaturée. Pour un élément qui reste listé mais n'est plus actif — il se lit encore, il ne s'impose plus.",
+        "kind": "input",
+        "name": "muted",
+        "propertyName": "muted",
         "required": false,
         "type": "boolean"
       },
@@ -1971,7 +2060,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "setNewValue$",
         "propertyName": "setNewValue$",
         "required": false,
-        "type": "Observable<{\n      blocks: WysiswgBlockData[] | string | null;\n      saveAfter?: boolean;\n    }>"
+        "type": "Observable<{\r\n      blocks: WysiswgBlockData[] | string | null;\r\n      saveAfter?: boolean;\r\n    }>"
       },
       {
         "kind": "input",
@@ -4711,6 +4800,32 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
+        "default": "[]",
+        "doc": "Points affichés sur la carte, regroupés automatiquement.",
+        "kind": "input",
+        "name": "markers",
+        "propertyName": "markers",
+        "required": false,
+        "type": "TaMapMarker[]"
+      },
+      {
+        "default": "[]",
+        "doc": "Étapes de l'itinéraire à tracer (au moins deux points).",
+        "kind": "input",
+        "name": "routePoints",
+        "propertyName": "routePoints",
+        "required": false,
+        "type": "google.maps.LatLngLiteral[]"
+      },
+      {
+        "default": "{ center: { lat: 50, lng: 4 }, zoom: 4 }",
+        "kind": "input",
+        "name": "options",
+        "propertyName": "options",
+        "required": false,
+        "type": "google.maps.MapOptions"
+      },
+      {
         "kind": "method",
         "name": "openInfoWindow",
         "propertyName": "openInfoWindow",
@@ -4784,7 +4899,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "cardTemplate",
         "propertyName": "cardTemplate",
         "required": true,
-        "type": "TemplateRef<{ items: T[]; selectedIds: Set<number> }>"
+        "type": "TemplateRef<{ items: T[]; selectedIds: Set<RowId> }>"
       },
       {
         "default": "false",
@@ -4804,6 +4919,31 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "'comfortable' | 'compact'"
       },
       {
+        "default": "'ui.container.empty.title'",
+        "doc": "Ce que dit la grille quand elle ne ramène rien ; l'action se projette sur `[emptyAction]`.",
+        "kind": "input",
+        "name": "emptyText",
+        "propertyName": "emptyText",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "default": "''",
+        "kind": "input",
+        "name": "emptySubtitle",
+        "propertyName": "emptySubtitle",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "default": "'sentiment_dissatisfied'",
+        "kind": "input",
+        "name": "emptyIcon",
+        "propertyName": "emptyIcon",
+        "required": false,
+        "type": "string"
+      },
+      {
         "kind": "output",
         "name": "rowClicked",
         "propertyName": "rowClicked",
@@ -4818,54 +4958,54 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "T[]"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "rows",
         "propertyName": "rows",
         "required": false,
-        "type": "T[]"
+        "type": "() => T[]"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "sortField",
         "propertyName": "sortField",
         "required": false,
-        "type": "string | null"
+        "type": "() => string | null"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "sortDir",
         "propertyName": "sortDir",
         "required": false,
-        "type": "'asc' | 'desc'"
+        "type": "() => 'asc' | 'desc'"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "isLoading",
         "propertyName": "isLoading",
         "required": false,
-        "type": "boolean"
+        "type": "() => boolean"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "errorMessage",
         "propertyName": "errorMessage",
         "required": false,
-        "type": "string"
+        "type": "() => string"
       },
       {
         "doc": "Largeur d'une ligne d'en-tête de groupe, colonne de sélection comprise.",
-        "kind": "property",
+        "kind": "method",
         "name": "colspan",
         "propertyName": "colspan",
         "required": false,
-        "type": "number"
+        "type": "() => number"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "selectedIds",
         "propertyName": "selectedIds",
         "required": false,
-        "type": "Set<number>"
+        "type": "() => Set<RowId>"
       },
       {
         "kind": "method",
@@ -4934,43 +5074,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5044,6 +5184,39 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "Preset[]"
       },
       {
+        "default": "[]",
+        "doc": "Critères de départ, quand la session n'en a pas retenu pour ce grid.",
+        "kind": "input",
+        "name": "initialFilter",
+        "propertyName": "initialFilter",
+        "required": false,
+        "type": "Filter[]"
+      },
+      {
+        "doc": "Source de données maison, quand la grille ne lit pas un modèle du serveur.",
+        "kind": "input",
+        "name": "dataService",
+        "propertyName": "dataService",
+        "required": false,
+        "type": "IDataService<T>"
+      },
+      {
+        "default": "'page'",
+        "doc": "`cursor` pour une source qui ne sait pas compter : le « voir plus » remplace les numéros de page.",
+        "kind": "input",
+        "name": "pagination",
+        "propertyName": "pagination",
+        "required": false,
+        "type": "PaginationMode"
+      },
+      {
+        "kind": "input",
+        "name": "pageSize",
+        "propertyName": "pageSize",
+        "required": false,
+        "type": "number"
+      },
+      {
         "inheritedFrom": "TaAbstractGridComponent",
         "kind": "input",
         "name": "gridId",
@@ -5053,43 +5226,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5150,91 +5323,91 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
-        "doc": "Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres.",
-        "kind": "property",
-        "name": "activeFiltersCount",
-        "propertyName": "activeFiltersCount",
-        "required": false,
-        "type": "number"
-      },
-      {
         "doc": "Colonnes sur lesquelles un regroupement a du sens.",
-        "kind": "property",
+        "kind": "method",
         "name": "groupableCols",
         "propertyName": "groupableCols",
         "required": false,
-        "type": "{ key: string; label: string }[]"
+        "type": "() => { key: string; label: string }[]"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "hasGroupableCols",
         "propertyName": "hasGroupableCols",
         "required": false,
-        "type": "boolean"
+        "type": "() => boolean"
       },
       {
         "doc": "Colonnes triables, pour les vues sans en-têtes (cartes).",
-        "kind": "property",
+        "kind": "method",
         "name": "sortableCols",
         "propertyName": "sortableCols",
         "required": false,
-        "type": "{ key: string; label: string }[]"
+        "type": "() => { key: string; label: string }[]"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "hasSortableCols",
         "propertyName": "hasSortableCols",
         "required": false,
-        "type": "boolean"
+        "type": "() => boolean"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activeSort",
         "propertyName": "activeSort",
         "required": false,
-        "type": "string | null"
+        "type": "() => string | null"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activeSortDir",
         "propertyName": "activeSortDir",
         "required": false,
-        "type": "'asc' | 'desc'"
+        "type": "() => 'asc' | 'desc'"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activeSortLabel",
         "propertyName": "activeSortLabel",
         "required": false,
-        "type": "string | null"
+        "type": "() => string | null"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activeGroup",
         "propertyName": "activeGroup",
         "required": false,
-        "type": "string | null"
+        "type": "() => string | null"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activeGroupLabel",
         "propertyName": "activeGroupLabel",
         "required": false,
-        "type": "string | null"
+        "type": "() => string | null"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "hasPresets",
         "propertyName": "hasPresets",
         "required": false,
-        "type": "boolean"
+        "type": "() => boolean"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activePresetName",
         "propertyName": "activePresetName",
         "required": false,
-        "type": "string | null"
+        "type": "() => string | null"
+      },
+      {
+        "doc": "Nombre de critères actifs, hors recherche globale — affiché sur le bouton Filtres.",
+        "kind": "method",
+        "name": "activeFiltersCount",
+        "propertyName": "activeFiltersCount",
+        "required": false,
+        "type": "() => number"
       },
       {
         "kind": "method",
@@ -5289,43 +5462,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5379,11 +5552,11 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "string"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "total",
         "propertyName": "total",
         "required": false,
-        "type": "number"
+        "type": "() => number"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
@@ -5395,43 +5568,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5469,7 +5642,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "pkg": "@ta/features"
   },
   "ta-grid-filters-panel": {
-    "className": "TaGridFiltersPanel",
+    "className": "TaGridFiltersPanelComponent",
     "doc": "Panneau latéral des filtres. Un panneau plutôt qu'une modale : les critères restent à côté de la liste, qui se met à jour pendant qu'on les règle.",
     "file": "projects/features/src/lib/features/grid/components/control/control.component.ts",
     "id": "ta-grid-filters-panel",
@@ -5483,11 +5656,11 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "void"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "resultCount",
         "propertyName": "resultCount",
         "required": false,
-        "type": "number"
+        "type": "() => number"
       },
       {
         "doc": "Ne touche qu'aux filtres : le regroupement se pilote depuis ta-grid-control.",
@@ -5507,43 +5680,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5660,43 +5833,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5756,6 +5929,14 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "doc": "Lu sur les critères du grid : ceux restaurés à l'ouverture comptent aussi.",
+        "kind": "method",
+        "name": "hasActiveFilters",
+        "propertyName": "hasActiveFilters",
+        "required": false,
+        "type": "() => boolean"
+      },
+      {
         "kind": "method",
         "name": "applyFilters",
         "propertyName": "applyFilters",
@@ -5779,43 +5960,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5883,43 +6064,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -5963,25 +6144,25 @@ export const TA_API: Record<string, TaApiEntry> = {
     "kind": "component",
     "members": [
       {
-        "kind": "property",
+        "kind": "method",
         "name": "group",
         "propertyName": "group",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "activeFilters",
         "propertyName": "activeFilters",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
-        "kind": "property",
+        "kind": "method",
         "name": "hasActiveFilters",
         "propertyName": "hasActiveFilters",
         "required": false,
-        "type": "boolean"
+        "type": "() => boolean"
       },
       {
         "doc": "Clé de traduction du libellé d'un critère — le champ de recherche n'est pas une colonne.",
@@ -6030,43 +6211,43 @@ export const TA_API: Record<string, TaApiEntry> = {
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "grid",
         "propertyName": "grid",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "isGroup",
         "propertyName": "isGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "data",
         "propertyName": "data",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "dataByGroup",
         "propertyName": "dataByGroup",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaAbstractGridComponent",
-        "kind": "property",
+        "kind": "method",
         "name": "displayType",
         "propertyName": "displayType",
         "required": false,
-        "type": "unknown"
+        "type": "() => void"
       },
       {
         "inheritedFrom": "TaBaseComponent",
@@ -6254,7 +6435,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "userLogo",
         "propertyName": "userLogo",
         "required": false,
-        "type": "{\n    user: UserLogoData;\n    size?: TaSizes;\n  } | null | undefined"
+        "type": "{\r\n    user: UserLogoData;\r\n    size?: TaSizes;\r\n  } | null | undefined"
       }
     ],
     "pkg": "@ta/ui"
@@ -6288,6 +6469,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -6412,6 +6603,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -6507,6 +6708,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -6610,6 +6821,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -6698,6 +6919,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -6797,6 +7028,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -6943,6 +7184,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -7052,6 +7303,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -7169,6 +7430,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -7257,6 +7528,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -7374,6 +7655,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -7476,6 +7767,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -7593,6 +7894,132 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "undefined",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "onFocus",
+        "propertyName": "onFocusObs",
+        "required": false,
+        "type": "Observable<void> | undefined"
+      },
+      {
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "output",
+        "name": "valueChanged",
+        "propertyName": "valueChanged",
+        "required": false,
+        "type": "V"
+      },
+      {
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "method",
+        "name": "onChange",
+        "propertyName": "onChange",
+        "required": false,
+        "type": "(value: V) => void"
+      },
+      {
+        "inheritedFrom": "TaBaseComponent",
+        "kind": "method",
+        "name": "trackById",
+        "propertyName": "trackById",
+        "required": false,
+        "type": "(_: any, item: { id: number | string }) => void"
+      },
+      {
+        "inheritedFrom": "TaBaseComponent",
+        "kind": "method",
+        "name": "trackByKey",
+        "propertyName": "trackByKey",
+        "required": false,
+        "type": "(_: any, item: { key: string }) => void"
+      },
+      {
+        "inheritedFrom": "TaAbstractComponent",
+        "kind": "property",
+        "name": "isMobile",
+        "propertyName": "isMobile",
+        "required": false,
+        "type": "unknown"
+      },
+      {
+        "inheritedFrom": "TaAbstractComponent",
+        "kind": "property",
+        "name": "isDesktop",
+        "propertyName": "isDesktop",
+        "required": false,
+        "type": "unknown"
+      }
+    ],
+    "pkg": "@ta/form-input"
+  },
+  "ta-input-range-slider": {
+    "className": "RangeSliderComponent",
+    "file": "projects/form/form-input/src/lib/components/input/range-slider/range-slider.component.ts",
+    "id": "ta-input-range-slider",
+    "kind": "component",
+    "members": [
+      {
+        "kind": "method",
+        "name": "onFirst",
+        "propertyName": "onFirst",
+        "required": false,
+        "type": "(value: number) => void"
+      },
+      {
+        "kind": "method",
+        "name": "onSecond",
+        "propertyName": "onSecond",
+        "required": false,
+        "type": "(value: number) => void"
+      },
+      {
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "input",
+        "propertyName": "inputModel",
+        "required": true,
+        "type": "C"
+      },
+      {
+        "default": "new ErrorStateMatcher()",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "matcher",
+        "propertyName": "matcher",
+        "required": false,
+        "type": "ErrorStateMatcher"
+      },
+      {
+        "default": "false",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "standalone",
+        "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -7688,6 +8115,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -7819,6 +8256,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -7907,6 +8354,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -8003,6 +8460,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -8091,6 +8558,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -8209,6 +8686,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -8297,6 +8784,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -8397,6 +8894,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -8563,6 +9070,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "boolean"
       },
       {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
+        "required": false,
+        "type": "boolean"
+      },
+      {
         "default": "undefined",
         "inheritedFrom": "TaAbstractInputComponent",
         "kind": "input",
@@ -8665,6 +9182,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -9180,7 +9707,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "profile",
         "propertyName": "profile",
         "required": false,
-        "type": "{\n    template: TemplateRef<any>;\n    user: { profilePictureUrl?: string; naming: UserLogoNaming | null };\n  } | null"
+        "type": "{\r\n    template: TemplateRef<any>;\r\n    user: { profilePictureUrl?: string; naming: UserLogoNaming | null };\r\n  } | null"
       },
       {
         "default": "null",
@@ -9203,7 +9730,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "userInfo",
         "propertyName": "userInfo",
         "required": false,
-        "type": "() => {\n    profilePictureUrl?: string;\n    naming: UserLogoNaming | null;\n  }"
+        "type": "() => {\r\n    profilePictureUrl?: string;\r\n    naming: UserLogoNaming | null;\r\n  }"
       },
       {
         "kind": "method",
@@ -10284,6 +10811,14 @@ export const TA_API: Record<string, TaApiEntry> = {
         "type": "(index: any, item: MenuBase) => void"
       },
       {
+        "doc": "Un item à panneau s'ouvre aussi au survol : sur une barre horizontale, on parcourt les rubriques à la souris sans cliquer. Sans panneau, ou sur mobile, le survol ne fait rien.",
+        "kind": "method",
+        "name": "openPanelOnHover",
+        "propertyName": "openPanelOnHover",
+        "required": false,
+        "type": "() => void"
+      },
+      {
         "kind": "method",
         "name": "executeCallback",
         "propertyName": "executeCallback",
@@ -10366,7 +10901,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "options",
         "propertyName": "options",
         "required": false,
-        "type": "{\n    spaceElement?: TaSizes | null;\n  }"
+        "type": "{\r\n    spaceElement?: TaSizes | null;\r\n  }"
       },
       {
         "kind": "input",
@@ -12019,7 +12554,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "searchHistory",
         "propertyName": "searchHistory",
         "required": false,
-        "type": "{\n    type: string;\n  }"
+        "type": "{\r\n    type: string;\r\n  }"
       },
       {
         "kind": "output",
@@ -12127,7 +12662,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "valueCompleted",
         "propertyName": "valueCompleted",
         "required": false,
-        "type": "void"
+        "type": "string | number"
       },
       {
         "kind": "method",
@@ -12173,6 +12708,16 @@ export const TA_API: Record<string, TaApiEntry> = {
         "kind": "input",
         "name": "standalone",
         "propertyName": "standaloneMode",
+        "required": false,
+        "type": "boolean"
+      },
+      {
+        "default": "false",
+        "doc": "Prend le focus dès que le champ est affiché (recherche d'une liste qui s'ouvre).",
+        "inheritedFrom": "TaAbstractInputComponent",
+        "kind": "input",
+        "name": "autoFocus",
+        "propertyName": "autoFocus",
         "required": false,
         "type": "boolean"
       },
@@ -12247,7 +12792,7 @@ export const TA_API: Record<string, TaApiEntry> = {
         "name": "searchHistory",
         "propertyName": "searchHistory",
         "required": false,
-        "type": "{\n    type: string;\n  }"
+        "type": "{\r\n    type: string;\r\n  }"
       },
       {
         "default": "\"\"",
@@ -12631,7 +13176,7 @@ export const TA_API: Record<string, TaApiEntry> = {
     "pkg": "@ta/ui"
   },
   "ta-template-modal-container": {
-    "className": "TemplateModalContainer",
+    "className": "TemplateModalContainerComponent",
     "file": "projects/ui/src/lib/modules/layout/layout-modal/layout-modal-container/layout-modal-container.component.ts",
     "id": "ta-template-modal-container",
     "kind": "component",

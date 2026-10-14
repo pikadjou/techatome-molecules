@@ -10,7 +10,7 @@
       <ta-button
         class="remove-action"
         [style]="'danger'"
-        (action)="remove(key)"
+        (action)="this.remove(key)"
       >
         <ta-local-icon [type]="this.icon.DeleteLight" size="xs"></ta-local-icon>
       </ta-button>
@@ -29,5 +29,5 @@
     } }
   </div>
   }
-  <ta-button (action)="add()">{{ "form.dynamic.add" | translate }}</ta-button>
+  <ta-button (action)="this.add()">{{ "form.dynamic.add" | translate }}</ta-button>
 </div>

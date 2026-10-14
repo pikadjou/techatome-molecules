@@ -1,8 +1,8 @@
 import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, Inject, OnInit, Optional, input } from "@angular/core";
+import { Component, OnInit, input, inject } from "@angular/core";
 
-import { TENANT_CONFIG_TOKEN, TenantConfig } from "@ta/server";
+import { TENANT_CONFIG_TOKEN } from "@ta/server";
 import {
   EmptyComponent,
   ErrorComponent,
@@ -17,7 +17,7 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
 @Component({
   selector: "ta-cms",
   templateUrl: "./cms.component.html",
-  styleUrls: ["./cms.component.scss"],
+  styleUrl: "./cms.component.scss",
   standalone: true,
   imports: [
     AsyncPipe,
@@ -31,18 +31,18 @@ import { RichTextComponent } from "../types/rich-text/rich-text.component";
 export class CmsComponent extends TaBaseComponent implements OnInit {
   contentType = input.required<string>();
 
+  public readonly cmsService = inject(TaCmsService);
+  private readonly _tenantConfig = inject(TENANT_CONFIG_TOKEN, { optional: true });
+
   get content$() {
     return this.cmsService.cmsContents.get$(this.contentType());
   }
-  constructor(
-    public cmsService: TaCmsService,
-    @Optional() @Inject(TENANT_CONFIG_TOKEN) private tenantConfig: TenantConfig
-  ) {
+  constructor() {
     super();
   }
 
   ngOnInit() {
-    const tenantId = this.tenantConfig.tenantId ?? 0;
+    const tenantId = this._tenantConfig?.tenantId ?? 0;
     this.requestState.asked();
     this._registerSubscription(
       this.cmsService

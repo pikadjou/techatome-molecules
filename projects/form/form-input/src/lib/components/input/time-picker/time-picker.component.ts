@@ -12,7 +12,7 @@ import { InputLayoutComponent } from "../../input-layout/input-layout.component"
 @Component({
   selector: "ta-input-time-picker",
   templateUrl: "./time-picker.component.html",
-  styleUrls: ["./time-picker.component.scss"],
+  styleUrl: "./time-picker.component.scss",
   standalone: true,
   imports: [
     InputLayoutComponent,

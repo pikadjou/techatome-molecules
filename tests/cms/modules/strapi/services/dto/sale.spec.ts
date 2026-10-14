@@ -1,4 +1,4 @@
-import { Sale, saleProps } from '@lib/cms/modules/strapi/services/dto/sale';
+import { saleProps } from '@lib/cms/modules/strapi/services/dto/sale';
 
 describe('Sale DTO', () => {
   it('should have saleProps GraphSchema defined', () => {

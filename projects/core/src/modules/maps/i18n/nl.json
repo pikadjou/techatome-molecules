@@ -3,5 +3,9 @@
   "noResults": "Geen resultaten gevonden",
   "markers": "Markeringen",
   "zoom.in": "Inzoomen",
-  "zoom.out": "Uitzoomen"
+  "zoom.out": "Uitzoomen",
+  "route.summary": "Routeoverzicht",
+  "route.details": "Routedetails",
+  "route.distance": "Afstand",
+  "route.duration": "Geschatte duur"
 }

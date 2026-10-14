@@ -1,4 +1,3 @@
-import { TranslateLoader } from '@ngx-translate/core';
 
 import { TaTranslationLoader } from '@lib/translation/services/translation.loader';
 import {

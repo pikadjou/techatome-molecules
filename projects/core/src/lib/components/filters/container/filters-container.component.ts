@@ -19,7 +19,7 @@ import { ActiveFilterTag } from "../types";
 @Component({
   selector: "ta-filters-container",
   templateUrl: "./filters-container.component.html",
-  styleUrls: ["./filters-container.component.scss"],
+  styleUrl: "./filters-container.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,

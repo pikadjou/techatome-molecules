@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import { ITranslation, TaTranslationRegistryService } from '@lib/translation/services/translation-registry.service';
 

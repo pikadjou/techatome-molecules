@@ -8,7 +8,7 @@ import { TaAbstractInputComponent } from "../../abstract.component";
 @Component({
   selector: "ta-input-image",
   templateUrl: "./input-image.component.html",
-  styleUrls: ["./input-image.component.scss"],
+  styleUrl: "./input-image.component.scss",
   standalone: true,
   imports: [UserLogoComponent],
 })

@@ -30,7 +30,7 @@ import { TaBaseComponent, downloadFile } from "@ta/utils";
 @Component({
   selector: "ta-documents-list",
   templateUrl: "./list.component.html",
-  styleUrls: ["./list.component.scss"],
+  styleUrl: "./list.component.scss",
   standalone: true,
   imports: [
     NgTemplateOutlet,

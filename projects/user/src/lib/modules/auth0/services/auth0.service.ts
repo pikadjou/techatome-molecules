@@ -27,51 +27,59 @@ export class TaAuth0Service extends TaAuthService {
   constructor() {
     super();
 
-    this._auth.user$
-      .pipe(
-        filter(isNonNullable),
-        distinct(user => user?.sub),
-        tap(user => this.user$.next(user || null)),
-        tap(user => {
-          Logger.LogInfo('user info', user);
-          if (user) {
-            this._permissionsService.set(null, true);
-          }
-        })
-      )
-      .subscribe();
+    this._registerSubscription(
+      this._auth.user$
+        .pipe(
+          filter(isNonNullable),
+          distinct(user => user?.sub),
+          tap(user => this.user$.next(user || null)),
+          tap(user => {
+            Logger.LogInfo('user info', user);
+            if (user) {
+              this._permissionsService.set(null, true);
+            }
+          })
+        )
+        .subscribe()
+    );
 
-    this._auth.error$
-      .pipe(
-        tap(errors => {
-          this.isLoading$.next(false);
-
-          Logger.LogError('[USERSERVICE] error on authentication', errors);
-        })
-      )
-      .subscribe();
-
-    this._auth.appState$
-      .pipe(
-        tap(state => {
-          Logger.LogInfo('[USERSERVICE] state', state);
-        })
-      )
-      .subscribe();
-
-    this._auth.isAuthenticated$
-      .pipe(
-        tap(isAuthenticated => {
-          this._serverService.isAuthenticated = isAuthenticated;
-          if (isAuthenticated) {
-            this._permissionsService.setSilentAuthenticated(isAuthenticated);
-          } else {
-            this._permissionsService.setAuthenticated(isAuthenticated);
+    this._registerSubscription(
+      this._auth.error$
+        .pipe(
+          tap(errors => {
             this.isLoading$.next(false);
-          }
-        })
-      )
-      .subscribe();
+
+            Logger.LogError('[USERSERVICE] error on authentication', errors);
+          })
+        )
+        .subscribe()
+    );
+
+    this._registerSubscription(
+      this._auth.appState$
+        .pipe(
+          tap(state => {
+            Logger.LogInfo('[USERSERVICE] state', state);
+          })
+        )
+        .subscribe()
+    );
+
+    this._registerSubscription(
+      this._auth.isAuthenticated$
+        .pipe(
+          tap(isAuthenticated => {
+            this._serverService.isAuthenticated = isAuthenticated;
+            if (isAuthenticated) {
+              this._permissionsService.setSilentAuthenticated(isAuthenticated);
+            } else {
+              this._permissionsService.setAuthenticated(isAuthenticated);
+              this.isLoading$.next(false);
+            }
+          })
+        )
+        .subscribe()
+    );
   }
 
   public fetchUserProfile$() {

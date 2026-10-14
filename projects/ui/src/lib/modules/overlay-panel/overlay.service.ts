@@ -11,7 +11,7 @@ import {
 
 import { Subject } from "rxjs";
 
-import { TaBaseService } from "@ta/server";
+import { Logger, TaBaseService } from "@ta/server";
 
 export const MENU_TEMPLATE = new InjectionToken<TemplateRef<any>>(
   "MENU_TEMPLATE"
@@ -34,7 +34,7 @@ export interface OverlayMenuConfig<T = any> {
 @Injectable({
   providedIn: "root",
 })
-export class OverlayService extends TaBaseService {
+export class TaOverlayService extends TaBaseService {
   private _overlayRef?: OverlayRef;
   private _onCloseCallback?: () => void;
   private readonly _onCloseSubject = new Subject<void>();
@@ -88,11 +88,11 @@ export class OverlayService extends TaBaseService {
     } = config;
 
     if (!triggerElement) {
-      console.log("OverlayService: triggerElement is required.");
+      Logger.LogWarning("TaOverlayService: triggerElement is required.");
       return;
     }
     if (!menuComponent) {
-      console.log("OverlayService: menuComponent is required.");
+      Logger.LogWarning("TaOverlayService: menuComponent is required.");
       return;
     }
 
@@ -146,3 +146,6 @@ export class OverlayService extends TaBaseService {
     }
   }
 }
+
+/** @deprecated utiliser TaOverlayService */
+export { TaOverlayService as OverlayService };

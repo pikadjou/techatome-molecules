@@ -14,7 +14,7 @@ export type EmptyVariant = 'filled' | 'dashed';
 @Component({
   selector: 'ta-empty',
   templateUrl: './empty.component.html',
-  styleUrls: ['./empty.component.scss'],
+  styleUrl: './empty.component.scss',
   standalone: true,
   imports: [TranslateModule, FontIconComponent],
 })

@@ -7,7 +7,7 @@ import { TaBaseComponent } from "@ta/utils";
 @Component({
   selector: "ta-swiper-light",
   templateUrl: "./swiper-light.component.html",
-  styleUrls: ["./swiper-light.component.scss"],
+  styleUrl: "./swiper-light.component.scss",
   standalone: true,
   imports: [NgClass, NgTemplateOutlet, AsyncPipe],
 })
@@ -45,10 +45,10 @@ export class SwiperLightComponent extends TaBaseComponent implements OnInit {
   }
 
   public track = (_: any, item: any) => {
-    if (item.hasOwnProperty("id")) {
+    if (Object.prototype.hasOwnProperty.call(item, "id")) {
       return this.trackById(_, item);
     }
-    if (item.hasOwnProperty("key")) {
+    if (Object.prototype.hasOwnProperty.call(item, "key")) {
       return this.trackByKey(_, item);
     }
     return item;

@@ -1,10 +1,10 @@
 import {
   Component,
   TemplateRef,
-  ViewChild,
   inject,
   input,
   output,
+  viewChild,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
@@ -21,7 +21,7 @@ import { SearchHistoryDisplayerComponent } from "./search-history-displayer/sear
 @Component({
   selector: "ta-search-displayer",
   templateUrl: "./search-displayer.component.html",
-  styleUrls: ["./search-displayer.component.scss"],
+  styleUrl: "./search-displayer.component.scss",
   standalone: true,
   imports: [
     FontIconComponent,
@@ -40,8 +40,7 @@ export class SearchDisplayerComponent extends TaBaseComponent {
 
   valueCompleted = output<any>();
 
-  @ViewChild("searchTemplate", { read: TemplateRef })
-  searchTemplate!: TemplateRef<void>;
+  searchTemplate = viewChild.required<TemplateRef<void>>("searchTemplate");
 
   get mobileDetection() {
     return this.breakpoints.isMobile;
@@ -62,7 +61,7 @@ export class SearchDisplayerComponent extends TaBaseComponent {
       BottomSheetTemplateGenericParams
     >(BottomSheetTemplateGenericComponent, {
       data: {
-        template: this.searchTemplate,
+        template: this.searchTemplate(),
         context: {
           options: { isDropDown: false },
         },

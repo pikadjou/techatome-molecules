@@ -8,7 +8,7 @@ import { TA_AUTH_TOKEN } from "../../services/auth.service";
 @Component({
   selector: "ta-login-card",
   templateUrl: "./login-card.component.html",
-  styleUrls: ["./login-card.component.scss"],
+  styleUrl: "./login-card.component.scss",
   standalone: true,
   imports: [
     CardComponent,

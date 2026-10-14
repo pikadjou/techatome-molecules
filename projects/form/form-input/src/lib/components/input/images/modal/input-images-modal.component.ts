@@ -16,7 +16,7 @@ export type InputImagesModalInput = {
 /** Sélection d'images dans une galerie ; rend les URL choisies. */
 @Component({
   selector: 'ta-input-images-modal',
-  styleUrls: ['./input-images-modal.component.scss'],
+  styleUrl: './input-images-modal.component.scss',
   templateUrl: './input-images-modal.component.html',
   standalone: true,
   imports: [AsyncPipe, DualButtonComponent, FileListComponent, TaModalComponent],

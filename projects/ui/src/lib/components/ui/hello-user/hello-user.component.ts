@@ -14,7 +14,7 @@ export interface UserLogoNaming {
 @Component({
   selector: "ta-hello-user",
   templateUrl: "./hello-user.component.html",
-  styleUrls: ["./hello-user.component.scss"],
+  styleUrl: "./hello-user.component.scss",
   standalone: true,
   imports: [TranslateModule, UserLogoComponent],
 })

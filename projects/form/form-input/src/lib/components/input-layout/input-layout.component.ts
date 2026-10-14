@@ -9,7 +9,7 @@ import { InputErrorComponent } from './input-error/input-error.component';
 @Component({
   selector: 'ta-input-layout',
   templateUrl: './input-layout.component.html',
-  styleUrls: ['./input-layout.component.scss'],
+  styleUrl: './input-layout.component.scss',
   standalone: true,
   imports: [FormLabelComponent, InputErrorComponent, NgClass],
 })

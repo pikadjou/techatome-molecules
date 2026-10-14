@@ -1038,7 +1038,7 @@ Overlay panel service and components.
 import {
   OverlayPanelComponent,
   DefaultPanelComponent,
-  OverlayService
+  TaOverlayService
 } from '@ta/ui';
 ```
 

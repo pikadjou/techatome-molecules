@@ -12,7 +12,7 @@ import { Culture, TaBaseComponent, extractEnum } from '@ta/utils';
 @Component({
   selector: 'ta-input-translation',
   templateUrl: './translation.component.html',
-  styleUrls: ['./translation.component.scss'],
+  styleUrl: './translation.component.scss',
   standalone: true,
   imports: [
     NgClass,

@@ -6,7 +6,7 @@ import { FontIconComponent } from "@ta/icons";
 @Component({
   selector: "ta-title",
   templateUrl: "./title.component.html",
-  styleUrls: ["./title.component.scss"],
+  styleUrl: "./title.component.scss",
   standalone: true,
   imports: [NgClass, NgTemplateOutlet, FontIconComponent],
 })

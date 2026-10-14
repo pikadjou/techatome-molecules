@@ -30,7 +30,7 @@
     {{ "user.guard.content" | translate }}
 
     @if (this.level() === 'authenticated') {
-    <ta-button (action)="this.goToLogin()"> Me connecter </ta-button>
+    <ta-button (action)="this.goToLogin()">{{ "user.login" | translate }}</ta-button>
     }
   </div>
   }

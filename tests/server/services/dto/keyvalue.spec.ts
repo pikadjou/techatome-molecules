@@ -1,4 +1,4 @@
-import { keyValueProps, KeyValue } from '@lib/server/services/dto/keyvalue';
+import { keyValueProps } from '@lib/server/services/dto/keyvalue';
 
 describe('KeyValue', () => {
   it('should have keyValueProps GraphSchema with key and value fields', () => {

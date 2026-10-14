@@ -55,8 +55,10 @@ yarn watch:lib                            # Rebuild only the libraries affected 
 ### Quality Assurance
 
 ```bash
-yarn lint                       # Run ESLint with auto-fix
-yarn prettier                   # Format all files with Prettier
+yarn lint                       # ESLint (flat config, prefix ta) on projects/, src/ and tests/
+yarn lint:fix                   # Same, with auto-fix
+yarn prettier                   # Format all files with Prettier 3 (prettier.config.mjs)
+yarn prettier:check             # Check formatting only
 ng test                        # Run Karma tests for main app
 ng test @ta/[LibName]          # Run tests for specific library
 ```
@@ -98,14 +100,23 @@ The project is organized into specialized libraries under the `projects/` direct
 ### Dependency Graph (build order)
 
 ```
-Layer 0: @ta/styles, @ta/eslint-config, @ta/prettier-config
-Layer 1: @ta/icons → @ta/utils
-Layer 2: @ta/notification, @ta/translation, @ta/form-model, @ta/server
-Layer 3: @ta/ui, @ta/services, @ta/menu
-Layer 4: @ta/form-input → @ta/form-basic
-Layer 5: @ta/core, @ta/user, @ta/charts, @ta/files-basic
-Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
+Layer 0:  @ta/styles, @ta/charts, @ta/testing, @ta/eslint-config, @ta/prettier-config
+Layer 1:  @ta/icons
+Layer 2:  @ta/utils
+Layer 3:  @ta/server
+Layer 4:  @ta/capacitor, @ta/translation
+Layer 5:  @ta/ui
+Layer 6:  @ta/menu, @ta/notification
+Layer 7:  @ta/services
+Layer 8:  @ta/wysiswyg
+Layer 9:  @ta/form-model
+Layer 10: @ta/files-basic
+Layer 11: @ta/form-input, @ta/files-extended
+Layer 12: @ta/form-basic, @ta/cms, @ta/user
+Layer 13: @ta/core, @ta/features
 ```
+
+Computed from the libraries' `package.json` on 2026-10-13; `nx graph` is the source of truth.
 
 ### Build Output: `.build` (local) vs `dist` (versioned)
 
@@ -123,8 +134,9 @@ Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
 
 - Uses **Nx** for task orchestration (graph, ordering, caching) over Yarn workspaces
 - The dependency graph is read from each library's `package.json` — `analyzeSourceFiles`
-  is off in `nx.json`, because the source imports contain a real cycle
-  (`@ta/services` imports `@ta/notification`, while `notification → ui → services`).
+  is off in `nx.json`: the `@ta/ui` stories import `@ta/menu` while `menu → ui`, which Nx
+  would report as a cycle. (The former source cycle `ui → services → notification → ui` was
+  broken on 2026-10-13 by moving `TaSharedMenuService` to `@ta/utils`.)
   A library that gains a dependency must therefore declare it in its `package.json`,
   or Nx will build it too early.
 - All packages follow the `@ta/` namespace convention
@@ -145,12 +157,19 @@ Layer 6: @ta/cms, @ta/files-extended, @ta/features, @ta/capacitor, @ta/wysiswyg
 
 1. **ALWAYS `standalone: true`** - no NgModules for components
 2. **ALWAYS use signal inputs**: `input<T>()` or `input.required<T>()` - NEVER `@Input()` decorator
-3. **ALWAYS extend base classes**: `TaBaseComponent` from `@ta/utils` (or `TaAbstractInputComponent` for form inputs)
+3. **ALWAYS extend base classes**: `TaBaseComponent` from `@ta/utils` (or `TaAbstractInputComponent` for form inputs).
+   Only exception: a purely presentational component (no subscription, no request, no routing) may stay without a base class
 4. **Selector prefix**: always `ta-` (e.g., `ta-button`, `ta-user-card`)
 5. **Angular control flow**: use `@if`, `@for`, `@switch` - NEVER `*ngIf`, `*ngFor`
 6. **Subscription management**: always use `this._registerSubscription()` from base class
 7. **Request states**: use `this.requestState` from base class for loading/error states
 8. **Content projection**: prefer `<ng-content>` over complex template inputs
+9. **Outputs**: `output<T>()` - NEVER `@Output()` / `EventEmitter`
+10. **Queries**: `viewChild()` / `viewChildren()` / `contentChild()` - NEVER `@ViewChild()` / `@ContentChild()`
+11. **Host bindings**: `host: { '(event)': '…', '[attr.x]': '…' }` metadata - NEVER `@HostListener` / `@HostBinding`
+12. **Styles**: `styleUrl: './x.scss'` (singular), never `styleUrls: [...]`
+13. **Logs**: `Logger` from `@ta/server` - NEVER `console.*`
+14. **Secrets**: never hardcode API keys; the host application injects them (`provideGoogleMaps({ apiKey })`, `provideForm({ googleMapsApiKey })`)
 
 ### Import Ordering
 
@@ -318,7 +337,7 @@ See `.claude/reference/forms-reference.md` for all 25+ input types and complete 
 ### Translation Keys
 
 Pattern: `<library>.<feature>.<element>.<action>`
-Files: `projects/<lib>/src/i18n/{en,fr}.json`
+Files: `projects/<lib>/src/i18n/{en,fr,de,nl}.json`
 Usage: `{{ 'key' | translate }}` or `TranslateService.instant('key')`
 
 ## Detailed Reference Files
@@ -343,7 +362,7 @@ For complete API documentation, see `.claude/reference/`:
 **Container**: `LoaderComponent`, `EmptyComponent`, `ErrorComponent`, `SwiperLightComponent`, `ContainerValidationComponent`, `ModalValidationComponent`
 **Card**: `CardComponent`, `CardHeaderComponent`, `CardTitleComponent`, `CardSubtitleComponent`, `CardContentComponent`, `CardCtaComponent`, `CardImageComponent`, `CardTagComponent`, `DashboardComponent`
 **List**: `ListContainerComponent`, `ListElementComponent`, `ListTitleComponent`, `ListSubTitleComponent`, `ListTagComponent`, `ListExtraInformationComponent`
-**Overlay**: `TaOverlayPanelComponent`, `DefaultPanelComponent`
+**Overlay**: `TaOverlayPanelComponent`, `DefaultPanelComponent`, `TaOverlayService`
 **Swiper**: `SwiperComponent`
 **Tree**: `TreeContainerComponent`, `TreeItemComponent`, `TreeChildrenComponent`
 
@@ -361,9 +380,12 @@ Validators: `phoneValidator()`, `slugValidator()`
 ### @ta/form-basic
 `FormComponent` (`ta-form`), `InputsComponent` (`ta-inputs`), `EditFieldComponent` (`ta-edit-field`)
 
+### @ta/form-input provider
+`provideForm({ googleMapsApiKey })` - Google Places key for the address autocomplete
+
 ### @ta/core
 `FiltersContainerComponent`, `FilterContainerComponent`, `FilterDisplayerComponent`, `FiltersTagComponent`, `SearchDisplayerComponent`, `SearchHistoryDisplayerComponent`, `DocumentsComponent`, `UploadDocumentModal`, `TextToClipboardComponent`, `MapComponent`
-Providers: `provideGTM()`, `provideGoogleMaps()`
+Providers: `provideGTM()`, `provideGoogleMaps({ apiKey, libraries? })` (token `TA_GOOGLE_MAPS_CONFIG`)
 
 ### @ta/server
 `TaGraphService`, `TaServerService`, `TaServerErrorService`, `BaseService`, `Logger`, `TaStrapiService`, `BaseStrapiService`, `CacheInterceptor`
@@ -378,7 +400,7 @@ Providers: `provideServer()`, `provideStrapi()`
 **Pipes**: `FileSizePipe`, `JoinPipe`, `PluralTranslatePipe`, `SafePipe`
 **Functions**: `isNonNullable()`, `getUniqueArray()`, `toArray()`, `filterNonNullableItems()`, `capitalizeFirstLetter()`, `isURL()`, `newGuid()`, `merge()`, `compare()`, `getModifiedValues()`, `copyTextToClipboard()`, `isLight()`, `extractEnum()`, `fullName()`, `compressImage()`, `downloadFile()`, `octetsToMo()`, `search()`, `sort()`, `createRange()`, `percentage()`, `roundToDecimal()`
 **Types**: `Civility`, `Culture`, `EFileExtension`, `FileData<T>`, `FileType`, `MessageLevel`, `RecursivePartial<T>`
-**Service**: `ReadOnlyContextService`
+**Services**: `TaReadOnlyContextService`, `TaSharedMenuService`, `TaAddressLookupService`
 
 ### @ta/notification
 `NotificationBoxComponent`, `NotificationInlineComponent`, `BulletComponent`
@@ -392,7 +414,7 @@ Providers: `provideServer()`, `provideStrapi()`
 Models: `Menu`, `MenuBase`, `MenuIcon`, `MenuAction`
 
 ### @ta/services
-`TaEnumerationService`, `TaSharedMenuService`, `TaDocumentsService`, `TaProjectsService`
+`TaEnumerationService`, `TaDocumentsService`, `TaProjectsService`, `TaNetworkService`, `TaConfigurationService` (+ `TaSharedMenuService` re-exported from `@ta/utils`)
 DTOs: `TranslatedEnumeration`, `User`, `Picture`, `DocumentDto`, `FileType`, `Project`, `Status`
 
 ### @ta/features
@@ -406,7 +428,7 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 `FilesListComponent`, `FilesEditComponent`, `DocumentsListComponent`
 
 ### @ta/files-extended
-`FilesDisplayComponent`, `FilesUploadComponent`, `UploadDocumentFormService`
+`FilesDisplayComponent`, `FilesUploadComponent`, `TaUploadDocumentFormService`
 
 ### @ta/user
 `LoginCardComponent`, `LoginComponent`, `SigninComponent`, `MyAccountComponent`, `GuardComponent`, `SwitchLanguageCtaComponent`
@@ -449,7 +471,7 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 - Use `common.get-var()` for all style values
 - Use `_registerSubscription()` for every subscription
 - Export from `public-api.ts` at every level
-- Keep i18n files in sync (en.json + fr.json)
+- Keep i18n files in sync (en, fr, de, nl)
 - Use `inject()` for dependency injection in services
 
 ### DON'T
@@ -459,6 +481,7 @@ Types: `ParameterType` enum, `ColMetaData<T>`, `Preset`
 - Create NgModules (use standalone components)
 - Use constructor injection (use `inject()` function)
 - Import from dist/ or .build/ folders (always import from `@ta/<lib>`)
+- Hardcode API keys or secrets in a library (the host app provides them through a provider config)
 - Build or commit `projects/**/dist` by hand (only the CI writes them, see below)
 - Forget to clean up subscriptions (base class handles it via ngOnDestroy)
 

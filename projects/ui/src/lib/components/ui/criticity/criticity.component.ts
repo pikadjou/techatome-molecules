@@ -17,7 +17,7 @@ export const criticityLabel = (criticity: CriticityStatus) =>
 @Component({
   selector: "ta-criticity",
   templateUrl: "./criticity.component.html",
-  styleUrls: ["./criticity.component.scss"],
+  styleUrl: "./criticity.component.scss",
   standalone: true,
   imports: [TranslateModule, BadgeComponent],
 })

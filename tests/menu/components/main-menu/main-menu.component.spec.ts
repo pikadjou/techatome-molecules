@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject, of } from 'rxjs';
 
-import { TaSharedMenuService } from '@ta/services';
+import { TaSharedMenuService } from '@ta/utils';
 
 import { MenuIcon } from '@lib/menu/models/menu/item/icon';
 import { Menu } from '@lib/menu/models/menu/menu';

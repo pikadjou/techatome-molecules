@@ -59,7 +59,7 @@
           </ta-button>
         </div>
       }
-      @if (this.has('center') && !(this.breakpoints.isTablette$ | async)) {
+      @if (this.has('center') && (this.breakpoints.isTablette$ | async) !== true) {
         <div class="content">
           <ng-template [ngTemplateOutlet]="centerTemplate"></ng-template>
         </div>
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  @if (!(this.breakpoints.isTablette$ | async)) {
+  @if ((this.breakpoints.isTablette$ | async) !== true) {
     <div class="second">
       <div class="right">
         @if (this.allowClose()) {

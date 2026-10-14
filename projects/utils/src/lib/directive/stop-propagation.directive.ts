@@ -1,13 +1,13 @@
-import { Directive, HostListener, input } from "@angular/core";
+import { Directive, input } from "@angular/core";
 
 @Directive({
   selector: "[appStopPropagation]",
   standalone: true,
+  host: { "(click)": "onClick($event)" },
 })
 export class StopPropagationDirective {
   stopPropagationActivation = input<boolean>(true);
 
-  @HostListener("click", ["$event"])
   public onClick(event: any): boolean {
     if (event && this.stopPropagationActivation()) {
       event.stopPropagation();

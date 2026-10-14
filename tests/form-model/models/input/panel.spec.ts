@@ -1,6 +1,5 @@
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
-import { InputBase } from '@lib/form-model/models/input/base';
 import { InputPanel } from '@lib/form-model/models/input/panel';
 import { InputTextBox } from '@lib/form-model/models/input/textbox';
 

@@ -8,7 +8,7 @@ import { DropdownComponent } from "../dropdown/dropdown.component";
 @Component({
   selector: "ta-input-culture",
   templateUrl: "./culture.component.html",
-  styleUrls: ["./culture.component.scss"],
+  styleUrl: "./culture.component.scss",
   standalone: true,
   imports: [DropdownComponent],
 })

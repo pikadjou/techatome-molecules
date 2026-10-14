@@ -20,5 +20,12 @@
   },
   "sideEffects": false,
   "license": "MIT",
-  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e"
+  "gitHead": "4b2e3d18b9e18345353471fbed62824c2f18740e",
+  "dependencies": {
+    "@ta/icons": "^0.0.0",
+    "@ta/styles": "^0.0.0",
+    "@ta/translation": "^0.0.0",
+    "@ta/ui": "^0.0.0",
+    "@ta/utils": "^0.0.0"
+  }
 }

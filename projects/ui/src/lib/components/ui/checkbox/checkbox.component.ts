@@ -6,7 +6,7 @@ import { FontIconComponent } from '@ta/icons';
 @Component({
   selector: 'ta-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  styleUrl: './checkbox.component.scss',
   standalone: true,
   imports: [FontIconComponent],
 })
