@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorage } from 'storage-manager-js';
@@ -20,11 +20,10 @@ import { ToastComponent } from '../toast/toast.component';
   standalone: true,
   imports: [TranslateModule, LinkComponent, TitleComponent, ButtonComponent, LogoComponent, ToastComponent],
 })
-export class PwaComponent extends TaBaseComponent implements OnInit {
+export class PwaComponent extends TaBaseComponent {
   askClose = output<void>();
 
   public isShowed: boolean = false;
-  public pictureWidth: number = 29;
 
   private _pwa = inject(TaPwaService);
 
@@ -36,12 +35,6 @@ export class PwaComponent extends TaBaseComponent implements OnInit {
         capability => (this.isShowed = capability && !LocalStorage.get('askForPwaAbility'))
       )
     );
-  }
-
-  ngOnInit() {
-    if (this.breakpoints.isDesktop) {
-      this.pictureWidth = 18;
-    }
   }
 
   public onNoClick(): void {

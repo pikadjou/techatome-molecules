@@ -38,13 +38,3 @@ export const Shown: StoryObj<StoryType> = {
     },
   }),
 };
-
-export const Desktop: StoryObj<StoryType> = {
-  render: (args) => ({
-    props: {
-      ...args,
-      isShowed: true,
-      pictureWidth: 18,
-    },
-  }),
-};

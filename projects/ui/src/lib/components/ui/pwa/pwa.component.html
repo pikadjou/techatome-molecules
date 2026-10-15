@@ -1,28 +1,26 @@
 @if (this.isShowed) {
   <div class="pwa-layout">
     <ta-toast>
-      <div class="pwa-container">
-        <div class="title-container">
-          <div class="mb-space-lg">
-            <ta-logo [widthPercentage]="this.pictureWidth" [type]="'oneline'"></ta-logo>
+      <div class="pwa-container invert">
+        <div class="pwa-header">
+          <div class="pwa-mark">
+            <ta-logo></ta-logo>
           </div>
-          <ta-title [level]="3" class="mb-space-xs title">{{ 'ui.pwa.title' | translate }}</ta-title>
-          {{ 'ui.pwa.description' | translate }}
-        </div>
-        <div class="cta col-auto flex-column g-space-md">
-          <div class="cta-button flex-column g-space-md">
-            <ta-button (action)="this.onYesClick()" icon="download">
-              {{ 'ui.pwa.install' | translate }}
-            </ta-button>
-            <ta-button type="tertiary" (action)="this.onNoClick()">
-              {{ 'ui.pwa.cancel' | translate }}
-            </ta-button>
-          </div>
-          <div class="link-container">
-            <ta-link (action)="this.dontAsk()" icon="close-tool">
+          <div class="pwa-text">
+            <ta-title [level]="4">{{ 'ui.pwa.title' | translate }}</ta-title>
+            <div class="pwa-description">{{ 'ui.pwa.description' | translate }}</div>
+            <ta-link size="sm" (action)="this.dontAsk()">
               {{ 'ui.pwa.no-more' | translate }}
             </ta-link>
           </div>
+        </div>
+        <div class="pwa-actions">
+          <ta-button type="tertiary" (action)="this.onNoClick()">
+            {{ 'ui.pwa.cancel' | translate }}
+          </ta-button>
+          <ta-button type="secondary" icon="download" (action)="this.onYesClick()">
+            {{ 'ui.pwa.install' | translate }}
+          </ta-button>
         </div>
       </div>
     </ta-toast>

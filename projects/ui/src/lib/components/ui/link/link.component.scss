@@ -34,3 +34,12 @@
 .bold {
   @include fonts.fontSizeBody(md, true);
 }
+
+// Sous une surface `.invert` (toast bleu nuit, conteneur sombre), le lien passe en clair.
+:host-context(.invert) .link {
+  color: common.get-var(text, invert, primary);
+
+  &:hover {
+    color: common.get-var(surface, brand, secondary);
+  }
+}

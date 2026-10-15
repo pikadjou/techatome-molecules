@@ -1,54 +1,82 @@
 @use 'ta/utils/mixins/flex';
 @use 'ta/utils/mixins/fonts';
 @use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
 
+/// Invitation à installer l'application : un toast épinglé en bas de l'écran.
+/// Pleine largeur sur mobile, ancré à droite sur les écrans plus larges.
 .pwa-layout {
   position: fixed;
-  bottom: calc(24px + env(safe-area-inset-bottom));
-  width: 90%;
-  right: 5%;
   z-index: 5000;
+  right: common.get-var(space, md);
+  left: common.get-var(space, md);
+  bottom: calc(#{common.get-var(space, md)} + env(safe-area-inset-bottom));
 
-  @media screen and (min-width: 768px) {
-    bottom: calc(50px + env(safe-area-inset-bottom));
-    right: 50px;
-    width: 800px;
+  @include mq.from-key(md) {
+    left: auto;
+    right: common.get-var(space, lg);
+    bottom: calc(#{common.get-var(space, lg)} + env(safe-area-inset-bottom));
+    width: 720px;
+    max-width: calc(100% - 2 * #{common.get-var(space, lg)});
   }
 }
 
+// Le toast est bleu nuit : la classe `invert` posée sur le conteneur fait
+// passer le bouton tertiaire et le lien en clair.
 .pwa-container {
   @include flex.flex-column();
-  gap: common.get-var(space, lg);
+  gap: common.get-var(space, md);
 
-  @media screen and (min-width: 768px) {
+  @include mq.from-key(md) {
     @include flex.flex-row();
-    @include flex.space-between();
-  }
-
-  .title {
-    color: common.get-var(brand, 700);
-    @include fonts.fontSizeBody(md, bold);
+    @include flex.align-center();
+    gap: common.get-var(space, lg);
   }
 }
 
-.cta {
-  .cta-button {
-    @include flex.flex-row();
-
-    justify-content: space-evenly;
-
-    @media screen and (min-width: 768px) {
-      @include flex.flex-column();
-    }
-    .button-content {
-      @include flex.align-center();
-      margin: auto;
-    }
-  }
+.pwa-header {
+  @include flex.flex-row();
+  @include flex.align-center();
+  @include flex.flex-fill();
+  gap: common.get-var(space, md);
+  min-width: 0;
 }
 
-.link-container {
-  ta-font-icon {
-    color: common.get-var(surface, brand, primary);
+// Même cartouche blanc que la marque dans l'en-tête : le logo reste lisible sur le fond sombre.
+.pwa-mark {
+  @include flex.simple-flex();
+  @include flex.align-center();
+  @include flex.justify-center();
+  flex-shrink: 0;
+  width: common.get-var(space, xxl);
+  height: common.get-var(space, xxl);
+  padding: common.get-var(space, sm);
+  box-sizing: border-box;
+  border-radius: common.get-var(radius, rounded);
+  background: common.get-var(neutral, white);
+}
+
+.pwa-text {
+  @include flex.flex-column();
+  gap: common.get-var(space, xs);
+  min-width: 0;
+}
+
+.pwa-description {
+  @include fonts.fontSizeBody(sm);
+}
+
+.pwa-actions {
+  @include flex.flex-row();
+  gap: common.get-var(space, sm);
+  flex-shrink: 0;
+
+  // Sur mobile, les deux boutons se partagent la largeur.
+  ta-button {
+    flex: 1 1 0;
+
+    @include mq.from-key(md) {
+      flex: 0 0 auto;
+    }
   }
 }
