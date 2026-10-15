@@ -147,7 +147,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ selector: 'ta-files-display', standalone: true, imports: [AsyncPipe, LoaderComponent, ErrorComponent, UploadComponent, FileListComponent, NavigationComponent], template: "<div class=\"toggle-navigation\">\n  <ta-menu-navigation [menu]=\"this.menu()\" [container]=\"'tab'\"></ta-menu-navigation>\n</div>\n\n@if (this.canDisplayTempsFiles) {\n  <div>\n    <ta-files-list [files]=\"this.tempFiles()\"></ta-files-list>\n    <hr />\n  </div>\n}\n\n<ta-loader [isLoading]=\"this.requestState.isLoading()\" skeleton=\"fileList\">\n  <ta-error [message]=\"this.requestState.getErrorMessage()\" [code]=\"this.requestState.getErrorStatus()\">\n    <div class=\"list\">\n      <ta-files-list\n        [files]=\"(this.files$() | async) || []\"\n        (fileSelected)=\"this.fileSelected.emit($event)\"\n        (moreInformationSelected)=\"this.moreInformationSelected.emit($event)\"\n      ></ta-files-list>\n    </div>\n  </ta-error>\n</ta-loader>\n\n@if (this.canAddFile() === true) {\n  <div class=\"floating-add\">\n    <ta-files-upload\n      [features]=\"this.getFeature()\"\n      [canSelectMultipleFiles]=\"this.canSelectMultipleFiles\"\n      (filesPicked)=\"this.fileUploading.emit($event)\"\n    ></ta-files-upload>\n  </div>\n}\n", styles: [".toggle-navigation{margin-bottom:var(--ta-space-sm)}\n"] }]
         }] });
 
-class UploadDocumentFormService {
+class TaUploadDocumentFormService {
     constructor() { }
     getGroupForm(data) {
         return [
@@ -179,10 +179,10 @@ class UploadDocumentFormService {
             }),
         ];
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentFormService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentFormService, providedIn: "root" }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaUploadDocumentFormService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaUploadDocumentFormService, providedIn: "root" }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: UploadDocumentFormService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaUploadDocumentFormService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: "root",
@@ -197,5 +197,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { FilesDisplayComponent, UploadComponent, UploadDocumentFormService };
+export { FilesDisplayComponent, TaUploadDocumentFormService, UploadComponent, TaUploadDocumentFormService as UploadDocumentFormService };
 //# sourceMappingURL=ta-files-extended.mjs.map

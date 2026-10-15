@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { TaSizes, TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class CopyLinkButtonComponent {
@@ -18,7 +17,7 @@ export declare class CopyLinkButtonComponent {
     /**
      * Event emitted when button is clicked (after copy)
      */
-    action: EventEmitter<any>;
+    action: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     handleClick(): Promise<void>;
     private _sizeMap;

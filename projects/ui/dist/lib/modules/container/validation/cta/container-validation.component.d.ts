@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 /** Demande confirmation avant l'action : `modal` interrompt, `inline` remplace le déclencheur par un encart. */
@@ -7,7 +6,7 @@ export declare class ContainerValidationComponent extends TaBaseComponent {
     title: import("@angular/core").InputSignal<string>;
     subtitle: import("@angular/core").InputSignal<string>;
     variant: import("@angular/core").InputSignal<"modal" | "inline">;
-    validated: EventEmitter<any>;
+    validated: import("@angular/core").OutputEmitterRef<void>;
     isModalOpen: import("@angular/core").WritableSignal<boolean>;
     readonly isInlineOpen: import("@angular/core").Signal<boolean>;
     constructor();

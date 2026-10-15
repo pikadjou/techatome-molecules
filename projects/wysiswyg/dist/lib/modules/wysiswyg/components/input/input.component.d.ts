@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, EventEmitter, OnInit } from '@angular/core';
+import { AfterViewInit, ElementRef, OnInit } from '@angular/core';
 import EditorJS from '@editorjs/editorjs';
 import { Observable } from 'rxjs';
 import { TaBaseComponent } from '@ta/utils';
@@ -34,10 +34,10 @@ export declare class EditorInputComponent extends TaBaseComponent implements OnI
     isCompact: import("@angular/core").InputSignal<boolean>;
     /** Laisse l'utilisateur régler la hauteur de la zone d'édition. */
     resizable: import("@angular/core").InputSignal<boolean>;
-    changed: EventEmitter<{
+    changed: import("@angular/core").OutputEmitterRef<{
         blocks: WysiswgBlockData[];
     }>;
-    saved: EventEmitter<EditorInputSavedData>;
+    saved: import("@angular/core").OutputEmitterRef<EditorInputSavedData>;
     /** Outil du bloc sous le curseur, que la barre met en évidence. */
     readonly activeTool: import("@angular/core").WritableSignal<string | null>;
     toolbarLabels: {
@@ -56,7 +56,7 @@ export declare class EditorInputComponent extends TaBaseComponent implements OnI
     };
     private readonly _documentsService;
     private _saveAfter;
-    editorjs: ElementRef;
+    editorjs: import("@angular/core").Signal<ElementRef<HTMLElement>>;
     editorInstance: EditorJS | null;
     constructor();
     ngOnInit(): void;

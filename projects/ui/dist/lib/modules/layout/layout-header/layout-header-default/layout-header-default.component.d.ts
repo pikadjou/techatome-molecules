@@ -1,11 +1,11 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
+import { TemplateRef } from '@angular/core';
 import { TaBaseComponent } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class LayoutHeaderDefaultComponent extends TaBaseComponent {
     showBack: import("@angular/core").InputSignal<boolean>;
     menuTemplate: import("@angular/core").InputSignal<TemplateRef<any> | undefined>;
     title: import("@angular/core").InputSignal<string | undefined>;
-    backEvent: EventEmitter<any>;
+    backEvent: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     showBackAction(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<LayoutHeaderDefaultComponent, never>;

@@ -1,4 +1,4 @@
-import { EventEmitter, OnDestroy, OnInit } from "@angular/core";
+import { OnDestroy, OnInit } from "@angular/core";
 import { InputNumber, InputTextBox } from "@ta/form-model";
 import { TaSizes } from "@ta/styles";
 import { TaAbstractInputComponent } from "../../abstract.component";
@@ -8,7 +8,7 @@ export declare class SearchFieldComponent extends TaAbstractInputComponent<Input
     placeholder: import("@angular/core").InputSignal<string>;
     space: import("@angular/core").InputSignal<boolean>;
     type: import("@angular/core").InputSignal<TaSizes>;
-    valueCompleted: EventEmitter<any>;
+    valueCompleted: import("@angular/core").OutputEmitterRef<string | number>;
     isDeployed: boolean;
     focusTextBox: boolean;
     constructor();

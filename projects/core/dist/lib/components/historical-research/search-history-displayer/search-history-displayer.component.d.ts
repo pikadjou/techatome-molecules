@@ -9,8 +9,8 @@ export declare class SearchHistoryDisplayerComponent {
     placeholder: import("@angular/core").InputSignal<string>;
     isDropDown: import("@angular/core").InputSignal<boolean>;
     valueCompleted: import("@angular/core").OutputEmitterRef<any>;
-    searchField: ElementRef | null;
-    searchTrigger: MatMenuTrigger | null;
+    searchField: import("@angular/core").Signal<ElementRef<any> | undefined>;
+    searchTrigger: import("@angular/core").Signal<MatMenuTrigger | undefined>;
     get searchFieldWidth(): any;
     get listRecentSearches(): string[] | null;
     input: InputTextBox<string>;

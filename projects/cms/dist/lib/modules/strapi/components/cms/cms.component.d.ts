@@ -1,15 +1,14 @@
 import { OnInit } from "@angular/core";
-import { TenantConfig } from "@ta/server";
 import { TaBaseComponent } from "@ta/utils";
 import { TaCmsService } from "../../services/cms.service";
 import * as i0 from "@angular/core";
 export declare class CmsComponent extends TaBaseComponent implements OnInit {
-    cmsService: TaCmsService;
-    private tenantConfig;
     contentType: import("@angular/core").InputSignal<string>;
+    readonly cmsService: TaCmsService;
+    private readonly _tenantConfig;
     get content$(): import("rxjs").Observable<import("../../services/dto/cms").Cms>;
-    constructor(cmsService: TaCmsService, tenantConfig: TenantConfig);
+    constructor();
     ngOnInit(): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<CmsComponent, [null, { optional: true; }]>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<CmsComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<CmsComponent, "ta-cms", never, { "contentType": { "alias": "contentType"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
 }

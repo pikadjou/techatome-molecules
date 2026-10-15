@@ -10,7 +10,7 @@ type InProgressFile = {
 };
 export declare class UploadComponent extends TaAbstractInputComponent<InputUpload> implements OnInit {
     uploadStatusChanged: import("@angular/core").OutputEmitterRef<boolean>;
-    fileDropEl: ElementRef;
+    fileDropEl: import("@angular/core").Signal<ElementRef<HTMLElement> | undefined>;
     private readonly _documentsService;
     private _invervalId;
     inProgressFiles: InProgressFile[];

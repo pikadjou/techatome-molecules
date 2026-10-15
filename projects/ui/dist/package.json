@@ -13,10 +13,9 @@
     "@ta/capacitor": "^0.0.0",
     "@ta/icons": "^0.0.0",
     "@ta/server": "^0.0.0",
-    "@ta/services": "^0.0.0",
     "@ta/styles": "^0.0.0",
-    "@ta/utils": "^0.0.0",
     "@ta/translation": "^0.0.0",
+    "@ta/utils": "^0.0.0",
     "storage-manager-js": "4.2.0",
     "swiper": "^9.1.0",
     "tslib": "^2.3.0"

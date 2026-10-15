@@ -1,13 +1,10 @@
-import { DomSanitizer } from "@angular/platform-browser";
 import { TaSizes } from "@ta/styles";
-import { TaIconType, TaIconsService } from "../../services/icons.service";
+import { TaIconType } from "../../services/icons.service";
 import * as i0 from "@angular/core";
 /**
  * @deprecated
  */
 export declare class LocalIconComponent {
-    private _iconService;
-    private _sanitizer;
     /**
      * Icon to display
      */
@@ -20,7 +17,8 @@ export declare class LocalIconComponent {
      * If set to true, icon will have a rotation animation
      */
     rotation: import("@angular/core").InputSignal<boolean>;
-    constructor(_iconService: TaIconsService, _sanitizer: DomSanitizer);
+    private readonly _iconService;
+    private readonly _sanitizer;
     getSvgIcon(): import("@angular/platform-browser").SafeHtml;
     getSize(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<LocalIconComponent, never>;

@@ -8,7 +8,7 @@ export declare class SearchDisplayerComponent extends TaBaseComponent {
         type: string;
     } | undefined>;
     valueCompleted: import("@angular/core").OutputEmitterRef<any>;
-    searchTemplate: TemplateRef<void>;
+    searchTemplate: import("@angular/core").Signal<TemplateRef<void>>;
     get mobileDetection(): boolean;
     private _bottomSheet;
     constructor();

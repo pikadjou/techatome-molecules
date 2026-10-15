@@ -3,5 +3,9 @@
   "noResults": "Aucun résultat trouvé",
   "markers": "Marqueurs",
   "zoom.in": "Zoom avant",
-  "zoom.out": "Zoom arrière"
+  "zoom.out": "Zoom arrière",
+  "route.summary": "Résumé du trajet",
+  "route.details": "Détails du trajet",
+  "route.distance": "Distance",
+  "route.duration": "Durée estimée"
 }

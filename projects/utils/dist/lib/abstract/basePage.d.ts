@@ -8,5 +8,5 @@ export declare abstract class TaBasePage extends TaAbstractComponent {
     private _filterParams;
     private _getParamsTyped;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaBasePage, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaBasePage, "ng-component", never, {}, {}, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaBasePage, "ng-component", never, {}, {}, never, never, true, never>;
 }

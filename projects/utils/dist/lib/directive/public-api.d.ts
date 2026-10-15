@@ -1,3 +1,4 @@
+export * from "./dnd.directive";
 export * from "./stop-propagation.directive";
 export * from "./type-template-directive";
 export * from "./let.directive";

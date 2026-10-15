@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import * as i0 from "@angular/core";
 export type BadgeType = "danger" | "warning" | "success" | "primary" | "secondary" | "info" | "purple" | "orange";
 export declare class BadgeComponent {
@@ -16,7 +15,7 @@ export declare class BadgeComponent {
      */
     showClickOption: import("@angular/core").InputSignal<boolean>;
     icon: import("@angular/core").InputSignal<string | undefined>;
-    clickAction: EventEmitter<any>;
+    clickAction: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     getClass(): string;
     click(): void;

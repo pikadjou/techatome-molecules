@@ -1,8 +1,9 @@
 import { TranslateService, provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 export { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import * as i0 from '@angular/core';
-import { Injectable, inject, Optional, Inject, InjectionToken, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
+import { Injectable, inject, InjectionToken, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { Subject, BehaviorSubject, map, debounceTime, mergeMap, of, forkJoin, catchError } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LocalStorage } from 'storage-manager-js';
 import { HttpClient } from '@angular/common/http';
 import { GraphSchema, baseStrapiProps, Apollo_gql, TaBaseStrapiService } from '@ta/server';
@@ -54,19 +55,19 @@ class TaAbstractTranslationModule {
     }
 }
 
-const TRANSLATION_CONFIG = 'config_translation';
+const TRANSLATION_CONFIG = new InjectionToken('config_translation');
 class TaTranslationService {
-    constructor(_config = {
-        default: 'fr',
-        supportedLanguages: ['fr'],
-    }) {
-        this._config = _config;
+    constructor() {
         this.translateService = inject(TranslateService);
         this._registry = inject(TaTranslationRegistryService);
         /** Langue active, à chaque changement (les applications n'importent pas ngx-translate). */
         this.onLangChange$ = this.translateService.onLangChange.pipe(map(({ lang }) => lang));
         /** Fichiers de traduction (re)chargés sans changement de langue : `reloadLang()`. */
         this.onTranslationChange$ = this.translateService.onTranslationChange.pipe(map(({ lang }) => lang));
+        this._config = inject(TRANSLATION_CONFIG, { optional: true }) ?? {
+            default: 'fr',
+            supportedLanguages: ['fr'],
+        };
         // this language will be used as a fallback when a translation isn't found in the current language
         this.translateService.setDefaultLang(this._config.default);
         // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -76,16 +77,14 @@ class TaTranslationService {
         }
         this.translateService.use(lang);
         this._registry.newRegistrationSubscription$
-            .pipe(debounceTime(100), mergeMap(() => this.translateService.reloadLang(this.translateService.currentLang))
-        // tap(data => console.log('reload lang', data))
-        )
+            .pipe(debounceTime(100), mergeMap(() => this.translateService.reloadLang(this.translateService.currentLang)), takeUntilDestroyed())
             .subscribe({
             next: translations => this.translateService.onTranslationChange.emit({
                 lang: this.translateService.currentLang,
                 translations,
             }),
         });
-        this.translateService.onLangChange.subscribe(({ lang }) => {
+        this.translateService.onLangChange.pipe(takeUntilDestroyed()).subscribe(({ lang }) => {
             if (!LocalStorage.has('lang')) {
                 LocalStorage.set('lang', lang);
                 return;
@@ -115,7 +114,7 @@ class TaTranslationService {
     use(lang) {
         return this.translateService.use(lang);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, deps: [{ token: TRANSLATION_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, providedIn: 'root' }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaTranslationService, decorators: [{
@@ -123,12 +122,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{
                     providedIn: 'root',
                 }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Optional
-                }, {
-                    type: Inject,
-                    args: [TRANSLATION_CONFIG]
-                }] }] });
+        }], ctorParameters: () => [] });
 
 const props$1 = ["key"];
 const featureProps = new GraphSchema(props$1.concat(baseStrapiProps));

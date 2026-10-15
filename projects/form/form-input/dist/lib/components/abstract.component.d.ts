@@ -17,7 +17,7 @@ export declare abstract class TaAbstractInputComponent<C extends InputBase<any>,
     get input(): C;
     get standalone(): boolean;
     get onFocus(): Observable<void> | undefined;
-    focusedElement: ElementRef;
+    focusedElement: import("@angular/core").Signal<ElementRef<any> | undefined>;
     readonly validators: typeof Validators;
     constructor();
     ngOnInit(): void;
@@ -25,5 +25,5 @@ export declare abstract class TaAbstractInputComponent<C extends InputBase<any>,
     ngOnDestroy(): void;
     onChange(value: V): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaAbstractInputComponent<any, any>, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractInputComponent<any, any>, "ng-component", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "matcher": { "alias": "matcher"; "required": false; "isSignal": true; }; "standaloneMode": { "alias": "standalone"; "required": false; "isSignal": true; }; "autoFocus": { "alias": "autoFocus"; "required": false; "isSignal": true; }; "onFocusObs": { "alias": "onFocus"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; }, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TaAbstractInputComponent<any, any>, "ng-component", never, { "inputModel": { "alias": "input"; "required": true; "isSignal": true; }; "matcher": { "alias": "matcher"; "required": false; "isSignal": true; }; "standaloneMode": { "alias": "standalone"; "required": false; "isSignal": true; }; "autoFocus": { "alias": "autoFocus"; "required": false; "isSignal": true; }; "onFocusObs": { "alias": "onFocus"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; }, never, never, true, never>;
 }

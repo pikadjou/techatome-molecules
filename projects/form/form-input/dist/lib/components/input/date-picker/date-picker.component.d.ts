@@ -4,7 +4,7 @@ import { InputDatePicker } from "@ta/form-model";
 import { TaAbstractInputComponent } from "../../abstract.component";
 import * as i0 from "@angular/core";
 export declare class DatePickerComponent extends TaAbstractInputComponent<InputDatePicker> {
-    picker: MatDatepicker<any>;
+    picker: import("@angular/core").Signal<MatDatepicker<any>>;
     readonly range: FormGroup<{
         start: FormControl<Date | null>;
         end: FormControl<Date | null>;

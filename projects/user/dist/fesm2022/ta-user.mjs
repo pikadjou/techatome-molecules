@@ -271,9 +271,9 @@ class TaAuthService extends TaBaseService {
         this.user$ = new BehaviorSubject(null);
         this.isLoading$ = new Subject();
         this.isLoading$.next(true);
-        this.user$
+        this._registerSubscription(this.user$
             .pipe(filter(user => !!user), switchMap(() => this.fetchUserProfile$()))
-            .subscribe();
+            .subscribe());
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuthService, deps: "invalid", target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuthService, providedIn: 'root' }); }
@@ -316,7 +316,6 @@ class LoginRedirectComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: LoginRedirectComponent, decorators: [{
             type: Component,
             args: [{
-                    selector: "",
                     template: "",
                     standalone: true,
                 }]
@@ -333,7 +332,6 @@ class SignRedirectComponent {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: SignRedirectComponent, decorators: [{
             type: Component,
             args: [{
-                    selector: "",
                     template: "",
                     standalone: true,
                 }]
@@ -466,11 +464,11 @@ class GuardComponent extends TaAbstractComponent {
         this._router.navigateByUrl(TaRoutes.getUrl([TaMainRoute.SINGIN]));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: GuardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: { classPropertyName: "level", publicName: "level", isSignal: true, isRequired: false, transformFunction: null }, feature: { classPropertyName: "feature", publicName: "feature", isSignal: true, isRequired: false, transformFunction: null }, role: { classPropertyName: "role", publicName: "role", isSignal: true, isRequired: false, transformFunction: null }, canDisplayErrorMessage: { classPropertyName: "canDisplayErrorMessage", publicName: "canDisplayErrorMessage", isSignal: true, isRequired: false, transformFunction: null }, preview: { classPropertyName: "preview", publicName: "preview", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid || this.preview()) {\n  <div class=\"guard-content\" [class.guard-content--preview]=\"!isValid && this.preview()\">\n    <div class=\"guard-projected\">\n      <ng-content></ng-content>\n    </div>\n\n    @if (!isValid && this.preview()) {\n    <div class=\"guard-overlay\">\n      <div class=\"guard-overlay-cta\">\n        <p class=\"guard-overlay-title\">{{ \"user.guard.preview.title\" | translate }}</p>\n        <p class=\"guard-overlay-subtitle\">{{ \"user.guard.preview.subtitle\" | translate }}</p>\n        <div class=\"flex-row g-space-sm\">\n          <ta-button [type]=\"'secondary'\" (action)=\"this.goToRegister()\">\n            {{ \"user.register\" | translate }}\n          </ta-button>\n          <ta-button (action)=\"this.goToLogin()\">\n            {{ \"user.login\" | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    }\n  </div>\n  } @if (!isValid && !this.preview() && this.canDisplayErrorMessage()) {\n  <div class=\"guard-no-valid ta-c\">\n    <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n    {{ \"user.guard.content\" | translate }}\n\n    @if (this.level() === 'authenticated') {\n    <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n    }\n  </div>\n  }\n</div>\n", styles: [":host{display:block}.guard-content--preview{position:relative;overflow:hidden;min-height:200px}.guard-content--preview .guard-projected{opacity:.25;pointer-events:none;-webkit-user-select:none;user-select:none}.guard-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,var(--ta-surface-secondary) 80%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:var(--ta-space-xl)}.guard-overlay-cta{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);text-align:center;max-width:440px}.guard-overlay-title{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight);color:var(--ta-text-primary);margin:0}.guard-overlay-subtitle{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-secondary);margin:0}.guard-no-valid{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-xl);color:var(--ta-text-secondary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: GuardComponent, isStandalone: true, selector: "ta-guard", inputs: { level: { classPropertyName: "level", publicName: "level", isSignal: true, isRequired: false, transformFunction: null }, feature: { classPropertyName: "feature", publicName: "feature", isSignal: true, isRequired: false, transformFunction: null }, role: { classPropertyName: "role", publicName: "role", isSignal: true, isRequired: false, transformFunction: null }, canDisplayErrorMessage: { classPropertyName: "canDisplayErrorMessage", publicName: "canDisplayErrorMessage", isSignal: true, isRequired: false, transformFunction: null }, preview: { classPropertyName: "preview", publicName: "preview", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid || this.preview()) {\n  <div class=\"guard-content\" [class.guard-content--preview]=\"!isValid && this.preview()\">\n    <div class=\"guard-projected\">\n      <ng-content></ng-content>\n    </div>\n\n    @if (!isValid && this.preview()) {\n    <div class=\"guard-overlay\">\n      <div class=\"guard-overlay-cta\">\n        <p class=\"guard-overlay-title\">{{ \"user.guard.preview.title\" | translate }}</p>\n        <p class=\"guard-overlay-subtitle\">{{ \"user.guard.preview.subtitle\" | translate }}</p>\n        <div class=\"flex-row g-space-sm\">\n          <ta-button [type]=\"'secondary'\" (action)=\"this.goToRegister()\">\n            {{ \"user.register\" | translate }}\n          </ta-button>\n          <ta-button (action)=\"this.goToLogin()\">\n            {{ \"user.login\" | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    }\n  </div>\n  } @if (!isValid && !this.preview() && this.canDisplayErrorMessage()) {\n  <div class=\"guard-no-valid ta-c\">\n    <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n    {{ \"user.guard.content\" | translate }}\n\n    @if (this.level() === 'authenticated') {\n    <ta-button (action)=\"this.goToLogin()\">{{ \"user.login\" | translate }}</ta-button>\n    }\n  </div>\n  }\n</div>\n", styles: [":host{display:block}.guard-content--preview{position:relative;overflow:hidden;min-height:200px}.guard-content--preview .guard-projected{opacity:.25;pointer-events:none;-webkit-user-select:none;user-select:none}.guard-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,var(--ta-surface-secondary) 80%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:var(--ta-space-xl)}.guard-overlay-cta{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);text-align:center;max-width:440px}.guard-overlay-title{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight);color:var(--ta-text-primary);margin:0}.guard-overlay-subtitle{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-secondary);margin:0}.guard-no-valid{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-xl);color:var(--ta-text-secondary)}\n"], dependencies: [{ kind: "pipe", type: AsyncPipe, name: "async" }, { kind: "component", type: FontIconComponent, selector: "ta-font-icon", inputs: ["name", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: GuardComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'ta-guard', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe], template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid || this.preview()) {\n  <div class=\"guard-content\" [class.guard-content--preview]=\"!isValid && this.preview()\">\n    <div class=\"guard-projected\">\n      <ng-content></ng-content>\n    </div>\n\n    @if (!isValid && this.preview()) {\n    <div class=\"guard-overlay\">\n      <div class=\"guard-overlay-cta\">\n        <p class=\"guard-overlay-title\">{{ \"user.guard.preview.title\" | translate }}</p>\n        <p class=\"guard-overlay-subtitle\">{{ \"user.guard.preview.subtitle\" | translate }}</p>\n        <div class=\"flex-row g-space-sm\">\n          <ta-button [type]=\"'secondary'\" (action)=\"this.goToRegister()\">\n            {{ \"user.register\" | translate }}\n          </ta-button>\n          <ta-button (action)=\"this.goToLogin()\">\n            {{ \"user.login\" | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    }\n  </div>\n  } @if (!isValid && !this.preview() && this.canDisplayErrorMessage()) {\n  <div class=\"guard-no-valid ta-c\">\n    <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n    {{ \"user.guard.content\" | translate }}\n\n    @if (this.level() === 'authenticated') {\n    <ta-button (action)=\"this.goToLogin()\"> Me connecter </ta-button>\n    }\n  </div>\n  }\n</div>\n", styles: [":host{display:block}.guard-content--preview{position:relative;overflow:hidden;min-height:200px}.guard-content--preview .guard-projected{opacity:.25;pointer-events:none;-webkit-user-select:none;user-select:none}.guard-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,var(--ta-surface-secondary) 80%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:var(--ta-space-xl)}.guard-overlay-cta{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);text-align:center;max-width:440px}.guard-overlay-title{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight);color:var(--ta-text-primary);margin:0}.guard-overlay-subtitle{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-secondary);margin:0}.guard-no-valid{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-xl);color:var(--ta-text-secondary)}\n"] }]
+            args: [{ selector: 'ta-guard', standalone: true, imports: [AsyncPipe, FontIconComponent, ButtonComponent, TranslatePipe], template: "@let isValid = this.isGuardValid$() | async;\n\n<div class=\"guard\">\n  @if (isValid || this.preview()) {\n  <div class=\"guard-content\" [class.guard-content--preview]=\"!isValid && this.preview()\">\n    <div class=\"guard-projected\">\n      <ng-content></ng-content>\n    </div>\n\n    @if (!isValid && this.preview()) {\n    <div class=\"guard-overlay\">\n      <div class=\"guard-overlay-cta\">\n        <p class=\"guard-overlay-title\">{{ \"user.guard.preview.title\" | translate }}</p>\n        <p class=\"guard-overlay-subtitle\">{{ \"user.guard.preview.subtitle\" | translate }}</p>\n        <div class=\"flex-row g-space-sm\">\n          <ta-button [type]=\"'secondary'\" (action)=\"this.goToRegister()\">\n            {{ \"user.register\" | translate }}\n          </ta-button>\n          <ta-button (action)=\"this.goToLogin()\">\n            {{ \"user.login\" | translate }}\n          </ta-button>\n        </div>\n      </div>\n    </div>\n    }\n  </div>\n  } @if (!isValid && !this.preview() && this.canDisplayErrorMessage()) {\n  <div class=\"guard-no-valid ta-c\">\n    <ta-font-icon name=\"close-tool\" size=\"md\"></ta-font-icon>\n    {{ \"user.guard.content\" | translate }}\n\n    @if (this.level() === 'authenticated') {\n    <ta-button (action)=\"this.goToLogin()\">{{ \"user.login\" | translate }}</ta-button>\n    }\n  </div>\n  }\n</div>\n", styles: [":host{display:block}.guard-content--preview{position:relative;overflow:hidden;min-height:200px}.guard-content--preview .guard-projected{opacity:.25;pointer-events:none;-webkit-user-select:none;user-select:none}.guard-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,var(--ta-surface-secondary) 80%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:var(--ta-space-xl)}.guard-overlay-cta{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);text-align:center;max-width:440px}.guard-overlay-title{font-size:var(--ta-font-h3-default-size);font-weight:var(--ta-font-h3-default-weight);color:var(--ta-text-primary);margin:0}.guard-overlay-subtitle{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-default-weight);color:var(--ta-text-secondary);margin:0}.guard-no-valid{display:flex;flex-direction:column;align-items:center;gap:var(--ta-space-md);padding:var(--ta-space-xl);color:var(--ta-text-secondary)}\n"] }]
         }], ctorParameters: () => [] });
 
 const TA_LANGUAGES = new InjectionToken('TaLanguages', {
@@ -544,26 +542,26 @@ class TaAuth0Service extends TaAuthService {
         this._translation = inject(TaTranslationService);
         this._http = inject(HttpClient);
         this._authClientConfig = inject(AuthClientConfig);
-        this._auth.user$
+        this._registerSubscription(this._auth.user$
             .pipe(filter(isNonNullable), distinct(user => user?.sub), tap(user => this.user$.next(user || null)), tap(user => {
             Logger.LogInfo('user info', user);
             if (user) {
                 this._permissionsService.set(null, true);
             }
         }))
-            .subscribe();
-        this._auth.error$
+            .subscribe());
+        this._registerSubscription(this._auth.error$
             .pipe(tap(errors => {
             this.isLoading$.next(false);
             Logger.LogError('[USERSERVICE] error on authentication', errors);
         }))
-            .subscribe();
-        this._auth.appState$
+            .subscribe());
+        this._registerSubscription(this._auth.appState$
             .pipe(tap(state => {
             Logger.LogInfo('[USERSERVICE] state', state);
         }))
-            .subscribe();
-        this._auth.isAuthenticated$
+            .subscribe());
+        this._registerSubscription(this._auth.isAuthenticated$
             .pipe(tap(isAuthenticated => {
             this._serverService.isAuthenticated = isAuthenticated;
             if (isAuthenticated) {
@@ -574,7 +572,7 @@ class TaAuth0Service extends TaAuthService {
                 this.isLoading$.next(false);
             }
         }))
-            .subscribe();
+            .subscribe());
     }
     fetchUserProfile$() {
         return this._userService.fetchUserProfile$().pipe(tap(() => this.isLoading$.next(false)));

@@ -4,8 +4,8 @@ import { TaAbstractInputComponent } from '@ta/form-input';
 import { AddressLocality } from '@ta/utils';
 import * as i0 from "@angular/core";
 export declare class InputAddressComponent extends TaAbstractInputComponent<InputAddress> implements OnInit, AfterViewInit, OnDestroy {
-    googleSearchInput?: ElementRef<HTMLInputElement>;
-    private _countryItemTpl;
+    googleSearchInput: import("@angular/core").Signal<ElementRef<HTMLInputElement> | undefined>;
+    private readonly _countryItemTpl;
     searchEnabled: boolean;
     complementInput: InputTextBox<string>;
     countryInput: InputChoices;

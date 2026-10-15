@@ -25,5 +25,6 @@
   "upload.add": "Een document toevoegen",
   "upload.confirm": "Bevestigen",
   "upload.dragndrop": "Sleep uw bestanden hierheen of klik om te uploaden",
-  "validate": "Bevestigen"
+  "validate": "Bevestigen",
+  "switch.novalue": "Geen waarde geselecteerd"
 }

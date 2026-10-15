@@ -25,5 +25,6 @@
   "upload.add": "Ein Dokument hinzufügen",
   "upload.confirm": "Bestätigen",
   "upload.dragndrop": "Dateien hierher ziehen oder klicken zum Hochladen",
-  "validate": "Bestätigen"
+  "validate": "Bestätigen",
+  "switch.novalue": "Kein Wert ausgewählt"
 }

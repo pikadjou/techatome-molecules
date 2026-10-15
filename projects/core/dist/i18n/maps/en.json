@@ -3,5 +3,9 @@
   "noResults": "No results found",
   "markers": "Markers",
   "zoom.in": "Zoom in",
-  "zoom.out": "Zoom out"
+  "zoom.out": "Zoom out",
+  "route.summary": "Route summary",
+  "route.details": "Route details",
+  "route.distance": "Distance",
+  "route.duration": "Estimated duration"
 }

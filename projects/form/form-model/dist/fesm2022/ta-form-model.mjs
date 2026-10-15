@@ -317,7 +317,9 @@ class InputWysiswyg extends InputBase {
             try {
                 this.value = JSON.parse(options.stringValue);
             }
-            catch (e) { }
+            catch {
+                // stringValue illisible : la valeur reste vide
+            }
         }
     }
 }

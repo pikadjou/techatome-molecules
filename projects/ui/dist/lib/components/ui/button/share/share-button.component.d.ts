@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { TaSizes, TaState } from "@ta/styles";
 import * as i0 from "@angular/core";
 export declare class ShareButtonComponent {
@@ -26,7 +25,7 @@ export declare class ShareButtonComponent {
     /**
      * Event emitted when button is clicked
      */
-    action: EventEmitter<any>;
+    action: import("@angular/core").OutputEmitterRef<void>;
     constructor();
     handleClick(): Promise<void>;
     private _sizeMap;

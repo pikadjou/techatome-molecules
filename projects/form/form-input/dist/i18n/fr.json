@@ -25,5 +25,6 @@
   "upload.add": "Ajouter un document",
   "upload.confirm": "Confirmer",
   "upload.dragndrop": "Glissez ou placez vos fichiers ici",
-  "validate": "Confirmer"
+  "validate": "Confirmer",
+  "switch.novalue": "Aucune valeur sélectionnée"
 }
