@@ -1,0 +1,27 @@
+@use 'ta/utils/mixins/flex';
+@use 'ta/utils/mixins/common';
+@use 'ta/utils/mixins/mediaQueriesRanges' as mq;
+
+/// État des notifications push de cet appareil : texte à gauche, geste à droite sur grand écran.
+.web-push-card {
+  @include flex.flex-column();
+  gap: common.get-var(space, md);
+
+  @include mq.from-key(md) {
+    @include flex.flex-row();
+    @include flex.align-center();
+    @include flex.space-between();
+    gap: common.get-var(space, lg);
+  }
+}
+
+.web-push-card__text {
+  @include flex.flex-column();
+  @include flex.flex-fill();
+  gap: common.get-var(space, xs);
+  min-width: 0;
+}
+
+.web-push-card__action {
+  flex-shrink: 0;
+}

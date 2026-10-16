@@ -13,7 +13,7 @@ export class TaDeviceNetworkService {
 
   private _delayToDisplayNewNotification: number = 10 * 1000; // in ms
   private _state: boolean = true;
-  private _timeoutActive: NodeJS.Timeout | null = null;
+  private _timeoutActive: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {}
 

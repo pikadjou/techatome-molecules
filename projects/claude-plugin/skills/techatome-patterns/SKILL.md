@@ -1467,9 +1467,8 @@ export class MyEntityService extends taBaseService {
   }
 
   public create$(payload: MyCreationPayloadInput) {
-    return this._graphService.mutate<MyEntity>(
+    return this._graphService.mutateBuilder<MyEntity>(
       CREATE_ENTITY(payload),
-      'createMyEntity',
       graphEndpoint.clientName,
       ['myEntities'] // cache keys à invalider
     );
@@ -1477,7 +1476,7 @@ export class MyEntityService extends taBaseService {
 
   public update$(payload: Partial<MyModifierPayloadInput>) {
     return this._graphService
-      .mutate<MyEntity>(UPDATE_ENTITY(payload), 'updateMyEntity', graphEndpoint.clientName, ['myEntities'])
+      .mutateBuilder<MyEntity>(UPDATE_ENTITY(payload), graphEndpoint.clientName, ['myEntities'])
       .pipe(mergeMap(() => this.fetchEntity$(payload.id ?? '')));
   }
 }
@@ -2190,49 +2189,38 @@ export function myEntityByOwnerQuery(input: GraphQueryInput<MyEntity>): GraphPay
 
 #### 5.4 Mutations GraphQL — `mutation.ts`
 
+Une mutation à un argument passe par `createMutation` : le payload porte son `name`, que
+`mutateBuilder` relit dans la réponse. `Apollo_gql` + `GraphMutationPayload` + `mutate` ne restent
+que pour les mutations à plusieurs arguments.
+
 ```typescript
-import { Apollo_gql, GraphMutationPayload } from '@ta/server';
+import { GraphMutationBuilderPayload, createMutation } from '@ta/server';
 
 import { myEntityProps } from './dto/my-entity';
 import { CreateMyEntityInput, UpdateMyEntityInput } from './form/dto/myEntityInput';
 
-export function createMyEntity(entity: Partial<CreateMyEntityInput>): GraphMutationPayload {
-  return {
-    mutation: Apollo_gql`
-      mutation CreateMyEntity($entity: CreateMyEntityInput!) {
-        createMyEntity(input: $entity) {
-          ${myEntityProps.get('id')}
-        }
-      }
-    `,
-    variables: { entity },
-  };
+// createMyEntity(input: CreateMyEntityInput!) { id }
+export function createMyEntity(entity: Partial<CreateMyEntityInput>): GraphMutationBuilderPayload {
+  return createMutation('createMyEntity', {
+    argument: 'input',
+    props: myEntityProps.get('id'),
+    type: 'CreateMyEntityInput!',
+    value: entity,
+  });
 }
 
-export function updateMyEntity(entity: Partial<UpdateMyEntityInput>): GraphMutationPayload {
-  return {
-    mutation: Apollo_gql`
-      mutation UpdateMyEntity($entity: UpdateMyEntityInput!) {
-        updateMyEntity(input: $entity) {
-          ${myEntityProps.get('id')}
-        }
-      }
-    `,
-    variables: { entity },
-  };
+export function updateMyEntity(entity: Partial<UpdateMyEntityInput>): GraphMutationBuilderPayload {
+  return createMutation('updateMyEntity', {
+    argument: 'input',
+    props: myEntityProps.get('id'),
+    type: 'UpdateMyEntityInput!',
+    value: entity,
+  });
 }
 
-export function deleteMyEntity(id: string): GraphMutationPayload {
-  return {
-    mutation: Apollo_gql`
-      mutation DeleteMyEntity($id: ID!) {
-        deleteMyEntity(id: $id) {
-          ${myEntityProps.get('id')}
-        }
-      }
-    `,
-    variables: { id },
-  };
+// deleteMyEntity(id: ID!) { id }
+export function deleteMyEntity(id: string): GraphMutationBuilderPayload {
+  return createMutation('deleteMyEntity', { argument: 'id', props: myEntityProps.get('id'), type: 'ID!', value: id });
 }
 ```
 
@@ -2307,9 +2295,8 @@ export class MyEntityService extends TaBaseService {
 
   public createMyEntity$(entity: Partial<CreateMyEntityInput>) {
     return this._graphService
-      .mutate<MyEntity>(
+      .mutateBuilder<MyEntity>(
         createMyEntity(entity),
-        'createMyEntity',
         graphEndpoint.clientName,
         ['myEntities'] // ← caches Apollo à invalider après mutation
       )
@@ -2321,9 +2308,7 @@ export class MyEntityService extends TaBaseService {
 
   public updateMyEntity$(id: string, entity: Partial<UpdateMyEntityInput>) {
     return this._graphService
-      .mutate<MyEntity>(updateMyEntity({ ...entity, myEntityId: id }), 'updateMyEntity', graphEndpoint.clientName, [
-        'myEntities',
-      ])
+      .mutateBuilder<MyEntity>(updateMyEntity({ ...entity, myEntityId: id }), graphEndpoint.clientName, ['myEntities'])
       .pipe(
         filter(isNonNullable),
         mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))
@@ -2332,7 +2317,7 @@ export class MyEntityService extends TaBaseService {
 
   public deleteMyEntity$(id: string) {
     return this._graphService
-      .mutate<unknown>(deleteMyEntity(id), 'deleteMyEntity', graphEndpoint.clientName, ['myEntities'])
+      .mutateBuilder<unknown>(deleteMyEntity(id), graphEndpoint.clientName, ['myEntities'])
       .pipe(
         filter(isNonNullable),
         mergeMap(result => this.fetchMyEntities$().pipe(map(() => result)))

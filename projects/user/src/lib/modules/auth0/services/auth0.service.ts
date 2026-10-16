@@ -6,7 +6,7 @@ import { Observable, distinct, filter, switchMap, take, tap } from 'rxjs';
 
 import { Logger } from '@ta/server';
 import { TaTranslationService } from '@ta/translation';
-import { isNonNullable } from '@ta/utils';
+import { TA_BEFORE_LOGOUT, isNonNullable, runBeforeLogoutHooks } from '@ta/utils';
 
 import { TaAuthService } from '../../user/services/auth.service';
 import { TA_USER_SERVICE } from '../../user/services/user.service';
@@ -23,6 +23,7 @@ export class TaAuth0Service extends TaAuthService {
   private _translation = inject(TaTranslationService);
   private _http = inject(HttpClient);
   private _authClientConfig = inject(AuthClientConfig);
+  private _beforeLogout = inject(TA_BEFORE_LOGOUT, { optional: true }) ?? [];
 
   constructor() {
     super();
@@ -123,8 +124,13 @@ export class TaAuth0Service extends TaAuthService {
     });
   }
   public logout() {
-    return new Promise<null>(resolve => {
-      this._auth.logout();
-    });
+    // Les hooks (désinscription push…) partent tant que le jeton est valide. La promesse rendue ne se
+    // résout jamais : Auth0 redirige, et `my-account` enchaîne un `location.reload()` qui ferait doublon.
+    return runBeforeLogoutHooks(this._beforeLogout).then(
+      () =>
+        new Promise<null>(() => {
+          this._auth.logout();
+        })
+    );
   }
 }

@@ -7,7 +7,8 @@
 - `fetchPagedQueryList<T>(payload, node, context): Observable<GraphReponsePaged<T>>` — liste paginée
 - `fetchQuery<T>(payload, node, context): Observable<T>` — item unique
 - `fetchQueryBuilder<T>(payload, context): Observable<T>` — query builder générique
-- `mutate<T>(payload, mutationName, context, clearCache?): Observable<T>` — mutation
+- `mutate<T>(payload, mutationName, context, clearCache?): Observable<T>` — mutation écrite à la main
+- `mutateBuilder<T>(payload, context, clearCache?): Observable<T>` — mutation issue de `createMutation()`, relue sous `payload.name`
 - `clearCache(key)` — vider le cache Apollo pour un champ
 - `registerGraphEndpoint(endpoint, options?)` — enregistrer un endpoint Apollo
 
@@ -35,9 +36,12 @@ this._graphService.fetchQuery<User>(
   'userService'
 );
 
-// Mutation
+// Mutation à un argument (createMutation)
+this._graphService.mutateBuilder<User>(UPDATE_USER(input), 'userService', ['users']);
+
+// Mutation écrite à la main
 this._graphService.mutate<User>(
-  { mutation: UPDATE_USER, variables: { input } },
+  { mutation: UPDATE_USER_GQL, variables: { input, notify } },
   'updateUser',
   'userService',
   ['users'] // cache keys à vider

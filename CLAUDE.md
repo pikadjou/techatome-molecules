@@ -329,8 +329,8 @@ See `.claude/reference/forms-reference.md` for all 25+ input types and complete 
 - Use `createQuery<T>()` for every read query; paginate with `paging: { mode: 'offset', skip }` (`totalCount` + `items`)
   or `paging: { mode: 'cursor', first, after }` (Relay `pageInfo` + `nodes`, flatten with `toPage()`); query-specific
   arguments go in `args: { name: { type: 'Boolean!', value } }`
-- Use `gql` + `GraphMutationPayload` for mutations
-- Use `TaGraphService` methods: `fetchQueryList`, `fetchQuery`, `fetchQueryPaged`, `mutate`
+- Use `createMutation(name, { argument, type, value, props })` + `mutateBuilder` for single-argument mutations; fall back to `gql` + `GraphMutationPayload` + `mutate` only for several arguments
+- Use `TaGraphService` methods: `fetchQueryList`, `fetchQuery`, `fetchQueryPaged`, `mutate`, `mutateBuilder`
 - Filter with `WhereType<T>`: `{ field: { eq: value } }`, `{ field: { contains: str } }`
 - Order with `OrderType<T>`: `{ field: 'ASC' | 'DESC' }`
 
@@ -389,8 +389,8 @@ Providers: `provideGTM()`, `provideGoogleMaps({ apiKey, libraries? })` (token `T
 
 ### @ta/server
 `TaGraphService`, `TaServerService`, `TaServerErrorService`, `BaseService`, `Logger`, `TaStrapiService`, `BaseStrapiService`, `CacheInterceptor`
-Helpers: `createQuery<T>()` (offset or cursor paging), `toPage()`, `appendPage()`, `handleRequest()`
-Types: `GraphPayload`, `GraphMutationPayload`, `GraphQueryInput<T>`, `WhereType<T>`, `OrderType<T>`, `GraphReponsePaged<T>`, `GraphEndpoint`, `IGraphConfig`
+Helpers: `createQuery<T>()` (offset or cursor paging), `createMutation()`, `toPage()`, `appendPage()`, `handleRequest()`
+Types: `GraphPayload`, `GraphMutationPayload`, `GraphMutationBuilderPayload`, `GraphQueryInput<T>`, `WhereType<T>`, `OrderType<T>`, `GraphReponsePaged<T>`, `GraphEndpoint`, `IGraphConfig`
 Providers: `provideServer()`, `provideStrapi()`
 
 ### @ta/utils

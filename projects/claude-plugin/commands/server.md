@@ -36,8 +36,9 @@ Format : nom (`Class`) — description courte. Le fichier de référence est `re
 
 ### Services GraphQL
 
-- `TaGraphService` — service Apollo/GraphQL principal (fetchQueryList, fetchQuery, fetchQueryPaged, fetchQueryBuilder, mutate).
+- `TaGraphService` — service Apollo/GraphQL principal (fetchQueryList, fetchQuery, fetchQueryPaged, fetchQueryBuilder, mutate, mutateBuilder).
 - `createQuery<T>()` — helper pour définir une query GraphQL typée ; `paging: { mode: 'offset', skip }` ou `{ mode: 'cursor', first, after }` pour paginer, `args` pour les arguments propres à la requête.
+- `createMutation()` — helper pour une mutation à un argument (`argument`, `type`, `value`, `props`) ; à passer à `mutateBuilder`.
 
 ### Services HTTP
 
@@ -62,7 +63,7 @@ Format : nom (`Class`) — description courte. Le fichier de référence est `re
 
 ### Types et interfaces
 
-- `GraphPayload` / `GraphQueryPayload` / `GraphMutationPayload` — modèles de payload.
+- `GraphPayload` / `GraphQueryPayload` / `GraphMutationPayload` / `GraphMutationBuilderPayload` — modèles de payload.
 - `GraphEndpoint` / `IGraphConfig` — configuration d'endpoint.
 - `WhereType<T>` — filtres HotChocolate (`{ field: { eq/contains/in/neq/gte/lt: value } }`).
 - `OrderType<T>` — tri (`{ field: 'ASC' | 'DESC' }`).
