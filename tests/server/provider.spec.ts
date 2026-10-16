@@ -1,3 +1,5 @@
+import { Provider } from '@angular/core';
+
 import { provideServer, provideStrapi } from '@lib/server/provider';
 
 describe('provideServer', () => {
@@ -8,7 +10,7 @@ describe('provideServer', () => {
     });
 
     expect(Array.isArray(result)).toBeTrue();
-    expect(result.length).toBeGreaterThan(0);
+    expect((result as Provider[]).length).toBeGreaterThan(0);
   });
 
   it('should work with empty config', () => {
@@ -38,6 +40,6 @@ describe('provideStrapi', () => {
     });
 
     expect(Array.isArray(result)).toBeTrue();
-    expect(result.length).toBeGreaterThan(0);
+    expect((result as Provider[]).length).toBeGreaterThan(0);
   });
 });

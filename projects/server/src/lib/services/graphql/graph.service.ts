@@ -9,7 +9,12 @@ import { isURL } from '@ta/utils';
 
 import { TaServerErrorService } from '../error.service';
 import { Logger } from '../logger';
-import { GraphMutationPayload, GraphPayload, GraphQueryPayload } from './models/graphPayload';
+import {
+  GraphMutationBuilderPayload,
+  GraphMutationPayload,
+  GraphPayload,
+  GraphQueryPayload,
+} from './models/graphPayload';
 import { GraphReponseData } from './models/graphResponseData';
 import { GraphReponsePagedData } from './models/graphResponsePagedData';
 import { ReponseMutationData } from './models/responseData';
@@ -295,6 +300,10 @@ export class TaGraphService {
         return throwError(() => err);
       })
     );
+  }
+
+  public mutateBuilder<T>(payload: GraphMutationBuilderPayload, context: string, clearCache?: string[]) {
+    return this.mutate<T>(payload, payload.name, context, clearCache);
   }
 
   public registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions) {

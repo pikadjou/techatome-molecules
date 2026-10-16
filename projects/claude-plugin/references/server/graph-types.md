@@ -24,7 +24,7 @@ interface GraphPayload {
 ```
 
 ## `GraphMutationPayload`
-Payload d'une mutation :
+Payload d'une mutation écrite à la main (plusieurs arguments) :
 ```typescript
 interface GraphMutationPayload {
   mutation: TypedDocumentNode;
@@ -35,6 +35,27 @@ const payload: GraphMutationPayload = {
   mutation: gql`mutation UpdateUser($input: UserInput!) { updateUser(input: $input) { id } }`,
   variables: { input: formData }
 };
+```
+
+## `GraphMutationBuilderPayload`
+Payload produit par `createMutation` : un `GraphMutationPayload` plus `name`, le champ racine que
+`mutateBuilder` relit dans la réponse.
+```typescript
+interface GraphMutationBuilderPayload extends GraphMutationPayload {
+  name: string;
+}
+```
+
+## `GraphMutationInput`
+Options pour `createMutation` :
+```typescript
+interface GraphMutationInput {
+  value: unknown;        // valeur de l'argument
+  argument?: string;     // nom de l'argument (défaut: "payload")
+  type?: string;         // type GraphQL (défaut: <Argument>Input! ou <Name>PayloadInput!)
+  props?: string;        // champs relus (défaut: "id", "" pour un scalaire)
+  operation?: string;    // nom de l'opération (défaut: nom capitalisé)
+}
 ```
 
 ## `GraphQueryInput<T>`

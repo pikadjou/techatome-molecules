@@ -28,13 +28,13 @@ export class TaWebPushGraphApi extends TaBaseService implements ITaWebPushApi {
 
   public register$(input: PushSubscriptionInput): Observable<PushSubscriptionDto> {
     return this._graphService
-      .mutate<PushSubscriptionDto>(registerPushSubscription(input), 'registerPushSubscription', this._clientName)
+      .mutateBuilder<PushSubscriptionDto>(registerPushSubscription(input), this._clientName)
       .pipe(filter(isNonNullable));
   }
 
   public unregister$(endpoint: string): Observable<boolean> {
     return this._graphService
-      .mutate<boolean>(unregisterPushSubscription(endpoint), 'unregisterPushSubscription', this._clientName)
+      .mutateBuilder<boolean>(unregisterPushSubscription(endpoint), this._clientName)
       .pipe(map(result => result === true));
   }
 }

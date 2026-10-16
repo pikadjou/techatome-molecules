@@ -41,8 +41,7 @@ export interface GraphQueryArgument {
  * - `cursor` : `first`/`after` au format Relay, la réponse porte `pageInfo` et `nodes` (voir `toPage`).
  */
 export type GraphQueryPaging =
-  | { mode: 'offset'; skip?: number | null }
-  | { mode: 'cursor'; first?: number | null; after?: string | null };
+  { mode: 'offset'; skip?: number | null } | { mode: 'cursor'; first?: number | null; after?: string | null };
 
 export interface GraphQueryInput<T = any> {
   props: string;
@@ -65,6 +64,22 @@ export interface GraphPayload extends GraphQueryPayload {
 export interface GraphMutationPayload {
   mutation: TypedDocumentNode<unknown, unknown>;
   variables: any;
+}
+
+export interface GraphMutationBuilderPayload extends GraphMutationPayload {
+  name: string;
+}
+
+/**
+ * L'unique argument d'une mutation : son nom (`payload` par défaut), son type GraphQL
+ * (déduit du nom sinon), sa valeur et les champs à relire (`id` par défaut, `''` pour un scalaire).
+ */
+export interface GraphMutationInput {
+  argument?: string;
+  type?: string;
+  value: unknown;
+  props?: string;
+  operation?: string;
 }
 
 /**
@@ -133,5 +148,36 @@ export function createQuery<T>(name: string, input?: GraphQueryInput<T>): GraphP
       }
     `,
     variables,
+  };
+}
+
+/**
+ * Construit une mutation à un argument, nommée d'après son champ racine : `mutateBuilder` relit la
+ * réponse sous `name` sans qu'on le répète.
+ *
+ * ```ts
+ * createMutation('registerPushSubscription', {
+ *   argument: 'input',
+ *   type: 'RegisterPushSubscriptionInput!',
+ *   value: input,
+ *   props: 'id lastSeenAt',
+ * });
+ * ```
+ */
+export function createMutation(name: string, input: GraphMutationInput): GraphMutationBuilderPayload {
+  const argument = input.argument ?? 'payload';
+  const type =
+    input.type ??
+    (input.argument ? `${capitalizeFirstLetter(input.argument)}Input!` : `${capitalizeFirstLetter(name)}PayloadInput!`);
+  const props = input.props ?? 'id';
+
+  return {
+    mutation: gql`
+      mutation ${input.operation ?? capitalizeFirstLetter(name)}($${argument}: ${type}) {
+        ${name}(${argument}: $${argument}) ${props ? `{ ${props} }` : ''}
+      }
+    `,
+    name,
+    variables: { [argument]: input.value },
   };
 }

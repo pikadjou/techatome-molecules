@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { ApolloError } from '@apollo/client/errors';
 import { Apollo } from 'apollo-angular';
@@ -8,8 +8,8 @@ import { HttpLink } from 'apollo-angular/http';
 import { of, throwError } from 'rxjs';
 
 import { TaServerErrorService } from '@lib/server/services/error.service';
-import { GRAPHQL_SERVER_CONFIG } from '@lib/server/services/graphql/models/graphConfig';
 import { TaGraphService } from '@lib/server/services/graphql/graph.service';
+import { GRAPHQL_SERVER_CONFIG } from '@lib/server/services/graphql/models/graphConfig';
 
 describe('TaGraphService', () => {
   let service: TaGraphService;
@@ -57,18 +57,18 @@ describe('TaGraphService', () => {
   });
 
   describe('fetchQueryList', () => {
-    it('should fetch a query list and return the node data', (done) => {
+    it('should fetch a query list and return the node data', done => {
       const mockData = { testNode: [{ id: 1 }, { id: 2 }] };
       apollo.query.and.returnValue(of({ data: mockData, loading: false, networkStatus: 7 }));
 
       const payload = { query: {}, variables: {} };
-      service.fetchQueryList(payload, 'testNode', 'testContext').subscribe((result) => {
+      service.fetchQueryList(payload, 'testNode', 'testContext').subscribe(result => {
         expect(result).toEqual([{ id: 1 }, { id: 2 }]);
         done();
       });
     });
 
-    it('should call error service on Apollo error', (done) => {
+    it('should call error service on Apollo error', done => {
       const mockError = new ApolloError({
         errorMessage: 'Test error',
         networkError: { error: { errors: [] } } as any,
@@ -77,7 +77,7 @@ describe('TaGraphService', () => {
 
       const payload = { query: {}, variables: {} };
       service.fetchQueryList(payload, 'testNode', 'testContext').subscribe({
-        error: (err) => {
+        error: err => {
           expect(errorService.addError).toHaveBeenCalled();
           done();
         },
@@ -86,7 +86,7 @@ describe('TaGraphService', () => {
   });
 
   describe('fetchPagedQueryList', () => {
-    it('should fetch a paged query list and return the node data', (done) => {
+    it('should fetch a paged query list and return the node data', done => {
       const mockData = {
         testNode: {
           items: [{ id: 1 }],
@@ -97,7 +97,7 @@ describe('TaGraphService', () => {
       apollo.query.and.returnValue(of({ data: mockData, loading: false, networkStatus: 7 }));
 
       const payload = { query: {}, variables: {} };
-      service.fetchPagedQueryList(payload, 'testNode', 'testContext').subscribe((result) => {
+      service.fetchPagedQueryList(payload, 'testNode', 'testContext').subscribe(result => {
         expect(result).toEqual(mockData.testNode);
         done();
       });
@@ -105,12 +105,12 @@ describe('TaGraphService', () => {
   });
 
   describe('fetchQuery', () => {
-    it('should fetch a single query and return the node data', (done) => {
+    it('should fetch a single query and return the node data', done => {
       const mockData = { testNode: { id: 1, name: 'test' } };
       apollo.query.and.returnValue(of({ data: mockData, loading: false, networkStatus: 7 }));
 
       const payload = { query: {}, variables: {} };
-      service.fetchQuery(payload, 'testNode', 'testContext').subscribe((result) => {
+      service.fetchQuery(payload, 'testNode', 'testContext').subscribe(result => {
         expect(result).toEqual({ id: 1, name: 'test' });
         done();
       });
@@ -118,20 +118,20 @@ describe('TaGraphService', () => {
   });
 
   describe('mutate', () => {
-    it('should perform a mutation and return the result data', (done) => {
+    it('should perform a mutation and return the result data', done => {
       const mockData = { createItem: { id: 1, name: 'new' } };
-      apollo.mutate.and.returnValue(of({ data: mockData }));
+      apollo.mutate.and.returnValue(of({ data: mockData, loading: false }));
 
       const payload = { mutation: {} as any, variables: {} };
-      service.mutate(payload, 'createItem', 'testContext').subscribe((result) => {
+      service.mutate(payload, 'createItem', 'testContext').subscribe(result => {
         expect(result).toEqual({ id: 1, name: 'new' });
         done();
       });
     });
 
-    it('should clear specified cache keys after mutation', (done) => {
+    it('should clear specified cache keys after mutation', done => {
       const mockData = { createItem: { id: 1 } };
-      apollo.mutate.and.returnValue(of({ data: mockData }));
+      apollo.mutate.and.returnValue(of({ data: mockData, loading: false }));
 
       spyOn(service, 'clearCache');
 
@@ -142,7 +142,7 @@ describe('TaGraphService', () => {
       });
     });
 
-    it('should call error service on mutation error', (done) => {
+    it('should call error service on mutation error', done => {
       const mockError = new ApolloError({
         errorMessage: 'Mutation error',
         networkError: { error: { errors: [] } } as any,
@@ -159,13 +159,37 @@ describe('TaGraphService', () => {
     });
   });
 
+  describe('mutateBuilder', () => {
+    it('reads the response under the payload name', done => {
+      const mockData = { createItem: { id: 1, name: 'new' } };
+      apollo.mutate.and.returnValue(of({ data: mockData, loading: false }));
+
+      const payload = { mutation: {} as any, name: 'createItem', variables: {} };
+      service.mutateBuilder(payload, 'testContext').subscribe(result => {
+        expect(result).toEqual({ id: 1, name: 'new' });
+        done();
+      });
+    });
+
+    it('forwards the cache keys to clear', done => {
+      apollo.mutate.and.returnValue(of({ data: { createItem: { id: 1 } }, loading: false }));
+      spyOn(service, 'clearCache');
+
+      const payload = { mutation: {} as any, name: 'createItem', variables: {} };
+      service.mutateBuilder(payload, 'testContext', ['cacheKey1']).subscribe(() => {
+        expect(service.clearCache).toHaveBeenCalledWith('cacheKey1');
+        done();
+      });
+    });
+  });
+
   describe('fetchQueryBuilder', () => {
-    it('should fetch query builder results and return data by name', (done) => {
+    it('should fetch query builder results and return data by name', done => {
       const mockData = { myQuery: { id: 1, value: 'test' } };
       apollo.query.and.returnValue(of({ data: mockData, loading: false, networkStatus: 7 }));
 
       const payload = { name: 'myQuery', query: {}, variables: {} };
-      service.fetchQueryBuilder(payload, 'testContext').subscribe((result) => {
+      service.fetchQueryBuilder(payload, 'testContext').subscribe(result => {
         expect(result).toEqual({ id: 1, value: 'test' });
         done();
       });
