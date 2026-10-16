@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Component, Injectable, input, output, viewChild, inject, computed, ViewEncapsulation, CUSTOM_ELEMENTS_SCHEMA, signal, InjectionToken, Injector, Optional, Inject, contentChild } from '@angular/core';
+import { Component, Injectable, input, output, viewChild, inject, computed, signal, ViewEncapsulation, CUSTOM_ELEMENTS_SCHEMA, InjectionToken, Injector, Optional, Inject, contentChild } from '@angular/core';
 import * as i1$2 from '@angular/common';
 import { NgClass, DatePipe, DecimalPipe, NgTemplateOutlet, NgStyle, AsyncPipe, CommonModule } from '@angular/common';
 import * as i1 from '@ngx-translate/core';
@@ -12,7 +12,7 @@ import { Logger, TaBaseService } from '@ta/server';
 import * as i1$1 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { LocalStorage } from 'storage-manager-js';
-import { TaPwaService, TaDeviceInfoService } from '@ta/capacitor';
+import { TaPwaService, TaWebPushService, TaDeviceInfoService } from '@ta/capacitor';
 import * as i2 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
 import { combineLatest, startWith, map, Subject } from 'rxjs';
@@ -1635,6 +1635,77 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             args: [{ selector: "ta-toggle-card", standalone: true, imports: [NgClass], template: "<div\n  class=\"toggle-card\"\n  [ngClass]=\"{\n    'toggle-card--active': isActive(),\n    'toggle-card--disabled': disabled()\n  }\"\n  (click)=\"this.onToggle()\"\n>\n  <div class=\"toggle-card__content\">\n    @if (icon()) {\n    <div class=\"toggle-card__icon\">\n      <i [class]=\"'icon-' + icon()\"></i>\n    </div>\n    }\n    <div class=\"toggle-card__text\">\n      <div class=\"toggle-card__title\">{{ this.title() }}</div>\n      @if (description()) {\n      <div class=\"toggle-card__description\">{{ this.description() }}</div>\n      }\n    </div>\n  </div>\n  <div class=\"toggle-card__indicator\">\n    <div\n      class=\"toggle-card__check\"\n      [ngClass]=\"{ 'toggle-card__check--active': isActive() }\"\n    >\n      @if (isActive()) {\n      <span>\u2713</span>\n      }\n    </div>\n  </div>\n</div>\n", styles: [".toggle-card{display:flex;align-items:center;justify-content:space-between;padding:var(--ta-components-toggle-card-padding);cursor:pointer;transition:all var(--ta-transition-base);border:1.5px solid var(--ta-border-tertiary);border-radius:var(--ta-radius-rounded);background-color:var(--ta-surface-primary);box-shadow:var(--ta-shadow-black-sm)}.toggle-card:hover:not(.toggle-card--disabled){border-color:var(--ta-border-brand-primary);background-color:var(--ta-surface-secondary);box-shadow:var(--ta-shadow-black-md);transform:translateY(-1px)}.toggle-card--active{border-color:var(--ta-border-brand-primary);background-color:var(--ta-surface-secondary);box-shadow:var(--ta-shadow-brand-sm)}.toggle-card--active:hover{border-color:var(--ta-border-hover-primary);background-color:var(--ta-surface-tertiary);box-shadow:var(--ta-shadow-brand-md)}.toggle-card--disabled{background-color:var(--ta-surface-tertiary);border-color:var(--ta-border-tertiary);cursor:not-allowed;opacity:.6}.toggle-card--disabled .toggle-card__title,.toggle-card--disabled .toggle-card__description{color:var(--ta-text-secondary)}.toggle-card__content{display:flex;align-items:center;flex:1}.toggle-card__icon{margin-right:var(--ta-space-md);color:var(--ta-icon-secondary);transition:color var(--ta-transition-fast)}.toggle-card--active .toggle-card__icon{color:var(--ta-icon-brand-primary)}.toggle-card__text{flex:1}.toggle-card__title{font-size:var(--ta-font-body-md-default-size);font-weight:var(--ta-font-body-md-bold-weight);color:var(--ta-text-primary);margin:0 0 var(--ta-space-xs) 0}.toggle-card__description{font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-default-weight);color:var(--ta-text-secondary);margin:0}.toggle-card__indicator{margin-left:var(--ta-space-md)}.toggle-card__check{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ta-border-tertiary);background-color:var(--ta-surface-primary);display:flex;align-items:center;justify-content:center;transition:all var(--ta-transition-base)}.toggle-card__check--active{background-color:var(--ta-surface-brand-primary);border-color:var(--ta-border-brand-primary);color:var(--ta-text-invert-primary)}\n"] }]
         }] });
 
+class BannerComponent extends TaBaseComponent {
+    constructor() {
+        super();
+        this.inline = input(false);
+        this.message = input.required();
+        this.type = input("warning");
+        TaTranslationUI.getInstance();
+    }
+    getClasses() {
+        return {
+            "banner--inline": this.inline(),
+            [`banner--${this.type()}`]: true,
+        };
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BannerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BannerComponent, isStandalone: true, selector: "ta-banner", inputs: { inline: { classPropertyName: "inline", publicName: "inline", isSignal: true, isRequired: false, transformFunction: null }, message: { classPropertyName: "message", publicName: "message", isSignal: true, isRequired: true, transformFunction: null }, type: { classPropertyName: "type", publicName: "type", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"banner\" [ngClass]=\"this.getClasses()\">\n  {{ this.message() | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color);padding:var(--ta-components-feedback-banner-padding-vertical) var(--ta-components-feedback-banner-padding-horizontal);text-align:center;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);box-shadow:var(--ta-shadow-black-sm)}.banner--inline{position:relative;top:unset;left:unset;right:unset;border-radius:var(--ta-radius-rounded)}.banner--warning{background-color:var(--ta-surface-warning);color:var(--ta-neutral-white)}.banner--success{background-color:var(--ta-surface-success);color:var(--ta-neutral-white)}.banner--alert{background-color:var(--ta-surface-alert);color:var(--ta-neutral-white)}.banner--default{background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "ngmodule", type: TranslateModule }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BannerComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "ta-banner", standalone: true, imports: [NgClass, TranslatePipe, TranslateModule], template: "<div class=\"banner\" [ngClass]=\"this.getClasses()\">\n  {{ this.message() | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color);padding:var(--ta-components-feedback-banner-padding-vertical) var(--ta-components-feedback-banner-padding-horizontal);text-align:center;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);box-shadow:var(--ta-shadow-black-sm)}.banner--inline{position:relative;top:unset;left:unset;right:unset;border-radius:var(--ta-radius-rounded)}.banner--warning{background-color:var(--ta-surface-warning);color:var(--ta-neutral-white)}.banner--success{background-color:var(--ta-surface-success);color:var(--ta-neutral-white)}.banner--alert{background-color:var(--ta-surface-alert);color:var(--ta-neutral-white)}.banner--default{background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color)}\n"] }]
+        }], ctorParameters: () => [] });
+
+class WebPushCardComponent extends TaBaseComponent {
+    constructor() {
+        super();
+        /** Résultat de la demande de permission, après le clic. */
+        this.enabled = output();
+        this.push = inject(TaWebPushService);
+        this.busy = signal(false);
+        this.failed = signal(false);
+        this.state = computed(() => {
+            if (!this.push.isConfigured()) {
+                return 'unsupported';
+            }
+            const permission = this.push.permission();
+            if (permission === 'unsupported') {
+                return this.push.isIos && !this.push.isStandalone ? 'install' : 'unsupported';
+            }
+            if (permission === 'denied') {
+                return 'denied';
+            }
+            if (permission === 'granted' && this.push.isSubscribed()) {
+                return 'active';
+            }
+            return 'ask';
+        });
+        TaTranslationUI.getInstance();
+    }
+    async onEnable() {
+        this.busy.set(true);
+        this.failed.set(false);
+        try {
+            const permission = await this.push.enable();
+            this.failed.set(permission === 'granted' && !this.push.isSubscribed());
+            this.enabled.emit(permission);
+        }
+        catch {
+            this.failed.set(true);
+        }
+        finally {
+            this.busy.set(false);
+        }
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: WebPushCardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: WebPushCardComponent, isStandalone: true, selector: "ta-web-push-card", outputs: { enabled: "enabled" }, usesInheritance: true, ngImport: i0, template: "@if (this.state() !== 'unsupported') {\n  <div class=\"web-push-card\">\n    <div class=\"web-push-card__text\">\n      <ta-title [level]=\"4\">{{ 'ui.push.title' | translate }}</ta-title>\n      @switch (this.state()) {\n        @case ('install') {\n          <ta-text size=\"sm\">{{ 'ui.push.install' | translate }}</ta-text>\n        }\n        @case ('denied') {\n          <ta-text size=\"sm\">{{ 'ui.push.denied' | translate }}</ta-text>\n        }\n        @case ('active') {\n          <ta-text size=\"sm\" color=\"success\">{{ 'ui.push.active' | translate }}</ta-text>\n        }\n        @default {\n          <ta-text size=\"sm\">{{ 'ui.push.description' | translate }}</ta-text>\n        }\n      }\n      @if (this.failed()) {\n        <ta-banner type=\"alert\" [inline]=\"true\" message=\"ui.push.error\"></ta-banner>\n      }\n    </div>\n    @if (this.state() === 'ask') {\n      <ta-button\n        class=\"web-push-card__action\"\n        type=\"secondary\"\n        size=\"small\"\n        icon=\"notifications_active\"\n        [state]=\"this.busy() ? 'disabled' : 'classic'\"\n        (action)=\"this.onEnable()\"\n      >\n        {{ 'ui.push.enable' | translate }}\n      </ta-button>\n    }\n  </div>\n}\n", styles: [".web-push-card{display:flex;flex-direction:column;gap:var(--ta-space-md)}@media screen and (min-width: 768px){.web-push-card{align-items:center;display:flex;flex-direction:row;justify-content:space-between;gap:var(--ta-space-lg)}}.web-push-card__text{flex-direction:column;display:flex;flex:1 1 auto;gap:var(--ta-space-xs);min-width:0}.web-push-card__action{flex-shrink:0}\n"], dependencies: [{ kind: "ngmodule", type: TranslateModule }, { kind: "pipe", type: i1.TranslatePipe, name: "translate" }, { kind: "component", type: BannerComponent, selector: "ta-banner", inputs: ["inline", "message", "type"] }, { kind: "component", type: ButtonComponent, selector: "ta-button", inputs: ["state", "type", "size", "icon", "options", "stopPropagationActivation"], outputs: ["action"] }, { kind: "component", type: TextComponent, selector: "ta-text", inputs: ["size", "isBold", "color"] }, { kind: "component", type: TitleComponent, selector: "ta-title", inputs: ["level", "isTheme", "isBold", "icon"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: WebPushCardComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ta-web-push-card', standalone: true, imports: [TranslateModule, BannerComponent, ButtonComponent, TextComponent, TitleComponent], template: "@if (this.state() !== 'unsupported') {\n  <div class=\"web-push-card\">\n    <div class=\"web-push-card__text\">\n      <ta-title [level]=\"4\">{{ 'ui.push.title' | translate }}</ta-title>\n      @switch (this.state()) {\n        @case ('install') {\n          <ta-text size=\"sm\">{{ 'ui.push.install' | translate }}</ta-text>\n        }\n        @case ('denied') {\n          <ta-text size=\"sm\">{{ 'ui.push.denied' | translate }}</ta-text>\n        }\n        @case ('active') {\n          <ta-text size=\"sm\" color=\"success\">{{ 'ui.push.active' | translate }}</ta-text>\n        }\n        @default {\n          <ta-text size=\"sm\">{{ 'ui.push.description' | translate }}</ta-text>\n        }\n      }\n      @if (this.failed()) {\n        <ta-banner type=\"alert\" [inline]=\"true\" message=\"ui.push.error\"></ta-banner>\n      }\n    </div>\n    @if (this.state() === 'ask') {\n      <ta-button\n        class=\"web-push-card__action\"\n        type=\"secondary\"\n        size=\"small\"\n        icon=\"notifications_active\"\n        [state]=\"this.busy() ? 'disabled' : 'classic'\"\n        (action)=\"this.onEnable()\"\n      >\n        {{ 'ui.push.enable' | translate }}\n      </ta-button>\n    }\n  </div>\n}\n", styles: [".web-push-card{display:flex;flex-direction:column;gap:var(--ta-space-md)}@media screen and (min-width: 768px){.web-push-card{align-items:center;display:flex;flex-direction:row;justify-content:space-between;gap:var(--ta-space-lg)}}.web-push-card__text{flex-direction:column;display:flex;flex:1 1 auto;gap:var(--ta-space-xs);min-width:0}.web-push-card__action{flex-shrink:0}\n"] }]
+        }], ctorParameters: () => [] });
+
 class TrigramComponent {
     constructor() {
         /**
@@ -1729,28 +1800,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
             type: Component,
             args: [{ selector: "ta-users-list", standalone: true, imports: [AsyncPipe, UserLogoComponent], template: "<div class=\"flex-row g-space-xs\">\n  @for (user of this.users() | async; track user.firstname + ' ' + user.lastname)\n  {\n  <ta-user-logo\n    [user]=\"user\"\n    size=\"md\"\n    defaultType=\"trigram\"\n    [attr.title]=\"user.firstname + ' ' + user.lastname\"\n  ></ta-user-logo>\n  }\n</div>\n" }]
         }] });
-
-class BannerComponent extends TaBaseComponent {
-    constructor() {
-        super();
-        this.inline = input(false);
-        this.message = input.required();
-        this.type = input("warning");
-        TaTranslationUI.getInstance();
-    }
-    getClasses() {
-        return {
-            "banner--inline": this.inline(),
-            [`banner--${this.type()}`]: true,
-        };
-    }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BannerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "18.2.14", type: BannerComponent, isStandalone: true, selector: "ta-banner", inputs: { inline: { classPropertyName: "inline", publicName: "inline", isSignal: true, isRequired: false, transformFunction: null }, message: { classPropertyName: "message", publicName: "message", isSignal: true, isRequired: true, transformFunction: null }, type: { classPropertyName: "type", publicName: "type", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0, template: "<div class=\"banner\" [ngClass]=\"this.getClasses()\">\n  {{ this.message() | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color);padding:var(--ta-components-feedback-banner-padding-vertical) var(--ta-components-feedback-banner-padding-horizontal);text-align:center;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);box-shadow:var(--ta-shadow-black-sm)}.banner--inline{position:relative;top:unset;left:unset;right:unset;border-radius:var(--ta-radius-rounded)}.banner--warning{background-color:var(--ta-surface-warning);color:var(--ta-neutral-white)}.banner--success{background-color:var(--ta-surface-success);color:var(--ta-neutral-white)}.banner--alert{background-color:var(--ta-surface-alert);color:var(--ta-neutral-white)}.banner--default{background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color)}\n"], dependencies: [{ kind: "directive", type: NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "pipe", type: TranslatePipe, name: "translate" }, { kind: "ngmodule", type: TranslateModule }] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: BannerComponent, decorators: [{
-            type: Component,
-            args: [{ selector: "ta-banner", standalone: true, imports: [NgClass, TranslatePipe, TranslateModule], template: "<div class=\"banner\" [ngClass]=\"this.getClasses()\">\n  {{ this.message() | translate }}\n</div>\n", styles: [".banner{position:fixed;top:0;left:0;right:0;background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color);padding:var(--ta-components-feedback-banner-padding-vertical) var(--ta-components-feedback-banner-padding-horizontal);text-align:center;font-size:var(--ta-font-body-sm-default-size);font-weight:var(--ta-font-body-sm-bold-weight);box-shadow:var(--ta-shadow-black-sm)}.banner--inline{position:relative;top:unset;left:unset;right:unset;border-radius:var(--ta-radius-rounded)}.banner--warning{background-color:var(--ta-surface-warning);color:var(--ta-neutral-white)}.banner--success{background-color:var(--ta-surface-success);color:var(--ta-neutral-white)}.banner--alert{background-color:var(--ta-surface-alert);color:var(--ta-neutral-white)}.banner--default{background-color:var(--ta-components-feedback-banner-background);color:var(--ta-components-feedback-banner-color)}\n"] }]
-        }], ctorParameters: () => [] });
 
 class InlineProfileDataComponent {
     constructor() {
@@ -3069,5 +3118,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
  * Generated bundle index. Do not edit.
  */
 
-export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CheckboxComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CopyLinkButtonComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DataGridComponent, DataGridItemComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, ItsmeButtonComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, MessengerButtonComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, TaOverlayService as OverlayService, OverlineComponent, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, ProgressComponent, PwaComponent, RatingComponent, RatingDistributionComponent, ShareButtonComponent, StatTileComponent, SwiperComponent, SwiperLightComponent, TaDefaultPanelComponent, TaExpansionPanelComponent, TaModalComponent, TaOverlayPanelComponent, TaOverlayService, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TabBarComponent, TemplateModalContainerComponent as TemplateModalContainer, TemplateModalContainerComponent, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, VeriffButtonComponent, WhatsappButtonComponent, WrappedIconComponent, criticityLabel };
+export { ActionButtonComponent, AddressComponent, BadgeComponent, BannerComponent, BenefitItemComponent, BooleanIconComponent, BulletComponent, ButtonComponent, ButtonToolComponent, CardComponent, CardContentComponent, CardCtaComponent, CardHeaderComponent, CardImageComponent, CardSubtitleComponent, CardTagComponent, CardTitleComponent, CheckboxComponent, CivilityComponent, ContactInformationComponent, ContainerValidationComponent, CopyLinkButtonComponent, CriticityComponent, CriticityStatus, CultureComponent, DashboardCardComponent, DataGridComponent, DataGridItemComponent, DepartmentIconListComponent, DepartmentProfessionsComponent, DepartmentsComponent, DualButtonComponent, DurationComponent, EmptyComponent, ErrorComponent, ExpandableTextComponent, FileImageComponent, HourDateLineComponent, InlineProfileDataComponent, ItsmeButtonComponent, LabelComponent, LayoutContentComponent, LayoutFlexComponent, LayoutFullPanelComponent, LayoutHeaderComponent, LayoutHeaderDefaultComponent, LayoutHeaderLogoComponent, LayoutModalComponent, LayoutNavComponent, LayoutNotFoundComponent, LayoutPageComponent, LayoutPanelComponent, LayoutSideComponent, LayoutSideContentComponent, LayoutSideCtaComponent, LayoutTitleComponent, LayoutWithBottomNavComponent, LayoutWithPanelComponent, LinkComponent, ListContainerComponent, ListElementComponent, ListExtraInformationComponent, ListSubTitleComponent, ListTagComponent, ListTitleComponent, LoaderComponent, LogoComponent, MENU_MAX_HEIGHT, MENU_TEMPLATE, MegaoctetComponent, MessengerButtonComponent, NewComponent, NotificationBadgeComponent, NotificationBadgeContainerComponent, TaOverlayService as OverlayService, OverlineComponent, PictureInfoMessageComponent, ProgressBarComponent, ProgressBarDataComponent, ProgressCircleComponent, ProgressComponent, PwaComponent, RatingComponent, RatingDistributionComponent, ShareButtonComponent, StatTileComponent, SwiperComponent, SwiperLightComponent, TaDefaultPanelComponent, TaExpansionPanelComponent, TaModalComponent, TaOverlayPanelComponent, TaOverlayService, TaTreeChildrenComponent, TaTreeContainerComponent, TaTreeItemComponent, TabBarComponent, TemplateModalContainerComponent as TemplateModalContainer, TemplateModalContainerComponent, TextComponent, TimeAgoComponent, TitleComponent, ToastComponent, ToggleCardComponent, TrigramComponent, TypedMessageComponent, UserLogoComponent, UsersListComponent, ValidationModal, VeriffButtonComponent, WebPushCardComponent, WhatsappButtonComponent, WrappedIconComponent, criticityLabel };
 //# sourceMappingURL=ta-ui.mjs.map

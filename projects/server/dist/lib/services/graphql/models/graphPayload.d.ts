@@ -56,6 +56,20 @@ export interface GraphMutationPayload {
     mutation: TypedDocumentNode<unknown, unknown>;
     variables: any;
 }
+export interface GraphMutationBuilderPayload extends GraphMutationPayload {
+    name: string;
+}
+/**
+ * L'unique argument d'une mutation : son nom (`payload` par défaut), son type GraphQL
+ * (déduit du nom sinon), sa valeur et les champs à relire (`id` par défaut, `''` pour un scalaire).
+ */
+export interface GraphMutationInput {
+    argument?: string;
+    type?: string;
+    value: unknown;
+    props?: string;
+    operation?: string;
+}
 /**
  * Construit une requête de lecture : filtres, tri, arguments propres et pagination déclarés en
  * variables. Sans `paging`, la réponse est la liste elle-même ; avec, elle suit le mode choisi.
@@ -69,3 +83,17 @@ export interface GraphMutationPayload {
  * ```
  */
 export declare function createQuery<T>(name: string, input?: GraphQueryInput<T>): GraphPayload;
+/**
+ * Construit une mutation à un argument, nommée d'après son champ racine : `mutateBuilder` relit la
+ * réponse sous `name` sans qu'on le répète.
+ *
+ * ```ts
+ * createMutation('registerPushSubscription', {
+ *   argument: 'input',
+ *   type: 'RegisterPushSubscriptionInput!',
+ *   value: input,
+ *   props: 'id lastSeenAt',
+ * });
+ * ```
+ */
+export declare function createMutation(name: string, input: GraphMutationInput): GraphMutationBuilderPayload;

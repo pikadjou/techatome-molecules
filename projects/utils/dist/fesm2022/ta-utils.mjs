@@ -1549,6 +1549,18 @@ const LOCAL = "config_local";
 const APPLICATION_CONFIG = new InjectionToken("config_application");
 const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
 
+/** Jeton multi : chaque fournisseur ajoute un hook, le service d'authentification les injecte en tableau. */
+const TA_BEFORE_LOGOUT = new InjectionToken('ta_before_logout');
+/** Exécute tous les hooks en parallèle, ignore leurs erreurs et rend la main au plus tard après `timeoutMs`. */
+function runBeforeLogoutHooks(hooks, timeoutMs = 3000) {
+    if (hooks.length === 0) {
+        return Promise.resolve();
+    }
+    const all = Promise.allSettled(hooks.map(hook => Promise.resolve().then(() => hook())));
+    const timeout = new Promise(resolve => setTimeout(resolve, timeoutMs));
+    return Promise.race([all, timeout]).then(() => undefined);
+}
+
 /*
  * Public API Surface of utils
  */
@@ -1557,5 +1569,5 @@ const DEFAULT_USER_LANGUAGE = new InjectionToken("default_user_language");
  * Generated bundle index. Do not edit.
  */
 
-export { APPLICATION_CONFIG, BreakpointDetection, Breakpoints, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, DndDirective, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, TaReadOnlyContextService as ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaReadOnlyContextService, TaSharedMenuService, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, WEEK_DAY_LABELS, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isPositive, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
+export { APPLICATION_CONFIG, BreakpointDetection, Breakpoints, COUNTRY_CODES, Civility, Culture, DEFAULT_USER_LANGUAGE, DndDirective, EFileExtension, FileSizePipe, HorizontalScroll, JoinPipe, LOCAL, LetDirective, ModalState, ObjectKeys, ObjectKeysReOrder, OnRenderDirective, PluralTranslatePipe, TaReadOnlyContextService as ReadOnlyContextService, RequestState, SafePipe, StopPropagationDirective, SubscriberHandler, TA_BEFORE_LOGOUT, TaAbstractComponent, TaAddressLookupService, TaBaseComponent, TaBaseModal, TaBasePage, TaReadOnlyContextService, TaSharedMenuService, TaTestIdDirective, TemporaryFile, TypedTemplateDirective, WEEK_DAYS_FROM_MONDAY, WEEK_DAY_LABELS, call, canTakePhoto, capitalizeFirstLetter, centsToEuros, compare, compareHour, compareObjectsByKeys, compressImage, convertToNumber, copyTextToClipboard, createRange, determineNewHeight, determineNewSize, determineNewWidth, diffInHourAndMinutes, downloadFile, excludingVatCents, extractEnum, extractExtension, filterNonNullableItems, formatMinutesToTime, fullName, getBase64FromFile, getBlobImage, getCivility, getCivilityIcon, getCountryList, getCountryName, getFileExtension, getFullFileNameFromUrl, getModifiedValues, getPropertyTypes, getUniqueArray, getUniqueValues, hasUpcomingOffsetShift, isArray, isLight, isNonNullable, isNotEmptyObject, isObject, isPositive, isStrictISODateString, isURL, isValidEmail, keepUniqueObjectByProperty, loadStylesheet, localDayKey, merge, newGuid, newId, normalizeGuid, octetsToMo, openExternalUrl, openMap, parseNumber, parseTimeToMinutes, pathToFile, percentage, pickImages, removeElement, removeElementsWithSameProperty, removeObjectKeys, resolveCountryCode, roundToDecimal, runBeforeLogoutHooks, s4, sameGuid, search, sendMail, sort, startOfLocalWeek, takePhoto, toArray, toLocalDate, toLocalDateString, toUtcDate, trigram, vatIncludedCents, weeklySlotToLocal, weeklySlotToUtc };
 //# sourceMappingURL=ta-utils.mjs.map

@@ -8,6 +8,7 @@ export declare class TaAuth0Service extends TaAuthService {
     private _translation;
     private _http;
     private _authClientConfig;
+    private _beforeLogout;
     constructor();
     fetchUserProfile$(): Observable<import("@ta/user").UserProfile>;
     changePassword$(): Observable<string>;

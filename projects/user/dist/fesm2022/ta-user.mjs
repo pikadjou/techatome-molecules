@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { map as map$1 } from 'rxjs/operators';
 import { TaRoutes, MenuIcon, Menu, MenuComponent, TaMainRoute } from '@ta/menu';
 import { BehaviorSubject, filter, map, Subject, switchMap, distinct, tap, take } from 'rxjs';
-import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent } from '@ta/utils';
+import { isNonNullable, TaBaseComponent, StopPropagationDirective, TaAbstractComponent, TA_BEFORE_LOGOUT, runBeforeLogoutHooks } from '@ta/utils';
 import { GraphSchema, Apollo_gql, TaBaseService, HandleSimpleRequest, Logger } from '@ta/server';
 import { TranslatePipe, TaLazyTranslationService, TaTranslationService } from '@ta/translation';
 import { CardComponent, CardContentComponent, ButtonComponent, LoaderComponent, ErrorComponent, EmptyComponent, InlineProfileDataComponent, ListContainerComponent, ListElementComponent, ListTagComponent, ListTitleComponent, TaOverlayPanelComponent } from '@ta/ui';
@@ -542,6 +542,7 @@ class TaAuth0Service extends TaAuthService {
         this._translation = inject(TaTranslationService);
         this._http = inject(HttpClient);
         this._authClientConfig = inject(AuthClientConfig);
+        this._beforeLogout = inject(TA_BEFORE_LOGOUT, { optional: true }) ?? [];
         this._registerSubscription(this._auth.user$
             .pipe(filter(isNonNullable), distinct(user => user?.sub), tap(user => this.user$.next(user || null)), tap(user => {
             Logger.LogInfo('user info', user);
@@ -602,9 +603,11 @@ class TaAuth0Service extends TaAuthService {
         });
     }
     logout() {
-        return new Promise(resolve => {
+        // Les hooks (désinscription push…) partent tant que le jeton est valide. La promesse rendue ne se
+        // résout jamais : Auth0 redirige, et `my-account` enchaîne un `location.reload()` qui ferait doublon.
+        return runBeforeLogoutHooks(this._beforeLogout).then(() => new Promise(() => {
             this._auth.logout();
-        });
+        }));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuth0Service, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
     static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: TaAuth0Service, providedIn: 'root' }); }

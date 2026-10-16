@@ -6,3 +6,4 @@ export * from './lib/utils/public-api';
 export * from './lib/helpers/public-api';
 export * from './lib/service/public-api';
 export * from './lib/const/environment';
+export * from './lib/const/logout';

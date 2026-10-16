@@ -543,6 +543,34 @@ function createQuery(name, input) {
         variables,
     };
 }
+/**
+ * Construit une mutation à un argument, nommée d'après son champ racine : `mutateBuilder` relit la
+ * réponse sous `name` sans qu'on le répète.
+ *
+ * ```ts
+ * createMutation('registerPushSubscription', {
+ *   argument: 'input',
+ *   type: 'RegisterPushSubscriptionInput!',
+ *   value: input,
+ *   props: 'id lastSeenAt',
+ * });
+ * ```
+ */
+function createMutation(name, input) {
+    const argument = input.argument ?? 'payload';
+    const type = input.type ??
+        (input.argument ? `${capitalizeFirstLetter(input.argument)}Input!` : `${capitalizeFirstLetter(name)}PayloadInput!`);
+    const props = input.props ?? 'id';
+    return {
+        mutation: gql `
+      mutation ${input.operation ?? capitalizeFirstLetter(name)}($${argument}: ${type}) {
+        ${name}(${argument}: $${argument}) ${props ? `{ ${props} }` : ''}
+      }
+    `,
+        name,
+        variables: { [argument]: input.value },
+    };
+}
 
 const GRAPHQL_SERVER_CONFIG = "config_graphQl_server";
 
@@ -765,6 +793,9 @@ class TaGraphService {
             this._errorServices.addError(payload, err);
             return throwError(() => err);
         }));
+    }
+    mutateBuilder(payload, context, clearCache) {
+        return this.mutate(payload, payload.name, context, clearCache);
     }
     registerGraphEndpoint(graphEndpoint, options) {
         const url = options?.visitor === true && this._graphConfig?.visitor ? this._graphConfig?.visitor : this._graphConfig?.url;
@@ -1014,5 +1045,5 @@ const provideStrapi = (data) => [
  * Generated bundle index. Do not edit.
  */
 
-export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, appendPage, baseStrapiProps, connectionFields, createQuery, emptyPage, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi, toPage };
+export { CacheInterceptor, GRAPHQL_SERVER_CONFIG, GraphSchema, HandleComplexRequest, HandleSimpleRequest, Logger, NOTIFICATION_HANDLER_TOKEN, Request, RequestMap, SERVER_CONFIG_KEY, STRAPI_SERVER_CONFIG, StatusReponse, TENANT_CONFIG_TOKEN, TaBaseService, TaBaseStrapiService, TaGraphService, TaServerErrorService, TaServerSevice, TaStrapiService, appendPage, baseStrapiProps, connectionFields, createMutation, createQuery, emptyPage, graphQlPaginationFields, graphQlTake, graphQlUpdateFields, keyValueProps, provideServer, provideStrapi, toPage };
 //# sourceMappingURL=ta-server.mjs.map

@@ -1,7 +1,7 @@
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { BehaviorSubject } from 'rxjs';
-import { GraphMutationPayload, GraphPayload, GraphQueryPayload } from './models/graphPayload';
+import { GraphMutationBuilderPayload, GraphMutationPayload, GraphPayload, GraphQueryPayload } from './models/graphPayload';
 import { GraphEndpoint, IGraphConfig } from './public-api';
 import * as i0 from "@angular/core";
 export type GraphOptions = {
@@ -39,6 +39,7 @@ export declare class TaGraphService {
     watchQueryBuilder<T>(payload: GraphPayload, context: string, pollInterval: number): import("rxjs").Observable<T>;
     fetchQuery<T>(payload: GraphQueryPayload, node: string, context: string): import("rxjs").Observable<T>;
     mutate<T>(payload: GraphMutationPayload, mutationName: string, context: string, clearCache?: string[]): import("rxjs").Observable<T>;
+    mutateBuilder<T>(payload: GraphMutationBuilderPayload, context: string, clearCache?: string[]): import("rxjs").Observable<T>;
     registerGraphEndpoint(graphEndpoint: GraphEndpoint, options?: GraphOptions): void;
     private _setupData;
     private _getWrapper;
