@@ -1,0 +1,36 @@
+@if (this.state() !== 'unsupported') {
+  <div class="web-push-card">
+    <div class="web-push-card__text">
+      <ta-title [level]="4">{{ 'ui.push.title' | translate }}</ta-title>
+      @switch (this.state()) {
+        @case ('install') {
+          <ta-text size="sm">{{ 'ui.push.install' | translate }}</ta-text>
+        }
+        @case ('denied') {
+          <ta-text size="sm">{{ 'ui.push.denied' | translate }}</ta-text>
+        }
+        @case ('active') {
+          <ta-text size="sm" color="success">{{ 'ui.push.active' | translate }}</ta-text>
+        }
+        @default {
+          <ta-text size="sm">{{ 'ui.push.description' | translate }}</ta-text>
+        }
+      }
+      @if (this.failed()) {
+        <ta-banner type="alert" [inline]="true" message="ui.push.error"></ta-banner>
+      }
+    </div>
+    @if (this.state() === 'ask') {
+      <ta-button
+        class="web-push-card__action"
+        type="secondary"
+        size="small"
+        icon="notifications_active"
+        [state]="this.busy() ? 'disabled' : 'classic'"
+        (action)="this.onEnable()"
+      >
+        {{ 'ui.push.enable' | translate }}
+      </ta-button>
+    }
+  </div>
+}

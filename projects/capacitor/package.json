@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@ta/server": "^0.0.0",
+    "@ta/translation": "^0.0.0",
+    "@ta/utils": "^0.0.0",
     "@capacitor/core": "5.0.4",
     "@capacitor/device": "^5.0.4",
     "@capacitor/geolocation": "^5.0.4",
