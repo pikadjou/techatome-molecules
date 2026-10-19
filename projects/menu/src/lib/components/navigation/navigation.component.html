@@ -74,14 +74,7 @@
       </div>
     }
     @if (item.options?.notificationBadge?.label) {
-      <ta-label
-        [style]="item.options?.notificationBadge?.style"
-        size="xs"
-        shape="pill"
-        [type]="this.isActive(item) ? 'secondary' : 'neutral'"
-      >
-        {{ item.options?.notificationBadge?.label || 0 }}
-      </ta-label>
+      <span class="count">{{ item.options?.notificationBadge?.label }}</span>
     }
     @if (item.translationData?.length) {
       <div class="bullet">({{ item.translationData?.length }})</div>

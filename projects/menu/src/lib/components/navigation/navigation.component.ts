@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 import { FontIconComponent } from '@ta/icons';
 import { TaSizes } from '@ta/styles';
-import { LabelComponent, SwiperLightComponent } from '@ta/ui';
+import { SwiperLightComponent } from '@ta/ui';
 import { TaAbstractComponent, TypedTemplateDirective } from '@ta/utils';
 
 import { getFontIcon, hasFontIcon } from '../../helpers/icon-manager';
@@ -29,7 +29,6 @@ import { TaTranslationMenu } from '../../translation.service';
     FontIconComponent,
     TypedTemplateDirective,
     AsyncPipe,
-    LabelComponent,
     SwiperLightComponent,
   ],
 })

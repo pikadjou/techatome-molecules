@@ -1,15 +1,19 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { provideRouter } from '@angular/router';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { of, Subject } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import { Subject } from 'rxjs';
 
+import { TRANSLATION_SOURCE_CONFIG, TranslationSourceType } from '@ta/translation';
+
+import { NavigationComponent } from '@lib/menu/components/navigation/navigation.component';
 import { MenuBase } from '@lib/menu/models/menu/item/base';
 import { MenuIcon } from '@lib/menu/models/menu/item/icon';
 import { Menu } from '@lib/menu/models/menu/menu';
-import { NavigationComponent } from '@lib/menu/components/navigation/navigation.component';
 
 @Component({
   standalone: true,
@@ -23,7 +27,7 @@ import { NavigationComponent } from '@lib/menu/components/navigation/navigation.
   ></ta-menu-navigation>`,
 })
 class TestHostComponent {
-  menu = new Menu({
+  menu: Menu = new Menu<MenuBase>({
     elements: [
       new MenuIcon({
         key: 'tab1',
@@ -65,18 +69,14 @@ describe('NavigationComponent', () => {
         TestHostComponent,
       ],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: Apollo, useValue: {} },
         {
-          provide: ActivatedRoute,
-          useValue: { params: of({}), queryParams: of({}) },
+          provide: TRANSLATION_SOURCE_CONFIG,
+          useValue: { filePath: '', type: TranslationSourceType.FILE },
         },
-        {
-          provide: Router,
-          useValue: { url: '/test', navigate: jasmine.createSpy('navigate') },
-        },
-        {
-          provide: Location,
-          useValue: {},
-        },
+        provideRouter([]),
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
@@ -96,9 +96,7 @@ describe('NavigationComponent', () => {
 
     it('should not set activeKey when no defaultOpen element', () => {
       hostComponent.menu = new Menu({
-        elements: [
-          new MenuIcon({ key: 'a', label: 'A', icon: 'home' }),
-        ],
+        elements: [new MenuIcon({ key: 'a', label: 'A', icon: 'home' })],
       });
       fixture.detectChanges();
       component.ngOnInit();
@@ -179,7 +177,7 @@ describe('NavigationComponent', () => {
       hostComponent.manuallyChanged$ = manualSubject.asObservable();
       hostComponent.menu = new Menu({
         elements: [
-          new MenuBase({ key: 'a', label: 'A', callback: () => {} }),
+          new MenuBase({ key: 'a', label: 'A', defaultOpen: true, callback: () => {} }),
           new MenuBase({ key: 'b', label: 'B', callback: () => {} }),
         ],
       });
@@ -188,6 +186,36 @@ describe('NavigationComponent', () => {
 
       manualSubject.next('b');
       expect(component.activeKey).toBe('b');
+    });
+  });
+
+  describe('notification badge', () => {
+    beforeEach(() => {
+      hostComponent.container = 'tags';
+      hostComponent.menu = new Menu({
+        elements: [
+          new MenuBase({
+            key: 'unread',
+            label: 'Unread',
+            callback: () => {},
+            options: { notificationBadge: { label: 3 } },
+          }),
+          new MenuBase({ key: 'all', label: 'All', callback: () => {} }),
+        ],
+      });
+      fixture.detectChanges();
+    });
+
+    it('should render the count as a plain chip, not a ta-label', () => {
+      const root: HTMLElement = fixture.nativeElement;
+      expect(root.querySelector('.item .count')?.textContent?.trim()).toBe('3');
+      expect(root.querySelector('.item ta-label')).toBeNull();
+    });
+
+    it('should keep every pill at the same height, with or without a count', () => {
+      const items = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('.item'));
+      expect(items.length).toBe(2);
+      expect(items[0].offsetHeight).toBe(items[1].offsetHeight);
     });
   });
 });
