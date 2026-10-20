@@ -9,17 +9,17 @@
           [matDatepicker]="picker"
           [value]="this.input.value"
           (dateInput)="this.onDateSelect($event)"
-          (click)="this.picker.open()"
+          (click)="picker.open()"
           [min]="this.input.minDate"
           [max]="this.input.maxDate"
           readonly
         />
         <mat-datepicker #picker></mat-datepicker>
-        <mat-datepicker-toggle matSuffix [for]="this.picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       </div>
     } @else {
       <div class="align-center">
-        <mat-date-range-input [formGroup]="this.range" [rangePicker]="this.picker">
+        <mat-date-range-input [formGroup]="this.range" [rangePicker]="picker">
           <input
             matStartDate
             #focusedElement
@@ -39,7 +39,7 @@
           />
         </mat-date-range-input>
         <mat-date-range-picker touchUi #picker></mat-date-range-picker>
-        <mat-datepicker-toggle matSuffix [for]="this.picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       </div>
     }
   </ta-input-layout>

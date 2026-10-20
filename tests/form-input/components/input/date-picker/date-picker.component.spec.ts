@@ -1,9 +1,16 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerToggle } from '@angular/material/datepicker';
+import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
 
 import { InputDatePicker } from '@ta/form-model';
+import { TRANSLATION_SOURCE_CONFIG, TranslationSourceType } from '@ta/translation';
 
 import { DatePickerComponent } from '@lib/form-input/components/input/date-picker/date-picker.component';
 
@@ -23,6 +30,16 @@ describe('DatePickerComponent', () => {
         }),
         MatNativeDateModule,
         DatePickerComponent,
+      ],
+      providers: [
+        provideNoopAnimations(),
+        provideHttpClient(),
+        provideRouter([]),
+        { provide: Apollo, useValue: {} },
+        {
+          provide: TRANSLATION_SOURCE_CONFIG,
+          useValue: { filePath: '', type: TranslationSourceType.FILE },
+        },
       ],
     }).compileComponents();
 
@@ -63,5 +80,16 @@ describe('DatePickerComponent', () => {
     const date = new Date(2025, 5, 10);
     component.range.setValue({ start: date, end: date });
     expect(component.input.value).toEqual(date);
+  });
+
+  it('should open the picker when the input is clicked', () => {
+    const open = spyOn(component.picker(), 'open');
+    (fixture.nativeElement as HTMLElement).querySelector('input')?.click();
+    expect(open).toHaveBeenCalled();
+  });
+
+  it('should bind the toggle to the picker', () => {
+    const toggle = fixture.debugElement.query(By.directive(MatDatepickerToggle)).componentInstance;
+    expect(toggle.datepicker).toBe(component.picker());
   });
 });

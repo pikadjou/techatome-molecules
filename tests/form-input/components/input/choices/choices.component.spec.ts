@@ -113,14 +113,14 @@ describe('InputChoicesComponent', () => {
   });
 
   it('should return name$ observable for a given id', fakeAsync(() => {
-    let result: string | null = null;
+    let result = null as string | null;
     component.getName$('1').subscribe(name => (result = name));
     tick();
     expect(result).toBe('Alpha');
   }));
 
   it('should fallback to id if name not found', fakeAsync(() => {
-    let result: string | null = null;
+    let result = null as string | null;
     component.getName$('unknown').subscribe(name => (result = name));
     tick();
     expect(result).toBe('unknown');

@@ -492,7 +492,10 @@
           "options": {
             "tsConfig": "projects/form/form-input/tsconfig.spec.json",
             "include": ["../../../../tests/form-input/**/*.spec.ts"],
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/styles/src/style"]
+            }
           }
         }
       }
