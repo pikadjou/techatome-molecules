@@ -119,6 +119,14 @@
   justify-content: flex-end;
   gap: common.get-var(space, sm);
 
+  // Le pied projeté (`<div modal-footer>`) porte la rangée : sans elle, `ta-button` (pleine largeur) s'empile.
+  > [modal-footer] {
+    @include flex.flex-row();
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: common.get-var(space, sm);
+  }
+
   &:empty {
     display: none;
   }

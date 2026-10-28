@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, ViewEncapsulation, input, output } from '@angular/core';
 
 import { FontIconComponent } from '@ta/icons';
 import { TaBaseComponent } from '@ta/utils';
@@ -16,6 +16,7 @@ export type ModalTone = 'surface' | 'brand';
   selector: 'ta-modal',
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [FontIconComponent, OverlineComponent, TitleComponent],
 })
