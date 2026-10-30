@@ -127,7 +127,7 @@ export class InputBase<T> implements IInputBase<T> {
         this.formControl.valueChanges
           .pipe(distinctUntilChanged())
           .subscribe((value) => {
-            this.value = value;
+            this.syncFromControl(value);
             this.launchChangeValue();
           })
       );
@@ -135,6 +135,15 @@ export class InputBase<T> implements IInputBase<T> {
         group.addControl(this.key, this.formControl);
       }
     }
+  }
+
+  /**
+   * Valeur venue de la vue : le contrôle la porte déjà, on ne la lui renvoie pas.
+   * Passer par le setter réécrivait le champ pendant la frappe (curseur replacé,
+   * saisie intermédiaire comme « 1. » écrasée).
+   */
+  protected syncFromControl(value: T | null) {
+    this._value.set(value);
   }
 
   public launchChangeValue() {

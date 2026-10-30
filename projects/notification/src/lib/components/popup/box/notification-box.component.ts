@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 
 import { tap } from "rxjs/operators";
 
@@ -20,7 +20,8 @@ const AUTO_DISMISS_DELAY = 3000;
   imports: [NotificationInlineComponent],
 })
 export class NotificationBoxComponent extends TaBaseComponent {
-  public list: NotificationItem[] = [];
+  // Signal : en zoneless, un tableau muté depuis un abonnement n'était rendu qu'au cycle suivant (NG0100).
+  public list = signal<NotificationItem[]>([]);
 
   private _notificationService = inject(TaNotificationService);
 
@@ -31,7 +32,7 @@ export class NotificationBoxComponent extends TaBaseComponent {
       this._notificationService.newNotification$
         .pipe(
           tap((notification) => {
-            this.list.push(notification);
+            this.list.update((list) => [...list, notification]);
 
             if (!notification.persistent) {
               setTimeout(() => {
@@ -55,6 +56,6 @@ export class NotificationBoxComponent extends TaBaseComponent {
   }
 
   private _remove(id: string) {
-    this.list = this.list.filter((item) => item.id !== id);
+    this.list.update((list) => list.filter((item) => item.id !== id));
   }
 }

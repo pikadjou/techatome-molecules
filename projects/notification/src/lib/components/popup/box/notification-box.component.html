@@ -1,5 +1,5 @@
 <div class="notification-box_container flex-column g-space-sm">
-  @for (item of this.list; track item.id) {
+  @for (item of this.list(); track item.id) {
   <ta-notification-inline
     [message]="item.message"
     [code]="item.code"

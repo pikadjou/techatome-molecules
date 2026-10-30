@@ -42,7 +42,7 @@ describe('NotificationBoxComponent', () => {
   });
 
   it('should start with an empty list', () => {
-    expect(component.list).toEqual([]);
+    expect(component.list()).toEqual([]);
   });
 
   it('should add a notification to the list when newNotification$ emits', () => {
@@ -51,9 +51,9 @@ describe('NotificationBoxComponent', () => {
       code: ENotificationCode.success,
     });
 
-    expect(component.list.length).toBe(1);
-    expect(component.list[0].message).toBe('Test message');
-    expect(component.list[0].code).toBe(ENotificationCode.success);
+    expect(component.list().length).toBe(1);
+    expect(component.list()[0].message).toBe('Test message');
+    expect(component.list()[0].code).toBe(ENotificationCode.success);
   });
 
   it('should add multiple notifications to the list', () => {
@@ -66,7 +66,7 @@ describe('NotificationBoxComponent', () => {
       code: ENotificationCode.warning,
     });
 
-    expect(component.list.length).toBe(2);
+    expect(component.list().length).toBe(2);
   });
 
   it('should remove a notification after 3 seconds', fakeAsync(() => {
@@ -75,11 +75,11 @@ describe('NotificationBoxComponent', () => {
       code: ENotificationCode.success,
     });
 
-    expect(component.list.length).toBe(1);
+    expect(component.list().length).toBe(1);
 
     tick(3000);
 
-    expect(component.list.length).toBe(0);
+    expect(component.list().length).toBe(0);
   }));
 
   it('should handle error notification codes', () => {
@@ -88,7 +88,7 @@ describe('NotificationBoxComponent', () => {
       code: ENotificationCode.error,
     });
 
-    expect(component.list.length).toBe(1);
-    expect(component.list[0].code).toBe(ENotificationCode.error);
+    expect(component.list().length).toBe(1);
+    expect(component.list()[0].code).toBe(ENotificationCode.error);
   });
 });

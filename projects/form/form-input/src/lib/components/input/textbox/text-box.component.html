@@ -10,7 +10,6 @@
       #box
       #focusedElement
       class="form-control"
-      [value]="this.input.value"
       [formControl]="$any(this.input.formControl)"
       [readonly]="this.input.disabled || this.input.readonly"
       [type]="this.isPassword && !this.hide ? 'text' : this.input.type"
