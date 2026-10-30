@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { InjectionToken, Injectable, inject, Component, input, output, effect } from '@angular/core';
+import { InjectionToken, Injectable, inject, Component, input, output, effect, signal } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { newGuid, TaBaseModal, copyTextToClipboard, TaBaseComponent, ModalState, isNonNullable, getUniqueArray } from '@ta/utils';
 import { Subject, map, switchMap, of } from 'rxjs';
@@ -203,11 +203,12 @@ const AUTO_DISMISS_DELAY = 3000;
 class NotificationBoxComponent extends TaBaseComponent {
     constructor() {
         super();
-        this.list = [];
+        // Signal : en zoneless, un tableau muté depuis un abonnement n'était rendu qu'au cycle suivant (NG0100).
+        this.list = signal([]);
         this._notificationService = inject(TaNotificationService);
         this._registerSubscription(this._notificationService.newNotification$
             .pipe(tap((notification) => {
-            this.list.push(notification);
+            this.list.update((list) => [...list, notification]);
             if (!notification.persistent) {
                 setTimeout(() => {
                     this._remove(notification.id);
@@ -223,14 +224,14 @@ class NotificationBoxComponent extends TaBaseComponent {
         this._remove(id);
     }
     _remove(id) {
-        this.list = this.list.filter((item) => item.id !== id);
+        this.list.update((list) => list.filter((item) => item.id !== id));
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBoxComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationBoxComponent, isStandalone: true, selector: "ta-notification-box", usesInheritance: true, ngImport: i0, template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item.id) {\n  <ta-notification-inline\n    [message]=\"item.message\"\n    [code]=\"item.code\"\n    [showClose]=\"item.persistent\"\n    (askClose)=\"this.dismiss(item.id)\"\n  ></ta-notification-inline>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:var(--ta-space-md);z-index:5000;width:calc(100% - var(--ta-space-lg));max-width:420px}@media (max-width: 575px){.notification-box_container{right:var(--ta-space-sm);width:calc(100% - var(--ta-space-md))}}\n"], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.14", type: NotificationBoxComponent, isStandalone: true, selector: "ta-notification-box", usesInheritance: true, ngImport: i0, template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list(); track item.id) {\n  <ta-notification-inline\n    [message]=\"item.message\"\n    [code]=\"item.code\"\n    [showClose]=\"item.persistent\"\n    (askClose)=\"this.dismiss(item.id)\"\n  ></ta-notification-inline>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:var(--ta-space-md);z-index:5000;width:calc(100% - var(--ta-space-lg));max-width:420px}@media (max-width: 575px){.notification-box_container{right:var(--ta-space-sm);width:calc(100% - var(--ta-space-md))}}\n"], dependencies: [{ kind: "component", type: NotificationInlineComponent, selector: "ta-notification-inline", inputs: ["message", "code", "showClose"], outputs: ["askClose"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: NotificationBoxComponent, decorators: [{
             type: Component,
-            args: [{ selector: "ta-notification-box", standalone: true, imports: [NotificationInlineComponent], template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list; track item.id) {\n  <ta-notification-inline\n    [message]=\"item.message\"\n    [code]=\"item.code\"\n    [showClose]=\"item.persistent\"\n    (askClose)=\"this.dismiss(item.id)\"\n  ></ta-notification-inline>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:var(--ta-space-md);z-index:5000;width:calc(100% - var(--ta-space-lg));max-width:420px}@media (max-width: 575px){.notification-box_container{right:var(--ta-space-sm);width:calc(100% - var(--ta-space-md))}}\n"] }]
+            args: [{ selector: "ta-notification-box", standalone: true, imports: [NotificationInlineComponent], template: "<div class=\"notification-box_container flex-column g-space-sm\">\n  @for (item of this.list(); track item.id) {\n  <ta-notification-inline\n    [message]=\"item.message\"\n    [code]=\"item.code\"\n    [showClose]=\"item.persistent\"\n    (askClose)=\"this.dismiss(item.id)\"\n  ></ta-notification-inline>\n  }\n</div>\n", styles: [".notification-box_container{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:var(--ta-space-md);z-index:5000;width:calc(100% - var(--ta-space-lg));max-width:420px}@media (max-width: 575px){.notification-box_container{right:var(--ta-space-sm);width:calc(100% - var(--ta-space-md))}}\n"] }]
         }], ctorParameters: () => [] });
 
 const notificationProps = new GraphSchema([

@@ -44,6 +44,12 @@ export declare class InputBase<T> implements IInputBase<T> {
     set value(value: T | null);
     constructor(options?: IInputBase<any>);
     createFormControl(group?: FormGroup): void;
+    /**
+     * Valeur venue de la vue : le contrôle la porte déjà, on ne la lui renvoie pas.
+     * Passer par le setter réécrivait le champ pendant la frappe (curseur replacé,
+     * saisie intermédiaire comme « 1. » écrasée).
+     */
+    protected syncFromControl(value: T | null): void;
     launchChangeValue(): void;
     disable(): void;
     setReadonly(value: boolean): void;

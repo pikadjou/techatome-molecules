@@ -113,13 +113,21 @@ class InputBase {
             this._subscriberHandler.registerSubscription(this.formControl.valueChanges
                 .pipe(distinctUntilChanged())
                 .subscribe((value) => {
-                this.value = value;
+                this.syncFromControl(value);
                 this.launchChangeValue();
             }));
             if (group) {
                 group.addControl(this.key, this.formControl);
             }
         }
+    }
+    /**
+     * Valeur venue de la vue : le contrôle la porte déjà, on ne la lui renvoie pas.
+     * Passer par le setter réécrivait le champ pendant la frappe (curseur replacé,
+     * saisie intermédiaire comme « 1. » écrasée).
+     */
+    syncFromControl(value) {
+        this._value.set(value);
     }
     launchChangeValue() {
         this.changeValue$.next(this.value);
@@ -247,6 +255,15 @@ class InputNumber extends InputTextBox {
     }
     set value(value) {
         super.value = Number(value);
+    }
+    /** Le contrôle reçoit un nombre, sans réécrire le champ en cours de frappe. */
+    syncFromControl(value) {
+        const raw = value;
+        const parsed = raw === null || raw === undefined || raw === "" ? null : Number(raw);
+        this._value.set(parsed);
+        if (parsed !== raw) {
+            this.formControl?.setValue(parsed, { emitEvent: false, emitModelToViewChange: false });
+        }
     }
     constructor(options = {}) {
         super(options);

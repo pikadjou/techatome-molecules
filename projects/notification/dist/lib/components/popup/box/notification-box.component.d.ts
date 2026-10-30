@@ -2,7 +2,7 @@ import { TaBaseComponent } from "@ta/utils";
 import { NotificationItem } from "../../../services/notification.service";
 import * as i0 from "@angular/core";
 export declare class NotificationBoxComponent extends TaBaseComponent {
-    list: NotificationItem[];
+    list: import("@angular/core").WritableSignal<NotificationItem[]>;
     private _notificationService;
     constructor();
     dismiss(id: string): void;
