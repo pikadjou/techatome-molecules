@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { output, Directive, input, inject, TemplateRef, ViewContainerRef, effect, Pipe, Injectable, signal, Component, InjectionToken } from '@angular/core';
+import { output, Directive, input, inject, TemplateRef, ViewContainerRef, effect, Pipe, LOCALE_ID, Injectable, signal, Component, InjectionToken } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
@@ -224,8 +224,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.14", ngImpo
         }] });
 
 class PluralTranslatePipe {
+    constructor() {
+        /**
+         * Le pluriel suit la langue affichée : zéro est un singulier en français (« 0 résultat »),
+         * un pluriel en anglais, néerlandais et allemand (« 0 results »).
+         */
+        this._rules = this._rulesOf(inject(LOCALE_ID));
+    }
     transform(key, number) {
-        return `${key}.${number == 0 || number == 1 ? "one" : "plural"}`;
+        return `${key}.${this._rules.select(Number(number)) === "one" ? "one" : "plural"}`;
+    }
+    _rulesOf(locale) {
+        try {
+            return new Intl.PluralRules(locale);
+        }
+        catch {
+            return new Intl.PluralRules("en");
+        }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.14", ngImport: i0, type: PluralTranslatePipe, deps: [], target: i0.ɵɵFactoryTarget.Pipe }); }
     static { this.ɵpipe = i0.ɵɵngDeclarePipe({ minVersion: "14.0.0", version: "18.2.14", ngImport: i0, type: PluralTranslatePipe, isStandalone: true, name: "pluralTranslate", pure: false }); }

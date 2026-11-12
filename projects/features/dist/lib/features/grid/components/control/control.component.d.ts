@@ -53,6 +53,8 @@ export declare class TaGridControlComponent extends TaAbstractGridComponent<any>
     setPreset(preset: Preset): void;
     /** Rejouer le même critère inverse le sens. */
     setSort(key: string | null): void;
+    /** Inverse le sens du tri en cours, sans changer de critère. */
+    toggleSortDir(): void;
     setGroup(key: string | null): void;
     isPresetActive(preset: Preset): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<TaGridControlComponent, never>;
