@@ -104,4 +104,36 @@ describe('TaGridControlComponent', () => {
       expect(mockGridData.filters.apply).toHaveBeenCalledWith(preset.filters);
     });
   });
+
+  describe('toggleSortDir', () => {
+    const tableSortedBy = (field: string | null, dir: 'asc' | 'desc') => ({
+      setSort: jasmine.createSpy('setSort'),
+      sortDir: () => dir,
+      sortField: () => field,
+    });
+
+    it('should reverse the direction and keep the sorted column', () => {
+      mockGridData.table = tableSortedBy('price', 'asc');
+
+      component.toggleSortDir();
+
+      expect(mockGridData.table.setSort).toHaveBeenCalledOnceWith('price', 'desc');
+    });
+
+    it('should go back to ascending from descending', () => {
+      mockGridData.table = tableSortedBy('price', 'desc');
+
+      component.toggleSortDir();
+
+      expect(mockGridData.table.setSort).toHaveBeenCalledOnceWith('price', 'asc');
+    });
+
+    it('should do nothing when no sort is active', () => {
+      mockGridData.table = tableSortedBy(null, 'asc');
+
+      component.toggleSortDir();
+
+      expect(mockGridData.table.setSort).not.toHaveBeenCalled();
+    });
+  });
 });

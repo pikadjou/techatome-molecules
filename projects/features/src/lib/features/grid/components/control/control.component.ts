@@ -151,6 +151,15 @@ export class TaGridControlComponent extends TaAbstractGridComponent<any> impleme
     this.grid()?.table?.setSort(key, dir);
   }
 
+  /** Inverse le sens du tri en cours, sans changer de critère. */
+  public toggleSortDir() {
+    const key = this.activeSort();
+    if (!key) {
+      return;
+    }
+    this.grid()?.table?.setSort(key, this.activeSortDir() === 'asc' ? 'desc' : 'asc');
+  }
+
   public setGroup(key: string | null) {
     if (!key || key === this.activeGroup()) {
       this._grid.clearGroupBy();

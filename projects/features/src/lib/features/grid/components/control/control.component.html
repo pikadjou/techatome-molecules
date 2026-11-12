@@ -54,7 +54,7 @@
           <!-- Le clic doit atteindre le déclencheur de l'overlay : pas de stopPropagation. -->
           <ta-button
             [type]="this.activeSort() ? 'secondary' : 'tertiary'"
-            [icon]="this.activeSort() && this.activeSortDir() === 'desc' ? 'arrow_downward' : 'arrow_upward'"
+            icon="swap_vert"
             [stopPropagationActivation]="false"
           >
             <span class="grid-control__label">
@@ -92,6 +92,16 @@
           </div>
         </ng-template>
       </ta-overlay-panel>
+
+      <!-- La flèche est un bouton à part : elle inverse le sens, sans rouvrir le menu. -->
+      @if (this.activeSort()) {
+        <ta-button
+          type="secondary"
+          [icon]="this.activeSortDir() === 'desc' ? 'arrow_downward' : 'arrow_upward'"
+          [options]="{ square: true }"
+          (action)="this.toggleSortDir()"
+        ></ta-button>
+      }
     }
 
     @if (this.show().group && this.hasGroupableCols()) {
